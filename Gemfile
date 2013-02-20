@@ -43,6 +43,8 @@ gem 'nine-ldap'
 gem "version_reader"
 gem "airbrake"
 gem "jbuilder"
+
+
 group :development, :test do
   gem "rspec"
   gem "rspec-rails"
@@ -50,6 +52,8 @@ group :development, :test do
   gem "brakeman"
   gem "simplecov", :require => false
   gem "simplecov-rcov", :require => false
+  gem "factory_girl_rails"
+  gem 'faker'
 end
 
 group :development do

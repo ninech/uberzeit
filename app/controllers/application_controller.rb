@@ -14,6 +14,8 @@ class ApplicationController < ActionController::Base
       authenticate_or_request_with_http_basic "Username = LDAP Usermail" do |usermail, password|
         person = Person.find_by_mail(usermail)
         if password == 'nineuberzeit' && person
+          LdapSync.sync_person(person.id)
+          
           session[:cas] = {}
           session[:cas]['user'] = person.id
         end
