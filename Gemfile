@@ -37,6 +37,9 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 
+# LDAP
+gem 'nine-ldap'
+
 gem "version_reader"
 gem "airbrake"
 gem "jbuilder"
