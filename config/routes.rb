@@ -1,5 +1,10 @@
 Uberzeit::Application.routes.draw do
-  root :to => 'application#hello_world'
+  
+  root :to => 'sessions#new'
+
+  resources :users do
+    resources :time_sheets
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -22,20 +22,7 @@ end
 
 gem 'jquery-rails'
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
+gem 'rack-cas'
 
 # LDAP
 gem 'nine-ldap'
@@ -43,7 +30,6 @@ gem 'nine-ldap'
 gem "version_reader"
 gem "airbrake"
 gem "jbuilder"
-
 
 group :development, :test do
   gem "rspec"
@@ -54,6 +40,7 @@ group :development, :test do
   gem "simplecov-rcov", :require => false
   gem "factory_girl_rails"
   gem 'faker'
+  gem 'capybara'
 end
 
 group :development do
