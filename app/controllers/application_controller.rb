@@ -12,10 +12,10 @@ class ApplicationController < ActionController::Base
   def local_authenticate
     unless signed_in?
       authenticate_or_request_with_http_basic "Username = LDAP Usermail" do |usermail, password|
-        #person = Person.find_by_mail(usermail)
-        if password == 'nineuz' #&& person
+        person = Person.find_by_mail(usermail)
+        if password == 'nineuberzeit' && person
           session[:cas] = {}
-          session[:cas]['user'] = usermail #person.id
+          session[:cas]['user'] = person.id
         end
       end
     end
