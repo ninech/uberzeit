@@ -1,10 +1,12 @@
 class User < ActiveRecord::Base
+  acts_as_paranoid
+
   attr_accessible :ldap_id, :name
 
-  has_many :memberships, :dependent => :destroy
-  has_many :teams, :through => :memberships
+  has_many :memberships, dependent: :destroy
+  has_many :teams, through: :memberships
 
-  has_many :sheets, :class_name => "TimeSheet"
+  has_many :sheets, class_name: 'TimeSheet'
   has_many :employments
 
   def subordinates

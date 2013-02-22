@@ -9,4 +9,11 @@ describe User do
     leader = FactoryGirl.create(:leader)
     leader.subordinates.length.should eq(leader.teams.first.members.length)
   end
+
+  it 'acts as paranoid' do
+    user = FactoryGirl.create(:user)
+    user.destroy
+    expect { User.find(user.id) }.to raise_error
+    expect { User.with_deleted.find(user.id) }.to_not raise_error
+  end
 end

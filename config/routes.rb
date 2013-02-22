@@ -2,9 +2,11 @@ Uberzeit::Application.routes.draw do
   
   root :to => 'sessions#new'
 
-  resources :users do
-    resources :time_sheets
+  resources :time_sheets do
+    resources :single_entries, except: [:show, :index]
   end
+  
+  resources :users 
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,20 +1,23 @@
 # uberZeit specific time settings
 
-config = Rails.application.config
-config.uberzeit = ActiveSupport::OrderedOptions.new
+module UberZeit
+  Config = ActiveSupport::OrderedOptions.new
+end
 
+
+UberZeit::Config[:rounding] = 5.minutes
 =begin
 # general
-config.uberzeit.working_hours_per_day = 8.5
-config.uberzeit.working_days_per_week = 5
-config.uberzeit.vacation_days_per_year = 25
+config.uberzeit.work_per_day = 8.5.hours
+config.uberzeit.work_days = [:monday, :tuesday, :wednesday, :thursday, :friday]
+config.uberzeit.vacation_per_year = 25.days
 
 # overtime
-config.uberzeit.overtime_limit_hours_per_day = 2
-config.uberzeit.overtime_limit_hours_per_year = 170
+config.uberzeit.overtime_limit_per_day = 2.hours
+config.uberzeit.overtime_limit_per_year = 170.hours
 
 # pikett
-config.uberzeit.onduty_limit_days_per_block = 7
-config.uberzeit.onduty_block_length_weeks = 4
-config.uberzeit.onduty_block_break_length_weeks = 2
+config.uberzeit.onduty_limit_per_block = 7.days
+config.uberzeit.onduty_block_length = 4.weeks
+config.uberzeit.onduty_block_break_length = 2.weeks
 =end

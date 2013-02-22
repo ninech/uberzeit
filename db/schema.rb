@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130220155929) do
+ActiveRecord::Schema.define(:version => 20130221104815) do
 
   create_table "employments", :force => true do |t|
     t.integer  "user_id"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20130220155929) do
     t.float    "workload"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.time     "deleted_at"
   end
 
   add_index "employments", ["user_id"], :name => "index_employments_on_user_id"
@@ -36,17 +37,32 @@ ActiveRecord::Schema.define(:version => 20130220155929) do
   add_index "memberships", ["team_id"], :name => "index_memberships_on_team_id"
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
+  create_table "single_entries", :force => true do |t|
+    t.integer  "time_sheet_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "time_type_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.time     "deleted_at"
+  end
+
+  add_index "single_entries", ["time_sheet_id"], :name => "index_single_entries_on_time_sheet_id"
+  add_index "single_entries", ["time_type_id"], :name => "index_single_entries_on_time_type_id"
+
   create_table "teams", :force => true do |t|
     t.string   "name"
     t.string   "ldap_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.time     "deleted_at"
   end
 
   create_table "time_sheets", :force => true do |t|
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.time     "deleted_at"
   end
 
   add_index "time_sheets", ["user_id"], :name => "index_time_sheets_on_user_id"
@@ -58,6 +74,7 @@ ActiveRecord::Schema.define(:version => 20130220155929) do
     t.boolean  "is_onduty",   :default => false
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
+    t.time     "deleted_at"
   end
 
   create_table "users", :force => true do |t|
@@ -65,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20130220155929) do
     t.string   "ldap_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.time     "deleted_at"
   end
 
 end

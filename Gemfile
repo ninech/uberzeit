@@ -1,4 +1,4 @@
-source "https://nine:nineball@gem-repo.nine.ch"
+source 'https://nine:nineball@gem-repo.nine.ch'
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
@@ -27,28 +27,31 @@ gem 'rack-cas'
 # LDAP
 gem 'nine-ldap'
 
-gem "version_reader"
-gem "airbrake"
-gem "jbuilder"
+gem 'version_reader'
+gem 'airbrake'
+gem 'jbuilder'
+
+gem 'validates_timeliness'
+gem 'acts_as_paranoid', '~>0.4.0'
 
 group :development, :test do
-  gem "rspec"
-  gem "rspec-rails"
-  gem "ci_reporter"
-  gem "brakeman"
-  gem "simplecov", :require => false
-  gem "simplecov-rcov", :require => false
-  gem "factory_girl_rails"
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'ci_reporter'
+  gem 'brakeman'
+  gem 'simplecov', :require => false
+  gem 'simplecov-rcov', :require => false
+  gem 'factory_girl_rails'
   gem 'faker'
   gem 'capybara'
 end
 
 group :development do
-  gem "capistrano"
-  gem "capistrano-maintenance"
-  gem "version_bumper"
-  gem "meta_request"
-  gem "better_errors"
-  gem "binding_of_caller"
-  gem "sextant"
+  gem 'capistrano'
+  gem 'capistrano-maintenance'
+  gem 'version_bumper'
+  gem 'meta_request'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'sextant'
 end

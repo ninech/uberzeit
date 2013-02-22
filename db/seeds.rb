@@ -10,5 +10,6 @@ if TimeType.count == 0
   TimeType.create(name: 'Biglu', is_work: true)
   TimeType.create(name: 'Ferien', is_vacation: true)
   TimeType.create(name: 'Pikett', is_onduty: true)
+  TimeType.create(name: 'Pause')
   TimeType.create(name: 'Krankfeiern')
 end

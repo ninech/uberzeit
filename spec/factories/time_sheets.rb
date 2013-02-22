@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :time_sheet do
-    user nil
+    user
   end
 end

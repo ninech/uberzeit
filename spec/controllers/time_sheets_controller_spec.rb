@@ -6,7 +6,7 @@ describe TimeSheetsController do
   describe 'GET "index"' do
     context 'for non-signed in users' do
       it 'denies access' do
-        get :index, :user_id => 1
+        get :index
         response.code.should eq('401')
       end
     end
@@ -14,7 +14,7 @@ describe TimeSheetsController do
     context 'for signed in users' do
       before do
         user = test_sign_in
-        get :index, :user_id => user.id
+        get :index 
       end
 
       it 'can access' do
