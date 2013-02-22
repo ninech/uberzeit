@@ -2,26 +2,49 @@
 
 <p id="notice"><%= notice %></p>
 
-<table>
-  <tr>
-    <th>Start</th>
-    <th>End</th>
-    <th>Duration</th>
-    <th>Type</th>
-    <th></th>
-  </tr>
 
-<% @sheet.single_entries.each do |entry| %>
-  <tr>
-    <td><%= entry.start_time %></td>
-    <td><%= entry.end_time %></td>
-    <td><%= distance_of_time_in_words entry.duration %></td>
-    <td><%= entry.time_type %></td>
-    <td><%= link_to 'Edit', edit_time_sheet_single_entry_path(@sheet, entry) %></td>
-    <td><%= link_to 'Destroy', [@sheet, entry], :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+<%
+  week = (Date.today.at_beginning_of_week..Date.today.at_end_of_week)
+  week.to_a.each do |date|
+%>
+  <table>
+    <tr>
+      <th colspan="5" style="background-color: yellow"><%=date.strftime('%A')%></th>
+    </tr>
+    <table>
+      <tr <%=raw ::UberZeit::is_work_day?(date) ? '' : 'style="background-color: gray"' %>>
+        <th>Start</th>
+        <th>End</th>
+        <th>Duration</th>
+        <th>Type</th>
+        <th>&nbsp;</th>
+      </tr>
+
+    <% @sheet.chunks_for(date).each do |entry| %>
+      <tr>
+        <td><%= entry.start_time %></td>
+        <td><%= entry.end_time %></td>
+        <td><%= entry.duration.to_hours %></td>
+        <td><%= entry.time_type %></td>
+        <% if entry.parent.kind_of?(SingleEntry) %>
+        <td><%= link_to 'Edit', edit_time_sheet_single_entry_path(@sheet, entry.parent) %></td>
+        <td><%= link_to 'Destroy', [@sheet, entry.parent], :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+
+    <tr colspan="5">
+      <td>Total Work: <%= @sheet.total_duration_for(date, :work).to_hours %></br>
+        Total Overtime: <%= @sheet.total_duration_for(date, :overtime).to_hours %>
+      </td>
+    </tr>
+  </table>
+  <hr/>
+<%
+  end
+%>
+Total Work: <%= @sheet.total_duration_for(week, :work).to_hours %></br>
+Total Overtime: <%= @sheet.total_duration_for(week, :overtime).to_hours %>
 
 <br />
 
