@@ -7,7 +7,7 @@ class TimeSheet < ActiveRecord::Base
 
   validates_presence_of :user
 
-  # returns time chunks (which are limited to a single day for cleaner calculation)
+  # returns time chunks (which are limited to the given date or range)
   def chunks_for(date_or_range, time_type_scope = nil)
     range = date_or_range.to_range
 
@@ -30,21 +30,43 @@ class TimeSheet < ActiveRecord::Base
   def total_duration_for(date_or_range, type)
     scope = type
 
-    case type
-    when :overtime
-      scope = :work
-    end
-
     chunks = chunks_for(date_or_range, scope)
 
     total = chunks.inject(0) do |sum, chunk|
-      sum + chunk.duration
-    end
+      duration = chunk.duration
+      if duration == 1.day
+        # 1 day equals to a whole work day, independent of users workload
+        duration = UberZeit::total_planned_work_duration(user, chunk.start_time.to_date, true)
+      end
 
-    if type == :overtime
-      total -= UberZeit::total_default_work_duration_for(date_or_range)
+      sum + duration
     end
 
     total
+  end
+
+  def total_overtime_for(date_or_range)
+    if date_or_range.kind_of?(Date) && user.employments.when(date_or_range).first.workload < 100
+      # special case for people with no fulltime position
+      # calculate the daily overtime not on base of the daily work hour (because it might be like 6.8 hours for 80% workload)
+      # but calculate the overtime on the status of the current week
+      date = date_or_range
+      
+      planned_week = UberZeit::total_planned_work_duration(user, (date.monday..date.sunday))
+      remaining_work_hours = [planned_week - total_duration_for((date.monday..date.to_date), :work),0].max
+      
+      overtime = [total_duration_for(date, :work) - remaining_work_hours,0].max
+    else
+      overtime = total_duration_for(date_or_range, :work) - UberZeit::total_planned_work_duration(user, date_or_range)
+    end
+  end
+
+  def total_vacation_for(year)
+    range = (Time.utc(year)..Time.utc(year+1))
+    total_duration_for(range, :vacation)
+  end
+
+  def total_remaining_vacation_for(year)
+    UberZeit::total_available_vacation_duration(user, year) - total_vacation_for(year)
   end
 end

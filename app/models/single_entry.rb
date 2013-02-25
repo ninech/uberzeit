@@ -15,7 +15,9 @@ class SingleEntry < ActiveRecord::Base
   # http://stackoverflow.com/questions/143552/comparing-date-ranges
   scope :between, lambda { |starts, ends| { conditions: ['start_time < ? AND end_time > ?', ends, starts] } }
   scope :work, joins: :time_type, conditions: ['is_work = ?', true]
-  
+  scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
+  scope :onduty, joins: :time_type, conditions: ['is_onduty = ?', true]
+
   def range_for(date_or_range)
     range_range = date_or_range.to_range
     
@@ -29,6 +31,7 @@ class SingleEntry < ActiveRecord::Base
   end
 
   def duration
+    return 0 if start_time.nil? or end_time.nil?
     (end_time - start_time).to_i
   end
 
@@ -37,7 +40,7 @@ class SingleEntry < ActiveRecord::Base
   end
 
   def whole_day?
-    duration == 86400
+    duration == 1.day
   end
 
   private

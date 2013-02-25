@@ -1,51 +1,105 @@
 <h1>Timesheet</h1>
 
-<p id="notice"><%= notice %></p>
-
+<% if notice %>
+<div id="notice" class="alert alert-success">
+  <%= notice %>
+</div>
+<% end %>
 
 <%
   week = (Date.today.at_beginning_of_week..Date.today.at_end_of_week)
+  year = week.min.year
+%>
+
+<%= link_to 'New Single Entry', new_time_sheet_single_entry_path(@sheet), class: 'btn btn-primary' %>
+
+<br/>
+<br/>
+<table class="table">
+  <thead>
+    <tr>
+      <th colspan="2">Week Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Work</td>
+      <td><%= format_duration(@sheet.total_duration_for(week, :work), :work) %></td>
+    </tr>
+    <tr>
+      <td>Overtime</td>
+      <td><%= format_duration(@sheet.total_overtime_for(week), :overtime) %></td>
+    </tr>
+    <tr>
+      <td>On duty</td>
+      <td><%= format_duration(@sheet.total_duration_for(week, :onduty), :onduty) %></td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr>
+      <th colspan="2">Vacation <%=year%></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Redeemed</td>
+      <td><%= format_duration(@sheet.total_vacation_for(year), :vacation, :work_days) %></td>
+    </tr>
+    <tr>
+      <td>Remaining</td>
+      <td><%= format_duration(@sheet.total_remaining_vacation_for(year), :vacation, :work_days) %></td>
+    </tr>
+  </tbody>
+</table>
+<br/>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Start</th>
+      <th>End</th>
+      <th>Duration</th>
+      <th>Type</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+<%
   week.to_a.each do |date|
 %>
-  <table>
-    <tr>
-      <th colspan="5" style="background-color: yellow"><%=date.strftime('%A')%></th>
-    </tr>
-    <table>
-      <tr <%=raw ::UberZeit::is_work_day?(date) ? '' : 'style="background-color: gray"' %>>
-        <th>Start</th>
-        <th>End</th>
-        <th>Duration</th>
-        <th>Type</th>
-        <th>&nbsp;</th>
-      </tr>
-
+  <tr <%=raw ::UberZeit::is_work_day?(date) ? '' : 'style="background-color: #CCC"' %>>
+    <th colspan="5"><%=date.strftime('%A, %d.%m.%Y')%></th>
+  </tr>
+  <tbody>
     <% @sheet.chunks_for(date).each do |entry| %>
-      <tr>
-        <td><%= entry.start_time %></td>
-        <td><%= entry.end_time %></td>
-        <td><%= entry.duration.to_hours %></td>
-        <td><%= entry.time_type %></td>
-        <% if entry.parent.kind_of?(SingleEntry) %>
-        <td><%= link_to 'Edit', edit_time_sheet_single_entry_path(@sheet, entry.parent) %></td>
-        <td><%= link_to 'Destroy', [@sheet, entry.parent], :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
+    <tr>
+      <td><%= entry.start_time.strftime("%R") %></td>
+      <td><%= entry.end_time.strftime("%R") %></td>
+      <td><span class="label label-<%=time_type_css(entry.time_type)%>"><%= entry.duration.to_hours %> h</span></td>
+      <td><%= entry.time_type %></td>
+      <% if entry.parent.kind_of?(SingleEntry) %>
+      <td>
+        <%= link_to 'Edit', edit_time_sheet_single_entry_path(@sheet, entry.parent), :class => 'btn btn-small' %>
+        <%= link_to 'Destroy', [@sheet, entry.parent], :class => 'btn btn-danger btn-small', :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+      </td>
+      <% end %>
+    </tr>
     <% end %>
 
-    <tr colspan="5">
-      <td>Total Work: <%= @sheet.total_duration_for(date, :work).to_hours %></br>
-        Total Overtime: <%= @sheet.total_duration_for(date, :overtime).to_hours %>
+    <% 
+      date_work_hours = @sheet.total_duration_for(date, :work).to_hours
+      date_overtime_hours = @sheet.total_overtime_for(date).to_hours
+      if date_work_hours != 0 || date_overtime_hours != 0 
+    %>
+    <tr>
+      <td colspan="5">
+        <span class="label label-<%=time_type_css(:work)%>">Total Work: <%= date_work_hours %> h</span><br/>
+        <span class="label label-<%=time_type_css(:overtime)%>">Total Overtime: <%= date_overtime_hours %> h</span>
       </td>
     </tr>
-  </table>
-  <hr/>
+    <%
+      end
+    %>
+  </tbody>
 <%
   end
 %>
-Total Work: <%= @sheet.total_duration_for(week, :work).to_hours %></br>
-Total Overtime: <%= @sheet.total_duration_for(week, :overtime).to_hours %>
-
-<br />
-
-<%= link_to 'New Single Entry', new_time_sheet_single_entry_path(@sheet) %>
+</table>

@@ -1,6 +1,6 @@
 <%= form_for([@sheet, @entry]) do |f| %>
   <% if @entry.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-error">
       <h2><%= pluralize(@entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
 
       <ul>
@@ -10,6 +10,11 @@
       </ul>
     </div>
   <% end %>
+
+  <div class="field">
+    <%= label_tag :whole_day? %>
+    <%= check_box_tag 'whole_day', 1, @entry.whole_day? %>
+  </div>
 
   <div class="field">
     <%= f.label :start_time %>
@@ -27,6 +32,6 @@
   </div>
   
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: 'btn btn-primary' %>
   </div>
 <% end %>
