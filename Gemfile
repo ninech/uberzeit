@@ -34,6 +34,10 @@ gem 'jbuilder'
 gem 'validates_timeliness'
 gem 'acts_as_paranoid', '~>0.4.0'
 
+# Gimme beauty... 
+gem 'bootstrap-sass', '~> 2.3.0.1'
+gem 'bootswatch-rails'
+
 group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
