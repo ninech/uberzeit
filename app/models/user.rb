@@ -13,11 +13,11 @@ class User < ActiveRecord::Base
     # method chaining LIKE A BOSS
     teams.select{ |t| t.has_leader?(self) }.collect{ |t| t.members }.flatten.uniq
   end
-  
+
   def ensure_timesheet_and_employment_exist
     # ensure a valid timesheet and a employment entry exists
     self.sheets << TimeSheet.new if self.sheets.empty?
-    self.employments << Employment.default
+    self.employments << Employment.default if self.employments.empty?
     save! if changed?
   end
 end
