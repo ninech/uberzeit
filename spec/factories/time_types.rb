@@ -2,24 +2,25 @@
 
 FactoryGirl.define do
   factory :time_type do
-    name 'Break'
+    sequence(:name) { |n| "time_type#{n}" }
     is_work false
     is_vacation false
     is_onduty false
 
     factory :time_type_work do
-      name 'Work'
       is_work true
     end
 
     factory :time_type_vacation do
-      name 'Vacation'
       is_vacation true
     end
 
     factory :time_type_onduty do
-      name 'On Duty'
       is_onduty true
+    end
+
+    factory :time_type_break do
+      # no flags set
     end
   end
 end

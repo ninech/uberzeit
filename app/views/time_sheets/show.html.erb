@@ -1,20 +1,15 @@
-<h1>Timesheet</h1>
-
 <% if notice %>
 <div id="notice" class="alert alert-success">
   <%= notice %>
 </div>
 <% end %>
-
 <%
-  week = (Time.zone.today.at_beginning_of_week...Time.zone.today.next_week)
+  week = (Time.zone.today.at_beginning_of_week..Time.zone.today.next_week)
   year = week.min.year
+
+  @sheet.vacation(year)
+  
 %>
-
-<%= link_to 'New Single Entry', new_time_sheet_single_entry_path(@sheet), class: 'btn btn-primary btn-small' %>
-
-<br/>
-<br/>
 <div class="hero-unit">
   <h3><%= @sheet.user.name %></h3>
   <table class="table">
@@ -27,20 +22,20 @@
     <tbody>
       <tr>
         <td>Work</td>
-        <td><%= format_duration(@sheet.total_duration_for(week, :work), :work) %></td>
+        <td><%= format_duration(@sheet.total(week, :work), :work) %></td>
 
         <td>Redeemed</td>
-        <td><%= format_duration(@sheet.total_vacation_for(year), :vacation, :work_days) %></td>
+        <td><%= format_duration(@sheet.vacation(year), :vacation, :work_days) %></td>
       </tr>
       <tr>
         <td>Overtime</td>
-        <td><%= format_duration(@sheet.total_overtime_for(week), :overtime) %></td>
+        <td><%= format_duration(@sheet.overtime(week), :overtime) %></td>
 
         <td>Remaining</td>
-        <td><%= format_duration(@sheet.total_remaining_vacation_for(year), :vacation, :work_days) %></td>
+        <td><%= format_duration(@sheet.remaining_vacation(year), :vacation, :work_days) %></td>
       </tr>
       <% 
-        onduty = @sheet.total_duration_for(week, :onduty)
+        onduty = @sheet.total(week, :onduty)
         if onduty != 0 
       %>
       <tr>
@@ -57,6 +52,7 @@
   </table>
 </div>
 <br/>
+<%= link_to 'New Single Entry', new_time_sheet_single_entry_path(@sheet), class: 'btn btn-primary btn-small' %>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -68,13 +64,15 @@
     </tr>
   </thead>
 <%
-  week.to_a.each do |date|
+  days = week.to_a
+  days.pop # ignore the 8th day
+  days.each do |date|
 %>
   <tr <%=raw ::UberZeit::is_work_day?(date) ? '' : 'style="background-color: #CCC"' %>>
     <th colspan="5"><%=date.strftime('%A, %d.%m.%Y')%></th>
   </tr>
   <tbody>
-    <% @sheet.chunks_for(date).each do |entry| %>
+    <% @sheet.find_chunks(date).each do |entry| %>
     <tr>
       <% 
         if entry.parent.whole_day?
@@ -100,14 +98,14 @@
     <% end %>
 
     <% 
-      date_work = @sheet.total_duration_for(date, :work)
-      date_overtime = @sheet.total_overtime_for(date)
+      date_work = @sheet.total(date, :work)
+      date_overtime = @sheet.overtime(date)
       if date_work != 0 || date_overtime != 0 
     %>
     <tr>
       <td colspan="5">
-        Total Work: <%= format_duration(date_work, :work) %><br/>
-        Total Overtime: <%= format_duration(date_overtime, :overtime)  %>
+        Daily Work: <%= format_duration(date_work, :work) %><br/>
+        Daily Overtime: <%= format_duration(date_overtime, :overtime)  %>
       </td>
     </tr>
     <%

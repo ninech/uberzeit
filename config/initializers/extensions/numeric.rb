@@ -7,6 +7,10 @@ class Numeric
     self.to_f / 24.hours
   end
 
+  def work_days
+    self.to_f * UberZeit::Config[:work_per_day]
+  end
+
   def to_work_days
     self.to_f / UberZeit::Config[:work_per_day]
   end

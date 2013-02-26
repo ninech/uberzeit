@@ -8,7 +8,7 @@ class TimeSheet < ActiveRecord::Base
   validates_presence_of :user
 
   # returns time chunks (which are limited to the given date or range)
-  def chunks_for(date_or_range, time_type_scope = nil)
+  def find_chunks(date_or_range, time_type_scope = nil)
     range = date_or_range.to_range
 
     if time_type_scope.nil?
@@ -21,24 +21,23 @@ class TimeSheet < ActiveRecord::Base
     chunks = []
 
     chunks += filtered_singles.between(range.min, range.max).collect do |entry|
-      tt = TimeChunk.new(range: entry.range_for(range), time_type: entry.time_type, parent: entry)
-      tt 
+      TimeChunk.new(range: entry.range_for(range), time_type: entry.time_type, parent: entry) 
     end
 
     chunks
   end
 
-  def total_duration_for(date_or_range, type)
+  def total(date_or_range, type)
     scope = type
 
-    chunks = chunks_for(date_or_range, scope)
+    chunks = find_chunks(date_or_range, scope)
 
     total = chunks.inject(0) do |sum, chunk|
       duration = chunk.duration
 
-      if duration == 1.day
-        # 1 day equals to a whole work day, independent of users workload
-        duration = UberZeit::total_planned_work_duration(user, chunk.starts.to_date, true)
+      if chunk.parent.whole_day?
+        # whole work day is independent of users workload
+        duration = UberZeit::planned_work(user, chunk.starts.to_date, true)
       end
 
       sum + duration
@@ -47,34 +46,35 @@ class TimeSheet < ActiveRecord::Base
     total
   end
 
-  def total_overtime_for(date_or_range)
+  def overtime(date_or_range)
     if date_or_range.kind_of?(Date) 
       date = date_or_range
-      workload = UberZeit::get_workload_for_date(user, date_or_range)
+      workload = UberZeit::workload_at(user, date_or_range)
 
       if workload >= 100
         # For full time position, the overtime per day is based on the excess of time relative to the planned work per day
-        remaining_work_at_date = UberZeit::total_planned_work_duration(user, date)
+        remaining_work_at_date = UberZeit::planned_work(user, date)
       else
         # special case for people with no fulltime position
         # calculate the daily overtime not on base of the daily work hour (because it might be like 6.8 hours for 80% workload)
         # but calculate the overtime on the status of the current week
-        planned_week = UberZeit::total_planned_work_duration(user, (date.monday..date.sunday))
-        remaining_work_at_date = [planned_week - total_duration_for((date.monday..date.to_date), :work),0].max
+        planned_week = UberZeit::planned_work(user, (date.monday..date.sunday))
+        remaining_work_at_date = [planned_week - total((date.monday..date.to_date), :work),0].max
       end
 
-      overtime = [total_duration_for(date, :work) - remaining_work_at_date,0].max
+      overtime = [total(date, :work) - remaining_work_at_date,0].max
     else
-      overtime = total_duration_for(date_or_range, :work) - UberZeit::total_planned_work_duration(user, date_or_range)
+      overtime = total(date_or_range, :work) - UberZeit::planned_work(user, date_or_range)
     end
   end
 
-  def total_vacation_for(year)
-    range = (Time.utc(year)..Time.utc(year+1))
-    total_duration_for(range, :vacation)
+  def vacation(year)
+    current_year = Time.zone.now.beginning_of_year
+    range = (current_year..current_year + 1.year)
+    total(range, :vacation)
   end
 
-  def total_remaining_vacation_for(year)
-    UberZeit::total_available_vacation_duration(user, year) - total_vacation_for(year)
+  def remaining_vacation(year)
+    UberZeit::total_vacation(user, year) - vacation(year)
   end
 end

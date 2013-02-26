@@ -14,15 +14,18 @@ UberZeit.module_eval do
     UberZeit::Config[:work_days].include?(date.strftime('%A').downcase.to_sym)
   end
 
-  def self.total_planned_work_duration(user, date_or_range, ignore_workload=false)
+  def self.planned_work(user, date_or_range, ignore_workload=false)
     range = date_or_range.to_range
 
-    if range.duration <= 24.hours
-      workload = ignore_workload ? 1 : get_workload_for_date(user, range.min) * 0.01
+    if range.duration <= 1.day
+      workload = ignore_workload ? 1 : workload_at(user, range.min) * 0.01
       total = workload * (is_work_day?(range.min) ? UberZeit::Config[:work_per_day] : 0)
     else
-      total = range.inject(0.0) do |sum, date|
-        workload = ignore_workload ? 1 : get_workload_for_date(user, date) * 0.01
+      raise "Expects a date range" unless date_or_range.min.kind_of?(Date)
+      days = range.to_a
+      days.pop # exclude the exclusive day
+      total = days.inject(0.0) do |sum, date|
+        workload = ignore_workload ? 1 : workload_at(user, date) * 0.01
         sum + workload * (is_work_day?(date) ? UberZeit::Config[:work_per_day] : 0)
       end
     end
@@ -30,14 +33,15 @@ UberZeit.module_eval do
     total
   end
 
-  def self.get_workload_for_date(user, date)
+  def self.workload_at(user, date)
     active_employment = user.employments.when(date).first
     return 0 unless active_employment
     return active_employment.workload
   end
 
-  def self.total_available_vacation_duration(user, year)
-    range = (Time.utc(year)..Time.utc(year+1))
+  def self.total_vacation(user, year)
+    current_year = Time.zone.now.beginning_of_year
+    range = (current_year..current_year + 1.year)
     employments = user.employments.between(range.min, range.max)
 
     default_vacation_per_year = UberZeit::Config[:vacation_per_year]/1.day*UberZeit::Config[:work_per_day]
@@ -45,7 +49,7 @@ UberZeit.module_eval do
     total = employments.inject(0.0) do |sum, employment|
       # contribution to this year
       if employment.end_time.nil?
-        contrib_year = range.intersect((employment.start_time..Time.utc(year+1))).duration
+        contrib_year = range.intersect((employment.start_time..current_year + 1.year)).duration
       else
         contrib_year = range.intersect((employment.start_time..employment.end_time)).duration
       end

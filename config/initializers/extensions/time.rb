@@ -6,5 +6,4 @@ class Time
   def floor(seconds = UberZeit::Config[:rounding])
     Time.at((self.to_f / seconds).floor * seconds).utc
   end
-
 end

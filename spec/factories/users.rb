@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :user do |f|
-    name { Faker::Name.name }
+    sequence(:name) { |n| "user#{n}" }
+    time_zone { Time.zone.name }
     
     after(:create) { |user| user.employments << FactoryGirl.create(:employment, user: user) } 
     after(:create) { |user| user.sheets << FactoryGirl.create(:time_sheet, user: user) } 
