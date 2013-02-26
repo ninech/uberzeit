@@ -18,18 +18,22 @@ UberZeit.module_eval do
     range = date_or_range.to_range
 
     if range.duration <= 24.hours
-      active_employment = user.employments.when(range.min).first
-      workload = ignore_workload ? 1 : active_employment.workload * 0.01
+      workload = ignore_workload ? 1 : get_workload_for_date(user, range.min) * 0.01
       total = workload * (is_work_day?(range.min) ? UberZeit::Config[:work_per_day] : 0)
     else
       total = range.inject(0.0) do |sum, date|
-        active_employment = user.employments.when(date).first
-        workload = ignore_workload ? 1 : active_employment.workload * 0.01
+        workload = ignore_workload ? 1 : get_workload_for_date(user, date) * 0.01
         sum + workload * (is_work_day?(date) ? UberZeit::Config[:work_per_day] : 0)
       end
     end
 
     total
+  end
+
+  def self.get_workload_for_date(user, date)
+    active_employment = user.employments.when(date).first
+    return 0 unless active_employment
+    return active_employment.workload
   end
 
   def self.total_available_vacation_duration(user, year)

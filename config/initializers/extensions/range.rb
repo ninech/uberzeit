@@ -7,8 +7,15 @@ class Range
     this = self
 
     # make sure we convert first when comparing a TimeRange to a DateRange
-    this = (this.min.to_time..this.max.to_time) if this.min.kind_of?(Date) && other.min.kind_of?(Time)
-    other = (other.min.to_time..other.max.to_time) if this.min.kind_of?(Time) && other.min.kind_of?(Date)
+    # midnight respects Time.zone, to_time won't
+    this = (this.min.midnight..this.max.midnight) if this.min.kind_of?(Date) && other.min.kind_of?(Time)
+    other = (other.min.midnight..other.max.midnight) if this.min.kind_of?(Time) && other.min.kind_of?(Date)
+
+    if this.min.zone != other.min.zone
+      # Convert both to UTC
+      this = (this.min.utc..this.max.utc)
+      other = (other.min.utc..other.max.utc)
+    end
 
     my_min, my_max = this.first, this.exclude_end? ? this.max : this.last  
     other_min, other_max = other.first, other.exclude_end? ? other.max : other.last  

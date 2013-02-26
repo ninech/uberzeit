@@ -5,17 +5,19 @@ module TimeSheetsHelper
       cls = "label label-#{time_type_css(type)}"
     end
     content_tag :span, :class => cls do 
-      unit = "h"
+
       case format
+      when :hours
+        format_hours(duration)
       when :days 
-        unit = "d"
+        format_days(duration)
       when :work_days
-        unit = "d"
+        format_work_days(duration)
       end
 
-      "#{duration.send("to_#{format}")} #{unit}"
     end
   end
+
 
   def time_type_css(type)
     case 
@@ -33,6 +35,20 @@ module TimeSheetsHelper
   end
 
   private
+
+  def format_days(time)
+    "%.1fd" % time.to_days 
+  end
+
+  def format_work_days(time)
+    "%.1fd" % time.to_work_days 
+  end
+
+  def format_hours(time)
+    h = (time.round.to_f / 60.minutes).to_i
+    m = (time.round.to_f - h * 1.hour).to_minutes.to_i.abs
+    [ h != 0 ? "#{h}h" : nil, m != 0 || h == 0 ? "#{m}min" : nil ].compact.join(' ')
+  end
 
   # for symbols and time_type model
   def is_type?(type, check_for)

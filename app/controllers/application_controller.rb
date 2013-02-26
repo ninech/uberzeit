@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
     before_filter :cas_authenticate
   end
 
+  around_filter :set_time_zone
+
+  private
+
   def local_authenticate
     unless signed_in?
       authenticate_or_request_with_http_basic "Username = LDAP Username" do |username, password|
@@ -30,4 +34,16 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  # U Can't touch this! Rails may leak zone to other request from another user in same thread
+  # http://ilikestuffblog.com/2011/02/03/how-to-set-a-time-zone-for-each-request-in-rails/
+  def set_time_zone
+    old_time_zone = Time.zone
+    Time.zone = current_user.time_zone if signed_in?
+    yield
+  ensure
+    Time.zone = old_time_zone
+  end
+
+
 end

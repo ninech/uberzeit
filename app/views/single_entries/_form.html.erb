@@ -12,8 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= label_tag :whole_day? %>
-    <%= check_box_tag 'whole_day', 1, @entry.whole_day? %>
+    <%= f.label :whole_day %>
+    <%= f.check_box :whole_day %>
   </div>
 
   <div class="field">

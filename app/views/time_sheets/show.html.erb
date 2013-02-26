@@ -7,7 +7,7 @@
 <% end %>
 
 <%
-  week = (Date.today.at_beginning_of_week..Date.today.at_end_of_week)
+  week = (Time.zone.today.at_beginning_of_week...Time.zone.today.next_week)
   year = week.min.year
 %>
 
@@ -15,42 +15,47 @@
 
 <br/>
 <br/>
-<table class="table">
-  <thead>
-    <tr>
-      <th colspan="2">Week Summary</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Work</td>
-      <td><%= format_duration(@sheet.total_duration_for(week, :work), :work) %></td>
-    </tr>
-    <tr>
-      <td>Overtime</td>
-      <td><%= format_duration(@sheet.total_overtime_for(week), :overtime) %></td>
-    </tr>
-    <tr>
-      <td>On duty</td>
-      <td><%= format_duration(@sheet.total_duration_for(week, :onduty), :onduty) %></td>
-    </tr>
-  </tbody>
-  <thead>
-    <tr>
-      <th colspan="2">Vacation <%=year%></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Redeemed</td>
-      <td><%= format_duration(@sheet.total_vacation_for(year), :vacation, :work_days) %></td>
-    </tr>
-    <tr>
-      <td>Remaining</td>
-      <td><%= format_duration(@sheet.total_remaining_vacation_for(year), :vacation, :work_days) %></td>
-    </tr>
-  </tbody>
-</table>
+<div class="hero-unit">
+  <h3><%= @sheet.user.name %></h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th colspan="2">Week Summary</th>
+        <th colspan="2">Vacation <%=year%></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Work</td>
+        <td><%= format_duration(@sheet.total_duration_for(week, :work), :work) %></td>
+
+        <td>Redeemed</td>
+        <td><%= format_duration(@sheet.total_vacation_for(year), :vacation, :work_days) %></td>
+      </tr>
+      <tr>
+        <td>Overtime</td>
+        <td><%= format_duration(@sheet.total_overtime_for(week), :overtime) %></td>
+
+        <td>Remaining</td>
+        <td><%= format_duration(@sheet.total_remaining_vacation_for(year), :vacation, :work_days) %></td>
+      </tr>
+      <% 
+        onduty = @sheet.total_duration_for(week, :onduty)
+        if onduty != 0 
+      %>
+      <tr>
+        <td>On duty</td>
+        <td><%= format_duration(onduty, :onduty) %></td>
+
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <%
+        end
+      %>
+    </tbody>
+  </table>
+</div>
 <br/>
 <table class="table table-striped">
   <thead>
@@ -71,9 +76,19 @@
   <tbody>
     <% @sheet.chunks_for(date).each do |entry| %>
     <tr>
-      <td><%= entry.start_time.strftime("%R") %></td>
-      <td><%= entry.end_time.strftime("%R") %></td>
-      <td><span class="label label-<%=time_type_css(entry.time_type)%>"><%= entry.duration.to_hours %> h</span></td>
+      <% 
+        if entry.parent.whole_day?
+      %> 
+        <td colspan="2"><em>Whole day</em></td>
+      <%
+        else
+      %>
+        <td><%= entry.starts.strftime("%R")  %></td>
+        <td><%= entry.ends.strftime("%R") %></td>
+      <%
+        end
+      %>
+      <td><%= format_duration(entry.duration, entry.time_type) %></td>
       <td><%= entry.time_type %></td>
       <% if entry.parent.kind_of?(SingleEntry) %>
       <td>
@@ -85,14 +100,14 @@
     <% end %>
 
     <% 
-      date_work_hours = @sheet.total_duration_for(date, :work).to_hours
-      date_overtime_hours = @sheet.total_overtime_for(date).to_hours
-      if date_work_hours != 0 || date_overtime_hours != 0 
+      date_work = @sheet.total_duration_for(date, :work)
+      date_overtime = @sheet.total_overtime_for(date)
+      if date_work != 0 || date_overtime != 0 
     %>
     <tr>
       <td colspan="5">
-        <span class="label label-<%=time_type_css(:work)%>">Total Work: <%= date_work_hours %> h</span><br/>
-        <span class="label label-<%=time_type_css(:overtime)%>">Total Overtime: <%= date_overtime_hours %> h</span>
+        Total Work: <%= format_duration(date_work, :work) %><br/>
+        Total Overtime: <%= format_duration(date_overtime, :overtime)  %>
       </td>
     </tr>
     <%

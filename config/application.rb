@@ -27,6 +27,8 @@ module Uberzeit
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
+    
+    # This is the default time zone which is set for each user at creation
     config.time_zone = 'Bern'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130221104815) do
+ActiveRecord::Schema.define(:version => 20130226105018) do
 
   create_table "employments", :force => true do |t|
     t.integer  "user_id"
@@ -42,9 +42,10 @@ ActiveRecord::Schema.define(:version => 20130221104815) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.integer  "time_type_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.time     "deleted_at"
+    t.boolean  "whole_day",     :default => false
   end
 
   add_index "single_entries", ["time_sheet_id"], :name => "index_single_entries_on_time_sheet_id"
@@ -83,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20130221104815) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.time     "deleted_at"
+    t.string   "time_zone"
   end
 
 end

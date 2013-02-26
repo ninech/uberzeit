@@ -1,8 +1,10 @@
 class User < ActiveRecord::Base
   acts_as_paranoid
 
-  attr_accessible :ldap_id, :name
+  attr_accessible :ldap_id, :name, :time_zone
 
+  before_create :set_default_time_zone
+  
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
 
@@ -19,5 +21,11 @@ class User < ActiveRecord::Base
     self.sheets << TimeSheet.new if self.sheets.empty?
     self.employments << Employment.default if self.employments.empty?
     save! if changed?
+  end
+
+  private
+
+  def set_default_time_zone
+    self.time_zone ||= Time.zone.name
   end
 end

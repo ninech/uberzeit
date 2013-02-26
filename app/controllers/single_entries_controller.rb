@@ -11,6 +11,12 @@ class SingleEntriesController < ApplicationController
 
   def create
     @entry = SingleEntry.new(params[:single_entry])
+    #if params[:whole_day]
+    #  ref_time = @entry.start_time
+    #  @entry.start_time = Time.utc(ref_time.year, ref_time.month, ref_time.day)
+    #  @entry.end_time = @entry.start_time + 24.hours
+    #end
+    
     @sheet.single_entries << @entry
     if @entry.save
       redirect_to @sheet, :notice => 'Entry was successfully created.'
