@@ -24,7 +24,7 @@ class SingleEntriesController < ApplicationController
     if @entry.update_attributes(params[:single_entry])
       redirect_to @sheet, :notice => 'Entry was successfully updated.'
     else
-      render :action => 'delete'
+      render :action => 'edit'
     end
   end
 

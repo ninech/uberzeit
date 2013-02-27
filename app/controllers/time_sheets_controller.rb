@@ -1,5 +1,6 @@
 class TimeSheetsController < ApplicationController
   def index
+    @sheets = TimeSheet.all
   end
 
   def show

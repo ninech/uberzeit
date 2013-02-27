@@ -18,7 +18,7 @@ class Employment < ActiveRecord::Base
   
   def self.default
     Employment.new({
-      start_date: Time.zone.now.beginning_of_year,
+      start_date: Time.zone.now.beginning_of_year.to_date,
       workload: 100
     })
   end

@@ -4,87 +4,103 @@ describe SingleEntriesController do
   render_views
 
   context 'for non-signed in users' do
-    let(:time_sheet) { FactoryGirl.create(:time_sheet) }
     it 'denies access' do
-      get :new, time_sheet_id: time_sheet.id
+      time_sheet = FactoryGirl.create(:time_sheet)
+      get :new, time_sheet_id: time_sheet
       response.code.should eq('401')
     end
   end
 
   context 'for signed-in users' do
     before do
-      @user = test_sign_in
+      test_sign_in
     end
 
     describe 'GET "new"' do
-      context 'with an existing time sheet' do
-        let(:time_sheet) { FactoryGirl.create(:time_sheet) }
-        before do
-          get :new, time_sheet_id: time_sheet.id
-        end
+      it 'assigns a single entry to @single_entry' do
+        time_sheet = FactoryGirl.create(:time_sheet)
+        get :new, time_sheet_id: time_sheet
+        assigns(:entry).class.should be(SingleEntry)
+      end
 
-        it 'is successful' do
-          response.should be_success
-        end
+      it 'renders the :new template' do
+        time_sheet = FactoryGirl.create(:time_sheet)
+        get :new, time_sheet_id: time_sheet
+        response.should render_template :new
       end
     end
 
     describe 'GET "edit"' do
-      context 'with an existing single time entry' do
-        let(:single_entry) { FactoryGirl.create(:single_entry) }
-        before do
-          get :edit, id: single_entry.id, time_sheet_id: single_entry.time_sheet.id 
-        end
+      before do
+        @entry = FactoryGirl.create(:single_entry)
+      end
 
-        it 'should be successful' do
-          response.should be_success
-        end
+      it 'assigns the to-be entry to @entry' do
+        get :edit, id: @entry, time_sheet_id: @entry.time_sheet
+        assigns(:entry).should eq(@entry)
+      end
+
+      it 'renders the :edit template' do
+        get :edit, id: @entry, time_sheet_id: @entry.time_sheet
+        assigns(:entry).should eq(@entry)
       end
     end
 
     describe 'PUT "update"' do
-      context 'with an existing single time entry' do
-        context 'with valid parameters' do
-          let(:single_entry) { FactoryGirl.create(:single_entry) }
-          before do
-            put :update, time_sheet_id: single_entry.time_sheet.id, id: single_entry.id
-          end
+      before do
+        @entry = FactoryGirl.create(:single_entry)
+      end
 
-          it 'should redirect to the time sheet' do
-            response.should redirect_to(time_sheet_path(single_entry.time_sheet))
-          end
+      context 'with valid attributes' do
+        it 'changes @entry\'s attributes' do
+          put :update, id: @entry, time_sheet_id: @entry.time_sheet, single_entry: FactoryGirl.attributes_for(:single_entry, whole_day: true)
+          @entry.reload
+          @entry.whole_day.should be_true
+        end
+
+        it 'redirects to the sheet overview' do
+          put :update, id: @entry, time_sheet_id: @entry.time_sheet, single_entry: FactoryGirl.attributes_for(:single_entry)
+          response.should redirect_to @entry.time_sheet
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 're-renders the :edit template' do
+          put :update, id: @entry, time_sheet_id: @entry.time_sheet, single_entry: FactoryGirl.attributes_for(:invalid_single_entry)
+          response.should render_template :edit
         end
       end
     end
 
     describe 'POST "create"' do
-      context 'with valid parameters' do
-        let(:time_type) { FactoryGirl.create(:time_type) }
-        let(:time_sheet) { FactoryGirl.create(:time_sheet) }
-        let(:params) { {start_time: '2013-01-01 08:00:00', end_time: '2013-01-01 10:00:00', time_type_id: time_type.id } }
-
-        before do
-          post :create, time_sheet_id: time_sheet.id, single_entry: params
-          @single_entry = SingleEntry.last
-        end
-
-        it 'should redirect to the time sheet' do
-          response.should redirect_to(time_sheet_path(@single_entry.time_sheet))
-        end
-      end
-    end
-
-    describe 'DELETE "destroy"' do
-      let(:single_entry) { FactoryGirl.create(:single_entry) }
-
-      it 'should redirect to the timesheet' do
-        delete :destroy, id: single_entry[:id], time_sheet_id: single_entry.time_sheet.id
-        response.should redirect_to(time_sheet_path(single_entry.time_sheet))
+      before do
+        @time_sheet = FactoryGirl.create(:time_sheet)
       end
 
-      it 'should have deleted the entry' do
-        delete :destroy, id: single_entry[:id], time_sheet_id: single_entry.time_sheet.id
-        SingleEntry.all.include?(single_entry).should be_false
+      context 'with valid attributes' do
+        it 'creates a new single entry' do
+          expect do
+            time_type = FactoryGirl.create(:time_type_work)
+            post :create, time_sheet_id: @time_sheet, single_entry: FactoryGirl.attributes_for(:single_entry, time_type_id: time_type.id)
+          end.to change(SingleEntry,:count).by(1)
+        end
+
+        it 'redirects to the sheet overview' do
+          time_type = FactoryGirl.create(:time_type_work)
+          post :create, time_sheet_id: @time_sheet, single_entry: FactoryGirl.attributes_for(:single_entry, time_type_id: time_type.id) 
+          response.should redirect_to @time_sheet
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'does not save the new single entry' do
+          expect { post :create, time_sheet_id: @time_sheet, single_entry: FactoryGirl.attributes_for(:invalid_single_entry) }.to_not change(SingleEntry,:count)
+        end
+
+        it 're-renders the :new template' do
+          post :create, time_sheet_id: @time_sheet, single_entry: FactoryGirl.attributes_for(:invalid_single_entry)
+          response.should render_template :new
+        end
       end
     end
   end

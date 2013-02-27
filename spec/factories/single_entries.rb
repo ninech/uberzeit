@@ -23,5 +23,10 @@ FactoryGirl.define do
     after(:create) do |entry, evaluator|
       entry.time_type = FactoryGirl.create("time_type_#{evaluator.type}")   
     end
+
+    factory :invalid_single_entry do
+      end_time { start_time }
+    end
+
    end
 end

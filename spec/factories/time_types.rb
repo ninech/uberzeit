@@ -22,5 +22,11 @@ FactoryGirl.define do
     factory :time_type_break do
       # no flags set
     end
+
+    factory :invalid_time_type do
+      name nil
+    end
+    
   end
+
 end

@@ -6,7 +6,7 @@ class LdapSync
       person = Person.find(id)
 
       unless User.find_by_ldap_id(person.id)
-        User.create(ldap_id: person.id)
+        User.create(ldap_id: person.id, time_zone: Time.zone.name)
       end
 
       user = User.find_by_ldap_id(person.id)
