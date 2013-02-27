@@ -6,7 +6,16 @@ Uberzeit::Application.routes.draw do
     resources :single_entries, except: [:show, :index]
   end
   
-  resources :users 
+  resources :users do
+    member do
+      get 'edit'
+      put 'update'
+    end
+    collection do
+      get 'index'
+    end
+    resources :employments
+  end 
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

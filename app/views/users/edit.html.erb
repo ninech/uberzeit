@@ -1,0 +1,9 @@
+<h3><%= @user.name %></h3>
+
+<% if notice %>
+<div id="notice" class="alert alert-success">
+  <%= notice %>
+</div>
+<% end %>
+
+<%= render 'form' %>
