@@ -35,7 +35,7 @@ class SingleEntriesController < ApplicationController
   private
 
   def load_sheet
-    @sheet = TimeSheet.find(params[:time_sheet_id])
+    @sheet = TimeSheet.find(params[:time_sheet_id]) unless params[:time_sheet_id].blank?
   end
 
 end

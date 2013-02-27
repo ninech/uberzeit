@@ -3,8 +3,8 @@
 FactoryGirl.define do
   factory :employment do
     user
-    start_time Time.zone.now.beginning_of_year
-    end_time nil
+    start_date Time.zone.now.beginning_of_year
+    end_date nil
     workload 100
   end
 end

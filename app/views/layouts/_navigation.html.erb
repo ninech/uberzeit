@@ -1,4 +1,4 @@
 <ul class="nav nav-tabs">
   <li class="<%= active_tab('time_sheets','single_entries') %>"><a href="<%= time_sheet_path(@user ? @user.sheets.last : current_user.sheets.last) %>">Time Sheet</a></li>
-  <li class="<%= active_tab('users') %>"><a href="<%= edit_user_path(@sheet.nil? ? current_user : @sheet.user) %>">Users</a></li>
+  <li class="<%= active_tab('users', 'employments') %>"><a href="<%= edit_user_path(@sheet.nil? ? current_user : @sheet.user) %>">Users</a></li>
 </ul>

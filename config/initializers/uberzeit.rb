@@ -40,7 +40,7 @@ UberZeit.module_eval do
   end
 
   def self.total_vacation(user, year)
-    current_year = Time.zone.now.beginning_of_year
+    current_year = Time.zone.now.beginning_of_year.to_date
     range = (current_year..current_year + 1.year)
     employments = user.employments.between(range.min, range.max)
 
@@ -48,10 +48,10 @@ UberZeit.module_eval do
 
     total = employments.inject(0.0) do |sum, employment|
       # contribution to this year
-      if employment.end_time.nil?
-        contrib_year = range.intersect((employment.start_time..current_year + 1.year)).duration
+      if employment.open_ended?
+        contrib_year = range.intersect((employment.start_date..current_year + 1.year)).duration
       else
-        contrib_year = range.intersect((employment.start_time..employment.end_time)).duration
+        contrib_year = range.intersect((employment.start_date..employment.end_date)).duration
       end
 
       sum + employment.workload * 0.01 * contrib_year/range.duration * default_vacation_per_year

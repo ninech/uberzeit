@@ -13,7 +13,9 @@ class Range
 
     # Although this intersection is valid, we don't expect this behaviour in UZ
     # You should always intersect the SAME TIME ZONES to prevent calculation errors
-    raise "Trying to intersect two different time zones" if this.min.zone != other.min.zone
+    if this.kind_of?(Time) && other.kind_of?(Time)
+      raise "Trying to intersect two different time zones" if this.min.zone != other.min.zone
+    end
 
     my_min, my_max = this.first, this.exclude_end? ? this.max : this.last  
     other_min, other_max = other.first, other.exclude_end? ? other.max : other.last  

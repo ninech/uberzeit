@@ -5,10 +5,13 @@ describe Employment do
     FactoryGirl.create(:employment).should be_valid
   end
 
-  it 'acts as paranoid' do
-    sheet = FactoryGirl.create(:employment)
-    sheet.destroy
-    expect { Employment.find(sheet.id) }.to raise_error
-    expect { Employment.with_deleted.find(sheet.id) }.to_not raise_error
+  it 'cannot be deleted if it is the last one' do
+    raise NotImplementedError
   end
+
+  it 'has a workload within the range of 0 to 100' do
+
+  end
+
+  
 end

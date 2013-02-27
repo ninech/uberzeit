@@ -15,11 +15,11 @@ ActiveRecord::Schema.define(:version => 20130226105018) do
 
   create_table "employments", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "start_time"
-    t.datetime "end_time"
-    t.float    "workload"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.date     "start_date"
+    t.date     "end_date"
+    t.float    "workload",   :default => 100.0
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.time     "deleted_at"
   end
 

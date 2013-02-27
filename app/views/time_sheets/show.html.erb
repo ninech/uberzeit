@@ -50,9 +50,21 @@
       %>
     </tbody>
   </table>
+
+
+  <table class="table">
+    <tr>
+      <th>Current time</th>
+      <td><%=Time.zone.now%></td>
+    </tr>
+    <tr>
+      <th>Last visit</th>
+      <td><%=Time.zone.now%></td>
+    </tr>
+  </table>
 </div>
-<br/>
 <%= link_to 'New Single Entry', new_time_sheet_single_entry_path(@sheet), class: 'btn btn-primary btn-small' %>
+<br/>
 <table class="table table-striped">
   <thead>
     <tr>

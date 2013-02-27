@@ -1,0 +1,27 @@
+<h3>List of employments for <%=@user.name%></h3>
+
+<%= link_to 'New Employment', new_user_employment_path(@user), class: 'btn btn-primary btn-small' %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Start</th>
+      <th>End</th>
+      <th>Workload</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @employments.each do |employment| %>
+  <tr>
+    <td><%=employment.start_date%></td>
+    <td><%= employment.end_date.nil? ? 'open-ended' : employment.end_date %></td>
+    <td><%=employment.workload%>&#037;</td>
+    <td>
+      <%= link_to 'Edit', edit_user_employment_path(@user, employment), :class => 'btn btn-small' %>
+      <%= link_to 'Destroy', [@user, employment], :class => 'btn btn-danger btn-small', :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+    </td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>

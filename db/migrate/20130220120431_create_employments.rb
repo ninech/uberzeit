@@ -2,12 +2,12 @@ class CreateEmployments < ActiveRecord::Migration
   def change
     create_table :employments do |t|
       t.references :user
-      t.datetime :start_time
-      t.datetime :end_time
-      t.float :workload
-
+      t.date :start_date
+      t.date :end_date
+      t.float :workload, :default => 100
       t.timestamps
     end
+
     add_index :employments, :user_id
   end
 end

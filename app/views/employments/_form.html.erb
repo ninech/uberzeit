@@ -1,0 +1,37 @@
+<%= form_for([@user,@employment]) do |f| %>
+  <% if @employment.errors.any? %>
+    <div id="error_explanation" class="alert alert-error">
+      <h2><%= pluralize(@employment.errors.count, "error") %> prohibited this entry from being saved:</h2>
+
+      <ul>
+      <% @employment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :workload %>
+    <%= f.text_field :workload %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :start_date %>
+    <%= f.date_select :start_date %>
+  </div>
+
+  <div class="field">
+    <%= label_tag :open_ended %>
+    <%= check_box_tag :open_ended, '1', @employment.end_date.nil? %>
+  </div>
+
+  <div class="field">
+    <%= f.label :end_date %>
+    <%= f.date_select :end_date %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>
