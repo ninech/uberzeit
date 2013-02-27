@@ -18,7 +18,6 @@ module TimeSheetsHelper
     end
   end
 
-
   def time_type_css(type)
     case 
     when is_type?(type, :work)
@@ -32,6 +31,21 @@ module TimeSheetsHelper
     else
       'default'
     end
+  end
+
+  def time_type_text(type)
+    case 
+    when is_type?(type, :work)
+      'work'
+    when is_type?(type, :vacation)
+      'vacation'
+    when is_type?(type, :onduty)
+      'onduty'
+    when is_type?(type, :overtime)
+      'overtime'
+    else
+      'default'
+    end   
   end
 
   private

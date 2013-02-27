@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include TimeSheetsHelper
+    
   def in_controller?(*args)
     args.find { |name| controller.controller_name == name }
   end

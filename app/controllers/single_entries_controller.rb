@@ -21,15 +21,20 @@ class SingleEntriesController < ApplicationController
 
   def update
     @entry = SingleEntry.find(params[:id])
-    @entry.update_attributes(params[:single_entry])
-    redirect_to @sheet, :notice => 'Entry was successfully updated.'
+    if @entry.update_attributes(params[:single_entry])
+      redirect_to @sheet, :notice => 'Entry was successfully updated.'
+    else
+      render :action => 'delete'
+    end
   end
 
   def destroy
     @entry = SingleEntry.find(params[:id])
-    @entry.destroy
-    
-    redirect_to @sheet, :notice => 'Entry was successfully deleted.'
+    if @entry.destroy
+      redirect_to @sheet, :notice => 'Entry was successfully deleted.'
+    else
+      render :action => 'edit'
+    end
   end 
 
   private

@@ -1,0 +1,25 @@
+<h3>List of time types</h3>
+
+<%= link_to 'New Time Type', new_time_type_path, class: 'btn btn-primary btn-small' %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Calculated as</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @time_types.each do |time_type| %>
+  <tr>
+    <td><%= time_type.name%></td>
+    <td><span class="label label-<%=time_type_css(time_type)%>"><%= time_type_text(time_type) %></span></td>
+    <td>
+      <%= link_to 'Edit', edit_time_type_path(time_type), :class => 'btn btn-small' %>
+      <%= link_to 'Destroy', time_type, :class => 'btn btn-danger btn-small', :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+    </td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>

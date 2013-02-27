@@ -1,8 +1,3 @@
-<% if notice %>
-<div id="notice" class="alert alert-success">
-  <%= notice %>
-</div>
-<% end %>
 <%
   week = (Time.zone.today.at_beginning_of_week..Time.zone.today.next_week)
   year = week.min.year
@@ -50,8 +45,6 @@
       %>
     </tbody>
   </table>
-
-
   <table class="table">
     <tr>
       <th>Current time</th>
@@ -63,6 +56,11 @@
     </tr>
   </table>
 </div>
+<% if notice %>
+<div id="notice" class="alert alert-success">
+  <%= notice %>
+</div>
+<% end %>
 <%= link_to 'New Single Entry', new_time_sheet_single_entry_path(@sheet), class: 'btn btn-primary btn-small' %>
 <br/>
 <table class="table table-striped">

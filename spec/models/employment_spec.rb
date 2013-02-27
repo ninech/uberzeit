@@ -6,7 +6,7 @@ describe Employment do
   end
 
   it 'cannot be deleted if it is the last one' do
-    raise NotImplementedError
+    pending
   end
 
   it 'has a workload within the range of 0 to 100' do

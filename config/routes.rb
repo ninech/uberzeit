@@ -15,7 +15,9 @@ Uberzeit::Application.routes.draw do
       get 'index'
     end
     resources :employments
-  end 
+  end
+
+  resources :time_types 
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
