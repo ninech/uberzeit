@@ -60,5 +60,26 @@ module Uberzeit
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # uberZeit specific time settings
+    Uberzeit::Application.config.to_prepare do
+      UberZeit::Config[:rounding] = 5.minutes
+      UberZeit::Config[:work_days] = [:monday, :tuesday, :wednesday, :thursday, :friday]
+      UberZeit::Config[:work_per_day] = 8.5.hours
+      UberZeit::Config[:vacation_per_year] = 25.days
+    end
+
+=begin
+    # general
+
+    # overtime
+    config.uberzeit.overtime_limit_per_day = 2.hours
+    config.uberzeit.overtime_limit_per_year = 170.hours
+
+    # pikett
+    config.uberzeit.onduty_limit_per_block = 7.days
+    config.uberzeit.onduty_block_length = 4.weeks
+    config.uberzeit.onduty_block_break_length = 2.weeks
+=end
   end
 end
