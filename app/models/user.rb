@@ -25,6 +25,52 @@ class User < ActiveRecord::Base
     save! if changed?
   end
 
+  # sollzeit
+  def planned_work(date_or_range, fulltime=false)
+    if date_or_range.kind_of?(Date)
+      workload = fulltime ? 1 : workload_on(date_or_range) * 0.01
+      total = workload * (UberZeit::is_work_day?(date_or_range) ? UberZeit::Config[:work_per_day] : 0)
+    else
+      raise "Expects a date range" unless date_or_range.min.kind_of?(Date)
+      days = date_or_range.to_a
+      days.pop # exclude the exclusive day
+      total = days.inject(0.0) do |sum, date|
+        workload = fulltime ? 1 : workload_on(date) * 0.01
+        sum + workload * (UberZeit::is_work_day?(date) ? UberZeit::Config[:work_per_day] : 0)
+      end
+    end
+
+    total
+  end
+
+  def workload_on(date)
+    employment = self.employments.on(date)
+    employment ? employment.workload : 0
+  end
+
+  def total_vacation(year)
+    current_year = Time.zone.now.beginning_of_year.to_date
+    range = (current_year..current_year + 1.year)
+    employments = self.employments.between(range.min, range.max)
+
+    default_vacation_per_year = UberZeit::Config[:vacation_per_year]/1.day*UberZeit::Config[:work_per_day]
+
+    total = employments.inject(0.0) do |sum, employment|
+      # contribution to this year
+      if employment.open_ended?
+        contrib_year = range.intersect((employment.start_date..current_year + 1.year)).duration
+      else
+        contrib_year = range.intersect((employment.start_date..employment.end_date)).duration
+      end
+
+      sum + employment.workload * 0.01 * contrib_year/range.duration * default_vacation_per_year
+    end
+
+    # round to half work days
+    half_day = UberZeit::Config[:work_per_day]*0.5
+    (total/half_day).round * half_day
+  end
+
   private
 
   def set_default_time_zone

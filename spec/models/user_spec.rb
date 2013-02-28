@@ -18,23 +18,15 @@ describe User do
   end
 
   it 'ensures that at least one time sheet exists' do
-    user = FactoryGirl.create(:user)
-    user.sheets.destroy_all
-    user.sheets.length.should eq(0)
-    2.times do
-      user.ensure_timesheet_and_employment_exist
-      user.sheets.length.should eq(1)
-    end
+    user = FactoryGirl.create(:user, with_sheet: false)
+    2.times { user.ensure_timesheet_and_employment_exist }
+    user.sheets.count.should eq(1)
   end
 
   it 'ensures that at least one employment exists' do
-    user = FactoryGirl.create(:user)
-    user.employments.destroy_all
-    user.employments.length.should eq(0)
-    2.times do
-      user.ensure_timesheet_and_employment_exist
-      user.employments.length.should eq(1)
-    end
+    user = FactoryGirl.create(:user, with_employment: false)
+    2.times { user.ensure_timesheet_and_employment_exist }
+    user.sheets.count.should eq(1)
   end
 
 end

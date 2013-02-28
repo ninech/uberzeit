@@ -1,9 +1,6 @@
 <%
   week = (Time.zone.today.at_beginning_of_week..Time.zone.today.next_week)
   year = week.min.year
-
-  @sheet.vacation(year)
-  
 %>
 <div class="hero-unit">
   <h3><%= @sheet.user.name %></h3>
@@ -36,7 +33,6 @@
       <tr>
         <td>On duty</td>
         <td><%= format_duration(onduty, :onduty) %></td>
-
         <td>&nbsp;</td>
         <td>&nbsp;</td>
       </tr>
@@ -78,7 +74,7 @@
   days.pop # ignore the 8th day
   days.each do |date|
 %>
-  <tr <%=raw ::UberZeit::is_work_day?(date) ? '' : 'style="background-color: #CCC"' %>>
+  <tr <%=raw UberZeit::is_work_day?(date) ? '' : 'style="background-color: #CCC"' %>>
     <th colspan="5"><%=date.strftime('%A, %d.%m.%Y')%></th>
   </tr>
   <tbody>

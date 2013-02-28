@@ -55,7 +55,6 @@ class SingleEntry < ActiveRecord::Base
 
   def starts
     if whole_day?
-      # we are not interested in the offset for whole days
       time = start_time - Time.zone.utc_offset
     else
       time = start_time

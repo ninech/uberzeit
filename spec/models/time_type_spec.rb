@@ -13,4 +13,8 @@ describe TimeType do
     expect { TimeType.with_deleted.find(time_type.id) }.to_not raise_error
   end
 
+  it 'has a unique name' do
+    time_type = FactoryGirl.create(:time_type, name: 'Work')
+    FactoryGirl.build(:time_type, name: 'Work').should_not be_valid
+  end
 end

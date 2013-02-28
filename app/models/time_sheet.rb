@@ -37,9 +37,9 @@ class TimeSheet < ActiveRecord::Base
 
       if chunk.parent.whole_day?
         # whole work day is independent of users workload
-        duration = UberZeit::planned_work(user, chunk.starts.to_date, true)
+        duration = user.planned_work(chunk.starts.to_date, true)
       end
-
+      
       sum + duration
     end
 
@@ -49,32 +49,32 @@ class TimeSheet < ActiveRecord::Base
   def overtime(date_or_range)
     if date_or_range.kind_of?(Date) 
       date = date_or_range
-      workload = UberZeit::workload_at(user, date_or_range)
+      workload = user.workload_on(date)
 
       if workload >= 100
         # For full time position, the overtime per day is based on the excess of time relative to the planned work per day
-        remaining_work_at_date = UberZeit::planned_work(user, date)
+        remaining_work_on_date = user.planned_work(date)
       else
         # special case for people with no fulltime position
-        # calculate the daily overtime not on base of the daily work hour (because it might be like 6.8 hours for 80% workload)
-        # but calculate the overtime on the status of the current week
-        planned_week = UberZeit::planned_work(user, (date.monday..date.sunday))
-        remaining_work_at_date = [planned_week - total((date.monday..date.to_date), :work),0].max
+        # calculate the daily overtime not based on the daily work hour (because it might be like 6.8 hours for 80% workload)
+        # but calculate the overtime based on the status of the current week
+        planned_week = user.planned_work(date.monday..date.next_week)
+        remaining_work_on_date = [planned_week - total(date.monday..date.to_date, :work), 0].max
       end
 
-      overtime = [total(date, :work) - remaining_work_at_date,0].max
+      overtime = [total(date, :work) - remaining_work_on_date, 0].max
     else
-      overtime = total(date_or_range, :work) - UberZeit::planned_work(user, date_or_range)
+      overtime = total(date_or_range, :work) - user.planned_work(date_or_range)
     end
   end
 
   def vacation(year)
-    current_year = Time.zone.now.beginning_of_year
+    current_year = Time.zone.now.beginning_of_year.to_date
     range = (current_year..current_year + 1.year)
     total(range, :vacation)
   end
 
   def remaining_vacation(year)
-    UberZeit::total_vacation(user, year) - vacation(year)
+    user.total_vacation(year) - vacation(year)
   end
 end

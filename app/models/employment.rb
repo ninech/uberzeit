@@ -13,14 +13,27 @@ class Employment < ActiveRecord::Base
 
   default_scope order(:start_date)
 
-  scope :when, lambda { |date| { conditions: ['? >= start_date AND (? < end_date OR end_date IS NULL)', date, date ] } }
-  scope :between, lambda { |starts, ends| { conditions: ['start_date < ? AND (end_date > ? OR end_date IS NULL)', ends, starts] } }
+  # Ensure in scopes that we use dates and not times, because a '2012-01-06 00:00:00 GMT+1'.to_time results 
+  # in '2012-01-05 23:00:00 UTC' which itself shifts the day. 
+  scope :when, lambda { |date| 
+    raise "Must be a date" unless date.kind_of?(Date)
+    { conditions: ['? >= start_date AND (? < end_date OR end_date IS NULL)', date, date ] } 
+  }
+
+  scope :between, lambda { |starts, ends| 
+    raise "Must be a date-range" unless starts.kind_of?(Date) and ends.kind_of?(Date)
+    { conditions: ['start_date < ? AND (end_date > ? OR end_date IS NULL)', ends, starts] } 
+  }
   
   def self.default
     Employment.new({
       start_date: Time.zone.now.beginning_of_year.to_date,
       workload: 100
     })
+  end
+
+  def self.on(date)
+    self.when(date).first
   end
 
   def open_ended?
