@@ -60,7 +60,8 @@ module TimeSheetsHelper
 
   def format_hours(time)
     h = (time.round.to_f / 60.minutes).to_i
-    m = (time.round.to_f - h * 1.hour).to_minutes.to_i.abs
+    m = (time.round.to_f - h * 1.hour).to_minutes.to_i
+    m = m.abs if h != 0
     [ h != 0 ? "#{h}h" : nil, m != 0 || h == 0 ? "#{m}min" : nil ].compact.join(' ')
   end
 
