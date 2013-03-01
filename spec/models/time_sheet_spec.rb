@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe TimeSheet do
 
-  def add_single_entry(start_time, end_time, type = :work)
-    if end_time.nil?
-      @sheet.single_entries << FactoryGirl.create(:single_entry, start_time: start_time.to_time, whole_day: true, type: type)
+  def add_single_entry(start_time, end_time, type = :work, whole_day = false)
+    if whole_day
+      @sheet.single_entries << FactoryGirl.create(:single_entry, start_time: start_time.to_time, end_time: end_time.to_time, whole_day: true, type: type)
     else
       @sheet.single_entries << FactoryGirl.create(:single_entry, start_time: start_time.to_time, end_time: end_time.to_time, type: type)
     end
@@ -38,7 +38,7 @@ describe TimeSheet do
     # @stats['2013-02-05'] = { num_work_entries: 2, work: 7.hours, overtime: 0, vacation: 0 }
 
     # wednesday we take a day off
-    add_single_entry('2013-02-06 00:00:00 GMT+1', nil, :vacation)
+    add_single_entry('2013-02-06 00:00:00 GMT+1', '2013-02-07 00:00:00 GMT+1', :vacation, true)
     # @stats['2013-02-06'] = { num_work_entries: 0, work: 0, overtime: 0, vacation: 1.work_days }
 
     # thursday we decide to work through the night
@@ -59,6 +59,9 @@ describe TimeSheet do
 
     # monday next week begins early
     add_single_entry('2013-02-11 00:00:00 GMT+1', '2013-02-11 06:00:00 GMT+1')
+
+    # tue-wed next week free
+    add_single_entry('2013-02-12 00:00:00 GMT+1', '2013-02-14 06:00:00 GMT+1', :vacation, true)
   end
 
   it 'has a valid factory' do
@@ -103,12 +106,13 @@ describe TimeSheet do
     end
 
     it 'calculates the number of redeemed vacation days for the year' do
-      @sheet.vacation(2013).should eq(1.0.work_days)
+      @sheet.vacation(2013).should eq(3.0.work_days)
     end
 
     it 'calculates the number of remaining vacation days for the year' do
-      @sheet.remaining_vacation(2013).should eq(24.0.work_days)
+      @sheet.remaining_vacation(2013).should eq(22.0.work_days)
     end
+
   end
 
   context 'user with part-time workload' do
@@ -134,11 +138,11 @@ describe TimeSheet do
     end
 
     it 'calculates the number of redeemed vacation days for the year' do
-      @sheet.vacation(2013).should eq(1.0.work_days)
+      @sheet.vacation(2013).should eq(3.0.work_days)
     end
 
     it 'calculates the number of remaining vacation days for the year' do
-      @sheet.remaining_vacation(2013).should eq(11.5.work_days)
+      @sheet.remaining_vacation(2013).should eq(9.5.work_days)
     end
   end
 

@@ -36,8 +36,10 @@ class TimeSheet < ActiveRecord::Base
       duration = chunk.duration
 
       if chunk.parent.whole_day?
-        # whole work day is independent of users workload
-        duration = user.planned_work(chunk.starts.to_date, true)
+        duration = (chunk.starts.to_date...chunk.ends.to_date).inject(0) do |sum_chunk, date| 
+          # whole day is independent of users workload
+          sum_chunk + user.planned_work(date, true)
+        end
       end
       
       sum + duration

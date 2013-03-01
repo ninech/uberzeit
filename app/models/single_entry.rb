@@ -15,7 +15,7 @@ class SingleEntry < ActiveRecord::Base
   validates_datetime :end_time, after: :start_time, unless: lambda { whole_day }
 
   before_validation :round_times
-  before_save :set_times_for_whole_day, if: lambda { whole_day_changed? && whole_day == true }
+  before_save :set_times_for_whole_day, if: lambda { whole_day }
 
   # http://stackoverflow.com/questions/143552/comparing-date-ranges
   scope :between, lambda { |starts, ends| 
@@ -64,8 +64,7 @@ class SingleEntry < ActiveRecord::Base
 
   def ends
     if whole_day?
-      #raise starts.to_s
-      time = starts + 24.hours
+      time = end_time - Time.zone.utc_offset
     else
       time = end_time
     end
@@ -85,9 +84,8 @@ class SingleEntry < ActiveRecord::Base
 
   def set_times_for_whole_day
     # Make sure the start time is UTC 00:00 so there's no mess when timezone changes in future
-    ref_time = start_time
-    self.start_time = Time.utc(ref_time.year, ref_time.month, ref_time.day)
-    self.end_time = start_time + 24.hours
+    self.start_time = Time.utc(start_time.year, start_time.month, start_time.day)
+    self.end_time = Time.utc(end_time.year, end_time.month, end_time.day)
   end
 
   def round_times
