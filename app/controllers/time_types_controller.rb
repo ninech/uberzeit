@@ -14,7 +14,7 @@ class TimeTypesController < ApplicationController
   def create
     @time_type = TimeType.new(params[:time_type])
     if @time_type.save
-      redirect_to @time_type, :notice => 'Time Type was successfully created.'
+      redirect_to edit_time_type_path(@time_type), :notice => 'Time Type was successfully created.'
     else
       render :action => 'new'
     end
@@ -23,7 +23,7 @@ class TimeTypesController < ApplicationController
   def update
     @time_type = TimeType.find(params[:id])
     if @time_type.update_attributes(params[:time_type])
-      redirect_to @time_type, :notice => 'Time Type was successfully updated.'
+      redirect_to edit_time_type_path(@time_type), :notice => 'Time Type was successfully updated.'
     else
       render :action => 'edit'
     end

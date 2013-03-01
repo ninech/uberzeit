@@ -80,7 +80,7 @@ describe EmploymentsController do
 
         it 'redirects to the updated employment' do
           put :update, id: @employment, user_id: @employment.user, employment: FactoryGirl.attributes_for(:employment)
-          response.should redirect_to [@employment.user, @employment]
+          response.should redirect_to user_employments_path(@employment.user)
         end
       end
 
@@ -111,7 +111,7 @@ describe EmploymentsController do
         it 'redirects to the new employment' do
           post :create, user_id: @user, employment: FactoryGirl.attributes_for(:employment) 
           @user.employments.reload
-          response.should redirect_to [@user, @user.employments.last]
+          response.should redirect_to user_employments_path(@user)
         end
       end
 
