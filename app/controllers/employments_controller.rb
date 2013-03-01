@@ -17,7 +17,7 @@ class EmploymentsController < ApplicationController
     @employment = Employment.new(params[:employment])
     @user.employments << @employment
     if @employment.save and params[:open_ended].blank? || @employment.update_attribute(:end_date, nil)
-      redirect_to [@employment.user, @employment], :notice => 'Employment was successfully created.'
+      redirect_to user_employments_path(@user), :notice => 'Employment was successfully created.'
     else
       render :action => 'new'
     end
@@ -26,7 +26,7 @@ class EmploymentsController < ApplicationController
   def update
     @employment = Employment.find(params[:id])
     if @employment.update_attributes(params[:employment]) and params[:open_ended].blank? || @employment.update_attribute(:end_date, nil)
-      redirect_to [@employment.user, @employment], :notice => 'Employment was successfully updated.'
+      redirect_to user_employments_path(@user), :notice => 'Employment was successfully updated.'
     else
       render :action => 'edit'
     end

@@ -1,5 +1,11 @@
 <h1>Edit time type</h1>
 
+<% if notice %>
+<div id="notice" class="alert alert-success">
+  <%= notice %>
+</div>
+<% end %>
+
 <%= render 'form' %>
 
 <%= link_to 'Back', time_types_path, class: 'btn' %>

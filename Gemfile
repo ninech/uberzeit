@@ -38,6 +38,9 @@ gem 'acts_as_paranoid', '~>0.4.0'
 gem 'bootstrap-sass', '~> 2.3.0.1'
 gem 'bootswatch-rails'
 
+gem 'bootstrap-datepicker-rails'
+gem 'jquery-timepicker-rails'
+
 group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'

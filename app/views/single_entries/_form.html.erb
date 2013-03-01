@@ -16,16 +16,16 @@
     <%= f.check_box :whole_day %>
   </div>
 
-  <div class="field">
-    <%= f.label :start_time %>
-    <%= f.datetime_select :start_time %>
-  </div>
+  <%= f.hidden_field :start_time, value: (f.object.starts.nil? ? Time.zone.now.round : f.object.starts).strftime("%Y-%m-%d %H:%M") %>
+  <%= f.hidden_field :end_time, value: (f.object.ends.nil? ? Time.zone.now.round + 1.hour : f.object.ends).strftime("%Y-%m-%d %H:%M") %>
 
-  <div class="field">
-    <%= f.label :end_time %>
-    <%= f.datetime_select :end_time %>
-  </div>
-  
+  <p class="datepair" data-language="javascript">
+    <input type="text" class="date start" />
+    <input type="text" class="time start" /> <span class="to">to</span>
+    <input type="text" class="time end" />
+    <input type="text" class="date end" />
+  </p>
+
   <div class="field">
     <%= f.label :time_type %><br />
     <%= f.collection_select :time_type_id, TimeType.all, :id, :name %>
@@ -35,3 +35,15 @@
     <%= f.submit class: 'btn btn-primary' %>
   </div>
 <% end %>
+
+<!--
+<script>
+  $("#single_entry_whole_day").change(function() {
+    if($(this).is(':checked')) {
+      $("#single_entry_end_time").parent().hide();
+    } else {
+      $("#single_entry_end_time").parent().show();
+    }
+  });
+</script>
+-->

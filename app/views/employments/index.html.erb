@@ -1,5 +1,11 @@
 <h3>List of employments for <%=@user.name%></h3>
 
+<% if notice %>
+<div id="notice" class="alert alert-success">
+  <%= notice %>
+</div>
+<% end %>
+
 <%= link_to 'New Employment', new_user_employment_path(@user), class: 'btn btn-primary btn-small' %>
 
 <table class="table table-striped">
