@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  rolify
   acts_as_paranoid
 
   attr_accessible :uid, :name, :time_zone
