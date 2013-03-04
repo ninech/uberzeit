@@ -4,10 +4,11 @@ describe UsersController do
   render_views
 
   context 'for non-signed in users' do
-    it 'denies access' do      
+    it 'denies access' do
       user = FactoryGirl.create(:user)
       get :edit, id: user
-      response.code.should eq('401')
+      response.should redirect_to(root_path)
+      flash[:error].should_not be_nil
     end
   end
 
