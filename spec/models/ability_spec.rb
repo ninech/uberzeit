@@ -83,4 +83,35 @@ describe Ability do
     end
   end
 
+  describe 'SingleEntry' do
+
+    let(:single_entry) { FactoryGirl.create(:single_entry, time_sheet: user.sheets.first) }
+
+    context 'as a user with the administration role' do
+      let(:ability) { Ability.new(admin) }
+
+      it { should be_able_to(:read, single_entry) }
+      it { should be_able_to(:update, single_entry) }
+      it { should be_able_to(:create, SingleEntry) }
+      it { should be_able_to(:destroy, single_entry) }
+    end
+
+    context 'as the owner' do
+      let(:ability) { Ability.new(user) }
+
+      it { should be_able_to(:read, single_entry) }
+      it { should be_able_to(:update, single_entry) }
+      it { should be_able_to(:create, SingleEntry) }
+      it { should be_able_to(:destroy, single_entry) }
+    end
+
+    context 'as another user' do
+      let(:ability) { Ability.new(FactoryGirl.create(:user)) }
+
+      it { should_not be_able_to(:read, single_entry) }
+      it { should_not be_able_to(:update, single_entry) }
+      it { should_not be_able_to(:destroy, single_entry) }
+    end
+  end
+
 end
