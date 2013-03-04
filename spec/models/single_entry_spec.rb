@@ -55,5 +55,10 @@ describe SingleEntry do
       entry = FactoryGirl.create(:single_entry, type: :vacation, start_time: '2013-01-25 00:00:00 GMT+1', whole_day: true)
       entry.starts.should eq('2013-01-25 00:00:00 GMT+1'.to_time)
     end
+
+    it 'makes sure that end date is not the same as start date (end date is exclusive)' do
+      entry = FactoryGirl.build(:single_entry, start_time: '2013-01-24 00:00:00 GMT+1', end_time: '2013-01-24 00:00:00 GMT+1', whole_day: true )
+      entry.should_not be_valid
+    end
   end
 end

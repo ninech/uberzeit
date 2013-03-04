@@ -14,7 +14,7 @@ class SingleEntry < ActiveRecord::Base
   validates_presence_of :time_type, :time_sheet, :start_time
 
   validates_datetime :start_time
-  validates_datetime :end_time, after: :start_time, unless: lambda { whole_day }
+  validates_datetime :end_time, after: :start_time
 
   before_validation :round_times
   before_save :set_times_for_whole_day, if: lambda { whole_day }
