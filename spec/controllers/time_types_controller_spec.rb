@@ -6,13 +6,14 @@ describe TimeTypesController do
   context 'for non-signed in users' do
     it 'denies access' do
       get :index
-      response.code.should eq('401')
+      response.should redirect_to(root_path)
+      flash[:error].should_not be_nil
     end
   end
 
   context 'for signed-in users' do
     before do
-      test_sign_in
+      test_sign_in FactoryGirl.create(:admin)
     end
 
     describe 'GET "index"' do
@@ -89,7 +90,7 @@ describe TimeTypesController do
         end
 
         it 'redirects to the new time type' do
-          post :create, time_type: FactoryGirl.attributes_for(:time_type) 
+          post :create, time_type: FactoryGirl.attributes_for(:time_type)
           response.should redirect_to edit_time_type_path(TimeType.last)
         end
       end

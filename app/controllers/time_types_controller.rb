@@ -1,4 +1,7 @@
 class TimeTypesController < ApplicationController
+
+  load_and_authorize_resource
+
   def index
     @time_types = TimeType.all
   end
@@ -36,5 +39,5 @@ class TimeTypesController < ApplicationController
     else
       render :action => 'edit'
     end
-  end 
+  end
 end
