@@ -82,7 +82,7 @@
     <% @sheet.find_chunks(date).each do |entry| %>
     <tr>
       <% 
-        if entry.parent.whole_day?
+        if entry.parent.respond_to?(:whole_day?) && entry.parent.whole_day?
       %> 
         <td colspan="2"><em>Whole day</em></td>
       <%

@@ -7,6 +7,10 @@ class RecurringEntry < ActiveRecord::Base
   
   serialize :schedule_hash, Hash
 
+  scope :work, joins: :time_type, conditions: ['is_work = ?', true]
+  scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
+  scope :onduty, joins: :time_type, conditions: ['is_onduty = ?', true]
+  
   # Inspiration from https://github.com/ableGray/Schedule-Attributes/blob/master/lib/schedule_atts.rb
   def schedule
     @schedule ||= begin

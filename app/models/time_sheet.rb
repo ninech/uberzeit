@@ -5,7 +5,7 @@ class TimeSheet < ActiveRecord::Base
   
   has_many :single_entries
   has_many :recurring_entries
-  
+
   validates_presence_of :user
 
   # returns time chunks (which are limited to the given date or range)
@@ -14,9 +14,11 @@ class TimeSheet < ActiveRecord::Base
 
     if time_type_scope.nil?
       filtered_singles = single_entries
+      filtered_recurring = recurring_entries
     else
       # scope filter
       filtered_singles = single_entries.send(time_type_scope)
+      filtered_recurring = recurring_entries.send(time_type_scope)
     end
 
     chunks = []
@@ -24,6 +26,16 @@ class TimeSheet < ActiveRecord::Base
     chunks += filtered_singles.between(range.min, range.max).collect do |entry|
       TimeChunk.new(range: entry.range_for(range), time_type: entry.time_type, parent: entry) 
     end
+
+    # filtered_recurring.each do |entry| 
+    #   entry.schedule.occurrences_between(range.min, range.max).each do |occurrence|
+    #     occ_range = (occurrence..occurrence+entry.schedule.duration)
+    #     intersect = range.intersect(occ_range)
+    #     if intersect
+    #       chunks << TimeChunk.new(range: intersect, time_type: entry.time_type, parent: entry)
+    #     end
+    #   end
+    # end
 
     chunks
   end
@@ -36,7 +48,7 @@ class TimeSheet < ActiveRecord::Base
     total = chunks.inject(0) do |sum, chunk|
       duration = chunk.duration
 
-      if chunk.parent.whole_day?
+      if chunk.parent.respond_to?(:whole_day?) && chunk.parent.whole_day?
         duration = (chunk.starts.to_date...chunk.ends.to_date).inject(0) do |sum_chunk, date| 
           # whole day is independent of users workload
           sum_chunk + user.planned_work(date, true)
