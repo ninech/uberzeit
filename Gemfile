@@ -22,10 +22,10 @@ end
 
 gem 'jquery-rails'
 
-gem 'rack-cas'
-
-# LDAP
-gem 'nine-ldap'
+# Authentication
+gem 'omniauth'
+gem 'omniauth-cas'
+gem 'omniauth-ldap'
 
 gem 'version_reader'
 gem 'airbrake'
