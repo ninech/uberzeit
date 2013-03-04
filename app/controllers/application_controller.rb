@@ -5,6 +5,11 @@ class ApplicationController < ActionController::Base
 
   around_filter :set_time_zone
 
+  rescue_from CanCan::AccessDenied do |error|
+    flash[:error] = error.message
+    redirect_to root_path
+  end
+
   private
 
   # U Can't touch this! Rails may leak zone to other request from another user in same thread
