@@ -5,9 +5,11 @@ class ApplicationController < ActionController::Base
 
   around_filter :set_time_zone
 
-  rescue_from CanCan::AccessDenied do |error|
-    flash[:error] = error.message
-    redirect_to root_path
+  unless Rails.env.test?
+    rescue_from CanCan::AccessDenied do |error|
+      flash[:error] = error.message
+      redirect_to root_path
+    end
   end
 
   private
