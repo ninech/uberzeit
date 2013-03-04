@@ -1,10 +1,10 @@
 class User < ActiveRecord::Base
   acts_as_paranoid
 
-  attr_accessible :ldap_id, :name, :time_zone
+  attr_accessible :uid, :name, :time_zone
 
   before_save :set_default_time_zone
-  
+
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
 
@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   has_many :employments
 
   validates_inclusion_of :time_zone, :in => ActiveSupport::TimeZone.zones_map { |m| m.name }, :message => "is not a valid Time Zone"
+
+  before_validation :set_default_time_zone
 
   def subordinates
     # method chaining LIKE A BOSS
@@ -69,6 +71,13 @@ class User < ActiveRecord::Base
     # round to half work days
     half_day = UberZeit::Config[:work_per_day]*0.5
     (total/half_day).round * half_day
+  end
+
+  def self.create_with_omniauth(auth)
+    create! do |user|
+      user.uid = auth["uid"]
+      user.name = auth["info"]["name"]
+    end
   end
 
   private
