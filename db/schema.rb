@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130304122600) do
+ActiveRecord::Schema.define(:version => 20130304140502) do
 
   create_table "employments", :force => true do |t|
     t.integer  "user_id"
@@ -48,6 +48,17 @@ ActiveRecord::Schema.define(:version => 20130304122600) do
 
   add_index "recurring_entries", ["time_sheet_id"], :name => "index_recurring_entries_on_time_sheet_id"
   add_index "recurring_entries", ["time_type_id"], :name => "index_recurring_entries_on_time_type_id"
+
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.integer  "resource_id"
+    t.string   "resource_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
+  add_index "roles", ["name"], :name => "index_roles_on_name"
 
   create_table "single_entries", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -98,5 +109,12 @@ ActiveRecord::Schema.define(:version => 20130304122600) do
     t.time     "deleted_at"
     t.string   "time_zone"
   end
+
+  create_table "users_roles", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
+
+  add_index "users_roles", ["user_id", "role_id"], :name => "index_users_roles_on_user_id_and_role_id"
 
 end
