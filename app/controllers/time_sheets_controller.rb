@@ -1,9 +1,14 @@
 class TimeSheetsController < ApplicationController
+
+  load_and_authorize_resource
+
+  respond_to :html
+
   def index
-    @sheets = TimeSheet.all
+    respond_with(@time_sheets)
   end
 
   def show
-    @sheet = TimeSheet.find(params[:id])
+    respond_with(@time_sheet)
   end
 end

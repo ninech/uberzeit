@@ -5,21 +5,24 @@ describe TimeSheetsController do
 
   context 'for non-signed in users' do
     it 'denies access' do
-      get :index
-      response.code.should eq('401')
+      expect { get :index }.to raise_error(CanCan::AccessDenied)
     end
   end
 
   context 'for signed-in users' do
+
+    let(:user) { FactoryGirl.create(:user) }
+    let(:sheet) { user.sheets.first }
+
     before do
-      test_sign_in
+      test_sign_in user
     end
 
     describe 'GET "index"' do
-      it 'populates an array of sheets' do
-        sheet = FactoryGirl.create(:time_sheet)
+      it 'populates an array of sheets of the current user' do
+        FactoryGirl.create(:time_sheet)
         get :index
-        assigns(:sheets).should eq(TimeSheet.all)
+        assigns(:time_sheets).should eq([sheet])
       end
 
       it 'renders the :index template' do
@@ -29,14 +32,12 @@ describe TimeSheetsController do
     end
 
     describe 'GET "show"' do
-      it 'assigns @sheet' do
-        sheet = FactoryGirl.create(:time_sheet)
+      it 'assigns @time_sheet' do
         get :show, id: sheet
-        assigns(:sheet).should eq(sheet)
+        assigns(:time_sheet).should eq(sheet)
       end
 
       it 'renders the :show template' do
-        sheet = FactoryGirl.create(:time_sheet)
         get :show, id: sheet
         response.should render_template :show
       end
