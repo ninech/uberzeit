@@ -1,5 +1,5 @@
-source 'https://nine:nineball@gem-repo.nine.ch'
-source 'https://rubygems.org'
+source 'http://nine:nineball@gem-repo.nine.ch'
+source 'http://rubygems.org'
 
 gem 'rails', '3.2.12'
 
@@ -34,7 +34,7 @@ gem 'jbuilder'
 gem 'validates_timeliness'
 gem 'acts_as_paranoid', '~>0.4.0'
 
-# Gimme beauty... 
+# Gimme beauty...
 gem 'bootstrap-sass', '~> 2.3.0.1'
 gem 'bootswatch-rails'
 
