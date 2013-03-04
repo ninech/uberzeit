@@ -59,6 +59,7 @@ GEM
       sass (~> 3.0)
       terminal-table (~> 1.4)
     builder (3.0.4)
+    cancan (1.6.9)
     capistrano (2.14.2)
       highline
       net-scp (>= 1.0.0)
@@ -177,6 +178,7 @@ GEM
     rake (10.0.3)
     rdoc (3.12.1)
       json (~> 1.4)
+    rolify (3.2.0)
     rspec (2.12.0)
       rspec-core (~> 2.12.0)
       rspec-expectations (~> 2.12.0)
@@ -255,6 +257,7 @@ DEPENDENCIES
   bootstrap-sass (~> 2.3.0.1)
   bootswatch-rails
   brakeman
+  cancan
   capistrano
   capistrano-maintenance
   capybara
@@ -273,6 +276,7 @@ DEPENDENCIES
   omniauth-ldap
   pg
   rails (= 3.2.12)
+  rolify
   rspec
   rspec-rails
   sass-rails (~> 3.2.3)

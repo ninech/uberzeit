@@ -27,6 +27,10 @@ gem 'omniauth'
 gem 'omniauth-cas'
 gem 'omniauth-ldap'
 
+# Authorization
+gem 'cancan'
+gem 'rolify'
+
 # sync
 gem 'nine-ldap'
 
