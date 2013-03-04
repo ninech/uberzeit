@@ -1,6 +1,6 @@
 module AfterLoginHelper
-  def after_login(id)
-    LdapSync.sync_person(id)
+  def after_login(user)
+    LdapSync.sync_person(user.uid)
     current_user.ensure_timesheet_and_employment_exist
   end
 end
