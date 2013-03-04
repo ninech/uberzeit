@@ -5,6 +5,13 @@ class Ability
 
     if user
       can [:read, :update], User, id: user.id
+
+      can :read, TimeType
+
+      if user.has_role?(:admin)
+        can :manage, TimeType
+      end
+
     end
 
     # Define abilities for the passed in user here. For example:
