@@ -4,7 +4,8 @@ class TimeSheet < ActiveRecord::Base
   belongs_to :user
   
   has_many :single_entries
-
+  has_many :recurring_entries
+  
   validates_presence_of :user
 
   # returns time chunks (which are limited to the given date or range)

@@ -41,6 +41,8 @@ gem 'bootswatch-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'jquery-timepicker-rails'
 
+gem 'ice_cube'
+
 group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'

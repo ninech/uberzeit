@@ -4,6 +4,7 @@ Uberzeit::Application.routes.draw do
 
   resources :time_sheets do
     resources :single_entries, except: [:show, :index]
+    resources :recurring_entries, except: [:show, :index]
   end
   
   resources :users do

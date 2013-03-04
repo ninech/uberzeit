@@ -5,6 +5,8 @@
 class SingleEntry < ActiveRecord::Base
   acts_as_paranoid
 
+  default_scope order(:start_time)
+
   belongs_to :time_sheet
   belongs_to :time_type
   attr_accessible :end_time, :start_time, :time_type_id, :whole_day
