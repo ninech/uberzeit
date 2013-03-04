@@ -7,9 +7,11 @@ class Ability
       can [:read, :update], User, id: user.id
 
       can :read, TimeType
+      can :manage, TimeSheet, user_id: user.id
 
       if user.has_role?(:admin)
         can :manage, TimeType
+        can :manage, TimeSheet
       end
 
     end
