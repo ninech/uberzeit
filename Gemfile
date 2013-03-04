@@ -27,6 +27,9 @@ gem 'omniauth'
 gem 'omniauth-cas'
 gem 'omniauth-ldap'
 
+# sync
+gem 'nine-ldap'
+
 gem 'version_reader'
 gem 'airbrake'
 gem 'jbuilder'
