@@ -38,7 +38,7 @@ class RecurringEntry < ActiveRecord::Base
         # make sure we use rails' time zone
         starts = occurrence.start_time.in_time_zone(Time.zone)
         intersect = chunks_range.intersect(starts..starts+schedule.duration)
-        unless intersect.nil?
+        unless intersect.nil? || intersect.duration == 0
           chunks << TimeChunk.new(range: intersect, time_type: entry.time_type, parent: entry) 
         end
       end
