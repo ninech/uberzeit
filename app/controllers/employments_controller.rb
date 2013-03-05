@@ -1,4 +1,7 @@
 class EmploymentsController < ApplicationController
+
+  load_and_authorize_resource
+
   before_filter :load_user
 
   def index
