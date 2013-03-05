@@ -8,7 +8,7 @@ describe AfterLoginHelper do
   end
 
   it 'creates a timesheet for the current user when non-existent' do
-    @user.sheets.should_not be_empty
+    @user.time_sheets.should_not be_empty
   end
 
   it 'creates an employment for the current user when non-existent' do

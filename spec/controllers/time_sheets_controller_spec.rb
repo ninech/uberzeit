@@ -19,7 +19,7 @@ describe TimeSheetsController do
       it 'populates an array of sheets' do
         sheet = FactoryGirl.create(:time_sheet)
         get :index
-        assigns(:sheets).should eq(TimeSheet.all)
+        assigns(:time_sheets).should eq(TimeSheet.all)
       end
 
       it 'renders the :index template' do
@@ -32,7 +32,7 @@ describe TimeSheetsController do
       it 'assigns @sheet' do
         sheet = FactoryGirl.create(:time_sheet)
         get :show, id: sheet
-        assigns(:sheet).should eq(sheet)
+        assigns(:time_sheet).should eq(sheet)
       end
 
       it 'renders the :show template' do

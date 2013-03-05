@@ -20,7 +20,7 @@ describe SingleEntriesController do
       it 'assigns a single entry to @single_entry' do
         time_sheet = FactoryGirl.create(:time_sheet)
         get :new, time_sheet_id: time_sheet
-        assigns(:entry).class.should be(SingleEntry)
+        assigns(:single_entry).class.should be(SingleEntry)
       end
 
       it 'renders the :new template' do
@@ -32,41 +32,41 @@ describe SingleEntriesController do
 
     describe 'GET "edit"' do
       before do
-        @entry = FactoryGirl.create(:single_entry)
+        @single_entry = FactoryGirl.create(:single_entry)
       end
 
-      it 'assigns the to-be entry to @entry' do
-        get :edit, id: @entry, time_sheet_id: @entry.time_sheet
-        assigns(:entry).should eq(@entry)
+      it 'assigns the to-be entry to @single_entry' do
+        get :edit, id: @single_entry, time_sheet_id: @single_entry.time_sheet
+        assigns(:single_entry).should eq(@single_entry)
       end
 
       it 'renders the :edit template' do
-        get :edit, id: @entry, time_sheet_id: @entry.time_sheet
-        assigns(:entry).should eq(@entry)
+        get :edit, id: @single_entry, time_sheet_id: @single_entry.time_sheet
+        assigns(:single_entry).should eq(@single_entry)
       end
     end
 
     describe 'PUT "update"' do
       before do
-        @entry = FactoryGirl.create(:single_entry)
+        @single_entry = FactoryGirl.create(:single_entry)
       end
 
       context 'with valid attributes' do
-        it 'changes @entry\'s attributes' do
-          put :update, id: @entry, time_sheet_id: @entry.time_sheet, single_entry: FactoryGirl.attributes_for(:single_entry, whole_day: true)
-          @entry.reload
-          @entry.whole_day.should be_true
+        it 'changes @single_entry\'s attributes' do
+          put :update, id: @single_entry, time_sheet_id: @single_entry.time_sheet, single_entry: FactoryGirl.attributes_for(:single_entry, whole_day: true)
+          @single_entry.reload
+          @single_entry.whole_day.should be_true
         end
 
         it 'redirects to the sheet overview' do
-          put :update, id: @entry, time_sheet_id: @entry.time_sheet, single_entry: FactoryGirl.attributes_for(:single_entry)
-          response.should redirect_to @entry.time_sheet
+          put :update, id: @single_entry, time_sheet_id: @single_entry.time_sheet, single_entry: FactoryGirl.attributes_for(:single_entry)
+          response.should redirect_to @single_entry.time_sheet
         end
       end
 
       context 'with invalid attributes' do
         it 're-renders the :edit template' do
-          put :update, id: @entry, time_sheet_id: @entry.time_sheet, single_entry: FactoryGirl.attributes_for(:invalid_single_entry)
+          put :update, id: @single_entry, time_sheet_id: @single_entry.time_sheet, single_entry: FactoryGirl.attributes_for(:invalid_single_entry)
           response.should render_template :edit
         end
       end
