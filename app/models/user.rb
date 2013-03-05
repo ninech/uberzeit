@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
     employment ? employment.workload : 0
   end
 
-  def total_vacation(year)
+  def vacation_available(year)
     current_year = Time.zone.now.beginning_of_year.to_date
     range = (current_year..current_year + 1.year)
     employments = self.employments.between(range.min, range.max)

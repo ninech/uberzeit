@@ -69,7 +69,7 @@ describe TimeSheet do
       add_single_entry('2013-02-11 00:00:00 GMT+1', '2013-02-11 06:00:00 GMT+1')
 
       # tue-wed next week free
-      add_single_entry('2013-02-12 00:00:00 GMT+1', '2013-02-14 06:00:00 GMT+1', :vacation, true)
+      add_single_entry('2013-02-12 00:00:00 GMT+1', '2013-02-14 00:00:00 GMT+1', :vacation, true)
     end
 
     it 'has a valid factory' do
@@ -106,7 +106,7 @@ describe TimeSheet do
       end
 
       it 'calculates the weekly overtime duration' do
-        @sheet.overtime('2013-02-04'.to_date..'2013-02-11'.to_date).should eq(-9.hours)
+        @sheet.overtime('2013-02-04'.to_date..'2013-02-11'.to_date).should eq(-0.5.hours)
       end
 
       it 'calculates the daily overtime duration' do
@@ -136,12 +136,12 @@ describe TimeSheet do
       end
 
       it 'calculates the weekly overtime duration' do
-        @sheet.overtime('2013-02-04'.to_date..'2013-02-11'.to_date).should eq(12.25.hours)
+        @sheet.overtime('2013-02-04'.to_date..'2013-02-11'.to_date).should eq(20.75.hours)
       end
 
       it 'calculates the daily overtime duration' do
         # different for part-time workers, depending on excess of work hours till this day relative to the planned working time for the week
-        @sheet.overtime('2013-02-07'.to_date).should eq(15.minutes)
+        @sheet.overtime('2013-02-05'.to_date).should eq(2.75.hours)
         @sheet.overtime('2013-02-08'.to_date).should eq(10.hours)
       end
 
