@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
 
-  has_many :sheets, class_name: 'TimeSheet'
+  has_many :time_sheets
   has_many :employments
 
   validates_inclusion_of :time_zone, :in => ActiveSupport::TimeZone.zones_map { |m| m.name }, :message => "is not a valid Time Zone"
@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 
   def ensure_timesheet_and_employment_exist
     # ensure a valid timesheet and a employment entry exists
-    self.sheets << TimeSheet.new if self.sheets.empty?
+    self.time_sheets << TimeSheet.new if self.time_sheets.empty?
     self.employments << Employment.default if self.employments.empty?
     save! if changed?
   end

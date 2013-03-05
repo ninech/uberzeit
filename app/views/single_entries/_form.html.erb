@@ -1,10 +1,10 @@
-<%= form_for([@sheet, @entry]) do |f| %>
-  <% if @entry.errors.any? %>
+<%= form_for([@time_sheet, @single_entry]) do |f| %>
+  <% if @single_entry.errors.any? %>
     <div id="error_explanation" class="alert alert-error">
-      <h2><%= pluralize(@entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
+      <h2><%= pluralize(@single_entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
 
       <ul>
-      <% @entry.errors.full_messages.each do |msg| %>
+      <% @single_entry.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>

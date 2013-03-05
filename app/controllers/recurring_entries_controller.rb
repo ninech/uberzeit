@@ -2,36 +2,36 @@ class RecurringEntriesController < ApplicationController
   before_filter :load_sheet
 
   def new
-    @entry = RecurringEntry.new
+    @recurring_entry = RecurringEntry.new
   end
 
   def edit
-    @entry = RecurringEntry.find(params[:id])
+    @recurring_entry = RecurringEntry.find(params[:id])
   end
 
   def create
-    @entry = RecurringEntry.new(params[:recurring_entry])
-    @sheet.recurring_entries << @entry
-    if @entry.save
-      redirect_to @sheet, :notice => 'Entry was successfully created.'
+    @recurring_entry = RecurringEntry.new(params[:recurring_entry])
+    @time_sheet.recurring_entries << @recurring_entry
+    if @recurring_entry.save
+      redirect_to @time_sheet, :notice => 'Entry was successfully created.'
     else
       render :action => 'new'
     end
   end
 
   def update
-    @entry = RecurringEntry.find(params[:id])
-    if @entry.update_attributes(params[:recurring_entry])
-      redirect_to @sheet, :notice => 'Entry was successfully updated.'
+    @recurring_entry = RecurringEntry.find(params[:id])
+    if @recurring_entry.update_attributes(params[:recurring_entry])
+      redirect_to @time_sheet, :notice => 'Entry was successfully updated.'
     else
       render :action => 'edit'
     end
   end
 
   def destroy
-    @entry = RecurringEntry.find(params[:id])
-    if @entry.destroy
-      redirect_to @sheet, :notice => 'Entry was successfully deleted.'
+    @recurring_entry = RecurringEntry.find(params[:id])
+    if @recurring_entry.destroy
+      redirect_to @time_sheet, :notice => 'Entry was successfully deleted.'
     else
       render :action => 'edit'
     end
@@ -40,7 +40,7 @@ class RecurringEntriesController < ApplicationController
   private
 
   def load_sheet
-    @sheet = TimeSheet.find(params[:time_sheet_id]) unless params[:time_sheet_id].blank?
+    @time_sheet = TimeSheet.find(params[:time_sheet_id]) unless params[:time_sheet_id].blank?
   end
 
 end

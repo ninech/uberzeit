@@ -20,7 +20,7 @@ describe RecurringEntriesController do
       it 'assigns a recurring entry to @recurring_entry' do
         time_sheet = FactoryGirl.create(:time_sheet)
         get :new, time_sheet_id: time_sheet
-        assigns(:entry).class.should be(RecurringEntry)
+        assigns(:recurring_entry).class.should be(RecurringEntry)
       end
 
       it 'renders the :new template' do
@@ -37,12 +37,12 @@ describe RecurringEntriesController do
 
       it 'assigns the to-be entry to @entry' do
         get :edit, id: @entry, time_sheet_id: @entry.time_sheet
-        assigns(:entry).should eq(@entry)
+        assigns(:recurring_entry).should eq(@entry)
       end
 
       it 'renders the :edit template' do
         get :edit, id: @entry, time_sheet_id: @entry.time_sheet
-        assigns(:entry).should eq(@entry)
+        assigns(:recurring_entry).should eq(@entry)
       end
     end
 
