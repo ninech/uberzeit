@@ -50,6 +50,9 @@ gem 'jquery-timepicker-rails'
 
 gem 'ice_cube'
 
+# regular tasks
+gem 'whenever'
+
 group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
