@@ -12,4 +12,11 @@ describe SessionsController do
     end
   end
 
+  describe 'GET new' do
+    it 'redirects to omniauth' do
+      get :new
+      response.should redirect_to('/auth/cas')
+    end
+  end
+
 end
