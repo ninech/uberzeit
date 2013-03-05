@@ -5,9 +5,7 @@ describe TimeTypesController do
 
   context 'for non-signed in users' do
     it 'denies access' do
-      get :index
-      response.should redirect_to(root_path)
-      flash[:error].should_not be_nil
+      expect { get :index }.to raise_error(CanCan::AccessDenied)
     end
   end
 
