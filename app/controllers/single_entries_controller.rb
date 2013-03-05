@@ -1,4 +1,8 @@
 class SingleEntriesController < ApplicationController
+
+  load_and_authorize_resource :time_sheet
+  load_and_authorize_resource :single_entry, through: :time_sheet
+
   before_filter :load_sheet
 
   def new
@@ -35,7 +39,7 @@ class SingleEntriesController < ApplicationController
     else
       render :action => 'edit'
     end
-  end 
+  end
 
   private
 
