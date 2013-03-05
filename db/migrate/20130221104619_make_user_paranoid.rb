@@ -1,6 +1,6 @@
 class MakeUserParanoid < ActiveRecord::Migration
   def up
-    add_column :users, :deleted_at, :time
+    add_column :users, :deleted_at, :datetime
   end
 
   def down
