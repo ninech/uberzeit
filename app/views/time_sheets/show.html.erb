@@ -3,7 +3,7 @@
   year = week.min.year
 %>
 <div class="hero-unit">
-  <h3><%= @sheet.user.name %></h3>
+  <h3><%= @time_sheet.user.name %></h3>
   <table class="table">
     <thead>
       <tr>
@@ -14,21 +14,21 @@
     <tbody>
       <tr>
         <td>Work</td>
-        <td><%= format_duration(@sheet.total(week, :work), :work) %></td>
+        <td><%= format_duration(@time_sheet.total(week, :work), :work) %></td>
 
         <td>Redeemed</td>
-        <td><%= format_duration(@sheet.vacation(year), :vacation, :work_days) %></td>
+        <td><%= format_duration(@time_sheet.vacation(year), :vacation, :work_days) %></td>
       </tr>
       <tr>
         <td>Overtime</td>
-        <td><%= format_duration(@sheet.overtime(week), :overtime) %></td>
+        <td><%= format_duration(@time_sheet.overtime(week), :overtime) %></td>
 
         <td>Remaining</td>
-        <td><%= format_duration(@sheet.remaining_vacation(year), :vacation, :work_days) %></td>
+        <td><%= format_duration(@time_sheet.remaining_vacation(year), :vacation, :work_days) %></td>
       </tr>
-      <% 
-        onduty = @sheet.total(week, :onduty)
-        if onduty != 0 
+      <%
+        onduty = @time_sheet.total(week, :onduty)
+        if onduty != 0
       %>
       <tr>
         <td>On duty</td>
@@ -57,8 +57,8 @@
   <%= notice %>
 </div>
 <% end %>
-<%= link_to 'New Single Entry', new_time_sheet_single_entry_path(@sheet), class: 'btn btn-primary btn-small' %>
-<%= link_to 'New Recurring Entry', new_time_sheet_recurring_entry_path(@sheet), class: 'btn btn-primary btn-small' %>
+<%= link_to 'New Single Entry', new_time_sheet_single_entry_path(@time_sheet), class: 'btn btn-primary btn-small' %>
+<%= link_to 'New Recurring Entry', new_time_sheet_recurring_entry_path(@time_sheet), class: 'btn btn-primary btn-small' %>
 <br/>
 <table class="table table-striped">
   <thead>
@@ -79,11 +79,11 @@
     <th colspan="5"><%=date.strftime('%A, %d.%m.%Y')%></th>
   </tr>
   <tbody>
-    <% @sheet.find_chunks(date).each do |entry| %>
+    <% @time_sheet.find_chunks(date).each do |entry| %>
     <tr>
-      <% 
+      <%
         if entry.parent.respond_to?(:whole_day?) && entry.parent.whole_day?
-      %> 
+      %>
         <td colspan="2"><em>Whole day</em></td>
       <%
         else
@@ -97,17 +97,17 @@
       <td><%= entry.time_type %></td>
       <% if entry.parent.kind_of?(SingleEntry) %>
       <td>
-        <%= link_to 'Edit', edit_time_sheet_single_entry_path(@sheet, entry.parent), :class => 'btn btn-small' %>
-        <%= link_to 'Destroy', [@sheet, entry.parent], :class => 'btn btn-danger btn-small', :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+        <%= link_to 'Edit', edit_time_sheet_single_entry_path(@time_sheet, entry.parent), :class => 'btn btn-small' %>
+        <%= link_to 'Destroy', [@time_sheet, entry.parent], :class => 'btn btn-danger btn-small', :method => :delete, :data => { :confirm => 'Are you sure?' } %>
       </td>
       <% end %>
     </tr>
     <% end %>
 
-    <% 
-      date_work = @sheet.total(date, :work)
-      date_overtime = @sheet.overtime(date)
-      if date_work != 0 || date_overtime != 0 
+    <%
+      date_work = @time_sheet.total(date, :work)
+      date_overtime = @time_sheet.overtime(date)
+      if date_work != 0 || date_overtime != 0
     %>
     <tr>
       <td colspan="5">
