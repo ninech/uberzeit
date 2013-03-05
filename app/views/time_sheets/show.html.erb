@@ -95,12 +95,16 @@
       %>
       <td><%= format_duration(entry.duration, entry.time_type) %></td>
       <td><%= entry.time_type %></td>
-      <% if entry.parent.kind_of?(SingleEntry) %>
       <td>
+      <% case entry.parent %>
+      <% when SingleEntry %>
         <%= link_to 'Edit', edit_time_sheet_single_entry_path(@sheet, entry.parent), :class => 'btn btn-small' %>
         <%= link_to 'Destroy', [@sheet, entry.parent], :class => 'btn btn-danger btn-small', :method => :delete, :data => { :confirm => 'Are you sure?' } %>
-      </td>
+      <% when RecurringEntry %>
+        <%= link_to 'Edit', edit_time_sheet_recurring_entry_path(@sheet, entry.parent), :class => 'btn btn-small' %>
+        <%= link_to 'Destroy', [@sheet, entry.parent], :class => 'btn btn-danger btn-small', :method => :delete, :data => { :confirm => 'Are you sure?' } %>
       <% end %>
+      </td>
     </tr>
     <% end %>
 

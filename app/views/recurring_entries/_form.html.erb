@@ -28,6 +28,16 @@
     </div>
 
     <div class="field">
+      <%= o.label :ends %>
+      <%= o.radio_button :ends, 'never' %> 
+      <%= o.label :ends, 'Never', value: 'never' %>
+      <%= o.radio_button :ends, 'counter' %> 
+      <%= o.label :ends, 'After number of occurrences', value: 'counter' %> <%= o.text_field :ends_counter %><br/>
+      <%= o.radio_button :ends, 'date' %>
+      <%= o.label :ends, 'On', value: 'date' %> <%= o.text_field :ends_date %><br/>
+    </div>
+
+    <div class="field">
       <%= o.label :repeats %>
       <%= o.select :repeat_unit, ['daily', 'weekly', 'monthly', 'yearly'] %>
     </div>
@@ -48,12 +58,12 @@
       </div>
       <div class="field">
         <%= o.label :weekly_repeat %><br/>
-        <% {'Monday' => 1, 'Tuesday' => 2, 'Wednesday' => 3, 'Thursday' => 4, 'Friday' => 5, 'Saturday' => 6, 'Sunday' => 7}.each_pair do |name, day_nr| %>
+        <% {'Monday' => 1, 'Tuesday' => 2, 'Wednesday' => 3, 'Thursday' => 4, 'Friday' => 5, 'Saturday' => 6, 'Sunday' => 0}.each_pair do |name, day_nr| %>
           <%
             weekdays = o.object.weekly_repeat_weekday
             checked = weekdays.nil? ? false : weekdays.include?(day_nr)
           %>
-          <%= check_box_tag 'time_entry[schedule_attributes][weekly_repeat_weekday][]', day_nr, checked %>
+          <%= check_box_tag 'recurring_entry[schedule_attributes][weekly_repeat_weekday][]', day_nr, checked %>
           <%= name %><br/>
         <% end %>
       </div>

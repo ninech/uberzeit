@@ -2,8 +2,20 @@
 
 FactoryGirl.define do
   factory :recurring_entry do
-    time_sheet nil
-    time_type nil
-    schedule_hash "MyText"
+    ignore do
+      type :work
+      attribs { {} }
+    end
+
+    time_sheet
+    schedule_attributes { {repeat_unit: 'daily', daily_repeat_every: 1, ends: 'never'}.merge(attribs) }
+    
+    after(:build) do |entry, evaluator|
+      entry.time_type = FactoryGirl.create("time_type_#{evaluator.type}")   
+    end
+
+    factory :invalid_recurring_entry do
+      time_type_id nil 
+    end
   end
 end

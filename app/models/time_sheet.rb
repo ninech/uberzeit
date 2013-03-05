@@ -10,40 +10,15 @@ class TimeSheet < ActiveRecord::Base
 
   # returns time chunks (which are limited to the given date or range)
   def find_chunks(date_or_range, time_type_scope = nil)
-    range = date_or_range.to_range
-
-    if time_type_scope.nil?
-      filtered_singles = single_entries
-      filtered_recurring = recurring_entries
-    else
-      # scope filter
-      filtered_singles = single_entries.send(time_type_scope)
-      filtered_recurring = recurring_entries.send(time_type_scope)
-    end
-
     chunks = []
-
-    chunks += filtered_singles.between(range.min, range.max).collect do |entry|
-      TimeChunk.new(range: entry.range_for(range), time_type: entry.time_type, parent: entry) 
-    end
-
-    # filtered_recurring.each do |entry| 
-    #   entry.schedule.occurrences_between(range.min, range.max).each do |occurrence|
-    #     occ_range = (occurrence..occurrence+entry.schedule.duration)
-    #     intersect = range.intersect(occ_range)
-    #     if intersect
-    #       chunks << TimeChunk.new(range: intersect, time_type: entry.time_type, parent: entry)
-    #     end
-    #   end
-    # end
+    chunks += single_entries.find_chunks(date_or_range, time_type_scope)
+    chunks += recurring_entries.find_chunks(date_or_range, time_type_scope)
 
     chunks
   end
 
   def total(date_or_range, type)
-    scope = type
-
-    chunks = find_chunks(date_or_range, scope)
+    chunks = find_chunks(date_or_range, type)
 
     total = chunks.inject(0) do |sum, chunk|
       duration = chunk.duration
