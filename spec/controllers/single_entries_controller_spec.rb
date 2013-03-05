@@ -103,5 +103,20 @@ describe SingleEntriesController do
         end
       end
     end
+
+    describe 'DELETE "destroy"' do
+      before do
+        @single_entry = FactoryGirl.create(:single_entry)
+      end
+
+      it 'deletes the entry' do
+        expect { delete :destroy, id: @single_entry, time_sheet_id: @single_entry.time_sheet }.to change(SingleEntry,:count).by(-1)
+      end
+
+      it 'redirects to the time sheet' do
+        delete :destroy, id: @single_entry, time_sheet_id: @single_entry.time_sheet
+        response.should redirect_to @single_entry.time_sheet
+      end
+    end
   end
 end

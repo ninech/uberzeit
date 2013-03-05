@@ -45,12 +45,6 @@ class SingleEntry < ActiveRecord::Base
     range.intersect(range_range)
   end
 
-  def duration_for(date_or_range)
-    intersection = range_for(date_or_range)
-    duration = intersection.nil? ? 0 : intersection.duration
-    duration
-  end
-
   def duration
     (ends - starts).to_i
   end

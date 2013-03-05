@@ -4,7 +4,9 @@ class RecurringEntry < ActiveRecord::Base
   belongs_to :time_sheet
   belongs_to :time_type
   attr_accessible :schedule, :time_sheet, :time_type_id, :schedule_attributes
-  
+ 
+  validates_presence_of :time_type, :time_sheet, :start_time
+
   serialize :schedule_hash, Hash
 
   scope :work, joins: :time_type, conditions: ['is_work = ?', true]
@@ -19,13 +21,15 @@ class RecurringEntry < ActiveRecord::Base
       opening_time = chunks_range.min
       closing_time = chunks_range.max
 
+      # We need to convert dates to times because of issue 153 (see below)
+      opening_time = opening_time.midnight if opening_time.kind_of?(Date)
+      closing_time = closing_time.midnight if closing_time.kind_of?(Date)
+
       # IceCube Bug https://github.com/seejohnrun/ice_cube/issues/152
       # Make sure the time zones are identical to the schedules' zone
-      if opening_time.kind_of?(Time) 
-        opening_time = opening_time.in_time_zone(entry.schedule.start_time.zone)
-        closing_time = closing_time.in_time_zone(entry.schedule.start_time.zone)
-      end
-
+      opening_time = opening_time.in_time_zone(entry.schedule.start_time.zone) if opening_time.kind_of?(Time) 
+      closing_time = closing_time.in_time_zone(entry.schedule.start_time.zone) if closing_time.kind_of?(Time) 
+      
       schedule = entry.schedule
 
       # Subtract the duration to make sure the requested time window is below the start time of the entry's start time if intersecting
