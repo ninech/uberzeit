@@ -5,6 +5,7 @@ class Ability
 
     if user
       can [:read, :update], User, id: user.id
+      can :read, Employment, user_id: user.id
 
       can :read, TimeType
       can :manage, TimeSheet, user_id: user.id
@@ -15,6 +16,7 @@ class Ability
         can :manage, TimeType
         can :manage, TimeSheet
         can :manage, SingleEntry
+        can :manage, Employment
       end
 
     end

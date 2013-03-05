@@ -114,4 +114,35 @@ describe Ability do
     end
   end
 
+  describe 'Employment' do
+
+    let(:employment) { FactoryGirl.create(:employment, user: user) }
+
+    context 'as a user with the administration role' do
+      let(:ability) { Ability.new(admin) }
+
+      it { should be_able_to(:read, employment) }
+      it { should be_able_to(:update, employment) }
+      it { should be_able_to(:create, Employment) }
+      it { should be_able_to(:destroy, employment) }
+    end
+
+    context 'as the owner' do
+      let(:ability) { Ability.new(user) }
+
+      it { should be_able_to(:read, employment) }
+      it { should_not be_able_to(:update, employment) }
+      it { should_not be_able_to(:create, Employment) }
+      it { should_not be_able_to(:destroy, employment) }
+    end
+
+    context 'as another user' do
+      let(:ability) { Ability.new(FactoryGirl.create(:user)) }
+
+      it { should_not be_able_to(:read, employment) }
+      it { should_not be_able_to(:update, employment) }
+      it { should_not be_able_to(:create, Employment) }
+      it { should_not be_able_to(:destroy, employment) }
+    end
+  end
 end
