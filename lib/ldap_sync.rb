@@ -1,15 +1,15 @@
 # Class for synchronizing Nine LDAP data into the UZ DB
-class LdapSync 
+class LdapSync
   class << self
     def sync_person(id)
       # Users
-      person = Person.find(id)
+      person = Person.find_by_mail(id)
 
-      unless User.find_by_ldap_id(person.id)
-        User.create(ldap_id: person.id, time_zone: Time.zone.name)
+      unless User.find_by_uid(person.id)
+        User.create(uid: person.id, time_zone: Time.zone.name)
       end
 
-      user = User.find_by_ldap_id(person.id)
+      user = User.find_by_uid(person.id)
 
       # Synchronize name etc. IF CHANGED
       if user.name != person.displayname
@@ -26,12 +26,12 @@ class LdapSync
         end
       end
 
-      # Check associations between user and various teams 
+      # Check associations between user and various teams
       Team.all.each do |team|
         # 3 cases
-        if team.has_leader?(user) && has_leader?(user.ldap_id, team.ldap_id)
+        if team.has_leader?(user) && has_leader?(user.uid, team.ldap_id)
           # leader exists in both -> do nothing
-        elsif has_leader?(user.ldap_id, team.ldap_id)
+        elsif has_leader?(user.uid, team.ldap_id)
           # leader exists only in LDAP -> Sync
           team.leaders << user
           team.save!
@@ -41,9 +41,9 @@ class LdapSync
           team.save!
         end
 
-        if team.has_member?(user) && has_member?(user.ldap_id, team.ldap_id)
+        if team.has_member?(user) && has_member?(user.uid, team.ldap_id)
           # member exists in both -> do nothing
-        elsif has_member?(user.ldap_id, team.ldap_id)
+        elsif has_member?(user.uid, team.ldap_id)
           # member exists only in LDAP -> Sync
           team.members << user
           team.save!

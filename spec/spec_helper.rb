@@ -48,3 +48,10 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 end
+
+OmniAuth.config.mock_auth[:cas] = OmniAuth::AuthHash.new({
+  :provider => 'cas',
+  :uid => 'user1'
+})
+OmniAuth.config.test_mode = true
+

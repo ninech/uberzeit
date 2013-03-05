@@ -7,7 +7,7 @@ class TimeType < ActiveRecord::Base
   attr_accessible :is_onduty, :is_vacation, :is_work, :name
 
   validates_presence_of :name
-  
+
   validates_uniqueness_of_without_deleted :name
 
   def to_s

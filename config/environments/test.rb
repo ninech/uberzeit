@@ -34,7 +34,4 @@ Uberzeit::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-  
-  # CAS
-  config.rack_cas.server_url = 'http://sso.dev/'
 end

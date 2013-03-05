@@ -1,12 +1,12 @@
 Uberzeit::Application.routes.draw do
-  
+
   root :to => 'sessions#new'
 
   resources :time_sheets do
     resources :single_entries, except: [:show, :index]
     resources :recurring_entries, except: [:show, :index]
   end
-  
+
   resources :users do
     member do
       get 'edit'
@@ -18,7 +18,9 @@ Uberzeit::Application.routes.draw do
     resources :employments
   end
 
-  resources :time_types 
+  resources :time_types
+
+  match '/auth/:provider/callback', to: 'sessions#create'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

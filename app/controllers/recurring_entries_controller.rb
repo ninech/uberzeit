@@ -1,4 +1,5 @@
 class RecurringEntriesController < ApplicationController
+
   before_filter :load_sheet
 
   def new
@@ -35,7 +36,7 @@ class RecurringEntriesController < ApplicationController
     else
       render :action => 'edit'
     end
-  end 
+  end
 
   private
 

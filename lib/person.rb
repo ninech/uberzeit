@@ -12,4 +12,4 @@ class Person < Nine::LDAP::Model::Base
       a.sn <=> b.sn
     end
   end
-end 
+end

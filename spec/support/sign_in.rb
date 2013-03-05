@@ -1,7 +1,7 @@
 include SessionsHelper
 
-def test_sign_in(person = nil)
-  person ||= Person.find_one
-  sign_in(person.id)
+def test_sign_in(user = nil)
+  user ||= FactoryGirl.create(:user)
+  sign_in(user)
   current_user
 end
