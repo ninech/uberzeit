@@ -32,6 +32,14 @@ class SingleEntry < ActiveRecord::Base
   scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
   scope :onduty, joins: :time_type, conditions: ['is_onduty = ?', true]
 
+  def self.find_chunks(date_or_range, time_type_scope = nil)
+    chunks_range = date_or_range.to_range
+    ref = time_type_scope.nil? ? self : self.send(time_type_scope)
+    ref.between(chunks_range.min, chunks_range.max).collect do |entry| 
+      TimeChunk.new(range: entry.range_for(chunks_range), time_type: entry.time_type, parent: entry)
+    end
+  end
+
   def range_for(date_or_range)
     range_range = date_or_range.to_range
     range.intersect(range_range)
