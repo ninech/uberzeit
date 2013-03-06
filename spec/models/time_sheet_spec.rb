@@ -2,16 +2,18 @@ require 'spec_helper'
 
 describe TimeSheet do
 
+  let(:time_sheet) { FactoryGirl.create(:time_sheet) }
+
   def add_single_entry(start_time, end_time, type = :work, whole_day = false)
     if whole_day
-      @sheet.single_entries << FactoryGirl.create(:single_entry, start_time: start_time.to_time, end_time: end_time.to_time, whole_day: true, type: type)
+      FactoryGirl.create(:single_entry, start_time: start_time.to_time, end_time: end_time.to_time, whole_day: true, type: type, time_sheet: time_sheet)
     else
-      @sheet.single_entries << FactoryGirl.create(:single_entry, start_time: start_time.to_time, end_time: end_time.to_time, type: type)
+      FactoryGirl.create(:single_entry, start_time: start_time.to_time, end_time: end_time.to_time, type: type, time_sheet: time_sheet)
     end
   end
 
   def add_recurring_entry(schedule_attributes, type = :work)
-    @sheet.recurring_entries << FactoryGirl.create(:recurring_entry, type: type, attribs: schedule_attributes)
+    time_sheet.recurring_entries << FactoryGirl.create(:recurring_entry, type: type, attribs: schedule_attributes, time_sheet: time_sheet)
   end
 
   before do
@@ -30,8 +32,6 @@ describe TimeSheet do
 
   context 'time-sheet with a complex weekly schedule (single entries)' do
     before do
-      @sheet = FactoryGirl.create(:time_sheet)
-
       @stats = {}
 
       # sunday previous week (night shift)
@@ -77,52 +77,52 @@ describe TimeSheet do
     end
 
     it 'has a valid factory' do
-      @sheet.should be_valid
+      time_sheet.should be_valid
     end
 
     it 'acts as paranoid' do
-      @sheet.destroy
-      expect { TimeSheet.find(@sheet.id) }.to raise_error
-      expect { TimeSheet.with_deleted.find(@sheet.id) }.to_not raise_error
+      time_sheet.destroy
+      expect { TimeSheet.find(time_sheet.id) }.to raise_error
+      expect { TimeSheet.with_deleted.find(time_sheet.id) }.to_not raise_error
     end
 
     context 'user with full-time workload' do
       it 'delivers single entries which are cut to the specified date or range (chunks)' do
-        @sheet.find_chunks('2013-02-04'.to_date..'2013-02-11'.to_date, :work).count.should eq(8)
+        time_sheet.find_chunks('2013-02-04'.to_date..'2013-02-11'.to_date, :work).count.should eq(8)
 
         # we work edthrough the night on 02-07 so we expect two chunks for 02-08
-        @sheet.find_chunks('2013-02-08'.to_date, :work).count.should eq(2)
+        time_sheet.find_chunks('2013-02-08'.to_date, :work).count.should eq(2)
 
         # check sunday for borderline
-        @sheet.find_chunks('2013-02-10'.to_date, :work).count.should eq(1)
+        time_sheet.find_chunks('2013-02-10'.to_date, :work).count.should eq(1)
 
         # what about times and timezones?
-        @sheet.find_chunks('2013-02-04 00:00:00 GMT+1'.to_time..'2013-02-04 09:00:00 GMT+1'.to_time).should be_empty
-        @sheet.find_chunks('2013-02-04 00:00:00 GMT+1'.to_time..'2013-02-04 09:05:00 GMT+1'.to_time).should_not be_empty
+        time_sheet.find_chunks('2013-02-04 00:00:00 GMT+1'.to_time..'2013-02-04 09:00:00 GMT+1'.to_time).should be_empty
+        time_sheet.find_chunks('2013-02-04 00:00:00 GMT+1'.to_time..'2013-02-04 09:05:00 GMT+1'.to_time).should_not be_empty
       end
 
       it 'calculates the total duration (daily and weekly)' do
-        @sheet.total('2013-02-04'.to_date..'2013-02-11'.to_date, :work).should eq(33.5.hours)
-        @sheet.total('2013-02-04'.to_date..'2013-02-11'.to_date, :vacation).should eq(1.work_days)
+        time_sheet.total('2013-02-04'.to_date..'2013-02-11'.to_date, :work).should eq(33.5.hours)
+        time_sheet.total('2013-02-04'.to_date..'2013-02-11'.to_date, :vacation).should eq(1.work_days)
 
         # what about times and timezones?
-        @sheet.total('2013-02-04 10:00:00 GMT+1'.to_time..'2013-02-10 22:00:00 GMT+1'.to_time, :work).should eq(30.5.hours)
+        time_sheet.total('2013-02-04 10:00:00 GMT+1'.to_time..'2013-02-10 22:00:00 GMT+1'.to_time, :work).should eq(30.5.hours)
       end
 
       it 'calculates the weekly overtime duration' do
-        @sheet.overtime('2013-02-04'.to_date..'2013-02-11'.to_date).should eq(-0.5.hours)
+        time_sheet.overtime('2013-02-04'.to_date..'2013-02-11'.to_date).should eq(-0.5.hours)
       end
 
       it 'calculates the daily overtime duration' do
-        @sheet.overtime('2013-02-08'.to_date).should eq(1.5.hours)
+        time_sheet.overtime('2013-02-08'.to_date).should eq(1.5.hours)
       end
 
       it 'calculates the number of redeemed vacation days for the year' do
-        @sheet.vacation(2013).should eq(3.0.work_days)
+        time_sheet.vacation(2013).should eq(3.0.work_days)
       end
 
       it 'calculates the number of remaining vacation days for the year' do
-        @sheet.remaining_vacation(2013).should eq(22.0.work_days)
+        time_sheet.remaining_vacation(2013).should eq(22.0.work_days)
       end
 
     end
@@ -130,38 +130,38 @@ describe TimeSheet do
     context 'user with part-time workload' do
       # TODO comment why we expect what
       before do
-        employment = @sheet.user.employments.first
+        employment = time_sheet.user.employments.first
         employment.workload = 50
         employment.save
 
-        @sheet.reload
+        time_sheet.reload
 
         @weekly_work_quota = 21.25.hours
       end
 
       it 'calculates the weekly overtime duration' do
-        @sheet.overtime('2013-02-04'.to_date..'2013-02-11'.to_date).should eq(20.75.hours)
+        time_sheet.overtime('2013-02-04'.to_date..'2013-02-11'.to_date).should eq(20.75.hours)
       end
 
       it 'calculates the daily overtime duration' do
         # different for part-time workers, depending on excess of work hours till this day relative to the planned working time for the week
-        @sheet.overtime('2013-02-05'.to_date).should eq(2.75.hours)
-        @sheet.overtime('2013-02-08'.to_date).should eq(10.hours)
+        time_sheet.overtime('2013-02-05'.to_date).should eq(2.75.hours)
+        time_sheet.overtime('2013-02-08'.to_date).should eq(10.hours)
       end
 
       it 'calculates the number of redeemed vacation days for the year' do
-        @sheet.vacation(2013).should eq(3.0.work_days)
+        time_sheet.vacation(2013).should eq(3.0.work_days)
       end
 
       it 'calculates the number of remaining vacation days for the year' do
-        @sheet.remaining_vacation(2013).should eq(9.5.work_days)
+        time_sheet.remaining_vacation(2013).should eq(9.5.work_days)
       end
     end
   end
 
   context 'time-sheet with both single-entries and recurring-entries' do
     before do
-      @sheet = FactoryGirl.create(:time_sheet)
+      time_sheet = FactoryGirl.create(:time_sheet)
 
       # Monday we work in the afternoon
       add_single_entry('2013-03-04 13:00:00 GMT+1', '2013-03-04 18:00:00 GMT+1')
@@ -175,11 +175,11 @@ describe TimeSheet do
     end
 
     it 'calculates the number of redeemed vacation days for the year' do
-      @sheet.vacation(2013).should eq(2.5.work_days)
+      time_sheet.vacation(2013).should eq(2.5.work_days)
     end
 
     it 'calculates the weekly work duration' do
-      @sheet.total('2013-03-04'.to_date..'2013-03-11'.to_date, :work).should eq(5.hours)
+      time_sheet.total('2013-03-04'.to_date..'2013-03-11'.to_date, :work).should eq(5.hours)
     end
 
   end

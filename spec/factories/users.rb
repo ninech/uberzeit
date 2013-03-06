@@ -7,9 +7,9 @@ FactoryGirl.define do
       with_employment true
       with_sheet true
     end
-    
-    after(:create) { |user, evaluator| user.employments << FactoryGirl.create(:employment, user: user) if evaluator.with_employment } 
-    after(:create) { |user, evaluator| user.time_sheets << FactoryGirl.create(:time_sheet, user: user) if evaluator.with_sheet } 
+
+    after(:create) { |user, evaluator| user.employments << FactoryGirl.create(:employment, user: user) if evaluator.with_employment && user.employments.empty? }
+    after(:create) { |user, evaluator| user.time_sheets << FactoryGirl.create(:time_sheet, user: user) if evaluator.with_sheet && user.time_sheets.empty? }
 
     factory :leader do
       after(:create) { |user| FactoryGirl.create(:team).leaders << user }

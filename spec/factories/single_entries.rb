@@ -15,16 +15,16 @@ FactoryGirl.define do
       start nil
     end
 
-    time_sheet 
+    time_sheet
     start_time { start.nil? ? time_rand(range.min, range.max) : start }
     end_time  { start_time.to_time + duration }
 
     after(:build) do |entry, evaluator|
-      entry.time_type = FactoryGirl.create("time_type_#{evaluator.type}")
+      entry.time_type = TEST_TIME_TYPES[evaluator.type]
     end
 
     factory :invalid_single_entry do
-      end_time { start_time } 
+      end_time { start_time }
     end
 
    end

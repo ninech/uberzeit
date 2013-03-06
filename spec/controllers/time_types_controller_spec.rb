@@ -16,9 +16,8 @@ describe TimeTypesController do
 
     describe 'GET "index"' do
       it 'populates an array of time types' do
-        time_type = FactoryGirl.create(:time_type)
         get :index
-        assigns(:time_types).should eq([time_type])
+        assigns(:time_types).should eq(TEST_TIME_TYPES.values)
       end
 
       it 'renders the :index template' do
@@ -41,7 +40,7 @@ describe TimeTypesController do
 
     describe 'GET "edit"' do
       before do
-        @time_type = FactoryGirl.create(:time_type)
+        @time_type = TEST_TIME_TYPES[:work]
       end
 
       it 'assigns the to-be edited time type to @time_type' do

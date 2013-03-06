@@ -47,6 +47,19 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  config.before(:suite) do
+    TEST_TIME_TYPES = {}
+    %w{work vacation onduty break}.each do |time_type|
+      TEST_TIME_TYPES[time_type.to_sym] = FactoryGirl.create("time_type_#{time_type}")
+    end
+  end
+
+  config.after(:suite) do
+    TEST_TIME_TYPES.each do |name, entry|
+      entry.destroy
+    end
+  end
 end
 
 OmniAuth.config.mock_auth[:cas] = OmniAuth::AuthHash.new({
