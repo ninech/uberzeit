@@ -15,28 +15,29 @@ class SingleEntry < ActiveRecord::Base
 
   validates_datetime :start_time
   validates_datetime :end_time, after: :start_time, unless: lambda { whole_day } # end_time is inclusive for whole day events
-  validates_datetime :end_time, on_or_after: :start_time, if: lambda { whole_day } 
+  validates_datetime :end_time, on_or_after: :start_time, if: lambda { whole_day }
 
   before_validation :round_times
   before_save :set_times_for_whole_day, if: lambda { whole_day }
 
   # http://stackoverflow.com/questions/143552/comparing-date-ranges
-  scope :between, lambda { |starts, ends| 
+  scope :between, lambda { |starts, ends|
     starts = starts.midnight if starts.kind_of?(Date) # Gracefully convert to local time zone
     ends = ends.midnight if ends.kind_of?(Date) # To ensure we acknowledge the users time zone with dates
-    { conditions: ['(whole_day = false AND start_time < ? AND end_time > ?) OR 
+    { conditions: ['(whole_day = false AND start_time < ? AND end_time > ?) OR
                     (whole_day = true AND start_time < ? AND end_time >= ?)', # end_time for whole days is inclusive
-                    ends, starts, Time.utc(ends.year, ends.month, ends.day), Time.utc(starts.year, starts.month, starts.day) ] } 
+                    ends, starts, Time.utc(ends.year, ends.month, ends.day), Time.utc(starts.year, starts.month, starts.day) ] }
   }
 
   scope :work, joins: :time_type, conditions: ['is_work = ?', true]
   scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
   scope :onduty, joins: :time_type, conditions: ['is_onduty = ?', true]
 
-  def self.find_chunks(date_or_range, time_type_scope = nil)
+  def self.find_chunks(date_or_range, time_type_scope = scoped)
     chunks_range = date_or_range.to_range
-    ref = time_type_scope.nil? ? self : self.send(time_type_scope)
-    ref.between(chunks_range.min, chunks_range.max).collect do |entry| 
+    scope_to_search_on = self.send(time_type_scope)
+
+    scope_to_search_on.between(chunks_range.min, chunks_range.max).collect do |entry|
       TimeChunk.new(range: entry.range_for(chunks_range), time_type: entry.time_type, parent: entry)
     end
   end
@@ -90,7 +91,7 @@ class SingleEntry < ActiveRecord::Base
   def set_times_for_whole_day
     # Make sure the start time is UTC 00:00 so there's no mess when timezone changes in future
     self.start_time = Time.utc(start_time.year, start_time.month, start_time.day)
-    self.end_time = Time.utc(end_time.year, end_time.month, end_time.day) 
+    self.end_time = Time.utc(end_time.year, end_time.month, end_time.day)
   end
 
   def round_times
