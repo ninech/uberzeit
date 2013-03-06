@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 
   def new
-    redirect_to '/auth/cas'
+    redirect_to Rails.env.development? ? '/auth/developer' : '/auth/cas'
   end
 
   def create
