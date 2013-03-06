@@ -21,11 +21,18 @@ class User < ActiveRecord::Base
     teams.select{ |t| t.has_leader?(self) }.collect{ |t| t.members }.flatten.uniq
   end
 
+  def create_time_sheet_if_needed
+    time_sheets.create! if time_sheets.empty?
+  end
+
+  def create_employment_if_needed
+    employments.create! if employments.empty?
+  end
+
   def ensure_timesheet_and_employment_exist
-    # ensure a valid timesheet and a employment entry exists
-    self.time_sheets << TimeSheet.new if self.time_sheets.empty?
-    self.employments << Employment.default if self.employments.empty?
-    save! if changed?
+    create_time_sheet_if_needed
+    create_employment_if_needed
+    self
   end
 
   # sollzeit
