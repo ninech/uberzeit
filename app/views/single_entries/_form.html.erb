@@ -16,8 +16,8 @@
     <%= f.check_box :whole_day %>
   </div>
 
-  <%= f.hidden_field :start_time, value: (f.object.starts.nil? ? Time.zone.now.round : f.object.starts).strftime("%Y-%m-%d %H:%M") %>
-  <%= f.hidden_field :end_time, value: (f.object.ends.nil? ? Time.zone.now.round + 1.hour : f.object.ends).strftime("%Y-%m-%d %H:%M") %>
+  <%= f.hidden_field :start_time, value: (f.object.send(:start_time).nil? ? Time.zone.now.round : f.object.send(:start_time)).strftime("%Y-%m-%d %H:%M") %>
+  <%= f.hidden_field :end_time, value: (f.object.send(:end_time).nil? ? Time.zone.now.round + 1.hour : f.object.send(:end_time)).strftime("%Y-%m-%d %H:%M") %>
 
   <p class="datepair" data-language="javascript">
     <input type="text" class="date start" />

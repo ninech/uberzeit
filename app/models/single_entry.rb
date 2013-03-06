@@ -14,7 +14,8 @@ class SingleEntry < ActiveRecord::Base
   validates_presence_of :time_type, :time_sheet, :start_time
 
   validates_datetime :start_time
-  validates_datetime :end_time, after: :start_time
+  validates_datetime :end_time, after: :start_time, unless: lambda { whole_day } # end_time is inclusive for whole day events
+  validates_datetime :end_time, on_or_after: :start_time, if: lambda { whole_day } 
 
   before_validation :round_times
   before_save :set_times_for_whole_day, if: lambda { whole_day }
@@ -24,7 +25,7 @@ class SingleEntry < ActiveRecord::Base
     starts = starts.midnight if starts.kind_of?(Date) # Gracefully convert to local time zone
     ends = ends.midnight if ends.kind_of?(Date) # To ensure we acknowledge the users time zone with dates
     { conditions: ['(whole_day = false AND start_time < ? AND end_time > ?) OR 
-                    (whole_day = true AND start_time < ? AND end_time > ?)', 
+                    (whole_day = true AND start_time < ? AND end_time >= ?)', # end_time for whole days is inclusive
                     ends, starts, Time.utc(ends.year, ends.month, ends.day), Time.utc(starts.year, starts.month, starts.day) ] } 
   }
 
@@ -68,7 +69,7 @@ class SingleEntry < ActiveRecord::Base
 
   def ends
     if whole_day?
-      time = end_time - Time.zone.utc_offset
+      time = end_time - Time.zone.utc_offset + 24.hours # end time for whole day events is inclusive
     else
       time = end_time
     end
@@ -89,7 +90,7 @@ class SingleEntry < ActiveRecord::Base
   def set_times_for_whole_day
     # Make sure the start time is UTC 00:00 so there's no mess when timezone changes in future
     self.start_time = Time.utc(start_time.year, start_time.month, start_time.day)
-    self.end_time = Time.utc(end_time.year, end_time.month, end_time.day)
+    self.end_time = Time.utc(end_time.year, end_time.month, end_time.day) 
   end
 
   def round_times

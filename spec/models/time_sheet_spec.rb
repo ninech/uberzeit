@@ -46,7 +46,7 @@ describe TimeSheet do
       # @stats['2013-02-05'] = { num_work_entries: 2, work: 7.hours, overtime: 0, vacation: 0 }
 
       # wednesday we take a day off
-      add_single_entry('2013-02-06 00:00:00 GMT+1', '2013-02-07 00:00:00 GMT+1', :vacation, true)
+      add_single_entry('2013-02-06 00:00:00 GMT+1', '2013-02-06 00:00:00 GMT+1', :vacation, true)
       # @stats['2013-02-06'] = { num_work_entries: 0, work: 0, overtime: 0, vacation: 1.work_days }
 
       # thursday we decide to work through the night
@@ -69,7 +69,7 @@ describe TimeSheet do
       add_single_entry('2013-02-11 00:00:00 GMT+1', '2013-02-11 06:00:00 GMT+1')
 
       # tue-wed next week free
-      add_single_entry('2013-02-12 00:00:00 GMT+1', '2013-02-14 00:00:00 GMT+1', :vacation, true)
+      add_single_entry('2013-02-12 00:00:00 GMT+1', '2013-02-13 00:00:00 GMT+1', :vacation, true)
     end
 
     it 'has a valid factory' do
