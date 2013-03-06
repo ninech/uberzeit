@@ -51,13 +51,13 @@ RSpec.configure do |config|
   config.before(:suite) do
     TEST_TIME_TYPES = {}
     %w{work vacation onduty break}.each do |time_type|
-      TEST_TIME_TYPES[time_type.to_sym] = FactoryGirl.create("time_type_#{time_type}")
+      TEST_TIME_TYPES[time_type.to_sym] = FactoryGirl.create("time_type_#{time_type}", name: "test_#{time_type}")
     end
   end
 
   config.after(:suite) do
     TEST_TIME_TYPES.each do |name, entry|
-      entry.destroy
+      entry.destroy!
     end
   end
 end

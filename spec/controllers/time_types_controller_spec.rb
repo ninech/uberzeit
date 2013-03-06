@@ -17,7 +17,7 @@ describe TimeTypesController do
     describe 'GET "index"' do
       it 'populates an array of time types' do
         get :index
-        assigns(:time_types).should eq(TEST_TIME_TYPES.values)
+        assigns(:time_types).sort.should eq(TEST_TIME_TYPES.values.sort)
       end
 
       it 'renders the :index template' do
