@@ -82,9 +82,9 @@ describe SingleEntry do
       entry.starts.should eq('2013-01-25 00:00:00 GMT+1'.to_time)
     end
 
-    it 'makes sure that end date is not the same as start date (end date is exclusive)' do
+    it 'makes sure that end date can match start date (end date is inclusive)' do
       entry = FactoryGirl.build(:single_entry, start_time: '2013-01-24 00:00:00 GMT+1', end_time: '2013-01-24 00:00:00 GMT+1', whole_day: true )
-      entry.should_not be_valid
+      entry.should be_valid
     end
   end
 end
