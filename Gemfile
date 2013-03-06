@@ -1,5 +1,4 @@
-source 'http://nine:nineball@gem-repo.nine.ch'
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
 
@@ -32,7 +31,13 @@ gem 'cancan'
 gem 'rolify'
 
 # sync
-gem 'nine-ldap'
+# Extensions
+gem 'nine-ldap',
+    git: 'git@git.nine.ch:nine-ldap.git',
+    tag: '0.0.13'
+
+# To use local Git repos, run this on console:
+# bundle config local.nine-ldap ~/projects/nine-ldap
 
 gem 'version_reader'
 gem 'airbrake'
@@ -54,6 +59,7 @@ gem 'ice_cube'
 gem 'whenever'
 
 group :development, :test do
+  gem 'mysql2'
   gem 'rspec'
   gem 'rspec-rails'
   gem 'ci_reporter'
