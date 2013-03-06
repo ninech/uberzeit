@@ -15,17 +15,21 @@ describe TimeSheet do
   end
 
   before do
+
     # Overwrite configs
-    UberZeit::Config[:rounding] = 5.minutes
-    UberZeit::Config[:work_days] = [:monday, :tuesday, :wednesday, :thursday, :friday]
-    UberZeit::Config[:work_per_day] = 8.5.hours
-    UberZeit::Config[:vacation_per_year] = 25.days
+    config = {
+      rounding: 5.minutes,
+      work_days:  [:monday, :tuesday, :wednesday, :thursday, :friday],
+      work_per_day:  8.5.hours,
+      vacation_per_year:  25.days
+    }
+    stub_const 'UberZeit::Config', config
 
     Time.zone = 'Bern' # GMT+1 (in february)
   end
 
   context 'time-sheet with a complex weekly schedule (single entries)' do
-    before :all do
+    before do
       @sheet = FactoryGirl.create(:time_sheet)
 
       @stats = {}
@@ -58,7 +62,7 @@ describe TimeSheet do
       # thank god it's friday
       add_single_entry('2013-02-08 12:00:00 GMT+1', '2013-02-08 19:00:00 GMT+1')
       # @stats['2013-02-08'] = { num_work_entries: 1, work: 10.hours, overtime: 1.5.hours, vacation: 0 }
-      
+
       # saturday off
 
       # sunday we decide to work, just for fun
@@ -161,12 +165,12 @@ describe TimeSheet do
 
       # Monday we work in the afternoon
       add_single_entry('2013-03-04 13:00:00 GMT+1', '2013-03-04 18:00:00 GMT+1')
-      
+
       # We take the morning off for this week
-      add_recurring_entry({ start_time: '2013-03-04 07:45:00 GMT+1', 
-                            end_time: '2013-03-04 12:00:00 GMT+1', 
-                            repeat_unit: 'daily', 
-                            ends: 'date', 
+      add_recurring_entry({ start_time: '2013-03-04 07:45:00 GMT+1',
+                            end_time: '2013-03-04 12:00:00 GMT+1',
+                            repeat_unit: 'daily',
+                            ends: 'date',
                             ends_date: '2013-03-08'}, :vacation)
     end
 
