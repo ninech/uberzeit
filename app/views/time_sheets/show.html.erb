@@ -26,9 +26,9 @@
         <td>Remaining</td>
         <td><%= format_duration(@time_sheet.remaining_vacation(year), :vacation, :work_days) %></td>
       </tr>
-      <% 
+      <%
         onduty = @time_sheet.total(week, :onduty)
-        if onduty != 0 
+        if onduty != 0
       %>
       <tr>
         <td>On duty</td>
@@ -81,9 +81,9 @@
   <tbody>
     <% @time_sheet.find_chunks(date).each do |entry| %>
     <tr>
-      <% 
+      <%
         if entry.parent.respond_to?(:whole_day?) && entry.parent.whole_day?
-      %> 
+      %>
         <td colspan="2"><em>Whole day</em></td>
       <%
         else
@@ -108,10 +108,10 @@
     </tr>
     <% end %>
 
-    <% 
+    <%
       date_work = @time_sheet.total(date, :work)
       date_overtime = @time_sheet.overtime(date)
-      if date_work != 0 || date_overtime != 0 
+      if date_work != 0 || date_overtime != 0
     %>
     <tr>
       <td colspan="5">

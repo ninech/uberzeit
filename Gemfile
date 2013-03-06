@@ -22,9 +22,16 @@ end
 
 gem 'jquery-rails'
 
-gem 'rack-cas'
+# Authentication
+gem 'omniauth'
+gem 'omniauth-cas'
+gem 'omniauth-ldap'
 
-# LDAP
+# Authorization
+gem 'cancan'
+gem 'rolify'
+
+# sync
 gem 'nine-ldap'
 
 gem 'version_reader'
@@ -42,6 +49,9 @@ gem 'bootstrap-datepicker-rails'
 gem 'jquery-timepicker-rails'
 
 gem 'ice_cube'
+
+# regular tasks
+gem 'whenever'
 
 group :development, :test do
   gem 'rspec'

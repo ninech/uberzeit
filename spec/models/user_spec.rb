@@ -29,4 +29,25 @@ describe User do
     user.time_sheets.count.should eq(1)
   end
 
+  describe '#create_with_omniauth' do
+    context 'without extra attributes' do
+
+      let(:omniauth_hash) { {'uid' => 'user-one'} }
+
+      it 'can be created' do
+        User.create_with_omniauth(omniauth_hash).should be_persisted
+      end
+    end
+    context 'with extra attributes' do
+
+      let(:omniauth_hash) { {'uid' => 'user-one', 'info' => {'name' => 'Super User'}} }
+
+      subject { User.create_with_omniauth(omniauth_hash) }
+
+      it { should be_persisted }
+      its(:name) { should eq('Super User') }
+
+    end
+  end
+
 end

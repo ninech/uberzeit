@@ -14,6 +14,10 @@ FactoryGirl.define do
     factory :leader do
       after(:create) { |user| FactoryGirl.create(:team).leaders << user }
     end
+
+    factory :admin do
+      after(:create) { |user| user.add_role(:admin) }
+    end
   end
 
 end
