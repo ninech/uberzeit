@@ -18,7 +18,6 @@ FactoryGirl.define do
     time_sheet 
     start_time { start.nil? ? time_rand(range.min, range.max) : start }
     end_time  { start_time.to_time + duration }
-    association :time_type, factory: :time_type_work
 
     after(:build) do |entry, evaluator|
       entry.time_type = FactoryGirl.create("time_type_#{evaluator.type}")

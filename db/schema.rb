@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(:version => 20130304140502) do
     t.float    "workload",   :default => 100.0
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
-    t.time     "deleted_at"
+    t.datetime "deleted_at"
   end
 
   add_index "employments", ["user_id"], :name => "index_employments_on_user_id"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20130304140502) do
     t.text     "schedule_hash"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.time     "deleted_at"
+    t.datetime "deleted_at"
   end
 
   add_index "recurring_entries", ["time_sheet_id"], :name => "index_recurring_entries_on_time_sheet_id"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(:version => 20130304140502) do
     t.integer  "time_type_id"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
-    t.time     "deleted_at"
+    t.datetime "deleted_at"
     t.boolean  "whole_day",     :default => false
   end
 
@@ -79,14 +79,14 @@ ActiveRecord::Schema.define(:version => 20130304140502) do
     t.string   "ldap_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.time     "deleted_at"
+    t.datetime "deleted_at"
   end
 
   create_table "time_sheets", :force => true do |t|
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.time     "deleted_at"
+    t.datetime "deleted_at"
   end
 
   add_index "time_sheets", ["user_id"], :name => "index_time_sheets_on_user_id"
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(:version => 20130304140502) do
     t.boolean  "is_onduty",   :default => false
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
-    t.time     "deleted_at"
+    t.datetime "deleted_at"
   end
 
   create_table "users", :force => true do |t|
@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(:version => 20130304140502) do
     t.string   "uid"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.time     "deleted_at"
+    t.datetime "deleted_at"
     t.string   "time_zone"
   end
 
