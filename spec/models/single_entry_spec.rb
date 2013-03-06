@@ -3,8 +3,8 @@ require 'spec_helper'
 describe SingleEntry do
   it 'has a valid factory' do
     FactoryGirl.create(:single_entry).should be_valid
-  end 
-  
+  end
+
   it 'acts as paranoid' do
     entry = FactoryGirl.create(:single_entry)
     entry.destroy
@@ -28,6 +28,14 @@ describe SingleEntry do
     time = '2013-01-01 8:00:00 UTC'.to_time
     entry = FactoryGirl.create(:single_entry, start_time: time, duration: 1.5.hours)
     entry.duration.should eq(1.5.hours)
+  end
+
+  it 'hides start_time' do
+    expect { FactoryGirl.create(:single_entry).start_time }.to raise_error(NoMethodError)
+  end
+
+  it 'hides end_time' do
+    expect { FactoryGirl.create(:single_entry).end_time }.to raise_error(NoMethodError)
   end
 
   context 'for multi-entry time sheet' do
