@@ -36,21 +36,13 @@ class User < ActiveRecord::Base
   end
 
   # sollzeit
-  def planned_work(date_or_range, fulltime=false)
-    if date_or_range.kind_of?(Date)
-      workload = fulltime ? 1 : workload_on(date_or_range) * 0.01
-      total = workload * (UberZeit::is_work_day?(date_or_range) ? UberZeit::Config[:work_per_day] : 0)
+  def planned_work(date_or_range, force_fulltime = false)
+    calculator = PlannedWorkCalculator.new(self, date_or_range)
+    unless force_fulltime
+      calculator.employment_dependent
     else
-      raise "Expects a date range" unless date_or_range.min.kind_of?(Date)
-      days = date_or_range.to_a
-      days.pop # exclude the exclusive day
-      total = days.inject(0.0) do |sum, date|
-        workload = fulltime ? 1 : workload_on(date) * 0.01
-        sum + workload * (UberZeit::is_work_day?(date) ? UberZeit::Config[:work_per_day] : 0)
-      end
+      calculator.fulltime_employment
     end
-
-    total
   end
 
   def workload_on(date)
