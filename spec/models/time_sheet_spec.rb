@@ -25,7 +25,7 @@ describe TimeSheet do
   end
 
   context 'time-sheet with a complex weekly schedule (single entries)' do
-    before do
+    before :all do
       @sheet = FactoryGirl.create(:time_sheet)
 
       @stats = {}
