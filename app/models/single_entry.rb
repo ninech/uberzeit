@@ -33,9 +33,13 @@ class SingleEntry < ActiveRecord::Base
   scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
   scope :onduty, joins: :time_type, conditions: ['is_onduty = ?', true]
 
-  def self.find_chunks(date_or_range, time_type_scope = scoped)
+  def self.find_chunks(date_or_range, time_type_scope = nil)
     chunks_range = date_or_range.to_range
-    scope_to_search_on = self.send(time_type_scope)
+    scope_to_search_on = if time_type_scope
+                           self.send(time_type_scope)
+                         else
+                           scoped
+                         end
 
     scope_to_search_on.between(chunks_range.min, chunks_range.max).collect do |entry|
       TimeChunk.new(range: entry.range_for(chunks_range), time_type: entry.time_type, parent: entry)
