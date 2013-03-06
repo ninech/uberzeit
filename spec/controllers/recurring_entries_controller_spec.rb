@@ -6,8 +6,7 @@ describe RecurringEntriesController do
   context 'for non-signed in users' do
     it 'denies access' do
       time_sheet = FactoryGirl.create(:time_sheet)
-      get :new, time_sheet_id: time_sheet
-      response.code.should eq('401')
+      expect { get :new, time_sheet_id: time_sheet.id }.to raise_error(CanCan::AccessDenied)
     end
   end
 
