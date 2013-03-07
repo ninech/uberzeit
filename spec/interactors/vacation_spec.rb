@@ -29,6 +29,23 @@ describe Vacation do
       end
     end
 
+    context 'employments' do
+
+      before do
+        employment = user.employments.first
+        employment.workload = 30
+        employment.start_date = '2013-01-01'.to_date
+        employment.end_date = '2013-03-31'.to_date
+        employment.save!
+        FactoryGirl.create(:employment, user: user, workload: 50, start_date: '2013-04-01'.to_date, end_date: '2013-12-31'.to_date)
+      end
+
+      it 'is handles multiple employments' do
+        vacation.total_redeemable_for_year.should eq(11.work_days) # 11.25
+      end
+
+    end
+
   end
 
 end
