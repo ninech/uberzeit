@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
 
   def vacation_available(year)
     vacation = Vacation.new(self, year)
-    vacation.total_redeemable_for_this_year
+    vacation.total_redeemable_for_year
   end
 
   def self.create_with_omniauth(auth)

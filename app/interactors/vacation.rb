@@ -6,7 +6,7 @@ class Vacation
     @total = 0.0
   end
 
-  def total_redeemable_for_this_year
+  def total_redeemable_for_year
     total = employments_for_year.inject(0.0) do |sum, employment|
       employment_duration = if employment.open_ended?
                               year_as_range.intersect((employment.start_date..(first_day_of_year + 1.year))).duration
