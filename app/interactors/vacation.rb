@@ -8,7 +8,7 @@ class Vacation
 
   def total_redeemable_for_year
     total = employments_for_year.inject(0.0) do |sum, employment|
-      sum + employment.workload * 0.01 * employment_duration(employment)/year_as_range.duration * default_vacation_per_year
+      sum + redeemable_vacation_for_employment(employment)
     end
 
     round_to_half_work_days(total)
@@ -45,6 +45,10 @@ class Vacation
 
   def employment_duration_defined_end(employment)
     year_as_range.intersect((employment.start_date..employment.end_date)).duration
+  end
+
+  def redeemable_vacation_for_employment(employment)
+    employment.workload * 0.01 * employment_duration(employment) / year_as_range.duration * default_vacation_per_year
   end
 
   def round_to_half_work_days(seconds)
