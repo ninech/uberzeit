@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130308082928) do
+ActiveRecord::Schema.define(:version => 20130308140014) do
 
   create_table "employments", :force => true do |t|
     t.integer  "user_id"
@@ -96,12 +96,14 @@ ActiveRecord::Schema.define(:version => 20130308082928) do
 
   create_table "time_types", :force => true do |t|
     t.string   "name"
-    t.boolean  "is_work",     :default => false
-    t.boolean  "is_vacation", :default => false
-    t.boolean  "is_onduty",   :default => false
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.boolean  "is_work",       :default => false
+    t.boolean  "is_vacation",   :default => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.datetime "deleted_at"
+    t.boolean  "treat_as_work", :default => false
+    t.boolean  "daywise"
+    t.boolean  "timewise"
   end
 
   create_table "users", :force => true do |t|
