@@ -1,14 +1,17 @@
 class TimeSheetsController < ApplicationController
-
-  load_and_authorize_resource
-
-  respond_to :html
+  load_and_authorize_resource :time_sheet
 
   def index
-    respond_with(@time_sheets)
+
   end
 
   def show
-    respond_with(@time_sheet)
+    @day      = Time.zone.today
+    @week     = @day.at_beginning_of_week..@day.at_end_of_week
+    @weekdays = @week.to_a
+    @year     = @week.min.year
+
+    @time_entries = @time_sheet.find_chunks(@day)
   end
+
 end
