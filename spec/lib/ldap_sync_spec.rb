@@ -17,7 +17,7 @@ describe LdapSync do
       managers: [],
       people: []
     })
-    
+
     @departments = [@management, @administration]
 
     @person = OpenStruct.new({
@@ -31,7 +31,7 @@ describe LdapSync do
     @management.people << @person
     @administration.people << @person
 
-    Department.stub(:find) do |id| 
+    Department.stub(:find) do |id|
       @departments.find { |dep| dep.cn == id }
     end
     Department.stub(:find_all).and_return(@person.departments)
@@ -54,7 +54,7 @@ describe LdapSync do
   it 'creates the teams which the user is leading of' do
     Department.find_all.each do |department|
       if department.managers.include?(@person)
-        Team.find_by_ldap_id(department.id).should_not be_nil 
+        Team.find_by_ldap_id(department.id).should_not be_nil
       end
     end
   end
@@ -74,7 +74,8 @@ describe LdapSync do
     team.has_leader?(@user).should be_true
     @management.managers.delete(@person)
     LdapSync.sync_person(@person)
-    team.reload.has_leader?(@user).should be_false
+    team.reload
+    team.has_leader?(@user).should be_false
   end
 
   it 'removes missing membership links' do
@@ -82,6 +83,16 @@ describe LdapSync do
     team.has_member?(@user).should be_true
     @administration.people.delete(@person)
     LdapSync.sync_person(@person)
-    team.reload.has_member?(@user).should be_false
+    team.reload
+    team.has_member?(@user).should be_false
+  end
+
+  it 'detects the change from member to leader' do
+    team = Team.find_by_ldap_id(@administration.id)
+    team.has_leader?(@user).should be_false
+    @administration.managers.push(@person)
+    LdapSync.sync_person(@person)
+    team.reload
+    team.has_leader?(@user).should be_true
   end
 end
