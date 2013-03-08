@@ -14,7 +14,11 @@ class TimeChunk
     self.time_type = opts[:time_type]
   end
 
+  def range
+    (starts..ends)
+  end
+
   def duration
-    (starts..ends).duration
+    range.duration
   end
 end

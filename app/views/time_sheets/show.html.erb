@@ -1,6 +1,6 @@
 <%
-  week = (Time.zone.today.at_beginning_of_week..Time.zone.today.next_week)
-  
+  week = (Time.zone.today.at_beginning_of_week...Time.zone.today.next_week)
+
   year = week.min.year
 %>
 <div class="hero-unit">
@@ -58,8 +58,8 @@
   <%= notice %>
 </div>
 <% end %>
-<%= link_to 'New Single Entry', new_time_sheet_single_entry_path(@time_sheet), class: 'btn btn-primary btn-small' %>
-<%= link_to 'New Recurring Entry', new_time_sheet_recurring_entry_path(@time_sheet), class: 'btn btn-primary btn-small' %>
+<%= link_to 'New Time Entry', new_time_sheet_time_entry_path(@time_sheet), class: 'btn btn-primary btn-small' %>
+<%= link_to 'New Date Entry', new_time_sheet_date_entry_path(@time_sheet), class: 'btn btn-primary btn-small' %>
 <br/>
 <table class="table table-striped">
   <thead>
@@ -73,7 +73,6 @@
   </thead>
 <%
   days = week.to_a
-  days.pop # ignore the 8th day
   days.each do |date|
 %>
   <tr <%=raw UberZeit::is_work_day?(date) ? '' : 'style="background-color: #CCC"' %>>
@@ -97,14 +96,6 @@
       <td><%= format_duration(entry.duration, entry.time_type) %></td>
       <td><%= entry.time_type %></td>
       <td>
-      <% case entry.parent %>
-      <% when SingleEntry %>
-        <%= link_to 'Edit', edit_time_sheet_single_entry_path(@time_sheet, entry.parent), :class => 'btn btn-small' %>
-        <%= link_to 'Destroy', [@time_sheet, entry.parent], :class => 'btn btn-danger btn-small', :method => :delete, :data => { :confirm => 'Are you sure?' } %>
-      <% when RecurringEntry %>
-        <%= link_to 'Edit', edit_time_sheet_recurring_entry_path(@time_sheet, entry.parent), :class => 'btn btn-small' %>
-        <%= link_to 'Destroy', [@time_sheet, entry.parent], :class => 'btn btn-danger btn-small', :method => :delete, :data => { :confirm => 'Are you sure?' } %>
-      <% end %>
       </td>
     </tr>
     <% end %>
