@@ -1,10 +1,11 @@
 class TimeChunkCollection
 
-  attr_reader :range
+  attr_reader :range, :chunks
 
-  def initialize(date_or_range, objects_to_scan)
+  def initialize(date_or_range, objects_to_scan, time_type_scope = nil)
     @chunks = []
     @range = date_or_range.to_range
+    @time_type_scope = time_type_scope
     @objects_to_scan = if objects_to_scan.respond_to?(:to_a)
                          objects_to_scan
                        else
@@ -15,7 +16,7 @@ class TimeChunkCollection
 
   def total(*types)
     @chunks.inject(0.0) do |sum,chunk|
-      if types.include?(chunk.time_type) || types.empty?
+      if types.include?(chunk.time_type.name.to_sym) || types.empty?
         sum += chunk.duration
       else
         sum
@@ -27,7 +28,7 @@ class TimeChunkCollection
   private
   def scan
     @objects_to_scan.each do |object|
-      @chunks.concat object.find_chunks(@range)
+      @chunks.concat object.find_chunks(@range, @time_type_scope)
     end
   end
 
