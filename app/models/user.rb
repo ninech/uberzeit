@@ -51,26 +51,8 @@ class User < ActiveRecord::Base
   end
 
   def vacation_available(year)
-    current_year = Time.zone.now.beginning_of_year.to_date
-    range = (current_year..current_year + 1.year)
-    employments = self.employments.between(range.min, range.max)
-
-    default_vacation_per_year = UberZeit::Config[:vacation_per_year]/1.day*UberZeit::Config[:work_per_day]
-
-    total = employments.inject(0.0) do |sum, employment|
-      # contribution to this year
-      if employment.open_ended?
-        contrib_year = range.intersect((employment.start_date..current_year + 1.year)).duration
-      else
-        contrib_year = range.intersect((employment.start_date..employment.end_date)).duration
-      end
-
-      sum + employment.workload * 0.01 * contrib_year/range.duration * default_vacation_per_year
-    end
-
-    # round to half work days
-    half_day = UberZeit::Config[:work_per_day]*0.5
-    (total/half_day).round * half_day
+    vacation = Vacation.new(self, year)
+    vacation.total_redeemable_for_year
   end
 
   def self.create_with_omniauth(auth)
