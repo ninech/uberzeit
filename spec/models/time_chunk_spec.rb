@@ -23,6 +23,10 @@ describe TimeChunk do
       it 'calculates only the work hours' do
         TimeChunk.new(range: '2013-03-06'.to_date...'2013-03-07'.to_date, time_type: time_type).duration.should eq(UberZeit::Config[:work_per_day])
       end
+
+      it 'calculates the work hours relative to the duration' do
+        TimeChunk.new(range: '2013-03-05'.to_date..'2013-03-07'.to_date, time_type: time_type).duration.should eq(3*UberZeit::Config[:work_per_day])
+      end
     end
 
     context 'for time type which has to calculate the whole day' do

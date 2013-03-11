@@ -22,7 +22,7 @@ class TimeChunk
 
   def duration
     if time_type.calculate_work_hours_only?
-      UberZeit::Config[:work_per_day]
+      range.duration.to_f / 24.hours * UberZeit::Config[:work_per_day]
     else
       range.duration
     end
