@@ -11,7 +11,7 @@ class TimeSheet < ActiveRecord::Base
 
   # returns time chunks (which are limited to the given date or range)
   def find_chunks(date_or_range, time_type_scope = nil)
-    TimeChunkCollection.new(date_or_range, [single_entries, recurring_entries], time_type_scope)
+    TimeChunkCollection.new(date_or_range, [time_entries, date_entries], time_type_scope)
   end
 
   def total(date_or_range, type)
