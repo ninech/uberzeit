@@ -1,9 +1,4 @@
 class Entry < ActiveRecord::Base
-  if Rails.env.development? # populate descendants in lazy loading environment
-    %w(date_entry time_entry).each do |class_name|
-      require_dependency File.join("app","models","#{class_name}.rb")
-    end
-  end
 
   acts_as_paranoid
 
@@ -47,5 +42,9 @@ class Entry < ActiveRecord::Base
 
   def range
     (starts..ends)
+  end
+
+  def self.descendants
+    [DateEntry,TimeEntry]
   end
 end
