@@ -11,30 +11,13 @@ class TimeSheet < ActiveRecord::Base
 
   # returns time chunks (which are limited to the given date or range)
   def find_chunks(date_or_range, time_type_scope = nil)
-    chunks = []
-    chunks += entries.find_chunks(date_or_range, time_type_scope)
-    #chunks += recurring_entries.find_chunks(date_or_range, time_type_scope)
-
-    chunks
+    TimeChunkCollection.new(date_or_range, [single_entries, recurring_entries], time_type_scope)
   end
 
   def total(date_or_range, type)
     chunks = find_chunks(date_or_range, type)
 
-    total = chunks.inject(0) do |sum, chunk|
-      duration = chunk.duration
-
-      if chunk.parent.respond_to?(:whole_day?) && chunk.parent.whole_day?
-        duration = chunk.range.to_date_range.inject(0) do |sum_chunk, date|
-          # whole day is independent of users workload
-          sum_chunk + user.planned_work(date, true)
-        end
-      end
-
-      sum + duration
-    end
-
-    total
+    chunks.total(type)
   end
 
   def overtime(date_or_range)
