@@ -43,19 +43,9 @@ describe TimeChunkCollection do
 
     context 'with chunks' do
 
-      let(:time_type_work) do
-        mock.tap do |m|
-          m.stub(:calculate_work_hours_only?).and_return(false)
-          m.stub(:name).and_return('work')
-        end
-      end
-      let(:time_type_break) do
-        mock.tap do |m|
-          m.stub(:calculate_work_hours_only?).and_return(false)
-          m.stub(:name).and_return('break')
-        end
-      end
-
+      let(:time_type_work) { TEST_TIME_TYPES[:work] }
+      let(:time_type_break) { TEST_TIME_TYPES[:break] }
+      let(:time_type_vacation) { TEST_TIME_TYPES[:vacation] }
       let(:time_chunks) do
         [
           TimeChunk.new(starts: '2013-03-07 09:00:00'.to_time, ends: '2013-03-07 12:00:00'.to_time, time_type: time_type_work),
@@ -63,8 +53,8 @@ describe TimeChunkCollection do
           TimeChunk.new(starts: '2013-03-07 12:30:00'.to_time, ends: '2013-03-07 18:30:00'.to_time, time_type: time_type_work)
         ]
       end
-
       let(:collection) { TimeChunkCollection.new(range, object_to_scan) }
+
       it 'returns the total of the chunks' do
         collection.total.should eq(9.5.hours)
       end
@@ -74,6 +64,19 @@ describe TimeChunkCollection do
         collection.total(:break).should eq(0.5.hours)
         collection.total(:break, :work).should eq(9.5.hours)
       end
+
+      context 'vacation' do
+        let(:time_chunks) do
+          [
+            TimeChunk.new(starts: '2013-03-06'.to_date, ends: '2013-03-06'.to_date, first_half_day: true, second_half_day: true, time_type: time_type_vacation),
+            TimeChunk.new(starts: '2013-03-07'.to_date, ends: '2013-03-07'.to_date, first_half_day: true, second_half_day: true, time_type: time_type_vacation)
+          ]
+        end
+        it 'takes into account whether the whole day should be treated as a work day' do
+          collection.total(:vacation).should eq(2.work_days)
+        end
+      end
+
     end
 
   end
