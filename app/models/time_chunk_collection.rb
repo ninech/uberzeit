@@ -24,6 +24,22 @@ class TimeChunkCollection
     end
   end
 
+  def length
+    @chunks.length
+  end
+
+  def each(&block)
+    @chunks.each do |chunk|
+      yield chunk
+    end
+  end
+
+  def map(&block)
+    @chunks.map do |chunk|
+      yield chunk
+    end
+  end
+
 
   private
   def scan
