@@ -99,6 +99,12 @@ describe TimeChunkCollection do
         end
       end
 
+      describe '#empty?' do
+        it 'allows you to check whether there are chunks' do
+          collection.empty?.should be_false
+        end
+      end
+
     end
 
   end

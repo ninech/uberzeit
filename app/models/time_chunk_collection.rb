@@ -40,6 +40,9 @@ class TimeChunkCollection
     end
   end
 
+  def empty?
+    @chunks.empty?
+  end
 
   private
   def scan
