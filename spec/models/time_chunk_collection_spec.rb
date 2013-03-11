@@ -77,6 +77,28 @@ describe TimeChunkCollection do
         end
       end
 
+      describe '#length' do
+        it 'returns the count of the chunks' do
+          collection.length.should eq(3)
+        end
+      end
+
+      describe '#each' do
+        it 'allows you to iterate over the chunks' do
+          a = []
+          collection.each do |chunk|
+            a << chunk.time_type.name
+          end
+          a.should eq(%w{test_work test_break test_work})
+        end
+      end
+
+      describe '#map' do
+        it 'allows you to map over the chunks' do
+          collection.map { |chunk| chunk.time_type.name }.should eq(%w{test_work test_break test_work})
+        end
+      end
+
     end
 
   end
