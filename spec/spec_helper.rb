@@ -55,6 +55,17 @@ RSpec.configure do |config|
     end
   end
 
+  config.before(:each) do
+    # Overwrite uZ config with default values
+    uberzeit_config = {
+      rounding: 5.minutes,
+      work_days:  [:monday, :tuesday, :wednesday, :thursday, :friday],
+      work_per_day:  8.5.hours,
+      vacation_per_year:  25.days
+    }
+    stub_const 'UberZeit::Config', uberzeit_config
+  end
+
   config.after(:suite) do
     TEST_TIME_TYPES.each do |name, entry|
       entry.destroy!

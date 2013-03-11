@@ -16,20 +16,6 @@ describe TimeSheet do
     time_sheet.recurring_entries << FactoryGirl.create(:recurring_entry, type: type, attribs: schedule_attributes, time_sheet: time_sheet)
   end
 
-  before do
-
-    # Overwrite configs
-    config = {
-      rounding: 5.minutes,
-      work_days:  [:monday, :tuesday, :wednesday, :thursday, :friday],
-      work_per_day:  8.5.hours,
-      vacation_per_year:  25.days
-    }
-    stub_const 'UberZeit::Config', config
-
-    Time.zone = 'Bern' # GMT+1 (in february)
-  end
-
   context 'time-sheet with a complex weekly schedule (time entries)' do
     before do
       @stats = {}
