@@ -12,6 +12,10 @@ class TimeEntry < Entry
     { conditions: ['(start_time < ? AND end_time > ?)', between_time_range.max, between_time_range.min] }
   }
 
+  def self.to_chunks
+    scoped.collect { |time_entry| TimeChunk.new(range: time_entry.range, time_type: time_entry.time_type, parent: time_entry) }
+  end
+
   def starts
     start_time
   end

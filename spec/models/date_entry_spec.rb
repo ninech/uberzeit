@@ -22,19 +22,40 @@ describe DateEntry do
     entry.duration.should eq(1.day)
   end
 
+  it 'tells you whether or not it\'s a whole day entry' do
+    entry = FactoryGirl.create(:date_entry, start_date: '2013-01-03', end_date: '2013-01-04')
+    entry.whole_day?.should be_true
+
+    entry = FactoryGirl.create(:date_entry, start_date: '2013-01-03', end_date: '2013-01-04', first_half_day: true)
+    entry.whole_day?.should be_false
+
+    entry = FactoryGirl.create(:date_entry, start_date: '2013-01-03', end_date: '2013-01-04', second_half_day: true)
+    entry.whole_day?.should be_false
+
+    entry = FactoryGirl.create(:date_entry, start_date: '2013-01-03', end_date: '2013-01-04', first_half_day: true, second_half_day: true)
+    entry.whole_day?.should be_true
+  end
+
+  it 'provides the ability to convert the entries to chunks' do
+    entry = FactoryGirl.create(:date_entry, start_date: '2013-01-03', end_date: '2013-01-04', first_half_day: true)
+    chunks = DateEntry.between('2013-01-03'.to_date..'2013-01-03'.to_date).to_chunks
+    chunks.length.should eq(2)
+    chunks.first.duration.should eq(12.hours)
+  end
+
   context 'for multiple entries' do
     before do
-      @entry1 = FactoryGirl.create(:date_entry, time_type: :work, start_date: '2013-01-23', end_date: '2013-01-23')
+      @entry1 = FactoryGirl.create(:date_entry, time_type: :work, start_date: '2013-01-23', end_date: '2013-01-30', first_half_day: true)
       @entry2 = FactoryGirl.create(:date_entry, time_type: :break, start_date: '2013-01-23', end_date: '2013-01-23')
-      @entry3 = FactoryGirl.create(:date_entry, time_type: :work, start_date: '2013-01-23', end_date: '2013-01-24')
+      @entry3 = FactoryGirl.create(:date_entry, time_type: :work, start_date: '2013-01-23', end_date: '2013-01-24', second_half_day: true)
       @entry4 = FactoryGirl.create(:date_entry, time_type: :work, start_date: '2013-01-24', end_date: '2013-01-24')
     end
 
     it 'returns entries between two dates' do
       DateEntry.between('2013-01-23'.to_date..'2013-01-30'.to_date).should =~ [@entry1,@entry2,@entry3,@entry4]
       DateEntry.between('2013-01-23'.to_date..'2013-01-24'.to_date).should =~ [@entry1,@entry2,@entry3,@entry4]
-      DateEntry.between('2013-01-24'.to_date..'2013-01-27'.to_date).should =~ [@entry3,@entry4]
-      DateEntry.between('2013-01-25'.to_date..'2013-01-26'.to_date).should =~ []
+      DateEntry.between('2013-01-24'.to_date..'2013-01-27'.to_date).should =~ [@entry1,@entry3,@entry4]
+      DateEntry.between('2013-01-25'.to_date..'2013-01-26'.to_date).should =~ [@entry1]
     end
   end
 end

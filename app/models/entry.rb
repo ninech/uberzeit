@@ -13,6 +13,7 @@ class Entry < ActiveRecord::Base
   attr_accessible :time_sheet_id, :time_type_id, :type
   attr_accessible :start_date, :end_date
   attr_accessible :start_time, :end_time
+  attr_accessible :first_half_day, :second_half_day
 
   scope :work, joins: :time_type, conditions: ['is_work = ?', true]
   scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
@@ -29,16 +30,23 @@ class Entry < ActiveRecord::Base
                            end
 
       entries_in_range = scope_to_search_on.between(range)
-      clip_entries(entries_in_range, range)
+      chunks_in_range = entries_in_range.to_chunks
+      clip_chunks(chunks_in_range, range)
     end.flatten
 
     chunks
   end
 
-  def self.clip_entries(entries, range)
-    entries.collect do |entry|
-      TimeChunk.new(range: entry.range.intersect(range), time_type: entry.time_type, parent: entry)
+  def self.clip_chunks(chunks, clip_range)
+    clipped_chunks = []
+    # cnt = 0
+    chunks.each do |chunk|
+      intersected_range = chunk.range.intersect(clip_range)
+      if intersected_range && intersected_range.duration > 0
+        clipped_chunks << TimeChunk.new(range: intersected_range, time_type: chunk.time_type, parent: chunk.parent)
+      end
     end
+    clipped_chunks
   end
 
   def duration

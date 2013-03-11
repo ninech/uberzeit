@@ -13,10 +13,20 @@
 
   <div class="field">
     <%= f.label :type %>
+    <%= f.radio_button :type, 'TimeEntry' %>
     <%= f.label :type, 'Time', value: 'TimeEntry' %>
-    <%= f.radio_button :type, 'TimeEntry' %><br/>
-    <%= f.label :type, 'Date', value: 'DateEntry' %>
     <%= f.radio_button :type, 'DateEntry' %>
+    <%= f.label :type, 'Date', value: 'DateEntry' %>
+  </div>
+
+  <div class="field">
+    <%= f.check_box :first_half_day %>
+    <%= f.label :first_half_day %>
+  </div>
+
+  <div class="field">
+    <%= f.check_box :second_half_day %>
+    <%= f.label :second_half_day %>
   </div>
 
   <div class="field">

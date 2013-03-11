@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130308082928) do
+ActiveRecord::Schema.define(:version => 20130311121647) do
 
   create_table "employments", :force => true do |t|
     t.integer  "user_id"
@@ -30,13 +30,14 @@ ActiveRecord::Schema.define(:version => 20130308082928) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.integer  "time_type_id"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.datetime "deleted_at"
-    t.boolean  "whole_day",     :default => false
     t.string   "type"
     t.date     "start_date"
     t.date     "end_date"
+    t.boolean  "first_half_day",  :default => false
+    t.boolean  "second_half_day", :default => false
   end
 
   add_index "entries", ["time_sheet_id"], :name => "index_single_entries_on_time_sheet_id"
