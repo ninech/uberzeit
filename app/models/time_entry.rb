@@ -20,6 +20,11 @@ class TimeEntry < Entry
     end_time
   end
 
+  def self.model_name
+    # generate paths for parent class
+    Entry.model_name
+  end
+
   private
 
   def round_times

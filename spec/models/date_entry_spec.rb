@@ -24,10 +24,10 @@ describe DateEntry do
 
   context 'for multiple entries' do
     before do
-      @entry1 = FactoryGirl.create(:date_entry, type: :work, start_date: '2013-01-23', end_date: '2013-01-23')
-      @entry2 = FactoryGirl.create(:date_entry, type: :break, start_date: '2013-01-23', end_date: '2013-01-23')
-      @entry3 = FactoryGirl.create(:date_entry, type: :work, start_date: '2013-01-23', end_date: '2013-01-24')
-      @entry4 = FactoryGirl.create(:date_entry, type: :work, start_date: '2013-01-24', end_date: '2013-01-24')
+      @entry1 = FactoryGirl.create(:date_entry, time_type: :work, start_date: '2013-01-23', end_date: '2013-01-23')
+      @entry2 = FactoryGirl.create(:date_entry, time_type: :break, start_date: '2013-01-23', end_date: '2013-01-23')
+      @entry3 = FactoryGirl.create(:date_entry, time_type: :work, start_date: '2013-01-23', end_date: '2013-01-24')
+      @entry4 = FactoryGirl.create(:date_entry, time_type: :work, start_date: '2013-01-24', end_date: '2013-01-24')
     end
 
     it 'returns entries between two dates' do

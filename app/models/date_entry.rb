@@ -20,5 +20,10 @@ class DateEntry < Entry
   def ends
     end_date.midnight + 1.day # end date is inclusive
   end
+
+  def self.model_name
+    # generate paths for parent class
+    Entry.model_name
+  end
 end
 

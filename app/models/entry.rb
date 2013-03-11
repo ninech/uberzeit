@@ -10,7 +10,7 @@ class Entry < ActiveRecord::Base
   belongs_to :time_sheet
   belongs_to :time_type
 
-  attr_accessible :time_sheet_id, :time_type_id
+  attr_accessible :time_sheet_id, :time_type_id, :type
   attr_accessible :start_date, :end_date
   attr_accessible :start_time, :end_time
 
@@ -43,6 +43,22 @@ class Entry < ActiveRecord::Base
 
   def duration
     range.duration
+  end
+
+  def is_time?
+    self.type == 'TimeEntry'
+  end
+
+  def is_date?
+    self.type == 'DateEntry'
+  end
+
+  def to_type
+    self.becomes(self.type.constantize) unless self.type.blank?
+  end
+
+  def to_entry
+    self.becomes(Entry)
   end
 
   def range
