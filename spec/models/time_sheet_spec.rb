@@ -74,13 +74,13 @@ describe TimeSheet do
 
     context 'user with full-time workload' do
       it 'delivers single entries which are cut to the specified date or range (chunks)' do
-        time_sheet.find_chunks('2013-02-04'.to_date...'2013-02-11'.to_date, :work).count.should eq(8)
+        time_sheet.find_chunks('2013-02-04'.to_date...'2013-02-11'.to_date, :work).length.should eq(8)
 
         # we work edthrough the night on 02-07 so we expect two chunks for 02-08
-        time_sheet.find_chunks('2013-02-08'.to_date, :work).count.should eq(2)
+        time_sheet.find_chunks('2013-02-08'.to_date, :work).length.should eq(2)
 
         # check sunday for borderline
-        time_sheet.find_chunks('2013-02-10'.to_date, :work).count.should eq(1)
+        time_sheet.find_chunks('2013-02-10'.to_date, :work).length.should eq(1)
 
         # what about times and timezones?
         time_sheet.find_chunks('2013-02-04 00:00:00 GMT+1'.to_time..'2013-02-04 09:00:00 GMT+1'.to_time).should be_empty
