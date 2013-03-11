@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130304140502) do
+ActiveRecord::Schema.define(:version => 20130308082928) do
 
   create_table "employments", :force => true do |t|
     t.integer  "user_id"
@@ -24,6 +24,23 @@ ActiveRecord::Schema.define(:version => 20130304140502) do
   end
 
   add_index "employments", ["user_id"], :name => "index_employments_on_user_id"
+
+  create_table "entries", :force => true do |t|
+    t.integer  "time_sheet_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "time_type_id"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.datetime "deleted_at"
+    t.boolean  "whole_day",     :default => false
+    t.string   "type"
+    t.date     "start_date"
+    t.date     "end_date"
+  end
+
+  add_index "entries", ["time_sheet_id"], :name => "index_single_entries_on_time_sheet_id"
+  add_index "entries", ["time_type_id"], :name => "index_single_entries_on_time_type_id"
 
   create_table "memberships", :force => true do |t|
     t.integer  "team_id"
@@ -59,20 +76,6 @@ ActiveRecord::Schema.define(:version => 20130304140502) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
-
-  create_table "single_entries", :force => true do |t|
-    t.integer  "time_sheet_id"
-    t.datetime "start_time"
-    t.datetime "end_time"
-    t.integer  "time_type_id"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-    t.datetime "deleted_at"
-    t.boolean  "whole_day",     :default => false
-  end
-
-  add_index "single_entries", ["time_sheet_id"], :name => "index_single_entries_on_time_sheet_id"
-  add_index "single_entries", ["time_type_id"], :name => "index_single_entries_on_time_type_id"
 
   create_table "teams", :force => true do |t|
     t.string   "name"
