@@ -14,4 +14,27 @@ class TimeType < ActiveRecord::Base
     name
   end
 
+  def calculate_work_hours_only?
+    daywise == true
+  end
+
+  def is_vacation?
+    is_vacation == true
+  end
+
+  def is_work?
+    is_work == true
+  end
+
+  def kind
+    case
+    when is_work?
+      :work
+    when is_vacation?
+      :vacation
+    else
+      :break
+    end
+  end
+
 end
