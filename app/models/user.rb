@@ -59,6 +59,10 @@ class User < ActiveRecord::Base
     time_sheets.first
   end
 
+  def current_employment
+    employments.first
+  end
+
   def self.create_with_omniauth(auth)
     create! do |user|
       user.uid = auth['uid']

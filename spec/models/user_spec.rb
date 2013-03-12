@@ -53,11 +53,15 @@ describe User do
   end
 
   describe '#current_time_sheet' do
-
     it 'returns the current active timesheet' do
       user.current_time_sheet.should eq(user.time_sheets.first)
     end
+  end
 
+  describe '#current_employment' do
+    it 'returns the current active employment' do
+      user.current_employment.should eq(user.employments.first)
+    end
   end
 
 end
