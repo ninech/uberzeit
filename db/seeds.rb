@@ -7,9 +7,10 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 if TimeType.count == 0
-  TimeType.create(name: 'Biglu', is_work: true)
-  TimeType.create(name: 'Ferien', is_vacation: true)
-  TimeType.create(name: 'Pikett', is_onduty: true)
-  TimeType.create(name: 'Pause')
-  TimeType.create(name: 'Krankfeiern')
+  TimeType.create(name: 'Work', is_work: true, is_vacation: false, treat_as_work: true, daywise: false, timewise: true)
+  TimeType.create(name: 'On Duty', is_work: true, is_vacation: false, treat_as_work: true, daywise: false, timewise: true)
+  TimeType.create(name: 'Vacation', is_work: false, is_vacation: true, treat_as_work: true, daywise: true, timewise: false)
+  TimeType.create(name: 'Illness', is_work: false, is_vacation: false, treat_as_work: true, daywise: true, timewise: true)
+  TimeType.create(name: 'Compensation', is_work: false, is_vacation: false, treat_as_work: false, daywise: true, timewise: true)
+  TimeType.create(name: 'Absence by law', is_work: false, is_vacation: false, treat_as_work: false, daywise: true, timewise: false)
 end
