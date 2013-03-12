@@ -74,13 +74,13 @@ describe TimeSheet do
 
     context 'user with full-time workload' do
       it 'delivers single entries which are cut to the specified date or range (chunks)' do
-        time_sheet.find_chunks('2013-02-04'.to_date...'2013-02-11'.to_date, :work).count.should eq(8)
+        time_sheet.find_chunks('2013-02-04'.to_date...'2013-02-11'.to_date, :work).length.should eq(8)
 
         # we work edthrough the night on 02-07 so we expect two chunks for 02-08
-        time_sheet.find_chunks('2013-02-08'.to_date, :work).count.should eq(2)
+        time_sheet.find_chunks('2013-02-08'.to_date, :work).length.should eq(2)
 
         # check sunday for borderline
-        time_sheet.find_chunks('2013-02-10'.to_date, :work).count.should eq(1)
+        time_sheet.find_chunks('2013-02-10'.to_date, :work).length.should eq(1)
 
         # what about times and timezones?
         time_sheet.find_chunks('2013-02-04 00:00:00 GMT+1'.to_time..'2013-02-04 09:00:00 GMT+1'.to_time).should be_empty
@@ -125,12 +125,6 @@ describe TimeSheet do
 
       it 'calculates the weekly overtime duration' do
         time_sheet.overtime('2013-02-04'.to_date...'2013-02-11'.to_date).should eq(20.75.hours)
-      end
-
-      it 'calculates the daily overtime duration' do
-        # different for part-time workers, depending on excess of work hours till this day relative to the planned working time for the week
-        time_sheet.overtime('2013-02-05'.to_date).should eq(2.75.hours)
-        time_sheet.overtime('2013-02-08'.to_date).should eq(10.hours)
       end
 
       it 'calculates the number of redeemed vacation days for the year' do

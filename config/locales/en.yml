@@ -2,4 +2,13 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      time_types:
+        is_work: 'effective worktime'
+        is_vacation: 'redeemed vacation'
+        treat_as_work: 'treat this work as worktime in the calculation'
+        daywise: 'Allows creating (half) days events'
+        timewise: 'Allows creating events on a 5 minute basis'
+
+

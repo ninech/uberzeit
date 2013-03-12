@@ -4,12 +4,12 @@ module TimeSheetsHelper
     unless type.nil?
       cls = "label label-#{time_type_css(type)}"
     end
-    content_tag :span, :class => cls do 
+    content_tag :span, :class => cls do
 
       case format
       when :hours
         format_hours(duration)
-      when :days 
+      when :days
         format_days(duration)
       when :work_days
         format_work_days(duration)
@@ -19,13 +19,11 @@ module TimeSheetsHelper
   end
 
   def time_type_css(type)
-    case 
+    case
     when is_type?(type, :work)
       'success'
     when is_type?(type, :vacation)
       'info'
-    when is_type?(type, :onduty)
-      'important'
     when is_type?(type, :overtime)
       'inverse'
     else
@@ -34,28 +32,26 @@ module TimeSheetsHelper
   end
 
   def time_type_text(type)
-    case 
+    case
     when is_type?(type, :work)
       'work'
     when is_type?(type, :vacation)
       'vacation'
-    when is_type?(type, :onduty)
-      'onduty'
     when is_type?(type, :overtime)
       'overtime'
     else
       'default'
-    end   
+    end
   end
 
   private
 
   def format_days(time)
-    "%.1fd" % time.to_days 
+    "%.1fd" % time.to_days
   end
 
   def format_work_days(time)
-    "%.1fd" % time.to_work_days 
+    "%.1fd" % time.to_work_days
   end
 
   def format_hours(time)

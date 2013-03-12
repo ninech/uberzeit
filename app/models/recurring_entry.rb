@@ -11,7 +11,6 @@ class RecurringEntry < ActiveRecord::Base
 
   # scope :work, joins: :time_type, conditions: ['is_work = ?', true]
   # scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
-  # scope :onduty, joins: :time_type, conditions: ['is_onduty = ?', true]
 
   # def self.find_chunks(date_or_range, time_type_scope = nil)
   #   chunks_range = date_or_range.to_range

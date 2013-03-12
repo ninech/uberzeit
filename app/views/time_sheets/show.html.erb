@@ -27,19 +27,6 @@
         <td>Remaining</td>
         <td><%= format_duration(@time_sheet.remaining_vacation(year), :vacation, :work_days) %></td>
       </tr>
-      <%
-        onduty = @time_sheet.total(week, :onduty)
-        if onduty != 0
-      %>
-      <tr>
-        <td>On duty</td>
-        <td><%= format_duration(onduty, :onduty) %></td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-      </tr>
-      <%
-        end
-      %>
     </tbody>
   </table>
   <table class="table">

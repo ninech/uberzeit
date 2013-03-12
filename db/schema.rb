@@ -97,12 +97,14 @@ ActiveRecord::Schema.define(:version => 20130311121647) do
 
   create_table "time_types", :force => true do |t|
     t.string   "name"
-    t.boolean  "is_work",     :default => false
-    t.boolean  "is_vacation", :default => false
-    t.boolean  "is_onduty",   :default => false
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.boolean  "is_work",       :default => false
+    t.boolean  "is_vacation",   :default => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.datetime "deleted_at"
+    t.boolean  "treat_as_work", :default => false
+    t.boolean  "daywise"
+    t.boolean  "timewise"
   end
 
   create_table "users", :force => true do |t|
