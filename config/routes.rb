@@ -6,7 +6,8 @@ Uberzeit::Application.routes.draw do
     #resources :single_entries, except: [:show, :index]
     resources :recurring_entries, except: [:show, :index]
 
-    resources :entries, except: [:show, :index]
+    resources :time_entries, except: [:show, :index]
+    resources :date_entries, except: [:show, :index]
   end
 
   resources :users do

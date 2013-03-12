@@ -1,23 +1,15 @@
-<%= form_for([@time_sheet, @entry]) do |f| %>
-  <% if @entry.errors.any? %>
+<%= form_for([@time_sheet, @date_entry]) do |f| %>
+  <% if @date_entry.errors.any? %>
     <div id="error_explanation" class="alert alert-error">
-      <h2><%= pluralize(@entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
+      <h2><%= pluralize(@date_entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
 
       <ul>
-      <% @entry.errors.full_messages.each do |msg| %>
+      <% @date_entry.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :type %>
-    <%= f.radio_button :type, 'TimeEntry' %>
-    <%= f.label :type, 'Time', value: 'TimeEntry' %>
-    <%= f.radio_button :type, 'DateEntry' %>
-    <%= f.label :type, 'Date', value: 'DateEntry' %>
-  </div>
 
   <div class="field">
     <%= f.check_box :first_half_day %>
@@ -32,11 +24,6 @@
   <div class="field">
     <%= f.label :time_type %><br/>
     <%= f.collection_select :time_type_id, TimeType.all, :id, :name %>
-  </div>
-
-  <div class="field">
-    <%= f.datetime_select :start_time %><br/>
-    <%= f.datetime_select :end_time %>
   </div>
 
   <div class="field">
