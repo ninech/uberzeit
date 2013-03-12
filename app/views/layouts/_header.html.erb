@@ -11,7 +11,9 @@
           <li><a href="#"><%= t('.settings') %></a></li>
         </ul>
       </div>
-      <a href="#" class="button"><span class="icon-plus"></span> <%= t '.add_time' %></a>
+      <% if has_top_buttons? %>
+        <%= render "#{controller.controller_name}/top_buttons" %>
+      <% end %>
     </div>
   </div>
 </div>

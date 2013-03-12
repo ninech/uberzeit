@@ -100,4 +100,14 @@
       }
     }
   }
+
+  form.new_time_entry {
+    label {
+      font-size: 1.2em;
+      font-weight: 600;
+    }
+    input {
+      font-size: 1.2em;
+    }
+  }
 }

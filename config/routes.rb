@@ -7,6 +7,9 @@ Uberzeit::Application.routes.draw do
     resources :time_entries, except: [:show, :index]
     resources :date_entries, except: [:show, :index]
     resources :recurring_entries, except: [:show, :index]
+    member do
+      match '/days/:date', to: 'time_sheets#show', via: :get
+    end
   end
 
   resources :users do

@@ -8,3 +8,6 @@ en:
         treat_as_work: 'treat this work as worktime in the calculation'
         daywise: 'Allows creating (half) days events'
         timewise: 'Allows creating events on a 5 minute basis'
+  time:
+    formats:
+      default: '%H:%M'
