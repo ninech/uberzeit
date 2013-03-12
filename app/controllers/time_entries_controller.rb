@@ -1,7 +1,6 @@
-class EntriesController < ApplicationController
-
+class TimeEntriesController < ApplicationController
   load_and_authorize_resource :time_sheet
-  load_and_authorize_resource :entry, through: :time_sheet
+  load_and_authorize_resource :time_entry, through: :time_sheet
 
   def new
   end
@@ -10,7 +9,7 @@ class EntriesController < ApplicationController
   end
 
   def create
-    if @entry.to_type.save
+    if @time_entry.save
       redirect_to @time_sheet, :notice => 'Entry was successfully created.'
     else
       render :action => 'new'
@@ -18,7 +17,7 @@ class EntriesController < ApplicationController
   end
 
   def update
-    if @entry.to_type.update_attributes(params[:entry])
+    if @time_entry.update_attributes(params[:time_entry])
       redirect_to @time_sheet, :notice => 'Entry was successfully updated.'
     else
       render :action => 'edit'
@@ -26,7 +25,7 @@ class EntriesController < ApplicationController
   end
 
   def destroy
-    if @entry.destroy
+    if @time_entry.destroy
       redirect_to @time_sheet, :notice => 'Entry was successfully deleted.'
     else
       render :action => 'edit'

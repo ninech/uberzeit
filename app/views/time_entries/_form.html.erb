@@ -1,0 +1,28 @@
+<%= form_for([@time_sheet, @time_entry]) do |f| %>
+  <% if @time_entry.errors.any? %>
+    <div id="error_explanation" class="alert alert-error">
+      <h2><%= pluralize(@time_entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
+
+      <ul>
+      <% @time_entry.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :time_type %><br/>
+    <%= f.collection_select :time_type_id, TimeType.all, :id, :name %>
+  </div>
+
+  <div class="field">
+    <%= f.datetime_select :start_time %><br/>
+    <%= f.datetime_select :end_time %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>
+

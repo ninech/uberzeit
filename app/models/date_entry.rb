@@ -1,5 +1,10 @@
-class DateEntry < Entry
-  validates_presence_of :time_sheet, :time_type, :start_date, :end_date
+class DateEntry < ActiveRecord::Base
+  include CommonEntry
+
+  attr_accessible :start_date, :end_date
+  attr_accessible :first_half_day, :second_half_day
+
+  validates_presence_of :start_date, :end_date
 
   validates_datetime :start_date
   validates_datetime :end_date, on_or_after: :start_date
@@ -46,11 +51,6 @@ class DateEntry < Entry
     time_start = time_start + 12.hours if second_half_day? && !whole_day?
 
     (time_start..time_end)
-  end
-
-  def self.model_name
-    # generate paths for parent class
-    Entry.model_name
   end
 end
 

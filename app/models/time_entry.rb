@@ -1,5 +1,9 @@
-class TimeEntry < Entry
-  validates_presence_of :time_sheet, :time_type, :start_time, :end_time
+class TimeEntry < ActiveRecord::Base
+  include CommonEntry
+
+  attr_accessible :start_time, :end_time
+
+  validates_presence_of :start_time, :end_time
 
   validates_datetime :start_time
   validates_datetime :end_time, after: :start_time
@@ -22,11 +26,6 @@ class TimeEntry < Entry
 
   def ends
     end_time
-  end
-
-  def self.model_name
-    # generate paths for parent class
-    Entry.model_name
   end
 
   private
