@@ -35,13 +35,13 @@ describe Vacation do
         employment = user.employments.first
         employment.workload = 30
         employment.start_date = '2013-01-01'.to_date
-        employment.end_date = '2013-03-31'.to_date
+        employment.end_date = '2013-03-31'.to_date # total: 90 days
         employment.save!
         FactoryGirl.create(:employment, user: user, workload: 50, start_date: '2013-04-01'.to_date, end_date: '2013-12-31'.to_date)
       end
 
       it 'is handles multiple employments' do
-        vacation.total_redeemable_for_year.should eq(11.work_days) # 11.25
+        vacation.total_redeemable_for_year.should eq(11.5.work_days) # 25*(90.0/365*0.3+275.0/365*0.5)
       end
 
     end

@@ -50,9 +50,20 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     TEST_TIME_TYPES = {}
-    %w{work vacation onduty break}.each do |time_type|
+    %w{work vacation break}.each do |time_type|
       TEST_TIME_TYPES[time_type.to_sym] = FactoryGirl.create("time_type_#{time_type}", name: "test_#{time_type}")
     end
+  end
+
+  config.before(:each) do
+    # Overwrite uZ config with default values
+    uberzeit_config = {
+      rounding: 5.minutes,
+      work_days:  [:monday, :tuesday, :wednesday, :thursday, :friday],
+      work_per_day:  8.5.hours,
+      vacation_per_year:  25.days
+    }
+    stub_const 'UberZeit::Config', uberzeit_config
   end
 
   config.after(:suite) do

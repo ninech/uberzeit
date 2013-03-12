@@ -55,6 +55,14 @@ class User < ActiveRecord::Base
     vacation.total_redeemable_for_year
   end
 
+  def current_time_sheet
+    time_sheets.first
+  end
+
+  def current_employment
+    employments.first
+  end
+
   def self.create_with_omniauth(auth)
     create! do |user|
       user.uid = auth['uid']

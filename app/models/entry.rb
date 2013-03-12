@@ -1,9 +1,4 @@
 class Entry < ActiveRecord::Base
-  if Rails.env.development? # populate descendants in lazy loading environment
-    %w(date_entry time_entry).each do |class_name|
-      require_dependency File.join("app","models","#{class_name}.rb")
-    end
-  end
 
   acts_as_paranoid
 
@@ -16,7 +11,6 @@ class Entry < ActiveRecord::Base
 
   scope :work, joins: :time_type, conditions: ['is_work = ?', true]
   scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
-  scope :onduty, joins: :time_type, conditions: ['is_onduty = ?', true]
 
   def self.find_chunks(date_or_range, time_type_scope = nil)
     range = date_or_range.to_range
@@ -47,5 +41,9 @@ class Entry < ActiveRecord::Base
 
   def range
     (starts..ends)
+  end
+
+  def self.descendants
+    [DateEntry,TimeEntry]
   end
 end

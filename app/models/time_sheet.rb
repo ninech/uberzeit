@@ -11,56 +11,17 @@ class TimeSheet < ActiveRecord::Base
 
   # returns time chunks (which are limited to the given date or range)
   def find_chunks(date_or_range, time_type_scope = nil)
-    chunks = []
-    chunks += entries.find_chunks(date_or_range, time_type_scope)
-    #chunks += recurring_entries.find_chunks(date_or_range, time_type_scope)
-
-    chunks
+    TimeChunkCollection.new(date_or_range, entries, time_type_scope)
   end
 
   def total(date_or_range, type)
     chunks = find_chunks(date_or_range, type)
 
-    total = chunks.inject(0) do |sum, chunk|
-      duration = chunk.duration
-
-      if chunk.parent.respond_to?(:whole_day?) && chunk.parent.whole_day?
-        duration = chunk.range.to_date_range.inject(0) do |sum_chunk, date|
-          # whole day is independent of users workload
-          sum_chunk + user.planned_work(date, true)
-        end
-      end
-
-      sum + duration
-    end
-
-    total
+    chunks.total(type)
   end
 
   def overtime(date_or_range)
-    if date_or_range.kind_of?(Date)
-      date = date_or_range
-      workload = user.workload_on(date)
-
-      if workload >= 100
-        # For full time position, the overtime per day is based on the excess of time relative to the planned work per day
-        remaining_work_on_date = user.planned_work(date) - total(date, :vacation)
-      else
-        # special case for people with no fulltime position
-        # calculate the daily overtime not based on the daily work hour (because it might be like 6.8 hours for 80% workload)
-        # but calculate the overtime based on the status of the current week
-        week_until_today = date.monday...date.to_date
-        whole_week = date.monday...date.next_week
-
-        effective_planned_work = user.planned_work(whole_week) - total(whole_week, :vacation)
-        remaining_work_on_date = [effective_planned_work - total(week_until_today, :work), 0].max
-      end
-
-      overtime = [total(date, :work) - remaining_work_on_date, 0].max
-    else
-      effective_planned_work = user.planned_work(date_or_range) - total(date_or_range, :vacation)
-      overtime = total(date_or_range, :work) - effective_planned_work
-    end
+    Overtime.new(user, date_or_range).total
   end
 
   def vacation(year)

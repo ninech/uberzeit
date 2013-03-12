@@ -1,17 +1,19 @@
 require 'spec_helper'
 
 describe User do
+
+  let(:user) { FactoryGirl.create(:user) }
+  let(:leader) { FactoryGirl.create(:leader) }
+
   it 'has a valid factory' do
-    FactoryGirl.create(:user).should be_valid
+    FactoryGirl.build(:user).should be_valid
   end
 
   it 'provides subordinates' do
-    leader = FactoryGirl.create(:leader)
     leader.subordinates.length.should eq(leader.teams.first.members.length)
   end
 
   it 'acts as paranoid' do
-    user = FactoryGirl.create(:user)
     user.destroy
     expect { User.find(user.id) }.to raise_error
     expect { User.with_deleted.find(user.id) }.to_not raise_error
@@ -47,6 +49,18 @@ describe User do
       it { should be_persisted }
       its(:name) { should eq('Super User') }
 
+    end
+  end
+
+  describe '#current_time_sheet' do
+    it 'returns the current active timesheet' do
+      user.current_time_sheet.should eq(user.time_sheets.first)
+    end
+  end
+
+  describe '#current_employment' do
+    it 'returns the current active employment' do
+      user.current_employment.should eq(user.employments.first)
     end
   end
 

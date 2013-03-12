@@ -29,11 +29,8 @@ class Range
   end
 
   def duration
-    return nil unless max.respond_to?(:strftime)
-    # convert to time if date is supplied
-    rs = min.kind_of?(Time) ? min : Time.parse(min.to_s)
-    re = max.kind_of?(Time) ? max : Time.parse(max.to_s)
-    (re - rs).to_i
+    range = self.to_time_range
+    (range.max - range.min).to_i
   end
 
   def to_range
@@ -41,7 +38,6 @@ class Range
   end
 
   def to_date_range
-    raise "Min and Max need to be the same class" unless min.class == max.class
     case min
     when Date
       self.dup
@@ -58,7 +54,6 @@ class Range
   end
 
   def to_time_range
-    raise "Min and Max need to be the same class" unless min.class == max.class
     case min
     when Date
       # Midnight is Time.zone aware
