@@ -127,12 +127,6 @@ describe TimeSheet do
         time_sheet.overtime('2013-02-04'.to_date...'2013-02-11'.to_date).should eq(20.75.hours)
       end
 
-      it 'calculates the daily overtime duration' do
-        # different for part-time workers, depending on excess of work hours till this day relative to the planned working time for the week
-        time_sheet.overtime('2013-02-05'.to_date).should eq(2.75.hours)
-        time_sheet.overtime('2013-02-08'.to_date).should eq(10.hours)
-      end
-
       it 'calculates the number of redeemed vacation days for the year' do
         time_sheet.vacation(2013).should eq(3.0.work_days)
       end
