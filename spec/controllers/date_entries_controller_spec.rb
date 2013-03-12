@@ -54,11 +54,11 @@ describe DateEntriesController do
 
       context 'with valid attributes' do
         it 'changes date_entry\'s attributes' do
-          time_now = Time.zone.now.round
-          put :update, id: date_entry, time_sheet_id: date_entry.time_sheet, date_entry: FactoryGirl.attributes_for(:date_entry, start_time: time_now, end_time: time_now + 1.hour)
+          date_now = Date.today
+          put :update, id: date_entry, time_sheet_id: date_entry.time_sheet, date_entry: FactoryGirl.attributes_for(:date_entry, start_date: date_now, end_date: date_now)
           date_entry.reload
-          date_entry.start_time.should eq(time_now)
-          date_entry.end_time.should eq(time_now + 1.hour)
+          date_entry.start_date.should eq(date_now)
+          date_entry.end_date.should eq(date_now)
         end
 
         it 'redirects to the sheet overview' do

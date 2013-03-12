@@ -1,5 +1,9 @@
-class TimeEntry < Entry
-  validates_presence_of :time_sheet, :time_type, :start_time, :end_time
+class TimeEntry < ActiveRecord::Base
+  include CommonEntry
+
+  attr_accessible :start_time, :end_time
+
+  validates_presence_of :start_time, :end_time
 
   validates_datetime :start_time
   validates_datetime :end_time, after: :start_time
@@ -11,6 +15,10 @@ class TimeEntry < Entry
     between_time_range = between_range.to_time_range
     { conditions: ['(start_time < ? AND end_time > ?)', between_time_range.max, between_time_range.min] }
   }
+
+  def self.to_chunks
+    scoped.collect { |time_entry| TimeChunk.new(range: time_entry.range, time_type: time_entry.time_type, parent: time_entry) }
+  end
 
   def starts
     start_time

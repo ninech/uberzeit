@@ -11,15 +11,28 @@
     </div>
   <% end %>
 
-  <%= f.date_select :start_date %><br/>
-  <%= f.date_select :end_date %>
+  <div class="field">
+    <%= f.check_box :first_half_day %>
+    <%= f.label :first_half_day %>
+  </div>
 
   <div class="field">
-    <%= f.label :time_type %><br />
+    <%= f.check_box :second_half_day %>
+    <%= f.label :second_half_day %>
+  </div>
+
+  <div class="field">
+    <%= f.label :time_type %><br/>
     <%= f.collection_select :time_type_id, TimeType.all, :id, :name %>
+  </div>
+
+  <div class="field">
+    <%= f.date_select :start_date %><br/>
+    <%= f.date_select :end_date %>
   </div>
 
   <div class="actions">
     <%= f.submit class: 'btn btn-primary' %>
   </div>
 <% end %>
+

@@ -1,7 +1,7 @@
 FactoryGirl.define do
-  factory :date_entry, class: DateEntry, parent: Entry do
+  factory :date_entry do
     ignore do
-      type :work
+      time_type :work
     end
 
     time_sheet
@@ -9,7 +9,7 @@ FactoryGirl.define do
     end_date { Date.today }
 
     after(:build) do |entry, evaluator|
-      entry.time_type = TEST_TIME_TYPES[evaluator.type]
+      entry.time_type = TEST_TIME_TYPES[evaluator.time_type]
     end
 
     factory :invalid_date_entry do

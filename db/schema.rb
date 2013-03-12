@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130308140014) do
+ActiveRecord::Schema.define(:version => 20130312122801) do
+
+  create_table "date_entries", :force => true do |t|
+    t.integer  "time_sheet_id"
+    t.integer  "time_type_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "first_half_day",  :default => false
+    t.boolean  "second_half_day", :default => false
+    t.datetime "deleted_at"
+  end
+
+  add_index "date_entries", ["time_sheet_id"], :name => "index_date_entries_on_time_sheet_id"
+  add_index "date_entries", ["time_type_id"], :name => "index_date_entries_on_time_type_id"
 
   create_table "employments", :force => true do |t|
     t.integer  "user_id"
@@ -24,23 +37,6 @@ ActiveRecord::Schema.define(:version => 20130308140014) do
   end
 
   add_index "employments", ["user_id"], :name => "index_employments_on_user_id"
-
-  create_table "entries", :force => true do |t|
-    t.integer  "time_sheet_id"
-    t.datetime "start_time"
-    t.datetime "end_time"
-    t.integer  "time_type_id"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-    t.datetime "deleted_at"
-    t.boolean  "whole_day",     :default => false
-    t.string   "type"
-    t.date     "start_date"
-    t.date     "end_date"
-  end
-
-  add_index "entries", ["time_sheet_id"], :name => "index_single_entries_on_time_sheet_id"
-  add_index "entries", ["time_type_id"], :name => "index_single_entries_on_time_type_id"
 
   create_table "memberships", :force => true do |t|
     t.integer  "team_id"
@@ -66,6 +62,24 @@ ActiveRecord::Schema.define(:version => 20130308140014) do
   add_index "recurring_entries", ["time_sheet_id"], :name => "index_recurring_entries_on_time_sheet_id"
   add_index "recurring_entries", ["time_type_id"], :name => "index_recurring_entries_on_time_type_id"
 
+  create_table "recurring_schedules", :force => true do |t|
+    t.boolean  "active",                  :default => false
+    t.integer  "entry_id"
+    t.string   "ends"
+    t.integer  "ends_counter"
+    t.date     "ends_date"
+    t.string   "repeat_interval_type"
+    t.integer  "daily_repeat_interval"
+    t.integer  "weekly_repeat_interval"
+    t.string   "weekly_repeat_weekday"
+    t.integer  "monthly_repeat_interval"
+    t.string   "monthly_repeat_by"
+    t.integer  "yearly_repeat_interval"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.datetime "deleted_at"
+  end
+
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.integer  "resource_id"
@@ -84,6 +98,17 @@ ActiveRecord::Schema.define(:version => 20130308140014) do
     t.datetime "updated_at", :null => false
     t.datetime "deleted_at"
   end
+
+  create_table "time_entries", :force => true do |t|
+    t.integer  "time_sheet_id"
+    t.integer  "time_type_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "deleted_at"
+  end
+
+  add_index "time_entries", ["time_sheet_id"], :name => "index_time_entries_on_time_sheet_id"
+  add_index "time_entries", ["time_type_id"], :name => "index_time_entries_on_time_type_id"
 
   create_table "time_sheets", :force => true do |t|
     t.integer  "user_id"
