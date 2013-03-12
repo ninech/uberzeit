@@ -3,9 +3,11 @@ class TimeEntriesController < ApplicationController
   load_and_authorize_resource :time_entry, through: :time_sheet
 
   def new
+    @time_entry.build_recurring_schedule
   end
 
   def edit
+    @time_entry.build_recurring_schedule if @time_entry.recurring_schedule.nil?
   end
 
   def create

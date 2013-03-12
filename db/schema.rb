@@ -11,16 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130312122801) do
+ActiveRecord::Schema.define(:version => 20130312134235) do
 
   create_table "date_entries", :force => true do |t|
     t.integer  "time_sheet_id"
     t.integer  "time_type_id"
     t.date     "start_date"
     t.date     "end_date"
-    t.boolean  "first_half_day",  :default => false
-    t.boolean  "second_half_day", :default => false
+    t.boolean  "first_half_day",        :default => false
+    t.boolean  "second_half_day",       :default => false
     t.datetime "deleted_at"
+    t.integer  "recurring_schedule_id"
   end
 
   add_index "date_entries", ["time_sheet_id"], :name => "index_date_entries_on_time_sheet_id"
@@ -64,7 +65,8 @@ ActiveRecord::Schema.define(:version => 20130312122801) do
 
   create_table "recurring_schedules", :force => true do |t|
     t.boolean  "active",                  :default => false
-    t.integer  "entry_id"
+    t.integer  "enterable_id"
+    t.string   "enterable_type"
     t.string   "ends"
     t.integer  "ends_counter"
     t.date     "ends_date"
@@ -105,6 +107,7 @@ ActiveRecord::Schema.define(:version => 20130312122801) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.datetime "deleted_at"
+    t.integer  "recurring_schedule_id"
   end
 
   add_index "time_entries", ["time_sheet_id"], :name => "index_time_entries_on_time_sheet_id"

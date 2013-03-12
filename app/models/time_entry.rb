@@ -3,12 +3,12 @@ class TimeEntry < ActiveRecord::Base
 
   attr_accessible :start_time, :end_time
 
+  before_validation :round_times
+
   validates_presence_of :start_time, :end_time
 
   validates_datetime :start_time
   validates_datetime :end_time, after: :start_time
-
-  before_validation :round_times
 
   # http://stackoverflow.com/questions/143552/comparing-date-ranges
   scope :between, lambda { |between_range|

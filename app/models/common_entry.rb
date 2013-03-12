@@ -13,9 +13,15 @@ module CommonEntry
     belongs_to :time_sheet
     belongs_to :time_type
 
-    attr_accessible :time_sheet_id, :time_type_id, :type
+    has_one :recurring_schedule, :as => :enterable
 
+    attr_accessible :recurring_schedule, :recurring_schedule_attributes
+
+    attr_accessible :time_sheet_id, :time_type_id, :type
     validates_presence_of :time_sheet, :time_type
+
+    accepts_nested_attributes_for :recurring_schedule, reject_if: :reject_recurring_schedule_condition, allow_destroy: true
+    before_save :mark_recurring_schedule_for_removal, if: :delete_recurring_schedule_condition
 
     scope :work, joins: :time_type, conditions: ['is_work = ?', true]
     scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
@@ -59,5 +65,15 @@ module CommonEntry
 
   def range
     (starts..ends)
+  end
+
+  private
+
+  def delete_recurring_schedule_condition
+    recurring_schedule && !recurring_schedule.active?
+  end
+
+  def reject_recurring_schedule_condition(attributes)
+    attributes['id'].nil? && attributes['active'].to_i != 1
   end
 end
