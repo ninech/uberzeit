@@ -35,7 +35,7 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def range_for_other_start_time(other_start_time)
-    other_start_time = other_start_time.to_time
+    other_start_time = other_start_time
     (other_start_time..other_start_time+duration)
   end
 end
