@@ -3,7 +3,7 @@
   <div class="large-12 columns">
     <div class="timesheet">
       <div class="head">
-        <%= l @weekdays.first, :format => :long %> -  <%= l @weekdays.last, :format => :long %>
+        <%= l @weekdays.first, :format => :long %> – <%= l @weekdays.last, :format => :long %>
         <div class="right">
           <a href="<%= url_for(action: :show, date: @previous_week_day.to_formatted_s(:iso)) %>"><span class="icon-caret-left"></span></a>
           <a href="<%= url_for(action: :show, date: @next_week_day.to_formatted_s(:iso)) %>"><span class="icon-caret-right"></span></a>
@@ -31,12 +31,12 @@
       </div>
       <div class="entries">
         <ul>
-          <% @time_entries.each do |time_entry| %>
+          <% @time_chunks.each do |time_chunk| %>
             <li>
-              <%= l time_entry.starts %> - <%= l time_entry.ends %>
-              <small><%= time_entry.time_type %></small>
+              <%= l time_chunk.starts %> - <%= l time_chunk.ends %>
+              <small><%= time_chunk.time_type %></small>
               <div class="right">
-                <%= l Time.at(time_entry.duration) %>
+                <%= l Time.at(time_chunk.duration) %>
               </div>
             </li>
           <% end %>

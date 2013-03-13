@@ -103,16 +103,26 @@
 
   form.new_time_entry {
     label {
-      font-size: 1.2em;
       font-weight: 600;
     }
-    input {
+
+    input, label {
       font-size: 1.2em;
+    }
+
+    select {
+      font-size: 1.1em;
     }
   }
 
   #add-time-modal {
     top: 50px;
+
+    .time-difference {
+      padding-top: 1.9em;
+      font-size: 1.2em;
+      color: #525252;
+    }
   }
 
 }

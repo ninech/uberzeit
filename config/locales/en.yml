@@ -11,3 +11,7 @@ en:
   time:
     formats:
       default: '%H:%M'
+  date:
+    formats:
+      default: '%d.%m.%Y'
+      long: '%A, %d. %B %Y'

@@ -18,8 +18,14 @@ class TimeSheetsController < ApplicationController
     @previous_week_day = (@week.min - 1).at_beginning_of_week
     @next_week_day = @week.max + 1
 
-    @time_entries = @time_sheet.find_chunks(@day)
+    @time_chunks = @time_sheet.find_chunks(@day)
+
+    # stuff for add form in modal
     @time_entry = TimeEntry.new
+    if params[:date]
+      @time_entry.start_date = params[:date]
+    end
+    @time_types = TimeType.find_all_by_is_work(true)
   end
 
 end

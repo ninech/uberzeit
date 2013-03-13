@@ -9,6 +9,8 @@ class TimeEntriesController < ApplicationController
   end
 
   def create
+    @time_types = TimeType.find_all_by_is_work(true)
+
     if @time_entry.save
       redirect_to @time_sheet, :notice => 'Entry was successfully created.'
     else

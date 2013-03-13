@@ -1,25 +1,34 @@
-<%= form_for([@time_sheet, @time_entry]) do |f| %>
-   <div class="row">
-    <div class="small-6 columns end">
-      <%= f.label :start_date %>
-      <%= f.text_field :start_date %><br/>
+<%= form_for([@time_sheet, @time_entry], remote: false) do |f| %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.label :time_type_id %>
+      <%= f.collection_select :time_type_id, @time_types, :id, :name %>
     </div>
   </div>
+<!--    <div class="row">
+    <div class="small-12 columns">
+      <%= f.label :start_date %>
+      <%= f.text_field :start_date, value: l(@time_entry.start_date.to_date, format: :long) %>
+    </div>
+  </div> -->
 
   <div class="row">
-    <div class="small-6 columns">
-      <%= f.label :start_time %>
-      <%= f.text_field :start_time, class: 'time' %><br/>
+    <div class="small-4 columns">
+      <%= f.label :from_time %>
+      <%= f.text_field :from_time, class: 'time' %>
     </div>
-    <div class="small-6 columns">
-      <%= f.label :end_time %>
-      <%= f.text_field :end_time, class: 'time' %><br/>
+    <div class="small-4 columns">
+      <%= f.label :to_time %>
+      <%= f.text_field :to_time, class: 'time' %>
+    </div>
+    <div class="small-4 columns time-difference">
+
     </div>
   </div>
 
   <div class="row">
     <div class="small-12 columns">
-      <%= f.submit t('.add'), class: 'primary medium button' %>
+      <%= f.submit t('.add_timer'), id: 'time_entry_submit', class: 'primary medium button' %>
       <%= link_to t('.cancel'), '#', class: 'close-reveal-modal link' %>
     </div>
   </div>
