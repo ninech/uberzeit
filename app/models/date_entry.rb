@@ -8,29 +8,22 @@ class DateEntry < ActiveRecord::Base
   validates_datetime :start_date
   validates_datetime :end_date, on_or_after: :start_date
 
-  scope :between, lambda { |between_range|
-    between_date_range = between_range.to_date_range
-    { conditions: ['(start_date <= ? AND end_date >= ?)', between_date_range.max, between_date_range.min] }
-  }
-
-  def self.to_chunks
-    scoped.collect do |date_entry|
-      # iterate through each day and add the semi days as chunks
-      date_entry.range.collect { |day| TimeChunk.new(range: date_entry.time_range(day), time_type: date_entry.time_type, parent: date_entry) }
-    end.flatten
+  def self.nonrecurring_entries_in_range(range)
+    date_range = range.to_date_range
+    nonrecurring_entries.find(:all, conditions: ['(start_date <= ? AND end_date >= ?)', date_range.max, date_range.min])
   end
 
   def whole_day?
     # true when both or none of the flags is set
-    not first_half_day? ^ second_half_day?
+    not first_half_day? and not second_half_day?
   end
 
   def first_half_day?
-    !!first_half_day
+    !!first_half_day and not !!second_half_day
   end
 
   def second_half_day?
-    !!second_half_day
+    !!second_half_day and not !!first_half_day
   end
 
   def starts
@@ -41,15 +34,34 @@ class DateEntry < ActiveRecord::Base
     end_date
   end
 
-  def time_range(day)
-    time_start = day.midnight
-    time_end = day.midnight + 1.day
+  def time_range_for_date(date)
+    time_start = date.midnight
+    time_end = date.midnight + 1.day
 
-    # calculates the time range for the given day
-    time_end = time_end - 12.hours if first_half_day? && !whole_day?
-    time_start = time_start + 12.hours if second_half_day? && !whole_day?
+    time_end = time_end - 12.hours if first_half_day?
+    time_start = time_start + 12.hours if second_half_day?
 
     (time_start..time_end)
   end
+
+  def duration_in_days
+    (end_date - start_date).to_i
+  end
+
+  def occurrences_as_time_ranges(date_or_range)
+    # for date entries we have to generate a occurrence range for each day (half days are not continuous)
+    occurrences(date_or_range).collect do |start_time|
+      date_range = range_for_other_start_time(start_time)
+      date_range.collect { |day| time_range_for_date(day) }
+    end.flatten
+  end
+
+  private
+
+  def range_for_other_start_time(other_start_time)
+    other_start_date = other_start_time.to_date
+    (other_start_date..other_start_date+duration_in_days)
+  end
+
 end
 
