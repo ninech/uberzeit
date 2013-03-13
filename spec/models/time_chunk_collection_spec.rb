@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe TimeChunkCollection do
 
-  let(:object_to_scan) do
+  let(:object_to_scan) { mock }
+  let(:time_chunk_finder) do
     mock.tap do |m|
-      m.should_receive(:find_chunks).with(date_or_range.to_range, time_type_scope).and_return(time_chunks)
+      m.should_receive(:chunks).and_return(time_chunks)
     end
   end
 
@@ -12,6 +13,8 @@ describe TimeChunkCollection do
   let(:range) { date...('2013-03-13'.to_date) }
   let(:time_type_scope) { :work }
   let(:time_chunks) { [] }
+
+  before { TimeChunkFinder.stub(:new).and_return(time_chunk_finder) }
 
   describe '#new' do
     context 'date' do

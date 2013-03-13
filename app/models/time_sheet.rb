@@ -3,7 +3,7 @@ class TimeSheet < ActiveRecord::Base
 
   belongs_to :user
 
-  has_many :time_entries # required by cancans' load_and_authorize_resource
+  has_many :time_entries
   has_many :date_entries
 
   validates_presence_of :user
