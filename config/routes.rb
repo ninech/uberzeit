@@ -8,6 +8,7 @@ Uberzeit::Application.routes.draw do
 
     resources :time_entries, except: [:show, :index]
     resources :date_entries, except: [:show, :index]
+    resources :absences, only: :index
   end
 
   resources :users do
