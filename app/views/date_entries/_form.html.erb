@@ -31,6 +31,8 @@
     <%= f.date_select :end_date %>
   </div>
 
+  <%= render 'shared/recurring_schedule_sub_form', main_form: f %>
+
   <div class="actions">
     <%= f.submit class: 'btn btn-primary' %>
   </div>

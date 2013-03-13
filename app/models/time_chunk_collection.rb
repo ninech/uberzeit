@@ -6,7 +6,7 @@ class TimeChunkCollection
     @chunks = []
     @range = date_or_range.to_range
     @time_type_scope = time_type_scope
-    @objects_to_scan = unless objects_to_scan.respond_to?(:find_chunks)
+    @objects_to_scan = if objects_to_scan.respond_to?(:each)
                          objects_to_scan
                        else
                          [objects_to_scan]
@@ -47,7 +47,8 @@ class TimeChunkCollection
   private
   def scan
     @objects_to_scan.each do |object|
-      @chunks.concat object.find_chunks(@range, @time_type_scope)
+      finder = TimeChunkFinder.new(object, @range, @time_type_scope)
+      @chunks.concat finder.chunks
     end
   end
 

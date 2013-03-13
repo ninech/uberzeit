@@ -3,21 +3,16 @@ class TimeEntry < ActiveRecord::Base
 
   attr_accessible :start_time, :end_time, :start_date, :end_date, :from_time, :to_time
 
+  before_validation :round_times
+
   validates_presence_of :start_time, :end_time
 
   validates_datetime :start_time
   validates_datetime :end_time, after: :start_time
 
-  before_validation :round_times
-
-  # http://stackoverflow.com/questions/143552/comparing-date-ranges
-  scope :between, lambda { |between_range|
-    between_time_range = between_range.to_time_range
-    { conditions: ['(start_time < ? AND end_time > ?)', between_time_range.max, between_time_range.min] }
-  }
-
-  def self.to_chunks
-    scoped.collect { |time_entry| TimeChunk.new(range: time_entry.range, time_type: time_entry.time_type, parent: time_entry) }
+  def self.nonrecurring_entries_in_range(range)
+    time_range = range.to_time_range
+    nonrecurring_entries.find(:all, conditions: ['(start_time < ? AND end_time > ?)', time_range.max, time_range.min])
   end
 
   def starts
@@ -27,7 +22,6 @@ class TimeEntry < ActiveRecord::Base
   def ends
     end_time
   end
-
 
   def start_date
     self.start_time ||= Time.now
@@ -76,6 +70,9 @@ class TimeEntry < ActiveRecord::Base
     end
   end
 
+  def occurrences_as_time_ranges(date_or_range)
+    occurrences(date_or_range).collect { |start_time| range_for_other_start_time(start_time) }
+  end
 
 
   private
@@ -83,5 +80,10 @@ class TimeEntry < ActiveRecord::Base
   def round_times
     self.start_time = start_time.round unless start_time.nil?
     self.end_time = end_time.round unless end_time.nil?
+  end
+
+  def range_for_other_start_time(other_start_time)
+    other_start_time = other_start_time.to_time
+    (other_start_time..other_start_time+duration)
   end
 end
