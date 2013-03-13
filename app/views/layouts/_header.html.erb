@@ -1,0 +1,25 @@
+<div class="header container">
+  <div class="row">
+    <div class="large-12 columns">
+      <div class="logo">
+        <%= image_tag('logo.svg', size: '122x36') %>
+      </div>
+      <div class="navigation">
+        <ul>
+          <li><%= link_to t('.timesheet'), root_url %></a></li>
+          <li><a href="#"><%= t('.absences') %></a></li>
+          <li><a href="#"><%= t('.settings') %></a></li>
+        </ul>
+      </div>
+      <% if has_top_buttons? %>
+        <%= render "#{controller.controller_name}/top_buttons" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- <ul class="nav nav-tabs">
+  <li class="<%= active_tab('time_sheets','single_entries','recurring_entries') %>"><a href="<%= time_sheet_path(@user ? @user.time_sheets.last : current_user.time_sheets.last) %>">Time Sheet</a></li>
+  <li class="<%= active_tab('users', 'employments') %>"><a href="<%= edit_user_path(@time_sheet.nil? ? current_user : @time_sheet.user) %>">Users</a></li>
+  <li class="<%= active_tab('time_types') %>"><a href="<%= time_types_path %>">Time Types</a></li>
+</ul> -->

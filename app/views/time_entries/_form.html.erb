@@ -1,30 +1,27 @@
 <%= form_for([@time_sheet, @time_entry]) do |f| %>
-  <% if @time_entry.errors.any? %>
-    <div id="error_explanation" class="alert alert-error">
-      <h2><%= pluralize(@time_entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
-
-      <ul>
-      <% @time_entry.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+   <div class="row">
+    <div class="small-6 columns end">
+      <%= f.label :start_date %>
+      <%= f.text_field :start_date %><br/>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :time_type %><br/>
-    <%= f.collection_select :time_type_id, TimeType.all, :id, :name %>
   </div>
 
-  <div class="field">
-    <%= f.datetime_select :start_time %><br/>
-    <%= f.datetime_select :end_time %>
+  <div class="row">
+    <div class="small-6 columns">
+      <%= f.label :start_time %>
+      <%= f.text_field :start_time, class: 'time' %><br/>
+    </div>
+    <div class="small-6 columns">
+      <%= f.label :end_time %>
+      <%= f.text_field :end_time, class: 'time' %><br/>
+    </div>
   </div>
 
-  <%= render 'shared/recurring_schedule_sub_form', main_form: f %>
-
-  <div class="actions">
-    <%= f.submit class: 'btn btn-primary' %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.submit t('.add'), class: 'primary medium button' %>
+      <%= link_to t('.cancel'), '#', class: 'close-reveal-modal link' %>
+    </div>
   </div>
 <% end %>
 

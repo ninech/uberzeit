@@ -1,3 +1,118 @@
-// Place all the styles related to the TimeSheets controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'compass/css3/images';
+
+#content-time_sheets {
+  .timesheet {
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+
+    .head {
+      font-weight: 600;
+      background-color: #EBEBEB;
+      color: #474747;
+      padding: 15px 10px;
+      border-bottom: 1px solid #ADADAD;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+      // box-shadow: inset 0 -7px 6px -9px #000;
+      @include background-image(linear-gradient(top center, #F5F5F5 0%, #E0E0E0 90%));
+
+      .right {
+        margin-top: -4px;
+        a {
+          font-size: 1.5em;
+          margin-left: 7px;
+        }
+      }
+    }
+
+    .weekdays {
+      ul {
+        width: 100%;
+        height: 45px;
+        li {
+          float: left;
+          width: 12.5%;
+
+          > a, > div {
+            display: block;
+            padding: 10px;
+            height: 60px;
+            text-align: center;
+            float: none;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+            // width: 14.2857%;
+            background-color: #CCCCCC;
+            border-bottom: 1px solid #ADADAD;
+            border-left: 1px solid #ADADAD;
+            color: black;
+            font-weight: 600;
+            font-size: 0.8em;
+            float: none;
+            @include background-image(linear-gradient(top center, #F5F5F5 0%, #D6D6D6 90%));
+
+            &.active {
+              box-shadow: inset 0 0 10px 1px #CCCCCC;
+              background-image: none;
+              background-color: #E0E0E0;
+            }
+
+            span.day {
+              // display: block;
+            }
+
+            span.time {
+              font-weight: 400;
+              font-size: 1.2em;
+              // display: block;
+            }
+          }
+
+          &:first-child {
+            a {
+              border-left: none;
+            }
+          }
+
+          &.weeksummary div {
+            background: #F5F5F5;
+          }
+        }
+      }
+    }
+
+    .entries {
+      ul {
+        li {
+          padding: 20px;
+          border-bottom: 1px solid #CCCCCC;
+          font-weight: 600;
+          font-size: 1.2em;
+
+          &:last-child {
+            margin-bottom: 60px;
+          }
+
+          small {
+            font-weight: 300;
+            font-size: 0.8em;
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  form.new_time_entry {
+    label {
+      font-size: 1.2em;
+      font-weight: 600;
+    }
+    input {
+      font-size: 1.2em;
+    }
+  }
+
+  #add-time-modal {
+    top: 50px;
+  }
+
+}
