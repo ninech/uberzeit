@@ -4,19 +4,10 @@
 
 @import 'compass/css3/images';
 
-$event_color0: #A2B4DB;
-$event_color1: #BAE4E5;
-$event_color2: #B8D5F2;
-$event_color3: #FFC48C;
-$event_color4: #E9ECD9;
-$event_color5: #FAE1DE;
-$event_color6: #FAC5C0;
-$event_color7: #EFE3F3;
-$event_color8: #E0F3B2;
-$event_color9: #EAC5ED;
+$event_colors: #A2B4DB #BAE4E5 #B8D5F2 #FFC48C #E9ECD9 #FAE1DE #FAC5C0 #EFE3F3 #E0F3B2 #EAC5ED;
 
-@mixin event-color-gradient($color) {
-  @include background-image(linear-gradient(top center, lighten($color, 5%) 0%, $color 90%));
+@mixin event-background($color) {
+  background: rgba($color, 0.5)
 }
 
 ul.time-type-legend {
@@ -25,35 +16,10 @@ ul.time-type-legend {
   height: 1.2em;
 
   i {
-    &.event-color0 {
-      color: $event_color0;
-    }
-    &.event-color1 {
-      color: $event_color1;
-    }
-    &.event-color2 {
-      color: $event_color2;
-    }
-    &.event-color3 {
-      color: $event_color3;
-    }
-    &.event-color4 {
-      color: $event_color4;
-    }
-    &.event-color5 {
-      color: $event_color5;
-    }
-    &.event-color6 {
-      color: $event_color6;
-    }
-    &.event-color7 {
-      color: $event_color7;
-    }
-    &.event-color8 {
-      color: $event_color8;
-    }
-    &.event-color9 {
-      color: $event_color9;
+    @for $i from 1 through length($event_colors) {
+      &.event-color#{$i - 1} {
+        color: nth($event_colors, $i);
+      }
     }
   }
 
@@ -90,35 +56,10 @@ table.calendar {
     &.otherMonth {
       color: #adadad !important;
     }
-    &.event-color0 {
-      @include event-color-gradient($event_color0);
-    }
-    &.event-color1 {
-      @include event-color-gradient($event_color1);
-    }
-    &.event-color2 {
-      @include event-color-gradient($event_color2);
-    }
-    &.event-color3 {
-      @include event-color-gradient($event_color3);
-    }
-    &.event-color4 {
-      @include event-color-gradient($event_color4);
-    }
-    &.event-color5 {
-      @include event-color-gradient($event_color5);
-    }
-    &.event-color6 {
-      @include event-color-gradient($event_color6);
-    }
-    &.event-color7 {
-      @include event-color-gradient($event_color7);
-    }
-    &.event-color8 {
-      @include event-color-gradient($event_color8);
-    }
-    &.event-color9 {
-      @include event-color-gradient($event_color9);
+    @for $i from 1 through length($event_colors) {
+      &.event-color#{$i - 1} {
+        @include event-background(nth($event_colors, $i));
+      }
     }
   }
 }
