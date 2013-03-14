@@ -1,4 +1,3 @@
-<% @time_entries.inspect %>
 <div class="row">
   <div class="large-12 columns">
     <div class="timesheet">
@@ -16,7 +15,7 @@
               <a href="<%= url_for(action: :show, date: weekday.to_formatted_s(:iso)) %>" class="<%= 'active' if weekday == @day %>">
                 <span class="day"><%= l weekday, format: '%A' %></span>
                 <br>
-                <span class="time"><%= l Time.at(@time_sheet.total(weekday, :work)) %></span>
+                <span class="time"><%= worktime_for_day(weekday) %></span>
               </a>
             </li>
           <% end %>
@@ -24,25 +23,51 @@
             <div>
               <span class="total"><%= t '.total' %></span>
               <br>
-              <span class="time"><%= l Time.at(@time_sheet.total(@week, :work)) %></span>
+              <span class="time"><%= worktime_for_week(@week) %></span>
             </div>
           </li>
         </ul>
       </div>
       <div class="entries">
+        <% if @time_chunks.length > 0 || (@timer && @timer.start_date == params[:date]) %>
         <ul>
           <% @time_chunks.each do |time_chunk| %>
             <li>
               <%= l time_chunk.starts %> - <%= l time_chunk.ends %>
               <small><%= time_chunk.time_type %></small>
               <div class="right">
+                <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_time_sheet_time_entry_path(@time_sheet, time_chunk.parent), remote: true, class: 'edit-time-entry-link' %>
                 <%= l Time.at(time_chunk.duration) %>
               </div>
             </li>
           <% end %>
+          <% if @timer && @timer.start_date == params[:date] %>
+          <li>
+            <%= @timer.from_time %> -
+            <small><%= @timer.time_type %></small>
+            <div class="right">
+              <a href="<%= url_for(action: :stop_timer) %>" data-method="put" data-remote="true" class="stop-timer">
+                <i class="icon-repeat icon-spin"></i>
+                 Stop
+              </a>
+              <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_time_sheet_timer_path(@time_sheet, @timer), remote: true, class: 'edit-time-entry-link' %>
+              <span class="timer-current" data-start="<%= @timer.from_time %>"></span>
+            </div>
+          </li>
+        <% end %>
         </ul>
+        <% else %>
+          <div class="no-entries-message">
+            <p>
+              <%= t '.no_entries_yet_message' %>
+              <br>
+              <a href="#" data-reveal-id="add-time-modal"><%= t '.add_time_now' %></a>
+            </p>
+          </div>
+        <% end %>
       </div>
     </div>
     <%= render 'add_time_modal' %>
+    <%= render 'edit_time_modal' %>
   </div>
 </div>

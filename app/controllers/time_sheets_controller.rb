@@ -26,6 +26,14 @@ class TimeSheetsController < ApplicationController
       @time_entry.start_date = params[:date]
     end
     @time_types = TimeType.find_all_by_is_work(true)
+
+    @timer = @time_sheet.timer
+  end
+
+  def stop_timer
+    @time_sheet.timer.stop
+
+    render json: {}
   end
 
 end

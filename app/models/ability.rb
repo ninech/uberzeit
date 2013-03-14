@@ -13,6 +13,7 @@ class Ability
       can :manage, TimeEntry, time_sheet: { user_id: user.id }
       can :manage, DateEntry, time_sheet: { user_id: user.id }
       can :manage, RecurringEntry, time_sheet: { user_id: user.id }
+      can :manage, Timer, time_sheet: { user_id: user.id }
 
       if user.has_role?(:admin)
         can :manage, TimeType

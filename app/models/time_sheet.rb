@@ -5,6 +5,7 @@ class TimeSheet < ActiveRecord::Base
 
   has_many :time_entries
   has_many :date_entries
+  has_one :timer
 
   validates_presence_of :user
 
