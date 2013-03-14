@@ -1,3 +1,124 @@
 // Place all the styles related to the Absences controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import 'compass/css3/images';
+
+$event_color0: #A2B4DB;
+$event_color1: #BAE4E5;
+$event_color2: #B8D5F2;
+$event_color3: #FFC48C;
+$event_color4: #E9ECD9;
+$event_color5: #FAE1DE;
+$event_color6: #FAC5C0;
+$event_color7: #EFE3F3;
+$event_color8: #E0F3B2;
+$event_color9: #EAC5ED;
+
+@mixin event-color-gradient($color) {
+  @include background-image(linear-gradient(top center, lighten($color, 5%) 0%, $color 90%));
+}
+
+ul.time-type-legend {
+
+  margin-bottom: 1.2em;
+  height: 1.2em;
+
+  i {
+    &.event-color0 {
+      color: $event_color0;
+    }
+    &.event-color1 {
+      color: $event_color1;
+    }
+    &.event-color2 {
+      color: $event_color2;
+    }
+    &.event-color3 {
+      color: $event_color3;
+    }
+    &.event-color4 {
+      color: $event_color4;
+    }
+    &.event-color5 {
+      color: $event_color5;
+    }
+    &.event-color6 {
+      color: $event_color6;
+    }
+    &.event-color7 {
+      color: $event_color7;
+    }
+    &.event-color8 {
+      color: $event_color8;
+    }
+    &.event-color9 {
+      color: $event_color9;
+    }
+  }
+
+  li {
+    float: left;
+    margin-right: 1em;
+  }
+
+}
+
+table.calendar {
+
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  border-collapse: collapse;
+
+  thead {
+    @include background-image(linear-gradient(top center, #F5F5F5 0%, #E0E0E0 90%));
+  }
+
+  tr {
+    border-collapse: collapse;
+  }
+
+  td {
+
+    text-align: center;
+    color: inherit !important;
+    border: 1px solid #ccc;
+
+    &.weekendDay {
+      background-color: #f5f5f5;
+    }
+    &.otherMonth {
+      color: #adadad !important;
+    }
+    &.event-color0 {
+      @include event-color-gradient($event_color0);
+    }
+    &.event-color1 {
+      @include event-color-gradient($event_color1);
+    }
+    &.event-color2 {
+      @include event-color-gradient($event_color2);
+    }
+    &.event-color3 {
+      @include event-color-gradient($event_color3);
+    }
+    &.event-color4 {
+      @include event-color-gradient($event_color4);
+    }
+    &.event-color5 {
+      @include event-color-gradient($event_color5);
+    }
+    &.event-color6 {
+      @include event-color-gradient($event_color6);
+    }
+    &.event-color7 {
+      @include event-color-gradient($event_color7);
+    }
+    &.event-color8 {
+      @include event-color-gradient($event_color8);
+    }
+    &.event-color9 {
+      @include event-color-gradient($event_color9);
+    }
+  }
+}

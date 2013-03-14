@@ -18,6 +18,7 @@ module CommonEntry
     before_save :mark_recurring_schedule_for_destruction, if: :delete_recurring_schedule_condition
 
     scope :work, joins: :time_type, conditions: ['is_work = ?', true]
+    scope :absence, joins: :time_type, conditions: ['is_work = ?', false]
     scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
   end
 
