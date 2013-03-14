@@ -1,69 +1,19 @@
 module TimeSheetsHelper
-  def format_duration(duration, type=nil, format=:hours)
-    cls = ''
-    unless type.nil?
-      cls = "label label-#{time_type_css(type)}"
+  def worktime_for_day(day)
+    worktime = @time_sheet.total(day, :work)
+    if @timer && Date.parse(@timer.start_date) == day
+      worktime += @timer.duration
     end
-    content_tag :span, :class => cls do
 
-      case format
-      when :hours
-        format_hours(duration)
-      when :days
-        format_days(duration)
-      when :work_days
-        format_work_days(duration)
-      end
+    l Time.at(worktime)
+  end
 
+  def worktime_for_week(week)
+    worktime = @time_sheet.total(@week, :work)
+    if @timer && @week.include?(@timer.start_date.to_date)
+      worktime += @timer.duration
     end
-  end
 
-  def time_type_css(type)
-    case
-    when is_type?(type, :work)
-      'success'
-    when is_type?(type, :vacation)
-      'info'
-    when is_type?(type, :overtime)
-      'inverse'
-    else
-      'default'
-    end
-  end
-
-  def time_type_text(type)
-    case
-    when is_type?(type, :work)
-      'work'
-    when is_type?(type, :vacation)
-      'vacation'
-    when is_type?(type, :overtime)
-      'overtime'
-    else
-      'default'
-    end
-  end
-
-  private
-
-  def format_days(time)
-    "%.1fd" % time.to_days
-  end
-
-  def format_work_days(time)
-    "%.1fd" % time.to_work_days
-  end
-
-  def format_hours(time)
-    h = (time.round.to_f / 60.minutes).to_i
-    m = (time.round.to_f - h * 1.hour).to_minutes.to_i
-    m = m.abs if h != 0
-    [ h != 0 ? "#{h}h" : nil, m != 0 || h == 0 ? "#{m}min" : nil ].compact.join(' ')
-  end
-
-  # for symbols and time_type model
-  def is_type?(type, check_for)
-    return type == check_for unless type.respond_to?("is_#{check_for}")
-    type.send("is_#{check_for}") == true
+    l Time.at(worktime)
   end
 end

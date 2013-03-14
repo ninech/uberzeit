@@ -1,9 +1,11 @@
-<div id="add-time-modal" class="medium reveal-modal">
+<div id="add-time-modal" class="medium reveal-modal time">
   <div class="row">
     <div class="small-12 columns">
       <h2><%= t '.add_time' %></h2>
     </div>
   </div>
-  <%= render 'time_entries/form' %>
+  <%= form_for([@time_sheet, @time_entry], remote: true) do |form| %>
+    <%= render partial: 'time_entries/form', locals: { f: form } %>
+  <% end %>
   <a class="close-reveal-modal">&#215;</a>
 </div>

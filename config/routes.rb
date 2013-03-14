@@ -9,8 +9,10 @@ Uberzeit::Application.routes.draw do
     resources :time_entries, except: [:show, :index]
     resources :date_entries, except: [:show, :index]
     resources :recurring_entries, except: [:show, :index]
+    resources :timers, only: [:show, :edit, :update]
     member do
       match '/days/:date', to: 'time_sheets#show', via: :get
+      match '/stop-timer', to: 'time_sheets#stop_timer', via: :put
     end
     resources :absences, only: :index do
       collection do

@@ -23,6 +23,8 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'turbolinks'
+gem 'jquery-turbolinks'
 
 # Authentication
 gem 'omniauth'

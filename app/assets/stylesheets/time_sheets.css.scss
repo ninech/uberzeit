@@ -91,6 +91,10 @@
             margin-bottom: 60px;
           }
 
+          .stop-timer {
+            margin-right: 1em;
+          }
+
           small {
             font-weight: 300;
             font-size: 0.8em;
@@ -98,21 +102,46 @@
           }
         }
       }
+
+      a.edit-time-entry-link {
+        color: #D6D6D6;
+        display: none;
+
+      }
+
+      .no-entries-message {
+        text-align: center;
+        padding: 100px 0 20px;
+        background-color: #F5F5F5;
+        margin-top: -5px;
+        height: 300px;
+
+        p {
+          font-weight: 600;
+        }
+      }
     }
   }
 
-  form.new_time_entry {
+  .reveal-modal.time {
     label {
-      font-size: 1.2em;
       font-weight: 600;
     }
-    input {
+
+    input, label {
       font-size: 1.2em;
     }
-  }
 
-  #add-time-modal {
+    select {
+      font-size: 1.1em;
+    }
+
     top: 50px;
-  }
 
+    .time-difference {
+      padding-top: 1.9em;
+      font-size: 1.2em;
+    }
+
+  }
 }

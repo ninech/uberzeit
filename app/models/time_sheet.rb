@@ -5,12 +5,19 @@ class TimeSheet < ActiveRecord::Base
 
   has_many :time_entries
   has_many :date_entries
+  has_one :timer
 
   validates_presence_of :user
 
   # returns time chunks (which are limited to the given date or range)
   def find_chunks(date_or_range, time_type_scope = nil)
-    TimeChunkCollection.new(date_or_range, [time_entries, date_entries], time_type_scope)
+    entries = if time_type_scope.nil?
+                [time_entries, date_entries]
+              else
+                [time_entries.send(time_type_scope), date_entries.send(time_type_scope)]
+              end
+    find_chunks = FindTimeChunks.new(entries)
+    find_chunks.in_range(date_or_range)
   end
 
   def total(date_or_range, type)

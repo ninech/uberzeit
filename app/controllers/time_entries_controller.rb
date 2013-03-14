@@ -1,21 +1,29 @@
 class TimeEntriesController < ApplicationController
   load_and_authorize_resource :time_sheet
-  load_and_authorize_resource :time_entry, through: :time_sheet
+  authorize_resource :time_entry, through: :time_sheet
 
   def new
-    @time_entry.build_recurring_schedule
   end
 
   def edit
-    @time_entry.build_recurring_schedule if @time_entry.recurring_schedule.nil?
+    @entry = TimeEntry.find(params[:id])
+    @time_types = TimeType.find_all_by_is_work(true)
+
+    render 'edit', layout: false
   end
 
   def create
-    if @time_entry.save
-      redirect_to @time_sheet, :notice => 'Entry was successfully created.'
+    @time_types = TimeType.find_all_by_is_work(true)
+
+    if params[:time_entry][:to_time].blank?
+      @entry = @time_sheet.build_timer(params[:time_entry].except(:to_time))
+      @entry.save
     else
-      render :action => 'new'
+      @entry = @time_sheet.time_entries.new(params[:time_entry])
+      @entry.save
     end
+
+    render json: @entry.errors
   end
 
   def update

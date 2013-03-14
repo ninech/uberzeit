@@ -13,29 +13,43 @@ describe TimeEntry do
   end
 
   it 'makes sure that the end time is after the start time' do
-    time = '2013-01-01 8:00:00 UTC'.to_time
+    time = '2013-01-01 8:00:00 +0000'.to_time
     FactoryGirl.build(:time_entry, start_time: time, end_time: time).should_not be_valid
   end
 
   it 'saves the times rounded' do
     rounded = UberZeit::Config[:rounding]/1.minute
-    time = "2013-01-01 9:#{rounded-1}:00 UTC".to_time
+    time = "2013-01-01 9:#{rounded-1}:00 +0000".to_time
     entry = FactoryGirl.create(:time_entry, start_time: time, duration: 2.hours)
     entry.starts.min.should eq(rounded)
   end
 
   it 'returns the duration' do
-    time = '2013-01-01 8:00:00 UTC'.to_time
+    time = '2013-01-01 8:00:00 +0000'.to_time
     entry = FactoryGirl.create(:time_entry, start_time: time, duration: 1.5.hours)
     entry.duration.should eq(1.5.hours)
   end
 
+  context 'occurrences' do
+    it 'returns the occurrences as time ranges' do
+      pending
+    end
+
+    it 'respects the time zone' do
+      entry = FactoryGirl.create(:time_entry, start_time: '2013-01-23 9:00:00 +0000', end_time: '2013-01-23 12:00:00 +0000')
+      entry.occurrences_as_time_ranges('2013-01-23'.to_date).each do |occurrence_range|
+        occurrence_range.min.should be_kind_of(ActiveSupport::TimeWithZone)
+        occurrence_range.max.should be_kind_of(ActiveSupport::TimeWithZone)
+      end
+    end
+  end
+
   context 'for multiple entries' do
     before do
-      @entry1 = FactoryGirl.create(:time_entry, time_type: :work, start_time: '2013-01-23 9:00:00 UTC', end_time: '2013-01-23 12:00:00 UTC')
-      @entry2 = FactoryGirl.create(:time_entry, time_type: :break, start_time: '2013-01-23 12:00:00 UTC', end_time: '2013-01-23 12:30:00 UTC')
-      @entry3 = FactoryGirl.create(:time_entry, time_type: :work, start_time: '2013-01-23 12:30:00 UTC', end_time: '2013-01-24 00:00:00 UTC')
-      @entry4 = FactoryGirl.create(:time_entry, time_type: :work, start_time: '2013-01-24 9:30:00 UTC', end_time: '2013-01-24 12:30:00 UTC')
+      @entry1 = FactoryGirl.create(:time_entry, time_type: :work, start_time: '2013-01-23 9:00:00 +0000', end_time: '2013-01-23 12:00:00 +0000')
+      @entry2 = FactoryGirl.create(:time_entry, time_type: :break, start_time: '2013-01-23 12:00:00 +0000', end_time: '2013-01-23 12:30:00 +0000')
+      @entry3 = FactoryGirl.create(:time_entry, time_type: :work, start_time: '2013-01-23 12:30:00 +0000', end_time: '2013-01-24 00:00:00 +0000')
+      @entry4 = FactoryGirl.create(:time_entry, time_type: :work, start_time: '2013-01-24 9:30:00 +0000', end_time: '2013-01-24 12:30:00 +0000')
     end
 
     # it 'returns entries between two dates' do
