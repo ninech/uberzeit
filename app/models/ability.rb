@@ -12,7 +12,6 @@ class Ability
 
       can :manage, TimeEntry, time_sheet: { user_id: user.id }
       can :manage, DateEntry, time_sheet: { user_id: user.id }
-      can :manage, RecurringEntry, time_sheet: { user_id: user.id }
       can :manage, Timer, time_sheet: { user_id: user.id }
 
       if user.has_role?(:admin)
@@ -20,7 +19,6 @@ class Ability
         can :manage, TimeSheet
         can :manage, TimeEntry
         can :manage, DateEntry
-        can :manage, RecurringEntry
         can :manage, Employment
       end
 

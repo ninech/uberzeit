@@ -22,14 +22,6 @@ module CommonEntry
   end
 
   module ClassMethods
-    def scope_for(time_type)
-      if time_type
-        self.send(time_type)
-      else
-        self.scoped
-      end
-    end
-
     def recurring_entries
       # inner join
       scoped.joins(:recurring_schedule).find(:all, conditions: {recurring_schedules: {active: true}})

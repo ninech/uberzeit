@@ -1,17 +1,9 @@
 class TimeChunkCollection
 
-  attr_reader :range, :chunks
+  attr_reader :chunks
 
-  def initialize(date_or_range, objects_to_scan, time_type_scope = nil)
-    @chunks = []
-    @range = date_or_range.to_range
-    @time_type_scope = time_type_scope
-    @objects_to_scan = if objects_to_scan.respond_to?(:each)
-                         objects_to_scan
-                       else
-                         [objects_to_scan]
-                       end
-    scan
+  def initialize(chunks = [])
+    @chunks = chunks
   end
 
   def total(*types)
@@ -43,13 +35,4 @@ class TimeChunkCollection
   def empty?
     @chunks.empty?
   end
-
-  private
-  def scan
-    @objects_to_scan.each do |object|
-      finder = TimeChunkFinder.new(object, @range, @time_type_scope)
-      @chunks.concat finder.chunks
-    end
-  end
-
 end
