@@ -54,6 +54,9 @@ gem 'ice_cube'
 # regular tasks
 gem 'whenever'
 
+# calendar
+gem 'calendar_helper'
+
 group :development, :test do
   gem 'mysql2'
   gem 'rspec'
