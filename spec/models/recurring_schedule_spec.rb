@@ -110,6 +110,13 @@ describe RecurringSchedule do
     let(:date) { '2013-03-14'.to_date }
     let(:entry) { FactoryGirl.build(:date_entry, start_date: date, end_date: date) }
 
+    it 'returns the occurrences as start times in correct time zone' do
+      recurring_schedule = FactoryGirl.build(:recurring_schedule, repeat_interval_type: 'daily', enterable: entry)
+      recurring_schedule.occurrences(date).each do |occurrence|
+        occurrence.should be_kind_of(ActiveSupport::TimeWithZone)
+      end
+    end
+
     context 'with daily repeats' do
       it 'finds the occurrences for the specified interval' do
         recurring_schedule = FactoryGirl.build(:recurring_schedule, repeat_interval_type: 'daily', enterable: entry)
