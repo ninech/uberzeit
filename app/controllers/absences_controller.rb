@@ -3,7 +3,8 @@ class AbsencesController < ApplicationController
   load_and_authorize_resource :time_sheet
 
   def index
-    @year = params[:year] || Time.current.year
+    year = params[:year] || Time.current.year
+    @year = year.to_i
     first_day_of_year = Time.zone.local(@year)
     year_range = first_day_of_year.to_date...(first_day_of_year + 1.year).to_date
 

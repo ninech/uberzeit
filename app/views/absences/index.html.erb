@@ -11,9 +11,9 @@
   </div>
   <div class="small-3 columns">
     <div class="year-navigation">
-      <a href="#back"><i class="icon-caret-left"></i></a></span>
-      <span>2013</span>
-      <a href="#back"><i class="icon-caret-right"></i></a></span>
+      <%= link_to icon('caret-left'), year_time_sheet_absences_path(@time_sheet, @year - 1) %>
+      <%= link_to @year, time_sheet_absences_path(@time_sheet) %>
+      <%= link_to icon('caret-right'), year_time_sheet_absences_path(@time_sheet, @year + 1) %>
     </div>
   </div>
 </div>

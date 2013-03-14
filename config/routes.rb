@@ -12,7 +12,11 @@ Uberzeit::Application.routes.draw do
     member do
       match '/days/:date', to: 'time_sheets#show', via: :get
     end
-    resources :absences, only: :index
+    resources :absences, only: :index do
+      collection do
+        get '/year/:year', to: 'absences#index', as: 'year'
+      end
+    end
   end
 
   resources :users do
