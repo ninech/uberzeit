@@ -5,6 +5,7 @@
 @import 'compass/css3/images';
 
 $event_colors: #A2B4DB #BAE4E5 #B8D5F2 #FFC48C #E9ECD9 #FAE1DE #FAC5C0 #EFE3F3 #E0F3B2 #EAC5ED;
+$today_color: #FFECAA;
 
 @mixin event-background($color) {
   background: rgba($color, 0.5)
@@ -20,6 +21,9 @@ ul.time-type-legend {
       &.event-color#{$i - 1} {
         color: nth($event_colors, $i);
       }
+    }
+    &.event-color-today {
+      color: $today_color;
     }
   }
 
@@ -66,6 +70,10 @@ table.calendar {
     &.otherMonth {
       color: #adadad !important;
     }
+    &.today {
+      background-color: $today_color;
+    }
+
     @for $i from 1 through length($event_colors) {
       &.event-color#{$i - 1} {
         @include event-background(nth($event_colors, $i));
