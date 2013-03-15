@@ -6,3 +6,7 @@ $ ->
     dropdown: false,
     timeFormat: 'HH:mm'
   })
+
+  $('input.date').pickadate
+    format: 'yyyy-mm-dd'
+
