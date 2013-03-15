@@ -42,6 +42,32 @@ describe DateEntry do
   #   chunks.length.should eq(2)
   #   chunks.first.duration.should eq(12.hours)
   # end
+  #
+
+  describe '#daypart' do
+    let(:date_entry) { DateEntry.new }
+    it 'allows setting a whole day' do
+      date_entry.daypart = :whole_day
+      date_entry.whole_day?.should be_true
+      date_entry.first_half_day?.should be_false
+      date_entry.second_half_day?.should be_false
+      date_entry.daypart.should eq(:whole_day)
+    end
+    it 'allows setting the first half of a day' do
+      date_entry.daypart = :first_half_day
+      date_entry.whole_day?.should be_false
+      date_entry.first_half_day?.should be_true
+      date_entry.second_half_day?.should be_false
+      date_entry.daypart.should eq(:first_half_day)
+    end
+    it 'allows setting the second half of a day' do
+      date_entry.daypart = :second_half_day
+      date_entry.whole_day?.should be_false
+      date_entry.first_half_day?.should be_false
+      date_entry.second_half_day?.should be_true
+      date_entry.daypart.should eq(:second_half_day)
+    end
+  end
 
   context 'for multiple entries' do
     before do
