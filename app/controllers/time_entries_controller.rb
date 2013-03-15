@@ -28,8 +28,17 @@ class TimeEntriesController < ApplicationController
 
   def update
     @time_entry = TimeEntry.find(params[:id])
-    @time_entry.update_attributes(params[:time_entry])
-    render json: @time_entry.errors
+
+    if params[:time_entry][:to_time].blank?
+      @timer = @time_sheet.build_timer(params[:time_entry].except(:to_time))
+      @timer.save
+      @time_entry.destroy
+
+      render json: @timer.errors
+    else
+      @time_entry.update_attributes(params[:time_entry])
+      render json: @time_entry.errors
+    end
   end
 
   def destroy
