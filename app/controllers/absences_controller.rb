@@ -5,8 +5,6 @@ class AbsencesController < ApplicationController
   def index
     year = params[:year] || Time.current.year
     @year = year.to_i
-    first_day_of_year = Time.zone.local(@year)
-    year_range = first_day_of_year.to_date...(first_day_of_year + 1.year).to_date
 
     @time_types = TimeType.absences
     @absences = {}
@@ -18,6 +16,8 @@ class AbsencesController < ApplicationController
     end
 
     @time_entry = @time_sheet.time_entries.new
+    @time_entry.build_recurring_schedule
     @date_entry = @time_sheet.date_entries.new
+    @date_entry.build_recurring_schedule
   end
 end
