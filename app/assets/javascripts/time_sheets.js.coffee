@@ -76,8 +76,8 @@ $ ->
   $('.reveal-modal.time form').on 'ajax:error', (xhr, status, error) ->
     console.log xhr, status, error
 
-  $('.reveal-modal.time form').on 'ajax:success', (data, status, xhr) ->
-    $('#add-time-modal').foundation('reveal', 'close')
+  $(document).on 'ajax:success', '.reveal-modal.time form', (data, status, xhr) ->
+    $(this).foundation('reveal', 'close')
     Turbolinks.visit(window.location)
 
   $('.stop-timer').bind 'click', ->
