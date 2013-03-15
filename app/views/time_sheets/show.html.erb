@@ -46,11 +46,11 @@
             <%= @timer.from_time %> -
             <small><%= @timer.time_type %></small>
             <div class="right">
+              <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_time_sheet_timer_path(@time_sheet, @timer), remote: true, class: 'edit-time-entry-link' %>
               <a href="<%= url_for(action: :stop_timer) %>" data-method="put" data-remote="true" class="stop-timer">
                 <i class="icon-repeat icon-spin"></i>
                  Stop
               </a>
-              <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_time_sheet_timer_path(@time_sheet, @timer), remote: true, class: 'edit-time-entry-link' %>
               <span class="timer-current" data-start="<%= @timer.from_time %>"></span>
             </div>
           </li>
