@@ -1,40 +1,22 @@
-<%= form_for([@time_sheet, @date_entry]) do |f| %>
-  <% if @date_entry.errors.any? %>
-    <div id="error_explanation" class="alert alert-error">
-      <h2><%= pluralize(@date_entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
-
-      <ul>
-      <% @date_entry.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.check_box :first_half_day %>
-    <%= f.label :first_half_day %>
+<div class="row">
+  <div class="small-6 columns">
+    <%= f.label :start_date %>
+    <%= f.text_field :start_date %>
   </div>
-
-  <div class="field">
-    <%= f.check_box :second_half_day %>
-    <%= f.label :second_half_day %>
+  <div class="small-6 columns">
+    <%= f.label :end_date %>
+    <%= f.text_field :end_date %>
   </div>
+</div>
 
-  <div class="field">
-    <%= f.label :time_type %><br/>
-    <%= f.collection_select :time_type_id, TimeType.all, :id, :name %>
+
+<div class="row">
+  <div class="small-2 columns">
+    <%= f.label :daypart %>
   </div>
-
-  <div class="field">
-    <%= f.date_select :start_date %><br/>
-    <%= f.date_select :end_date %>
+  <div class="small-10 columns">
+    <%= f.select :daypart, options_for_select([['Whole day', :whole_day], ['First half day', :first_half_day], ['Second half day', :second_half_day]]) %>
   </div>
+</div>
 
-  <%= render 'shared/recurring_schedule_sub_form', main_form: f %>
-
-  <div class="actions">
-    <%= f.submit class: 'btn btn-primary' %>
-  </div>
-<% end %>
-
+<%= render 'shared/recurring_schedule_sub_form', main_form: f %>
