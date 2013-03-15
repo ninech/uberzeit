@@ -31,10 +31,6 @@ describe TimeEntry do
   end
 
   context 'occurrences' do
-    it 'returns the occurrences as time ranges' do
-      pending
-    end
-
     it 'respects the time zone' do
       entry = FactoryGirl.create(:time_entry, start_time: '2013-01-23 9:00:00 +0000', end_time: '2013-01-23 12:00:00 +0000')
       entry.occurrences_as_time_ranges('2013-01-23'.to_date).each do |occurrence_range|

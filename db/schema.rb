@@ -50,18 +50,6 @@ ActiveRecord::Schema.define(:version => 20130312134235) do
   add_index "memberships", ["team_id"], :name => "index_memberships_on_team_id"
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
-  create_table "recurring_entries", :force => true do |t|
-    t.integer  "time_sheet_id"
-    t.integer  "time_type_id"
-    t.text     "schedule_hash"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.datetime "deleted_at"
-  end
-
-  add_index "recurring_entries", ["time_sheet_id"], :name => "index_recurring_entries_on_time_sheet_id"
-  add_index "recurring_entries", ["time_type_id"], :name => "index_recurring_entries_on_time_type_id"
-
   create_table "recurring_schedules", :force => true do |t|
     t.boolean  "active",                  :default => false
     t.integer  "enterable_id"

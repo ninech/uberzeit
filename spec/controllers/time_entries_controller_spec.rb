@@ -57,8 +57,8 @@ describe TimeEntriesController do
           time_now = Time.zone.now.round
           put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: FactoryGirl.attributes_for(:time_entry, start_time: time_now, end_time: time_now + 1.hour)
           time_entry.reload
-          time_entry.start_time.should eq(time_now)
-          time_entry.end_time.should eq(time_now + 1.hour)
+          time_entry.start_time.to_i.should eq(time_now.to_i)
+          time_entry.end_time.to_i.should eq(time_now.to_i + 1.hour)
         end
 
         it 'redirects to the sheet overview' do
