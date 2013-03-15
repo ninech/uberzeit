@@ -27,11 +27,9 @@ class TimeEntriesController < ApplicationController
   end
 
   def update
-    if @time_entry.update_attributes(params[:time_entry])
-      redirect_to @time_sheet, :notice => 'Entry was successfully updated.'
-    else
-      render :action => 'edit'
-    end
+    @time_entry = TimeEntry.find(params[:id])
+    @time_entry.update_attributes(params[:time_entry])
+    render json: @time_entry.errors
   end
 
   def destroy
