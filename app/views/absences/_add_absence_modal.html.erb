@@ -13,8 +13,8 @@
     <%= render partial: 'date_entries/absence_form', locals: {f: f} %>
   <% end %>
 
-  <%#= form_for [@time_sheet, @time_entry] do |f| %>
-    <%#= render partial: 'time_entries/absence_form', locals: {f: f} %>
-  <%# end %>
+  <%= form_for [@time_sheet, @time_entry] do |f| %>
+    <%= render partial: 'time_entries/absence_form', locals: {f: f} %>
+  <% end %>
   <a class="close-reveal-modal">&#215;</a>
 </div>
