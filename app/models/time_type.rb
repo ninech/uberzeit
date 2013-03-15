@@ -39,4 +39,15 @@ class TimeType < ActiveRecord::Base
     end
   end
 
+  def type_for_entries
+    case
+    when daywise && timewise
+      :both
+    when daywise
+      :daywise
+    when timewise
+      :timewise
+    end
+  end
+
 end
