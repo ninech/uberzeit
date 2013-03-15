@@ -11,13 +11,19 @@
   <fieldset>
     <legend>Recurring</legend>
 
-    <div class="row collapse">
+    <div class="row">
       <div class="small-6 columns">
         <%= rs.label :weekly_repeat_interval %>
       </div>
       <div class="small-6 columns">
-        <%= rs.text_field :weekly_repeat_interval %>
-        <span class="postfix"> weeks</span>
+        <div class="row collapse">
+          <div class="small-4 columns">
+            <%= rs.text_field :weekly_repeat_interval %>
+          </div>
+          <div class="small-8 columns">
+            <span class="postfix"> weeks</span>
+          </div>
+        </div>
       </div>
     </div>
 
