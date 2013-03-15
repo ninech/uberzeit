@@ -1,50 +1,60 @@
-<%= main_form.fields_for :recurring_schedule do |rs| %>
-  <div class="row">
-    <div class="small-1 columns">
-      <%= rs.check_box :active %>
-    </div>
-    <div class="small-11 columns">
-      <%= rs.label :active %>
-    </div>
+<div class="row">
+  <div class="small-12 columns">
+    <%= main_form.fields_for :recurring_schedule do |rs| %>
+      <fieldset>
+        <legend> Recurring Schedule </legend>
+
+        <div class="row">
+          <div class="small-12 columns">
+            <div class="switch tiny">
+              <%= rs.radio_button :active, false, class: 'toggle', data: { :'toggle-target' => 'recurring-form' }%>
+              <%= rs.label :active, 'Off' %>
+
+              <%= rs.radio_button :active, true, class: 'toggle', data: { :'toggle-target' => 'recurring-form' }%>
+              <%= rs.label :active, 'On' %>
+              <span></span>
+            </div>
+          </div>
+        </div>
+
+        <span id="recurring-form" class="hide">
+          <div class="row">
+            <div class="small-6 columns">
+              <%= rs.label :weekly_repeat_interval %>
+            </div>
+            <div class="small-6 columns">
+              <div class="row collapse">
+                <div class="small-4 columns">
+                  <%= rs.text_field :weekly_repeat_interval %>
+                </div>
+                <div class="small-8 columns">
+                  <span class="postfix"> weeks</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend>Ends</legend>
+            <div class="row">
+              <div class="small-2 columns">
+                <%= rs.radio_button :ends, 'counter' %>
+              </div>
+              <div class="small-10 columns">
+                <%= rs.label :ends, 'After number of occurrences', value: 'counter' %> <%= rs.text_field :ends_counter %><br/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="small-2 columns">
+                <%= rs.radio_button :ends, 'date' %>
+              </div>
+              <div class="small-10 columns">
+                <%= rs.label :ends, 'On', value: 'date' %> <%= rs.text_field :ends_date %><br/>
+              </div>
+            </div>
+          </fieldset>
+        </fieldset>
+      </span>
+    <% end %>
   </div>
-
-  <fieldset>
-    <legend>Recurring</legend>
-
-    <div class="row">
-      <div class="small-6 columns">
-        <%= rs.label :weekly_repeat_interval %>
-      </div>
-      <div class="small-6 columns">
-        <div class="row collapse">
-          <div class="small-4 columns">
-            <%= rs.text_field :weekly_repeat_interval %>
-          </div>
-          <div class="small-8 columns">
-            <span class="postfix"> weeks</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <fieldset>
-      <legend>Ends</legend>
-      <div class="row">
-        <div class="small-2 columns">
-          <%= rs.radio_button :ends, 'counter' %>
-        </div>
-        <div class="small-10 columns">
-          <%= rs.label :ends, 'After number of occurrences', value: 'counter' %> <%= rs.text_field :ends_counter %><br/>
-        </div>
-      </div>
-      <div class="row">
-        <div class="small-2 columns">
-          <%= rs.radio_button :ends, 'date' %>
-        </div>
-        <div class="small-10 columns">
-          <%= rs.label :ends, 'On', value: 'date' %> <%= rs.text_field :ends_date %><br/>
-        </div>
-      </div>
-    </fieldset>
-
-<% end %>
+</div>
