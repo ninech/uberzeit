@@ -10,10 +10,14 @@ class AbsencesController < ApplicationController
 
     @time_types = TimeType.absences
     @absences = {}
-    TimeChunkCollection.new(year_range, [@time_sheet.date_entries, @time_sheet.time_entries], :absence).each do |chunk|
+    time_chunks_finder = FindTimeChunks.new([@time_sheet.date_entries.absence, @time_sheet.time_entries.absence])
+    time_chunks_finder.in_year(@year).each do |chunk|
       chunk.range.to_date_range.each do |day|
         @absences[day.to_s] = chunk.time_type
       end
     end
+
+    @time_entry = @time_sheet.time_entries.new
+    @date_entry = @time_sheet.date_entries.new
   end
 end
