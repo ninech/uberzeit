@@ -8,7 +8,7 @@ class AbsenceTimeEntriesController < ApplicationController
   def create
     @time_entry.save
 
-    respond_with(@time_entry, redirect: year_time_sheet_absences_path(@time_sheet, @time_entry.starts.year))
+    respond_with(@time_entry, location: year_time_sheet_absences_path(@time_sheet, @time_entry.starts.year))
   end
 
 end
