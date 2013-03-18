@@ -1,11 +1,13 @@
+<%= f.hidden_field :time_type_id %>
+
 <div class="row">
   <div class="small-6 columns">
     <%= f.label :start_date %>
-    <%= f.text_field :start_date %>
+    <%= f.text_field :start_date, class: :date %>
   </div>
   <div class="small-6 columns">
     <%= f.label :end_date %>
-    <%= f.text_field :end_date %>
+    <%= f.text_field :end_date, class: :date %>
   </div>
 </div>
 
@@ -20,3 +22,9 @@
 </div>
 
 <%= render 'shared/recurring_schedule_sub_form', main_form: f %>
+
+<div class="row">
+  <div class="small-2 columns">
+    <%= f.submit class: 'button'%>
+  </div>
+</div>

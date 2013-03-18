@@ -1,5 +1,6 @@
 Uberzeit::Application.routes.draw do
 
+
   root :to => 'sessions#new'
 
   resources :time_sheets do
@@ -17,6 +18,7 @@ Uberzeit::Application.routes.draw do
     resources :absences, only: :index do
       collection do
         get '/year/:year', to: 'absences#index', as: 'year'
+        resources :time_entries, controller: :absence_time_entries, as: :absence_time_entries, only: :create
       end
     end
   end
