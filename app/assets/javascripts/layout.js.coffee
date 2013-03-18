@@ -1,5 +1,6 @@
 $(document)
   .foundation('reveal', { closeOnBackgroundClick: false })
+  .foundation('tooltips')
 
 $ ->
   $('input.time').timepicker({

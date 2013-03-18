@@ -11,7 +11,8 @@ class AbsencesController < ApplicationController
     time_chunks_finder = FindTimeChunks.new([@time_sheet.date_entries.absence, @time_sheet.time_entries.absence])
     time_chunks_finder.in_year(@year).each do |chunk|
       chunk.range.to_date_range.each do |day|
-        @absences[day.to_s] = chunk.time_type
+        @absences[day.to_s] ||= []
+        @absences[day.to_s] << chunk
       end
     end
 
