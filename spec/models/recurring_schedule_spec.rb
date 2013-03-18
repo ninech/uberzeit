@@ -85,6 +85,14 @@ describe RecurringSchedule do
         recurring_schedule.occurrences(date + 1.week).should be_empty
         recurring_schedule.occurrences(date + 2.weeks).should_not be_empty
       end
+
+      it 'finds occurrences which span multiple days' do
+        date_entry = FactoryGirl.build(:date_entry, start_date: date, end_date: date + 1.day)
+        recurring_schedule = FactoryGirl.build(:recurring_schedule, enterable: date_entry, ends: 'counter', ends_counter: 1)
+        recurring_schedule.occurrences(date).should_not be_empty
+        recurring_schedule.occurrences(date.tomorrow).should_not be_empty
+        recurring_schedule.occurrences(date + 2.days).should be_empty
+      end
     end
 
     context 'ending condition' do

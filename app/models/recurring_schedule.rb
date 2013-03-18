@@ -60,25 +60,26 @@ class RecurringSchedule < ActiveRecord::Base
     weekly_repeat_interval.weeks
   end
 
+  def duration
+    entry.duration
+  end
+
   def occurrences(date_or_range)
     occurrences_date_range = date_or_range.to_range.to_date_range
     recurring_schedule_date_range = self.range.to_date_range
 
-    intersect = recurring_schedule_date_range.intersect(occurrences_date_range)
-    return [] if intersect.nil?
-
-    diff_in_days = (intersect.min - recurring_schedule_date_range.min).to_i
-    # round up to first occurrence which complies with interval
-    first_occurrence = intersect.min + diff_in_days % interval.to_days
-
     occurrences = []
 
-    reference_time = start_time
+    cursor = recurring_schedule_date_range.min
+    while cursor <= recurring_schedule_date_range.max
+      occurrence_start_time = start_time.change(year: cursor.year, month: cursor.month, day: cursor.day)
+      occurrence_end_time = occurrence_start_time + duration
 
-    cursor = first_occurrence
-    while cursor <= intersect.max
-      # Time.change preserves the time with DST in mind (e.g. 9AM in winter is 9AM in summer)
-      occurrences << reference_time.change(year: cursor.year, month: cursor.month, day: cursor.day)
+      range = (occurrence_start_time..occurrence_end_time)
+      if range.intersects_with_duration?(occurrences_date_range)
+        occurrences << occurrence_start_time
+      end
+
       cursor += interval
     end
 
