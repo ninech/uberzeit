@@ -28,6 +28,7 @@ class TimeSheetsController < ApplicationController
     @time_types = TimeType.find_all_by_is_work(true)
 
     @timer = @time_sheet.timer
+    @timer_active = @timer.start_date == (params[:date] || Time.current.to_date.to_s(:db))
   end
 
   def stop_timer

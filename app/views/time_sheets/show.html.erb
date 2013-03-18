@@ -29,7 +29,7 @@
         </ul>
       </div>
       <div class="entries">
-        <% if @time_chunks.length > 0 || (@timer && @timer.start_date == params[:date]) %>
+        <% if @time_chunks.length > 0 || @timer_active %>
         <ul>
           <% @time_chunks.each do |time_chunk| %>
             <li>
@@ -41,7 +41,7 @@
               </div>
             </li>
           <% end %>
-          <% if @timer && @timer.start_date == params[:date] %>
+          <% if @timer_active %>
           <li>
             <%= @timer.from_time %> -
             <small><%= @timer.time_type %></small>
