@@ -1,5 +1,6 @@
 <%
-  week = (Time.zone.today.at_beginning_of_week...Time.zone.today.next_week)
+  offset = 0.week
+  week = (Time.zone.today.at_beginning_of_week+offset...Time.zone.today.next_week+offset)
 
   year = week.min.year
 %>

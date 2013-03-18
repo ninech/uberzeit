@@ -1,36 +1,18 @@
 class RecurringSchedule < ActiveRecord::Base
-  include RecurringScheduleExtensions::IceCubeExtension
-
   acts_as_paranoid
 
   belongs_to :enterable, polymorphic: true
 
-  attr_accessible   :active, :ends, :ends_counter, :ends_date, :enterable, :repeat_interval_type,
-                    :daily_repeat_interval,
-                    :weekly_repeat_interval, :weekly_repeat_weekday,
-                    :monthly_repeat_by, :monthly_repeat_interval,
-                    :yearly_repeat_interval
+  attr_accessible   :active, :ends, :ends_counter, :ends_date, :enterable, :weekly_repeat_interval
 
-  REPEAT_INTERVAL_TYPES = %w(daily weekly monthly yearly)
-  ENDING_CONDITIONS = %w(never counter date)
-  MONTHLY_REPEAT_BY_CONDITIONS = %w(day_of_week day_of_month)
+  ENDING_CONDITIONS = %w(counter date)
 
-  validates_inclusion_of :repeat_interval_type, in: REPEAT_INTERVAL_TYPES
   validates_inclusion_of :ends, in: ENDING_CONDITIONS
-  validates_inclusion_of :monthly_repeat_by, in: MONTHLY_REPEAT_BY_CONDITIONS, if: :repeat_monthly?
 
-  validates_presence_of :enterable
-
-  validates_numericality_of :daily_repeat_interval, greater_than: 0, if: :repeat_daily?
-  validates_numericality_of :weekly_repeat_interval, greater_than: 0, if: :repeat_weekly?
-  validates_numericality_of :monthly_repeat_interval, greater_than: 0, if: :repeat_monthly?
-  validates_numericality_of :yearly_repeat_interval, greater_than: 0, if: :repeat_yearly?
-
+  validates_numericality_of :weekly_repeat_interval, greater_than: 0
   validates_numericality_of :ends_counter, greater_than: 0, if: :ends_on_counter?
 
   validates_date :ends_date, if: :ends_on_date?
-
-  serialize :weekly_repeat_weekday
 
   def active?
     !!active
@@ -38,22 +20,6 @@ class RecurringSchedule < ActiveRecord::Base
 
   def entry
     enterable
-  end
-
-  def repeat_daily?
-    repeat_interval_type == 'daily'
-  end
-
-  def repeat_weekly?
-    repeat_interval_type == 'weekly'
-  end
-
-  def repeat_monthly?
-    repeat_interval_type == 'monthly'
-  end
-
-  def repeat_yearly?
-    repeat_interval_type == 'yearly'
   end
 
   def ends_on_date?
@@ -64,14 +30,62 @@ class RecurringSchedule < ActiveRecord::Base
     ends == 'counter'
   end
 
-  # e.g. 2013-07-14: 2th thursday, return 2
-  def self.number_of_weekday_occurrence_in_month(date)
-    current_date = date.beginning_of_month
-    occurrence_number = 1
-    while current_date < date
-      occurrence_number += 1 if current_date.wday == date.wday
-      current_date += 1
+  def start_date
+    entry.starts.to_date
+  end
+
+  def start_time
+    if entry.starts.kind_of?(Date)
+      entry.starts.midnight
+    else
+      entry.starts
     end
-    occurrence_number
+  end
+
+  def end_date
+    if ends_on_counter?
+      start_date + interval.to_days * (ends_counter - 1)
+    elsif ends_on_date?
+      ends_date.to_date
+    else
+      nil
+    end
+  end
+
+  def range
+    (start_date..end_date)
+  end
+
+  def interval
+    weekly_repeat_interval.weeks
+  end
+
+  def occurrences(date_or_range)
+    occurrences_date_range = date_or_range.to_range.to_date_range
+    recurring_schedule_date_range = self.range.to_date_range
+
+    intersect = recurring_schedule_date_range.intersect(occurrences_date_range)
+    return [] if intersect.nil?
+
+    diff_in_days = (intersect.min - recurring_schedule_date_range.min).to_i
+    # round up to first occurrence which complies with interval
+    first_occurrence = intersect.min + diff_in_days % interval.to_days
+
+    occurrences = []
+
+    reference_time = start_time
+
+    cursor = first_occurrence
+    while cursor <= intersect.max
+      # Time.change preserves the time with DST in mind (e.g. 9AM in winter is 9AM in summer)
+      occurrences << reference_time.change(year: cursor.year, month: cursor.month, day: cursor.day)
+      cursor += interval
+    end
+
+    occurrences
+  end
+
+  def occurring?(date_or_range)
+    occurrences(date_or_range).any?
   end
 end
