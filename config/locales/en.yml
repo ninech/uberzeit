@@ -7,6 +7,12 @@ en:
         treat_as_work: 'treat this work as worktime in the calculation'
         daywise: 'Allows creating (half) days events'
         timewise: 'Allows creating events on a 5 minute basis'
+    errors:
+      models:
+        time_entry:
+          attributes:
+            end_time:
+              after: 'End time must be after start time'
   time:
     formats:
       default: '%H:%M'

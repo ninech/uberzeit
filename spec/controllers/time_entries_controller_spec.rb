@@ -19,33 +19,33 @@ describe TimeEntriesController do
       test_sign_in user
     end
 
-    describe 'GET "new"' do
-      it 'assigns a single entry to time_entry' do
-        get :new, time_sheet_id: time_sheet.id
-        assigns(:time_entry).class.should be(TimeEntry)
-      end
+    # describe 'GET "new"' do
+    #   it 'assigns a single entry to time_entry' do
+    #     get :new, time_sheet_id: time_sheet.id
+    #     assigns(:time_entry).class.should be(TimeEntry)
+    #   end
 
-      it 'renders the :new template' do
-        get :new, time_sheet_id: time_sheet.id
-        response.should render_template :new
-      end
-    end
+    #   it 'renders the :new template' do
+    #     get :new, time_sheet_id: time_sheet.id
+    #     response.should render_template :new
+    #   end
+    # end
 
-    describe 'GET "edit"' do
-      before do
-        time_entry = FactoryGirl.create(:time_entry, time_sheet: time_sheet)
-      end
+    # describe 'GET "edit"' do
+    #   before do
+    #     time_entry = FactoryGirl.create(:time_entry, time_sheet: time_sheet)
+    #   end
 
-      it 'assigns the to-be entry to time_entry' do
-        get :edit, id: time_entry, time_sheet_id: time_entry.time_sheet
-        assigns(:time_entry).should eq(time_entry)
-      end
+    #   it 'assigns the to-be entry to time_entry' do
+    #     get :edit, id: time_entry, time_sheet_id: time_entry.time_sheet
+    #     assigns(:time_entry).should eq(time_entry)
+    #   end
 
-      it 'renders the :edit template' do
-        get :edit, id: time_entry, time_sheet_id: time_entry.time_sheet
-        assigns(:time_entry).should eq(time_entry)
-      end
-    end
+    #   it 'renders the :edit template' do
+    #     get :edit, id: time_entry, time_sheet_id: time_entry.time_sheet
+    #     assigns(:time_entry).should eq(time_entry)
+    #   end
+    # end
 
     describe 'PUT "update"' do
       before do
@@ -63,14 +63,14 @@ describe TimeEntriesController do
 
         it 'redirects to the sheet overview' do
           put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: FactoryGirl.attributes_for(:time_entry)
-          response.should redirect_to time_entry.time_sheet
+          response.body.should == '{}'
         end
       end
 
       context 'with invalid attributes' do
         it 're-renders the :edit template' do
           put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: FactoryGirl.attributes_for(:invalid_time_entry)
-          response.should render_template :edit
+          response.body.should == '{"end_time":["End time must be after start time"]}'
         end
       end
     end
@@ -84,10 +84,10 @@ describe TimeEntriesController do
           end.to change(TimeEntry,:count).by(1)
         end
 
-        it 'redirects to the sheet overview' do
+        it 'returns empty json (no errors)' do
           time_type = FactoryGirl.create(:time_type_work)
           post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:time_entry, time_type_id: time_type.id)
-          response.should redirect_to time_sheet
+          response.body.should == '{}'
         end
       end
 
@@ -96,9 +96,9 @@ describe TimeEntriesController do
           expect { post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:invalid_time_entry) }.to_not change(TimeEntry,:count)
         end
 
-        it 're-renders the :new template' do
+        it 'returns json errors' do
           post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:invalid_time_entry)
-          response.should render_template :new
+          response.body.should == '{"time_type":["can\'t be blank"],"end_time":["End time must be after start time"]}'
         end
       end
     end
@@ -111,16 +111,16 @@ describe TimeEntriesController do
       end
 
       it 'redirects to the time sheet' do
-        delete :destroy, id: time_entry, time_sheet_id: time_entry.time_sheet
+        delete :destroy, id: time_entry.id, time_sheet_id: time_entry.time_sheet
         response.should redirect_to time_entry.time_sheet
       end
     end
 
-    describe 'PUT "exception_date"' do
-      it 'adds the date as an exception' do
-        recurring_schedule = time_entry.create_recurring_schedule(ends: 'date', ends_date: time_entry.starts.to_date + 1.year, weekly_repeat_interval: 1)
-        expect { put :exception_date, id: time_entry, time_sheet_id: time_entry.time_sheet, date: Date.today }.to change(recurring_schedule.exception_dates,:count).by(1)
-      end
-    end
+    # describe 'PUT "exception_date"' do
+    #   it 'adds the date as an exception' do
+    #     recurring_schedule = time_entry.create_recurring_schedule(ends: 'date', ends_date: time_entry.starts.to_date + 1.year, weekly_repeat_interval: 1)
+    #     expect { put :exception_date, id: time_entry, time_sheet_id: time_entry.time_sheet, date: Date.today }.to change(recurring_schedule.exception_dates,:count).by(1)
+    #   end
+    # end
   end
 end
