@@ -14,7 +14,7 @@
   <% @time_types.each do |time_type| %>
   <tr>
     <td><%= time_type.name%></td>
-    <td><span class="label label-<%=time_type_css(time_type)%>"><%= time_type_text(time_type) %></span></td>
+    <td><%= time_type %></td>
     <td>
       <%= link_to 'Edit', edit_time_type_path(time_type), :class => 'btn btn-small' %>
       <%= link_to 'Destroy', time_type, :class => 'btn btn-danger btn-small', :method => :delete, :data => { :confirm => 'Are you sure?' } %>
