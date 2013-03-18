@@ -50,14 +50,15 @@ $ ->
 
 
   # events
-  $('.reveal-modal.time form #time_entry_to_time').bind 'keyup', ->
-    startEl = $('#time_entry_from_time')
-    endEl   = $('#time_entry_to_time')
+  $(document).on 'keyup', '.reveal-modal.time form #time_entry_to_time, .reveal-modal.time form #time_entry_from_time', ->
+    form_id = "#" + $(this).parents('form').attr('id')
+    startEl = $("#{form_id} #time_entry_from_time")
+    endEl   = $("#{form_id} #time_entry_to_time")
 
     if endEl.val()
-      $('#time_entry_submit').val('Add Entry')
+      $("#{form_id} #time_entry_submit").val('Add Entry')
     else
-      $('#time_entry_submit').val('Start Timer')
+      $("#{form_id} #time_entry_submit").val('Start Timer')
 
 
     startValue = $.fn.timepicker.parseTime startEl.val()
@@ -71,7 +72,7 @@ $ ->
     else
       value = ""
 
-    $('.time-difference').html(value)
+    $("#{form_id} .time-difference").html(value)
 
   $('.reveal-modal.time form').on 'ajax:error', (xhr, status, error) ->
     console.log xhr, status, error
@@ -94,5 +95,9 @@ $ ->
   $('a.edit-time-entry-link').on 'ajax:success', (xhr, data, status) ->
     $('form.edit_time_entry').remove()
     $(data).insertAfter('#edit-time-modal .row')
+    $('#edit-time-modal input.time').timepicker({
+      dropdown: false,
+      timeFormat: 'HH:mm'
+    })
     $('#edit-time-modal').foundation('reveal', 'open')
 
