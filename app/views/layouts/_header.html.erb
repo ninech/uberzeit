@@ -6,8 +6,10 @@
       </div>
       <div class="navigation">
         <ul>
-          <li><%= link_to t('.timesheet'), time_sheet_path(@time_sheet) %></a></li>
-          <li><%= link_to t('.absences'), time_sheet_absences_path(@time_sheet) %></li>
+          <% if @time_sheet %>
+            <li><%= link_to t('.timesheet'), time_sheet_path(@time_sheet) %></a></li>
+            <li><%= link_to t('.absences'), time_sheet_absences_path(@time_sheet) %></li>
+          <% end %>
           <li><a href="#"><%= t('.settings') %></a></li>
         </ul>
       </div>

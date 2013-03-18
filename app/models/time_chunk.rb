@@ -1,6 +1,6 @@
 # SingleTimes, RecurringTimes etc. are converted to TimeChunks for calculations and display
 class TimeChunk
-  attr_accessor :starts, :ends, :time_type, :parent, :first_half_day, :second_half_day
+  attr_accessor :starts, :ends, :time_type, :parent
 
   def initialize(opts)
     if opts[:range]
@@ -12,8 +12,6 @@ class TimeChunk
     end
     self.parent = opts[:parent]
     self.time_type = opts[:time_type]
-    self.first_half_day = opts[:first_half_day]
-    self.second_half_day = opts[:second_half_day]
   end
 
   def range
@@ -28,7 +26,19 @@ class TimeChunk
     end
   end
 
+  def first_half_day?
+    @first_half_day ||= half_day_specific? && parent.first_half_day?
+  end
+
+  def second_half_day?
+    @second_half_day ||= half_day_specific? && parent.second_half_day?
+  end
+
   def whole_day?
-    first_half_day && second_half_day
+    @whole_day ||= half_day_specific? && parent.whole_day?
+  end
+
+  def half_day_specific?
+    @half_day_specific ||= parent.respond_to?(:whole_day?)
   end
 end

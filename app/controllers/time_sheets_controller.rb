@@ -1,10 +1,6 @@
 class TimeSheetsController < ApplicationController
   load_and_authorize_resource :time_sheet
 
-  def index
-
-  end
-
   def show
     unless params[:date].nil?
       @day = Time.zone.parse(params[:date]).to_date
