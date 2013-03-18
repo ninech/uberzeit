@@ -13,7 +13,7 @@
     <%= render partial: 'date_entries/absence_form', locals: {f: f} %>
   <% end %>
 
-  <%= form_for [@time_sheet, @time_entry], html: {class: 'hide', id: 'time_entry_form'} do |f| %>
+  <%= form_for [@time_sheet, @time_entry], url: time_sheet_absence_time_entries_path(@time_sheet), html: {class: 'hide', id: 'time_entry_form'} do |f| %>
     <%= render partial: 'time_entries/absence_form', locals: {f: f} %>
   <% end %>
   <a class="close-reveal-modal">&#215;</a>
