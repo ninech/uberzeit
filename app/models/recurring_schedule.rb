@@ -3,6 +3,8 @@ class RecurringSchedule < ActiveRecord::Base
 
   belongs_to :enterable, polymorphic: true
 
+  has_many :exception_dates
+
   attr_accessible   :active, :ends, :ends_counter, :ends_date, :enterable, :weekly_repeat_interval
 
   ENDING_CONDITIONS = %w(counter date)
@@ -34,8 +36,8 @@ class RecurringSchedule < ActiveRecord::Base
     entry.starts.to_date
   end
 
-  def start_time
-    if entry.starts.kind_of?(Date)
+  def start_time_of_associated_entry
+    if entry.starts.kind_of?(Date) # convert it to time for date entries
       entry.starts.midnight
     else
       entry.starts
@@ -64,6 +66,10 @@ class RecurringSchedule < ActiveRecord::Base
     entry.duration
   end
 
+  def has_exception_date_in_range?(range)
+    range.to_date_range.any? { |date| !exception_dates.find_by_date(date).nil? }
+  end
+
   def occurrences(date_or_range)
     occurrences_date_range = date_or_range.to_range.to_date_range
     recurring_schedule_date_range = self.range.to_date_range
@@ -71,13 +77,15 @@ class RecurringSchedule < ActiveRecord::Base
     occurrences = []
 
     cursor = recurring_schedule_date_range.min
-    while cursor <= recurring_schedule_date_range.max
-      occurrence_start_time = start_time.change(year: cursor.year, month: cursor.month, day: cursor.day)
-      occurrence_end_time = occurrence_start_time + duration
+    while cursor <= recurring_schedule_date_range.max && cursor <= occurrences_date_range.max
+      unless has_exception_date_in_range?(cursor...cursor+interval)
+        occurrence_start_time = start_time_of_associated_entry.change(year: cursor.year, month: cursor.month, day: cursor.day)
+        occurrence_end_time = occurrence_start_time + duration
 
-      range = (occurrence_start_time..occurrence_end_time)
-      if range.intersects_with_duration?(occurrences_date_range)
-        occurrences << occurrence_start_time
+        occurrence_range = (occurrence_start_time..occurrence_end_time)
+        if occurrence_range.intersects_with_duration?(occurrences_date_range)
+          occurrences << occurrence_start_time
+        end
       end
 
       cursor += interval

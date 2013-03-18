@@ -115,5 +115,12 @@ describe TimeEntriesController do
         response.should redirect_to time_entry.time_sheet
       end
     end
+
+    describe 'PUT "exception_date"' do
+      it 'adds the date as an exception' do
+        recurring_schedule = time_entry.create_recurring_schedule(ends: 'date', ends_date: time_entry.starts.to_date + 1.year, weekly_repeat_interval: 1)
+        expect { put :exception_date, id: time_entry, time_sheet_id: time_entry.time_sheet, date: Date.today }.to change(recurring_schedule.exception_dates,:count).by(1)
+      end
+    end
   end
 end

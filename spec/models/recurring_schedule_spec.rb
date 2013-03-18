@@ -95,6 +95,27 @@ describe RecurringSchedule do
       end
     end
 
+    context 'exception dates' do
+      it 'takes exception dates into account' do
+        recurring_schedule = FactoryGirl.create(:recurring_schedule, enterable: entry, ends: 'counter', ends_counter: 4, exception_dates: [date+1.week])
+        recurring_schedule.occurrences(date).should_not be_empty
+        recurring_schedule.occurrences(date + 1.week).should be_empty
+        recurring_schedule.occurrences(date + 2.weeks).should_not be_empty
+      end
+
+      it 'takes exception dates into account which fall into the middle for entries which span over multiple days' do
+        date_entry = FactoryGirl.build(:date_entry, start_date: '2013-07-20', end_date: '2013-07-22')
+        recurring_schedule = FactoryGirl.create(:recurring_schedule, enterable: date_entry, ends: 'counter', ends_counter: 10, exception_dates: ['2013-07-28'])
+        recurring_schedule.occurrences('2013-07-20'.to_date).should_not be_empty
+
+        recurring_schedule.occurrences('2013-07-27'.to_date).should be_empty
+        recurring_schedule.occurrences('2013-07-28'.to_date).should be_empty
+        recurring_schedule.occurrences('2013-07-29'.to_date).should be_empty
+
+        recurring_schedule.occurrences('2013-08-03'.to_date).should_not be_empty
+      end
+    end
+
     context 'ending condition' do
       it 'ends after a certain number of occurrences' do
         recurring_schedule = FactoryGirl.build(:recurring_schedule, enterable: entry, ends: 'counter', ends_counter: 3)

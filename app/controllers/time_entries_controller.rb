@@ -33,4 +33,11 @@ class TimeEntriesController < ApplicationController
       render :action => 'edit'
     end
   end
+
+  def exception_date
+    rs = @time_entry.recurring_schedule
+    rs.exception_dates.build(date: params[:date])
+    rs.save!
+    redirect_to @time_sheet, :notice => 'Exception date successfully added.'
+  end
 end

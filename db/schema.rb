@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130315161548) do
+ActiveRecord::Schema.define(:version => 20130318104505) do
 
   create_table "date_entries", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(:version => 20130315161548) do
   end
 
   add_index "employments", ["user_id"], :name => "index_employments_on_user_id"
+
+  create_table "exception_dates", :force => true do |t|
+    t.integer  "recurring_schedule_id"
+    t.date     "date"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+  end
+
+  add_index "exception_dates", ["recurring_schedule_id"], :name => "index_exception_dates_on_recurring_schedule_id"
 
   create_table "memberships", :force => true do |t|
     t.integer  "team_id"

@@ -3,8 +3,16 @@ Uberzeit::Application.routes.draw do
   root :to => 'sessions#new'
 
   resources :time_sheets do
-    resources :time_entries, except: [:show, :index]
-    resources :date_entries, except: [:show, :index]
+    resources :time_entries, except: [:show, :index] do
+      member do
+        put 'exception_date/:date', action: 'exception_date', as: :exception_date
+      end
+    end
+    resources :date_entries, except: [:show, :index] do
+      member do
+        put 'exception_date/:date', action: 'exception_date', as: :exception_date
+      end
+    end
   end
 
   resources :users do

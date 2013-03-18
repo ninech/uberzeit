@@ -76,7 +76,7 @@
       <%
         else
       %>
-        <td><%= entry.starts.strftime("%R")  %></td>
+        <td><%= entry.starts.strftime("%R") %></td>
         <td><%= entry.ends.strftime("%R") %></td>
       <%
         end
@@ -85,7 +85,10 @@
       <td><%= entry.time_type %></td>
       <td>
         <%= link_to 'Edit', edit_polymorphic_path([@time_sheet, entry.parent]), :class => 'btn btn-small' %>
-        <%= link_to 'Destroy', [@time_sheet, entry.parent], :class => 'btn btn-danger btn-small', :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+        <%= link_to 'Destroy', polymorphic_path([@time_sheet, entry.parent]), :class => 'btn btn-danger btn-small', :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+        <% if entry.parent.recurring? %>
+          <%= link_to 'Recurring: Add exception date', exception_date_time_sheet_time_entry_path(@time_sheet, entry.parent, date), :method => :put, :class => 'btn btn-danger btn-small', :data => { :confirm => 'Are you sure?' } %>
+        <% end %>
       </td>
     </tr>
     <% end %>
