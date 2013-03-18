@@ -5,7 +5,7 @@ class PlannedWorkCalculator
     if date_or_range.kind_of?(Date)
       @date = date_or_range
     else
-      @array = sanitize_range(date_or_range)
+      @array = date_or_range.to_date_range.to_a
     end
   end
 
@@ -73,11 +73,4 @@ class PlannedWorkCalculator
   def employment_on
     @user.employments.on(@date)
   end
-
-  def sanitize_range(range)
-    range.to_a.tap do |arr|
-      arr.pop unless range.exclude_end?
-    end
-  end
-
 end
