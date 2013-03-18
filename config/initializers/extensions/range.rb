@@ -33,6 +33,11 @@ class Range
     (range.max - range.min).to_i
   end
 
+  def intersects_with_duration?(other)
+    intersection = intersect(other)
+    not intersection.nil? and intersection.duration > 0
+  end
+
   def to_range
     self
   end

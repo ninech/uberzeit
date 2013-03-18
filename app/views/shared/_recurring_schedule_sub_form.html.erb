@@ -8,62 +8,17 @@
 
   <div class="field">
     <%= rs.label :ends %>
-    <%= rs.radio_button :ends, 'never' %>
-    <%= rs.label :ends, 'Never', value: 'never' %>
     <%= rs.radio_button :ends, 'counter' %>
     <%= rs.label :ends, 'After number of occurrences', value: 'counter' %> <%= rs.text_field :ends_counter %><br/>
     <%= rs.radio_button :ends, 'date' %>
     <%= rs.label :ends, 'On', value: 'date' %> <%= rs.text_field :ends_date %><br/>
   </div>
 
-  <div class="field">
-    <%= rs.label :repeats %>
-    <%= rs.select :repeat_interval_type, ['daily', 'weekly', 'monthly', 'yearly'] %>
-  </div>
-
-  <fieldset>
-    <legend>Daily</legend>
-    <div class="field">
-      <%= rs.label :daily_repeat_interval %>
-      <%= rs.select :daily_repeat_interval, (1..30).map(&:to_s) %> days
-    </div>
-  </fieldset>
-
   <fieldset>
     <legend>Weekly</legend>
     <div class="field">
       <%= rs.label :weekly_repeat_interval %>
       <%= rs.select :weekly_repeat_interval, (1..30).map(&:to_s) %> weeks
-    </div>
-    <div class="field">
-      <%= rs.label :weekly_repeat %><br/>
-      <% {'Monday' => '1', 'Tuesday' => '2', 'Wednesday' => '3', 'Thursday' => '4', 'Friday' => '5', 'Saturday' => '6', 'Sunday' => '0'}.each_pair do |name, day_nr| %>
-        <%= rs.check_box :weekly_repeat_weekday, {name: "#{rs.object_name}[weekly_repeat_weekday][]"}, day_nr, false %>
-        <%= name %><br/>
-      <% end %>
-    </div>
-  </fieldset>
-
-  <fieldset>
-    <legend>Monthly</legend>
-    <div class="field">
-      <%= rs.label :monthly_repeat_interval %>
-      <%= rs.select :monthly_repeat_interval, (1..30).map(&:to_s) %> months
-    </div>
-    <div class="field">
-      <%= rs.label :monthly_repeat_by %>
-      <%= rs.radio_button :monthly_repeat_by, 'day_of_month' %>
-      <%= rs.label :monthly_repeat_by, 'Day of the month', value: 'day_of_month' %>
-      <%= rs.radio_button :monthly_repeat_by, 'day_of_week' %>
-      <%= rs.label :monthly_repeat_by, 'Day of the week', value: 'day_of_week' %>
-    </div>
-  </fieldset>
-
-  <fieldset>
-    <legend>Yearly</legend>
-    <div class="field">
-      <%= rs.label :yearly_repeat_interval %>
-      <%= rs.select :yearly_repeat_interval, (1..30).map(&:to_s) %> years
     </div>
   </fieldset>
   <% end %>
