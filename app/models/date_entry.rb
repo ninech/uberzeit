@@ -34,6 +34,31 @@ class DateEntry < ActiveRecord::Base
     end_date
   end
 
+  def daypart
+    case
+    when whole_day?
+      :whole_day
+    when first_half_day?
+      :first_half_day
+    when second_half_day?
+      :second_half_day
+    end
+  end
+
+  def daypart=(value)
+    case value.to_sym
+    when :whole_day
+      self.first_half_day = true
+      self.second_half_day = true
+    when :first_half_day
+      self.first_half_day = true
+      self.second_half_day = false
+    when :second_half_day
+      self.first_half_day = false
+      self.second_half_day = true
+    end
+  end
+
   def time_range_for_date(date)
     time_start = date.midnight
     time_end = date.midnight + 1.day

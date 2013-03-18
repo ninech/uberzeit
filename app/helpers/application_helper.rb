@@ -12,4 +12,9 @@ module ApplicationHelper
   def has_top_buttons?
     lookup_context.template_exists? 'top_buttons', controller.controller_name, true
   end
+
+  def icon(*icon_classes)
+    classes = icon_classes.map { |klass| "icon-#{klass}" }.join(' ')
+    content_tag(:i, '', :class => classes)
+  end
 end

@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="small-9 columns">
+    <ul class="time-type-legend">
+      <% @time_types.each_with_index do |time_type, index| %>
+        <li>
+          <i class="icon-sign-blank event-color<%= index %>"></i>
+          <%= time_type %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="small-3 columns">
+    <div class="year-navigation">
+      <%= link_to icon('caret-left'), year_time_sheet_absences_path(@time_sheet, @year - 1) %>
+      <%= link_to @year, time_sheet_absences_path(@time_sheet) %>
+      <%= link_to icon('caret-right'), year_time_sheet_absences_path(@time_sheet, @year + 1) %>
+    </div>
+  </div>
+</div>
+
+<% (1..12).to_a.in_groups_of(3) do |months| %>
+  <div class="row">
+    <% months.each do |month| %>
+      <div class="small-1 large-4 columns">
+        <%= calendar(year: @year, month: month, first_day_of_week: 1) do |day|
+          render_calendar_cell(day)
+        end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<%= render 'add_absence_modal' %>

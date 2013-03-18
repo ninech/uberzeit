@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="small-6 columns">
+    <%= f.label :start_date %>
+    <%= f.text_field :start_date %>
+  </div>
+  <div class="small-6 columns">
+    <%= f.label :end_date %>
+    <%= f.text_field :end_date %>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="small-2 columns">
+    <%= f.label :daypart %>
+  </div>
+  <div class="small-10 columns">
+    <%= f.select :daypart, options_for_select([['Whole day', :whole_day], ['First half day', :first_half_day], ['Second half day', :second_half_day]]) %>
+  </div>
+</div>
+
+<%= render 'shared/recurring_schedule_sub_form', main_form: f %>
