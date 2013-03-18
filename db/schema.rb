@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130313154110) do
+ActiveRecord::Schema.define(:version => 20130318104505) do
 
   create_table "date_entries", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -38,6 +38,15 @@ ActiveRecord::Schema.define(:version => 20130313154110) do
 
   add_index "employments", ["user_id"], :name => "index_employments_on_user_id"
 
+  create_table "exception_dates", :force => true do |t|
+    t.integer  "recurring_schedule_id"
+    t.date     "date"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+  end
+
+  add_index "exception_dates", ["recurring_schedule_id"], :name => "index_exception_dates_on_recurring_schedule_id"
+
   create_table "memberships", :force => true do |t|
     t.integer  "team_id"
     t.integer  "user_id"
@@ -50,34 +59,16 @@ ActiveRecord::Schema.define(:version => 20130313154110) do
   add_index "memberships", ["team_id"], :name => "index_memberships_on_team_id"
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
-  create_table "recurring_entries", :force => true do |t|
-    t.integer  "time_sheet_id"
-    t.integer  "time_type_id"
-    t.text     "schedule_hash"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.datetime "deleted_at"
-  end
-
-  add_index "recurring_entries", ["time_sheet_id"], :name => "index_recurring_entries_on_time_sheet_id"
-  add_index "recurring_entries", ["time_type_id"], :name => "index_recurring_entries_on_time_type_id"
-
   create_table "recurring_schedules", :force => true do |t|
-    t.boolean  "active",                  :default => false
+    t.boolean  "active",                 :default => false
     t.integer  "enterable_id"
     t.string   "enterable_type"
     t.string   "ends"
     t.integer  "ends_counter"
     t.date     "ends_date"
-    t.string   "repeat_interval_type"
-    t.integer  "daily_repeat_interval"
     t.integer  "weekly_repeat_interval"
-    t.string   "weekly_repeat_weekday"
-    t.integer  "monthly_repeat_interval"
-    t.string   "monthly_repeat_by"
-    t.integer  "yearly_repeat_interval"
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.datetime "deleted_at"
   end
 

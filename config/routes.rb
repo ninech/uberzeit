@@ -7,18 +7,28 @@ Uberzeit::Application.routes.draw do
     #resources :single_entries, except: [:show, :index]
     resources :recurring_entries, except: [:show, :index]
 
-    resources :time_entries, except: [:show, :index]
-    resources :date_entries, except: [:show, :index]
     resources :recurring_entries, except: [:show, :index]
     resources :timers, only: [:show, :edit, :update]
     member do
       match '/days/:date', to: 'time_sheets#show', via: :get
       match '/stop-timer', to: 'time_sheets#stop_timer', via: :put
     end
+
     resources :absences, only: :index do
       collection do
         get '/year/:year', to: 'absences#index', as: 'year'
         resources :time_entries, controller: :absence_time_entries, as: :absence_time_entries, only: :create
+      end
+    end
+
+    resources :time_entries, except: [:show, :index] do
+      member do
+        put 'exception_date/:date', action: 'exception_date', as: :exception_date
+      end
+    end
+    resources :date_entries, except: [:show, :index] do
+      member do
+        put 'exception_date/:date', action: 'exception_date', as: :exception_date
       end
     end
   end

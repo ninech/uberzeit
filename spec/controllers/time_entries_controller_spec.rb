@@ -57,8 +57,8 @@ describe TimeEntriesController do
           time_now = Time.zone.now.round
           put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: FactoryGirl.attributes_for(:time_entry, start_time: time_now, end_time: time_now + 1.hour)
           time_entry.reload
-          time_entry.start_time.should eq(time_now)
-          time_entry.end_time.should eq(time_now + 1.hour)
+          time_entry.start_time.to_i.should eq(time_now.to_i)
+          time_entry.end_time.to_i.should eq(time_now.to_i + 1.hour)
         end
 
         it 'redirects to the sheet overview' do
@@ -113,6 +113,13 @@ describe TimeEntriesController do
       it 'redirects to the time sheet' do
         delete :destroy, id: time_entry, time_sheet_id: time_entry.time_sheet
         response.should redirect_to time_entry.time_sheet
+      end
+    end
+
+    describe 'PUT "exception_date"' do
+      it 'adds the date as an exception' do
+        recurring_schedule = time_entry.create_recurring_schedule(ends: 'date', ends_date: time_entry.starts.to_date + 1.year, weekly_repeat_interval: 1)
+        expect { put :exception_date, id: time_entry, time_sheet_id: time_entry.time_sheet, date: Date.today }.to change(recurring_schedule.exception_dates,:count).by(1)
       end
     end
   end

@@ -104,7 +104,6 @@ describe DateEntriesController do
     end
 
     describe 'DELETE "destroy"' do
-
       it 'deletes the entry' do
         date_entry
         expect { delete :destroy, id: date_entry, time_sheet_id: date_entry.time_sheet }.to change(DateEntry,:count).by(-1)
@@ -113,6 +112,13 @@ describe DateEntriesController do
       it 'redirects to the time sheet' do
         delete :destroy, id: date_entry, time_sheet_id: date_entry.time_sheet
         response.should redirect_to date_entry.time_sheet
+      end
+    end
+
+    describe 'PUT "exception_date"' do
+      it 'adds the date as an exception' do
+        recurring_schedule = date_entry.create_recurring_schedule(ends: 'date', ends_date: date_entry.starts.to_date + 1.year, weekly_repeat_interval: 1)
+        expect { put :exception_date, id: date_entry, time_sheet_id: date_entry.time_sheet, date: Date.today }.to change(recurring_schedule.exception_dates,:count).by(1)
       end
     end
   end
