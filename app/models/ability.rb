@@ -20,6 +20,7 @@ class Ability
         can :manage, TimeEntry
         can :manage, Absence
         can :manage, Employment
+        can :manage, PublicHoliday
       end
 
     end
