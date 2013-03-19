@@ -20,14 +20,17 @@ class TimeSheet < ActiveRecord::Base
     find_chunks.in_range(date_or_range)
   end
 
+  def work(date_or_range)
+    CalculateWorkingTime.new(self, date_or_range).total
+  end
+
   def total(date_or_range, type)
     chunks = find_chunks(date_or_range, type)
-
     chunks.total(type)
   end
 
   def overtime(date_or_range)
-    Overtime.new(user, date_or_range).total
+    Overtime.new(self, date_or_range).total
   end
 
   def vacation(year)

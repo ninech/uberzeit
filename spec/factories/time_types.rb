@@ -6,6 +6,8 @@ FactoryGirl.define do
     is_work false
     is_vacation false
     treat_as_working_time false
+    daywise true
+    timewise true
 
     factory :time_type_work do
       is_work true

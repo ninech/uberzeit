@@ -18,18 +18,18 @@ describe Overtime do
   context 'full time employment' do
     it 'calculates the overtime for a date' do
       work '2013-03-12 9:00:00', '2013-03-12 18:00:00'
-      Overtime.new(user, date).total.should eq(0.5.hours)
+      Overtime.new(time_sheet, date).total.should eq(0.5.hours)
     end
 
     it 'calculates the overtime for a range' do
       work '2013-03-12 9:00:00', '2013-03-12 18:00:00'
       work '2013-03-13 9:00:00', '2013-03-13 18:30:00'
-      Overtime.new(user, range).total.should eq(1.5.hours)
+      Overtime.new(time_sheet, range).total.should eq(1.5.hours)
     end
 
     it 'calculates the undertime' do
       work '2013-03-12 9:00:00', '2013-03-12 12:30:00'
-      Overtime.new(user, date).total.should eq(-5.hours)
+      Overtime.new(time_sheet, date).total.should eq(-5.hours)
     end
   end
 
@@ -43,18 +43,18 @@ describe Overtime do
 
     it 'calculates the overtime for a date' do
       work '2013-03-12 9:00:00', '2013-03-12 13:30:00'
-      Overtime.new(user, date).total.should eq(0.25.hours)
+      Overtime.new(time_sheet, date).total.should eq(0.25.hours)
     end
 
     it 'calculates the overtime for a range' do
       work '2013-03-12 9:00:00', '2013-03-12 13:30:00'
       work '2013-03-13 9:00:00', '2013-03-13 14:30:00'
-      Overtime.new(user, range).total.should eq(1.5.hours)
+      Overtime.new(time_sheet, range).total.should eq(1.5.hours)
     end
 
     it 'calculates the undertime' do
       work '2013-03-12 9:00:00', '2013-03-12 10:30:00'
-      Overtime.new(user, date).total.should eq(-2.75.hours)
+      Overtime.new(time_sheet, date).total.should eq(-2.75.hours)
     end
   end
 

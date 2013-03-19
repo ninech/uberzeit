@@ -33,18 +33,11 @@ describe TimeChunkCollection do
         collection.total(:break).should eq(0.5.hours)
         collection.total(:break, :work).should eq(9.5.hours)
       end
+    end
 
-      context 'vacation' do
-        let(:time_chunks) do
-          [
-            TimeChunk.new(starts: '2013-03-06'.to_date, ends: '2013-03-06'.to_date, first_half_day: true, second_half_day: true, time_type: time_type_vacation),
-            TimeChunk.new(starts: '2013-03-07'.to_date, ends: '2013-03-07'.to_date, first_half_day: true, second_half_day: true, time_type: time_type_vacation)
-          ]
-        end
-        let(:collection) { TimeChunkCollection.new(time_chunks) }
-        it 'takes into account whether the whole day should be treated as a work day' do
-          collection.total(:vacation).should eq(2.work_days)
-        end
+    describe '#total_for_flag' do
+      it 'returns the total of the chunks for the given flag' do
+        collection.total_for_flag(:treat_as_working_time?).should eq(9.hours)
       end
     end
 
