@@ -16,6 +16,16 @@ class TimeChunkCollection
     end
   end
 
+  def total_for_flag(flag)
+    @chunks.inject(0.0) do |sum,chunk|
+      if chunk.time_type.send(flag)
+        sum += chunk.duration
+      else
+        sum
+      end
+    end
+  end
+
   def length
     @chunks.length
   end

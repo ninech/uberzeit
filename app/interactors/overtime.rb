@@ -1,8 +1,8 @@
 class Overtime
 
-  def initialize(user, date_or_range)
-    @user = user
-    @time_sheet = user.current_time_sheet
+  def initialize(time_sheet, date_or_range)
+    @time_sheet = time_sheet
+    @user = time_sheet.user
     @date_or_range = date_or_range
   end
 
@@ -16,11 +16,11 @@ class Overtime
   end
 
   def effective_planned_work
-    @effective_planned_work ||= @user.planned_work(@date_or_range) - @time_sheet.total(@date_or_range, :vacation)
+    @effective_planned_work ||= @user.planned_work(@date_or_range)
   end
 
   def total_worktime
-    @total_worktime ||= @time_sheet.total(@date_or_range, :work)
+    @total_worktime ||= CalculateWorkingTime.new(@time_sheet, @date_or_range).total
   end
 
 end

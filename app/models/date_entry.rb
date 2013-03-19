@@ -69,7 +69,7 @@ class DateEntry < ActiveRecord::Base
     (time_start..time_end)
   end
 
-  def duration_in_days
+  def days_length
     (end_date - start_date).to_i
   end
 
@@ -85,7 +85,7 @@ class DateEntry < ActiveRecord::Base
 
   def range_for_other_start_time(other_start_time)
     other_start_date = other_start_time.to_date
-    (other_start_date..other_start_date+duration_in_days)
+    (other_start_date..other_start_date+days_length)
   end
 
 end

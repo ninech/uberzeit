@@ -38,6 +38,20 @@ describe FindTimeChunks do
     find_chunks.in_year(2013).should_not be_empty
   end
 
+  it 'sets the duration relative to the daily working time for chunks whose range is half or whole day' do
+    relation = mock.tap do |m|
+      m.stub(:entries_in_range).and_return([
+                                            FactoryGirl.build(:date_entry, start_date: '2013-07-20', end_date: '2013-07-20', time_type: :work),
+                                            FactoryGirl.build(:date_entry, start_date: '2013-07-21', end_date: '2013-07-21', first_half_day: true, time_type: :work)])
+    end
+    find_chunks = FindTimeChunks.new(relation)
+    found_chunks = find_chunks.in_day('2013-07-20'.to_date)
+    found_chunks.chunks.first.duration.should eq(8.5.hours)
+
+    found_chunks = find_chunks.in_day('2013-07-21'.to_date)
+    found_chunks.chunks.first.duration.should eq(4.25.hours)
+  end
+
   context '#in_year' do
     let(:find_chunks) { FindTimeChunks.new(all_relations) }
     let(:found_chunks) { find_chunks.in_year(2013) }
