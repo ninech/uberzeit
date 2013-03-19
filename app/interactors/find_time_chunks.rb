@@ -42,16 +42,12 @@ class FindTimeChunks
     intersected_range = range.intersect(@range)
     return nil if !intersected_range or intersected_range.duration <= 0
 
-    duration =  if treat_duration_relative_to_daily_working_time?(entry)
+    duration =  if entry.kind_of?(Absence)
                   duration_relative_to_daily_working_time(intersected_range.duration)
                 else
                   nil
                 end
     TimeChunk.new(range: intersected_range, time_type: entry.time_type, parent: entry, duration: duration)
-  end
-
-  def treat_duration_relative_to_daily_working_time?(entry)
-    entry.kind_of?(Absence) && entry.time_type.treat_duration_relative_to_daily_working_time?
   end
 
   def duration_relative_to_daily_working_time(duration)
