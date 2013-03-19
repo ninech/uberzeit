@@ -8,7 +8,7 @@ class TimeChunkCollection
 
   def total(*types)
     @chunks.inject(0.0) do |sum,chunk|
-      if types.include?(chunk.time_type.kind) || types.empty?
+      if !chunk.time_type.ignore_in_calculation? && types.empty? or types.include?(chunk.time_type.kind)
         sum += chunk.duration
       else
         sum

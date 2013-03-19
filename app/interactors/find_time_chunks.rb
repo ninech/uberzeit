@@ -11,7 +11,6 @@ class FindTimeChunks
     @range = UberZeit.year_as_range(year)
     find_chunks_as_collection
   end
-
   def in_range(date_or_range)
     @range = date_or_range.to_range
     find_chunks_as_collection
@@ -42,7 +41,17 @@ class FindTimeChunks
   def create_and_clip_chunk(range, entry)
     intersected_range = range.intersect(@range)
     return nil if !intersected_range or intersected_range.duration <= 0
-    TimeChunk.new(range: intersected_range, time_type: entry.time_type, parent: entry)
+
+    duration =  if entry.kind_of?(Absence)
+                  duration_relative_to_daily_working_time(intersected_range.duration)
+                else
+                  nil
+                end
+    TimeChunk.new(range: intersected_range, time_type: entry.time_type, parent: entry, duration: duration)
+  end
+
+  def duration_relative_to_daily_working_time(duration)
+    duration.to_f / 24.hours * UberZeit::Config[:work_per_day]
   end
 end
 

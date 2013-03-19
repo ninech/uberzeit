@@ -4,16 +4,12 @@ describe TimeSheet do
 
   let(:time_sheet) { FactoryGirl.create(:time_sheet) }
 
-  def add_entry(start_time, end_time, type = :work, whole_day = false)
-    if whole_day
-      FactoryGirl.create(:date_entry, start_date: start_time.to_date, end_date: end_time.to_date, time_type: type, time_sheet: time_sheet)
+  def add_entry(start_time, end_time, type = :work, daypart = nil)
+    if daypart
+      FactoryGirl.create(:absence, start_date: start_time.to_date, end_date: end_time.to_date, time_type: type, time_sheet: time_sheet, daypart: daypart)
     else
       FactoryGirl.create(:time_entry, start_time: start_time.to_time, end_time: end_time.to_time, time_type: type, time_sheet: time_sheet)
     end
-  end
-
-  def add_recurring_entry(schedule_attributes, type = :work)
-    time_sheet.recurring_entries << FactoryGirl.create(:recurring_entry, type: type, attribs: schedule_attributes, time_sheet: time_sheet)
   end
 
   context 'time-sheet with a complex weekly schedule (time entries)' do
@@ -36,7 +32,7 @@ describe TimeSheet do
       # @stats['2013-02-05'] = { num_work_entries: 2, work: 7.hours, overtime: 0, vacation: 0 }
 
       # wednesday we take a day off
-      add_entry('2013-02-06 00:00:00 GMT+1', '2013-02-06 00:00:00 GMT+1', :vacation, true)
+      add_entry('2013-02-06 00:00:00 GMT+1', '2013-02-06 00:00:00 GMT+1', :vacation, :whole_day)
       # @stats['2013-02-06'] = { num_work_entries: 0, work: 0, overtime: 0, vacation: 1.work_days }
 
       # thursday we decide to work through the night
@@ -59,7 +55,7 @@ describe TimeSheet do
       add_entry('2013-02-11 00:00:00 GMT+1', '2013-02-11 06:00:00 GMT+1')
 
       # tue-wed next week free
-      add_entry('2013-02-12 00:00:00 GMT+1', '2013-02-13 00:00:00 GMT+1', :vacation, true)
+      add_entry('2013-02-12 00:00:00 GMT+1', '2013-02-13 00:00:00 GMT+1', :vacation, :whole_day)
     end
 
     it 'has a valid factory' do
@@ -134,6 +130,33 @@ describe TimeSheet do
       it 'calculates the number of remaining vacation days for the year' do
         time_sheet.remaining_vacation(2013).should eq(9.5.work_days)
       end
+    end
+  end
+
+  context 'time-sheet with both one time and recurring entries plus holidays' do
+    before do
+      # recurring entry every monday paid absence for 4 weeks
+      absence_entry = add_entry('2013-03-04', '2013-03-04', :paid_absence, :whole_day)
+      FactoryGirl.create(:recurring_schedule, enterable: absence_entry, ends: 'counter', ends_counter: 4, weekly_repeat_interval: 1)
+      # tuesday vacation
+      add_entry('2013-03-19', '2013-03-19', :vacation, :whole_day)
+      # wednesday morning off
+      add_entry('2013-03-20', '2013-03-20', :vacation, :first_half_day)
+      add_entry('2013-03-20 13:00:00 GMT+1', '2013-03-20 17:15:00 GMT+1', :work)
+      # thursday is a normal work day
+      add_entry('2013-03-21 08:00:00 GMT+1', '2013-03-21 12:00:00 GMT+1', :work)
+      add_entry('2013-03-21 12:30:00 GMT+1', '2013-03-21 17:00:00 GMT+1', :work)
+      # and friday is a public holiday, what a lovely week!
+
+      FactoryGirl.create(:public_holiday, start_date: '2013-03-22', end_date: '2013-03-22')
+    end
+
+    it 'calculates the work time' do
+      time_sheet.work('2013-03-18'.to_date...'2013-03-25'.to_date).should eq(34.hours)
+    end
+
+    it 'calculates the overtime' do
+      time_sheet.overtime('2013-03-18'.to_date...'2013-03-25'.to_date).should eq(0)
     end
   end
 

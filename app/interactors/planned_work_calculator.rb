@@ -18,8 +18,7 @@ class PlannedWorkCalculator
   end
 
   def employment_dependent_with_date
-    return 0 unless UberZeit.is_work_day?(@date)
-    workload * UberZeit::Config[:work_per_day]
+    workload * UberZeit.default_work_hours_on(@date)
   end
 
   def employment_dependent_with_range
@@ -38,16 +37,15 @@ class PlannedWorkCalculator
   end
 
   def fulltime_employment_with_date
-    return 0 unless UberZeit.is_work_day?(@date)
     if employed_on?
-      UberZeit::Config[:work_per_day]
+      UberZeit.default_work_hours_on(@date)
     else
       0
     end
   end
 
   def fulltime_employment_with_range
-    @array.to_a.inject(0.0) do |sum, date|
+    @array.inject(0.0) do |sum, date|
       @date = date
       sum + fulltime_employment_with_date
     end

@@ -8,11 +8,11 @@ describe FindTimeChunks do
     ]
   end
 
-  let(:date_entries) do
+  let(:absences) do
     [
-      FactoryGirl.build(:date_entry, start_date: '2012-12-23', end_date: '2013-01-08', time_type: :vacation),
-      FactoryGirl.build(:date_entry, start_date: '2013-07-20', end_date: '2013-07-21', time_type: :work),
-      FactoryGirl.build(:date_entry, start_date: '2013-07-23', end_date: '2013-07-24', time_type: :vacation)
+      FactoryGirl.build(:absence, start_date: '2012-12-23', end_date: '2013-01-08', time_type: :vacation),
+      FactoryGirl.build(:absence, start_date: '2013-07-20', end_date: '2013-07-21', time_type: :work),
+      FactoryGirl.build(:absence, start_date: '2013-07-23', end_date: '2013-07-24', time_type: :vacation)
     ]
   end
 
@@ -22,13 +22,13 @@ describe FindTimeChunks do
     end
   end
 
-  let(:date_entry_relation) do
+  let(:absence_relation) do
     mock.tap do |m|
-      m.stub(:entries_in_range).and_return(date_entries)
+      m.stub(:entries_in_range).and_return(absences)
     end
   end
 
-  let(:all_relations) { [time_entry_relation, date_entry_relation] }
+  let(:all_relations) { [time_entry_relation, absence_relation] }
 
   it 'handles single and mulitple entry relations' do
     find_chunks = FindTimeChunks.new(time_entry_relation)
@@ -36,6 +36,20 @@ describe FindTimeChunks do
 
     find_chunks = FindTimeChunks.new(all_relations)
     find_chunks.in_year(2013).should_not be_empty
+  end
+
+  it 'sets the duration relative to the daily working time for chunks whose range is half or whole day' do
+    relation = mock.tap do |m|
+      m.stub(:entries_in_range).and_return([
+                                            FactoryGirl.build(:absence, start_date: '2013-07-20', end_date: '2013-07-20', time_type: :work),
+                                            FactoryGirl.build(:absence, start_date: '2013-07-21', end_date: '2013-07-21', first_half_day: true, time_type: :work)])
+    end
+    find_chunks = FindTimeChunks.new(relation)
+    found_chunks = find_chunks.in_day('2013-07-20'.to_date)
+    found_chunks.chunks.first.duration.should eq(8.5.hours)
+
+    found_chunks = find_chunks.in_day('2013-07-21'.to_date)
+    found_chunks.chunks.first.duration.should eq(4.25.hours)
   end
 
   context '#in_year' do

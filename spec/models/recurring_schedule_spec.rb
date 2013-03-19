@@ -58,7 +58,7 @@ describe RecurringSchedule do
 
   context '#occurrences' do
     let(:date) { '2013-03-14'.to_date }
-    let(:entry) { FactoryGirl.build(:date_entry, start_date: date, end_date: date) }
+    let(:entry) { FactoryGirl.build(:absence, start_date: date, end_date: date) }
 
     it 'returns the occurrences as start times with time zone support' do
       recurring_schedule = FactoryGirl.build(:recurring_schedule, enterable: entry)
@@ -87,8 +87,8 @@ describe RecurringSchedule do
       end
 
       it 'finds occurrences which span multiple days' do
-        date_entry = FactoryGirl.build(:date_entry, start_date: date, end_date: date + 1.day)
-        recurring_schedule = FactoryGirl.build(:recurring_schedule, enterable: date_entry, ends: 'counter', ends_counter: 1)
+        absence = FactoryGirl.build(:absence, start_date: date, end_date: date + 1.day)
+        recurring_schedule = FactoryGirl.build(:recurring_schedule, enterable: absence, ends: 'counter', ends_counter: 1)
         recurring_schedule.occurrences(date).should_not be_empty
         recurring_schedule.occurrences(date.tomorrow).should_not be_empty
         recurring_schedule.occurrences(date + 2.days).should be_empty
@@ -104,8 +104,8 @@ describe RecurringSchedule do
       end
 
       it 'takes exception dates into account which fall into the middle for entries which span over multiple days' do
-        date_entry = FactoryGirl.build(:date_entry, start_date: '2013-07-20', end_date: '2013-07-22')
-        recurring_schedule = FactoryGirl.create(:recurring_schedule, enterable: date_entry, ends: 'counter', ends_counter: 10, exception_dates: ['2013-07-28'])
+        absence = FactoryGirl.build(:absence, start_date: '2013-07-20', end_date: '2013-07-22')
+        recurring_schedule = FactoryGirl.create(:recurring_schedule, enterable: absence, ends: 'counter', ends_counter: 10, exception_dates: ['2013-07-28'])
         recurring_schedule.occurrences('2013-07-20'.to_date).should_not be_empty
 
         recurring_schedule.occurrences('2013-07-27'.to_date).should be_empty

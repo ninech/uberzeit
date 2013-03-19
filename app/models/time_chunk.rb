@@ -4,14 +4,15 @@ class TimeChunk
 
   def initialize(opts)
     if opts[:range]
-      self.starts = opts[:range].min
-      self.ends = opts[:range].max
+      @starts = opts[:range].min
+      @ends = opts[:range].max
     else
-      self.starts = opts[:starts]
-      self.ends = opts[:ends]
+      @starts = opts[:starts]
+      @ends = opts[:ends]
     end
-    self.parent = opts[:parent]
-    self.time_type = opts[:time_type]
+    @parent = opts[:parent]
+    @time_type = opts[:time_type]
+    @duration = opts[:duration]
   end
 
   def range
@@ -19,11 +20,7 @@ class TimeChunk
   end
 
   def duration
-    if time_type.calculate_work_hours_only?
-      range.duration.to_f / 24.hours * UberZeit::Config[:work_per_day]
-    else
-      range.duration
-    end
+    @duration ||= range.duration
   end
 
   def first_half_day?

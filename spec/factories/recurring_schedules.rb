@@ -6,11 +6,12 @@ FactoryGirl.define do
       exception_dates []
     end
 
-    enterable { FactoryGirl.build(:date_entry) }
+    enterable { FactoryGirl.build(:absence) }
     ends 'counter'
     ends_counter 100
     ends_date Date.today
     weekly_repeat_interval 1
+    active true
 
     after(:build) do |recurring_schedule, evaluator|
       evaluator.exception_dates.each do |exception_date|

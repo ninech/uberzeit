@@ -18,10 +18,10 @@ describe TimeEntry do
   end
 
   it 'saves the times rounded' do
-    rounded = UberZeit::Config[:rounding]/1.minute
-    time = "2013-01-01 9:#{rounded-1}:00 +0000".to_time
+    time = "2013-01-01 9:03:37 +0000".to_time
+    rounded = "2013-01-01 9:04:00 +0000".to_time
     entry = FactoryGirl.create(:time_entry, start_time: time, end_time: time + 2.hours)
-    entry.starts.min.should eq(rounded)
+    entry.starts.should eq(rounded)
   end
 
   it 'returns the duration' do
