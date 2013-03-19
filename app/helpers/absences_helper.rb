@@ -49,7 +49,7 @@ module AbsencesHelper
                      t('.second_half_day')
                    end
     else
-      "#{l(absence.starts)} - #{l(absence.ends)}"
+      time_range = "#{l(absence.starts)} - #{l(absence.ends)}"
     end
 
     "#{time_range} #{absence.time_type.name}"
