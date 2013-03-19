@@ -4,9 +4,6 @@ Uberzeit::Application.routes.draw do
   root :to => 'sessions#new'
 
   resources :time_sheets do
-    #resources :single_entries, except: [:show, :index]
-    resources :recurring_entries, except: [:show, :index]
-
     resources :recurring_entries, except: [:show, :index]
     resources :timers, only: [:show, :edit, :update]
     member do
