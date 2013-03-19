@@ -1,6 +1,5 @@
 $(document)
   .foundation('reveal', { closeOnBackgroundClick: false })
-  .foundation('tooltips')
 
 $ ->
   $('input.time').timepicker({
@@ -14,3 +13,9 @@ $ ->
 
   $('.toggle').on 'click', (element) ->
     $('#' + $(this).data('toggle-target')).toggle()
+
+  $('.has-click-tip').tooltipster
+    interactive: true
+    position: 'bottom'
+    fixedWidth: 300
+    speed: 250

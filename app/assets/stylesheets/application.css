@@ -11,5 +11,6 @@
  *= require_self
  *= require foundation_and_overrides
  *= require _font-awesome
+ *= require tooltipster-rails
  *= require_tree .
  */
