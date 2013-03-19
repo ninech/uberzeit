@@ -1,16 +1,3 @@
 <div id="add-absence-modal" class="medium reveal-modal">
-  <div class="row">
-    <div class="small-12 columns">
-      <h2><%= t('.add_absence') %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="small-12 columns">
-      <%= select :shared, :time_type, options_for_select(@time_types.map { |time_type| [time_type.name, time_type.id, {:'data-type' => time_type.type_for_entries}]}), include_blank: true %>
-    </div>
-  </div>
-  <%= form_for [@time_sheet, @absence] do |f| %>
-    <%= render partial: 'absences/form', locals: {f: f} %>
-  <% end %>
   <a class="close-reveal-modal">&#215;</a>
 </div>

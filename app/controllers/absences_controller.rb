@@ -3,6 +3,8 @@ class AbsencesController < ApplicationController
   load_and_authorize_resource :time_sheet
   load_and_authorize_resource :absence, through: :time_sheet
 
+  respond_to :html, :json
+
   def index
     year = params[:year] || Time.current.year
     @year = year.to_i
@@ -16,17 +18,18 @@ class AbsencesController < ApplicationController
         @absences[day.to_s] << chunk
       end
     end
-
-    @absence = @time_sheet.absences.new
-
   end
 
   def new
+    @time_types = TimeType.absences
     @absence.build_recurring_schedule
+
+    respond_with(@absence, :layout => !request.xhr?)
   end
 
   def create
     @absence.save
+    respond_with(@absence, location: year_time_sheet_absences_path(@time_sheet, @absence.start_date.year))
   end
 
 end
