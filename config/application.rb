@@ -63,7 +63,7 @@ module Uberzeit
 
     # uberZeit specific time settings
     Uberzeit::Application.config.to_prepare do
-      UberZeit::Config[:rounding] = 5.minutes
+      UberZeit::Config[:rounding] = 1.minutes
       UberZeit::Config[:work_days] = [:monday, :tuesday, :wednesday, :thursday, :friday]
       UberZeit::Config[:work_per_day] = 8.5.hours
       UberZeit::Config[:vacation_per_year] = 25.days
