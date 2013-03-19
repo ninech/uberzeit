@@ -114,34 +114,34 @@ describe Ability do
     end
   end
 
-  describe 'DateEntry' do
+  describe 'Absence' do
 
-    let(:date_entry) { FactoryGirl.create(:date_entry, time_sheet: user.time_sheets.first) }
+    let(:absence) { FactoryGirl.create(:absence, time_sheet: user.time_sheets.first) }
 
     context 'as a user with the administration role' do
       let(:ability) { Ability.new(admin) }
 
-      it { should be_able_to(:read, date_entry) }
-      it { should be_able_to(:update, date_entry) }
-      it { should be_able_to(:create, DateEntry) }
-      it { should be_able_to(:destroy, date_entry) }
+      it { should be_able_to(:read, absence) }
+      it { should be_able_to(:update, absence) }
+      it { should be_able_to(:create, Absence) }
+      it { should be_able_to(:destroy, absence) }
     end
 
     context 'as the owner' do
       let(:ability) { Ability.new(user) }
 
-      it { should be_able_to(:read, date_entry) }
-      it { should be_able_to(:update, date_entry) }
-      it { should be_able_to(:create, DateEntry) }
-      it { should be_able_to(:destroy, date_entry) }
+      it { should be_able_to(:read, absence) }
+      it { should be_able_to(:update, absence) }
+      it { should be_able_to(:create, Absence) }
+      it { should be_able_to(:destroy, absence) }
     end
 
     context 'as another user' do
       let(:ability) { Ability.new(FactoryGirl.create(:user)) }
 
-      it { should_not be_able_to(:read, date_entry) }
-      it { should_not be_able_to(:update, date_entry) }
-      it { should_not be_able_to(:destroy, date_entry) }
+      it { should_not be_able_to(:read, absence) }
+      it { should_not be_able_to(:update, absence) }
+      it { should_not be_able_to(:destroy, absence) }
     end
   end
 

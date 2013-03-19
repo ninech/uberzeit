@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe CalculateWorkingTime do
-  pending
-
   let(:user) { FactoryGirl.create(:user) }
   let(:date) { '2013-03-12'.to_date }
   let(:range) { '2013-03-12'.to_date...'2013-03-14'.to_date }
@@ -13,7 +11,7 @@ describe CalculateWorkingTime do
   end
 
   def vacation(start_date, end_date)
-    FactoryGirl.create(:date_entry, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :vacation, time_sheet: time_sheet)
+    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :vacation, time_sheet: time_sheet)
   end
 
   it 'calculates the working time for a date' do

@@ -6,7 +6,7 @@ FactoryGirl.define do
       exception_dates []
     end
 
-    enterable { FactoryGirl.build(:date_entry) }
+    enterable { FactoryGirl.build(:absence) }
     ends 'counter'
     ends_counter 100
     ends_date Date.today

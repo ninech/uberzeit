@@ -51,7 +51,7 @@ class FindTimeChunks
   end
 
   def treat_duration_relative_to_daily_working_time?(entry)
-    entry.kind_of?(DateEntry) && entry.time_type.treat_duration_relative_to_daily_working_time?
+    entry.kind_of?(Absence) && entry.time_type.treat_duration_relative_to_daily_working_time?
   end
 
   def duration_relative_to_daily_working_time(duration)

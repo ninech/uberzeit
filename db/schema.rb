@@ -11,9 +11,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130319100329) do
+ActiveRecord::Schema.define(:version => 20130319131245) do
 
-  create_table "date_entries", :force => true do |t|
+  create_table "absences", :force => true do |t|
     t.integer  "time_sheet_id"
     t.integer  "time_type_id"
     t.date     "start_date"
@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(:version => 20130319100329) do
     t.datetime "deleted_at"
   end
 
-  add_index "date_entries", ["time_sheet_id"], :name => "index_date_entries_on_time_sheet_id"
-  add_index "date_entries", ["time_type_id"], :name => "index_date_entries_on_time_type_id"
+  add_index "absences", ["time_sheet_id"], :name => "index_date_entries_on_time_sheet_id"
+  add_index "absences", ["time_type_id"], :name => "index_date_entries_on_time_type_id"
 
   create_table "employments", :force => true do |t|
     t.integer  "user_id"
