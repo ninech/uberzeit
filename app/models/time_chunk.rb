@@ -38,4 +38,8 @@ class TimeChunk
   def half_day_specific?
     @half_day_specific ||= parent.respond_to?(:whole_day?)
   end
+
+  def parent_id
+    @parent_id ||= parent.id
+  end
 end
