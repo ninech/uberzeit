@@ -6,7 +6,7 @@ class TimeType < ActiveRecord::Base
 
   default_scope order(:name)
 
-  attr_accessible :is_vacation, :is_work, :name, :treat_as_work, :daywise, :timewise
+  attr_accessible :is_vacation, :is_work, :name, :treat_as_working_time, :daywise, :timewise
 
   validates_presence_of :name
 

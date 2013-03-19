@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130319082619) do
+ActiveRecord::Schema.define(:version => 20130319100329) do
 
   create_table "date_entries", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -94,6 +94,20 @@ ActiveRecord::Schema.define(:version => 20130319082619) do
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
 
+  create_table "special_days", :force => true do |t|
+    t.integer  "time_type_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.string   "name"
+    t.boolean  "first_half_day"
+    t.boolean  "second_half_day"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.datetime "deleted_at"
+  end
+
+  add_index "special_days", ["time_type_id"], :name => "index_special_days_on_time_type_id"
+
   create_table "teams", :force => true do |t|
     t.string   "name"
     t.string   "ldap_id"
@@ -124,12 +138,12 @@ ActiveRecord::Schema.define(:version => 20130319082619) do
 
   create_table "time_types", :force => true do |t|
     t.string   "name"
-    t.boolean  "is_work",       :default => false
-    t.boolean  "is_vacation",   :default => false
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.boolean  "is_work",               :default => false
+    t.boolean  "is_vacation",           :default => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.datetime "deleted_at"
-    t.boolean  "treat_as_work", :default => false
+    t.boolean  "treat_as_working_time", :default => false
     t.boolean  "daywise"
     t.boolean  "timewise"
   end
