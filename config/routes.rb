@@ -25,6 +25,8 @@ Uberzeit::Application.routes.draw do
     end
   end
 
+  resources :public_holidays
+
   resources :users do
     member do
       get 'edit'

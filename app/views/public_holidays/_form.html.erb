@@ -1,0 +1,29 @@
+<%= form_for(@public_holiday) do |f| %>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-2 columns">
+    <%= f.label :start_date %>
+    <%= f.text_field :start_date, class: 'date' %>
+  </div>
+
+  <div class="small-2 columns end">
+    <%= f.label :end_date %>
+    <%= f.text_field :end_date, class: 'date' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-3 columns">
+    <%= f.submit class: 'button'%>
+  </div>
+  <div class="small-2 columns end">
+    <%= link_to t('.back'), public_holidays_path, class: "secondary button" %>
+  </div>
+</div>
+<% end %>
+
