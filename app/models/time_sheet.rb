@@ -4,7 +4,7 @@ class TimeSheet < ActiveRecord::Base
   belongs_to :user
 
   has_many :time_entries
-  has_many :date_entries
+  has_many :absences
   has_one :timer
 
   validates_presence_of :user
