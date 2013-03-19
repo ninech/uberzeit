@@ -6,6 +6,6 @@ class CalculateWorkingTime
 
   def total
     chunks = @time_sheet.find_chunks(@date_or_range)
-    chunks.total_for_flag(:treat_as_working_time?)
+    chunks.total
   end
 end

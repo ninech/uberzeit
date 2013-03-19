@@ -26,11 +26,6 @@ Uberzeit::Application.routes.draw do
         put 'exception_date/:date', action: 'exception_date', as: :exception_date
       end
     end
-    resources :date_entries, except: [:show, :index] do
-      member do
-        put 'exception_date/:date', action: 'exception_date', as: :exception_date
-      end
-    end
   end
 
   resources :users do

@@ -6,7 +6,7 @@ describe TimeSheet do
 
   def add_entry(start_time, end_time, type = :work, daypart = nil)
     if daypart
-      FactoryGirl.create(:date_entry, start_date: start_time.to_date, end_date: end_time.to_date, time_type: type, time_sheet: time_sheet, daypart: daypart)
+      FactoryGirl.create(:absence, start_date: start_time.to_date, end_date: end_time.to_date, time_type: type, time_sheet: time_sheet, daypart: daypart)
     else
       FactoryGirl.create(:time_entry, start_time: start_time.to_time, end_time: end_time.to_time, time_type: type, time_sheet: time_sheet)
     end

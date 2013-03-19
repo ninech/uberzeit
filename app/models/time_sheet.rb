@@ -12,9 +12,9 @@ class TimeSheet < ActiveRecord::Base
   # returns time chunks (which are limited to the given date or range)
   def find_chunks(date_or_range, time_type_scope = nil)
     entries = if time_type_scope.nil?
-                [time_entries, date_entries]
+                [time_entries, absences]
               else
-                [time_entries.send(time_type_scope), date_entries.send(time_type_scope)]
+                [time_entries.send(time_type_scope), absences.send(time_type_scope)]
               end
     find_chunks = FindTimeChunks.new(entries)
     find_chunks.in_range(date_or_range)
