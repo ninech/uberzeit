@@ -9,8 +9,8 @@
       <%= select :shared, :time_type, options_for_select(@time_types.map { |time_type| [time_type.name, time_type.id, {:'data-type' => time_type.type_for_entries}]}), include_blank: true %>
     </div>
   </div>
-  <%= form_for [@time_sheet, @absence], html: {class: 'hide', id: 'date_entry_form'} do |f| %>
-    <%= render partial: 'date_entries/absence_form', locals: {f: f} %>
+  <%= form_for [@time_sheet, @absence] do |f| %>
+    <%= render partial: 'absences/form', locals: {f: f} %>
   <% end %>
   <a class="close-reveal-modal">&#215;</a>
 </div>
