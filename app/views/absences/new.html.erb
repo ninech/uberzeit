@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="small-12 columns">
+    <h2><%= t('.add_absence') %>
+  </div>
+</div>
+<%= form_for [@time_sheet, @absence] do |f| %>
+  <%= render partial: 'form', locals: {f: f} %>
+<% end %>

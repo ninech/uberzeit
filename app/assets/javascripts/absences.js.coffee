@@ -4,17 +4,9 @@
 
 jQuery ->
 
-  $('#shared_time_type').on 'change', () ->
-    selected = $(this).find('option:selected')
-    type = selected.data('type')
-
-    switch type
-      when 'both', 'timewise'
-        $('#date_entry_form').hide()
-        $('#time_entry_form').show()
-      when 'daywise'
-        $('#date_entry_form').show()
-        $('#time_entry_form').hide()
-
-    $('#date_entry_time_type_id').val(selected.val())
-    $('#time_entry_time_type_id').val(selected.val())
+  $(document).on 'click', '.remote-reveal', () ->
+    element = $('#' + $(this).data('reveal-id'))
+    element.find('span.ajax-content').remove()
+    content_element = element.append('<span class="ajax-content"></span>')
+    content_element.find('span.ajax-content').load $(this).data('reveal-url'), () ->
+      $('.date').pickadate()

@@ -1,6 +1,12 @@
 <%= f.hidden_field :time_type_id %>
 
 <div class="row">
+  <div class="small-12 columns">
+    <%= f.select :time_type_id, options_from_collection_for_select(@time_types, :id, :name) %>
+  </div>
+</div>
+
+<div class="row">
   <div class="small-6 columns">
     <%= f.label :start_date %>
     <%= f.text_field :start_date, class: :date %>

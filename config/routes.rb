@@ -11,7 +11,7 @@ Uberzeit::Application.routes.draw do
       match '/stop-timer', to: 'time_sheets#stop_timer', via: :put
     end
 
-    resources :absences, only: :index do
+    resources :absences do
       collection do
         get '/year/:year', to: 'absences#index', as: 'year'
         resources :time_entries, controller: :absence_time_entries, as: :absence_time_entries, only: :create

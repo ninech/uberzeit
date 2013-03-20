@@ -58,6 +58,7 @@ gem 'whenever'
 
 # calendar
 gem 'calendar_helper'
+gem 'tooltipster-rails'
 
 group :development, :test do
   gem 'mysql2'

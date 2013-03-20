@@ -14,13 +14,16 @@ module AbsencesHelper
   end
 
   def tooltips_for_day(day)
-    content_tag(:span, day.mday, class: 'has-tip tip-bottom', title: tooltip_content_for_day(day), :'data-tooltip' => day.object_id)
+    content_tag(:span, day.mday, class: 'has-click-tip', title: tooltip_content_for_day(day))
   end
 
   def tooltip_content_for_day(day)
     absences = @absences[day.to_date.to_s]
     absences.map do |absence|
-      "<i class='icon-sign-blank event-color#{color_index_of_element(absence)}'> </i>#{text_for_absence(absence)}"
+      link = link_to('#', class: 'remote-reveal', :'data-reveal-id' => 'edit-absence-modal', :'data-reveal-url' => edit_time_sheet_absence_path(@time_sheet, absence.parent_id)) do
+        "<i class='icon-edit event-color#{color_index_of_element(absence)}'> </i>".html_safe
+      end
+      "#{link} #{text_for_absence(absence)}"
     end.join('<br />')
   end
 
