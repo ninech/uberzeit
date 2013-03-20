@@ -29,7 +29,7 @@ class AbsencesController < ApplicationController
 
   def create
     @absence.save
-    respond_with(@absence, location: year_time_sheet_absences_path(@time_sheet, @absence.start_date.year))
+    respond_with(@absence, location: default_return_location)
   end
 
   def edit
@@ -40,7 +40,17 @@ class AbsencesController < ApplicationController
 
   def update
     @absence.update_attributes(params[:absence])
-    respond_with(@absence, location: year_time_sheet_absences_path(@time_sheet, @absence.start_date.year))
+    respond_with(@absence, location: default_return_location)
+  end
+
+  def destroy
+    @absence.destroy
+    respond_with(@absence, location: default_return_location)
+  end
+
+  private
+  def default_return_location
+    year_time_sheet_absences_path(@time_sheet, @absence.start_date.year)
   end
 
 end

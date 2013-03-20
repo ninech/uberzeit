@@ -20,10 +20,13 @@ module AbsencesHelper
   def tooltip_content_for_day(day)
     absences = @absences[day.to_date.to_s]
     absences.map do |absence|
-      link = link_to('#', class: 'remote-reveal', :'data-reveal-id' => 'edit-absence-modal', :'data-reveal-url' => edit_time_sheet_absence_path(@time_sheet, absence.parent_id)) do
+      edit_link = link_to('#', class: 'remote-reveal', :'data-reveal-id' => 'edit-absence-modal', :'data-reveal-url' => edit_time_sheet_absence_path(@time_sheet, absence.parent_id)) do
         "<i class='icon-edit event-color#{color_index_of_element(absence)}'> </i>".html_safe
       end
-      "#{link} #{text_for_absence(absence)}"
+      delete_link = link_to(time_sheet_absence_path(@time_sheet, absence.parent_id), method: :delete) do
+        "<i class='icon-remove-sign event-color#{color_index_of_element(absence)}'> </i>".html_safe
+      end
+      "#{edit_link} #{text_for_absence(absence)} #{delete_link}"
     end.join('<br />')
   end
 
