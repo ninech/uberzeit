@@ -9,12 +9,12 @@ class RecurringSchedule < ActiveRecord::Base
 
   ENDING_CONDITIONS = %w(counter date)
 
-  validates_inclusion_of :ends, in: ENDING_CONDITIONS
+  validates_inclusion_of :ends, in: ENDING_CONDITIONS, if: :active?
 
-  validates_numericality_of :weekly_repeat_interval, greater_than: 0
-  validates_numericality_of :ends_counter, greater_than: 0, if: :ends_on_counter?
+  validates_numericality_of :weekly_repeat_interval, greater_than: 0, if: :active?
+  validates_numericality_of :ends_counter, greater_than: 0, if: lambda { active? && ends_on_counter? }
 
-  validates_date :ends_date, if: :ends_on_date?
+  validates_date :ends_date, if: lambda { active? && ends_on_date? }
 
   def active?
     !!active

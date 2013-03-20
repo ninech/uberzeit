@@ -14,23 +14,24 @@ module CommonEntry
     attr_accessible :time_sheet_id, :time_type_id, :type
     validates_presence_of :time_sheet, :time_type
 
-    accepts_nested_attributes_for :recurring_schedule, reject_if: :reject_recurring_schedule_condition, allow_destroy: true
-    before_save :mark_recurring_schedule_for_destruction, if: :delete_recurring_schedule_condition
+    accepts_nested_attributes_for :recurring_schedule
 
     scope :work, joins: :time_type, conditions: ['is_work = ?', true]
     scope :absence, joins: :time_type, conditions: ['is_work = ?', false]
     scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
+
+    before_validation :build_recurring_schedule, unless: :recurring_schedule
   end
 
   module ClassMethods
     def recurring_entries
       # inner join
-      scoped.joins(:recurring_schedule).find(:all, conditions: {recurring_schedules: {active: true}})
+      scoped.joins(:recurring_schedule).where(recurring_schedules: {active: true})
     end
 
     def nonrecurring_entries
       # left outer join
-      scoped.includes(:recurring_schedule).where('recurring_schedules.id IS NULL')
+      scoped.includes(:recurring_schedule).where(recurring_schedules: {active: false})
     end
 
     def recurring_entries_in_range(range)
@@ -62,17 +63,4 @@ module CommonEntry
     end
   end
 
-  private
-
-  def mark_recurring_schedule_for_destruction
-    recurring_schedule.mark_for_destruction
-  end
-
-  def delete_recurring_schedule_condition
-    recurring_schedule && !recurring_schedule.active?
-  end
-
-  def reject_recurring_schedule_condition(attributes)
-    attributes['id'].nil? && attributes['active'].to_i != 1
-  end
 end
