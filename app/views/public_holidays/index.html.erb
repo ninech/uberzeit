@@ -1,0 +1,51 @@
+<div class="row">
+  <h3>
+    <%= t '.public_holidays' %>
+    <div class="year-navigation">
+      <%= link_to icon('caret-left'), public_holidays_path(year: @year - 1) %>
+      <%= link_to @year, public_holidays_path(year: @year ) %>
+      <%= link_to icon('caret-right'), public_holidays_path(year: @year + 1) %>
+    </div>
+  </h3>
+
+  <%= link_to icon('plus') + ' ' + t('.new_public_holiday'), new_public_holiday_path, class: 'small button' %></h3>
+
+  <% if notice %>
+  <div id="notice" class="alert-box success">
+    <%= notice %>
+  </div>
+  <% end %>
+
+  <div class="large-12 columns">
+    <table>
+      <thead>
+        <tr>
+          <th width="180"><%=t '.date' %></th>
+          <th width="200"><%=t '.name' %></th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @public_holidays.each do |public_holiday| %>
+          <tr>
+            <td>
+              <%= public_holiday.start_date %>
+              <% unless public_holiday.end_date.blank? || public_holiday.start_date == public_holiday.end_date %>
+                - <%= public_holiday.end_date %>
+              <% end %>
+            </td>
+            <td><%= public_holiday.name %></td>
+            <td>
+              <%= link_to icon('edit'), edit_public_holiday_path(public_holiday) %>
+            </td>
+            <td>
+              <%= link_to icon('trash'), public_holiday, method: :delete, confirm: t('.confirm_delete') %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>

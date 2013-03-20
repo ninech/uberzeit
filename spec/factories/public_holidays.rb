@@ -7,5 +7,9 @@ FactoryGirl.define do
     name "Christmas"
     first_half_day false
     second_half_day false
+
+    factory :invalid_public_holiday do
+      name nil
+    end
   end
 end
