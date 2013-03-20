@@ -9,7 +9,7 @@
 <div class="row">
   <div class="small-6 columns">
     <%= f.label :start_date %>
-    <%= f.text_field :start_date, class: :date %>
+    <%= f.text_field :start_date, class: :date, :'date-value' => f.object.start_date %>
   </div>
   <div class="small-6 columns">
     <%= f.label :end_date %>

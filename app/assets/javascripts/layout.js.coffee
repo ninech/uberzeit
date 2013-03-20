@@ -7,9 +7,6 @@ $ ->
     timeFormat: 'HH:mm'
   })
 
-  $('input.date').pickadate
-    format: 'yyyy-mm-dd'
-
   $('.toggle').on 'click', (element) ->
     $('#' + $(this).data('toggle-target')).toggle()
 
@@ -18,3 +15,9 @@ $ ->
     position: 'bottom'
     fixedWidth: 300
     speed: 250
+
+  window.init_pickdate = () ->
+    $('input.date').pickadate
+      format: 'yyyy-mm-dd'
+
+  init_pickdate()

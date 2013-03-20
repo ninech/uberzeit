@@ -32,4 +32,15 @@ class AbsencesController < ApplicationController
     respond_with(@absence, location: year_time_sheet_absences_path(@time_sheet, @absence.start_date.year))
   end
 
+  def edit
+    @time_types = TimeType.absences
+    @absence.build_recurring_schedule unless @absence.recurring_schedule
+    respond_with(@absence, :layout => !request.xhr?)
+  end
+
+  def update
+    @absence.update_attributes(params[:absence])
+    respond_with(@absence, location: year_time_sheet_absences_path(@time_sheet, @absence.start_date.year))
+  end
+
 end

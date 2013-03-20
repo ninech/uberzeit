@@ -9,4 +9,4 @@ jQuery ->
     element.find('span.ajax-content').remove()
     content_element = element.append('<span class="ajax-content"></span>')
     content_element.find('span.ajax-content').load $(this).data('reveal-url'), () ->
-      $('.date').pickadate()
+      init_pickdate()
