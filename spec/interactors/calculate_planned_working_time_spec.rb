@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe PlannedWorkCalculator do
+describe CalculatePlannedWorkingTime do
 
-  let(:calculator) { PlannedWorkCalculator.new(user, date_or_range) }
+  let(:calculator) { CalculatePlannedWorkingTime.new(user, date_or_range) }
   let(:user) { FactoryGirl.create(:user, with_employment: false, with_sheet: false) }
 
 

@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
 
   # sollzeit
   def planned_work(date_or_range, force_fulltime = false)
-    calculator = PlannedWorkCalculator.new(self, date_or_range)
+    calculator = CalculatePlannedWorkingTime.new(self, date_or_range)
     unless force_fulltime
       calculator.employment_dependent
     else

@@ -1,4 +1,4 @@
-class PlannedWorkCalculator
+class CalculatePlannedWorkingTime
 
   def initialize(user, date_or_range)
     @user = user
