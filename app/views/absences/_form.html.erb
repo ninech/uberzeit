@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="small-12 columns">
-    <%= f.select :time_type_id, options_from_collection_for_select(@time_types, :id, :name) %>
+    <%= f.select :time_type_id, options_from_collection_for_select(@time_types, :id, :name, f.object.time_type_id) %>
   </div>
 </div>
 
