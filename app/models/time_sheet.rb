@@ -30,7 +30,7 @@ class TimeSheet < ActiveRecord::Base
   end
 
   def overtime(date_or_range)
-    Overtime.new(self, date_or_range).total
+    CalculateOvertime.new(self, date_or_range).total
   end
 
   def vacation(year)
