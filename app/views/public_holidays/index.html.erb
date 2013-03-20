@@ -1,5 +1,12 @@
 <div class="row">
-  <h3><%= t '.public_holidays' %></h3>
+  <h3>
+    <%= t '.public_holidays' %>
+    <div class="year-navigation">
+      <%= link_to icon('caret-left'), public_holidays_path(year: @year - 1) %>
+      <%= link_to @year, public_holidays_path(year: @year ) %>
+      <%= link_to icon('caret-right'), public_holidays_path(year: @year + 1) %>
+    </div>
+  </h3>
 
   <%= link_to icon('plus') + ' ' + t('.new_public_holiday'), new_public_holiday_path, class: 'small button' %></h3>
 
@@ -13,8 +20,8 @@
     <table>
       <thead>
         <tr>
-          <th><%=t '.date' %></th>
-          <th><%=t '.name' %></th>
+          <th width="180"><%=t '.date' %></th>
+          <th width="200"><%=t '.name' %></th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
         </tr>

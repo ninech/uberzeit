@@ -11,6 +11,5 @@ $ ->
   $('input.date').pickadate
     format: 'yyyy-mm-dd'
 
-
   $('.toggle').on 'click', (element) ->
     $('#' + $(this).data('toggle-target')).toggle()

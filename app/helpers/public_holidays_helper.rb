@@ -1,2 +1,0 @@
-module PublicHolidaysHelper
-end

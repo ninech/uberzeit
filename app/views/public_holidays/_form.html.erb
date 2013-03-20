@@ -1,4 +1,16 @@
 <%= form_for(@public_holiday) do |f| %>
+  <% if @public_holiday.errors.any? %>
+    <div id="error_explanation" class="alert-box alert">
+      <h2><%= pluralize(@public_holiday.errors.count, "error") %> prohibited this entry from being saved:</h2>
+
+      <ul>
+      <% @public_holiday.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
 <div class="row">
   <div class="small-4 columns">
     <%= f.label :name %>
@@ -8,12 +20,18 @@
 <div class="row">
   <div class="small-2 columns">
     <%= f.label :start_date %>
-    <%= f.text_field :start_date, class: 'date' %>
+    <%= f.text_field :start_date, class: 'date start' %>
   </div>
 
   <div class="small-2 columns end">
     <%= f.label :end_date %>
-    <%= f.text_field :end_date, class: 'date' %>
+    <%= f.text_field :end_date, class: 'date end' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.select :daypart, [[t('.whole_day'), :whole_day], [t('.first_half_day'), :first_half_day], [t('.second_half_day'), :second_half_day]] %>
   </div>
 </div>
 

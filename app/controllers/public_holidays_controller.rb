@@ -2,6 +2,11 @@ class PublicHolidaysController < ApplicationController
   load_and_authorize_resource
 
   def index
+    @year = (params[:year] || session[:year] || Time.current.year).to_i
+    session[:year] = @year
+
+    year_range = UberZeit.year_as_range(@year)
+    @public_holidays = @public_holidays.where('start_date <= ? AND end_date >= ?', year_range.max, year_range.min)
   end
 
   def new
