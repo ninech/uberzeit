@@ -9,6 +9,12 @@
           <% if @time_sheet %>
             <li><%= link_to t('.timesheet'), time_sheet_path(@time_sheet) %></a></li>
             <li><%= link_to t('.absences'), time_sheet_absences_path(@time_sheet) %></li>
+            <% if can? :manage, Employment %>
+              <li><%= link_to t('.employments'), user_employments_path(@current_user, @current_user.employments) %></li>
+            <% end %>
+          <% end %>
+          <% if @current_user.has_role?(:admin) %>
+            <li><%= link_to t('.public_holidays'), public_holidays_path %></li>
           <% end %>
           <li><a href="#"><%= t('.settings') %></a></li>
         </ul>
