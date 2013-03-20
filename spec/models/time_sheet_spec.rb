@@ -147,7 +147,7 @@ describe TimeSheet do
       add_entry('2013-03-21 08:00:00 GMT+1', '2013-03-21 12:00:00 GMT+1', :work)
       add_entry('2013-03-21 12:30:00 GMT+1', '2013-03-21 17:00:00 GMT+1', :work)
       # and friday is a public holiday, what a lovely week!
-
+      # (public holidays are not counted as work days)
       FactoryGirl.create(:public_holiday, start_date: '2013-03-22', end_date: '2013-03-22')
     end
 

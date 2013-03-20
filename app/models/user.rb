@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
 
   # sollzeit
   def planned_work(date_or_range, force_fulltime = false)
-    calculator = PlannedWorkCalculator.new(self, date_or_range)
+    calculator = CalculatePlannedWorkingTime.new(self, date_or_range)
     unless force_fulltime
       calculator.employment_dependent
     else
@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   end
 
   def vacation_available(year)
-    vacation = Vacation.new(self, year)
+    vacation = CalculateTotalRedeemableVacation.new(self, year)
     vacation.total_redeemable_for_year
   end
 

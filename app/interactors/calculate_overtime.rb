@@ -1,4 +1,4 @@
-class Overtime
+class CalculateOvertime
 
   def initialize(time_sheet, date_or_range)
     @time_sheet = time_sheet
