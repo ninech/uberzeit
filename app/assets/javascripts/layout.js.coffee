@@ -28,6 +28,21 @@ $ ->
     $('input.date').pickadate
       format: 'yyyy-mm-dd'
 
+    picker_from = $('.from_to_date').find('input.from_date').pickadate
+      onSelect: () ->
+        console.log this
+        date = createDateArray(this.getDate('yyyy-mm-dd'))
+        picker_to.data('pickadate').setDateLimit(date)
+
+    picker_to = $('.from_to_date').find('input.to_date').pickadate
+      onSelect: () ->
+        date = createDateArray(this.getDate('yyyy-mm-dd'))
+        picker_from.data('pickadate').setDateLimit(date)
+
+    createDateArray = (date) ->
+      date.split( '-' ).map (value) ->
+        + value
+
   init_pickdate()
 
 
