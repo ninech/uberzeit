@@ -1,4 +1,4 @@
-class Vacation
+class CalculateTotalRedeemableVacation
 
   def initialize(user, year)
     @user = user

@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   end
 
   def vacation_available(year)
-    vacation = Vacation.new(self, year)
+    vacation = CalculateTotalRedeemableVacation.new(self, year)
     vacation.total_redeemable_for_year
   end
 

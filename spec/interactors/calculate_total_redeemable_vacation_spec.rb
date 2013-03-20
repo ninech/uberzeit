@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 
-describe Vacation do
+describe CalculateTotalRedeemableVacation do
 
   describe '#total_for_this_year' do
 
     let(:user) { FactoryGirl.create(:user, with_sheet: false) }
     let(:year) { 2013 }
-    let(:vacation) { Vacation.new(user, year) }
+    let(:vacation) { CalculateTotalRedeemableVacation.new(user, year) }
 
     it 'returns the total available vacations for the given year' do
       vacation.total_redeemable_for_year.should eq(25.work_days)
