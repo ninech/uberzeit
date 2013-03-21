@@ -5,7 +5,7 @@ $ ->
     e.preventDefault()
     e.stopPropagation()
     $(this).popover
-      content: $(this).attr('title')
+      content: $(this).data('tooltip')
       trigger: 'click'
       hideOnHTMLClick: true
       stopChildrenPropagation: false,

@@ -12,7 +12,7 @@ module AbsencesHelper
   end
 
   def tooltips_for_day(day)
-    content_tag(:span, day.mday, class: 'has-click-tip', title: tooltip_content_for_day(day))
+    content_tag(:span, day.mday, class: 'has-click-tip', data: { tooltip: tooltip_content_for_day(day) })
   end
 
   def tooltip_content_for_day(day)
