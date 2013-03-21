@@ -25,23 +25,33 @@ $ ->
 
   # Pickadate
   window.init_pickdate = () ->
+
     $('input.date').pickadate
-      format: 'yyyy-mm-dd'
 
-    picker_from = $('.from_to_date').find('input.from_date').pickadate
-      onSelect: () ->
-        console.log this
-        date = createDateArray(this.getDate('yyyy-mm-dd'))
-        picker_to.data('pickadate').setDateLimit(date)
-
-    picker_to = $('.from_to_date').find('input.to_date').pickadate
-      onSelect: () ->
-        date = createDateArray(this.getDate('yyyy-mm-dd'))
-        picker_from.data('pickadate').setDateLimit(date)
 
     createDateArray = (date) ->
-      date.split( '-' ).map (value) ->
+      date.split('-').map (value) ->
         + value
+
+    picker_from_element = $('.from_to_date').find('input.from_date')
+    picker_to_element = $('.from_to_date').find('input.to_date')
+
+    picker_from = $(picker_from_element).pickadate
+      onSelect: () ->
+        fromDate = createDateArray(this.getDate('yyyy-mm-dd'))
+        picker_to.data('pickadate').setDateLimit(fromDate)
+
+        from_moment = moment(this.getDate(true))
+        to_moment = moment(picker_to.data('pickadate').getDate(true))
+
+        if to_moment.isBefore(from_moment)
+          picker_to.data('pickadate').setDate(from_moment.year(), from_moment.months() + 1, from_moment.date())
+
+    picker_to = $(picker_to_element).pickadate
+      onStart: () ->
+        fromDate = createDateArray(picker_from.data('pickadate').getDate('yyyy-mm-dd'))
+        this.setDateLimit(fromDate)
+
 
   init_pickdate()
 
