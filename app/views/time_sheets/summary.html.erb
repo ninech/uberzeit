@@ -1,0 +1,44 @@
+<div class="row">
+  <h3><%= t '.summary' %> <%=2013%></h3>
+
+  <div class="small-6 columns">
+    <table style="width: 100%;">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th colspan="4" style="text-align: center;">
+            <div>
+              <%= link_to icon('caret-left'), summary_time_sheet_path(@time_sheet) %>
+              <%= link_to 'Arbeitszeit (h)', summary_time_sheet_path(@time_sheet) %>
+              <%= link_to icon('caret-right'), summary_time_sheet_path(@time_sheet) %>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th>&nbsp;</th>
+          <th>Ist</th>
+          <th>Soll</th>
+          <th>&Delta;</th>
+          <th>&Sigma;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @summary.each_with_index do |summary, index| %>
+        <tr>
+          <td><%= link_to summary[:name], action: 'weekly_summary', year: @year, month: index + 1, remote: true %></td>
+          <td><%= format_hours(summary[:worked]) %></td>
+          <td><%= format_hours(summary[:planned]) %></td>
+          <td><%= format_hours(summary[:overtime]) %></td>
+          <td><%= format_hours(summary[:sum]) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="small-6 columns end">
+    <div id="summary_table">
+
+    </div>
+  </div>
+</div>

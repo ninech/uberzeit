@@ -24,7 +24,7 @@ class CalculateTotalRedeemableVacation
   end
 
   def employments_for_year
-    @employments_for_year ||= @user.employments.between(year_as_range.min, year_as_range.max)
+    @employments_for_year ||= @user.employments.between(year_as_range)
   end
 
   def default_vacation_per_year

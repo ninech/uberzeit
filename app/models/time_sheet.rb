@@ -29,6 +29,10 @@ class TimeSheet < ActiveRecord::Base
     chunks.total(type)
   end
 
+  def planned_work(date_or_range)
+    user.planned_work(date_or_range)
+  end
+
   def overtime(date_or_range)
     CalculateOvertime.new(self, date_or_range).total
   end

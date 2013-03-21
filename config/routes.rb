@@ -4,10 +4,15 @@ Uberzeit::Application.routes.draw do
   root :to => 'sessions#new'
 
   resources :time_sheets do
+    member do
+      get :summary
+      match '/weekly_summary/year/:year/month/:month', to: 'time_sheets#weekly_summary', via: :get
+    end
+
     resources :recurring_entries, except: [:show, :index]
     resources :timers, only: [:show, :edit, :update]
     member do
-      match '/days/:date', to: 'time_sheets#show', via: :get
+      match '/date/:date', to: 'time_sheets#show', via: :get
       match '/stop-timer', to: 'time_sheets#stop_timer', via: :put
     end
 
@@ -24,6 +29,7 @@ Uberzeit::Application.routes.draw do
       end
     end
   end
+
 
   resources :public_holidays
 

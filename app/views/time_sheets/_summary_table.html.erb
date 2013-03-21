@@ -1,0 +1,30 @@
+<table style="width: 100%;">
+  <thead>
+    <tr>
+      <th>&nbsp;</th>
+      <th colspan="4" style="text-align: center;">
+        <div>
+          <%= @summary_title %>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <th>&nbsp;</th>
+      <th>Ist</th>
+      <th>Soll</th>
+      <th>&Delta;</th>
+      <th>&Sigma;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @summary.each do |summary| %>
+    <tr>
+      <td><%= link_to summary[:name], summary[:link] %></td>
+      <td><%= format_hours(summary[:worked]) %></td>
+      <td><%= format_hours(summary[:planned]) %></td>
+      <td><%= format_hours(summary[:overtime]) %></td>
+      <td><%= format_hours(summary[:sum]) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

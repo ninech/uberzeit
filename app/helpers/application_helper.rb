@@ -25,4 +25,16 @@ module ApplicationHelper
   def show_manage_link_in_navigation?
     can?(:manage, TimeType) || can?(:manage, Employment) || can?(:manage, PublicHoliday)
   end
+
+  def format_hours(duration)
+    color = if duration == 0
+            'gray'
+          elsif duration < 0
+            'tomato'
+          else
+            ''
+          end
+
+    content_tag(:span, number_with_precision(duration.to_hours, precision: 2), style: "color: #{color}")
+  end
 end
