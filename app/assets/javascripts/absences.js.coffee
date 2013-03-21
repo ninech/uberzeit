@@ -8,6 +8,10 @@ $ ->
       content: $(this).attr('title')
       trigger: 'click'
       hideOnHTMLClick: true
-      stopChildrenPropagation: false
+      stopChildrenPropagation: false,
+      afterInit: (e) ->
+        e.data('popover').popover.click (event) ->
+          unless $(event.target).is('a')
+            event.stopPropagation()
     .popover('show')
 
