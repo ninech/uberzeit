@@ -4,6 +4,7 @@ class Absence < ActiveRecord::Base
   attr_accessible :start_date, :end_date, :first_half_day, :second_half_day, :daypart
 
   validates_presence_of :start_date, :end_date
+  after_initialize :set_default_dates
 
   validates_datetime :start_date
   validates_datetime :end_date, on_or_after: :start_date
@@ -11,6 +12,12 @@ class Absence < ActiveRecord::Base
   def self.nonrecurring_entries_in_range(range)
     date_range = range.to_date_range
     nonrecurring_entries.find(:all, conditions: ['(start_date <= ? AND end_date >= ?)', date_range.max, date_range.min])
+  end
+
+
+  def set_default_dates
+    self.start_date ||= Date.current
+    self.end_date ||= Date.current
   end
 
   def whole_day?

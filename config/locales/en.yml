@@ -20,3 +20,8 @@ en:
     formats:
       default: '%d.%m.%Y'
       long: '%A, %d. %B %Y'
+
+  js:
+    pickadate:
+      firstDay: 1
+      format: 'dddd, dd. mmmm yyyy'
