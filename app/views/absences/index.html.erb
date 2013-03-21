@@ -21,7 +21,7 @@
 <% (1..12).to_a.in_groups_of(3) do |months| %>
   <div class="row">
     <% months.each do |month| %>
-      <div class="small-1 large-4 columns">
+      <div class="small-12 large-4 columns">
         <%= calendar(year: @year, month: month, first_day_of_week: 1) do |day|
           render_calendar_cell(day)
         end %>
