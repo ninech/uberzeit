@@ -21,4 +21,8 @@ module ApplicationHelper
   def pickadate_js_localization
     I18n.t('js.pickadate').to_json.html_safe
   end
+
+  def show_manage_link_in_navigation?
+    can?(:manage, TimeType) || can?(:manage, Employment) || can?(:manage, PublicHoliday)
+  end
 end
