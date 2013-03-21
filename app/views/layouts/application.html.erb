@@ -19,6 +19,13 @@
 	<%= javascript_include_tag "vendor/custom.modernizr" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+
+  <%= javascript_tag do %>
+    $.extend( $.fn.pickadate.defaults,
+      <%= pickadate_js_localization %>
+    );
+  <% end %>
+
 </head>
 <body>
   <%= render 'layouts/header' %>

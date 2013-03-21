@@ -17,4 +17,8 @@ module ApplicationHelper
     classes = icon_classes.map { |klass| "icon-#{klass}" }.join(' ')
     content_tag(:i, '', :class => classes)
   end
+
+  def pickadate_js_localization
+    I18n.t('js.pickadate').to_json.html_safe
+  end
 end
