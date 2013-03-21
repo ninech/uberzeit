@@ -15,14 +15,6 @@ $ ->
     $('#' + $(this).data('toggle-target')).toggle()
 
 
-  # Tooltip
-  $('.has-click-tip').tooltipster
-    interactive: true
-    position: 'bottom'
-    fixedWidth: 300
-    speed: 250
-
-
   # Pickadate
   window.init_pickdate = () ->
     $('input.date').pickadate

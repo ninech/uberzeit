@@ -15,5 +15,4 @@
 //= require foundation
 //= require turbolinks
 //= require jquery.turbolinks
-//= require tooltipster-rails
 //= require_tree .

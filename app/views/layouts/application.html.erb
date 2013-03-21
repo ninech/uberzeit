@@ -20,9 +20,9 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="content-<%= controller.controller_name %>">
   <%= render 'layouts/header' %>
-  <div class="content container" id="content-<%= controller.controller_name %>">
+  <div class="content container">
     <%= yield %>
   </div>
 </body>
