@@ -1,20 +1,22 @@
 <div class="row">
-  <div class="small-9 columns">
+  <div class="small-10 columns">
     <ul class="time-type-legend">
-      <% @time_types.each_with_index do |time_type, index| %>
+      <% 1.times do @time_types.each_with_index do |time_type, index| %>
         <li>
           <i class="icon-sign-blank event-color<%= index %>"></i>
           <%= time_type %>
         </li>
-      <% end %>
+      <% end end %>
     </ul>
   </div>
-  <div class="small-3 columns">
-    <div class="year-navigation">
-      <%= link_to icon('caret-left'), year_time_sheet_absences_path(@time_sheet, @year - 1) %>
-      <%= link_to @year, time_sheet_absences_path(@time_sheet) %>
-      <%= link_to icon('caret-right'), year_time_sheet_absences_path(@time_sheet, @year + 1) %>
-    </div>
+  <div class="small-2 columns">
+    <h1 class="year-navigation">
+      <small>
+        <%= link_to icon('caret-left'), year_time_sheet_absences_path(@time_sheet, @year - 1) %>
+        <%= link_to icon('caret-right'), year_time_sheet_absences_path(@time_sheet, @year + 1) %>
+      </small>
+      <%= @year %>
+    </h1>
   </div>
 </div>
 

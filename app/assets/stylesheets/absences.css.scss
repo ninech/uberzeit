@@ -22,7 +22,7 @@
 
   ul.time-type-legend {
 
-    margin-bottom: 1.2em;
+    margin: 1.72em 0 0;
     height: 1.2em;
 
 
@@ -34,12 +34,12 @@
   }
 
   .year-navigation {
-
     float: right;
+    margin: 0;
 
-    span {
-      font-size: 1.2em;
-    }
+    // span {
+    //   font-size: 1.2em;
+    // }
 
   }
 
