@@ -10,12 +10,9 @@ class TimeSheet < ActiveRecord::Base
   validates_presence_of :user
 
   # returns time chunks (which are limited to the given date or range)
-  def find_chunks(date_or_range, time_type_scope = nil)
-    entries = if time_type_scope.nil?
-                [time_entries, absences]
-              else
-                [time_entries.send(time_type_scope), absences.send(time_type_scope)]
-              end
+  def find_chunks(date_or_range, time_types = TimeType.scoped)
+    entries = [time_entries.where(time_type_id: time_types), absences.where(time_type_id: time_types)]
+
     find_chunks = FindTimeChunks.new(entries)
     find_chunks.in_range(date_or_range)
   end
@@ -24,9 +21,9 @@ class TimeSheet < ActiveRecord::Base
     CalculateWorkingTime.new(self, date_or_range).total
   end
 
-  def total(date_or_range, type)
-    chunks = find_chunks(date_or_range, type)
-    chunks.total(type)
+  def total(date_or_range, time_types)
+    chunks = find_chunks(date_or_range, time_types)
+    chunks.total
   end
 
   def planned_work(date_or_range)
@@ -40,10 +37,11 @@ class TimeSheet < ActiveRecord::Base
   def vacation(year)
     current_year = Time.zone.now.beginning_of_year.to_date
     range = (current_year...current_year + 1.year)
-    total(range, :vacation)
+    total(range, TimeType.vacation)
   end
 
   def remaining_vacation(year)
     user.vacation_available(year) - vacation(year)
   end
+
 end

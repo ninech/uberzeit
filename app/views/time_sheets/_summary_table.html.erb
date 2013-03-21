@@ -19,7 +19,11 @@
     <% @summary.each do |summary| %>
     <tr>
       <td><%= link_to summary[:name], summary[:link] %></td>
-      <td><%= format_hours(summary[:worked]) %></td>
+      <td><%= format_hours(summary[:worked]) %>
+        <% summary[:worked_by_type].each_pair do |name, worked| %>
+          <%= name %>&nbsp;<%= format_hours(worked) %>
+        <% end %>
+      </td>
       <td><%= format_hours(summary[:planned]) %></td>
       <td><%= format_hours(summary[:overtime]) %></td>
       <td><%= format_hours(summary[:sum]) %></td>

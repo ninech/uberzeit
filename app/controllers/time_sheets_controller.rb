@@ -93,14 +93,14 @@ class TimeSheetsController < ApplicationController
     planned = @time_sheet.planned_work(range)
     worked = @time_sheet.work(range)
     overtime = @time_sheet.overtime(range)
-    work_types = {}
+    worked_by_type = {}
 
     TimeType.work.each do |type|
-      #work_types[type.name] << @time_sheet.total(range, type)
+      worked_by_type[type.name] = @time_sheet.total(range, type)
     end
 
     evaluator[:sum] += overtime
 
-    { range: range, planned: planned, worked: worked, overtime: overtime, sum: evaluator[:sum], work_types: work_types }
+    { range: range, planned: planned, worked: worked, overtime: overtime, sum: evaluator[:sum], worked_by_type: worked_by_type }
   end
 end
