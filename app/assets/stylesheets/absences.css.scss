@@ -63,9 +63,19 @@
       border-bottom: 10px solid #222;
     }
 
+    .arrow.bottom-arrow {
+      margin: 0 0 0 -11px;
+      border-top: 10px solid #222;
+    }
+
     .arrow.left-arrow {
       margin: -10px 0 0 -10px;
       border-right: 10px solid #222;
+    }
+
+    .arrow.right-arrow {
+      margin: -10px 0 0 0;
+      border-left: 10px solid #222;
     }
 
 
