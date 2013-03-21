@@ -9,7 +9,7 @@ class AbsencesController < ApplicationController
     year = params[:year] || Time.current.year
     @year = year.to_i
 
-    @time_types = TimeType.absences
+    @time_types = TimeType.absence
     @absences = {}
     time_chunks_finder = FindTimeChunks.new(@time_sheet.absences)
     time_chunks_finder.in_year(@year).each do |chunk|
@@ -21,7 +21,7 @@ class AbsencesController < ApplicationController
   end
 
   def new
-    @time_types = TimeType.absences
+    @time_types = TimeType.absence
     @absence.build_recurring_schedule
 
     respond_with(@absence, :layout => !request.xhr?)
@@ -33,7 +33,7 @@ class AbsencesController < ApplicationController
   end
 
   def edit
-    @time_types = TimeType.absences
+    @time_types = TimeType.absence
     @absence.build_recurring_schedule unless @absence.recurring_schedule
     respond_with(@absence, :layout => !request.xhr?)
   end

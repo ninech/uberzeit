@@ -28,10 +28,6 @@ describe TimeChunkCollection do
       it 'returns the total of the chunks' do
         collection.total.should eq(9.5.hours)
       end
-
-      it 'returns the total of the given type' do
-        collection.total(:work).should eq(9.hours)
-      end
     end
 
     describe '#length' do

@@ -2,7 +2,9 @@ class TimeType < ActiveRecord::Base
   acts_as_paranoid
   validates_as_paranoid
 
-  scope :absences, where(is_work:  false)
+  scope :absence,   where(is_work: false)
+  scope :work,      where(is_work: true)
+  scope :vacation,  where(is_vacation: true)
 
   default_scope order(:name)
 
