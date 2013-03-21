@@ -5,7 +5,7 @@ Uberzeit::Application.routes.draw do
 
   resources :time_sheets do
     member do
-      get :summary
+      get :summary, as: :summary
       match '/weekly_summary/year/:year/month/:month', to: 'time_sheets#weekly_summary', via: :get
     end
 

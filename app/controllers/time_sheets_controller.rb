@@ -40,6 +40,8 @@ class TimeSheetsController < ApplicationController
 
     year_range = UberZeit.year_as_range(@year)
 
+    @time_type = TimeType.first
+
     ranges = generate_ranges(year_range, 1.month)
     @summary = summary_for_ranges(ranges).collect do |summary|
       summary[:name] = summary[:range].min.strftime('%B')
@@ -91,8 +93,14 @@ class TimeSheetsController < ApplicationController
     planned = @time_sheet.planned_work(range)
     worked = @time_sheet.work(range)
     overtime = @time_sheet.overtime(range)
+    work_types = {}
+
+    TimeType.work.each do |type|
+      #work_types[type.name] << @time_sheet.total(range, type)
+    end
+
     evaluator[:sum] += overtime
 
-    { range: range, planned: planned, worked: worked, overtime: overtime, sum: evaluator[:sum] }
+    { range: range, planned: planned, worked: worked, overtime: overtime, sum: evaluator[:sum], work_types: work_types }
   end
 end

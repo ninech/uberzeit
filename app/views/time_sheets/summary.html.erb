@@ -1,25 +1,24 @@
-<div class="row">
+<div id="content-summary" class="row">
   <h3><%= t '.summary' %> <%=2013%></h3>
 
   <div class="small-6 columns">
-    <table style="width: 100%;">
+    <table class="summary">
       <thead>
-        <tr>
-          <th>&nbsp;</th>
-          <th colspan="4" style="text-align: center;">
-            <div>
-              <%= link_to icon('caret-left'), summary_time_sheet_path(@time_sheet) %>
-              <%= link_to 'Arbeitszeit (h)', summary_time_sheet_path(@time_sheet) %>
-              <%= link_to icon('caret-right'), summary_time_sheet_path(@time_sheet) %>
-            </div>
+        <tr class="header">
+          <th colspan="5">
+            <% if @time_type.nil? %>
+              <%= t '.total_work_time_in_hours' %>
+            <% else %>
+              <%= t('.only_type_in_hours', type: @time_type.name) %>
+            <% end %>
           </th>
         </tr>
-        <tr>
+        <tr class="subheader">
           <th>&nbsp;</th>
-          <th>Ist</th>
-          <th>Soll</th>
-          <th>&Delta;</th>
-          <th>&Sigma;</th>
+          <th class="value"><%= t '.actual' %></th>
+          <th class="value"><%= t '.target' %></th>
+          <th class="value">&Delta;</th>
+          <th class="value">&Sigma;</th>
         </tr>
       </thead>
       <tbody>
