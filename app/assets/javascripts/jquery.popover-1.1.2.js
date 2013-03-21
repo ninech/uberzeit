@@ -3,7 +3,7 @@
  * By Davey IJzermans
  * See http://wp.me/p12l3P-gT for details
  * http://daveyyzermans.nl/
- * 
+ *
  * Released under MIT License.
  */
 
@@ -33,10 +33,10 @@
 			var options = data.options;
 			var $anchor = options.anchor ? $(options.anchor) : popover;
 			var el = data.popover;
-			
+
 			var coordinates = $anchor.offset();
 			var y1, x1;
-			
+
 			if (position == 'top') {
 				y1 = coordinates.top - el.outerHeight();
 				x1 = coordinates.left - el.outerWidth() / 2 + $anchor.outerWidth() / 2;
@@ -51,7 +51,7 @@
 				y1 = coordinates.top + $anchor.outerHeight();
 				x1 = coordinates.left - el.outerWidth() / 2 + $anchor.outerWidth() / 2;
 			}
-			
+
 			x2 = x1 + el.outerWidth();
 			y2 = y1 + el.outerHeight();
 			ret = {
@@ -60,14 +60,14 @@
 				y1: y1,
 				y2: y2
 			};
-			
+
 			return ret;
 		},
 		pop_position_class: function(popover, position) {
 			var remove = "popover-top popover-right popover-left";
 			var arrow = "top-arrow"
 			var arrow_remove = "right-arrow bottom-arrow left-arrow";
-			
+
 			if (position == 'top') {
 				remove = "popover-right popover-bottom popover-left";
 				arrow = 'bottom-arrow';
@@ -81,7 +81,7 @@
 				arrow = 'right-arrow';
 				arrow_remove = "top-arrow bottom-arrow left-arrow";
 			}
-			
+
 			popover
 				.removeClass(remove)
 				.addClass('popover-' + position)
@@ -94,17 +94,17 @@
 		/**
 		 * Initialization method
 		 * Merges parameters with defaults, makes the popover and saves data
-		 * 
+		 *
 		 * @param object
 		 * @return jQuery
 		 */
 		init : function(params) {
 			return this.each(function() {
 				var options = $.extend({}, defaults, params);
-				
+
 				var $this = $(this);
 				var data = $this.popover('getData');
-				
+
 				if ( ! data) {
 					var popover = $('<div class="popover" />')
 						.addClass(options.classes)
@@ -112,25 +112,25 @@
 						.append('<div class="wrap"></div>')
 						.appendTo('body')
 						.hide();
-					
+
 					if (options.stopChildrenPropagation) {
 						popover.children().bind('click.popover', function(event) {
 							event.stopPropagation();
 						});
 					}
-					
+
 					if (options.anchor) {
 						if ( ! options.anchor instanceof jQuery) {
 							options.anchor = $(options.anchor);
 						}
 					}
-					
+
 					var data = {
 						target: $this,
 						popover: popover,
 						options: options
 					};
-					
+
 					if (options.title) {
 						$('<div class="title" />')
 							.html(options.title instanceof jQuery ? options.title.html() : options.title)
@@ -144,14 +144,14 @@
 
 					$this.data('popover', data);
 					popovers.push($this);
-					
+
 					if (options.url) {
 						$this.popover('ajax', options.url);
 					}
-					
+
 					$this.popover('reposition');
 					$this.popover('setTrigger', options.trigger);
-					
+
 					if (options.hideOnHTMLClick) {
 						var hideEvent = "click.popover";
 						if ("ontouchstart" in document.documentElement)
@@ -160,7 +160,7 @@
 							$('html').popover('fadeOutAll');
 						});
 					}
-					
+
 					if (options.autoReposition) {
 						var repos_function = function(event) {
 							$this.popover('reposition');
@@ -169,73 +169,77 @@
 							.unbind('resize.popover').bind('resize.popover', repos_function)
 							.unbind('scroll.popover').bind('scroll.popover', repos_function);
 					}
+
+					if(options.afterInit !== undefined) {
+						options.afterInit($this);
+					}
 				}
 			});
 		},
 		/**
 		 * Reposition the popover
-		 * 
+		 *
 		 * @return jQuery
 		 */
 		reposition: function() {
 			return this.each(function() {
 				var $this = $(this);
 				var data = $this.popover('getData');
-				
+
 				if (data) {
 					var popover = data.popover;
 					var options = data.options;
 					var $anchor = options.anchor ? $(options.anchor) : $this;
 					var coordinates = $anchor.offset();
-					
+
 					var position = options.position;
 					if ( ! (position == 'top' || position == 'right' || position == 'left' || position == 'auto')) {
 						position = 'bottom';
 					}
 					var calc;
-					
+
 					if (position == 'auto') {
 						var positions = ["bottom", "left", "top", "right"];
 						var scrollTop = $(window).scrollTop();
 						var scrollLeft = $(window).scrollLeft();
 						var windowHeight = $(window).outerHeight();
 						var windowWidth = $(window).outerWidth();
-						
+
 						$.each (positions, function(i, pos) {
 							calc = _.calc_position($this, pos);
-							
+
 							var x1 = calc.x1 - scrollLeft;
 							var x2 = calc.x2 - scrollLeft + options.horizontalOffset;
 							var y1 = calc.y1 - scrollTop;
 							var y2 = calc.y2 - scrollTop + options.verticalOffset;
-							
+
 							if (x1 < 0 || x2 < 0 || y1 < 0 || y2 < 0)
 								//popover is left off of the screen or above it
 								return true; //continue
-							
+
 							if (y2 > windowHeight)
 								//popover is under the window viewport
 								return true; //continue
-							
+
 							if (x2 > windowWidth)
 								//popover is right off of the screen
 								return true; //continue
-							
+
 							position = pos;
 							return false;
 						});
-						
+
 						if (position == 'auto') {
 							//position is still auto
 							return;
 						}
 					}
-					
+
 					calc = _.calc_position($this, position);
 					var top = calc.top;
 					var left = calc.left;
 					_.pop_position_class(popover, position);
-					
+
 					var marginTop = 0;
 					var marginLeft = 0;
 					if (position == 'bottom') {
@@ -250,14 +254,14 @@
 					if (position == 'left') {
 						marginLeft = -options.horizontalOffset;
 					}
-					
+
 					var css = {
 						left: calc.x1,
 						top: calc.y1,
 						marginTop: marginTop,
 						marginLeft: marginLeft
 					};
-					
+
 					if (data.initd && options.animateChange) {
 						popover.css(css);
 					} else {
@@ -270,14 +274,14 @@
 		},
 		/**
 		 * Remove a popover from the DOM and clean up data associated with it.
-		 * 
+		 *
 		 * @return jQuery
 		 */
 		destroy: function() {
 			return this.each(function() {
 				var $this = $(this);
 				var data = $this.popover('getData');
-				
+
 				$this.unbind('.popover');
 				$(window).unbind('.popover');
 				data.popover.remove();
@@ -286,14 +290,14 @@
 		},
 		/**
 		 * Show the popover
-		 * 
+		 *
 		 * @return jQuery
 		 */
 		show: function() {
 			return this.each(function() {
 				var $this = $(this);
 				var data = $this.popover('getData');
-				
+
 				if (data) {
 					var popover = data.popover;
 					$this.popover('reposition');
@@ -303,14 +307,14 @@
 		},
 		/**
 		 * Hide the popover
-		 * 
+		 *
 		 * @return jQuery
 		 */
 		hide: function() {
 			return this.each(function() {
 				var $this = $(this);
 				var data = $this.popover('getData');
-				
+
 				if (data) {
 					data.popover.hide().css({ zIndex: 949 });
 				}
@@ -318,14 +322,14 @@
 		},
 		/**
 		 * Fade out the popover
-		 * 
+		 *
 		 * @return jQuery
 		 */
 		fadeOut: function(ms) {
 			return this.each(function() {
 				var $this = $(this);
 				var data = $this.popover('getData');
-				
+
 				if (data) {
 					var popover = data.popover;
 					var options = data.options;
@@ -335,14 +339,14 @@
 		},
 		/**
 		 * Hide all popovers
-		 * 
+		 *
 		 * @return jQuery
 		 */
 		hideAll: function() {
 			return $.each (popovers, function(i, pop) {
 				var $this = $(this);
 				var data = $this.popover('getData');
-				
+
 				if (data) {
 					var popover = data.popover;
 					popover.hide();
@@ -351,7 +355,7 @@
 		},
 		/**
 		 * Fade out all popovers
-		 * 
+		 *
 		 * @param int
 		 * @return jQuery
 		 */
@@ -359,7 +363,7 @@
 			return $.each (popovers, function(i, pop) {
 				var $this = $(this);
 				var data = $this.popover('getData');
-				
+
 				if (data) {
 					var popover = data.popover;
 					var options = data.options;
@@ -368,8 +372,8 @@
 			});
 		},
 		/**
-		 * Set the event trigger for the popover. Also cleans the previous binding. 
-		 * 
+		 * Set the event trigger for the popover. Also cleans the previous binding.
+		 *
 		 * @param string
 		 * @return jQuery
 		 */
@@ -377,12 +381,12 @@
 			return this.each(function() {
 				var $this = $(this);
 				var data = $this.popover('getData');
-				
+
 				if (data) {
 					var popover = data.popover;
 					var options = data.options;
 					var $anchor = options.anchor ? $(options.anchor) : $this;
-					
+
 					if (trigger === 'click') {
 						$anchor.unbind('click.popover').bind('click.popover', function(event) {
 							if (options.preventDefault) {
@@ -398,7 +402,7 @@
 						$anchor.unbind('click.popover');
 						popover.unbind('click.popover')
 					}
-					
+
 					if (trigger === 'hover') {
 						$anchor.add(popover).bind('mousemove.popover', function(event) {
 							$this.popover('show');
@@ -409,7 +413,7 @@
 					} else {
 						$anchor.add(popover).unbind('mousemove.popover').unbind('mouseleave.popover');
 					}
-					
+
 					if (trigger === 'focus') {
 						$anchor.add(popover).bind('focus.popover', function(event) {
 							$this.popover('show');
@@ -428,7 +432,7 @@
 		},
 		/**
 		 * Rename the popover's title
-		 * 
+		 *
 		 * @param string
 		 * @return jQuery
 		 */
@@ -436,7 +440,7 @@
 			return this.each(function() {
 				var $this = $(this);
 				var data = $this.popover('getData');
-				
+
 				if (data) {
 					var title = data.popover.find('.title');
 					var wrap = data.popover.find('.wrap');
@@ -449,7 +453,7 @@
 		},
 		/**
 		 * Set the popover's content
-		 * 
+		 *
 		 * @param html
 		 * @return jQuery
 		 */
@@ -457,7 +461,7 @@
 			return this.each(function() {
 				var $this = $(this);
 				var data = $this.popover('getData');
-				
+
 				if (data) {
 					var content = data.popover.find('.content');
 					var wrap = data.popover.find('.wrap');
@@ -470,7 +474,7 @@
 		},
 		/**
 		 * Read content with AJAX and set popover's content.
-		 * 
+		 *
 		 * @param string
 		 * @param object
 		 * @return jQuery
@@ -479,7 +483,7 @@
 			return this.each(function() {
 				var $this = $(this);
 				var data = $this.popover('getData');
-				
+
 				if (data) {
 					var ajax_defaults = {
 						url: url,
@@ -501,7 +505,7 @@
 			return this.each(function() {
 				var $this = $(this);
 				var data = $this.popover('getData');
-				
+
 				if (data) {
 					data.options[option] = value;
 					$this.data('popover', data);
@@ -513,10 +517,10 @@
 			this.each(function() {
 				var $this = $(this);
 				var data = $this.data('popover');
-				
+
 				if (data) ret.push(data);
 			});
-			
+
 			if (ret.length == 0) {
 				return;
 			}
