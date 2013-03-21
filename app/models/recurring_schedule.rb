@@ -16,6 +16,8 @@ class RecurringSchedule < ActiveRecord::Base
 
   validates_date :ends_date, if: lambda { active? && ends_on_date? }
 
+  validates_uniqueness_of :enterable_id, scope: :enterable_type
+
   def active?
     !!active
   end

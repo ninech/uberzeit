@@ -137,7 +137,8 @@ describe TimeSheet do
     before do
       # recurring entry every monday paid absence for 4 weeks
       absence_entry = add_entry('2013-03-04', '2013-03-04', :paid_absence, :whole_day)
-      FactoryGirl.create(:recurring_schedule, enterable: absence_entry, ends: 'counter', ends_counter: 4, weekly_repeat_interval: 1)
+      absence_entry.recurring_schedule.update_attributes(active: true, ends: 'counter', ends_counter: 4, weekly_repeat_interval: 1)
+
       # tuesday vacation
       add_entry('2013-03-19', '2013-03-19', :vacation, :whole_day)
       # wednesday morning off
