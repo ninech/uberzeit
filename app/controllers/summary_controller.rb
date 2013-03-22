@@ -108,7 +108,7 @@ class SummaryController < ApplicationController
       by_type[type.name] = @time_sheet.total(range, type)
     end
 
-    evaluator[:sum] = (evaluator[:sum] || 0) + worked
+    evaluator[:sum] = (evaluator[:sum] || 0) + overtime
 
     {range: range, planned: planned, worked: worked, overtime: overtime, sum: evaluator[:sum], by_type: by_type}
   end
