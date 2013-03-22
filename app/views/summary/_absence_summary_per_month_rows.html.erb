@@ -1,0 +1,9 @@
+<% @summary.each do |summary| %>
+<tr class="sub-summary-row <% if @summary.first == summary %>first<% end %><% if @summary.last == summary %>last<% end %>" data-month="<%=@month%>">
+  <td class="indentation"></td>
+  <td><%= link_to summary[:name], summary[:link], target: '_blank' %></td>
+  <% TimeType.absence.each do |time_type| %>
+  <td><%= format_work_days(summary[time_type.id]) %></td>
+  <% end %>
+</tr>
+<% end %>

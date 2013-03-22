@@ -1,35 +1,21 @@
+<%= render partial: 'header', locals: {title: t('.work_summary'), year: @year, path: :work_summary_time_sheet_path} %>
 <div id="content-summary" class="row">
-  <div class="row">
-    <div class="small-8 columns">
-      <h1><%= t 'work_summary' %></h1>
-    </div>
-    <div class="small-2 columns end">
-      <h1 class="year-navigation">
-        <small>
-          <%= link_to icon('caret-left'), summary_year_time_sheet_path(@time_sheet, @year - 1) %>
-          <%= link_to icon('caret-right'), summary_year_time_sheet_path(@time_sheet, @year + 1) %>
-        </small>
-        <%= @year %>
-      </h1>
-    </div>
-  </div>
-
   <div class="small-10 columns">
     <table class="summary nice">
       <thead>
         <tr class="header">
           <th colspan="6">
             <div>
-              <%= @summary_title %>
+              <%= t '.total_working_time_in_hours' %>
             </div>
           </th>
         </tr>
         <tr class="subheader">
           <th colspan="2">&nbsp;</th>
-          <th class="value"><%= t '.worked' %></th>
-          <th class="value"><%= t '.target' %></th>
-          <th class="value"><%= t '.overtime' %></th>
-          <th class="value"><%= t '.running_total' %></th>
+          <th class="work-value"><%= t '.worked' %></th>
+          <th class="work-value"><%= t '.target' %></th>
+          <th class="work-value"><%= t '.overtime' %></th>
+          <th class="work-value"><%= t '.running_total' %></th>
         </tr>
       </thead>
       <tbody>
@@ -43,7 +29,7 @@
             end
           end
           %>
-          <td colspan="2"><%= link_to summary[:name], summary[:link], remote: summary[:remote] ? true : false %></td>
+          <td colspan="2"><%= link_to summary[:name], summary[:link], remote: true %></td>
           <td><span <% unless tip.blank? %>data-tooltip class="has-tip" title="<div class='tbl-tooltip'><%=tip%></div>"<% end %>><%= format_hours(summary[:worked]) %></span></td>
           <td><%= format_hours(summary[:planned]) %></td>
           <td><%= format_hours(summary[:overtime]) %></td>

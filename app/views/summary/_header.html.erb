@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="small-10 columns">
+    <h1><%= title %></h1>
+  </div>
+  <div class="small-2 columns end">
+    <h1 class="year-navigation">
+      <small>
+        <%= link_to icon('caret-left'), method(path).call(@time_sheet, @year - 1) %>
+        <%= link_to icon('caret-right'), method(path).call(@time_sheet, @year + 1) %>
+      </small>
+      <%= year %>
+    </h1>
+  </div>
+</div>

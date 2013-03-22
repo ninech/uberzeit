@@ -2,10 +2,9 @@
 <tr class="sub-summary-row <% if @summary.first == summary %>first<% end %><% if @summary.last == summary %>last<% end %>" data-month="<%=@month%>">
   <%
   tip = ""
-  summary[:by_type].each_pair do |name, worked|
-    if worked != 0
-      tip += ("<div class='tr'><div class='td'>#{name}</div><div class='td'>#{format_hours(worked)}</div></div>").html_safe
-    end
+  summary[:by_type].each_pair do |name, total|
+    next if total == 0
+    tip += ("<div class='tr'><div class='td'>#{name}</div><div class='td'>#{format_hours(total)}</div></div>").html_safe
   end
   %>
   <td class="indentation"></td>
