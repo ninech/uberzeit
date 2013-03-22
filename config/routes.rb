@@ -5,8 +5,8 @@ Uberzeit::Application.routes.draw do
 
   resources :time_sheets do
     member do
-      get :summary, as: :summary
-      match '/weekly_summary/year/:year/month/:month', to: 'time_sheets#weekly_summary', via: :get
+      get '/summary/year/:year', to: 'time_sheets#summary', as: 'summary_year'
+      match '/sub_summary_rows/year/:year/month/:month', to: 'time_sheets#sub_summary_rows', via: :get
     end
 
     resources :recurring_entries, except: [:show, :index]

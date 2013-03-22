@@ -1,43 +1,61 @@
 <div id="content-summary" class="row">
-  <h3><%= t '.summary' %> <%=2013%></h3>
+  <div class="row">
+    <div class="small-8 columns">
+      <h1><%= t 'work_summary' %></h1>
+    </div>
+    <div class="small-2 columns end">
+      <h1 class="year-navigation">
+        <small>
+          <%= link_to icon('caret-left'), summary_year_time_sheet_path(@time_sheet, @year - 1) %>
+          <%= link_to icon('caret-right'), summary_year_time_sheet_path(@time_sheet, @year + 1) %>
+        </small>
+        <%= @year %>
+      </h1>
+    </div>
+  </div>
 
-  <div class="small-6 columns">
+  <div class="small-10 columns">
     <table class="summary">
       <thead>
         <tr class="header">
-          <th colspan="5">
-            <% if @time_type.nil? %>
-              <%= t '.total_work_time_in_hours' %>
-            <% else %>
-              <%= t('.only_type_in_hours', type: @time_type.name) %>
-            <% end %>
+          <th colspan="6">
+            <div>
+              <%= @summary_title %>
+            </div>
           </th>
         </tr>
         <tr class="subheader">
-          <th>&nbsp;</th>
-          <th class="value"><%= t '.actual' %></th>
+          <th colspan="2">&nbsp;</th>
+          <th class="value"><%= t '.worked' %></th>
           <th class="value"><%= t '.target' %></th>
-          <th class="value">&Delta;</th>
-          <th class="value">&Sigma;</th>
+          <th class="value"><%= t '.overtime' %></th>
+          <th class="value"><%= t '.running_total' %></th>
         </tr>
       </thead>
       <tbody>
-        <% @summary.each_with_index do |summary, index| %>
-        <tr>
-          <td><%= link_to summary[:name], action: 'weekly_summary', year: @year, month: index + 1, remote: true %></td>
-          <td><%= format_hours(summary[:worked]) %></td>
+        <% @summary.each do |summary| %>
+        <tr class="summary-row" data-month="<%=summary[:month]%>" <% if summary[:hide] %>style="display: none;"<% end %>>
+          <%
+          tip = ""
+          summary[:by_type].each_pair do |name, worked|
+            if worked != 0
+              tip += ("<div class='tr'><div class='td'>#{name}</div><div class='td'>#{format_hours(worked)}</div></div>").html_safe
+            end
+          end
+          %>
+          <td colspan="2"><%= link_to summary[:name], summary[:link], remote: summary[:remote] ? true : false %></td>
+          <td><span <% unless tip.blank? %>data-tooltip class="has-tip" title="<div class='tbl-tooltip'><%=tip%></div>"<% end %>><%= format_hours(summary[:worked]) %></span></td>
           <td><%= format_hours(summary[:planned]) %></td>
           <td><%= format_hours(summary[:overtime]) %></td>
           <td><%= format_hours(summary[:sum]) %></td>
         </tr>
         <% end %>
+        <% if @summary.any? { |s| s[:hide] == true } %>
+        <tr class="expand-row">
+          <td colspan="6"><a href="#" class="unhider" data-unhide-class="summary-row" data-hide-class="expand-row" title="<%= t '.expand' %>"><i class='icon-chevron-down'></i></a></td>
+        </tr>
+        <% end %>
       </tbody>
     </table>
-  </div>
-
-  <div class="small-6 columns end">
-    <div id="summary_table">
-
-    </div>
   </div>
 </div>

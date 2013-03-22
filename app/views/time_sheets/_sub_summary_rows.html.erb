@@ -1,0 +1,18 @@
+<% @summary.each do |summary| %>
+<tr class="sub-summary-row <% if @summary.first == summary %>first<% end %><% if @summary.last == summary %>last<% end %>" data-month="<%=@month%>">
+  <%
+  tip = ""
+  summary[:by_type].each_pair do |name, worked|
+    if worked != 0
+      tip += ("<div class='tr'><div class='td'>#{name}</div><div class='td'>#{format_hours(worked)}</div></div>").html_safe
+    end
+  end
+  %>
+  <td class="indentation"></td>
+  <td><%= link_to summary[:name], summary[:link], target: '_blank' %></td>
+  <td><span <% unless tip.blank? %>data-tooltip class="has-tip" title="<div class='tbl-tooltip'><%=tip%></div>"<% end %>><%= format_hours(summary[:worked]) %></span></td>
+  <td><%= format_hours(summary[:planned]) %></td>
+  <td><%= format_hours(summary[:overtime]) %></td>
+  <td><%= format_hours(summary[:sum]) %></td>
+</tr>
+<% end %>

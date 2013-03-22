@@ -21,7 +21,7 @@ class TimeSheet < ActiveRecord::Base
     CalculateWorkingTime.new(self, date_or_range).total
   end
 
-  def total(date_or_range, time_types)
+  def total(date_or_range, time_types = TimeType.scoped)
     chunks = find_chunks(date_or_range, time_types)
     chunks.total
   end

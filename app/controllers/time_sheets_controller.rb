@@ -36,20 +36,30 @@ class TimeSheetsController < ApplicationController
   end
 
   def summary
-    @year = Date.current.year
+    @year = (params[:year] || Date.current.year).to_i
 
+    @summary_title = t('.total_working_time_in_hours')
     year_range = UberZeit.year_as_range(@year)
 
-    @time_type = TimeType.first
-
     ranges = generate_ranges(year_range, 1.month)
-    @summary = summary_for_ranges(ranges).collect do |summary|
-      summary[:name] = summary[:range].min.strftime('%B')
+    @summary = summary_for_ranges(ranges, :work_summary).collect do |summary|
+      start_date = summary[:range].min
+      month = start_date.month
+
+      summary[:month] = month
+      summary[:name] = start_date.strftime('%B')
+      summary[:link] = url_for(action: 'sub_summary_rows', year: @year, month: month)
+
+      if @year == Date.current.year && month > Date.current.month
+        summary[:hide] = true
+      end
+
+      summary[:remote] = true
       summary
     end
   end
 
-  def weekly_summary
+  def sub_summary_rows
     @year = params[:year].to_i
     @month = params[:month].to_i
 
@@ -58,8 +68,8 @@ class TimeSheetsController < ApplicationController
 
     range = first_day_of_month..last_day_of_month
 
-    ranges = generate_ranges(range, 1.week, first_day_of_month.monday)
-    @summary = summary_for_ranges(ranges).collect do |summary|
+    ranges = generate_ranges(range, 1.week, first_day_of_month.monday) # start with monday!
+    @summary = summary_for_ranges(ranges, :work_summary).collect do |summary|
       summary[:name] = [summary[:range].min.strftime('%e. %a.'), summary[:range].max.strftime('%e. %a.')].join(' - ')
       summary[:link] = url_for(action: :show, date: summary[:range].min)
       summary
@@ -81,26 +91,25 @@ class TimeSheetsController < ApplicationController
     ranges
   end
 
-  def summary_for_ranges(ranges)
+  def summary_for_ranges(ranges, summary_method)
     evaluator = {sum: 0}
     ranges.collect do |range|
-      summary = summary_for_range(range, evaluator)
-      summary
+      method(summary_method).call(range, evaluator)
     end
   end
 
-  def summary_for_range(range, evaluator)
+  def work_summary(range, evaluator)
     planned = @time_sheet.planned_work(range)
     worked = @time_sheet.work(range)
     overtime = @time_sheet.overtime(range)
-    worked_by_type = {}
+    by_type = {}
 
-    TimeType.work.each do |type|
-      worked_by_type[type.name] = @time_sheet.total(range, type)
+    TimeType.all.each do |type|
+      by_type[type.name] = @time_sheet.total(range, type)
     end
 
     evaluator[:sum] += overtime
 
-    { range: range, planned: planned, worked: worked, overtime: overtime, sum: evaluator[:sum], worked_by_type: worked_by_type }
+    { range: range, planned: planned, worked: worked, overtime: overtime, sum: evaluator[:sum], by_type: by_type }
   end
 end

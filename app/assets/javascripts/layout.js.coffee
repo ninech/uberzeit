@@ -1,6 +1,6 @@
 $(document)
   .foundation('reveal', { closeOnBackgroundClick: false })
-
+  .foundation('tooltips')
 $ ->
 
   # Timepicker
