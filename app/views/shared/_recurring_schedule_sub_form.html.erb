@@ -3,11 +3,8 @@
     <%= main_form.fields_for :recurring_schedule do |rs| %>
 
       <div class="row">
-        <div class="small-1 columns">
+        <div class="small-3 columns">
           <%= rs.check_box :active, class: 'toggle', :'data-toggle-target' => 'recurring-form' %>
-        </div>
-        <div class="small-11 columns">
-          <%= rs.label :active %>
         </div>
       </div>
 
@@ -20,13 +17,13 @@
             <span class="prefix">Repeat every</span>
           </div>
           <div class="small-3 columns">
-            <%= rs.text_field :weekly_repeat_interval %>
+            <%= rs.text_field :weekly_repeat_interval, label: false %>
           </div>
           <div class="small-3 columns">
             <span class="postfix prefix">weeks, until</span>
           </div>
           <div class="small-3 columns">
-            <%= rs.text_field :ends_date, class: :date %>
+            <%= rs.text_field :ends_date, class: :date, label: false %>
           </div>
         </div>
       </span>
