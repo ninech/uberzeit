@@ -9,30 +9,30 @@ describe EmploymentsController do
     FactoryGirl.create(:user).tap { |user| user.add_role(:admin) }
   end
 
-  context 'for non-signed in users' do
-    it 'denies access' do
-      expect { get :index, user_id: user.id }.to raise_error(CanCan::AccessDenied)
-    end
-  end
+  # context 'for non-signed in users' do
+  #   it 'denies access' do
+  #     expect { get :index, user_id: user.id }.to raise_error(CanCan::AccessDenied)
+  #   end
+  # end
 
   context 'for signed-in users' do
-    context 'as owner' do
-      before do
-        test_sign_in user
-      end
+    # context 'as owner' do
+    #   before do
+    #     test_sign_in user
+    #   end
 
-      describe 'GET "index"' do
-        it 'populates an array of employments' do
-          get :index, user_id: user.id
-          assigns(:employments).should eq(user.employments.to_a)
-        end
+    #   describe 'GET "index"' do
+    #     it 'populates an array of employments' do
+    #       get :index, user_id: user.id
+    #       assigns(:employments).should eq(user.employments.to_a)
+    #     end
 
-        it 'renders the :index template' do
-          get :index, user_id: user.id
-          response.should render_template :index
-        end
-      end
-    end
+    #     it 'renders the :index template' do
+    #       get :index, user_id: user.id
+    #       response.should render_template :index
+    #     end
+    #   end
+    # end
 
     context 'as admin' do
       before do
