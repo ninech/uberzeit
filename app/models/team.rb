@@ -1,7 +1,7 @@
 class Team < ActiveRecord::Base
   acts_as_paranoid
 
-  attr_accessible :ldap_id, :name
+  attr_accessible :uid, :name
 
   has_many :memberships, conditions: { role: 'member' }, dependent: :destroy
   has_many :members, through: :memberships, :source => :user

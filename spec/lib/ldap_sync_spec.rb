@@ -21,9 +21,9 @@ describe LdapSync do
     @departments = [@management, @administration]
 
     @person = OpenStruct.new({
-      id: 'hakanns',
-      displayname: 'Hans Kanns',
-      mail: 'hakanns@mail.ch',
+      id: 'tofue',
+      displayname: 'Tobias Fuenke',
+      mail: 'tofue@nine.ch',
       departments: @departments.dup
     })
 
@@ -31,14 +31,15 @@ describe LdapSync do
     @management.people << @person
     @administration.people << @person
 
-    Department.stub(:find) do |id|
-      @departments.find { |dep| dep.cn == id }
-    end
+    Department.stub(:find) { |id|  @departments.find { |dep| dep.cn == id } }
     Department.stub(:find_all).and_return(@person.departments)
     Person.stub(:find).and_return(@person)
     Person.stub(:find_one).and_return(@person)
+    Person.stub(:find_all).and_return([@person])
 
-    @user = LdapSync.sync_person(@person)
+    LdapSync.all
+
+    @user = User.last
   end
 
   it 'creates a local user' do
@@ -47,14 +48,14 @@ describe LdapSync do
 
   it 'creates the teams which the user is member of' do
     @person.departments.each do |department|
-      Team.find_by_ldap_id(department.id).should_not be_nil
+      Team.find_by_uid(department.id).should_not be_nil
     end
   end
 
   it 'creates the teams which the user is leading of' do
     Department.find_all.each do |department|
       if department.managers.include?(@person)
-        Team.find_by_ldap_id(department.id).should_not be_nil
+        Team.find_by_uid(department.id).should_not be_nil
       end
     end
   end
@@ -65,33 +66,33 @@ describe LdapSync do
 
   it 'assigns the properties of the teams correctly' do
     @user.teams.each do |team|
-      team.name.should eq(Department.find(team.ldap_id).cn)
+      team.name.should eq(Department.find(team.uid).cn)
     end
   end
 
   it 'removes missing leadership links' do
-    team = Team.find_by_ldap_id(@management.id)
+    team = Team.find_by_uid(@management.id)
     team.has_leader?(@user).should be_true
     @management.managers.delete(@person)
-    LdapSync.sync_person(@person)
+    LdapSync.all
     team.reload
     team.has_leader?(@user).should be_false
   end
 
   it 'removes missing membership links' do
-    team = Team.find_by_ldap_id(@administration.id)
+    team = Team.find_by_uid(@administration.id)
     team.has_member?(@user).should be_true
     @administration.people.delete(@person)
-    LdapSync.sync_person(@person)
+    LdapSync.all
     team.reload
     team.has_member?(@user).should be_false
   end
 
   it 'detects the change from member to leader' do
-    team = Team.find_by_ldap_id(@administration.id)
+    team = Team.find_by_uid(@administration.id)
     team.has_leader?(@user).should be_false
     @administration.managers.push(@person)
-    LdapSync.sync_person(@person)
+    LdapSync.all
     team.reload
     team.has_leader?(@user).should be_true
   end

@@ -63,10 +63,10 @@ ActiveRecord::Schema.define(:version => 20130319133710) do
     t.date     "start_date"
     t.date     "end_date"
     t.string   "name"
-    t.boolean  "first_half_day"
-    t.boolean  "second_half_day"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.boolean  "first_half_day",  :default => false
+    t.boolean  "second_half_day", :default => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.datetime "deleted_at"
   end
 
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(:version => 20130319133710) do
 
   create_table "teams", :force => true do |t|
     t.string   "name"
-    t.string   "ldap_id"
+    t.string   "uid"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.datetime "deleted_at"
