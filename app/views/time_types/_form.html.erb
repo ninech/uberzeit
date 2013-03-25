@@ -11,22 +11,28 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.text_field :name %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :is_work %>
-    <%= f.check_box :is_work %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.check_box :is_work %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :is_vacation %>
-    <%= f.check_box :is_vacation %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.check_box :is_vacation %>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= f.submit class: 'btn btn-primary' %>
+  <div class="row buttons">
+    <div class="small-12 columns">
+      <%= f.submit class: 'button' %>
+      <%= link_to t('.back'), time_types_path, class: 'button secondary' %>
+    </div>
   </div>
 <% end %>

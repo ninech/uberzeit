@@ -6,8 +6,8 @@
       </div>
       <div class="navigation">
         <ul>
-          <li><%= link_to t('.timesheet'), time_sheet_path(@time_sheet) %></a></li>
-          <li><%= link_to t('.absences'), time_sheet_absences_path(@time_sheet) %></li>
+          <li><%= link_to t('.timesheet'), time_sheet_path(current_user.current_time_sheet) %></a></li>
+          <li><%= link_to t('.absences'), time_sheet_absences_path(current_user.current_time_sheet) %></li>
           <% if show_manage_link_in_navigation? %>
             <li><%= link_to t('.manage'), public_holidays_path %></li>
           <% end %>
@@ -19,9 +19,3 @@
     </div>
   </div>
 </div>
-
-<!-- <ul class="nav nav-tabs">
-  <li class="<%= active_tab('time_sheets','single_entries','recurring_entries') %>"><a href="<%= time_sheet_path(@user ? @user.time_sheets.last : current_user.time_sheets.last) %>">Time Sheet</a></li>
-  <li class="<%= active_tab('users', 'employments') %>"><a href="<%= edit_user_path(@time_sheet.nil? ? current_user : @time_sheet.user) %>">Users</a></li>
-  <li class="<%= active_tab('time_types') %>"><a href="<%= time_types_path %>">Time Types</a></li>
-</ul> -->

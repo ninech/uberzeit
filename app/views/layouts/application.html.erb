@@ -29,6 +29,10 @@
 </head>
 <body class="content-<%= controller.controller_name %>">
   <%= render 'layouts/header' %>
+  <% if request.fullpath =~ %r[^/manage] %>
+    <%= render 'layouts/manage_navigation' %>
+  <% end %>
+
   <div class="content container">
     <%= yield %>
   </div>

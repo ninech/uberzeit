@@ -20,6 +20,7 @@ class PublicHolidaysController < ApplicationController
 
   def create
     @public_holiday = PublicHoliday.new(params[:public_holiday])
+    @public_holiday.end_date = @public_holiday.start_date
     if @public_holiday.save
       redirect_to public_holidays_path, :notice => 'Public Holiday was successfully created.'
     else
@@ -29,6 +30,7 @@ class PublicHolidaysController < ApplicationController
 
   def update
     @public_holiday = PublicHoliday.find(params[:id])
+    params[:public_holiday][:end_date] = params[:public_holiday][:start_date]
     if @public_holiday.update_attributes(params[:public_holiday])
       redirect_to public_holidays_path, :notice => 'Public Holiday was successfully updated.'
     else

@@ -1,15 +1,12 @@
 <div class="row">
   <div class="small-12 columns">
-    <h3>
-      <%= t '.public_holidays' %>
-      <div class="year-navigation">
-        <%= link_to icon('caret-left'), public_holidays_path(year: @year - 1) %>
-        <%= link_to @year, public_holidays_path(year: @year ) %>
-        <%= link_to icon('caret-right'), public_holidays_path(year: @year + 1) %>
-      </div>
-    </h3>
+    <h1>
+      <%= t('.public_holidays', year: @year) %>
+      <%= link_to icon('caret-left'), public_holidays_path(year: @year - 1) %>
+      <%= link_to icon('caret-right'), public_holidays_path(year: @year + 1) %>
+      <%= link_to icon('plus') + ' ' + t('.new_public_holiday'), new_public_holiday_path, class: 'button right' %></h3>
+    </h1>
 
-    <%= link_to icon('plus') + ' ' + t('.new_public_holiday'), new_public_holiday_path, class: 'small button' %></h3>
 
     <% if notice %>
     <div id="notice" class="alert-box success">
@@ -17,11 +14,11 @@
     </div>
     <% end %>
 
-    <table class="nice">
+    <table class="nice small-12 edit destroy">
       <thead>
         <tr>
-          <th width="180"><%=t '.date' %></th>
-          <th width="200"><%=t '.name' %></th>
+          <th width="180"><%=t '.name' %></th>
+          <th width="200"><%=t '.date' %></th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
         </tr>
@@ -29,13 +26,13 @@
       <tbody>
         <% @public_holidays.each do |public_holiday| %>
           <tr>
+            <td><%= public_holiday.name %></td>
             <td>
-              <%= public_holiday.start_date %>
+              <%= l(public_holiday.start_date, format: :long) %>
               <% unless public_holiday.end_date.blank? || public_holiday.start_date == public_holiday.end_date %>
                 - <%= public_holiday.end_date %>
               <% end %>
             </td>
-            <td><%= public_holiday.name %></td>
             <td>
               <%= link_to icon('edit'), edit_public_holiday_path(public_holiday) %>
             </td>

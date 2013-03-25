@@ -25,20 +25,23 @@ Uberzeit::Application.routes.draw do
     end
   end
 
-  resources :public_holidays
 
-  resources :users do
-    member do
-      get 'edit'
-      put 'update'
+  scope "/manage" do
+    resources :public_holidays
+
+    resources :users do
+      member do
+        get 'edit'
+        put 'update'
+      end
+      collection do
+        get 'index'
+      end
+      resources :employments
     end
-    collection do
-      get 'index'
-    end
-    resources :employments
+
+    resources :time_types
   end
-
-  resources :time_types
 
   match '/auth/:provider/callback', to: 'sessions#create'
 

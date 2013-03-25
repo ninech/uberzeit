@@ -1,0 +1,17 @@
+<div class="subnavigation container">
+  <div class="row">
+    <div class="small-12 columns">
+      <dl class="sub-nav">
+        <dd<%= ' class=active' if controller.controller_name == 'public_holidays' %>>
+          <%= link_to t('.public_holidays'), public_holidays_path %>
+        </dd>
+        <dd<%= ' class=active' if controller.controller_name == 'users' %>>
+          <%= link_to t('.users'), users_path %>
+        </dd>
+        <dd<%= ' class=active' if controller.controller_name == 'time_types' %>>
+          <%= link_to t('.time_types'), time_types_path %>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</div>

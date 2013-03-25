@@ -1,25 +1,34 @@
-<h3>List of time types</h3>
+<div class="row">
+  <div class="small-12 columns">
+    <h1>
+      <%= t '.time_types' %>
+      <%= link_to 'New Time Type', new_time_type_path, class: 'button right' %>
+    </h1>
 
-<%= link_to 'New Time Type', new_time_type_path, class: 'btn btn-primary btn-small' %>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Calculated as</th>
-      <th>&nbsp;</th>
-    </tr>
-  </thead>
-  <tbody>
-  <% @time_types.each do |time_type| %>
-  <tr>
-    <td><%= time_type.name%></td>
-    <td><%= time_type %></td>
-    <td>
-      <%= link_to 'Edit', edit_time_type_path(time_type), :class => 'btn btn-small' %>
-      <%= link_to 'Destroy', time_type, :class => 'btn btn-danger btn-small', :method => :delete, :data => { :confirm => 'Are you sure?' } %>
-    </td>
-  </tr>
-  <% end %>
-  </tbody>
-</table>
+    <table class="nice small-12 edit destroy">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Calculated as</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @time_types.each do |time_type| %>
+      <tr>
+        <td><%= time_type.name %></td>
+        <td><%= t(".#{time_type.kind}") %></td>
+        <td>
+          <%= link_to icon('edit'), edit_time_type_path(time_type) %>
+        </td>
+        <td>
+          <%= link_to icon('trash'), time_type, method: :delete, confirm: t('.confirm_delete') %>
+        </td>
+      </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
