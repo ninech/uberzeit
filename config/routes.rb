@@ -6,9 +6,9 @@ Uberzeit::Application.routes.draw do
   resources :time_sheets do
     member do
       get '/work_summary/year/:year', to: 'summary#work_summary', as: 'work_summary'
-      get '/absence_summary/year/:year', to: 'summary#absence_summary', as: 'absence_summary'
-
       get '/work_summary_per_month/year/:year/month/:month', to: 'summary#work_summary_per_month'
+
+      get '/absence_summary/year/:year', to: 'summary#absence_summary', as: 'absence_summary'
       get '/absence_summary_per_month/year/:year/month/:month', to: 'summary#absence_summary_per_month'
     end
 

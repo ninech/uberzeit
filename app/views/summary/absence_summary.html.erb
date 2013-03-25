@@ -32,8 +32,18 @@
           <td><%= format_work_days(@total[time_type.id]) %></td>
           <% end %>
         </tr>
-
+        <tr class="summary-row header total">
+          <td colspan="2"><%= t('.remaining') %></td>
+          <% TimeType.absence.each do |time_type| %>
+          <td>
+            <% unless @remaining[time_type.id].blank? %>
+              <%=format_work_days(@remaining[time_type.id]) %>
+            <% end %>
+          </td>
+          <% end %>
+        </tr>
       </tbody>
     </table>
   </div>
+
 </div>

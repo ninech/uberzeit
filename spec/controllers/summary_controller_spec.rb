@@ -50,12 +50,13 @@ describe SummaryController do
 
 
     describe 'GET "absence_summary"' do
-      it 'assigns @time_sheet, @year, @rows and @total' do
+      it 'assigns @time_sheet, @year, @rows, @remaining and @total' do
         get :absence_summary, id: sheet, year: year
         assigns(:time_sheet).should eq(sheet)
         assigns(:year).should_not be_nil
         assigns(:rows).should_not be_nil
         assigns(:total).should_not be_nil
+        assigns(:remaining).should_not be_nil
       end
 
       it 'renders the :absence_summary template' do

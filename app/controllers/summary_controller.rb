@@ -15,10 +15,9 @@ class SummaryController < ApplicationController
       row[:name] = start_date.strftime('%B')
       row[:link] = url_for(action: 'work_summary_per_month', year: @year, month: month, type: @type)
 
-      if @year == Date.current.year and month > Date.current.month
+      if @year == Date.current.year && month > Date.current.month
         row[:hide] = true
       end
-
     end
   end
 
@@ -50,6 +49,10 @@ class SummaryController < ApplicationController
       row[:name] = start_date.strftime('%B')
       row[:link] = url_for(action: 'absence_summary_per_month', year: @year, month: month, type: @type)
     end
+
+    vacation_id = TimeType.vacation.first.id
+    vacation_remaining = @time_sheet.user.vacation_available(@year) - @total[vacation_id]
+    @remaining = {vacation_id => vacation_remaining}
   end
 
   def absence_summary_per_month
