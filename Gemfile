@@ -71,6 +71,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'capybara'
+  gem 'i18n-missing_translations'
 end
 
 group :development do

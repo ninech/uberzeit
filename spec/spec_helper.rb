@@ -11,6 +11,9 @@ end
 SimpleCov.formatter(SimpleCov::Formatter::MergedFormatter)
 SimpleCov.start 'rails'
 
+require 'i18n/missing_translations'
+at_exit { I18n.missing_translations.dump }
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
