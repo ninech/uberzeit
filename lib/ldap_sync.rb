@@ -55,12 +55,18 @@ class LdapSync
     end
 
     def sync_user(person)
-      unless user = User.find_by_uid(person.id)
-        user = User.create(uid: person.id, time_zone: Time.zone.name)
-      end
+      if person.cancelled?
+        if user = User.find_by_uid(person.id)
+          user.destroy
+        end
+      else
+        unless user = User.find_by_uid(person.id)
+          user = User.create(uid: person.id, time_zone: Time.zone.name)
+        end
 
-      sync_user_attributes(user, person)
-      user
+        sync_user_attributes(user, person)
+        user
+      end
     end
 
     def sync_user_attributes(user, person)
