@@ -68,7 +68,7 @@ describe TimeTypesController do
 
         it 'redirects to the updated time type' do
           put :update, id: @time_type, time_type: FactoryGirl.attributes_for(:time_type)
-          response.should redirect_to edit_time_type_path(@time_type)
+          response.should redirect_to time_types_path
         end
       end
 
@@ -88,7 +88,7 @@ describe TimeTypesController do
 
         it 'redirects to the new time type' do
           post :create, time_type: FactoryGirl.attributes_for(:time_type)
-          response.should redirect_to edit_time_type_path(TimeType.last)
+          response.should redirect_to time_types_path
         end
       end
 
