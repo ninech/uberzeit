@@ -16,7 +16,7 @@ class CalculateTotalRedeemableVacation
 
   private
   def first_day_of_year
-    @first_day_of_year ||= Time.zone.now.beginning_of_year.to_date
+    @first_day_of_year ||= Date.new(@year,1,1)
   end
 
   def year_as_range
@@ -24,7 +24,7 @@ class CalculateTotalRedeemableVacation
   end
 
   def employments_for_year
-    @employments_for_year ||= @user.employments.between(year_as_range.min, year_as_range.max)
+    @employments_for_year ||= @user.employments.between(year_as_range)
   end
 
   def default_vacation_per_year

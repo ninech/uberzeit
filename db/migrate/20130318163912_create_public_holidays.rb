@@ -4,8 +4,8 @@ class CreatePublicHolidays < ActiveRecord::Migration
       t.date :start_date
       t.date :end_date
       t.string :name
-      t.boolean :first_half_day
-      t.boolean :second_half_day
+      t.boolean :first_half_day, default: false
+      t.boolean :second_half_day, default: false
 
       t.timestamps
     end

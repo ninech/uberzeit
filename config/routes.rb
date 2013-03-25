@@ -4,10 +4,18 @@ Uberzeit::Application.routes.draw do
   root :to => 'sessions#new'
 
   resources :time_sheets do
+    member do
+      get '/work_summary/year/:year', to: 'summary#work_summary', as: 'work_summary'
+      get '/work_summary_per_month/year/:year/month/:month', to: 'summary#work_summary_per_month'
+
+      get '/absence_summary/year/:year', to: 'summary#absence_summary', as: 'absence_summary'
+      get '/absence_summary_per_month/year/:year/month/:month', to: 'summary#absence_summary_per_month'
+    end
+
     resources :recurring_entries, except: [:show, :index]
     resources :timers, only: [:show, :edit, :update]
     member do
-      match '/days/:date', to: 'time_sheets#show', via: :get
+      match '/date/:date', to: 'time_sheets#show', via: :get
       match '/stop-timer', to: 'time_sheets#stop_timer', via: :put
     end
 
@@ -24,6 +32,7 @@ Uberzeit::Application.routes.draw do
       end
     end
   end
+
 
   resources :public_holidays
 

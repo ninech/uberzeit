@@ -48,6 +48,11 @@ $ ->
       setTimeout arguments.callee, 60000
       ), 0)
 
+  # summary
+  $('.unhider').click ->
+    $('.' + $(this).data('hide-class')).hide()
+    $('.' + $(this).data('unhide-class')).show()
+    false
 
   # events
   $(document).on 'keyup', '.reveal-modal.time form #time_entry_to_time, .reveal-modal.time form #time_entry_from_time', ->

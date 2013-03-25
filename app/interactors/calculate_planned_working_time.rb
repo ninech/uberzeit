@@ -1,74 +1,67 @@
 class CalculatePlannedWorkingTime
 
-  def initialize(user, date_or_range)
+  def initialize(user, date_or_range, opts = {})
     @user = user
-    if date_or_range.kind_of?(Date)
-      @date = date_or_range
-    else
-      @array = date_or_range.to_date_range.to_a
-    end
+    @range = date_or_range.to_range.to_date_range
+    @opts = opts
   end
 
-  def employment_dependent
-    if @date
-      employment_dependent_with_date
-    else
-      employment_dependent_with_range
-    end
-  end
-
-  def employment_dependent_with_date
-    workload * UberZeit.default_work_hours_on(@date)
-  end
-
-  def employment_dependent_with_range
-    @array.to_a.inject(0.0) do |sum, date|
-      @date = date
-      sum + employment_dependent_with_date
-    end
-  end
-
-  def fulltime_employment
-    if @date
-      fulltime_employment_with_date
-    else
-      fulltime_employment_with_range
-    end
-  end
-
-  def fulltime_employment_with_date
-    if employed_on?
-      UberZeit.default_work_hours_on(@date)
-    else
-      0
-    end
-  end
-
-  def fulltime_employment_with_range
-    @array.inject(0.0) do |sum, date|
-      @date = date
-      sum + fulltime_employment_with_date
-    end
+  def total
+    average_workload * planned_working_time
   end
 
   private
-  def workload
-    workload_percentage.to_f / 100
+  def average_workload
+    @employments = @user.employments.between(@range).to_a # preload for performance
+    total_workload = @range.inject(0.0) do |sum, date|
+      @date = date
+      sum + workload_on_date
+    end
+
+    total_workload / duration_in_days
   end
 
-  def workload_percentage
-    if employed_on?
-      employment_on.workload
+  def duration_in_days
+    @range.max - @range.min + 1
+  end
+
+  def workload_on_date
+    employment_on_date = @employments.find { |employment| employment.on_date?(@date) }
+    return 0 if employment_on_date.nil?
+    return 1 if !!@opts[:fulltime] # overwrite to fulltime workload
+    employment_on_date.workload / 100.0
+  end
+
+  def planned_working_time
+    @holidays = PublicHoliday.in(@range).to_a # preload for performance
+
+    @range.inject(0.0) do |sum, date|
+      @date = date
+      sum + work_coefficient_on_date * UberZeit::Config[:work_per_day]
+    end
+  end
+
+  def work_coefficient_on_date
+    if is_work_day?
+      if is_half_day_a_public_holiday?
+        0.5
+      else
+        1
+      end
     else
       0
     end
   end
 
-  def employed_on?
-    !@user.employments.on(@date).nil?
+  def is_work_day?
+    UberZeit.is_weekday_a_workday?(@date) and not is_whole_day_a_public_holiday?
   end
 
-  def employment_on
-    @user.employments.on(@date)
+  def is_half_day_a_public_holiday?
+    @holidays.any? { |holiday| holiday.half_day? && holiday.on_date?(@date) }
+  end
+
+  def is_whole_day_a_public_holiday?
+    @holidays.any? { |holiday| holiday.whole_day? && holiday.on_date?(@date) }
   end
 end

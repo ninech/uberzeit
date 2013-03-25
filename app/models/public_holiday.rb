@@ -11,6 +11,7 @@ class PublicHoliday < ActiveRecord::Base
   validates_datetime :end_date, on_or_after: :start_date
 
   scope :on, lambda { |date| date = date.to_date; { conditions: ['(start_date <= ? AND end_date >= ?)', date, date] } }
+  scope :in, lambda { |range| date_range = range.to_range.to_date_range; { conditions: ['(start_date <= ? AND end_date >= ?)', date_range.max, date_range.min] } }
 
   def self.half_day_on?(date)
     flag_on_date(date, :half_day?)
@@ -59,6 +60,10 @@ class PublicHoliday < ActiveRecord::Base
       self.first_half_day = false
       self.second_half_day = true
     end
+  end
+
+  def on_date?(date)
+    start_date <= date && date <= end_date
   end
 
   private

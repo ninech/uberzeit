@@ -1,0 +1,6 @@
+current_month = $('.sub-summary-row').data('month');
+$(".sub-summary-row").remove();
+
+if(current_month != <%=@month%>) {
+  $("tr[data-month=<%=@month%>]").after("<%=escape_javascript(render(partial: 'work_summary_per_month_rows'))%>")
+}

@@ -25,6 +25,10 @@ class Absence < ActiveRecord::Base
     not first_half_day? and not second_half_day?
   end
 
+  def half_day?
+    not whole_day?
+  end
+
   def first_half_day?
     !!first_half_day and not !!second_half_day
   end
