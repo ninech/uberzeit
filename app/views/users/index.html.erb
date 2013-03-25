@@ -1,5 +1,20 @@
 <div class="row">
   <div class="small-12 columns">
-    <h3>List of users</h3>
+    <h1>List of users</h1>
+
+    <table class="nice small-12">
+      <thead>
+        <tr>
+          <th><%= t '.user' %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+        <tr>
+          <td><strong><%= link_to user.name, user_path(user) %></strong></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

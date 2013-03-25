@@ -24,7 +24,7 @@ describe EmploymentsController do
       describe 'GET "index"' do
         it 'populates an array of employments' do
           get :index, user_id: user.id
-          assigns(:employments).should eq(user.employments)
+          assigns(:employments).should eq(user.employments.to_a)
         end
 
         it 'renders the :index template' do
@@ -78,7 +78,7 @@ describe EmploymentsController do
 
           it 'redirects to the updated employment' do
             put :update, id: @employment, user_id: @employment.user, employment: FactoryGirl.attributes_for(:employment)
-            response.should redirect_to user_employments_path(@employment.user)
+            response.should redirect_to user_path(@employment.user)
           end
         end
 
@@ -109,7 +109,7 @@ describe EmploymentsController do
           it 'redirects to the new employment' do
             post :create, user_id: @user, employment: FactoryGirl.attributes_for(:employment)
             @user.employments.reload
-            response.should redirect_to user_employments_path(@user)
+            response.should redirect_to user_path(@user)
           end
         end
 
@@ -138,7 +138,7 @@ describe EmploymentsController do
 
         it 'redirects to the overview' do
           delete :destroy, id: @employment, user_id: @employment.user
-          response.should redirect_to user_employments_path(@employment.user)
+          response.should redirect_to user_path(@employment.user)
         end
       end
     end

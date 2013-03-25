@@ -11,27 +11,28 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :workload %>
-    <%= f.text_field :workload %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :start_date %>
-    <%= f.text_field :start_date %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.text_field :workload %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= label_tag :open_ended %>
-    <%= check_box_tag :open_ended, '1', @employment.end_date.nil? %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.text_field :start_date %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :end_date %>
-    <%= f.text_field :end_date %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.text_field :end_date %>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= f.submit class: 'btn btn-primary' %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.submit class: 'button' %>
+      <%= link_to t('.back'), user_path(@user), class: 'button secondary' %>
+    </div>
   </div>
 <% end %>

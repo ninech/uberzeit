@@ -21,6 +21,7 @@ class Ability
         can :manage, Absence
         can :manage, Employment
         can :manage, PublicHoliday
+        can :manage, User
       end
 
     end

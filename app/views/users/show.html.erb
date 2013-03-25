@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="small-12 columns">
+    <h1><%=@user.name%></h1>
+
+    <h2>
+      <%= t '.employments' %>
+      <%= link_to t('.add_employment'), new_user_employment_path(@user), class: 'button right' %>
+    </h2>
+    <table class="nice small-12 edit destroy">
+      <thead>
+        <tr>
+          <th><%= t '.start' %></th>
+          <th><%= t '.end' %></th>
+          <th><%= t '.workload' %></th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @user.employments.each do |employment| %>
+      <tr>
+        <td><%= l employment.start_date %></td>
+        <td><%= employment.end_date.nil? ? 'open-ended' : l(employment.end_date) %></td>
+        <td><%= employment.workload %>&#037;</td>
+        <td>
+          <%= link_to icon('edit'), edit_user_employment_path(@user, employment)%>
+        </td>
+        <td>
+          <%= link_to icon('trash'), [@user, employment], :method => :delete, :data => { :confirm => 'Yo?' } %>
+        </td>
+      </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
