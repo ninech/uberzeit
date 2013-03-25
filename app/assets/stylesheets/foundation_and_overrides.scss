@@ -81,12 +81,12 @@ $header-font-family: "Source Sans Pro", sans-serif;
 // $header-text-rendering: optimizeLegibility;
 
 // We use these to control header font sizes
-// $h1-font-size: emCalc(44px);
-// $h2-font-size: emCalc(37px);
-// $h3-font-size: emCalc(27px);
-// $h4-font-size: emCalc(23px);
-// $h5-font-size: emCalc(18px);
-// $h6-font-size: 1em;
+$h1-font-size: emCalc(27px);
+$h2-font-size: emCalc(23px);
+$h3-font-size: emCalc(20px);
+$h4-font-size: emCalc(18px);
+$h5-font-size: emCalc(16px);
+$h6-font-size: 1em;
 
 // These control how subheaders are styled.
 // $subheader-line-height: 1.4;
