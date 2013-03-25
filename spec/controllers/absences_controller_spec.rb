@@ -20,7 +20,7 @@ describe AbsencesController do
     describe 'GET "index"' do
       it 'assigns @time_types' do
         get :index, time_sheet_id: time_sheet.id
-        assigns(:time_types).should eq(TimeType.absences)
+        assigns(:time_types).should eq(TimeType.absence)
       end
 
       it 'assigns @absences' do
@@ -44,7 +44,7 @@ describe AbsencesController do
 
       it 'assigns @time_types' do
         get :new, time_sheet_id: time_sheet.id
-        assigns(:time_types).should eq(TimeType.absences)
+        assigns(:time_types).should eq(TimeType.absence)
       end
 
       it 'ensures the absence has an empty recurring schedule' do
@@ -84,7 +84,7 @@ describe AbsencesController do
 
       it 'assigns @time_types' do
         get :edit, time_sheet_id: time_sheet.id, id: absence.id
-        assigns(:time_types).should eq(TimeType.absences)
+        assigns(:time_types).should eq(TimeType.absence)
       end
 
       it 'ensures the absence has a recurring schedule' do

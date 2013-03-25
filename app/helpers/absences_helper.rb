@@ -54,23 +54,4 @@ module AbsencesHelper
       l(absence.starts.to_date)
     end
   end
-
-  # def text_for_absence(absence)
-
-  #   if absence.half_day_specific?
-  #     time_range = case
-  #                  when absence.whole_day?
-  #                    t('.whole_day')
-  #                  when absence.first_half_day?
-  #                    t('.first_half_day')
-  #                  when absence.second_half_day?
-  #                    t('.second_half_day')
-  #                  end
-  #   else
-  #     time_range = "#{l(absence.starts)} - #{l(absence.ends)}"
-  #   end
-
-  #   "#{time_range} #{absence.time_type.name}"
-  # end
-
 end

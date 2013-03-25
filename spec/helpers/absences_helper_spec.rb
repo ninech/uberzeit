@@ -11,5 +11,28 @@ require 'spec_helper'
 #   end
 # end
 describe AbsencesHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  describe '#render_calendar_cell' do
+    before do
+      @absences = {}
+    end
+
+    let(:date) { Date.civil(2013, 1, 1) }
+    let(:absence) { mock.tap { |m| m.should_receive(:id).and_return(42) }}
+    let(:time_chunk) do
+      TimeChunk.new(range: '2013-01-01'.to_date...'2013-02-02'.to_date, time_type: TEST_TIME_TYPES[:vacation], parent: absence)
+    end
+
+    it 'renders a calendar cell without a date' do
+      helper.render_calendar_cell(date).should == [1]
+    end
+
+    it 'renders a calendar cell with a date' do
+      @time_types = TimeType.absence
+      @absences['2013-01-01'] = [time_chunk]
+      @time_sheet = stub_model(TimeSheet)
+      helper.render_calendar_cell(date).to_s.should =~ /event-color#{TEST_TIME_TYPES.index(:vacation)}/
+    end
+  end
+
 end
