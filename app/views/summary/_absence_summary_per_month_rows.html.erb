@@ -1,5 +1,5 @@
 <% @rows.each do |row| %>
-<tr class="sub-summary-row <% if @rows.first == row %>first<% end %><% if @rows.last == row %>last<% end %>" data-month="<%=@month%>">
+<tr class="sub-summary-row" data-month="<%=@month%>">
   <td class="indentation"></td>
   <td><%= link_to row[:name], row[:link], target: '_blank' %></td>
   <% TimeType.absence.each do |time_type| %>
