@@ -1,23 +1,25 @@
 .content-summary {
-  tr {
-    td, th {
-      text-align: right;
+  table.nice {
+    tr {
+      td, th {
+        text-align: right;
+      }
+
+      td:first-child {
+        text-align: left;
+      }
     }
 
-    td:first-child {
-      text-align: left;
+    tr.expand-row {
+      td {
+        text-align: center;
+      }
     }
-  }
 
-  tr.expand-row {
-    td {
-      text-align: center;
-    }
-  }
-
-  tr.total {
-    td {
-      font-weight: bold;
+    tr.total {
+      td {
+        font-weight: bold;
+      }
     }
   }
 }
