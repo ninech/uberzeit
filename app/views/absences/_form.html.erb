@@ -8,21 +8,16 @@
 
 <div class="row from_to_date">
   <div class="small-6 columns">
-    <%= f.label :start_date %>
     <%= f.text_field :start_date, class: :from_date, value: l(f.object.start_date, format: :long) %>
   </div>
   <div class="small-6 columns">
-    <%= f.label :end_date %>
     <%= f.text_field :end_date, class: :to_date, value: l(f.object.end_date, format: :long) %>
   </div>
 </div>
 
 
 <div class="row">
-  <div class="small-2 columns">
-    <%= f.label :daypart %>
-  </div>
-  <div class="small-10 columns">
+  <div class="small-12 columns">
     <%= f.select :daypart, options_for_select([['Whole day', :whole_day], ['First half day', :first_half_day], ['Second half day', :second_half_day]]) %>
   </div>
 </div>
