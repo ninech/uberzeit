@@ -1,16 +1,9 @@
 <%= render partial: 'header', locals: {title: t('.absence_summary'), year: @year, path: :absence_summary_time_sheet_path} %>
-<div id="content-summary" class="row">
+<div class="row">
   <div class="small-12 columns">
-    <table class="summary nice">
+    <table class="nice small-12">
       <thead>
-        <tr class="header">
-          <th colspan="<%=2+TimeType.absence.length%>">
-            <div>
-              <%= t '.absence_in_days' %>
-            </div>
-          </th>
-        </tr>
-        <tr class="header">
+        <tr>
           <th colspan="2">&nbsp;</th>
           <% TimeType.absence.each do |time_type| %>
           <th class="value"><%= time_type.name %></th>
@@ -19,20 +12,20 @@
       </thead>
       <tbody>
         <% @rows.each do |row| %>
-        <tr class="summary-row" data-month="<%=row[:month]%>" <% if row[:hide] %>style="display: none;"<% end %>>
+        <tr data-month="<%=row[:month]%>" <% if row[:hide] %>style="display: none;"<% end %>>
           <td colspan="2"><%= link_to row[:name], row[:link], remote: true %></td>
           <% TimeType.absence.each do |time_type| %>
           <td><%= format_work_days(row[time_type.id]) %></td>
           <% end %>
         </tr>
         <% end %>
-        <tr class="summary-row header total">
+        <tr class="total">
           <td colspan="2"><%= t('.total') %></td>
           <% TimeType.absence.each do |time_type| %>
           <td><%= format_work_days(@total[time_type.id]) %></td>
           <% end %>
         </tr>
-        <tr class="summary-row header total">
+        <tr class="total">
           <td colspan="2"><%= t('.remaining') %></td>
           <% TimeType.absence.each do |time_type| %>
           <td>
