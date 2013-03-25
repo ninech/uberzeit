@@ -20,7 +20,7 @@ class CalculateOvertime
   end
 
   def total_worktime
-    @total_worktime ||= CalculateWorkingTime.new(@time_sheet, @date_or_range).total
+    @total_worktime ||= @time_sheet.work(@date_or_range)
   end
 
 end

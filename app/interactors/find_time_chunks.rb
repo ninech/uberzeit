@@ -43,15 +43,21 @@ class FindTimeChunks
     return nil if !intersected_range or intersected_range.duration <= 0
 
     duration =  if entry.kind_of?(Absence)
-                  duration_relative_to_daily_working_time(intersected_range.duration)
+                  translate_absence_to_planned_working_time(entry, intersected_range)
                 else
                   nil
                 end
     TimeChunk.new(range: intersected_range, time_type: entry.time_type, parent: entry, duration: duration)
   end
 
-  def duration_relative_to_daily_working_time(duration)
-    duration.to_f / 24.hours * UberZeit::Config[:work_per_day]
+  def translate_absence_to_planned_working_time(absence, range)
+    coeff = if absence.half_day?
+              0.5
+            else
+              1
+            end
+
+    coeff * CalculatePlannedWorkingTime.new(absence.time_sheet.user, range, fulltime: true).total
   end
 end
 
