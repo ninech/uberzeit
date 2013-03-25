@@ -8,6 +8,7 @@
         <ul>
           <li><%= link_to t('.timesheet'), time_sheet_path(current_user.current_time_sheet) %></a></li>
           <li><%= link_to t('.absences'), time_sheet_absences_path(current_user.current_time_sheet) %></li>
+          <li><%= link_to t('.reports'), work_summary_time_sheet_path(current_user.current_time_sheet, Date.current.year) %></li>
           <% if show_manage_link_in_navigation? %>
             <li><%= link_to t('.manage'), public_holidays_path %></li>
           <% end %>

@@ -32,6 +32,9 @@
   <% if request.fullpath =~ %r[^/manage] %>
     <%= render 'layouts/manage_navigation' %>
   <% end %>
+  <% if request.fullpath =~ %r[^*summary] %>
+    <%= render 'layouts/reports_navigation' %>
+  <% end %>
 
   <div class="content container">
     <%= yield %>

@@ -1,0 +1,14 @@
+<div class="subnavigation container">
+  <div class="row">
+    <div class="small-12 columns">
+      <dl class="sub-nav">
+        <dd<%= ' class=active' if controller.action_name == 'work_summary' %>>
+          <%= link_to t('.work_summary'), work_summary_time_sheet_path(current_user.current_time_sheet, Date.current.year) %>
+        </dd>
+        <dd<%= ' class=active' if controller.action_name == 'absence_summary' %>>
+          <%= link_to t('.absence_summary'), absence_summary_time_sheet_path(current_user.current_time_sheet, Date.current.year) %>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</div>
