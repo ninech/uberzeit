@@ -72,10 +72,11 @@ group :development, :test do
   gem 'faker'
   gem 'capybara'
   gem 'i18n-missing_translations'
+  gem 'capistrano_database_yml'
 end
 
 group :development do
-  gem 'capistrano'
+  gem 'capistrano', '~> 2.13.0'
   gem 'capistrano-maintenance'
   gem 'version_bumper'
   gem 'meta_request'

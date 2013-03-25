@@ -1,0 +1,23 @@
+<% pass = Capistrano::CLI.ui.ask("Enter Postgres database password: ") %>
+<%
+case stage
+when :staging %>
+staging:
+  adapter: postgresql
+  database: uberzeit_staging
+  username: uberzeit
+  pool: 5
+  password: <%= pass %>
+  encoding: utf8
+  timeout: 5000
+<% when :production %>
+production:
+  adapter: postgresql
+  database: uberzeit_production
+  username: uberzeit
+  pool: 5
+  password: <%= pass %>
+  encoding: utf8
+  timeout: 5000
+<% end %>
+m

@@ -64,7 +64,7 @@ GEM
     calendar_helper (0.2.5)
       open4
     cancan (1.6.9)
-    capistrano (2.14.2)
+    capistrano (2.13.5)
       highline
       net-scp (>= 1.0.0)
       net-sftp (>= 2.0.0)
@@ -72,6 +72,8 @@ GEM
       net-ssh-gateway (>= 1.1.0)
     capistrano-maintenance (0.0.3)
       capistrano (>= 2.0.0)
+    capistrano_database_yml (1.1.3)
+      capistrano (~> 2.0)
     capybara (2.0.2)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -289,8 +291,9 @@ DEPENDENCIES
   brakeman
   calendar_helper
   cancan
-  capistrano
+  capistrano (~> 2.13.0)
   capistrano-maintenance
+  capistrano_database_yml
   capybara
   ci_reporter
   coffee-rails (~> 3.2.1)
