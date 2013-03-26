@@ -20,4 +20,19 @@ module SummaryHelper
 
     content_tag(:span, number_with_precision(duration.to_hours, precision: 2), style: "color: #{color}")
   end
+
+  def types_to_tooltip_table(hash)
+    tooltip = ""
+
+    hash.each_pair do |name, time|
+      next if time == 0
+      tooltip += ("<div class='tr'><div class='td'>#{name}</div><div class='td'>#{format_hours(time)}</div></div>").html_safe
+    end
+
+    unless tooltip.blank?
+      tooltip = "<div class='tbl-tooltip'>#{tooltip}</div>"
+    end
+
+    tooltip
+  end
 end

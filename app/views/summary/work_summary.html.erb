@@ -14,16 +14,9 @@
       <tbody>
         <% @rows.each do |row| %>
         <tr class="summary-row" data-month="<%=row[:month]%>" <% if row[:hide] %>style="display: none;"<% end %>>
-          <%
-          tip = ""
-          row[:by_type].each_pair do |name, worked|
-            if worked != 0
-              tip += ("<div class='tr'><div class='td'>#{name}</div><div class='td'>#{format_hours(worked)}</div></div>").html_safe
-            end
-          end
-          %>
+          <% tooltip = types_to_tooltip_table(row[:by_type]) %>
           <td colspan="2"><%= link_to row[:name], row[:link], remote: true %></td>
-          <td><span <% unless tip.blank? %>data-tooltip class="has-tip" title="<div class='tbl-tooltip'><%=tip%></div>"<% end %>><%= format_hours(row[:worked]) %></span></td>
+          <td><span <% unless tooltip.blank? %>data-tooltip class="has-tip" title="<%=tooltip%>"<% end %>><%= format_hours(row[:worked]) %></span></td>
           <td><%= format_hours(row[:planned]) %></td>
           <td><%= format_hours(row[:overtime]) %></td>
           <td><%= format_hours(row[:sum]) %></td>
