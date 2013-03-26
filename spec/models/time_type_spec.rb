@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe TimeType do
+  it 'has a valid factory' do
+    FactoryGirl.create(:time_type).should be_valid
+  end
+
   it 'returns the name as default string' do
     time_type = FactoryGirl.create(:time_type)
     time_type.to_s == time_type.name
@@ -16,5 +20,9 @@ describe TimeType do
   it 'has a unique name' do
     time_type = FactoryGirl.create(:time_type, name: 'Work')
     FactoryGirl.build(:time_type, name: 'Work').should_not be_valid
+  end
+
+  it 'has a valid calculation facotr' do
+    FactoryGirl.build(:time_type, calculation_factor: -1.5).should_not be_valid
   end
 end
