@@ -27,7 +27,8 @@ class TimeSheet < ActiveRecord::Base
   end
 
   def planned_work(date_or_range)
-    user.planned_work(date_or_range)
+    calculator = CalculatePlannedWorkingTime.new(user, date_or_range)
+    calculator.total
   end
 
   def overtime(date_or_range)
@@ -40,8 +41,12 @@ class TimeSheet < ActiveRecord::Base
     total(range, TimeType.vacation)
   end
 
-  def remaining_vacation(year)
-    user.vacation_available(year) - vacation(year)
+  def total_reedemable_vacation(year)
+    vacation = CalculateTotalRedeemableVacation.new(user, year)
+    vacation.total_redeemable_for_year
   end
 
+  def remaining_vacation(year)
+    total_reedemable_vacation(year) - vacation(year)
+  end
 end

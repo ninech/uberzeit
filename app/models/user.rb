@@ -35,20 +35,9 @@ class User < ActiveRecord::Base
     self
   end
 
-  # sollzeit
-  def planned_work(date_or_range)
-    calculator = CalculatePlannedWorkingTime.new(self, date_or_range)
-    calculator.total
-  end
-
   def workload_on(date)
     employment = self.employments.on(date)
     employment ? employment.workload : 0
-  end
-
-  def vacation_available(year)
-    vacation = CalculateTotalRedeemableVacation.new(self, year)
-    vacation.total_redeemable_for_year
   end
 
   def current_time_sheet

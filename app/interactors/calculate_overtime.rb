@@ -7,7 +7,7 @@ class CalculateOvertime
   end
 
   def total
-    total_worktime - effective_planned_work
+    total_worktime - planned_work
   end
 
   private
@@ -15,8 +15,8 @@ class CalculateOvertime
     @workload ||= @user.workload_on(@date_or_range)
   end
 
-  def effective_planned_work
-    @effective_planned_work ||= @user.planned_work(@date_or_range)
+  def planned_work
+    @planned_work ||= @time_sheet.planned_work(@date_or_range)
   end
 
   def total_worktime
