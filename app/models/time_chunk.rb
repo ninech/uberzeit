@@ -39,12 +39,7 @@ class TimeChunk
     @half_day_specific ||= parent.respond_to?(:whole_day?)
   end
 
-  def ignore_in_calculation?
-    @time_type.ignore_in_calculation?
-  end
-
   def duration_for_calculation
-    return 0 if ignore_in_calculation?
     duration * @time_type.calculation_factor
   end
 

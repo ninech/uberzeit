@@ -31,14 +31,14 @@ describe TimeChunkCollection do
       end
 
       it 'uses the factor in the time type of every chunk' do
-        time_type_onduty.update_attribute(:calculation_factor, 3.0)
-        collection.total.should eq(10.5.hours)
+        time_type_onduty.should_receive(:calculation_factor).and_return(2.0)
+        collection.total.should eq(10.0.hours)
       end
     end
 
     describe '#length' do
       it 'returns the count of the chunks' do
-        collection.length.should eq(3)
+        collection.length.should eq(4)
       end
     end
 
@@ -48,13 +48,13 @@ describe TimeChunkCollection do
         collection.each do |chunk|
           a << chunk.time_type.name
         end
-        a.should eq(%w{test_work test_work test_onduty})
+        a.should eq(%w{test_work test_work test_onduty test_break})
       end
     end
 
     describe '#map' do
       it 'allows you to map over the chunks' do
-        collection.map { |chunk| chunk.time_type.name }.should eq(%w{test_work test_work test_onduty})
+        collection.map { |chunk| chunk.time_type.name }.should eq(%w{test_work test_work test_onduty test_break})
       end
     end
 
