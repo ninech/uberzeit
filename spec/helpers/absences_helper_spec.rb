@@ -18,7 +18,14 @@ describe AbsencesHelper do
     end
 
     let(:date) { Date.civil(2013, 1, 1) }
-    let(:absence) { mock.tap { |m| m.should_receive(:id).and_return(42) }}
+    let(:absence) do
+       mock.tap do |m|
+        m.stub(:id).and_return(42)
+        m.stub(:starts).and_return('2013-01-01'.to_date)
+        m.stub(:ends).and_return('2013-02-02'.to_date)
+       end
+     end
+
     let(:time_chunk) do
       TimeChunk.new(range: '2013-01-01'.to_date...'2013-02-02'.to_date, time_type: TEST_TIME_TYPES[:vacation], parent: absence)
     end
