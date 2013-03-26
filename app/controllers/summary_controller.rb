@@ -51,7 +51,7 @@ class SummaryController < ApplicationController
     end
 
     vacation_id = TimeType.vacation.first.id
-    vacation_remaining = @time_sheet.vacation_available(@year) - @total[vacation_id]
+    vacation_remaining = @time_sheet.total_reedemable_vacation(@year) - @total[vacation_id]
     @remaining = {vacation_id => vacation_remaining}
   end
 
