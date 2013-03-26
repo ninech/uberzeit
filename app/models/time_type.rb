@@ -8,18 +8,14 @@ class TimeType < ActiveRecord::Base
 
   default_scope order(:name)
 
-  attr_accessible :is_vacation, :is_work, :name, :ignore_in_calculation, :absence
-
-  validates_presence_of :name
+  attr_accessible :is_vacation, :is_work, :name, :absence, :calculation_factor
+  validates_presence_of :name, :calculation_factor
+  validates_numericality_of :calculation_factor, greater_than_or_equal_to: 0
 
   validates_uniqueness_of_without_deleted :name
 
   def to_s
     name
-  end
-
-  def ignore_in_calculation?
-    !!ignore_in_calculation
   end
 
   def is_absence?
@@ -35,13 +31,10 @@ class TimeType < ActiveRecord::Base
   end
 
   def kind
-    case
-    when is_work?
-      :work
-    when is_vacation?
-      :vacation
+    if is_absence?
+      :absence
     else
-      :break
+      :work
     end
   end
 

@@ -39,6 +39,10 @@ class TimeChunk
     @half_day_specific ||= parent.respond_to?(:whole_day?)
   end
 
+  def duration_for_calculation
+    duration * @time_type.calculation_factor
+  end
+
   def parent_id
     @parent_id ||= parent.id
   end

@@ -9,8 +9,9 @@
     <table class="nice small-12 edit destroy">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Calculated as</th>
+          <th><%= t '.name' %></th>
+          <th><%= t '.acquired_as' %></th>
+          <th><%= t '.calculation_factor' %></th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
         </tr>
@@ -20,6 +21,7 @@
       <tr>
         <td><%= time_type.name %></td>
         <td><%= t(".#{time_type.kind}") %></td>
+        <td><%= time_type.calculation_factor %></td>
         <td>
           <%= link_to icon('edit'), edit_time_type_path(time_type) %>
         </td>
