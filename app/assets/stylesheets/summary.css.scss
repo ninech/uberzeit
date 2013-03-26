@@ -23,3 +23,18 @@
     }
   }
 }
+
+// Table emulation for summary tooltips
+.tbl-tooltip {
+  width: 100%;
+  display: table;
+
+  > .tr {
+    display: table-row;
+
+    > .td {
+      padding: 0.2em;
+      display: table-cell;
+    }
+  }
+}
