@@ -39,6 +39,8 @@ class LdapSync
         team = Team.find_by_uid(department.id)
 
         department.people.each do |person|
+          next if person.cancelled?
+
           user = User.find_by_uid(person.id)
           unless team.has_member?(user)
             team.members.push(user)
@@ -46,6 +48,8 @@ class LdapSync
         end
 
         department.managers.each do |manager|
+          next if manager.cancelled?
+
           user = User.find_by_uid(manager.id)
           unless team.has_leader?(user)
             team.leaders.push(user)
