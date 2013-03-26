@@ -29,6 +29,6 @@ module TimeSheetsHelper
 
   def time_type_calculation_percentage(time_type)
     calculation_percent = time_type.calculation_factor * 100.0
-    "(%s%%)" % number_with_precision(calculation_percent, precision: 2, strip_insignificant_zeros: true)
+    "%s%%" % number_with_precision(calculation_percent, precision: 2, strip_insignificant_zeros: true)
   end
 end

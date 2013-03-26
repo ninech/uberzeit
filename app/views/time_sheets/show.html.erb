@@ -37,7 +37,7 @@
               <small>
                 <%= time_chunk.time_type %>
                 <% unless standard_calculation?(time_chunk.time_type) %>
-                <%= time_type_calculation_percentage(time_chunk.time_type) %>
+                (<%= time_type_calculation_percentage(time_chunk.time_type) %>)
                 <% end %>
               </small>
               <div class="right">
