@@ -12,4 +12,8 @@ class Person < Nine::LDAP::Model::Base
       a.sn <=> b.sn
     end
   end
+
+  def cancelled?
+    !employeetypes.nil? && employeetypes.include?('Cancelled')
+  end
 end

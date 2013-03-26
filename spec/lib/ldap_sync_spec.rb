@@ -24,7 +24,8 @@ describe LdapSync do
       id: 'tofue',
       displayname: 'Tobias Fuenke',
       mail: 'tofue@nine.ch',
-      departments: @departments.dup
+      departments: @departments.dup,
+      cancelled?: false
     })
 
     @management.managers << @person
@@ -96,4 +97,13 @@ describe LdapSync do
     team.reload
     team.has_leader?(@user).should be_true
   end
+
+  it 'deletes "cancelled" persons' do
+    User.find_by_uid(@person.id).should_not be_nil
+    @person.stub(:cancelled?).and_return(true)
+    LdapSync.all
+    User.find_by_uid(@person.id).should be_nil
+    User.with_deleted.find_by_uid(@person.id).should_not be_nil
+  end
+
 end
