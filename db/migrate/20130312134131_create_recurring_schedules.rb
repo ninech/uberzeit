@@ -1,7 +1,7 @@
 class CreateRecurringSchedules < ActiveRecord::Migration
   def change
     create_table :recurring_schedules do |t|
-      t.boolean :active, :default => 0
+      t.boolean :active, :default => false
       t.integer :enterable_id
       t.string :enterable_type
       t.string :ends
