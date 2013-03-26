@@ -15,6 +15,7 @@ describe AbsencesHelper do
   describe '#render_calendar_cell' do
     before do
       @absences = {}
+      @public_holidays = {}
     end
 
     let(:date) { Date.civil(2013, 1, 1) }

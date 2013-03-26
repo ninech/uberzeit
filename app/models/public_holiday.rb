@@ -13,6 +13,10 @@ class PublicHoliday < ActiveRecord::Base
   scope :on, lambda { |date| date = date.to_date; { conditions: ['(start_date <= ? AND end_date >= ?)', date, date] } }
   scope :in, lambda { |range| date_range = range.to_range.to_date_range; { conditions: ['(start_date <= ? AND end_date >= ?)', date_range.max, date_range.min] } }
 
+  def self.in_year(year)
+    scoped.in(UberZeit.year_as_range(year))
+  end
+
   def self.half_day_on?(date)
     flag_on_date(date, :half_day?)
   end
@@ -28,6 +32,7 @@ class PublicHoliday < ActiveRecord::Base
   def half_day?
     first_half_day? or second_half_day?
   end
+  alias_method :half_day_specific?, :half_day?
 
   def first_half_day?
     !!first_half_day and not !!second_half_day

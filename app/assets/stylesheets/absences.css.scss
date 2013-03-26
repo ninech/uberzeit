@@ -6,7 +6,8 @@
 
 .content-absences {
 
-  $event_colors: #A2B4DB #BAE4E5 #B8D5F2 #FFC48C #E9ECD9 #FAE1DE #FAC5C0 #EFE3F3 #E0F3B2 #EAC5ED;
+  $event_colors: #A2B4DB #BAE4E5 #B8D5F2 #FFC48C #E9ECD9 #FAE1DE #FAC5C0 #E0F3B2;
+  $public_holiday_color: #EAC5ED;
 
   @mixin event-background($color) {
     background: rgba($color, 0.5)
@@ -18,6 +19,10 @@
         color: nth($event_colors, $i);
       }
     }
+  }
+
+  i.public-holiday-color {
+    color: $public_holiday_color;
   }
 
   ul.time-type-legend {
@@ -150,6 +155,9 @@
       }
       &.today {
         font-weight: 800;
+      }
+      &.public-holiday {
+        @include event-background($public_holiday_color);
       }
       &.has-absences {
         padding: 0;

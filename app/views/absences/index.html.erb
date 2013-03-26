@@ -1,6 +1,11 @@
 <div class="row">
   <div class="small-10 columns">
     <ul class="time-type-legend">
+      <li>
+        <i class="icon-sign-blank public-holiday-color"></i>
+        <%= t '.public_holiday' %>
+      </li>
+
       <% 1.times do @time_types.each_with_index do |time_type, index| %>
         <li>
           <i class="icon-sign-blank event-color<%= index %>"></i>
