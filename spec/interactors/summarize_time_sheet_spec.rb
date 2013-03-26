@@ -1,24 +1,22 @@
 require 'spec_helper'
 
 describe SummarizeTimeSheet do
-
-  let(:user) { FactoryGirl.create(:user) }
-  let(:time_sheet) { user.current_time_sheet }
-
   def work(start_time, end_time)
-    FactoryGirl.create(:time_entry, start_time: start_time.to_time, end_time: end_time.to_time, time_type: :work, time_sheet: time_sheet)
+    FactoryGirl.create(:time_entry, start_time: start_time.to_time, end_time: end_time.to_time, time_type: :work, time_sheet: @time_sheet)
   end
 
   def vacation(start_date, end_date)
-    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :vacation, time_sheet: time_sheet)
+    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :vacation, time_sheet: @time_sheet)
   end
 
   context 'work' do
     before :all do
+      @time_sheet = FactoryGirl.create(:time_sheet)
+
       work '2013-03-25 09:00:00', '2013-03-25 12:00:00'
       work '2013-03-25 12:30:00', '2013-03-25 18:00:00'
 
-      summarize = SummarizeTimeSheet.new(time_sheet, 2013, 1.month)
+      summarize = SummarizeTimeSheet.new(@time_sheet, 2013, 1.month)
       @rows, @total = summarize.work
       @month_row = @rows[2]
     end
@@ -52,10 +50,12 @@ describe SummarizeTimeSheet do
 
   context 'absence' do
     before :all do
+      @time_sheet = FactoryGirl.create(:time_sheet)
+
       vacation '2013-02-11', '2013-02-13'
       vacation '2013-03-25', '2013-03-28'
 
-      summarize = SummarizeTimeSheet.new(time_sheet, 2013, 1.month)
+      summarize = SummarizeTimeSheet.new(@time_sheet, 2013, 1.month)
       @rows, @total = summarize.absence
       @month_row = @rows[2]
     end
