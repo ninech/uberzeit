@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130319133710) do
+ActiveRecord::Schema.define(:version => 20130326124600) do
 
   create_table "absences", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(:version => 20130319133710) do
     t.datetime "deleted_at"
     t.boolean  "absence"
     t.boolean  "ignore_in_calculation", :default => false
+    t.float    "calculation_factor",    :default => 1.0
   end
 
   create_table "timers", :force => true do |t|
