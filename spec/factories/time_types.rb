@@ -7,6 +7,7 @@ FactoryGirl.define do
     is_vacation false
     ignore_in_calculation false
     absence false
+    calculation_factor 1.0
 
     factory :time_type_work do
       is_work true

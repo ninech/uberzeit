@@ -19,7 +19,8 @@ describe TimeChunkCollection do
       [
         TimeChunk.new(starts: '2013-03-07 09:00:00'.to_time, ends: '2013-03-07 12:00:00'.to_time, time_type: time_type_work),
         TimeChunk.new(starts: '2013-03-07 12:30:00'.to_time, ends: '2013-03-07 18:30:00'.to_time, time_type: time_type_work),
-        TimeChunk.new(starts: '2013-03-07 20:00:00'.to_time, ends: '2013-03-07 20:30:00'.to_time, time_type: time_type_onduty)
+        TimeChunk.new(starts: '2013-03-07 20:00:00'.to_time, ends: '2013-03-07 20:30:00'.to_time, time_type: time_type_onduty),
+        TimeChunk.new(starts: '2013-03-07 21:00:00'.to_time, ends: '2013-03-07 22:00:00'.to_time, time_type: time_type_break)
       ]
     end
     let(:collection) { TimeChunkCollection.new(time_chunks) }
@@ -27,6 +28,11 @@ describe TimeChunkCollection do
     describe '#total' do
       it 'returns the total of the chunks' do
         collection.total.should eq(9.5.hours)
+      end
+
+      it 'uses the factor in the time type of every chunk' do
+        time_type_onduty.update_attribute(:calculation_factor, 3.0)
+        collection.total.should eq(10.5.hours)
       end
     end
 
