@@ -1,12 +1,10 @@
 require 'spec_helper'
 
-# Make sure ldap-admin DevelopmentLdapServer is running
 describe LdapSync do
   before do
-    # Frickelfrickel™
-    @management = OpenStruct.new({
-      id: 'Management',
-      cn: 'Management',
+    @systems = OpenStruct.new({
+      id: 'Systems',
+      cn: 'Systems',
       managers: [],
       people: []
     })
@@ -18,22 +16,27 @@ describe LdapSync do
       people: []
     })
 
-    @departments = [@management, @administration]
+    @departments = [@systems, @administration]
 
     @person = OpenStruct.new({
       id: 'tofue',
       displayname: 'Tobias Fuenke',
       mail: 'tofue@nine.ch',
-      departments: @departments.dup,
       cancelled?: false
     })
 
-    @management.managers << @person
-    @management.people << @person
+    @person.stub(:departments) do
+      @departments.collect do |dep|
+        dep if dep.people.include?(@person) or dep.managers.include?(@person)
+      end.compact
+    end
+
+    @systems.managers << @person
+    @systems.people << @person
     @administration.people << @person
 
     Department.stub(:find) { |id|  @departments.find { |dep| dep.cn == id } }
-    Department.stub(:find_all).and_return(@person.departments)
+    Department.stub(:find_all).and_return(@departments)
     Person.stub(:find).and_return(@person)
     Person.stub(:find_one).and_return(@person)
     Person.stub(:find_all).and_return([@person])
@@ -72,12 +75,11 @@ describe LdapSync do
   end
 
   it 'removes missing leadership links' do
-    team = Team.find_by_uid(@management.id)
+    team = Team.find_by_uid(@systems.id)
     team.has_leader?(@user).should be_true
-    @management.managers.delete(@person)
+    @systems.managers.delete(@person)
     LdapSync.all
-    team.reload
-    team.has_leader?(@user).should be_false
+    team.reload.has_leader?(@user).should be_false
   end
 
   it 'removes missing membership links' do
@@ -85,8 +87,7 @@ describe LdapSync do
     team.has_member?(@user).should be_true
     @administration.people.delete(@person)
     LdapSync.all
-    team.reload
-    team.has_member?(@user).should be_false
+    team.reload.has_member?(@user).should be_false
   end
 
   it 'detects the change from member to leader' do
@@ -94,8 +95,7 @@ describe LdapSync do
     team.has_leader?(@user).should be_false
     @administration.managers.push(@person)
     LdapSync.all
-    team.reload
-    team.has_leader?(@user).should be_true
+    team.reload.has_leader?(@user).should be_true
   end
 
   it 'deletes "cancelled" persons' do
@@ -106,4 +106,15 @@ describe LdapSync do
     User.with_deleted.find_by_uid(@person.id).should_not be_nil
   end
 
+  it 'delegates the user to admin when in admin department' do
+    @user.has_role?(:admin).should be_true
+  end
+
+  it 'revokes admin rights when user is no longer in admin department' do
+    @user.has_role?(:admin).should be_true
+    @administration.managers.delete(@person)
+    @administration.people.delete(@person)
+    LdapSync.all
+    @user.has_role?(:admin).should be_false
+  end
 end

@@ -6,6 +6,7 @@ class LdapSync
       LdapSync::Users.sync
       LdapSync::Teams.sync
       LdapSync::Links.sync
+      LdapSync::Roles.sync
     end
 
   end
