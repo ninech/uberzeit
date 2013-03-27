@@ -50,9 +50,12 @@ class SummaryController < ApplicationController
       row[:link] = url_for(action: 'absence_summary_per_month', year: @year, month: month, type: @type)
     end
 
-    vacation_id = TimeType.vacation.first.id
-    vacation_remaining = @time_sheet.total_reedemable_vacation(@year) - @total[vacation_id]
-    @remaining = {vacation_id => vacation_remaining}
+    @remaining = {}
+    unless TimeType.vacation.first.nil?
+      vacation_id = TimeType.vacation.first.id
+      vacation_remaining = @time_sheet.total_reedemable_vacation(@year) - @total[vacation_id]
+      @remaining[vacation_id] = vacation_remaining
+    end
   end
 
   def absence_summary_per_month
