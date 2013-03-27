@@ -25,4 +25,17 @@ module ApplicationHelper
   def show_manage_link_in_navigation?
     can?(:manage, TimeType) || can?(:manage, Employment) || can?(:manage, PublicHoliday)
   end
+
+  def color_index_of_array(array)
+    array.each do |element|
+      color_index = color_index_of_element(element)
+      if color_index
+        return color_index
+      end
+    end
+  end
+
+  def color_index_of_element(element)
+    TimeType.all.index(element.time_type)
+  end
 end

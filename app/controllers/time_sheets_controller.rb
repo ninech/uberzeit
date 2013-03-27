@@ -14,8 +14,9 @@ class TimeSheetsController < ApplicationController
     @previous_week_day = (@week.min - 1).at_beginning_of_week
     @next_week_day = @week.max + 1
 
-    @time_chunks = @time_sheet.find_chunks(@day)
-
+    @time_chunks = {}
+    @time_chunks[:work] = @time_sheet.find_chunks(@day, TimeType.work)
+    @time_chunks[:absence] = @time_sheet.find_chunks(@day, TimeType.absence)
     # stuff for add form in modal
     @time_entry = TimeEntry.new
     if params[:date]
@@ -27,6 +28,8 @@ class TimeSheetsController < ApplicationController
     unless @timer.nil?
       @timer_active = @timer.start_date == (params[:date] || Time.current.to_date.to_s(:db))
     end
+
+    @public_holiday = PublicHoliday.on(@day).first
   end
 
   def stop_timer

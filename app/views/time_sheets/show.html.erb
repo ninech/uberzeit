@@ -29,9 +29,28 @@
         </ul>
       </div>
       <div class="entries">
-        <% if @time_chunks.length > 0 || @timer_active %>
+        <% if @time_chunks[:absence].length > 0 || @time_chunks[:work].length > 0 || @timer_active || @public_holiday %>
         <ul>
-          <% @time_chunks.each do |time_chunk| %>
+          <!-- PUBLIC HOLIDAYS -->
+          <% if @public_holiday %>
+            <li>
+              <i class="icon-sign-blank public-holiday-color"></i><%= @public_holiday.name %>
+              <div class="right">
+                <small><%= part_of_day(@public_holiday) %></small>
+              </div>
+            </li>
+          <% end %>
+          <!-- ABSENCES -->
+          <% @time_chunks[:absence].each do |time_chunk| %>
+            <li>
+              <i class="icon-sign-blank event-color<%=color_index_of_element(time_chunk)%>"></i><%= time_chunk.time_type %>
+              <div class="right">
+                <small><%= part_of_day(time_chunk) %></small>
+              </div>
+            </li>
+          <% end %>
+          <!-- WORK -->
+          <% @time_chunks[:work].each do |time_chunk| %>
             <li>
               <%= l time_chunk.starts %> - <%= l time_chunk.ends %>
               <small>
