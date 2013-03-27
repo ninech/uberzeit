@@ -1,5 +1,6 @@
 @import 'compass/css3/images';
 @import 'events';
+@import 'foundation_and_overrides';
 
 .content-time_sheets {
 
@@ -50,6 +51,10 @@
             font-size: 0.8em;
             float: none;
             @include background-image(linear-gradient(top center, #F5F5F5 0%, #D6D6D6 90%));
+
+            i.timer {
+              color: $primary-color;
+            }
 
             &.active {
               box-shadow: inset 0 0 10px 1px #CCCCCC;

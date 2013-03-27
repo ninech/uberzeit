@@ -24,6 +24,9 @@
                 </span>
                 <br>
                 <span class="time"><%= worktime_for_day(weekday) %></span>
+                <% if @timer && @timer.start_date.to_date == weekday %>
+                <i class='icon-repeat icon-spin timer'></i>
+                <% end %>
               </a>
             </li>
           <% end %>
@@ -82,7 +85,7 @@
             <div class="right">
               <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_time_sheet_timer_path(@time_sheet, @timer), remote: true, class: 'edit-time-entry-link' %>
               <a href="<%= url_for(action: :stop_timer) %>" data-method="put" data-remote="true" class="stop-timer">
-                <i class="icon-repeat icon-spin"></i>
+                <i class="icon-repeat icon-spin timer"></i>
                  Stop
               </a>
               <span class="timer-current" data-start="<%= @timer.from_time %>"></span>
