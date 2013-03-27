@@ -58,3 +58,12 @@ $event_background_opacity: 0.7;
   @include event-background-half($public_holiday_color,'right');
 }
 
+ul.event-legend {
+  margin: 1.72em 0 0;
+  height: 1.2em;
+
+  li {
+    float: left;
+    margin-right: 1em;
+  }
+}

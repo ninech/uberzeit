@@ -22,7 +22,7 @@ class TimeSheetsController < ApplicationController
     if params[:date]
       @time_entry.start_date = params[:date]
     end
-    @time_types = TimeType.find_all_by_is_work(true)
+    @time_types = TimeType.work
 
     @timer = @time_sheet.timer
     unless @timer.nil?
@@ -30,6 +30,21 @@ class TimeSheetsController < ApplicationController
     end
 
     @public_holiday = PublicHoliday.on(@day).first
+
+    @absences = {}
+    @public_holidays = {}
+
+    @weekdays.each do |weekday|
+      absences =  @time_sheet.find_chunks(weekday, TimeType.absence)
+      unless absences.empty?
+        @absences[weekday.to_s] = absences
+      end
+
+      public_holiday = PublicHoliday.on(weekday).first
+      if public_holiday
+        @public_holidays[weekday.to_s] = public_holiday
+      end
+    end
   end
 
   def stop_timer

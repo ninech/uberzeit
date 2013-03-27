@@ -13,7 +13,15 @@
           <% @weekdays.each do |weekday| %>
             <li>
               <a href="<%= url_for(action: :show, date: weekday.to_formatted_s(:iso)) %>" class="<%= 'active' if weekday == @day %>">
-                <span class="day"><%= l weekday, format: '%A' %></span>
+                <span class="day">
+                  <%= l weekday, format: '%A' %>
+                  <% if @absences[weekday.to_s] %>
+                    <i class="icon-sign-blank event-color<%=color_index_of_array(@absences[weekday.to_s])%>"></i>
+                  <% end %>
+                  <% if @public_holidays[weekday.to_s] %>
+                    <i class="icon-sign-blank public-holiday-color"></i>
+                  <% end %>
+                </span>
                 <br>
                 <span class="time"><%= worktime_for_day(weekday) %></span>
               </a>
@@ -29,7 +37,7 @@
         </ul>
       </div>
       <div class="entries">
-        <% if @time_chunks[:absence].length > 0 || @time_chunks[:work].length > 0 || @timer_active || @public_holiday %>
+        <% if @time_chunks[:absence].length > 0 || @time_chunks[:work].length > 0 || @timer_active || @public_holidays[@day] %>
         <ul>
           <!-- PUBLIC HOLIDAYS -->
           <% if @public_holiday %>
@@ -95,3 +103,21 @@
     <%= render 'edit_time_modal' %>
   </div>
 </div>
+<div class="row">
+  <div class="small-12 columns">
+    <ul class="event-legend">
+      <li>
+        <i class="icon-sign-blank public-holiday-color"></i>
+        <%= t '.public_holiday' %>
+      </li>
+
+      <% 1.times do TimeType.absence.each_with_index do |time_type, index| %>
+        <li>
+          <i class="icon-sign-blank event-color<%= index %>"></i>
+          <%= time_type %>
+        </li>
+      <% end end %>
+    </ul>
+  </div>
+</div>
+

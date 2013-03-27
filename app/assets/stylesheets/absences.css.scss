@@ -3,21 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import 'compass/css3/images';
-@import 'event_colors';
+@import 'events';
 
 .content-absences {
-  ul.time-type-legend {
-
-    margin: 1.72em 0 0;
-    height: 1.2em;
-
-
-    li {
-      float: left;
-      margin-right: 1em;
-    }
-
-  }
 
   .year-navigation {
     float: right;
