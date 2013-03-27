@@ -76,7 +76,7 @@ class RecurringSchedule < ActiveRecord::Base
     occurrences_date_range = date_or_range.to_range.to_date_range
     recurring_schedule_date_range = self.range.to_date_range
 
-    exceptions_in_range = exception_dates.where("date >= ? AND date <= ?", occurrences_date_range.min, occurrences_date_range.max)
+    exceptions_in_range = exception_dates.in(recurring_schedule_date_range)
     exceptions = exceptions_in_range.each_with_object({}) do |exception, hash|
       hash[exception.date.to_s] = exception
     end
