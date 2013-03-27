@@ -12,6 +12,7 @@ set :default_stage, 'staging'
 require 'capistrano/ext/multistage'
 
 set :whenever_environment, defer { stage }
+set :whenever_command, "bundle exec whenever"
 require 'whenever/capistrano'
 
 ssh_options[:forward_agent] = true
