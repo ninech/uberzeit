@@ -68,19 +68,24 @@ class RecurringSchedule < ActiveRecord::Base
     entry.duration
   end
 
-  def has_exception_date_in_range?(range)
-    range.to_date_range.any? { |date| !exception_dates.find_by_date(date).nil? }
+  def has_exception_date_in_range?(exceptions, range)
+    range.to_date_range.any? { |date| not exceptions[date.to_s].nil? }
   end
 
   def occurrences(date_or_range)
     occurrences_date_range = date_or_range.to_range.to_date_range
     recurring_schedule_date_range = self.range.to_date_range
 
+    exceptions_in_range = exception_dates.where("date >= ? AND date <= ?", occurrences_date_range.min, occurrences_date_range.max)
+    exceptions = exceptions_in_range.each_with_object({}) do |exception, hash|
+      hash[exception.date.to_s] = exception
+    end
+
     occurrences = []
 
     cursor = recurring_schedule_date_range.min
     while cursor <= recurring_schedule_date_range.max && cursor <= occurrences_date_range.max
-      unless has_exception_date_in_range?(cursor...cursor+interval)
+      unless has_exception_date_in_range?(exceptions, cursor...cursor+interval)
         occurrence_start_time = start_time_of_associated_entry.change(year: cursor.year, month: cursor.month, day: cursor.day)
         occurrence_end_time = occurrence_start_time + duration
 
