@@ -19,7 +19,7 @@ class AbsencesController < ApplicationController
       end
     end
 
-    @public_holidays = {}
+  @public_holidays = {}
     PublicHoliday.in_year(@year).each do |public_holiday|
       @public_holidays[public_holiday.start_date.to_s] = public_holiday
     end

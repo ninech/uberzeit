@@ -46,12 +46,12 @@ class LdapSync
 
       def leader_in_ldap?(department_id, person_id)
         department = Department.find(department_id)
-        department.managers.any?{ |manager| manager.uid == person_id }
+        department.managers.any?{ |manager| manager.mail == person_id }
       end
 
       def member_in_ldap?(department_id, person_id)
         department = Department.find(department_id)
-        department.people.any?{ |member| member.uid == person_id }
+        department.people.any?{ |member| member.mail == person_id }
       end
 
     end
