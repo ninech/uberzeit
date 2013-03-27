@@ -11,6 +11,9 @@ set :stages, %w(production staging)
 set :default_stage, 'staging'
 require 'capistrano/ext/multistage'
 
+set :whenever_environment, defer { stage }
+require 'whenever/capistrano'
+
 ssh_options[:forward_agent] = true
 set :use_sudo, false
 set :user, 'www-data'
