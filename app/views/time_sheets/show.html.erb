@@ -15,10 +15,10 @@
               <a href="<%= url_for(action: :show, date: weekday.to_formatted_s(:iso)) %>" class="<%= 'active' if weekday == @day %>">
                 <span class="day">
                   <%= l weekday, format: '%A' %>
-                  <% if @absences[weekday.to_s] %>
-                    <i class="icon-sign-blank event-color<%=color_index_of_array(@absences[weekday.to_s])%>"></i>
+                  <% if @absences[weekday] %>
+                    <i class="icon-sign-blank event-color<%=color_index_of_element(@absences[weekday])%>"></i>
                   <% end %>
-                  <% if @public_holidays[weekday.to_s] %>
+                  <% if @public_holidays[weekday] %>
                     <i class="icon-sign-blank public-holiday-color"></i>
                   <% end %>
                 </span>
@@ -105,19 +105,7 @@
 </div>
 <div class="row">
   <div class="small-12 columns">
-    <ul class="event-legend">
-      <li>
-        <i class="icon-sign-blank public-holiday-color"></i>
-        <%= t '.public_holiday' %>
-      </li>
-
-      <% 1.times do TimeType.absence.each_with_index do |time_type, index| %>
-        <li>
-          <i class="icon-sign-blank event-color<%= index %>"></i>
-          <%= time_type %>
-        </li>
-      <% end end %>
-    </ul>
+    <%= render 'shared/event_legend', show_public_holiday: @legend_show_public_holiday, time_types: @legend_time_types  %>
   </div>
 </div>
 

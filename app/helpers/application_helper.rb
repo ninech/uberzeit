@@ -36,6 +36,10 @@ module ApplicationHelper
   end
 
   def color_index_of_element(element)
-    TimeType.all.index(element.time_type)
+    color_index_of_time_type(element.time_type)
+  end
+
+  def color_index_of_time_type(time_type)
+    TimeType.all.index(time_type)
   end
 end
