@@ -42,22 +42,21 @@ class FindTimeChunks
     intersected_range = range.intersect(@range)
     return nil if !intersected_range or intersected_range.duration <= 0
 
-    duration =  if entry.kind_of?(Absence)
-                  translate_absence_to_planned_working_time(entry, intersected_range)
-                else
-                  nil
-                end
-    TimeChunk.new(range: intersected_range, time_type: entry.time_type, parent: entry, duration: duration)
+    chunk = TimeChunk.new(range: intersected_range, time_type: entry.time_type, parent: entry)
+    if entry.respond_to?(:half_day?)
+      chunk.duration = translate_absence_to_planned_working_time(entry, intersected_range)
+    end
+    chunk
   end
 
   def translate_absence_to_planned_working_time(absence, range)
-    coeff = if absence.half_day?
-              0.5
-            else
-              1
-            end
+    coefficient = if absence.half_day?
+                    0.5
+                  else
+                    1
+                  end
 
-    coeff * CalculatePlannedWorkingTime.new(absence.time_sheet.user, range, fulltime: true).total
+    coefficient * CalculatePlannedWorkingTime.new(absence.time_sheet.user, range, fulltime: true).total
   end
 end
 

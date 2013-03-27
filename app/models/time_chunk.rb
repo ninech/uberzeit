@@ -1,6 +1,7 @@
 # SingleTimes, RecurringTimes etc. are converted to TimeChunks for calculations and display
 class TimeChunk
   attr_accessor :starts, :ends, :time_type, :parent
+  attr_writer :duration
 
   def initialize(opts)
     if opts[:range]
