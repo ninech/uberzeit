@@ -103,9 +103,11 @@
     <%= render 'edit_time_modal' %>
   </div>
 </div>
+<% if @legend_show_public_holiday || @legend_time_types.any? %>
 <div class="row">
   <div class="small-12 columns">
     <%= render 'shared/event_legend', show_public_holiday: @legend_show_public_holiday, time_types: @legend_time_types  %>
   </div>
 </div>
+<% end %>
 
