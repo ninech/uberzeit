@@ -16,7 +16,7 @@
                 <span class="day">
                   <%= l weekday, format: '%A' %>
                   <% if @absences[weekday] %>
-                    <i class="icon-sign-blank event-color<%=color_index_of_element(@absences[weekday])%>"></i>
+                    <i class="icon-sign-blank event-color<%=color_index_of_array(@absences[weekday])%>"></i>
                   <% end %>
                   <% if @public_holidays[weekday] %>
                     <i class="icon-sign-blank public-holiday-color"></i>
@@ -37,7 +37,7 @@
         </ul>
       </div>
       <div class="entries">
-        <% if @time_chunks[:absence].length > 0 || @time_chunks[:work].length > 0 || @timer_active || @public_holidays[@day] %>
+        <% if @time_chunks.length > 0 || @timer_active || @public_holidays[@day] || @absences[@day] %>
         <ul>
           <!-- PUBLIC HOLIDAYS -->
           <% if @public_holiday %>
@@ -49,16 +49,18 @@
             </li>
           <% end %>
           <!-- ABSENCES -->
-          <% @time_chunks[:absence].each do |time_chunk| %>
+          <% if @absences[@day] %>
+            <% @absences[@day].each do |time_chunk| %>
             <li>
               <i class="icon-sign-blank event-color<%=color_index_of_element(time_chunk)%>"></i><%= time_chunk.time_type %>
               <div class="right">
                 <small><%= part_of_day(time_chunk) %></small>
               </div>
             </li>
+            <% end %>
           <% end %>
           <!-- WORK -->
-          <% @time_chunks[:work].each do |time_chunk| %>
+          <% @time_chunks.each do |time_chunk| %>
             <li>
               <%= l time_chunk.starts %> - <%= l time_chunk.ends %>
               <small>

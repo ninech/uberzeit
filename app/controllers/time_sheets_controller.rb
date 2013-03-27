@@ -14,9 +14,7 @@ class TimeSheetsController < ApplicationController
     @previous_week_day = (@week.min - 1).at_beginning_of_week
     @next_week_day = @week.max + 1
 
-    @time_chunks = {}
-    @time_chunks[:work] = @time_sheet.find_chunks(@day, TimeType.work)
-    @time_chunks[:absence] = @time_sheet.find_chunks(@day, TimeType.absence)
+    @time_chunks = @time_sheet.find_chunks(@day, TimeType.work)
     # stuff for add form in modal
     @time_entry = TimeEntry.new
     if params[:date]
@@ -36,8 +34,8 @@ class TimeSheetsController < ApplicationController
 
     @weekdays.each do |weekday|
       absences =  @time_sheet.find_chunks(weekday, TimeType.absence)
-      unless absences.chunks.empty?
-        @absences[weekday] = absences.chunks[0]
+      unless absences.empty?
+        @absences[weekday] = absences
       end
 
       public_holiday = PublicHoliday.on(weekday).first
@@ -48,7 +46,9 @@ class TimeSheetsController < ApplicationController
 
     @legend_show_public_holiday = @public_holidays.any?
     @legend_time_types = TimeType.absence.select do |time_type|
-      @absences.any?{ |date, absence| absence.time_type == time_type }
+      @absences.any? do |date, absences|
+        absences.chunks.any? { |absence| absence.time_type == time_type }
+      end
     end
   end
 
