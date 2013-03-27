@@ -18,7 +18,7 @@
 
 <div class="row">
   <div class="small-12 columns">
-    <%= f.select :daypart, options_for_select([['Whole day', :whole_day], ['First half day', :first_half_day], ['Second half day', :second_half_day]]) %>
+    <%= f.select :daypart, {t('.whole_day') => :whole_day, t('.first_half_day') => :first_half_day, t('.second_half_day') => :second_half_day} %>
   </div>
 </div>
 
