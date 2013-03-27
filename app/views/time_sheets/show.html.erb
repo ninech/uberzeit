@@ -13,9 +13,20 @@
           <% @weekdays.each do |weekday| %>
             <li>
               <a href="<%= url_for(action: :show, date: weekday.to_formatted_s(:iso)) %>" class="<%= 'active' if weekday == @day %>">
-                <span class="day"><%= l weekday, format: '%A' %></span>
+                <span class="day">
+                  <%= l weekday, format: '%A' %>
+                  <% if @absences[weekday] %>
+                    <i class="icon-sign-blank event-color<%=color_index_of_array(@absences[weekday])%>"></i>
+                  <% end %>
+                  <% if @public_holidays[weekday] %>
+                    <i class="icon-sign-blank public-holiday-color"></i>
+                  <% end %>
+                </span>
                 <br>
                 <span class="time"><%= worktime_for_day(weekday) %></span>
+                <% if @timer && @timer.start_date.to_date == weekday %>
+                <i class='icon-repeat icon-spin timer'></i>
+                <% end %>
               </a>
             </li>
           <% end %>
@@ -29,8 +40,29 @@
         </ul>
       </div>
       <div class="entries">
-        <% if @time_chunks.length > 0 || @timer_active %>
+        <% if @time_chunks.length > 0 || @timer_active || @public_holidays[@day] || @absences[@day] %>
         <ul>
+          <!-- PUBLIC HOLIDAYS -->
+          <% if @public_holiday %>
+            <li>
+              <i class="icon-sign-blank public-holiday-color"></i><%= @public_holiday.name %>
+              <div class="right">
+                <small><%= part_of_day(@public_holiday) %></small>
+              </div>
+            </li>
+          <% end %>
+          <!-- ABSENCES -->
+          <% if @absences[@day] %>
+            <% @absences[@day].each do |time_chunk| %>
+            <li>
+              <i class="icon-sign-blank event-color<%=color_index_of_element(time_chunk)%>"></i><%= time_chunk.time_type %>
+              <div class="right">
+                <small><%= part_of_day(time_chunk) %></small>
+              </div>
+            </li>
+            <% end %>
+          <% end %>
+          <!-- WORK -->
           <% @time_chunks.each do |time_chunk| %>
             <li>
               <%= l time_chunk.starts %> - <%= l time_chunk.ends %>
@@ -53,7 +85,7 @@
             <div class="right">
               <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_time_sheet_timer_path(@time_sheet, @timer), remote: true, class: 'edit-time-entry-link' %>
               <a href="<%= url_for(action: :stop_timer) %>" data-method="put" data-remote="true" class="stop-timer">
-                <i class="icon-repeat icon-spin"></i>
+                <i class="icon-repeat icon-spin timer"></i>
                  Stop
               </a>
               <span class="timer-current" data-start="<%= @timer.from_time %>"></span>
@@ -76,3 +108,11 @@
     <%= render 'edit_time_modal' %>
   </div>
 </div>
+<% if @legend_show_public_holiday || @legend_time_types.any? %>
+<div class="row">
+  <div class="small-12 columns">
+    <%= render 'shared/event_legend', show_public_holiday: @legend_show_public_holiday, time_types: @legend_time_types  %>
+  </div>
+</div>
+<% end %>
+
