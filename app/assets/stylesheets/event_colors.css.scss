@@ -1,0 +1,60 @@
+$event_colors: #A2B4DB #BAE4E5 #B8D5F2 #FFC48C #E9ECD9 #FAE1DE #FAC5C0 #E0F3B2;
+$public_holiday_color: #EAC5ED;
+
+$event_background_opacity: 0.7;
+
+@mixin event-background($color) {
+  background: rgba($color, $event_background_opacity);
+}
+
+@mixin event-background-half($color, $side) {
+  $left_opacity: 0;
+  $right_opacity: $event_background_opacity;
+  @if $side == 'left' {
+    $left_opacity: $event_background_opacity;
+    $right_opacity: 0;
+  }
+
+  background: -moz-linear-gradient(left, rgba($color,$left_opacity) 0%, rgba($color,$left_opacity) 50%, rgba($color,$right_opacity) 51%, rgba($color,$right_opacity) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba($color,$left_opacity)), color-stop(50%,rgba($color,$left_opacity)), color-stop(51%,rgba($color,$right_opacity)), color-stop(100%,rgba($color,$right_opacity))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, rgba($color,$left_opacity) 0%,rgba($color,$left_opacity) 50%,rgba($color,$right_opacity) 51%,rgba($color,$right_opacity) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, rgba($color,$left_opacity) 0%,rgba($color,$left_opacity) 50%,rgba($color,$right_opacity) 51%,rgba($color,$right_opacity) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, rgba($color,$left_opacity) 0%,rgba($color,$left_opacity) 50%,rgba($color,$right_opacity) 51%,rgba($color,$right_opacity) 100%); /* IE10+ */
+  background: linear-gradient(to right, rgba($color,$left_opacity) 0%,rgba($color,$left_opacity) 50%,rgba($color,$right_opacity) 51%,rgba($color,$right_opacity) 100%); /* W3C */
+}
+
+@for $i from 1 through length($event_colors) {
+  .event-color#{$i - 1} {
+    color: nth($event_colors, $i);
+  }
+  .event-bg#{$i - 1} {
+    @include event-background(nth($event_colors, $i));
+  }
+
+  .event-color-first-half#{$i - 1} {
+    color: nth($event_colors, $i);
+  }
+  .event-bg-first-half#{$i - 1} {
+    @include event-background-half(nth($event_colors, $i),'left');
+  }
+  .event-color-second-half#{$i - 1} {
+    color: nth($event_colors, $i);
+  }
+  .event-bg-second-half#{$i - 1} {
+    @include event-background-half(nth($event_colors, $i),'right');
+  }
+}
+
+.public-holiday-color, .public-holiday-color-first-half, .public-holiday-color-second-half {
+  color: $public_holiday_color;
+}
+.public-holiday-bg {
+  @include event-background($public_holiday_color);
+}
+.public-holiday-bg-first-half {
+  @include event-background-half($public_holiday_color,'left');
+}
+.public-holiday-bg-second-half {
+  @include event-background-half($public_holiday_color,'right');
+}
+
