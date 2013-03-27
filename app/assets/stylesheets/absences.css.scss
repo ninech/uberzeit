@@ -9,7 +9,7 @@
   $event_colors: #A2B4DB #BAE4E5 #B8D5F2 #FFC48C #E9ECD9 #FAE1DE #FAC5C0 #E0F3B2;
   $public_holiday_color: #EAC5ED;
 
-  $event_background_opacity: 0.5;
+  $event_background_opacity: 0.7;
 
   @mixin event-background($color) {
     background: rgba($color, $event_background_opacity);
@@ -176,6 +176,12 @@
       }
       &.public-holiday {
         @include event-background($public_holiday_color);
+      }
+      &.public-holiday-first-half {
+        @include event-background-half($public_holiday_color,'left');
+      }
+      &.public-holiday-second-half {
+        @include event-background-half($public_holiday_color,'right');
       }
       &.has-absences {
         padding: 0;
