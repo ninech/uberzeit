@@ -24,6 +24,9 @@ describe AbsencesHelper do
         m.stub(:id).and_return(42)
         m.stub(:starts).and_return('2013-01-01'.to_date)
         m.stub(:ends).and_return('2013-02-02'.to_date)
+        m.stub(:first_half_day?).and_return(false)
+        m.stub(:second_half_day?).and_return(false)
+        m.stub(:whole_day?).and_return(true)
        end
      end
 

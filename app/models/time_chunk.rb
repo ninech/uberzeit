@@ -24,24 +24,12 @@ class TimeChunk
     @duration ||= range.duration
   end
 
-  def first_half_day?
-    @first_half_day ||= half_day_specific? && parent.first_half_day?
-  end
-
-  def second_half_day?
-    @second_half_day ||= half_day_specific? && parent.second_half_day?
-  end
-
-  def whole_day?
-    @whole_day ||= half_day_specific? && parent.whole_day?
-  end
-
   def half_day_specific?
-    @half_day_specific ||= parent.respond_to?(:whole_day?)
+    parent.respond_to?(:whole_day?)
   end
 
-  def duration_for_calculation
-    duration * @time_type.calculation_factor
+  def method_missing(sym, *args, &block)
+    @parent.send(sym, *args, &block)
   end
 
   def parent_id
