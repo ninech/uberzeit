@@ -2,6 +2,10 @@ de:
   activerecord:
     errors:
       models:
+        time_entry:
+          attributes:
+            end_time:
+              after: Endzeit muss nach Startzeit sein
         absence:
           attributes:
             end_date:
@@ -94,6 +98,9 @@ de:
       time_types: Zeittypen
       users: Benutzer
   summary:
+    formats:
+      date: '%e. %a.'
+      month: '%B'
     work_summary:
       hours: Stunden
       overtime: Überzeit

@@ -22,4 +22,14 @@ module SummaryHelper
 
     tooltip
   end
+
+  def label_for_month(date)
+    I18n.l(date, format: t('summary.formats.month'))
+  end
+
+  def label_for_range(range)
+    starts = I18n.l(range.min, format: t('summary.formats.date'))
+    ends = I18n.l(range.max, format: t('summary.formats.date'))
+    [starts, ends].join(' - ')
+  end
 end
