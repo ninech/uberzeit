@@ -106,3 +106,12 @@ $ ->
     })
     $('#edit-time-modal').foundation('reveal', 'open')
 
+  $('li.weeksummary.overtime').hide()
+
+  $('li.weeksummary.total').mouseenter ->
+    $(this).hide()
+    $('li.weeksummary.overtime').show()
+
+  $('li.weeksummary.overtime').mouseleave ->
+    $(this).hide()
+    $('li.weeksummary.total').show()

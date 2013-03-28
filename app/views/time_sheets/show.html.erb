@@ -30,11 +30,22 @@
               </a>
             </li>
           <% end %>
-          <li class="weeksummary">
+          <li class="weeksummary total">
             <div>
               <span class="total"><%= t '.total' %></span>
               <br>
-              <span class="time"><%= worktime_for_week(@week) %></span>
+              <span class="time">
+                <%= worktime_for_week(@week) %>
+              </span>
+            </div>
+          </li>
+          <li class="weeksummary overtime">
+            <div>
+              <span class="overtime"><%= t '.overtime' %></span>
+              <br>
+              <span class="time">
+                <%= overtime_for_week(@week) %>
+              </span>
             </div>
           </li>
         </ul>
