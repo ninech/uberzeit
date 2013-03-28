@@ -15,12 +15,12 @@ $event_background_opacity: 0.75;
     $right_opacity: 0;
   }
 
-  background: -moz-linear-gradient(left, rgba($color,$left_opacity) 0%, rgba($color,$left_opacity) 50%, rgba($color,$right_opacity) 51%, rgba($color,$right_opacity) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba($color,$left_opacity)), color-stop(50%,rgba($color,$left_opacity)), color-stop(51%,rgba($color,$right_opacity)), color-stop(100%,rgba($color,$right_opacity))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(left, rgba($color,$left_opacity) 0%,rgba($color,$left_opacity) 50%,rgba($color,$right_opacity) 51%,rgba($color,$right_opacity) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(left, rgba($color,$left_opacity) 0%,rgba($color,$left_opacity) 50%,rgba($color,$right_opacity) 51%,rgba($color,$right_opacity) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(left, rgba($color,$left_opacity) 0%,rgba($color,$left_opacity) 50%,rgba($color,$right_opacity) 51%,rgba($color,$right_opacity) 100%); /* IE10+ */
-  background: linear-gradient(to right, rgba($color,$left_opacity) 0%,rgba($color,$left_opacity) 50%,rgba($color,$right_opacity) 51%,rgba($color,$right_opacity) 100%); /* W3C */
+  background: -moz-linear-gradient(-45deg, rgba($color,$left_opacity) 0%, rgba($color,$left_opacity) 50%, rgba($color,$right_opacity) 51%, rgba($color,$right_opacity) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba($color,$left_opacity)), color-stop(50%,rgba($color,$left_opacity)), color-stop(51%,rgba($color,$right_opacity)), color-stop(100%,rgba($color,$right_opacity))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg, rgba($color,$left_opacity) 0%,rgba($color,$left_opacity) 50%,rgba($color,$right_opacity) 51%,rgba($color,$right_opacity) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg, rgba($color,$left_opacity) 0%,rgba($color,$left_opacity) 50%,rgba($color,$right_opacity) 51%,rgba($color,$right_opacity) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(-45deg, rgba($color,$left_opacity) 0%,rgba($color,$left_opacity) 50%,rgba($color,$right_opacity) 51%,rgba($color,$right_opacity) 100%); /* IE10+ */
+  background: linear-gradient(135deg, rgba($color,$left_opacity) 0%,rgba($color,$left_opacity) 50%,rgba($color,$right_opacity) 51%,rgba($color,$right_opacity) 100%); /* W3C */
 }
 
 @for $i from 1 through length($event_colors) {
