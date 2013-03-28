@@ -1,7 +1,13 @@
 require 'spec_helper'
 
 describe TimeChunkCollection do
+  let(:time_type_work) { TEST_TIME_TYPES[:work] }
+  let(:time_type_break) { TEST_TIME_TYPES[:break] }
+  let(:time_type_vacation) { TEST_TIME_TYPES[:vacation] }
+  let(:time_type_onduty) { TEST_TIME_TYPES[:onduty] }
+
   let(:time_chunks) { [] }
+  let(:collection) { TimeChunkCollection.new(time_chunks) }
 
   context 'no chunks' do
     it 'returns zero' do
@@ -11,10 +17,6 @@ describe TimeChunkCollection do
   end
 
   context 'with chunks' do
-    let(:time_type_work) { TEST_TIME_TYPES[:work] }
-    let(:time_type_break) { TEST_TIME_TYPES[:break] }
-    let(:time_type_vacation) { TEST_TIME_TYPES[:vacation] }
-    let(:time_type_onduty) { TEST_TIME_TYPES[:onduty] }
     let(:time_chunks) do
       [
         TimeChunk.new(starts: '2013-03-07 09:00:00'.to_time, ends: '2013-03-07 12:00:00'.to_time, time_type: time_type_work),
@@ -23,7 +25,6 @@ describe TimeChunkCollection do
         TimeChunk.new(starts: '2013-03-07 21:00:00'.to_time, ends: '2013-03-07 22:00:00'.to_time, time_type: time_type_break)
       ]
     end
-    let(:collection) { TimeChunkCollection.new(time_chunks) }
 
     describe '#total' do
       it 'returns the total of the chunks' do
@@ -61,6 +62,59 @@ describe TimeChunkCollection do
     describe '#empty?' do
       it 'allows you to check whether there are chunks' do
         collection.empty?.should be_false
+      end
+    end
+  end
+
+  context 'overlapping absences' do
+    describe '#total' do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:time_sheet) { user.time_sheets.first }
+      let(:absence1) { FactoryGirl.build(:absence, time_type: :vacation, start_date: '2013-03-07', end_date: '2013-03-08') }
+      let(:absence2) { FactoryGirl.build(:absence, time_type: :vacation, start_date: '2013-03-07', end_date: '2013-03-07', first_half_day: true) }
+      let(:time_chunks) do
+        [
+          TimeChunk.new(starts: '2013-03-07'.to_date.midnight, ends: '2013-03-08'.to_date.midnight, parent: absence1),
+          TimeChunk.new(starts: '2013-03-08'.to_date.midnight, ends: '2013-03-09'.to_date.midnight, parent: absence1),
+          TimeChunk.new(starts: '2013-03-07'.to_date.midnight, ends: '2013-03-08'.to_date.midnight, parent: absence2),
+        ]
+      end
+
+      it 'counts overlapping absences as one absence' do
+        collection.total.should eq(17.0.hours)
+      end
+    end
+  end
+
+  context 'daylight saving bounday' do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:time_sheet) { user.time_sheets.first }
+    let(:absence) { FactoryGirl.build(:absence, time_type: :vacation, start_date: '2013-03-31', end_date: '2013-03-31') }
+    let(:time_chunks) { [TimeChunk.new(starts: '2013-03-31'.to_date.midnight, ends: '2013-04-01'.to_date.midnight, parent: absence)] }
+
+    describe "#total" do
+      it 'absence should count as a half/full working day even when the day is only 23 hours long (e.g. on daylight saving boundary)' do
+        # e.g. when zone switches from CET to CEST on 2013-03-31, the daily length is 23 hours
+        # we want the total duration to be 8.5 hours independent of this change
+
+        # overwrite so we can work on sunday when the change occurs
+        uberzeit_config = UberZeit::Config.merge({work_days:[:sunday]})
+        stub_const 'UberZeit::Config', uberzeit_config
+
+        collection.total.should eq(8.5.hours)
+      end
+    end
+  end
+
+  context 'non-working day' do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:time_sheet) { user.time_sheets.first }
+    let(:absence) { FactoryGirl.build(:absence, time_type: :vacation, start_date: '2013-03-24', end_date: '2013-03-24') }
+    let(:time_chunks) { [TimeChunk.new(starts: '2013-03-24'.to_date.midnight, ends: '2013-03-24'.to_date.midnight, parent: absence)] }
+
+    describe '#total' do
+      it 'absence on a non-working day should not count towards the total' do
+        collection.total.should eq(0)
       end
     end
   end

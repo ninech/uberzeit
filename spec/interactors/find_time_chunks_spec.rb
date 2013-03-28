@@ -38,46 +38,6 @@ describe FindTimeChunks do
     find_chunks.in_year(2013).should_not be_empty
   end
 
-  it 'sets the duration relative to the daily working time for chunks whose range is half or whole day' do
-    relation = mock.tap do |m|
-      m.stub(:entries_in_range).and_return([
-                                            FactoryGirl.build(:absence, start_date: '2013-07-18', end_date: '2013-07-18'),
-                                            FactoryGirl.build(:absence, start_date: '2013-07-19', end_date: '2013-07-20', first_half_day: true)])
-    end
-    find_chunks = FindTimeChunks.new(relation)
-    found_chunks = find_chunks.in_day('2013-07-18'.to_date)
-    found_chunks.chunks.first.duration.should eq(8.5.hours)
-
-    found_chunks = find_chunks.in_day('2013-07-19'.to_date)
-    found_chunks.chunks.first.duration.should eq(4.25.hours)
-  end
-
-  it 'special case: absence should count as a half/full working day even when the day is only 23 hours long (e.g. on daylight saving boundary)' do
-    # e.g. when zone switches from CET to CEST on 2013-03-31, the daily length is 23 hours
-    # we want the chunk duration to be 8.5 hours independent of this change
-    relation = mock.tap do |m|
-      m.stub(:entries_in_range).and_return([FactoryGirl.build(:absence, start_date: '2013-03-31', end_date: '2013-03-31')])
-    end
-
-    # overwrite so we can work on sunday when the change occurs
-    uberzeit_config = UberZeit::Config.merge({work_days:[:sunday]})
-    stub_const 'UberZeit::Config', uberzeit_config
-
-    find_chunks = FindTimeChunks.new(relation)
-    found_chunks = find_chunks.in_day('2013-03-31'.to_date)
-    found_chunks.chunks.first.duration.should eq(8.5.hours)
-  end
-
-  it 'special case: absence on a non-working day should not have duration' do
-    relation = mock.tap do |m|
-      m.stub(:entries_in_range).and_return([FactoryGirl.build(:absence, start_date: '2013-03-22', end_date: '2013-03-23')])
-    end
-
-    find_chunks = FindTimeChunks.new(relation)
-    found_chunks = find_chunks.in_range('2013-03-22'.to_date..'2013-03-23'.to_date)
-    found_chunks.chunks.first.duration.should eq(8.5.hours)
-  end
-
   context '#in_year' do
     let(:find_chunks) { FindTimeChunks.new(all_relations) }
     let(:found_chunks) { find_chunks.in_year(2013) }

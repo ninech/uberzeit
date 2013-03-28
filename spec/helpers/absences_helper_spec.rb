@@ -24,11 +24,15 @@ describe AbsencesHelper do
         m.stub(:id).and_return(42)
         m.stub(:starts).and_return('2013-01-01'.to_date)
         m.stub(:ends).and_return('2013-02-02'.to_date)
+        m.stub(:first_half_day?).and_return(false)
+        m.stub(:second_half_day?).and_return(false)
+        m.stub(:whole_day?).and_return(true)
+        m.stub(:time_type).and_return(TEST_TIME_TYPES[:vacation])
        end
      end
 
     let(:time_chunk) do
-      TimeChunk.new(range: '2013-01-01'.to_date...'2013-02-02'.to_date, time_type: TEST_TIME_TYPES[:vacation], parent: absence)
+      TimeChunk.new(range: '2013-01-01'.to_date...'2013-02-02'.to_date, parent: absence)
     end
 
     it 'renders a calendar cell without a date' do
