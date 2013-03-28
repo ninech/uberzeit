@@ -1,12 +1,7 @@
 module SummaryHelper
   def format_work_days(duration)
-    color = if duration == 0
-              'gray'
-            else
-              ''
-            end
-
-    content_tag(:span, number_with_precision(duration.to_work_days, precision: 1), style: "color: #{color}")
+    text = number_with_precision(duration.to_work_days, precision: 1, strip_insignificant_zeros: true)
+    content_tag(:span, text, style: "color: #{color_for_duration(duration)}")
   end
 
   def format_hours(duration)

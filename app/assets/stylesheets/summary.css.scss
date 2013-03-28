@@ -5,6 +5,16 @@
         text-align: right;
       }
 
+      th.value {
+        &.work {
+          width: 20%;
+        }
+        &.absence {
+          width: 20%;
+        }
+      }
+
+
       td:first-child {
         text-align: left;
       }
