@@ -22,6 +22,10 @@ de:
       firstDay: 1
       format: dddd, dd. mmmm yyyy
 
+  number:
+    format:
+      separator: ! '.'
+
   time_types:
     edit:
       edit_time_type: Neuer Zeittyp
@@ -93,7 +97,7 @@ de:
       second_half_day: Nachmittags
       first_half_day: Vormittags
       back: Zurück
-      whole_day: Ganztägig
+      whole_day: Ganzer Tag
     new:
       add_public_holiday: Feiertag hinzufügen
   time_sheets:
@@ -108,6 +112,9 @@ de:
       total: Total
       add_time_now: Zeit jetzt eintragen
       no_entries_yet_message: Noch keine Einträge vorhanden
+      whole_day: Ganzer Tag
+      first_half_day: Vormittags
+      second_half_day: Nachmittags
   employments:
     edit:
       edit_employment: Anstellungsverhältnis bearbeiten
