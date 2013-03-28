@@ -11,9 +11,6 @@ class CalculateOvertime
   end
 
   private
-  def workload
-    @workload ||= @user.workload_on(@date_or_range)
-  end
 
   def planned_work
     @planned_work ||= @time_sheet.planned_work(@date_or_range)
