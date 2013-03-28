@@ -9,5 +9,9 @@ describe TimeSheetsHelper do
     it 'formats negative durations' do
       helper.hour_string(-2.5.hours).should eq("-02:30")
     end
+
+    it 'rounds minutes up' do
+      helper.hour_string(2.hours + 1.2.minutes).should eq("02:02")
+    end
   end
 end

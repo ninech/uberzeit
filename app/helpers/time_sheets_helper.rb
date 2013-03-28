@@ -20,7 +20,7 @@ module TimeSheetsHelper
 
   def hour_string(duration)
     hours = duration.to_hours.to_i
-    minutes = (duration - hours * 1.hour).to_minutes.to_i
+    minutes = (duration - hours * 1.hour).to_minutes.ceil
     is_negative = hours < 0
 
     if is_negative
