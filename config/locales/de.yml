@@ -1,0 +1,117 @@
+de:
+  activerecord:
+    errors:
+      models:
+        absence:
+          attributes:
+            end_date:
+              on_or_after: Am oder Nach
+        recurring_schedule:
+          attributes:
+            ends_date:
+              invalid_date: Ungültiges Datum
+  time:
+    formats:
+      default: '%H:%M'
+  date:
+    formats:
+      default: '%d.%m.%Y'
+      long: '%A, %d. %B %Y'
+  js:
+    pickadate:
+      firstDay: 1
+      format: dddd, dd. mmmm yyyy
+
+  time_types:
+    edit:
+      edit_time_type: Neuer Zeittyp
+    index:
+      new_time_type: Neuer Zeittyp
+      name: Bezeichnung
+      work: Arbeit
+      acquired_as: Wird erfasst als
+      absence: Absenz
+      calculation_factor: Berechnungsfaktor
+      confirm_delete: Löschen bestägigen
+      time_types: Zeittypen
+    form:
+      back: Zurück
+    new:
+      create_time_type: Zeittyp erstellen
+  absences:
+    absences_tooltip:
+      edit: Bearbeiten
+  users:
+    show:
+      start: Start
+      employments: Anstellungsverhältnisse
+      workload: Arbeitspensum
+      end: Ende
+      add_employment: Neues Anstellungsverhältnis
+  layouts:
+    reports_navigation:
+      work_summary: Arbeitsübersicht
+      absence_summary: Absenzenübersicht
+    header:
+      manage: Verwalten
+      absences: Absenzen
+      timesheet: Zeiterfassung
+      reports: Berichte
+    manage_navigation:
+      public_holidays: Feiertage
+      time_types: Zeittypen
+      users: Benutzer
+  summary:
+    work_summary:
+      hours: Stunden
+      overtime: Überzeit
+      target: Sollzeit
+      running_overtime: Laufende Überzeit
+      work_summary: Arbeitsübersicht
+      worked: Arbeitszeit
+      expand: Ausklappen
+    absence_summary:
+      absence_summary: Absenzübersicht
+      total: Total
+      remaining: Verbleibend
+      days: Tage
+  time_entries:
+    form:
+      cancel: Abbrechen
+      add_entry: Neuer Eintrag
+      from_time: Von
+      to_time: Bis
+      start_timer: Timer starten
+  public_holidays:
+    edit:
+      edit_public_holiday: Feiertag bearbeiten
+    index:
+      date: Datum
+      new_public_holiday: Neuer Feiertag
+      name: Name
+    form:
+      second_half_day: Nachmittags
+      first_half_day: Vormittags
+      back: Zurück
+      whole_day: Ganztägig
+    new:
+      add_public_holiday: Feiertag hinzufügen
+  time_sheets:
+    top_buttons:
+      add_time: Zeit hinzufügen
+    add_time_modal:
+      add_time: Zeit hinzufügen
+    edit_time_modal:
+      edit_time: Zeit bearbeiten
+    show:
+      overtime: Überzeit
+      total: Total
+      add_time_now: Zeit jetzt eintragen
+      no_entries_yet_message: Noch keine Einträge vorhanden
+  employments:
+    edit:
+      edit_employment: Anstellungsverhältnis bearbeiten
+    new:
+      add_employment: Anstellungsverhältnis hinzufügen
+    form:
+      back: Zurück
