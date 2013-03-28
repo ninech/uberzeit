@@ -70,13 +70,13 @@ describe TimeChunkCollection do
     describe '#total' do
       let(:user) { FactoryGirl.create(:user) }
       let(:time_sheet) { user.time_sheets.first }
-      let(:absence1) { FactoryGirl.build(:absence, time_type: time_type_vacation, start_date: '2013-03-07', end_date: '2013-03-08') }
-      let(:absence2) { FactoryGirl.build(:absence, time_type: time_type_vacation, start_date: '2013-03-07', end_date: '2013-03-07', first_half_day: true) }
+      let(:absence1) { FactoryGirl.build(:absence, time_type: :vacation, start_date: '2013-03-07', end_date: '2013-03-08') }
+      let(:absence2) { FactoryGirl.build(:absence, time_type: :vacation, start_date: '2013-03-07', end_date: '2013-03-07', first_half_day: true) }
       let(:time_chunks) do
         [
-          TimeChunk.new(starts: '2013-03-07'.to_date.midnight, ends: '2013-03-08'.to_date.midnight, time_type: time_type_vacation, parent: absence1),
-          TimeChunk.new(starts: '2013-03-08'.to_date.midnight, ends: '2013-03-09'.to_date.midnight, time_type: time_type_vacation, parent: absence1),
-          TimeChunk.new(starts: '2013-03-07'.to_date.midnight, ends: '2013-03-08'.to_date.midnight, time_type: time_type_vacation, parent: absence2),
+          TimeChunk.new(starts: '2013-03-07'.to_date.midnight, ends: '2013-03-08'.to_date.midnight, parent: absence1),
+          TimeChunk.new(starts: '2013-03-08'.to_date.midnight, ends: '2013-03-09'.to_date.midnight, parent: absence1),
+          TimeChunk.new(starts: '2013-03-07'.to_date.midnight, ends: '2013-03-08'.to_date.midnight, parent: absence2),
         ]
       end
 
@@ -89,8 +89,8 @@ describe TimeChunkCollection do
   context 'daylight saving bounday' do
     let(:user) { FactoryGirl.create(:user) }
     let(:time_sheet) { user.time_sheets.first }
-    let(:absence) { FactoryGirl.build(:absence, time_type: time_type_vacation, start_date: '2013-03-31', end_date: '2013-03-31') }
-    let(:time_chunks) { [TimeChunk.new(starts: '2013-03-31'.to_date.midnight, ends: '2013-04-01'.to_date.midnight, time_type: time_type_vacation, parent: absence)] }
+    let(:absence) { FactoryGirl.build(:absence, time_type: :vacation, start_date: '2013-03-31', end_date: '2013-03-31') }
+    let(:time_chunks) { [TimeChunk.new(starts: '2013-03-31'.to_date.midnight, ends: '2013-04-01'.to_date.midnight, parent: absence)] }
 
     describe "#total" do
       it 'absence should count as a half/full working day even when the day is only 23 hours long (e.g. on daylight saving boundary)' do
@@ -109,8 +109,8 @@ describe TimeChunkCollection do
   context 'non-working day' do
     let(:user) { FactoryGirl.create(:user) }
     let(:time_sheet) { user.time_sheets.first }
-    let(:absence) { FactoryGirl.build(:absence, time_type: time_type_vacation, start_date: '2013-03-24', end_date: '2013-03-24') }
-    let(:time_chunks) { [TimeChunk.new(starts: '2013-03-24'.to_date.midnight, ends: '2013-03-24'.to_date.midnight, time_type: time_type_vacation, parent: absence)] }
+    let(:absence) { FactoryGirl.build(:absence, time_type: :vacation, start_date: '2013-03-24', end_date: '2013-03-24') }
+    let(:time_chunks) { [TimeChunk.new(starts: '2013-03-24'.to_date.midnight, ends: '2013-03-24'.to_date.midnight, parent: absence)] }
 
     describe '#total' do
       it 'absence on a non-working day should not count towards the total' do

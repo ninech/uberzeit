@@ -41,7 +41,7 @@ class FindTimeChunks
   def create_and_clip_chunk(range, entry)
     intersected_range = range.intersect(@range)
     return nil if !intersected_range or intersected_range.duration <= 0
-    TimeChunk.new(range: intersected_range, time_type: entry.time_type, parent: entry)
+    TimeChunk.new(range: intersected_range, parent: entry)
   end
 end
 
