@@ -1,4 +1,4 @@
-<%= render partial: 'header', locals: {title: t('.absence_summary'), year: @year, path: :absence_summary_time_sheet_path} %>
+<%= render partial: 'header', locals: {title: t('.absence_summary'), year: @year, path: :absence_summary_time_sheet_path, unit: t('.days')} %>
 <div class="row">
   <div class="small-12 columns">
     <table class="nice small-12">
@@ -6,7 +6,7 @@
         <tr>
           <th colspan="2">&nbsp;</th>
           <% TimeType.absence.each do |time_type| %>
-          <th class="value"><%= time_type.name %></th>
+          <th class="value absence"><%= time_type.name %></th>
           <% end %>
         </tr>
       </thead>

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="small-12 columns">
-    <h1><%= title %>
+    <h1><%= title %> <small><%= unit %></small>
       <div class="right">
         <%= link_to icon('caret-left'), method(path).call(@time_sheet, @year - 1) %>
         <%= link_to icon('caret-right'), method(path).call(@time_sheet, @year + 1) %>

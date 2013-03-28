@@ -6,8 +6,14 @@
       }
 
       th.value {
-        width: 15%;
+        &.work {
+          width: 20%;
+        }
+        &.absence {
+          width: 20%;
+        }
       }
+
 
       td:first-child {
         text-align: left;

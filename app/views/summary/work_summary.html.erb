@@ -1,14 +1,14 @@
-<%= render partial: 'header', locals: {title: t('.work_summary'), year: @year, path: :work_summary_time_sheet_path} %>
+<%= render partial: 'header', locals: {title: t('.work_summary'), year: @year, path: :work_summary_time_sheet_path, unit: t('.hours')} %>
 <div id="content-summary" class="row">
   <div class="small-12 columns">
     <table class="nice small-12">
       <thead>
         <tr>
           <th colspan="2">&nbsp;</th>
-          <th class="value"><%= t '.worked' %></th>
-          <th class="value"><%= t '.target' %></th>
-          <th class="value"><%= t '.overtime' %></th>
-          <th class="value"><%= t '.running_total' %></th>
+          <th class="value work"><%= t '.worked' %></th>
+          <th class="value work"><%= t '.target' %></th>
+          <th class="value work"><%= t '.overtime' %></th>
+          <th class="value work"><%= t '.running_total' %></th>
         </tr>
       </thead>
       <tbody>
