@@ -4,7 +4,7 @@
     <table class="nice small-12">
       <thead>
         <tr>
-          <th colspan="2">&nbsp;</th>
+          <th>&nbsp;</th>
           <th class="value work"><%= t '.worked' %></th>
           <th class="value work"><%= t '.target' %></th>
           <th class="value work"><%= t '.overtime' %></th>
@@ -15,7 +15,7 @@
         <% @rows.each do |row| %>
         <tr class="summary-row" data-month="<%=row[:month]%>" <% if row[:hide] %>style="display: none;"<% end %>>
           <% tooltip = types_to_tooltip_table(row[:by_type]) %>
-          <td colspan="2"><%= link_to row[:name], row[:link], remote: true %></td>
+          <td><%= link_to row[:name], row[:link], remote: true %></td>
           <td><span <% unless tooltip.blank? %>data-tooltip class="has-tip" title="<%=tooltip%>"<% end %>><%= format_hours(row[:worked]) %></span></td>
           <td><%= format_hours(row[:planned]) %></td>
           <td><%= format_hours(row[:overtime]) %></td>
