@@ -90,14 +90,20 @@ de:
     edit:
       edit_public_holiday: Feiertag bearbeiten
     index:
+      public_holidays: 'Feiertage im Jahr %{year}'
       date: Datum
       new_public_holiday: Neuer Feiertag
       name: Name
+      confirm_delete: Wirklich löschen?
     form:
       second_half_day: Nachmittags
       first_half_day: Vormittags
       back: Zurück
       whole_day: Ganzer Tag
+      daypart: Dauer
+      name: Name
+      start_date: Datum
+      add_public_holiday: Feiertag hinzufügen
     new:
       add_public_holiday: Feiertag hinzufügen
   time_sheets:
