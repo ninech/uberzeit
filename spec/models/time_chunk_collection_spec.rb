@@ -85,4 +85,37 @@ describe TimeChunkCollection do
       end
     end
   end
+
+  context 'daylight saving bounday' do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:time_sheet) { user.time_sheets.first }
+    let(:absence) { FactoryGirl.build(:absence, time_type: time_type_vacation, start_date: '2013-03-31', end_date: '2013-03-31') }
+    let(:time_chunks) { [TimeChunk.new(starts: '2013-03-31'.to_date.midnight, ends: '2013-04-01'.to_date.midnight, time_type: time_type_vacation, parent: absence)] }
+
+    describe "#total" do
+      it 'absence should count as a half/full working day even when the day is only 23 hours long (e.g. on daylight saving boundary)' do
+        # e.g. when zone switches from CET to CEST on 2013-03-31, the daily length is 23 hours
+        # we want the total duration to be 8.5 hours independent of this change
+
+        # overwrite so we can work on sunday when the change occurs
+        uberzeit_config = UberZeit::Config.merge({work_days:[:sunday]})
+        stub_const 'UberZeit::Config', uberzeit_config
+
+        collection.total.should eq(8.5.hours)
+      end
+    end
+  end
+
+  context 'non-working day' do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:time_sheet) { user.time_sheets.first }
+    let(:absence) { FactoryGirl.build(:absence, time_type: time_type_vacation, start_date: '2013-03-24', end_date: '2013-03-24') }
+    let(:time_chunks) { [TimeChunk.new(starts: '2013-03-24'.to_date.midnight, ends: '2013-03-24'.to_date.midnight, time_type: time_type_vacation, parent: absence)] }
+
+    describe '#total' do
+      it 'absence on a non-working day should not count towards the total' do
+        collection.total.should eq(0)
+      end
+    end
+  end
 end
