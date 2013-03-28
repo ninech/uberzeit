@@ -26,6 +26,16 @@ module ApplicationHelper
     can?(:manage, TimeType) || can?(:manage, Employment) || can?(:manage, PublicHoliday)
   end
 
+  def color_for_duration(duration)
+    if duration == 0
+      'gray'
+    elsif duration < 0
+      'tomato'
+    else
+      ''
+    end
+  end
+
   def color_index_of_array(array)
     array.each do |element|
       color_index = color_index_of_element(element)

@@ -15,6 +15,10 @@ module TimeSheetsHelper
   end
 
   def format_duration(duration)
+    content_tag(:span, hour_string(duration), style: "color: #{color_for_duration(duration)}")
+  end
+
+  def hour_string(duration)
     hours = duration.to_hours.to_i
     minutes = (duration - hours * 1.hour).to_minutes.to_i
     is_negative = hours < 0
