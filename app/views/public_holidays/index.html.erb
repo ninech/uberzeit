@@ -26,13 +26,13 @@
       <tbody>
         <% @public_holidays.each do |public_holiday| %>
           <tr>
-            <td><%= public_holiday.name %></td>
             <td>
               <%= l(public_holiday.start_date, format: :long) %>
               <% unless public_holiday.end_date.blank? || public_holiday.start_date == public_holiday.end_date %>
                 - <%= public_holiday.end_date %>
               <% end %>
             </td>
+            <td><%= public_holiday.name %></td>
             <td>
               <%= link_to icon('edit'), edit_public_holiday_path(public_holiday) %>
             </td>
