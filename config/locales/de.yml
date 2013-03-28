@@ -48,8 +48,28 @@ de:
     new:
       create_time_type: Zeittyp erstellen
   absences:
+    top_buttons:
+      add_absence: Absenz hinzufügen
+    recurring_schedule_sub_form:
+      recurring_active: Wiederholen...
+      repeat_every: Wiederhole jede
+      weeks_until: Woche bis
+      repeat: Wiederholen
+    new:
+      add_absence: Absenz hinzufügen
+    form:
+      create_absence: Absenz erstellen
+      time_type: Zeittyp
+      start_date: Start
+      end_date: Ende
+      daypart: Dauer
     absences_tooltip:
       edit: Bearbeiten
+      first_half_day: Vormittags
+      second_half_day: Nachmittags
+    public_holiday_tooltip:
+      first_half_day: Vormittags
+      second_half_day: Nachmittags
   users:
     index:
       list_of_users: Liste der Benutzer

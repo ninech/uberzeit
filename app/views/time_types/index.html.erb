@@ -21,7 +21,7 @@
       <tr>
         <td><%= time_type.name %></td>
         <td><%= t(".#{time_type.kind}") %></td>
-        <td><%= time_type.calculation_factor %></td>
+        <td><%= number_with_precision(time_type.calculation_factor, strip_insignificant_zeros: true) %></td>
         <td>
           <%= link_to icon('edit'), edit_time_type_path(time_type) %>
         </td>
