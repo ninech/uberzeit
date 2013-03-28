@@ -40,12 +40,20 @@ de:
       time_types: Zeittypen
     form:
       back: Zurück
+      calculation_factor: Berechnungsfaktor
+      name: Name
+      is_work: Gilt als effektive Arbeitszeit
+      is_vacation: Wird von Ferien abgezählt
+      update_time_type: Zeittyp aktualisieren
     new:
       create_time_type: Zeittyp erstellen
   absences:
     absences_tooltip:
       edit: Bearbeiten
   users:
+    index:
+      list_of_users: Liste der Benutzer
+      user: Benutzer
     show:
       start: Start
       employments: Anstellungsverhältnisse
