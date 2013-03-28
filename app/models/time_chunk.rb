@@ -28,6 +28,10 @@ class TimeChunk
     parent.respond_to?(:whole_day?)
   end
 
+  def effective_duration
+    duration * time_type.calculation_factor
+  end
+
   def method_missing(sym, *args, &block)
     @parent.send(sym, *args, &block)
   end

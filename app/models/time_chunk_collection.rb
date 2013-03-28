@@ -42,43 +42,47 @@ class TimeChunkCollection
 
   def total_for_time_chunks
     time_chunks.inject(0.0) do |sum,chunk|
-      sum + chunk.duration * chunk.time_type.calculation_factor
+      sum + chunk.effective_duration
     end
   end
 
   # make sure we only count chunks on the same date once
   def total_for_date_chunks
-    @dates = {}
+    @chunks_on_date = {}
 
     date_chunks.each do |chunk|
       date_range = chunk.range.to_date_range
-      date_range.each { |date| occupy(date, chunk) }
+      date_range.each { |date| put_chunk_on_date(date, chunk) }
     end
 
-    @dates.inject(0.0) do |sum,(date,data)|
-      sum + translate_part_of_day_to_planned_working_time(date, data)
+    @chunks_on_date.inject(0.0) do |sum,(date,date_chunks)|
+      sum + chunks_on_date_to_working_time(date, date_chunks)
     end
   end
 
-  def occupy(date, chunk)
-    @dates[date] ||= {first_half_day: false, second_half_day: false, chunks: []}
-    @dates[date][:first_half_day] ||= chunk.first_half_day? || chunk.whole_day?
-    @dates[date][:second_half_day] ||= chunk.second_half_day? || chunk.whole_day?
-    @dates[date][:chunks].push(chunk)
+  def put_chunk_on_date(date, chunk)
+    @chunks_on_date[date] ||= {first_half_day: [], second_half_day: []}
+    if chunk.first_half_day? || chunk.whole_day?
+      @chunks_on_date[date][:first_half_day].push(chunk)
+    end
+    if chunk.second_half_day? || chunk.whole_day?
+      @chunks_on_date[date][:second_half_day].push(chunk)
+    end
   end
 
-  def translate_part_of_day_to_planned_working_time(date, data)
-    coefficient = if data[:first_half_day] && data[:second_half_day]
-                    1
-                  else
-                    0.5
-                  end
-
-    calculation_factor = average_calculation_factor(data[:chunks])
-    coefficient * calculation_factor * CalculatePlannedWorkingTime.new(data[:chunks].first.time_sheet.user, date.to_range, fulltime: true).total
+  def chunks_on_date_to_working_time(date, date_chunks)
+    first_half_day = 0.5 * date_chunks_to_planned_working_time(date, date_chunks[:first_half_day])
+    second_half_day = 0.5 * date_chunks_to_planned_working_time(date, date_chunks[:second_half_day])
+    first_half_day + second_half_day
   end
 
-  def average_calculation_factor(chunks)
-    chunks.inject(0.0) { |sum,chunk| sum + chunk.time_type.calculation_factor } / chunks.size
+  def date_chunks_to_planned_working_time(date, chunks)
+    chunks.collect { |chunk| chunk_to_planned_working_time(date, chunk) }.max || 0
+  end
+
+  def chunk_to_planned_working_time(date, chunk)
+    user = chunk.time_sheet.user
+    calculation_factor = chunk.time_type.calculation_factor
+    calculation_factor * CalculatePlannedWorkingTime.new(user, date.to_range, fulltime: true).total
   end
 end

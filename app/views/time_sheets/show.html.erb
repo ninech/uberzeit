@@ -74,7 +74,7 @@
               </small>
               <div class="right">
                 <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_time_sheet_time_entry_path(@time_sheet, time_chunk.parent), remote: true, class: 'edit-time-entry-link' %>
-                <%= format_duration(time_chunk.duration_for_calculation) %>
+                <%= format_duration(time_chunk.effective_duration) %>
               </div>
             </li>
           <% end %>
