@@ -24,9 +24,6 @@
                 </span>
                 <br>
                 <span class="time"><%= worktime_for_day(weekday) %></span>
-                <% if @timer && @timer.start_date.to_date == weekday && weekday != @day %>
-                <i class='icon-repeat icon-spin timer'></i>
-                <% end %>
               </a>
             </li>
           <% end %>
