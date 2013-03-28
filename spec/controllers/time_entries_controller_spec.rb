@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe TimeEntriesController do
@@ -70,7 +72,7 @@ describe TimeEntriesController do
       context 'with invalid attributes' do
         it 're-renders the :edit template' do
           put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: FactoryGirl.attributes_for(:invalid_time_entry)
-          response.body.should == '{"end_time":["End time must be after start time"]}'
+          response.body.should == '{"end_time":["Endzeit muss nach Startzeit sein"]}'
         end
       end
     end
@@ -98,7 +100,7 @@ describe TimeEntriesController do
 
         it 'returns json errors' do
           post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:invalid_time_entry)
-          response.body.should == '{"time_type":["can\'t be blank"],"end_time":["End time must be after start time"]}'
+          response.body.should == '{"time_type":["muss ausgefüllt werden"],"end_time":["Endzeit muss nach Startzeit sein"]}'
         end
       end
     end

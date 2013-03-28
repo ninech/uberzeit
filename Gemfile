@@ -60,6 +60,9 @@ gem 'whenever'
 # calendar
 gem 'calendar_helper'
 
+# rails localization
+gem 'rails-i18n', branch: 'rails-3-x'
+
 group :development, :test do
   gem 'mysql2'
   gem 'rspec'

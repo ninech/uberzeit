@@ -1,4 +1,6 @@
 class SummaryController < ApplicationController
+  include SummaryHelper
+
   load_and_authorize_resource :time_sheet, parent: false
 
   def work_summary
@@ -12,7 +14,7 @@ class SummaryController < ApplicationController
       month = start_date.month
 
       row[:month] = month
-      row[:name] = start_date.strftime('%B')
+      row[:name] = label_for_month(start_date)
       row[:link] = url_for(action: 'work_summary_per_month', year: @year, month: month, type: @type)
 
       if @year == Date.current.year && month > Date.current.month
@@ -30,7 +32,7 @@ class SummaryController < ApplicationController
     @rows, @total = summarize_time_sheet.work
 
     @rows.each do |row|
-      row[:name] = [row[:range].min.strftime('%e. %a.'), row[:range].max.strftime('%e. %a.')].join(' - ')
+      row[:name] = label_for_range(row[:range])
       row[:link] = url_for(controller: :time_sheets, action: :show, id: @time_sheet, date: row[:range].min)
     end
   end
@@ -46,7 +48,7 @@ class SummaryController < ApplicationController
       month = start_date.month
 
       row[:month] = month
-      row[:name] = start_date.strftime('%B')
+      row[:name] = label_for_month(start_date)
       row[:link] = url_for(action: 'absence_summary_per_month', year: @year, month: month, type: @type)
     end
 
@@ -67,7 +69,7 @@ class SummaryController < ApplicationController
     @rows, @total = summarize_time_sheet.absence
 
     @rows.each do |row|
-      row[:name] = [row[:range].min.strftime('%e. %a.'), row[:range].max.strftime('%e. %a.')].join(' - ')
+      row[:name] = label_for_range(row[:range])
       row[:link] = url_for(controller: :time_sheets, action: :show, id: @time_sheet, date: row[:range].min)
     end
   end
