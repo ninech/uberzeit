@@ -3,7 +3,7 @@ Uberzeit::Application.routes.draw do
 
   root :to => 'sessions#new'
 
-  resources :time_sheets do
+  resources :time_sheets, only: [:show] do
     member do
       get '/work_summary/year/:year', to: 'summary#work_summary', as: 'work_summary'
       get '/work_summary_per_month/year/:year/month/:month', to: 'summary#work_summary_per_month'
