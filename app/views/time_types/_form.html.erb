@@ -25,6 +25,12 @@
 
   <div class="row">
     <div class="small-12 columns">
+      <%= f.select :absence, [[t('.work'), false], [ t('.absence'), true]], label: t('.acquired_as') %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-12 columns">
       <%= f.check_box :is_work, label: t('.is_work') %>
     </div>
   </div>

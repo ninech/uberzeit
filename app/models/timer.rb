@@ -5,7 +5,7 @@ class Timer < ActiveRecord::Base
   attr_accessible :time_type_id, :from_time, :start_date
 
   scope :on, lambda { |date| range = date.to_range.to_time_range; { conditions: ['(start_time >= ? AND start_time <= ?)', range.min, range.max] } }
-  scope :others, lambda { |date| range = date.to_range.to_time_range; { conditions: ['(start_time <= ? OR start_time >= ?)', range.min, range.max] } }
+  scope :others, lambda { |date| range = date.to_range.to_time_range; { conditions: ['(start_time < ? OR start_time > ?)', range.min, range.max] } }
 
   def start_date
     self.start_time ||= Time.now
@@ -46,7 +46,7 @@ class Timer < ActiveRecord::Base
 
   private
   def check_active_timers_on_same_date
-    timers = self.time_sheet.timers.where("start_time like ?", "#{self.start_date} %")
+    timers = self.time_sheet.timers.on(self.start_date.to_date)
     unless timers.empty?
       timers.first.stop
     end

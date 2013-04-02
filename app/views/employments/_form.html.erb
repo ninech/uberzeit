@@ -12,20 +12,18 @@
   <% end %>
 
   <div class="row">
-    <div class="small-12 columns">
+    <div class="small-2 columns">
       <%= f.text_field :workload, label: t('.workload') %>
     </div>
   </div>
 
-  <div class="row">
-    <div class="small-12 columns">
-      <%= f.text_field :start_date, label: t('.start_date') %>
+  <div class="row from_to_date">
+    <div class="small-6 columns">
+      <%= datefield(f, :start_date, t('.start_date'), f.object.start_date, :from_date) %>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="small-12 columns">
-      <%= f.text_field :end_date, label: t('.end_date') %>
+    <div class="small-6 columns">
+      <%= datefield(f, :end_date, t('.end_date'), f.object.end_date, :to_date) %>
     </div>
   </div>
 

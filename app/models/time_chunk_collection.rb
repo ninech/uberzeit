@@ -77,12 +77,13 @@ class TimeChunkCollection
   end
 
   def date_chunks_to_planned_working_time(date, chunks)
-    chunks.collect { |chunk| chunk_to_planned_working_time(date, chunk) }.max || 0
+    chunks.collect { |chunk| date_chunk_to_planned_working_time(date, chunk) }.max || 0
   end
 
-  def chunk_to_planned_working_time(date, chunk)
+  def date_chunk_to_planned_working_time(date, chunk)
     user = chunk.time_sheet.user
     calculation_factor = chunk.time_type.calculation_factor
+    # date chunks (from absences) are calculated independent of the workload, cf. redmine #5596
     calculation_factor * CalculatePlannedWorkingTime.new(user, date.to_range, fulltime: true).total
   end
 end

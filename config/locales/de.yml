@@ -40,7 +40,7 @@ de:
       public_holiday: Feiertag
   time_types:
     edit:
-      edit_time_type: Neuer Zeittyp
+      edit_time_type: Zeittyp bearbeiten
     index:
       new_time_type: Neuer Zeittyp
       name: Bezeichnung
@@ -54,8 +54,11 @@ de:
       back: Zurück
       calculation_factor: Berechnungsfaktor
       name: Name
-      is_work: Gilt als effektive Arbeitszeit
+      is_work: Gilt als tatsächliche Arbeitszeit
       is_vacation: Wird von Ferien abgezählt
+      acquired_as: Wird erfasst als
+      work: Arbeit
+      absence: Absenz
     new:
       create_time_type: Zeittyp erstellen
   absences:
@@ -77,6 +80,7 @@ de:
       second_half_day: Nachmittags
       first_half_day: Vormittags
       whole_day: Ganzer Tag
+      delete: Löschen
     absences_tooltip:
       edit: Bearbeiten
       first_half_day: Vormittags
@@ -136,6 +140,7 @@ de:
       from_time: Von
       to_time: Bis
       start_timer: Timer starten
+      delete: Löschen
   public_holidays:
     edit:
       edit_public_holiday: Feiertag bearbeiten
@@ -170,7 +175,7 @@ de:
       whole_day: Ganzer Tag
       first_half_day: Vormittags
       second_half_day: Nachmittags
-      timer_running_warning: "Achtung, an den folgenden Tagen sind noch Timer aktiv:"
+      timer_running_warning: "An den folgenden Tagen sind noch Timer aktiv:"
   employments:
     edit:
       edit_employment: Anstellungsverhältnis bearbeiten
