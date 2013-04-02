@@ -92,6 +92,7 @@ de:
       workload: Arbeitspensum
       end: Ende
       add_employment: Neues Anstellungsverhältnis
+      open-ended: unbefristet
   layouts:
     reports_navigation:
       work_summary: Arbeitsübersicht
@@ -171,3 +172,7 @@ de:
       add_employment: Anstellungsverhältnis hinzufügen
     form:
       back: Zurück
+      workload: Arbeitspensum
+      start_date: Start
+      end_date: Ende
+      add_employment: Anstellungsverhältnis hinzufügen
