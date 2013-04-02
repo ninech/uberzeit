@@ -6,6 +6,13 @@
       <%= t '.employments' %>
       <%= link_to t('.add_employment'), new_user_employment_path(@user), class: 'button right' %>
     </h2>
+
+    <% if notice %>
+    <div id="notice" class="alert-box success">
+      <%= notice %>
+    </div>
+    <% end %>
+
     <table class="nice small-12 edit destroy">
       <thead>
         <tr>
@@ -26,7 +33,7 @@
           <%= link_to icon('edit'), edit_user_employment_path(@user, employment)%>
         </td>
         <td>
-          <%= link_to icon('trash'), [@user, employment], :method => :delete, :data => { :confirm => 'Yo?' } %>
+          <%= link_to icon('trash'), [@user, employment], :method => :delete, :data => { :confirm => t('.confirm_delete') } %>
         </td>
       </tr>
       <% end %>

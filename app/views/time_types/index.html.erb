@@ -5,6 +5,11 @@
       <%= link_to icon('plus') + ' ' + t('.new_time_type'), new_time_type_path, class: 'button right' %>
     </h1>
 
+    <% if notice %>
+    <div id="notice" class="alert-box success">
+      <%= notice %>
+    </div>
+    <% end %>
 
     <table class="nice small-12 edit destroy">
       <thead>

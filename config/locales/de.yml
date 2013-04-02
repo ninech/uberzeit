@@ -19,6 +19,10 @@ de:
           attributes:
             ends_date:
               invalid_date: Ungültiges Datum
+
+  model_successfully_created: "%{model} wurde erfolgreich erstellt."
+  model_successfully_updated: "%{model} wurde erfolgreich aktualisiert."
+  model_successfully_deleted: "%{model} wurde erfolgreich gelöscht."
   time:
     formats:
       default: '%H:%M'
@@ -103,6 +107,7 @@ de:
       end: Ende
       add_employment: Neues Anstellungsverhältnis
       open-ended: unbefristet
+      confirm_delete: Löschen?
   layouts:
     reports_navigation:
       work_summary: Arbeitsübersicht
