@@ -1,13 +1,9 @@
 class TimeSheetsController < ApplicationController
   load_and_authorize_resource :time_sheet
 
+  before_filter :load_day
+
   def show
-    unless params[:date].nil?
-      @day = Time.zone.parse(params[:date]).to_date
-    end
-
-    @day ||= Time.zone.today
-
     @week     = @day.at_beginning_of_week..@day.at_end_of_week
     @weekdays = @week.to_a
     @year     = @week.min.year
@@ -22,11 +18,11 @@ class TimeSheetsController < ApplicationController
     end
     @time_types = TimeType.work
 
-    @timer = @time_sheet.timers.where("start_time LIKE ?", "#{params[:date] || Time.current.to_date.to_s(:db)} %").first
+    @timer = @time_sheet.timers.on(@day).first
     unless @timer.nil?
-      @timer_active = @timer.start_date == (params[:date] || Time.current.to_date.to_s(:db))
+      @timer_active = (@timer.start_date.to_date == @day.to_date) # (params[:date] || Time.current.to_date.to_s(:db))
     end
-    @timers_other_days = @time_sheet.timers.where("start_time NOT LIKE ?", "#{params[:date] || Time.current.to_date.to_s(:db)} %")
+    @timers_other_days = @time_sheet.timers.others
 
     @public_holiday = PublicHoliday.on(@day).first
 
@@ -54,10 +50,19 @@ class TimeSheetsController < ApplicationController
   end
 
   def stop_timer
-    timer = @time_sheet.timers.where("start_time like ?", "#{params[:date] || Time.current.to_date.to_s(:db)} %").first
+    timer = @time_sheet.timers.on(@day).first
     timer.stop
 
     render json: {}
+  end
+
+  private
+
+  def load_day
+    unless params[:date].nil?
+      @day = Time.zone.parse(params[:date]).to_date
+    end
+    @day ||= Time.zone.today
   end
 
 end

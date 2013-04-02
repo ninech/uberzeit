@@ -11,7 +11,11 @@ FactoryGirl.define do
     ends_counter 100
     ends_date Date.today
     weekly_repeat_interval 1
-    active true
+    active false
+
+    factory :active_recurring_schedule do
+      active true
+    end
 
     after(:build) do |recurring_schedule, evaluator|
       evaluator.exception_dates.each do |exception_date|

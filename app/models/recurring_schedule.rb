@@ -14,6 +14,8 @@ class RecurringSchedule < ActiveRecord::Base
   validates_numericality_of :weekly_repeat_interval, greater_than: 0, if: :active?
   validates_numericality_of :ends_counter, greater_than: 0, if: lambda { active? && ends_on_counter? }
 
+  validates_presence_of :weekly_repeat_interval, if: :active?
+
   validates_date :ends_date, if: lambda { active? && ends_on_date? }
 
   validates_uniqueness_of :enterable_id, scope: :enterable_type

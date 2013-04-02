@@ -1,5 +1,10 @@
 de:
   activerecord:
+    models:
+      employment: Anstellungsverhältnis
+      public_holiday: Feiertag
+      time_type: Zeittyp
+      absence: Absenz
     errors:
       models:
         time_entry:
@@ -51,7 +56,6 @@ de:
       name: Name
       is_work: Gilt als effektive Arbeitszeit
       is_vacation: Wird von Ferien abgezählt
-      update_time_type: Zeittyp aktualisieren
     new:
       create_time_type: Zeittyp erstellen
   absences:
@@ -149,7 +153,6 @@ de:
       daypart: Dauer
       name: Name
       start_date: Datum
-      add_public_holiday: Feiertag hinzufügen
     new:
       add_public_holiday: Feiertag hinzufügen
   time_sheets:
@@ -178,4 +181,3 @@ de:
       workload: Arbeitspensum
       start_date: Start
       end_date: Ende
-      add_employment: Anstellungsverhältnis hinzufügen
