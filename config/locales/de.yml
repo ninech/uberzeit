@@ -80,6 +80,7 @@ de:
       second_half_day: Nachmittags
       first_half_day: Vormittags
       whole_day: Ganzer Tag
+      delete: Löschen
     absences_tooltip:
       edit: Bearbeiten
       first_half_day: Vormittags
@@ -139,6 +140,7 @@ de:
       from_time: Von
       to_time: Bis
       start_timer: Timer starten
+      delete: Löschen
   public_holidays:
     edit:
       edit_public_holiday: Feiertag bearbeiten
