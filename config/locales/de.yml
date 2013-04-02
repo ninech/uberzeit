@@ -40,7 +40,7 @@ de:
       public_holiday: Feiertag
   time_types:
     edit:
-      edit_time_type: Neuer Zeittyp
+      edit_time_type: Zeittyp bearbeiten
     index:
       new_time_type: Neuer Zeittyp
       name: Bezeichnung
@@ -54,8 +54,11 @@ de:
       back: Zurück
       calculation_factor: Berechnungsfaktor
       name: Name
-      is_work: Gilt als effektive Arbeitszeit
+      is_work: Gilt als tatsächliche Arbeitszeit
       is_vacation: Wird von Ferien abgezählt
+      acquired_as: Wird erfasst als
+      work: Arbeit
+      absence: Absenz
     new:
       create_time_type: Zeittyp erstellen
   absences:
