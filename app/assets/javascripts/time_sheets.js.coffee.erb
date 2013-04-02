@@ -91,6 +91,9 @@ $ ->
   $('.stop-timer').bind 'ajax:complete', (xhr, status) ->
     Turbolinks.visit(window.location)
 
+  $('.delete-time-entry-link').bind 'ajax:complete', (xhr, status) ->
+    Turbolinks.visit(window.location)
+
   $('.entries ul li').hover (->
     $(this).find('a.edit-time-entry-link').show()
   ), ->

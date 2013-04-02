@@ -6,11 +6,11 @@
       </div>
       <div class="navigation">
         <ul>
-          <li><%= link_to t('.timesheet'), time_sheet_path(current_user.current_time_sheet) %></a></li>
-          <li><%= link_to t('.absences'), time_sheet_absences_path(current_user.current_time_sheet) %></li>
-          <li><%= link_to t('.reports'), work_summary_time_sheet_path(current_user.current_time_sheet, Date.current.year) %></li>
+          <li><%= nav_link(t('.timesheet'), time_sheet_path(current_user.current_time_sheet), [:time_sheets]) %></a></li>
+          <li><%= nav_link(t('.absences'), time_sheet_absences_path(current_user.current_time_sheet), [:absences]) %></li>
+          <li><%= nav_link(t('.reports'), work_summary_time_sheet_path(current_user.current_time_sheet, Date.current.year), [:summary]) %></li>
           <% if show_manage_link_in_navigation? %>
-            <li><%= link_to t('.manage'), public_holidays_path %></li>
+            <li><%= nav_link(t('.manage'), public_holidays_path, [:public_holidays, :users, :time_types]) %></li>
           <% end %>
         </ul>
       </div>

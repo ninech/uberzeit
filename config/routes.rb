@@ -16,7 +16,7 @@ Uberzeit::Application.routes.draw do
     resources :timers, only: [:show, :edit, :update]
     member do
       match '/date/:date', to: 'time_sheets#show', via: :get
-      match '/stop-timer', to: 'time_sheets#stop_timer', via: :put
+      match '/date/:date/stop-timer', to: 'time_sheets#stop_timer', via: :put
     end
 
     resources :absences do

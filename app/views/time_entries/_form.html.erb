@@ -21,6 +21,9 @@
   <div class="small-12 columns">
     <%= f.submit t('.start_timer'), id: 'time_entry_submit', class: 'primary medium button' %>
     <%= link_to t('.cancel'), '#', class: 'close-reveal-modal link' %>
+    <% if @entry && @entry.persisted? %>
+      <%= link_to t('.delete'), time_sheet_time_entry_path(@time_sheet, @entry), method: :delete, remote: true, class: 'delete-time-entry-link' %>
+    <% end %>
   </div>
 </div>
 
