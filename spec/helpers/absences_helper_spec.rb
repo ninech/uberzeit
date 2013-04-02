@@ -36,7 +36,7 @@ describe AbsencesHelper do
     end
 
     it 'renders a calendar cell without a date' do
-      helper.render_calendar_cell(date).should == [1]
+      helper.render_calendar_cell(date).first.should eq(1)
     end
 
     it 'renders a calendar cell with a date' do

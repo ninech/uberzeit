@@ -16,4 +16,6 @@
 //= require foundation/foundation.reveal
 //= require turbolinks
 //= require jquery.turbolinks
+//= require pickadate
+//= require pickadate.de-DE
 //= require_tree .

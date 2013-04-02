@@ -8,10 +8,12 @@
 
 <div class="row from_to_date">
   <div class="small-6 columns">
-    <%= f.text_field :start_date, label: t('.start_date'), class: :from_date, value: l(f.object.start_date, format: :long) %>
+    <%= f.text_field :start_date, label: t('.start_date'), class: :from_date, value: l(f.object.start_date, format: :long),
+                     'data-year' => f.object.start_date.year, 'data-month' => f.object.start_date.month, 'data-day' => f.object.start_date.day %>
   </div>
   <div class="small-6 columns">
-    <%= f.text_field :end_date, label: t('.end_date'), class: :to_date, value: l(f.object.end_date, format: :long) %>
+    <%= f.text_field :end_date, label: t('.end_date'), class: :to_date, value: l(f.object.end_date, format: :long),
+                     'data-year' => f.object.end_date.year, 'data-month' => f.object.end_date.month, 'data-day' => f.object.end_date.day %>
   </div>
 </div>
 

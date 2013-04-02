@@ -3,17 +3,16 @@ require 'spec_helper'
 describe TimeSheetsController do
   render_views
 
+  let(:user) { FactoryGirl.create(:user) }
+  let(:sheet) { user.time_sheets.first }
+
   context 'for non-signed in users' do
     it 'denies access' do
-      expect { get :index }.to raise_error(CanCan::AccessDenied)
+      expect { get :show, id: sheet, date: Date.today }.to raise_error(CanCan::AccessDenied)
     end
   end
 
   context 'for signed-in users' do
-
-    let(:user) { FactoryGirl.create(:user) }
-    let(:sheet) { user.time_sheets.first }
-
     before do
       test_sign_in user
     end

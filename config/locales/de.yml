@@ -30,6 +30,9 @@ de:
     format:
       separator: ! '.'
 
+  shared:
+    event_legend:
+      public_holiday: Feiertag
   time_types:
     edit:
       edit_time_type: Neuer Zeittyp
@@ -67,6 +70,9 @@ de:
       start_date: Start
       end_date: Ende
       daypart: Dauer
+      second_half_day: Nachmittags
+      first_half_day: Vormittags
+      whole_day: Ganzer Tag
     absences_tooltip:
       edit: Bearbeiten
       first_half_day: Vormittags
@@ -76,6 +82,8 @@ de:
     public_holiday_tooltip:
       first_half_day: Vormittags
       second_half_day: Nachmittags
+    edit:
+      edit_absence: Absenz bearbeiten
   users:
     index:
       list_of_users: Liste der Benutzer
@@ -86,6 +94,7 @@ de:
       workload: Arbeitspensum
       end: Ende
       add_employment: Neues Anstellungsverhältnis
+      open-ended: unbefristet
   layouts:
     reports_navigation:
       work_summary: Arbeitsübersicht
@@ -165,3 +174,7 @@ de:
       add_employment: Anstellungsverhältnis hinzufügen
     form:
       back: Zurück
+      workload: Arbeitspensum
+      start_date: Start
+      end_date: Ende
+      add_employment: Anstellungsverhältnis hinzufügen

@@ -13,25 +13,25 @@
 
   <div class="row">
     <div class="small-12 columns">
-      <%= f.text_field :workload %>
+      <%= f.text_field :workload, label: t('.workload') %>
     </div>
   </div>
 
   <div class="row">
     <div class="small-12 columns">
-      <%= f.text_field :start_date %>
+      <%= f.text_field :start_date, label: t('.start_date') %>
     </div>
   </div>
 
   <div class="row">
     <div class="small-12 columns">
-      <%= f.text_field :end_date %>
+      <%= f.text_field :end_date, label: t('.end_date') %>
     </div>
   </div>
 
   <div class="row">
     <div class="small-12 columns">
-      <%= f.submit class: 'button' %>
+      <%= f.submit t('.add_employment'), class: 'button' %>
       <%= link_to t('.back'), user_path(@user), class: 'button secondary' %>
     </div>
   </div>

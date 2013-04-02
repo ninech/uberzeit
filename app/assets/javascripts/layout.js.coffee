@@ -20,7 +20,6 @@ $ ->
 
     $('input.date').pickadate()
 
-
     createDateArray = (date) ->
       date.split('-').map (value) ->
         + value
@@ -44,9 +43,16 @@ $ ->
         fromDate = createDateArray(picker_from.data('pickadate').getDate('yyyy-mm-dd'))
         this.setDateLimit(fromDate)
 
+    # Set initial dates (to isolate Rails' locale from Pickadate locale)
+    pickadate_from = picker_from.data('pickadate')
+    if(pickadate_from && picker_from.data('year'))
+      pickadate_from.setDate(picker_from.data('year'),picker_from.data('month'),picker_from.data('day'))
+
+    pickadate_to = picker_to.data('pickadate')
+    if(pickadate_to && picker_to.data('year'))
+      pickadate_to.setDate(picker_to.data('year'),picker_to.data('month'),picker_to.data('day'))
 
   init_pickdate()
-
 
   # Ajax modals / reveal
   $(document).on 'click', '.remote-reveal', () ->
