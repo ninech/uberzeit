@@ -4,6 +4,8 @@ class Timer < ActiveRecord::Base
   belongs_to :time_type
   attr_accessible :time_type_id, :from_time, :start_date
 
+  scope :on, lambda { |date| range = date.to_range.to_time_range; { conditions: ['(start_time >= ? AND start_time <= ?)', range.min, range.max] } }
+
   def start_date
     self.start_time ||= Time.now
     self.start_time.to_date.to_s(:db)
