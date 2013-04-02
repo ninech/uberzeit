@@ -1,8 +1,8 @@
 $(document)
   .foundation('reveal', { closeOnBackgroundClick: false })
   .foundation('tooltips')
-$ ->
 
+$ ->
   # Timepicker
   $('input.time').timepicker({
     dropdown: false,
@@ -18,7 +18,7 @@ $ ->
   # Pickadate
   window.init_pickdate = () ->
 
-    $('input.date').pickadate
+    $('input.date').pickadate()
 
 
     createDateArray = (date) ->
