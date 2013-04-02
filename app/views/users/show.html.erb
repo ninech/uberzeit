@@ -19,8 +19,8 @@
       <tbody>
       <% @user.employments.each do |employment| %>
       <tr>
-        <td><%= l employment.start_date %></td>
-        <td><%= employment.end_date.nil? ? t('.open-ended') : l(employment.end_date) %></td>
+        <td><%= l(employment.start_date, format: :long) %></td>
+        <td><%= employment.end_date.nil? ? t('.open-ended') : l(employment.end_date, format: :long) %></td>
         <td><%= employment.workload %>&#037;</td>
         <td>
           <%= link_to icon('edit'), edit_user_employment_path(@user, employment)%>
