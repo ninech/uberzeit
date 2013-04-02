@@ -30,7 +30,7 @@ class TimeEntriesController < ApplicationController
     @time_entry = TimeEntry.find(params[:id])
 
     if params[:time_entry][:to_time].blank?
-      @timer = @time_sheet.build_timer(params[:time_entry].except(:to_time))
+      @timer = @time_sheet.timers.new(params[:time_entry].except(:to_time))
       @timer.save
       @time_entry.destroy
 

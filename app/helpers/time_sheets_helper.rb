@@ -72,4 +72,11 @@ module TimeSheetsHelper
       0
     end
   end
+
+  def running_timer_dates(timers)
+    if timers
+      links = timers.map { |x| "<a href=\"#{url_for(action: :show, date: x.start_date)}\">#{l x.start_time, format: '%d.%m.%Y'}</a>"}
+      links.join(', ')
+    end
+  end
 end

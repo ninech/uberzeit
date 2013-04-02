@@ -1,5 +1,12 @@
 <div class="row">
   <div class="large-12 columns">
+    <% unless @timers_other_days.empty? %>
+      <div data-alert class="alert-box">
+        <%= t '.timer_running_warning' %>
+        <%= running_timer_dates(@timers_other_days).html_safe %>
+      </div>
+    <% end %>
+
     <div class="timesheet">
       <div class="head">
         <%= l @weekdays.first, :format => :long %> – <%= l @weekdays.last, :format => :long %>
@@ -96,7 +103,7 @@
             <small><%= @timer.time_type %></small>
             <div class="right">
               <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_time_sheet_timer_path(@time_sheet, @timer), remote: true, class: 'edit-time-entry-link' %>
-              <a href="<%= url_for(action: :stop_timer) %>" data-method="put" data-remote="true" class="stop-timer">
+              <a href="<%= url_for(action: :stop_timer, date: @day) %>" data-method="put" data-remote="true" class="stop-timer">
                 <i class="icon-repeat icon-spin timer"></i>
                  Stop
               </a>

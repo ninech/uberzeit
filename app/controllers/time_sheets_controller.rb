@@ -22,10 +22,11 @@ class TimeSheetsController < ApplicationController
     end
     @time_types = TimeType.work
 
-    @timer = @time_sheet.timers.where("start_time like ?", "#{params[:date] || Time.current.to_date.to_s(:db)} %").first
+    @timer = @time_sheet.timers.where("start_time LIKE ?", "#{params[:date] || Time.current.to_date.to_s(:db)} %").first
     unless @timer.nil?
       @timer_active = @timer.start_date == (params[:date] || Time.current.to_date.to_s(:db))
     end
+    @timers_other_days = @time_sheet.timers.where("start_time NOT LIKE ?", "#{params[:date] || Time.current.to_date.to_s(:db)} %")
 
     @public_holiday = PublicHoliday.on(@day).first
 

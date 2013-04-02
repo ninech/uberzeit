@@ -27,7 +27,7 @@ class Timer < ActiveRecord::Base
   end
 
   def duration
-    (start_time..Time.current).duration
+    (start_time..Time.parse("#{start_date} #{Time.now.strftime('%H:%M')}")).duration
   end
 
   def stop
@@ -35,7 +35,7 @@ class Timer < ActiveRecord::Base
     time_entry.time_sheet = time_sheet
     time_entry.time_type  = time_type
     time_entry.start_time = start_time
-    time_entry.end_time   = Time.current
+    time_entry.end_time   = Time.parse("#{start_date} #{Time.now.strftime('%H:%M')}")
     time_entry.save
 
     destroy
@@ -43,8 +43,10 @@ class Timer < ActiveRecord::Base
 
   private
   def check_active_timers_on_same_date
-    timer = self.time_sheet.timers.where("start_time like ?", "#{self.start_date} %").first
-    timer.stop
+    timers = self.time_sheet.timers.where("start_time like ?", "#{self.start_date} %")
+    unless timers.empty?
+      timers.first.stop
+    end
   end
 
 end
