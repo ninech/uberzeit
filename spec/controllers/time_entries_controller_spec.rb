@@ -111,11 +111,6 @@ describe TimeEntriesController do
         time_entry
         expect { delete :destroy, id: time_entry, time_sheet_id: time_entry.time_sheet }.to change(TimeEntry,:count).by(-1)
       end
-
-      it 'redirects to the time sheet' do
-        delete :destroy, id: time_entry.id, time_sheet_id: time_entry.time_sheet
-        response.should redirect_to time_entry.time_sheet
-      end
     end
 
     # describe 'PUT "exception_date"' do
