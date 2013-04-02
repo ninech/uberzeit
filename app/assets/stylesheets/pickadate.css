@@ -272,6 +272,7 @@
   margin: 0 2.5%;
   font-weight: bold;
   width: 40%;
+  color: black;
 }
 .pickadate__button--today:before,
 .pickadate__button--clear:before {
