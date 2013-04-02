@@ -146,6 +146,7 @@ de:
       to_time: Bis
       start_timer: Timer starten
       delete: Löschen
+      save: Speichern
   public_holidays:
     edit:
       edit_public_holiday: Feiertag bearbeiten
