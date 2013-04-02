@@ -3,7 +3,7 @@
     <% unless @timers_other_days.empty? %>
       <div data-alert class="alert-box">
         <%= t '.timer_running_warning' %>
-        <%= running_timer_dates(@timers_other_days).html_safe %>
+        <%= running_timer_dates(@timers_other_days).html_safe %>.
       </div>
     <% end %>
 

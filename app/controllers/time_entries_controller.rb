@@ -43,11 +43,8 @@ class TimeEntriesController < ApplicationController
 
   def destroy
     @time_entry = TimeEntry.find(params[:id])
-    if @time_entry.destroy
-      redirect_to @time_sheet, :notice => 'Entry was successfully deleted.'
-    else
-      render :action => 'edit'
-    end
+    @time_entry.destroy
+    render json: {}
   end
 
   def exception_date
