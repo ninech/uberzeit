@@ -2,14 +2,13 @@
   <h1>
     <%= absence.time_type.name %>
   </h1>
-  <p class='date-range'><%= absence_date_range(absence.parent) %></p>
+  <p class='date-range'><%= absence_date_range(absence) %></p>
+  <% if absence.recurring_schedule.active? %>
+    <p class='recurring'><%= absence_recurring(absence) %></p>
+  <% end %>
   <% if absence_period(absence) %>
     <p class='period'><%= absence_period(absence) %></p>
   <% end %>
-
-<!--   <a href='<%= time_sheet_absence_path(@time_sheet, absence.parent_id) %>' method='delete'></a>
-    <i class='icon-remove-sign event-color<%= color_index_of_element(absence) %>'> </i>
-  </a> -->
   <a href='#' class='small button remote-reveal' data-reveal-id='edit-absence-modal' data-reveal-url='<%= edit_time_sheet_absence_path(@time_sheet, absence.parent_id) %>'>
     <%= t('.edit') %>
   </a>
