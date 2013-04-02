@@ -29,11 +29,13 @@ describe AbsencesHelper do
         m.stub(:id).and_return(42)
         m.stub(:starts).and_return('2013-01-01'.to_date)
         m.stub(:ends).and_return('2013-02-02'.to_date)
+        m.stub(:range).and_return('2013-01-01'.to_date..'2013-02-02'.to_date)
         m.stub(:first_half_day?).and_return(false)
         m.stub(:second_half_day?).and_return(false)
         m.stub(:whole_day?).and_return(true)
         m.stub(:time_type).and_return(TEST_TIME_TYPES[:vacation])
         m.stub(:recurring_schedule).and_return(recurring_schedule)
+        m.stub(:recurring?).and_return(false)
        end
      end
 

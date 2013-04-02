@@ -55,10 +55,18 @@ module AbsencesHelper
   end
 
   def absence_date_range(absence)
-    unless absence.starts == absence.ends
-      "#{l(absence.starts.to_date)} - #{l(absence.ends.to_date)}"
+    absence_object = absence.parent
+
+    range = if absence_object.recurring?
+              (absence.starts..absence.starts+absence_object.duration).to_date_range
+            else
+              absence_object.range
+            end
+
+    if range.min == range.max
+      l(range.min)
     else
-      l(absence.starts.to_date)
+      "#{l(range.min)} - #{l(range.max)}"
     end
   end
 
