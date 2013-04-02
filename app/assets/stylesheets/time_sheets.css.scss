@@ -65,6 +65,11 @@
               font-size: 1.2em;
               // display: block;
             }
+
+            span.public-holiday {
+              font-weight: 400;
+              font-style: italic;
+            }
           }
 
           &:first-child {

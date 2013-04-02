@@ -1,24 +1,24 @@
 <%= form_for(@public_holiday) do |f| %>
 <div class="row">
   <div class="small-4 columns">
-    <%= f.text_field :name %>
+    <%= f.text_field :name, label: t('.name') %>
   </div>
 </div>
 <div class="row">
   <div class="small-4 columns">
-    <%= f.text_field :start_date, value: (l(@public_holiday.start_date, format: :long) if @public_holiday.start_date), class: 'date start' %>
+    <%= f.text_field :start_date, label: t('.start_date'), value: (l(@public_holiday.start_date, format: :long) if @public_holiday.start_date), class: 'date start' %>
   </div>
 </div>
 
 <div class="row">
   <div class="small-4 columns">
-    <%= f.select :daypart, [[t('.whole_day'), :whole_day], [t('.first_half_day'), :first_half_day], [t('.second_half_day'), :second_half_day]] %>
+    <%= f.select :daypart, [[t('.whole_day'), :whole_day], [t('.first_half_day'), :first_half_day], [t('.second_half_day'), :second_half_day]], label: t('.daypart') %>
   </div>
 </div>
 
 <div class="row">
   <div class="small-3 columns">
-    <%= f.submit class: 'button'%>
+    <%= f.submit t('.add_public_holiday'), class: 'button'%>
   </div>
   <div class="small-2 columns end">
     <%= link_to t('.back'), public_holidays_path, class: "secondary button" %>

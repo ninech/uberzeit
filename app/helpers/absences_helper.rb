@@ -4,6 +4,7 @@ module AbsencesHelper
     absences = @absences[day.to_date.to_s]
     public_holiday = @public_holidays[day.to_date.to_s]
 
+
     if absences
       css_class = "has-absences event-bg#{suffix_for_daypart(absences.first)}#{color_index_of_array(absences)}"
       [tooltips_for_day(day, :tooltip_content_for_absence), {:class => css_class}]
@@ -11,7 +12,8 @@ module AbsencesHelper
       css_class = "has-absences public-holiday-bg#{suffix_for_daypart(public_holiday)}"
       [tooltips_for_day(day, :tooltip_content_for_public_holiday), {:class => css_class}]
     else
-      [day.mday]
+      css_class = "not-a-workday" unless UberZeit.is_weekday_a_workday?(day)
+      [day.mday, {:class => css_class}]
     end
   end
 

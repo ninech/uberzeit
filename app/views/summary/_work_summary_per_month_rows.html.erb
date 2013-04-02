@@ -7,7 +7,6 @@
     tip += ("<div class='tr'><div class='td'>#{name}</div><div class='td'>#{format_hours(total)}</div></div>").html_safe
   end
   %>
-  <td class="indentation"></td>
   <td><%= link_to row[:name], row[:link], target: '_blank' %></td>
   <td><span <% unless tip.blank? %>data-tooltip class="has-tip" title="<div class='tbl-tooltip'><%=tip%></div>"<% end %>><%= format_hours(row[:worked]) %></span></td>
   <td><%= format_hours(row[:planned]) %></td>

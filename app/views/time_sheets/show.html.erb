@@ -23,7 +23,11 @@
                   <% end %>
                 </span>
                 <br>
-                <span class="time"><%= worktime_for_day(weekday) %></span>
+                <% if @public_holidays[weekday] && @public_holidays[weekday].whole_day? %>
+                  <span class="public-holiday"><%= @public_holidays[weekday].name %></span>
+                <% else %>
+                  <span class="time"><%= worktime_for_day(weekday) %></span>
+                <% end %>
               </a>
             </li>
           <% end %>

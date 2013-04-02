@@ -4,7 +4,7 @@
     <table class="nice small-12">
       <thead>
         <tr>
-          <th colspan="2">&nbsp;</th>
+          <th>&nbsp;</th>
           <% TimeType.absence.each do |time_type| %>
           <th class="value absence"><%= time_type.name %></th>
           <% end %>
@@ -12,21 +12,21 @@
       </thead>
       <tbody>
         <% @rows.each do |row| %>
-        <tr data-month="<%=row[:month]%>" <% if row[:hide] %>style="display: none;"<% end %>>
-          <td colspan="2"><%= link_to row[:name], row[:link], remote: true %></td>
+        <tr class="summary-row" data-month="<%=row[:month]%>" <% if row[:hide] %>style="display: none;"<% end %>>
+          <td><%= link_to row[:name], row[:link], remote: true %></td>
           <% TimeType.absence.each do |time_type| %>
           <td><%= format_work_days(row[time_type.id]) %></td>
           <% end %>
         </tr>
         <% end %>
         <tr class="total">
-          <td colspan="2"><%= t('.total') %></td>
+          <td><%= t('.total') %></td>
           <% TimeType.absence.each do |time_type| %>
           <td><%= format_work_days(@total[time_type.id]) %></td>
           <% end %>
         </tr>
         <tr class="total">
-          <td colspan="2"><%= t('.remaining') %></td>
+          <td><%= t('.remaining') %></td>
           <% TimeType.absence.each do |time_type| %>
           <td>
             <% unless @remaining[time_type.id].blank? %>

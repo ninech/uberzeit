@@ -2,30 +2,30 @@
 
 <div class="row">
   <div class="small-12 columns">
-    <%= f.select :time_type_id, options_from_collection_for_select(@time_types, :id, :name, f.object.time_type_id) %>
+    <%= f.select :time_type_id, options_from_collection_for_select(@time_types, :id, :name, f.object.time_type_id), label: t('.time_type') %>
   </div>
 </div>
 
 <div class="row from_to_date">
   <div class="small-6 columns">
-    <%= f.text_field :start_date, class: :from_date, value: l(f.object.start_date, format: :long) %>
+    <%= f.text_field :start_date, label: t('.start_date'), class: :from_date, value: l(f.object.start_date, format: :long) %>
   </div>
   <div class="small-6 columns">
-    <%= f.text_field :end_date, class: :to_date, value: l(f.object.end_date, format: :long) %>
+    <%= f.text_field :end_date, label: t('.end_date'), class: :to_date, value: l(f.object.end_date, format: :long) %>
   </div>
 </div>
 
 
 <div class="row">
   <div class="small-12 columns">
-    <%= f.select :daypart, {t('.whole_day') => :whole_day, t('.first_half_day') => :first_half_day, t('.second_half_day') => :second_half_day} %>
+    <%= f.select :daypart, {t('.whole_day') => :whole_day, t('.first_half_day') => :first_half_day, t('.second_half_day') => :second_half_day}, label: t('.daypart') %>
   </div>
 </div>
 
-<%= render 'shared/recurring_schedule_sub_form', main_form: f %>
+<%= render 'absences/recurring_schedule_sub_form', main_form: f %>
 
 <div class="row">
   <div class="small-2 columns">
-    <%= f.submit class: 'button'%>
+    <%= f.submit t('.create_absence'), class: 'button' %>
   </div>
 </div>
