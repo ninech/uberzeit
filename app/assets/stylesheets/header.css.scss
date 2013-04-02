@@ -17,11 +17,16 @@
 
       li {
         float: left;
+        padding: 0 20px;
 
         a {
-          padding: 0 20px;
+
           text-transform: uppercase;
           font-weight: 700;
+
+          &.active {
+            border-bottom: 3px solid #b0d4eb;
+          }
         }
       }
     }

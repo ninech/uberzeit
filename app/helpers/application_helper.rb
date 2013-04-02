@@ -1,12 +1,11 @@
 module ApplicationHelper
   include TimeSheetsHelper
 
-  def in_controller?(*args)
-    args.find { |name| controller.controller_name == name }
-  end
-
-  def active_tab(*args)
-    in_controller?(*args) ? 'active' : ''
+  def nav_link(name, link, match_controllers)
+    if match_controllers.include? controller.controller_name.to_sym
+      classes = 'active'
+    end
+    link_to name, link, class: classes
   end
 
   def has_top_buttons?
