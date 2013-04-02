@@ -6,6 +6,16 @@
 
 .content-absences {
 
+  form.nice {
+    .recurring-checkbox {
+      margin: 10px 0;
+    }
+
+    .absence-delete-link {
+      margin-left: 10px;
+    }
+  }
+
   .year-navigation {
     float: right;
     margin: 0;

@@ -3,7 +3,7 @@
     <%= main_form.fields_for :recurring_schedule do |rs| %>
 
       <div class="row">
-        <div class="small-12 columns">
+        <div class="small-12 columns recurring-checkbox">
           <%= rs.check_box :active, label: t('.recurring_active'), class: 'toggle', :'data-toggle-target' => 'recurring-form' %>
         </div>
       </div>
