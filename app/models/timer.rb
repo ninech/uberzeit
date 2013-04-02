@@ -1,4 +1,5 @@
 class Timer < ActiveRecord::Base
+  before_save :check_active_timers_on_same_date
   belongs_to :time_sheet
   belongs_to :time_type
   attr_accessible :time_type_id, :from_time, :start_date
@@ -39,4 +40,11 @@ class Timer < ActiveRecord::Base
 
     destroy
   end
+
+  private
+  def check_active_timers_on_same_date
+    timer = self.time_sheet.timers.where("start_time like ?", "#{self.start_date} %").first
+    timer.stop
+  end
+
 end

@@ -5,7 +5,7 @@ class TimeSheet < ActiveRecord::Base
 
   has_many :time_entries
   has_many :absences
-  has_one :timer
+  has_many :timers
 
   validates_presence_of :user
 

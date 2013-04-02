@@ -97,7 +97,7 @@ $ ->
     $(this).find('a.edit-time-entry-link').hide()
 
   $('a.edit-time-entry-link').on 'ajax:success', (xhr, data, status) ->
-    $('form.edit_time_entry').remove()
+    $('#edit-time-modal form').remove()
     $(data).insertAfter('#edit-time-modal .row')
     $('#edit-time-modal input.time').timepicker({
       dropdown: false,
