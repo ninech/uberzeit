@@ -22,7 +22,7 @@ class TimeSheetsController < ApplicationController
     end
     @time_types = TimeType.work
 
-    @timer = @time_sheet.timer
+    @timer = @time_sheet.timers.where("start_time like ?", "#{params[:date] || Time.current.to_date.to_s(:db)} %").first
     unless @timer.nil?
       @timer_active = @timer.start_date == (params[:date] || Time.current.to_date.to_s(:db))
     end
@@ -53,7 +53,8 @@ class TimeSheetsController < ApplicationController
   end
 
   def stop_timer
-    @time_sheet.timer.stop
+    timer = @time_sheet.timers.where("start_time like ?", "#{params[:date] || Time.current.to_date.to_s(:db)} %").first
+    timer.stop
 
     render json: {}
   end

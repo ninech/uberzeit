@@ -3,7 +3,6 @@ $(document)
   .foundation('tooltips')
 
 $ ->
-
   # Timepicker
   $('input.time').timepicker({
     dropdown: false,
@@ -19,7 +18,7 @@ $ ->
   # Pickadate
   window.init_pickdate = () ->
 
-    $('input.date').pickadate
+    $('input.date').pickadate()
 
     createDateArray = (date) ->
       date.split('-').map (value) ->

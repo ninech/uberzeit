@@ -1,18 +1,15 @@
 <%= f.hidden_field :start_date %>
 <div class="row">
   <div class="small-12 columns">
-    <%= f.label :time_type_id %>
     <%= f.collection_select :time_type_id, @time_types, :id, :name %>
   </div>
 </div>
 
 <div class="row">
   <div class="small-4 columns">
-    <%= f.label :from_time %>
     <%= f.text_field :from_time, class: 'time' %>
   </div>
   <div class="small-4 columns">
-    <%= f.label :to_time %>
     <%= f.text_field :to_time, class: 'time' %>
   </div>
   <div class="small-4 columns time-difference">

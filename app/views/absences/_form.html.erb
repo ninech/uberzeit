@@ -27,7 +27,10 @@
 <%= render 'absences/recurring_schedule_sub_form', main_form: f %>
 
 <div class="row">
-  <div class="small-2 columns">
+  <div class="small-12 columns">
     <%= f.submit class: 'button' %>
+    <% if f.object.persisted? %>
+      <%= link_to t('.delete'), time_sheet_absence_path(f.object.time_sheet_id, f.object), method: :delete, class: 'absence-delete-link' %>
+    <% end %>
   </div>
 </div>

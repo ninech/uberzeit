@@ -6,6 +6,16 @@
 
 .content-absences {
 
+  form.nice {
+    .recurring-checkbox {
+      margin: 10px 0;
+    }
+
+    .absence-delete-link {
+      margin-left: 10px;
+    }
+  }
+
   .year-navigation {
     float: right;
     margin: 0;
@@ -132,7 +142,7 @@
 
         .has-click-tip {
           display: block;
-          padding: 0.5625em 0.625em;
+          padding: 0.58em 0.625em;
           text-align: center;
           width: 100%;
           line-height: 0.98em;

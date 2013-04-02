@@ -16,7 +16,7 @@ class TimeEntriesController < ApplicationController
     @time_types = TimeType.find_all_by_is_work(true)
 
     if params[:time_entry][:to_time].blank?
-      @entry = @time_sheet.build_timer(params[:time_entry].except(:to_time))
+      @entry = @time_sheet.timers.new(params[:time_entry].except(:to_time))
       @entry.save
     else
       @entry = @time_sheet.time_entries.new(params[:time_entry])
