@@ -1,15 +1,29 @@
 $ ->
 
   # global functions
-  window.timeDiff = (start, end) ->
-    diffHours = moment.duration(moment(end, 'HH:mm').diff(moment(start, 'HH:mm'))).hours()
-    diffMinutes = moment.duration(moment(end, 'HH:mm').diff(moment(start, 'HH:mm'))).minutes()
+  window.timeDiff = (start_time, end_time, start_date, end_date) ->
+    if typeof start_date == 'undefined'
+      start_date = moment().format('YYYY-MM-DD')
+
+    if typeof end_date == 'undefined'
+      end_date = moment().format('YYYY-MM-DD')
+
+
+    start = moment("#{start_date} #{start_time}")
+    end   = moment("#{end_date} #{end_time}")
+
+
+    diffHours = moment.duration(end.diff(start)).hours()
+    diffMinutes = moment.duration(end.diff(start)).minutes()
+    prefix = ""
 
     if diffHours < 0
-      diffHours = 23 - diffHours * -1
+      diffHours = diffHours * -1
+      prefix = "−"
 
     if diffMinutes < 0
       diffMinutes = diffMinutes * -1
+      prefix = "−"
 
     if diffHours < 10
       diffHours = "0#{diffHours}"
@@ -17,12 +31,24 @@ $ ->
     if diffMinutes < 10
       diffMinutes = "0#{diffMinutes}"
 
-    "#{diffHours}:#{diffMinutes}"
+    "#{prefix}#{diffHours}:#{diffMinutes}"
 
 
   window.updateTimer = ->
     if $('.timer-current').length > 0
-      $('.timer-current').html(timeDiff($('.timer-current').data('start'), moment().format('HH:mm')))
+      diff = timeDiff($('.timer-current').data('starttime'), moment().format('HH:mm'), $('.timer-current').data('startdate'))
+      $('.timer-current').html(diff)
+
+      # disable stop timer link if duration is negative
+      if diff.indexOf('−') == 0
+        $('.stop-timer').addClass 'disabled'
+        $('.stop-timer').bind 'click', (e) ->
+          e.preventDefault()
+          false
+      else
+        $('.stop-timer').removeClass 'disabled'
+        $('.stop-timer').unbind 'click'
+
 
 
   # $('#time_entry_start_date').pickadate({
@@ -45,7 +71,7 @@ $ ->
     window.timerStarted = true
     setTimeout((->
       updateTimer()
-      setTimeout arguments.callee, 60000
+      setTimeout arguments.callee, 30000
       ), 0)
 
   # summary
@@ -86,7 +112,8 @@ $ ->
     Turbolinks.visit(window.location)
 
   $('.stop-timer').bind 'click', ->
-    $('.stop-timer i').removeClass('icon-spin')
+    unless $('.stop-timer').hasClass 'disabled'
+      $('.stop-timer i').removeClass('icon-spin')
 
   $('.stop-timer').bind 'ajax:complete', (xhr, status) ->
     Turbolinks.visit(window.location)

@@ -85,7 +85,7 @@
           <!-- WORK -->
           <% @time_chunks.each do |time_chunk| %>
             <li>
-              <%= l time_chunk.starts %> - <%= l time_chunk.ends %>
+              <%= l time_chunk.starts %> – <%= l time_chunk.ends %>
               <small>
                 <%= time_chunk.time_type %>
                 <% unless standard_calculation?(time_chunk.time_type) %>
@@ -100,7 +100,7 @@
           <% end %>
           <% if @timer_active %>
           <li>
-            <%= @timer.from_time %> -
+            <%= @timer.from_time %> –
             <small><%= @timer.time_type %></small>
             <div class="right">
               <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_time_sheet_timer_path(@time_sheet, @timer), remote: true, class: 'edit-time-entry-link' %>
@@ -108,7 +108,7 @@
                 <i class="icon-repeat icon-spin timer"></i>
                  Stop
               </a>
-              <span class="timer-current" data-start="<%= @timer.from_time %>"></span>
+              <span class="timer-current" data-startdate="<%= @timer.start_date %>" data-starttime="<%= @timer.from_time %>"></span>
             </div>
           </li>
         <% end %>

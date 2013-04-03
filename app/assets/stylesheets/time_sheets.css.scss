@@ -100,6 +100,11 @@
 
           .stop-timer {
             margin-right: 1em;
+
+            &.disabled {
+              color: #ccc;
+              cursor: default;
+            }
           }
 
           small {

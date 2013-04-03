@@ -14,17 +14,11 @@ class TimersController < ApplicationController
 
   def update
     @timer = Timer.find(params[:id])
-
     if params[:timer][:to_time].blank?
       @timer.update_attributes(params[:timer].except(:to_time))
     else
       @timer.stop
     end
-    # if @time_entry.update_attributes(params[:time_entry])
-    #   redirect_to @time_sheet, :notice => 'Entry was successfully updated.'
-    # else
-    #   render :action => 'edit'
-    # end
     render json: {}
   end
 end
