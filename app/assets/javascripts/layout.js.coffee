@@ -14,11 +14,12 @@ $ ->
     timeFormat: 'HH:mm'
   })
 
-
   # Toggler
+  # make sure we have only one toggle listener active
+  # (turbolinks will execute jQuery.ready with every request)
+  $(document).off 'click', '.toggle'
   $(document).on 'click', '.toggle', (element) ->
     $('#' + $(this).data('toggle-target')).toggle()
-
 
   # Pickadate
   window.init_pickdate = () ->
