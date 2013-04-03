@@ -29,8 +29,20 @@ class Timer < ActiveRecord::Base
     nil
   end
 
-  def duration
-    Time.current - start_time
+  def range
+    # make sure range end is greater or equal than range start
+    end_time = Time.current < start_time ? start_time : Time.current
+    (start_time..end_time)
+  end
+
+  def duration(date_or_range = nil)
+    duration_range =  if date_or_range.nil?
+                        range
+                      else
+                        range.intersect(date_or_range.to_range)
+                      end
+
+    duration_range.duration
   end
 
   def stop
