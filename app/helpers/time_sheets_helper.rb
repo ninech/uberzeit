@@ -67,7 +67,8 @@ module TimeSheetsHelper
     range = date_or_range.to_range.to_date_range
     if @timer && range.include?(@timer.start_date.to_date)
       # round down to full minutes to match the javascript timer duration
-      @timer.duration.to_minutes.floor * 1.minute
+      timer_duration = @timer.duration.to_minutes.floor * 1.minute
+      [timer_duration,0].max
     else
       0
     end
