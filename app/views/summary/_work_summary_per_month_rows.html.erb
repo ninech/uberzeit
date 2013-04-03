@@ -8,7 +8,7 @@
   end
   %>
   <td><%= link_to row[:name], row[:link], target: '_blank' %></td>
-  <td><span <% unless tip.blank? %>data-tooltip class="has-tip" title="<div class='tbl-tooltip'><%=tip%></div>"<% end %>><%= format_hours(row[:worked]) %></span></td>
+  <td><span <% unless tip.blank? %>class="has-tip" data-tooltip="<div class='tbl-tooltip'><%=tip%></div>"<% end %>><%= format_hours(row[:worked]) %></span></td>
   <td><%= format_hours(row[:planned]) %></td>
   <td><%= format_hours(row[:overtime]) %></td>
   <td><%= format_hours(row[:sum]) %></td>

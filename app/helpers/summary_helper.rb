@@ -5,7 +5,7 @@ module SummaryHelper
   end
 
   def format_hours(duration)
-    content_tag(:span, number_with_precision(duration.to_hours, precision: 2), style: "color: #{color_for_duration(duration)}")
+    "<span style='color: #{color_for_duration(duration)}'>#{number_with_precision(duration.to_hours, precision: 2)}</span>".html_safe
   end
 
   def types_to_tooltip_table(hash)

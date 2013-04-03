@@ -16,7 +16,7 @@
         <tr class="summary-row" data-month="<%=row[:month]%>" <% if row[:hide] %>style="display: none;"<% end %>>
           <% tooltip = types_to_tooltip_table(row[:by_type]) %>
           <td><%= link_to row[:name], row[:link], remote: true %></td>
-          <td><span <% unless tooltip.blank? %>data-tooltip class="has-tip" title="<%=tooltip%>"<% end %>><%= format_hours(row[:worked]) %></span></td>
+          <td><span <% unless tooltip.blank? %>class="has-tip" data-tooltip="<%=tooltip%>"<% end %>><%= format_hours(row[:worked]) %></span></td>
           <td><%= format_hours(row[:planned]) %></td>
           <td><%= format_hours(row[:overtime]) %></td>
           <td><%= format_hours(row[:sum]) %></td>

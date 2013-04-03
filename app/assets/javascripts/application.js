@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation/foundation
-//= require foundation/foundation.tooltips
 //= require foundation/foundation.reveal
 //= require turbolinks
 //= require jquery.turbolinks
