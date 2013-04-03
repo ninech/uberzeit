@@ -12,8 +12,7 @@ $ ->
     start = moment("#{start_date} #{start_time}")
     end   = moment("#{end_date} #{end_time}")
 
-
-    diffHours = moment.duration(end.diff(start)).hours()
+    diffHours = Math.ceil(moment.duration(end.diff(start)).asHours())
     diffMinutes = moment.duration(end.diff(start)).minutes()
     prefix = ""
 
