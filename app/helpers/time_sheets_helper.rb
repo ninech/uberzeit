@@ -15,19 +15,7 @@ module TimeSheetsHelper
   end
 
   def format_duration(duration)
-    content_tag(:span, hour_string(duration), style: "color: #{color_for_duration(duration)}")
-  end
-
-  def hour_string(duration)
-    hours = duration.to_hours.to_i
-    minutes = (duration - hours * 1.hour).to_minutes.ceil
-    is_negative = hours < 0
-
-    if is_negative
-      "-%02i:%02i" % [hours.abs, minutes.abs]
-    else
-      "%02i:%02i" % [hours, minutes]
-    end
+    content_tag(:span, display_in_hours(duration), style: "color: #{color_for_duration(duration)}")
   end
 
   def part_of_day(absence)
