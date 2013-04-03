@@ -66,4 +66,13 @@ describe CalculatePlannedWorkingTime do
     it_behaves_like 'range'
   end
 
+
+  describe 'special case: employment starts in the middle of the month' do
+    let(:date_or_range) { '2013-01-01'.to_date..'2013-01-31'.to_date }
+
+    it 'returns the planned work for part time employment starting in the middle of the month' do
+      FactoryGirl.create(:employment, start_date: '2013-01-21'.to_date, workload: 100, user: user)
+      calculator.total.should eq(76.5.hours)
+    end
+  end
 end
