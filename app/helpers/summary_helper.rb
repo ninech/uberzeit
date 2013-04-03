@@ -5,7 +5,7 @@ module SummaryHelper
   end
 
   def format_hours(duration)
-    "<span style='color: #{color_for_duration(duration)}'>#{number_with_precision(duration.to_hours, precision: 2)}</span>".html_safe
+    "<span style='color: #{color_for_duration(duration)}'>#{display_in_hours(duration)}</span>".html_safe
   end
 
   def types_to_tooltip_table(hash)

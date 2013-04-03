@@ -59,4 +59,16 @@ module ApplicationHelper
     end
     form.text_field object_name, opts
   end
+
+  def display_in_hours(duration)
+    hours = duration.to_hours.to_i
+    minutes = (duration - hours * 1.hour).to_minutes.ceil
+    is_negative = hours < 0
+
+    if is_negative
+      "-%02i:%02i" % [hours.abs, minutes.abs]
+    else
+      "%02i:%02i" % [hours, minutes]
+    end
+  end
 end
