@@ -30,7 +30,7 @@ class Timer < ActiveRecord::Base
   end
 
   def duration
-    (start_time..Time.parse("#{start_date} #{Time.now.strftime('%H:%M')}")).duration
+    Time.current - start_time
   end
 
   def stop
@@ -38,7 +38,7 @@ class Timer < ActiveRecord::Base
     time_entry.time_sheet = time_sheet
     time_entry.time_type  = time_type
     time_entry.start_time = start_time
-    time_entry.end_time   = Time.parse("#{start_date} #{Time.now.strftime('%H:%M')}")
+    time_entry.end_time   = start_time + duration
     time_entry.save
 
     destroy
