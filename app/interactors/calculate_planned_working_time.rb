@@ -7,19 +7,10 @@ class CalculatePlannedWorkingTime
   end
 
   def total
-    average_workload * planned_working_time
+    planned_working_time
   end
 
   private
-  def average_workload
-    @employments = @user.employments.between(@range).to_a # preload for performance
-    total_workload = @range.inject(0.0) do |sum, date|
-      @date = date
-      sum + workload_on_date
-    end
-
-    total_workload / duration_in_days
-  end
 
   def duration_in_days
     @range.max - @range.min + 1
@@ -32,12 +23,18 @@ class CalculatePlannedWorkingTime
     employment_on_date.workload / 100.0
   end
 
-  def planned_working_time
+  def preload
+    # preload for performance
+    @employments = @user.employments.between(@range).to_a # preload for performance
     @holidays = PublicHoliday.in(@range).to_a # preload for performance
+  end
+
+  def planned_working_time
+    preload
 
     @range.inject(0.0) do |sum, date|
       @date = date
-      sum + work_coefficient_on_date * UberZeit::Config[:work_per_day]
+      sum + work_coefficient_on_date * workload_on_date * UberZeit::Config[:work_per_day]
     end
   end
 
