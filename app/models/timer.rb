@@ -1,5 +1,5 @@
 class Timer < ActiveRecord::Base
-  before_save :check_active_timers_on_same_date
+  before_create :check_active_timers_on_same_date
   belongs_to :time_sheet
   belongs_to :time_type
   attr_accessible :time_type_id, :from_time, :start_date
