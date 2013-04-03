@@ -24,7 +24,7 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def start_date
-    self.start_time ||= Time.now
+    self.start_time ||= Time.current
     self.start_time.to_date.to_s(:db)
   end
 
@@ -33,7 +33,7 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def from_time
-    self.start_time ||= Time.now
+    self.start_time ||= Time.current
     "#{'%02d' % self.start_time.hour}:#{'%02d' % self.start_time.min}"
   end
 

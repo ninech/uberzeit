@@ -25,7 +25,7 @@ class Employment < ActiveRecord::Base
   }
 
   def set_default_values
-    self.start_date ||= Time.zone.now.beginning_of_year.to_date
+    self.start_date ||= Time.current.beginning_of_year.to_date
     self.workload ||= 100
   end
 

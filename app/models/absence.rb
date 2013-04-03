@@ -11,9 +11,8 @@ class Absence < ActiveRecord::Base
 
   def self.nonrecurring_entries_in_range(range)
     date_range = range.to_date_range
-    nonrecurring_entries.find(:all, conditions: ['(start_date <= ? AND end_date >= ?)', date_range.max, date_range.min])
+    nonrecurring_entries.where('(start_date <= ? AND end_date >= ?)', date_range.max, date_range.min)
   end
-
 
   def set_default_dates
     self.start_date ||= Date.current
