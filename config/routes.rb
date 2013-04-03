@@ -13,7 +13,7 @@ Uberzeit::Application.routes.draw do
     end
 
     resources :recurring_entries, except: [:show, :index]
-    resources :timers, only: [:show, :edit, :update]
+    resources :timers, only: [:show, :edit, :update, :destroy]
     member do
       match '/date/:date', to: 'time_sheets#show', via: :get
       match '/date/:date/stop-timer', to: 'time_sheets#stop_timer', via: :put

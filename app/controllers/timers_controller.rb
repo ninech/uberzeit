@@ -21,4 +21,10 @@ class TimersController < ApplicationController
     end
     render json: {}
   end
+
+  def destroy
+    @timer = Timer.find(params[:id])
+    @timer.destroy
+    render json: {}
+  end
 end
