@@ -36,7 +36,7 @@ class TimeSheet < ActiveRecord::Base
   end
 
   def vacation(year)
-    current_year = Time.zone.now.beginning_of_year.to_date
+    current_year = Time.current.beginning_of_year.to_date
     range = (current_year...current_year + 1.year)
     total(range, TimeType.vacation)
   end

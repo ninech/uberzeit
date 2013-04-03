@@ -8,7 +8,7 @@ class Timer < ActiveRecord::Base
   scope :others, lambda { |date| range = date.to_range.to_time_range; { conditions: ['(start_time < ? OR start_time > ?)', range.min, range.max] } }
 
   def start_date
-    self.start_time ||= Time.now
+    self.start_time ||= Time.current
     self.start_time.to_date.to_s(:db)
   end
 
@@ -17,7 +17,7 @@ class Timer < ActiveRecord::Base
   end
 
   def from_time
-    self.start_time ||= Time.now
+    self.start_time ||= Time.current
     "#{'%02d' % self.start_time.hour}:#{'%02d' % self.start_time.min}"
   end
 
