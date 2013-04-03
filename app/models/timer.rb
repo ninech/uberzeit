@@ -30,9 +30,11 @@ class Timer < ActiveRecord::Base
   end
 
   def range
+    # granularity should be minutes, not seconds
+    timer_start = start_time.change(sec: 0)
     # make sure range end is greater or equal than range start
-    end_time = Time.current < start_time ? start_time : Time.current
-    (start_time..end_time)
+    timer_end = (Time.current < start_time ? start_time : Time.current).change(sec: 0)
+    (timer_start..timer_end)
   end
 
   def duration(date_or_range = nil)
