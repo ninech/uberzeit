@@ -65,7 +65,7 @@ module TimeSheetsHelper
 
   def duration_of_timers(date_or_range)
     range = date_or_range.to_range.to_date_range
-    timers_in_range = @time_sheet.timers.select { |timer| range.include?(timer.start_date.to_date) }
+    timers_in_range = @time_sheet.timers.select { |timer| range.intersects_with_duration?(timer.range) }
     timers_in_range.inject(0) { |sum,timer| sum + timer.duration(range) }
   end
 
