@@ -147,6 +147,15 @@ de:
       start_timer: Timer starten
       delete: Löschen
       save: Speichern
+  timers:
+    form:
+      cancel: Abbrechen
+      add_entry: Neuer Eintrag
+      from_time: Von
+      to_time: Bis
+      start_timer: Timer starten
+      delete: Löschen
+      save: Speichern
   public_holidays:
     edit:
       edit_public_holiday: Feiertag bearbeiten
