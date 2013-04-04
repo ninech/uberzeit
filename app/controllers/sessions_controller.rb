@@ -7,8 +7,12 @@ class SessionsController < ApplicationController
   def create
     auth = request.env['omniauth.auth']
     user = User.find_by_uid(auth['uid'])
-    user.ensure_timesheet_and_employment_exist
-    sign_in(user)
-    redirect_to time_sheet_path(user.time_sheets.last)
+    if user.nil?
+      render text: 'The requested user could not be found.', status: 404
+    else
+      user.ensure_timesheet_and_employment_exist
+      sign_in(user)
+      redirect_to time_sheet_path(user.time_sheets.last)
+    end
   end
 end
