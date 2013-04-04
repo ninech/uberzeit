@@ -27,7 +27,7 @@ class TimeSheet < ActiveRecord::Base
   end
 
   def planned_work(date_or_range)
-    calculator = CalculatePlannedWorkingTime.new(user, date_or_range)
+    calculator = CalculatePlannedWorkingTime.new(date_or_range, user)
     calculator.total
   end
 

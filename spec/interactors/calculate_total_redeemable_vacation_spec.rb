@@ -3,9 +3,7 @@ require 'spec_helper'
 
 describe CalculateTotalRedeemableVacation do
 
-
-  describe '#total_for_this_year' do
-
+  describe '#total_redeemable_for_year' do
     let(:user) { FactoryGirl.create(:user, with_sheet: false) }
     let(:year) { 2013 }
     let(:vacation) { CalculateTotalRedeemableVacation.new(user, year) }
@@ -35,23 +33,38 @@ describe CalculateTotalRedeemableVacation do
       end
     end
 
-    context 'employments' do
-
+    context 'multiple employments' do
       before do
         employment = user.employments.first
         employment.workload = 30
         employment.start_date = '2013-01-01'.to_date
-        employment.end_date = '2013-03-31'.to_date # total: 90 days
+        employment.end_date = '2013-03-31'.to_date
         employment.save!
+
+        # create second employment
         FactoryGirl.create(:employment, user: user, workload: 50, start_date: '2013-04-01'.to_date, end_date: '2013-12-31'.to_date)
       end
 
-      it 'is handles multiple employments' do
-        vacation.total_redeemable_for_year.should eq(11.5.work_days) # 25*(90.0/365*0.3+275.0/365*0.5)
+      it 'returns the correct value for multiple employments' do
+        vacation.total_redeemable_for_year.should eq(11.5.work_days)
       end
-
     end
 
+    context 'employment starts in the middle of the month' do
+      before do
+        employment = user.employments.first
+        employment.workload = 100
+        employment.start_date = '2013-01-21'.to_date
+        employment.end_date = '2013-12-31'.to_date
+        employment.save!
+      end
+
+      it 'returns the reedemable year' do
+        # total 261 work days (excluding public holidays)
+        # test employment starts after 14 already elapsed working days
+        vacation.total_redeemable_for_year(false).should be_within(0.1).of(25.work_days * (261-14).to_f/261.to_f)
+      end
+    end
   end
 
 end

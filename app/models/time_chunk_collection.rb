@@ -84,6 +84,6 @@ class TimeChunkCollection
     user = chunk.time_sheet.user
     calculation_factor = chunk.time_type.calculation_factor
     # date chunks (from absences) are calculated independent of the workload, cf. redmine #5596
-    calculation_factor * CalculatePlannedWorkingTime.new(user, date.to_range, fulltime: true).total
+    calculation_factor * CalculatePlannedWorkingTime.new(date.to_range, user, fulltime: true).total
   end
 end

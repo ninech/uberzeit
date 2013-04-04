@@ -6,12 +6,16 @@ class CalculateTotalRedeemableVacation
     @total = 0.0
   end
 
-  def total_redeemable_for_year
+  def total_redeemable_for_year(round_result_to_half_work_days = true)
     total = employments_for_year.inject(0.0) do |sum, employment|
       sum + redeemable_vacation_for_employment(employment)
     end
 
-    round_to_half_work_days(total)
+    if round_result_to_half_work_days
+      round_to_half_work_days(total)
+    else
+      total
+    end
   end
 
   private
@@ -20,7 +24,7 @@ class CalculateTotalRedeemableVacation
   end
 
   def year_as_range
-    @year_as_range ||= first_day_of_year...(first_day_of_year + 1.year)
+    @year_as_range ||= UberZeit.year_as_range(@year)
   end
 
   def employments_for_year
@@ -31,30 +35,44 @@ class CalculateTotalRedeemableVacation
     @default_vacation_per_year ||= UberZeit::Config[:vacation_per_year] / 1.day * UberZeit::Config[:work_per_day]
   end
 
-  def employment_duration(employment)
+  def redeemable_vacation_for_employment(employment)
+    planned_working_time_for_employment_in_year(employment) / planned_working_time_in_year * default_vacation_per_year
+  end
+
+  def planned_working_time_in_year
+    CalculatePlannedWorkingTime.new(year_as_range).total
+  end
+
+  def planned_working_time_for_employment_in_year(employment)
+    CalculatePlannedWorkingTime.new(employment_range_in_year(employment), @user).total
+  end
+
+  def employment_range_in_year(employment)
     if employment.open_ended?
-      employment_duration_open_ended employment
+      employment_range_open_ended employment
     else
-      employment_duration_defined_end employment
+      employment_range_defined_end employment
     end
   end
 
-  def employment_duration_open_ended(employment)
-    year_as_range.intersect((employment.start_date..(first_day_of_year + 1.year))).duration
+  def employment_range_open_ended(employment)
+    year_as_range.intersect((employment.start_date..(first_day_of_year + 1.year)))
   end
 
-  def employment_duration_defined_end(employment)
-    year_as_range.intersect((employment.start_date..employment.end_date)).duration
+  def employment_range_defined_end(employment)
+    year_as_range.intersect((employment.start_date..employment.end_date))
   end
 
-  def redeemable_vacation_for_employment(employment)
-    employment.workload * 0.01 * employment_duration(employment) / year_as_range.duration * default_vacation_per_year
+  def in_half_work_days(duration)
+    duration/half_work_day
   end
 
-  def round_to_half_work_days(seconds)
-    half_day = UberZeit::Config[:work_per_day]*0.5
-    (seconds/half_day).round * half_day
+  def round_to_half_work_days(duration)
+    in_half_work_days(duration).round * half_work_day
   end
 
+  def half_work_day
+    0.5*UberZeit::Config[:work_per_day]
+  end
 end
 

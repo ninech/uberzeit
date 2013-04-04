@@ -1,6 +1,6 @@
 class CalculatePlannedWorkingTime
-
-  def initialize(user, date_or_range, opts = {})
+  # user can be nil to request the planned working time for a range
+  def initialize(date_or_range, user = nil, opts = {})
     @user = user
     @range = date_or_range.to_range.to_date_range
     @opts = opts
@@ -23,18 +23,26 @@ class CalculatePlannedWorkingTime
     employment_on_date.workload / 100.0
   end
 
-  def preload
-    # preload for performance
-    @employments = @user.employments.between(@range).to_a # preload for performance
-    @holidays = PublicHoliday.in(@range).to_a # preload for performance
+  def preload_employments
+    @employments = @user.employments.between(@range).to_a
+  end
+
+  def preload_public_holidays
+    @public_holidays = PublicHoliday.in(@range).to_a
   end
 
   def planned_working_time
-    preload
+    preload_public_holidays
+    preload_employments unless @user.nil?
 
     @range.inject(0.0) do |sum, date|
       @date = date
-      sum + work_coefficient_on_date * workload_on_date * UberZeit::Config[:work_per_day]
+      workload_factor = if @user.nil?
+                          1
+                        else
+                          workload_on_date
+                        end
+      sum + work_coefficient_on_date * workload_factor * UberZeit::Config[:work_per_day]
     end
   end
 
@@ -55,10 +63,10 @@ class CalculatePlannedWorkingTime
   end
 
   def is_half_day_a_public_holiday?
-    @holidays.any? { |holiday| holiday.half_day? && holiday.on_date?(@date) }
+    @public_holidays.any? { |holiday| holiday.half_day? && holiday.on_date?(@date) }
   end
 
   def is_whole_day_a_public_holiday?
-    @holidays.any? { |holiday| holiday.whole_day? && holiday.on_date?(@date) }
+    @public_holidays.any? { |holiday| holiday.whole_day? && holiday.on_date?(@date) }
   end
 end
