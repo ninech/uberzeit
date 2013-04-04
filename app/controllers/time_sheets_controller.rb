@@ -22,7 +22,7 @@ class TimeSheetsController < ApplicationController
     unless @timer.nil?
       @timer_active = (@timer.start_date.to_date == @day.to_date) # (params[:date] || Time.current.to_date.to_s(:db))
     end
-    @timers_other_days = @time_sheet.timers.others(@day)
+    @timers_other_days = @time_sheet.timers.others(@day).order('start_time')
 
     @public_holiday = PublicHoliday.on(@day).first
 
