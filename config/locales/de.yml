@@ -192,7 +192,9 @@ de:
       whole_day: Ganzer Tag
       first_half_day: Vormittags
       second_half_day: Nachmittags
-      timer_running_warning: "An den folgenden Tagen sind noch Timer aktiv:"
+      timer_running_warning:
+        one: 'An dem folgenden Tag ist noch ein Timer aktiv:'
+        other: "An den folgenden Tagen sind noch Timer aktiv:"
   employments:
     edit:
       edit_employment: Anstellungsverhältnis bearbeiten

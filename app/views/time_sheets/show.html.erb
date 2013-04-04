@@ -3,7 +3,7 @@
     <% unless @timers_other_days.empty? %>
       <div data-alert class="alert-box">
         <i class='icon-time'></i>
-        <%= t '.timer_running_warning' %>
+        <%= t '.timer_running_warning', count: @timers_other_days.length %>
         <%= running_timer_dates(@timers_other_days) %>.
       </div>
     <% end %>
