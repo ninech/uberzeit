@@ -4,7 +4,7 @@
       <div data-alert class="alert-box">
         <i class='icon-time'></i>
         <%= t '.timer_running_warning' %>
-        <%= running_timer_dates(@timers_other_days).html_safe %>.
+        <%= running_timer_dates(@timers_other_days) %>.
       </div>
     <% end %>
 
@@ -22,7 +22,7 @@
             <li>
               <a href="<%= url_for(action: :show, date: weekday.to_formatted_s(:iso)) %>" class="<%= 'active' if weekday == @day %>">
                 <span class="day">
-                  <%= l weekday, format: '%A' %>
+                  <%= l weekday, format: :weekday %>
                   <% if @absences[weekday] %>
                     <i class="icon-sign-blank event-color<%=color_index_of_array(@absences[weekday])%>"></i>
                   <% end %>
