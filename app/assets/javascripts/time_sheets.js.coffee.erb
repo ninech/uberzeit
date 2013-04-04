@@ -48,6 +48,17 @@ $ ->
         $('.stop-timer').removeClass 'disabled'
         $('.stop-timer').unbind 'click'
 
+      # update day summaries
+      sum = moment()
+      $('.entries li[class!="summary"] .right span').each (i, el) =>
+        time = $(el).html()
+        hours_and_minutes = time.split(':')
+        sum.add('hours', hours_and_minutes[0])
+        sum.add('minutes', hours_and_minutes[1])
+
+      total = timeDiff(moment().format('HH:mm'), sum.format('HH:mm'), moment().format('YYYY-MM-DD'), sum.format('YYYY-MM-DD'))
+      $('li.summary span, .weekdays a.active span.time').html(total)
+
 
 
   # $('#time_entry_start_date').pickadate({

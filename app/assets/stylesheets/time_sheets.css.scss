@@ -95,7 +95,10 @@
           font-size: 1.2em;
 
           &:last-child {
-            margin-bottom: 60px;
+            margin-bottom: 30px;
+            border-bottom: none;
+            color: #A3A3A3;
+            // font-size: 1em;
           }
 
           .stop-timer {
