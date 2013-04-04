@@ -67,3 +67,10 @@ $ ->
     content_element = element.append('<span class="ajax-content"></span>')
     content_element.find('span.ajax-content').load $(this).data('reveal-url'), () ->
       init_pickdate()
+
+
+  $(document).on 'mouseover', '.has-tip', ->
+    $(this).popover
+      trigger: 'hover'
+      content: $(this).data('tooltip')
+      fadeSpeed: 0

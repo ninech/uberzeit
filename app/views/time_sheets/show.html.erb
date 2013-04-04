@@ -85,7 +85,21 @@
           <!-- WORK -->
           <% @time_chunks.each do |time_chunk| %>
             <li>
-              <%= l time_chunk.starts %> – <%= l time_chunk.ends %>
+              <% if time_chunk.parent.start_time.to_date != @day %>
+                <span class="has-tip" data-tooltip="<%= t('.tooltip.starts') %> <%= l time_chunk.parent.start_time, format: :long %>">
+                  <%= l time_chunk.starts %>
+                </span>
+              <% else %>
+                <%= l time_chunk.starts %>
+              <% end %>
+              –
+              <% if time_chunk.parent.end_time.to_date != @day %>
+                <span class="has-tip" data-tooltip="<%= t('.tooltip.ends') %> <%= l time_chunk.parent.end_time, format: :long %>">
+                  <%= l time_chunk.ends %>
+                </span>
+              <% else %>
+                <%= l time_chunk.ends %>
+              <% end %>
               <small>
                 <%= time_chunk.time_type %>
                 <% unless standard_calculation?(time_chunk.time_type) %>

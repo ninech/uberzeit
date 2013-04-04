@@ -195,6 +195,9 @@ de:
       timer_running_warning:
         one: 'An dem folgenden Tag ist noch ein Timer aktiv:'
         other: "An den folgenden Tagen sind noch Timer aktiv:"
+      tooltip:
+        starts: 'Beginnt am'
+        ends: 'Endet am'
   employments:
     edit:
       edit_employment: Anstellungsverhältnis bearbeiten
