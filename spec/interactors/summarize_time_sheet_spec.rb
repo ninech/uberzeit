@@ -10,7 +10,7 @@ describe SummarizeTimeSheet do
   end
 
   context 'work' do
-    before :all do
+    before do
       @time_sheet = FactoryGirl.create(:time_sheet)
 
       work '2013-03-25 09:00:00', '2013-03-25 12:00:00'
@@ -49,7 +49,7 @@ describe SummarizeTimeSheet do
   end
 
   context 'absence' do
-    before :all do
+    before do
       @time_sheet = FactoryGirl.create(:time_sheet)
 
       vacation '2013-02-11', '2013-02-13'
