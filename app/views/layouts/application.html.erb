@@ -37,6 +37,18 @@
   <% end %>
 
   <div class="content container">
+
+    <% flash.each do |key,val| %>
+      <div class="row">
+        <div class="small-12 columns">
+          <div class="alert-box <%= key %>">
+            <%= val %>
+            <%= link_to '×', '', class: 'close' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
     <%= yield %>
   </div>
   <%= render 'layouts/footer' %>

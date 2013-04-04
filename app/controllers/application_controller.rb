@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   unless Rails.env.test?
     rescue_from CanCan::AccessDenied do |error|
-      flash[:error] = error.message
+      flash[:alert] = error.message
       redirect_to root_path
     end
   end
