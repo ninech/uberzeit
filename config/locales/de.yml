@@ -26,10 +26,12 @@ de:
   time:
     formats:
       default: '%H:%M'
+      weekday: '%a, %d. %b'
   date:
     formats:
       default: '%d.%m.%Y'
       long: '%A, %d. %B %Y'
+      weekday: '%a, %d. %b'
   js:
     pickadate:
       firstDay: 1
