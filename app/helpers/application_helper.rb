@@ -63,7 +63,7 @@ module ApplicationHelper
   def display_in_hours(duration)
     hours = duration.to_hours.to_i
     minutes = (duration - hours * 1.hour).to_minutes.ceil
-    is_negative = hours < 0
+    is_negative = hours < 0 || minutes < 0
 
     if is_negative
       "-%02i:%02i" % [hours.abs, minutes.abs]
