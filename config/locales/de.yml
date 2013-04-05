@@ -5,6 +5,13 @@ de:
       public_holiday: Feiertag
       time_type: Zeittyp
       absence: Absenz
+    attributes:
+      time_entries:
+        from_time: Von
+        to_time: Bis
+      timers:
+        from_time: Von
+        to_time: Bis
     errors:
       models:
         time_entry:
@@ -145,8 +152,6 @@ de:
     form:
       cancel: Abbrechen
       add_entry: Neuer Eintrag
-      from_time: Von
-      to_time: Bis
       start_timer: Timer starten
       delete: Löschen
       save: Speichern
@@ -154,8 +159,6 @@ de:
     form:
       cancel: Abbrechen
       add_entry: Neuer Eintrag
-      from_time: Von
-      to_time: Bis
       start_timer: Timer starten
       delete: Löschen
       save: Speichern
