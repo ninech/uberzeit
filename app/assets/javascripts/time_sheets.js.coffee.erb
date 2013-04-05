@@ -1,7 +1,7 @@
 $ ->
 
   # global functions
-  window.timeDiff = (start_time, end_time, start_date, end_date) ->
+  window.timeDiff = (start_time, end_time, start_date, end_date, countdown = true) ->
     if typeof start_date == 'undefined'
       start_date = moment().format('YYYY-MM-DD')
 
@@ -11,6 +11,9 @@ $ ->
 
     start = moment("#{start_date} #{start_time}")
     end   = moment("#{end_date} #{end_time}")
+
+    if start >= end && countdown == false
+      end.add('days', 1)
 
     diffHours = Math.floor(moment.duration(end.diff(start)).asHours())
     diffMinutes = moment.duration(end.diff(start)).minutes()
@@ -60,21 +63,6 @@ $ ->
     $('li.summary span, .weekdays a.active span.time').html(total)
 
 
-
-  # $('#time_entry_start_date').pickadate({
-  #   monthsFull: [ 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ],
-  #   monthsShort: [ 'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez' ],
-  #   weekdaysFull: [ 'Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag' ],
-  #   weekdaysShort: [ 'So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa' ],
-  #   today: 'Heute',
-  #   clear: 'Löschen',
-  #   firstDay: 1,
-  #   format: 'dddd, dd. mmmm yyyy',
-  #   formatSubmit: 'yyyy-mm-dd'
-  #   hiddenSuffix: ''
-  # })
-
-
   # on page load
   updateTimer()
   if $('.timer-current').length > 0 && window.timerStarted != true
@@ -109,7 +97,7 @@ $ ->
       start = startEl.timepicker().format(startValue)
       end   = endEl.timepicker().format(endValue)
 
-      value = timeDiff(start, end)
+      value = timeDiff(start, end, undefined, undefined, false)
     else
       value = ""
 
