@@ -1,4 +1,3 @@
-<%= f.hidden_field :start_date %>
 <div class="row">
   <div class="small-12 columns">
     <%= f.collection_select :time_type_id, @time_types, :id, :name %>
@@ -7,10 +6,18 @@
 
 <div class="row">
   <div class="small-4 columns">
-    <%= f.text_field :from_time, label: t('.from_time'), class: 'time' %>
+    <%= f.label :from_time %>
+    <% if f.object.start_date != f.object.end_date %>
+      <%= f.text_field :start_date, label: false, class: 'date' %>
+    <% end %>
+    <%= f.text_field :from_time, label: false, class: 'time' %>
   </div>
   <div class="small-4 columns">
-    <%= f.text_field :to_time, label: t('.to_time'), class: 'time' %>
+    <%= f.label :to_time %>
+    <% if f.object.start_date != f.object.end_date %>
+      <%= f.text_field :end_date, label: false, class: 'date' %>
+    <% end %>
+    <%= f.text_field :to_time, label: false, class: 'time' %>
   </div>
   <div class="small-4 columns time-difference">
 
