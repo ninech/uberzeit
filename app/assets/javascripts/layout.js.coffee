@@ -61,7 +61,7 @@ $ ->
   init_pickdate()
 
   # Ajax modals / reveal
-  $(document).on 'click', '.remote-reveal', () ->
+  $(document).on 'click', '.remote-reveal', (event) ->
     element = $('#' + $(this).data('reveal-id'))
     element.find('span.ajax-content').remove()
     content_element = element.append('<span class="ajax-content"></span>')

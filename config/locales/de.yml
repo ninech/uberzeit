@@ -149,6 +149,8 @@ de:
       remaining: Verbleibend
       days: Tage
   time_entries:
+    edit:
+      edit_time: 'Zeit bearbeiten'
     form:
       cancel: Abbrechen
       add_entry: Neuer Eintrag
@@ -186,8 +188,6 @@ de:
       add_time: Zeit hinzufügen
     add_time_modal:
       add_time: Zeit hinzufügen
-    edit_time_modal:
-      edit_time: Zeit bearbeiten
     show:
       overtime: Überzeit
       total: Total
