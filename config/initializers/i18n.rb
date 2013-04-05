@@ -3,7 +3,7 @@
 module I18n
   class MissingTranslation
     def html_message
-      keys.last.to_s.gsub('_', ' ').gsub(/\b('?[a-z])/) { $1.capitalize }
+      keys.inspect
     end
   end
 end
