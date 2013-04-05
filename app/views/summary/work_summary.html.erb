@@ -6,6 +6,7 @@
         <tr>
           <th>&nbsp;</th>
           <th class="value work"><%= t '.worked' %></th>
+          <th class="value work"><%= t '.absent' %></th>
           <th class="value work"><%= t '.target' %></th>
           <th class="value work"><%= t '.overtime' %></th>
           <th class="value work"><%= t '.running_overtime' %></th>
@@ -14,9 +15,11 @@
       <tbody>
         <% @rows.each do |row| %>
         <tr class="summary-row" data-month="<%=row[:month]%>" <% if row[:hide] %>style="display: none;"<% end %>>
-          <% tooltip = types_to_tooltip_table(row[:by_type]) %>
           <td><%= link_to row[:name], row[:link], remote: true %></td>
-          <td><span <% unless tooltip.blank? %>class="has-tip" data-tooltip="<%=tooltip%>"<% end %>><%= format_hours(row[:worked]) %></span></td>
+          <% tooltip_effective_worked = types_to_tooltip_table(row[:effective_worked_by_type]) %>
+          <% tooltip_absent = types_to_tooltip_table(row[:absent_by_type]) %>
+          <td><span <% unless tooltip_effective_worked.blank? %>class="has-tip" data-tooltip="<%=tooltip_effective_worked%>"<% end %>><%= format_hours(row[:effective_worked]) %></span></td>
+          <td><span <% unless tooltip_absent.blank? %>class="has-tip" data-tooltip="<%=tooltip_absent%>"<% end %>><%= format_hours(row[:absent]) %></span></td>
           <td><%= format_hours(row[:planned]) %></td>
           <td><%= format_hours(row[:overtime]) %></td>
           <td><%= format_hours(row[:sum]) %></td>

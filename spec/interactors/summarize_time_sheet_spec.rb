@@ -22,12 +22,16 @@ describe SummarizeTimeSheet do
     end
 
     context 'for each row' do
-      it 'returns the worked time' do
-        @month_row[:worked].should eq(8.5.hours)
+      it 'returns the effective worked time' do
+        @month_row[:effective_worked].should eq(8.5.hours)
+      end
+
+      it 'returns the absent time' do
+        @month_row[:absent].should eq(0.hours)
       end
 
       it 'returns the time by time type' do
-        @month_row[:by_type]['test_work'].should eq(8.5.hours)
+        @month_row[:effective_worked_by_type]['test_work'].should eq(8.5.hours)
       end
 
       it 'returns the planned working time' do

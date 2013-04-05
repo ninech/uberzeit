@@ -35,14 +35,16 @@ class SummarizeTimeSheet
   end
 
   def summarize_work_range(range, evaluator)
-    planned   = @time_sheet.planned_work(range)
-    worked    = @time_sheet.work(range)
-    overtime  = @time_sheet.overtime(range)
-    by_type   = TimeType.all.each_with_object({}) { |time_type,hash| hash[time_type.name] = @time_sheet.total(range, time_type) }
+    planned                   =  @time_sheet.planned_work(range)
+    effective_worked          = @time_sheet.total(range, TimeType.work)
+    effective_worked_by_type  = TimeType.work.each_with_object({}) { |time_type,hash| hash[time_type.name] = @time_sheet.total(range, time_type) }
+    absent                    = @time_sheet.total(range, TimeType.absence)
+    absent_by_type            = TimeType.absence.each_with_object({}) { |time_type,hash| hash[time_type.name] = @time_sheet.total(range, time_type) }
+    overtime                  = @time_sheet.overtime(range)
 
     evaluator[:sum] = (evaluator[:sum] || 0) + overtime
 
-    {range: range, planned: planned, worked: worked, overtime: overtime, sum: evaluator[:sum], by_type: by_type}
+    {range: range, planned: planned, effective_worked: effective_worked, absent: absent, overtime: overtime, sum: evaluator[:sum], effective_worked_by_type: effective_worked_by_type, absent_by_type: absent_by_type}
   end
 
   def summarize_absence_range(range, evaluator)

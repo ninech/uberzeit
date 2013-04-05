@@ -1,14 +1,10 @@
 <% @rows.each do |row| %>
 <tr class="sub-summary-row" data-month="<%=@month%>">
-  <%
-  tip = ""
-  row[:by_type].each_pair do |name, total|
-    next if total == 0
-    tip += ("<div class='tr'><div class='td'>#{name}</div><div class='td'>#{format_hours(total)}</div></div>").html_safe
-  end
-  %>
+  <% tooltip_effective_worked = types_to_tooltip_table(row[:effective_worked_by_type]) %>
+  <% tooltip_absent = types_to_tooltip_table(row[:absent_by_type]) %>
   <td><%= link_to row[:name], row[:link], target: '_blank' %></td>
-  <td><span <% unless tip.blank? %>class="has-tip" data-tooltip="<div class='tbl-tooltip'><%=tip%></div>"<% end %>><%= format_hours(row[:worked]) %></span></td>
+  <td><span <% unless tooltip_effective_worked.blank? %>class="has-tip" data-tooltip="<%=tooltip_effective_worked%>"<% end %>><%= format_hours(row[:effective_worked]) %></span></td>
+  <td><span <% unless tooltip_absent.blank? %>class="has-tip" data-tooltip="<%=tooltip_absent%>"<% end %>><%= format_hours(row[:absent]) %></span></td>
   <td><%= format_hours(row[:planned]) %></td>
   <td><%= format_hours(row[:overtime]) %></td>
   <td><%= format_hours(row[:sum]) %></td>
