@@ -6,10 +6,10 @@ de:
       time_type: Zeittyp
       absence: Absenz
     attributes:
-      time_entries:
+      time_entry:
         from_time: Von
         to_time: Bis
-      timers:
+      timer:
         from_time: Von
         to_time: Bis
     errors:

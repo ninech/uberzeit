@@ -4,25 +4,46 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="small-4 columns">
-    <%= f.label :from_time %>
-    <% if f.object.start_date != f.object.end_date %>
-      <%= f.text_field :start_date, label: false, class: 'date' %>
-    <% end %>
-    <%= f.text_field :from_time, label: false, class: 'time' %>
-  </div>
-  <div class="small-4 columns">
-    <%= f.label :to_time %>
-    <% if f.object.start_date != f.object.end_date %>
-      <%= f.text_field :end_date, label: false, class: 'date' %>
-    <% end %>
-    <%= f.text_field :to_time, label: false, class: 'time' %>
-  </div>
-  <div class="small-4 columns time-difference">
+<%= f.object.class %>
 
+<% if f.object.start_date != f.object.end_date %>
+
+  <div class="row">
+    <div class="small-2 columns">
+      <%= f.label :from_time %>
+    </div>
+    <div class="small-7 columns">
+      <%= datefield(f, :start_date, false, f.object.start_date.to_date, :date) %>
+    </div>
+    <div class="small-3 columns">
+      <%= f.text_field :from_time, label: false, class: 'time' %>
+    </div>
   </div>
-</div>
+  <div class="row">
+    <div class="small-2 columns">
+      <%= f.label :to_time %>
+    </div>
+    <div class="small-7 columns">
+      <%= datefield(f, :end_date, false, f.object.end_date.to_date, :date) %>
+    </div>
+    <div class="small-3 columns">
+      <%= f.text_field :to_time, label: false, class: 'time' %>
+    </div>
+  </div>
+
+<% else %>
+  <div class="row">
+    <div class="small-4 columns">
+      <%= f.text_field :from_time, class: 'time' %>
+    </div>
+    <div class="small-4 columns">
+      <%= f.text_field :to_time, class: 'time' %>
+    </div>
+    <div class="small-4 columns time-difference">
+
+    </div>
+  </div>
+<% end %>
 
 <div class="row">
   <div class="small-12 columns">
