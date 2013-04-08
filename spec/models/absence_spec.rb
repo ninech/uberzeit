@@ -72,7 +72,7 @@ describe Absence do
   context 'for multiple entries' do
     before do
       @entry1 = FactoryGirl.create(:absence, time_type: :work, start_date: '2013-01-23', end_date: '2013-01-30', first_half_day: true)
-      @entry2 = FactoryGirl.create(:absence, time_type: :break, start_date: '2013-01-23', end_date: '2013-01-23')
+      @entry2 = FactoryGirl.create(:absence, time_type: :compensation, start_date: '2013-01-23', end_date: '2013-01-23')
       @entry3 = FactoryGirl.create(:absence, time_type: :work, start_date: '2013-01-23', end_date: '2013-01-24', second_half_day: true)
       @entry4 = FactoryGirl.create(:absence, time_type: :work, start_date: '2013-01-24', end_date: '2013-01-24')
     end

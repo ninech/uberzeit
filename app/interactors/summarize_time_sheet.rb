@@ -50,7 +50,8 @@ class SummarizeTimeSheet
   def summarize_absence_range(range, evaluator)
     summary = {range: range}
     TimeType.absence.each_with_object(summary) do |time_type, hash|
-      total_for_time_type = @time_sheet.total(range, time_type)
+      chunks = @time_sheet.find_chunks(range, time_type)
+      total_for_time_type = chunks.total(1.0) # override calculation factor defined in timet type, we are interested in the amount of days
       evaluator[time_type.id] = (evaluator[time_type.id] || 0) + total_for_time_type
       hash[time_type.id] = total_for_time_type
     end

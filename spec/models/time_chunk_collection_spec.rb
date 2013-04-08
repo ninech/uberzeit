@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe TimeChunkCollection do
   let(:time_type_work) { TEST_TIME_TYPES[:work] }
-  let(:time_type_break) { TEST_TIME_TYPES[:break] }
+  let(:time_type_compensation) { TEST_TIME_TYPES[:compensation] }
   let(:time_type_vacation) { TEST_TIME_TYPES[:vacation] }
   let(:time_type_onduty) { TEST_TIME_TYPES[:onduty] }
 
@@ -22,7 +22,7 @@ describe TimeChunkCollection do
         TimeChunk.new(starts: '2013-03-07 09:00:00'.to_time, ends: '2013-03-07 12:00:00'.to_time, time_type: time_type_work),
         TimeChunk.new(starts: '2013-03-07 12:30:00'.to_time, ends: '2013-03-07 18:30:00'.to_time, time_type: time_type_work),
         TimeChunk.new(starts: '2013-03-07 20:00:00'.to_time, ends: '2013-03-07 20:30:00'.to_time, time_type: time_type_onduty),
-        TimeChunk.new(starts: '2013-03-07 21:00:00'.to_time, ends: '2013-03-07 22:00:00'.to_time, time_type: time_type_break)
+        TimeChunk.new(starts: '2013-03-07 21:00:00'.to_time, ends: '2013-03-07 22:00:00'.to_time, time_type: time_type_compensation)
       ]
     end
 
@@ -34,6 +34,10 @@ describe TimeChunkCollection do
       it 'uses the factor in the time type of every chunk' do
         time_type_onduty.should_receive(:calculation_factor).and_return(2.0)
         collection.total.should eq(10.0.hours)
+      end
+
+      it 'allows to override the calculation factor for all chunks' do
+        collection.total(2.0).should eq(21.hours)
       end
     end
 
@@ -49,13 +53,13 @@ describe TimeChunkCollection do
         collection.each do |chunk|
           a << chunk.time_type.name
         end
-        a.should eq(%w{test_work test_work test_onduty test_break})
+        a.should eq(%w{test_work test_work test_onduty test_compensation})
       end
     end
 
     describe '#map' do
       it 'allows you to map over the chunks' do
-        collection.map { |chunk| chunk.time_type.name }.should eq(%w{test_work test_work test_onduty test_break})
+        collection.map { |chunk| chunk.time_type.name }.should eq(%w{test_work test_work test_onduty test_compensation})
       end
     end
 
