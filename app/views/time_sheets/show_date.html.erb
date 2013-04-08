@@ -12,15 +12,15 @@
       <div class="head">
         <%= l @weekdays.first, :format => :long %> – <%= l @weekdays.last, :format => :long %>
         <div class="right">
-          <a href="<%= url_for(action: :show, date: @previous_week_day.to_formatted_s(:iso)) %>"><span class="icon-caret-left"></span></a>
-          <a href="<%= url_for(action: :show, date: @next_week_day.to_formatted_s(:iso)) %>"><span class="icon-caret-right"></span></a>
+          <a href="<%= url_for(action: :show_date, date: @previous_week_day.to_formatted_s(:iso)) %>"><span class="icon-caret-left"></span></a>
+          <a href="<%= url_for(action: :show_date, date: @next_week_day.to_formatted_s(:iso)) %>"><span class="icon-caret-right"></span></a>
         </div>
       </div>
       <div class="weekdays">
         <ul>
           <% @weekdays.each do |weekday| %>
             <li>
-              <a href="<%= url_for(action: :show, date: weekday.to_formatted_s(:iso)) %>" class="<%= 'active' if weekday == @day %>">
+              <a href="<%= url_for(action: :show_date, date: weekday.to_formatted_s(:iso)) %>" class="<%= 'active' if weekday == @day %>">
                 <span class="day">
                   <%= l weekday, format: :weekday %>
                   <% if @absences[weekday] %>
