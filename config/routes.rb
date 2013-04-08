@@ -5,6 +5,11 @@ Uberzeit::Application.routes.draw do
 
   resources :time_sheets, only: [:show] do
     member do
+      get '/date/:date/time', to: 'time_sheets#time'
+      get '/date/:date/timer', to: 'time_sheets#timer'
+    end
+
+    member do
       get '/work_summary/year/:year', to: 'summary#work_summary', as: 'work_summary'
       get '/work_summary_per_month/year/:year/month/:month', to: 'summary#work_summary_per_month'
 

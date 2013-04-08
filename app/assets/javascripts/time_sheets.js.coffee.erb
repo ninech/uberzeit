@@ -36,39 +36,30 @@ $ ->
     "#{prefix}#{diffHours}:#{diffMinutes}"
 
 
-  window.updateTimer = ->
+  window.updateTimers = ->
     if $('.timer-current').length > 0
-      diff = timeDiff($('.timer-current').data('starttime'), moment().format('HH:mm'), $('.timer-current').data('startdate'))
-      $('.timer-current').html(diff)
+      $.getJSON window.location.pathname + '/time', (data) ->
+        $('.time.active').text data.time
 
-      # disable stop timer link if duration is negative
-      if diff.indexOf('−') == 0
-        $('.stop-timer').addClass 'disabled'
-        $('.stop-timer').bind 'click', (e) ->
-          e.preventDefault()
-          false
-      else
-        $('.stop-timer').removeClass 'disabled'
-        $('.stop-timer').unbind 'click'
-
-    # update day summaries
-    sum = moment()
-    $('.entries li[class!="summary"] .right span').each (i, el) =>
-      time = $(el).html()
-      hours_and_minutes = time.split(':')
-      sum.add('hours', hours_and_minutes[0])
-      sum.add('minutes', hours_and_minutes[1])
-
-    total = timeDiff(moment().format('HH:mm'), sum.format('HH:mm'), moment().format('YYYY-MM-DD'), sum.format('YYYY-MM-DD'))
-    $('li.summary span, .weekdays a.active span.time').html(total)
+      $.getJSON window.location.pathname + '/timer', (data) ->
+        $('.timer-current').text data.timer
+        # disable stop timer link if there is no timer duration (e.g. timer in future)
+        if $('.timer-current').text() == "00:00"
+          $('.stop-timer').addClass 'disabled'
+          $('.stop-timer').bind 'click', (e) ->
+            e.preventDefault()
+            false
+        else
+          $('.stop-timer').removeClass 'disabled'
+          $('.stop-timer').unbind 'click'
 
 
   # on page load
-  updateTimer()
+  updateTimers()
   if $('.timer-current').length > 0 && window.timerStarted != true
     window.timerStarted = true
     setTimeout((->
-      updateTimer()
+      updateTimers()
       setTimeout arguments.callee, 30000
       ), 0)
 

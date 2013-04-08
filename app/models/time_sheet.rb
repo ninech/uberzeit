@@ -49,4 +49,10 @@ class TimeSheet < ActiveRecord::Base
   def remaining_vacation(year)
     total_reedemable_vacation(year) - vacation(year)
   end
+
+  def duration_of_timers(date_or_range)
+    range = date_or_range.to_range.to_date_range
+    timers_in_range = timers.select { |timer| range.intersects_with_duration?(timer.range) }
+    timers_in_range.inject(0) { |sum,timer| sum + timer.duration(range) }
+  end
 end

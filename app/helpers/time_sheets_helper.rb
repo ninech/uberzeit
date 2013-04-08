@@ -44,17 +44,11 @@ module TimeSheetsHelper
   private
 
   def work_for_range(date_or_range)
-    @time_sheet.work(date_or_range) + duration_of_timers(date_or_range)
+    @time_sheet.work(date_or_range) + @time_sheet.duration_of_timers(date_or_range)
   end
 
   def overtime_for_range(date_or_range)
-    @time_sheet.overtime(date_or_range) + duration_of_timers(date_or_range)
-  end
-
-  def duration_of_timers(date_or_range)
-    range = date_or_range.to_range.to_date_range
-    timers_in_range = @time_sheet.timers.select { |timer| range.intersects_with_duration?(timer.range) }
-    timers_in_range.inject(0) { |sum,timer| sum + timer.duration(range) }
+    @time_sheet.overtime(date_or_range) + @time_sheet.duration_of_timers(date_or_range)
   end
 
   def running_timer_dates(timers)

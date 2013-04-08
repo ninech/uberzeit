@@ -1,4 +1,5 @@
 class TimeSheetsController < ApplicationController
+
   load_and_authorize_resource :time_sheet
 
   before_filter :load_day
@@ -54,6 +55,15 @@ class TimeSheetsController < ApplicationController
     timer.stop
 
     render json: {}
+  end
+
+  def time
+    @time = @time_sheet.total(@day) + @time_sheet.duration_of_timers(@day)
+  end
+
+  def timer
+    active_timer = @time_sheet.timers.on(@day).first
+    @timer = active_timer.duration(@day)
   end
 
   private

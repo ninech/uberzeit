@@ -34,7 +34,7 @@
                 <% if @public_holidays[weekday] && @public_holidays[weekday].whole_day? %>
                   <span class="public-holiday"><%= @public_holidays[weekday].name %></span>
                 <% else %>
-                  <span class="time"><%= worktime_for_day(weekday) %></span>
+                  <span class="time <%= 'active' if weekday == @day %>"><%= worktime_for_day(weekday) %></span>
                 <% end %>
               </a>
             </li>
@@ -126,13 +126,13 @@
                 <i class="icon-repeat icon-spin timer"></i>
                  Stop
               </a>
-              <span class="timer-current" data-startdate="<%= @timer.start_date %>" data-starttime="<%= @timer.from_time %>"></span>
+              <span class="timer-current" data-timer-id="<%=@timer.id%>" data-startdate="<%= @timer.start_date %>" data-starttime="<%= @timer.from_time %>"></span>
             </div>
           </li>
         <% end %>
           <li class="summary">
             <div class="right">
-              <%= t '.total' %> <span>0:00</span>
+              <%= t '.total' %> <span class="time active">0:00</span>
             </div>
           </li>
         </ul>

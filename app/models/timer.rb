@@ -30,10 +30,6 @@ class Timer < ActiveRecord::Base
   end
 
   def range
-    # granularity should be minutes, not seconds
-    timer_start = start_time.change(sec: 0)
-    # make sure range end is greater or equal than range start
-    timer_end = (Time.current < start_time ? start_time : Time.current).change(sec: 0)
     (timer_start..timer_end)
   end
 
@@ -63,6 +59,19 @@ class Timer < ActiveRecord::Base
     timers = self.time_sheet.timers.on(self.start_date.to_date)
     unless timers.empty?
       timers.first.stop
+    end
+  end
+
+  def timer_start
+    start_time
+  end
+
+  def timer_end
+    # make sure range end is greater or equal than range start
+    if Time.current < start_time
+      start_time
+    else
+      Time.current.change(sec: 0)
     end
   end
 
