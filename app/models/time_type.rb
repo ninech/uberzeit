@@ -19,7 +19,7 @@ class TimeType < ActiveRecord::Base
   end
 
   def is_absence?
-    !!absence
+    not is_work?
   end
 
   def is_vacation?
