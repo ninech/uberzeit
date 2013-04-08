@@ -9,6 +9,10 @@ describe SummarizeTimeSheet do
     FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :vacation, time_sheet: @time_sheet)
   end
 
+  def compensation(start_date, end_date)
+    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :compensation, time_sheet: @time_sheet)
+  end
+
   context 'work' do
     before do
       @time_sheet = FactoryGirl.create(:time_sheet)
@@ -58,6 +62,7 @@ describe SummarizeTimeSheet do
 
       vacation '2013-02-11', '2013-02-13'
       vacation '2013-03-25', '2013-03-28'
+      compensation '2013-03-29', '2013-03-29'
 
       summarize = SummarizeTimeSheet.new(@time_sheet, 2013, 1.month)
       @rows, @total = summarize.absence
@@ -66,6 +71,10 @@ describe SummarizeTimeSheet do
 
     it 'returns the total absence time for a type' do
       @total[TEST_TIME_TYPES[:vacation].id].should eq(7*8.5.hours)
+    end
+
+    it 'ignores the calculation factor defined in the time type' do
+      @total[TEST_TIME_TYPES[:compensation].id].should eq(8.5.hours)
     end
 
     context 'for each row' do
