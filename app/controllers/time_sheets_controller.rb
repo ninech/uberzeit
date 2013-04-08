@@ -67,7 +67,11 @@ class TimeSheetsController < ApplicationController
 
   def timer
     active_timer = @time_sheet.timers.on(@day).first
-    @timer = active_timer.duration(@day)
+    @timer =  if active_timer.nil?
+                0
+              else
+                active_timer.duration(@day)
+              end
   end
 
   private
