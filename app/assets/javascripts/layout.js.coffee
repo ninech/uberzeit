@@ -8,11 +8,15 @@ $(document)
   .foundation('tooltips')
 
 $ ->
-  # Timepicker
-  $('input.time').timepicker({
-    dropdown: false,
-    timeFormat: 'HH:mm'
-  })
+
+  window.init_picktime = () ->
+    # Timepicker
+    $('input.time').timepicker({
+      dropdown: false,
+      timeFormat: 'HH:mm'
+    })
+
+  window.init_picktime()
 
   # Toggler
   # make sure we have only one toggle listener active
@@ -61,12 +65,13 @@ $ ->
   init_pickdate()
 
   # Ajax modals / reveal
-  $(document).on 'click', '.remote-reveal', () ->
+  $(document).on 'click', '.remote-reveal', (event) ->
     element = $('#' + $(this).data('reveal-id'))
     element.find('span.ajax-content').remove()
     content_element = element.append('<span class="ajax-content"></span>')
     content_element.find('span.ajax-content').load $(this).data('reveal-url'), () ->
       init_pickdate()
+      init_picktime()
 
 
   $(document).on 'mouseover', '.has-tip', ->

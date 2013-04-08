@@ -5,6 +5,13 @@ de:
       public_holiday: Feiertag
       time_type: Zeittyp
       absence: Absenz
+    attributes:
+      time_entry:
+        from_time: Von
+        to_time: Bis
+      timer:
+        from_time: Von
+        to_time: Bis
     errors:
       models:
         time_entry:
@@ -142,11 +149,11 @@ de:
       remaining: Verbleibend
       days: Tage
   time_entries:
+    edit:
+      edit_time: 'Zeit bearbeiten'
     form:
       cancel: Abbrechen
       add_entry: Neuer Eintrag
-      from_time: Von
-      to_time: Bis
       start_timer: Timer starten
       delete: Löschen
       save: Speichern
@@ -154,8 +161,6 @@ de:
     form:
       cancel: Abbrechen
       add_entry: Neuer Eintrag
-      from_time: Von
-      to_time: Bis
       start_timer: Timer starten
       delete: Löschen
       save: Speichern
@@ -183,8 +188,6 @@ de:
       add_time: Zeit hinzufügen
     add_time_modal:
       add_time: Zeit hinzufügen
-    edit_time_modal:
-      edit_time: Zeit bearbeiten
     show:
       overtime: Überzeit
       total: Total
