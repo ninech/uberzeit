@@ -43,7 +43,7 @@ describe TimeEntry do
   context 'for multiple entries' do
     before do
       @entry1 = FactoryGirl.create(:time_entry, time_type: :work, start_time: '2013-01-23 9:00:00 +0000', end_time: '2013-01-23 12:00:00 +0000')
-      @entry2 = FactoryGirl.create(:time_entry, time_type: :break, start_time: '2013-01-23 12:00:00 +0000', end_time: '2013-01-23 12:30:00 +0000')
+      @entry2 = FactoryGirl.create(:time_entry, time_type: :compensation, start_time: '2013-01-23 12:00:00 +0000', end_time: '2013-01-23 12:30:00 +0000')
       @entry3 = FactoryGirl.create(:time_entry, time_type: :work, start_time: '2013-01-23 12:30:00 +0000', end_time: '2013-01-24 00:00:00 +0000')
       @entry4 = FactoryGirl.create(:time_entry, time_type: :work, start_time: '2013-01-24 9:30:00 +0000', end_time: '2013-01-24 12:30:00 +0000')
     end

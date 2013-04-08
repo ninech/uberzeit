@@ -53,7 +53,7 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     TEST_TIME_TYPES = {}
-    %w{work vacation break paid_absence onduty}.each do |time_type|
+    %w{work vacation compensation paid_absence onduty}.each do |time_type|
       TEST_TIME_TYPES[time_type.to_sym] = FactoryGirl.create("time_type_#{time_type}", name: "test_#{time_type}")
     end
   end

@@ -6,7 +6,10 @@ class TimeChunkCollection
     @chunks = chunks
   end
 
-  def total
+  # calculation_factor_override allows to override the calculation factor defined in time type
+  # e.g. when you are interested solely in absence time (and not in the time it counts towards the net working time)
+  def total(calculation_factor_override = nil)
+    @calculation_factor_override = calculation_factor_override
     total_for_time_chunks + total_for_date_chunks
   end
 
@@ -42,7 +45,7 @@ class TimeChunkCollection
 
   def total_for_time_chunks
     time_chunks.inject(0.0) do |sum,chunk|
-      sum + chunk.effective_duration
+      sum + effective_duration(chunk.duration, chunk.time_type)
     end
   end
 
@@ -82,8 +85,18 @@ class TimeChunkCollection
 
   def date_chunk_to_planned_working_time(date, chunk)
     user = chunk.time_sheet.user
-    calculation_factor = chunk.time_type.calculation_factor
     # date chunks (from absences) are calculated independent of the workload, cf. redmine #5596
-    calculation_factor * CalculatePlannedWorkingTime.new(date.to_range, user, fulltime: true).total
+    duration = CalculatePlannedWorkingTime.new(date.to_range, user, fulltime: true).total
+    effective_duration(duration, chunk.time_type)
+  end
+
+  def effective_duration(duration, time_type)
+    calculation_factor =  if @calculation_factor_override.nil?
+                            time_type.calculation_factor
+                          else
+                            @calculation_factor_override
+                          end
+
+    duration * calculation_factor
   end
 end

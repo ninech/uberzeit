@@ -5,27 +5,25 @@ FactoryGirl.define do
     sequence(:name) { |n| "time_type#{n}" }
     is_work false
     is_vacation false
-    absence false
     calculation_factor 1.0
 
     factory :time_type_work do
       is_work true
     end
 
+    factory :time_type_onduty do
+      is_work true
+    end
+
     factory :time_type_vacation do
       is_vacation true
-      absence true
     end
 
-    factory :time_type_onduty do
-    end
-
-    factory :time_type_break do
+    factory :time_type_compensation do
       calculation_factor 0
     end
 
     factory :time_type_paid_absence do
-      absence true
     end
 
     factory :invalid_time_type do
