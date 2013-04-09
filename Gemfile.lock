@@ -1,18 +1,18 @@
 GIT
+  remote: git://github.com/fnando/i18n-js.git
+  revision: eeec14066b50f72876aa789c9b1f226172452798
+  branch: master
+  specs:
+    i18n-js (2.1.2)
+      i18n
+
+GIT
   remote: git@git.nine.ch:nine-ldap.git
   revision: 00dfc14c3cef7ae6f2d83348b0ae9ea38c6b991d
   tag: 0.0.13
   specs:
     nine-ldap (0.0.13)
       net-ldap
-
-GIT
-  remote: git@github.com:fnando/i18n-js.git
-  revision: eeec14066b50f72876aa789c9b1f226172452798
-  branch: master
-  specs:
-    i18n-js (2.1.2)
-      i18n
 
 GEM
   remote: https://rubygems.org/
