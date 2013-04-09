@@ -8,7 +8,7 @@ describe TimeSheetsController do
 
   context 'for non-signed in users' do
     it 'denies access' do
-      expect { get :show, id: sheet, date: Date.today }.to raise_error(CanCan::AccessDenied)
+      expect { get :show_date, id: sheet, date: Date.today }.to raise_error(CanCan::AccessDenied)
     end
   end
 
@@ -19,12 +19,12 @@ describe TimeSheetsController do
 
     describe 'GET "show"' do
       it 'assigns @time_sheet' do
-        get :show, id: sheet, date: Date.today
+        get :show_date, id: sheet, date: Date.today
         assigns(:time_sheet).should eq(sheet)
       end
 
       it 'renders the :show template' do
-        get :show, id: sheet, date: Date.today
+        get :show_date, id: sheet, date: Date.today
         response.should render_template :show
       end
     end
