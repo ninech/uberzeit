@@ -62,6 +62,7 @@ gem 'calendar_helper'
 
 # rails localization
 gem 'rails-i18n', branch: 'rails-3-x'
+gem 'i18n-js', :git => 'git@github.com:fnando/i18n-js.git', :branch => 'master'
 
 group :development, :test do
   gem 'mysql2'
