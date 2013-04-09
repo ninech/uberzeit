@@ -158,6 +158,8 @@ de:
       delete: Löschen
       save: Speichern
   timers:
+    edit:
+      edit_time: 'Zeit bearbeiten'
     form:
       cancel: Abbrechen
       add_entry: Neuer Eintrag
