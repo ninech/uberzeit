@@ -8,6 +8,9 @@
       </div>
     <% end %>
 
+    <%= link_to '', {action: :timer, date: @day}, remote: true, class: 'hide ajax timer' %>
+    <%= link_to '', {action: :time, date: @day}, remote: true, class: 'hide ajax time' %>
+
     <div class="timesheet">
       <div class="head">
         <%= l @weekdays.first, :format => :long %> – <%= l @weekdays.last, :format => :long %>
