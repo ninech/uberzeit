@@ -26,6 +26,11 @@
     );
   <% end %>
 
+  <script type="text/javascript">
+    // Required keys in javascript
+    I18n.defaultLocale = "<%= I18n.default_locale %>";
+    I18n.locale = "<%= I18n.locale %>";
+  </script>
 </head>
 <body class="content-<%= controller.controller_name %>">
   <%= render 'layouts/header' %>
