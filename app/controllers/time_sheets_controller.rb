@@ -5,10 +5,6 @@ class TimeSheetsController < ApplicationController
   before_filter :load_day
 
   def show
-    redirect_to action: :show_date, date: Date.current
-  end
-
-  def show_date
     @week     = @day.at_beginning_of_week..@day.at_end_of_week
     @weekdays = @week.to_a
     @year     = @week.min.year
