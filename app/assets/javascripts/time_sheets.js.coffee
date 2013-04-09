@@ -74,11 +74,11 @@ $ ->
     startEl = $("#{form_id} #time_entry_from_time")
     endEl   = $("#{form_id} #time_entry_to_time")
 
-    unless $("#{form_id} #time_entry_submit").val() == '<%=I18n.t('time_entries.form.save')%>'
+    unless $("#{form_id} #time_entry_submit").val() == I18n.t('time_entries.form.save')
       if endEl.val()
-        $("#{form_id} #time_entry_submit").val('<%=I18n.t('time_entries.form.add_entry')%>')
+        $("#{form_id} #time_entry_submit").val(I18n.t('time_entries.form.add_entry'))
       else
-        $("#{form_id} #time_entry_submit").val('<%=I18n.t('time_entries.form.start_timer')%>')
+        $("#{form_id} #time_entry_submit").val(I18n.t('time_entries.form.start_timer'))
 
     startValue = $.fn.timepicker.parseTime startEl.val()
     endValue   = $.fn.timepicker.parseTime endEl.val()
