@@ -17,7 +17,7 @@ Uberzeit::Application.routes.draw do
     resources :timers, only: [:show, :edit, :update, :destroy]
 
     member do
-      get '/date/:date', to: 'time_sheets#show'
+      get '/date/:date', to: 'time_sheets#show', as: :show_date
       put '/date/:date/stop-timer', to: 'time_sheets#stop_timer'
 
       get '/date/:date/time', to: 'time_sheets#time'
