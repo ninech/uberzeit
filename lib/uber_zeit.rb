@@ -13,4 +13,8 @@ module UberZeit
   def self.year_as_range(year)
     Date.new(year)...Date.new(year+1)
   end
+
+  def self.round(duration, smallest_unit = UberZeit::Config[:rounding])
+    (duration.to_f / smallest_unit.to_f).round * smallest_unit
+  end
 end

@@ -97,6 +97,6 @@ class TimeChunkCollection
                             @calculation_factor_override
                           end
 
-    duration * calculation_factor
+    UberZeit.round(duration * calculation_factor)
   end
 end

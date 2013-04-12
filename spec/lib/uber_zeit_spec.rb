@@ -27,4 +27,9 @@ describe UberZeit do
     range.min.should eq(Date.new(1986,1,1))
     range.max.should eq(Date.new(1986,12,31))
   end
+
+  it '::round' do
+    UberZeit.round(10.5.minutes, 1.minute).should eq(11.minutes)
+    UberZeit.round(77.minutes, 15.minutes).should eq(75.minutes)
+  end
 end

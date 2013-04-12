@@ -70,6 +70,23 @@ describe TimeChunkCollection do
     end
   end
 
+  context 'with chunks which have a type where the calculation factor is not 1.0' do
+    let(:special_time_type) { FactoryGirl.create(:time_type, calculation_factor: 1.1) }
+    let(:time_chunks) do
+      [
+        TimeChunk.new(starts: '2013-04-12 01:10:00'.to_time, ends: '2013-04-12 01:25:00'.to_time, time_type: special_time_type),
+        TimeChunk.new(starts: '2013-04-12 02:00:00'.to_time, ends: '2013-04-12 02:45:00'.to_time, time_type: special_time_type),
+        TimeChunk.new(starts: '2013-04-12 02:50:00'.to_time, ends: '2013-04-12 03:00:00'.to_time, time_type: special_time_type)
+      ]
+    end
+
+    describe '#total' do
+      it 'returns the total duration as the sum of the rounded duration of each chunk' do
+        collection.total.should eq(17.minutes + 50.minutes + 11.minutes)
+      end
+    end
+  end
+
   context 'overlapping absences' do
     describe '#total' do
       let(:user) { FactoryGirl.create(:user) }
