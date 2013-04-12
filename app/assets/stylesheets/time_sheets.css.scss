@@ -103,10 +103,14 @@
 
           .stop-timer {
             margin-right: 1em;
+            background-image: image-url('clock.gif');
+            background-repeat: no-repeat;
+            background-position: left center;
+            background-size: 1em;
+            padding-left: 1.2em;
 
             &.disabled {
-              color: #ccc;
-              cursor: default;
+              opacity: 0.5;
             }
           }
 

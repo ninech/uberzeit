@@ -126,8 +126,7 @@
                 <%= icon(:edit) %>
               </a>
               <a href="<%= url_for(action: :stop_timer, date: @day) %>" data-method="put" data-remote="true" class="stop-timer">
-                <i class="icon-repeat icon-spin timer"></i>
-                 Stop
+                Stop
               </a>
               <span class="timer-current" data-timer-id="<%=@timer.id%>" data-startdate="<%= @timer.start_date %>" data-starttime="<%= @timer.from_time %>"></span>
             </div>
