@@ -1,6 +1,8 @@
 class TimeEntry < ActiveRecord::Base
   include CommonEntry
 
+  default_scope order(:start_time)
+
   attr_accessible :start_time, :end_time, :start_date, :end_date, :from_time, :to_time
 
   before_validation :round_times

@@ -22,6 +22,14 @@ describe Absence do
     entry.duration.should eq(1.day)
   end
 
+  it 'returns the entries sorted by start date' do
+    # create the newer entry first
+    entry1 = FactoryGirl.create(:absence, start_date: '2013-01-04', end_date: '2013-01-04')
+    entry2 = FactoryGirl.create(:absence, start_date: '2013-01-03', end_date: '2013-01-03')
+
+    Absence.all.should eq([entry2,entry1])
+  end
+
   it 'tells you whether or not it\'s a whole day entry' do
     entry = FactoryGirl.create(:absence, start_date: '2013-01-03', end_date: '2013-01-04')
     entry.whole_day?.should be_true

@@ -12,6 +12,14 @@ describe TimeEntry do
     expect { TimeEntry.with_deleted.find(entry.id) }.to_not raise_error
   end
 
+  it 'returns the entries sorted by start time' do
+    # create the newer entry first
+    entry1 = FactoryGirl.create(:time_entry, start_time: '2013-01-23 12:00:00 +0000', end_time: '2013-01-23 13:00:00 +0000')
+    entry2 = FactoryGirl.create(:time_entry, start_time: '2013-01-23 9:00:00 +0000', end_time: '2013-01-23 12:00:00 +0000')
+
+    TimeEntry.all.should eq([entry2,entry1])
+  end
+
   it 'makes sure that the end time is after the start time' do
     time = '2013-01-01 8:00:00 +0000'.to_time
     FactoryGirl.build(:time_entry, start_time: time, end_time: time).should_not be_valid

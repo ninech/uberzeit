@@ -1,6 +1,8 @@
 class Absence < ActiveRecord::Base
   include CommonEntry
 
+  default_scope order(:start_date)
+
   attr_accessible :start_date, :end_date, :first_half_day, :second_half_day, :daypart
 
   validates_presence_of :start_date, :end_date
