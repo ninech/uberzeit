@@ -1,7 +1,7 @@
 $event_colors: #BBBBBB #5285f4 #c47ee1 #61aaf2 #ff9d40 #42ac47 #fa6654 #89c100 #d15894 #e3bc27 #43976d #cf1f2f;
 $public_holiday_color: #8283a9;
 
-$event_background_opacity: 1;
+$event_background_opacity: 0.75;
 
 @mixin event-background($color) {
   background: rgba($color, $event_background_opacity);
