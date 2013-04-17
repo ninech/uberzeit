@@ -2,7 +2,7 @@
   <div class="row">
     <div class="large-12 columns">
       <div class="logo">
-        <%= image_tag('logo.svg', size: '122x36') %>
+        <%= link_to image_tag('logo.svg', size: '122x36'), time_sheet_path(current_user.current_time_sheet) %>
       </div>
       <div class="navigation">
         <ul>
