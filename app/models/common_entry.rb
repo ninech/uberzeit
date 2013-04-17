@@ -5,7 +5,7 @@ module CommonEntry
     acts_as_paranoid
 
     belongs_to :time_sheet
-    belongs_to :time_type
+    belongs_to :time_type, with_deleted: true
 
     has_one :recurring_schedule, as: :enterable, dependent: :destroy
 

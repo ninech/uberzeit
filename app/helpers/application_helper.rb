@@ -42,6 +42,7 @@ module ApplicationHelper
         return color_index
       end
     end
+    return 0
   end
 
   def color_index_of_element(element)
