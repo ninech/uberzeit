@@ -19,7 +19,7 @@
       <tbody>
       <% @time_types.each do |time_type| %>
       <tr>
-        <td><%= icon(time_type.icon) %></td>
+        <td><%= icon_for_time_type(time_type) %></td>
         <td><%= time_type.name %></td>
         <td><%= t(".#{time_type.kind}") %></td>
         <td><%= number_with_precision(time_type.calculation_factor, strip_insignificant_zeros: true) %></td>
