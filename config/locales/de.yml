@@ -12,6 +12,14 @@ de:
       timer:
         from_time: Von
         to_time: Bis
+      time_type:
+        name: Bezeichnung
+        acquired_as: Wird erfasst als
+        calculation_factor: Berechnungsfaktor
+        confirm_delete: Löschen bestägigen
+        time_types: Zeittypen
+        calculation_factor: Berechnungsfaktor
+        is_vacation: Wird von Ferien abgezählt
     errors:
       models:
         time_entry:
@@ -56,19 +64,11 @@ de:
       edit_time_type: Zeittyp bearbeiten
     index:
       new_time_type: Neuer Zeittyp
-      name: Bezeichnung
       work: Arbeit
       acquired_as: Wird erfasst als
       absence: Absenz
-      calculation_factor: Berechnungsfaktor
-      confirm_delete: Löschen bestägigen
-      time_types: Zeittypen
     form:
       back: Zurück
-      calculation_factor: Berechnungsfaktor
-      name: Name
-      is_work: Gilt als tatsächliche Arbeitszeit
-      is_vacation: Wird von Ferien abgezählt
       acquired_as: Wird erfasst als
       work: Arbeit
       absence: Absenz

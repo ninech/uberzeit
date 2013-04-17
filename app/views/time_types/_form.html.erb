@@ -1,25 +1,13 @@
 <%= form_for(@time_type) do |f| %>
-  <% if @time_type.errors.any? %>
-    <div id="error_explanation" class="alert alert-error">
-      <h2><%= pluralize(@time_type.errors.count, "error") %> prohibited this entry from being saved:</h2>
-
-      <ul>
-      <% @time_type.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="row">
     <div class="small-12 columns">
-      <%= f.text_field :name, label: t('.name') %>
+      <%= f.text_field :name %>
     </div>
   </div>
 
   <div class="row">
     <div class="small-12 columns">
-      <%= f.text_field :calculation_factor, label: t('.calculation_factor'), class: 'small-2 columns' %>
+      <%= f.text_field :calculation_factor, class: 'small-2 columns' %>
     </div>
   </div>
 
@@ -31,7 +19,7 @@
 
   <div class="row">
     <div class="small-12 columns">
-      <%= f.check_box :is_vacation, label: t('.is_vacation') %>
+      <%= f.check_box :is_vacation %>
     </div>
   </div>
 

@@ -1,7 +1,7 @@
 <div class="row">
   <div class="small-12 columns">
     <h1>
-      <%= t '.time_types' %>
+      <%= TimeType.model_name.human %>
       <%= link_to icon('plus') + ' ' + t('.new_time_type'), new_time_type_path, class: 'button right' %>
     </h1>
 
@@ -14,9 +14,9 @@
     <table class="nice small-12 edit destroy">
       <thead>
         <tr>
-          <th><%= t '.name' %></th>
-          <th><%= t '.acquired_as' %></th>
-          <th><%= t '.calculation_factor' %></th>
+          <th><%= TimeType.human_attribute_name :name %></th>
+          <th><%= TimeType.human_attribute_name :acquired_as %></th>
+          <th><%= TimeType.human_attribute_name :calculation_factor %></th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
         </tr>
