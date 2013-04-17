@@ -20,6 +20,7 @@ de:
         time_types: Zeittypen
         calculation_factor: Berechnungsfaktor
         is_vacation: Wird von Ferien abgezählt
+        icon: Icon
       employment:
         workload: Arbeitspensum
         start_date: Start
