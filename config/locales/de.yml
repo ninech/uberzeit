@@ -87,6 +87,7 @@ de:
       acquired_as: Wird erfasst als
       work: Arbeit
       absence: Absenz
+      clear: zurücksetzen
     new:
       create_time_type: Zeittyp erstellen
   absences:
