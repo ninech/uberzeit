@@ -11,6 +11,12 @@
       <%= f.hidden_field :icon %>
       <%= list_available_icons(f.object.icon) %>
     </div>
+    <div class="small-2 columns">
+      <%= content_tag(:div, TimeType.human_attribute_name(:color_index)) %>
+      <%= f.hidden_field :color_index %>
+      <%= list_available_colors(f.object.color_index) %>
+    </div>
+    <div class="small-7 columns"></div>
   </div>
 
   <div class="row">

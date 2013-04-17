@@ -21,6 +21,7 @@ de:
         calculation_factor: Berechnungsfaktor
         is_vacation: Wird von Ferien abgezählt
         icon: Icon
+        color_index: Farbe
       employment:
         workload: Arbeitspensum
         start_date: Start
