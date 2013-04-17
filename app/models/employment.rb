@@ -6,7 +6,8 @@ class Employment < ActiveRecord::Base
   attr_accessible :end_date, :start_date, :workload
 
   validates_presence_of :user, :start_date, :workload
-  validates_inclusion_of :workload, :in => 1..100, :message => "must be within 1 and 100 percent"
+  validates_inclusion_of  :workload, :in => 1..100,
+                          :message => I18n.t('.error_outside_1_and_100_percent', scope: [:activerecord, :errors, :models, :employment])
 
   before_destroy :check_if_last
   before_save :resolve_conflicts

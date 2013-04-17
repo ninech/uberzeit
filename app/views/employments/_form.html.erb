@@ -1,29 +1,17 @@
 <%= form_for([@user,@employment]) do |f| %>
-  <% if @employment.errors.any? %>
-    <div id="error_explanation" class="alert alert-error">
-      <h2><%= pluralize(@employment.errors.count, "error") %> prohibited this entry from being saved:</h2>
-
-      <ul>
-      <% @employment.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="row">
     <div class="small-2 columns">
-      <%= f.text_field :workload, label: t('.workload') %>
+      <%= f.text_field :workload %>
     </div>
   </div>
 
   <div class="row from_to_date">
     <div class="small-6 columns">
-      <%= datefield(f, :start_date, t('.start_date'), f.object.start_date, :from_date) %>
+      <%= datefield(f, :start_date, Employment.human_attribute_name(:start_date), f.object.start_date, :from_date) %>
     </div>
 
     <div class="small-6 columns">
-      <%= datefield(f, :end_date, t('.end_date'), f.object.end_date, :to_date) %>
+      <%= datefield(f, :end_date, Employment.human_attribute_name(:end_date), f.object.end_date, :to_date) %>
     </div>
   </div>
 

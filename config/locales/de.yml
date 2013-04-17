@@ -20,6 +20,10 @@ de:
         time_types: Zeittypen
         calculation_factor: Berechnungsfaktor
         is_vacation: Wird von Ferien abgezählt
+      employment:
+        workload: Arbeitspensum
+        start_date: Start
+        end_date: Ende
     errors:
       models:
         time_entry:
@@ -34,6 +38,8 @@ de:
           attributes:
             ends_date:
               invalid_date: Ungültiges Datum
+        employment:
+          error_outside_1_and_100_percent: muss innerhalb 1 und 100 Prozent liegen
 
   model_successfully_created: "%{model} wurde erfolgreich erstellt."
   model_successfully_updated: "%{model} wurde erfolgreich aktualisiert."
@@ -67,6 +73,7 @@ de:
       work: Arbeit
       acquired_as: Wird erfasst als
       absence: Absenz
+      confirm_delete: Löschen?
     form:
       back: Zurück
       acquired_as: Wird erfasst als
@@ -110,10 +117,7 @@ de:
       list_of_users: Liste der Benutzer
       user: Benutzer
     show:
-      start: Start
       employments: Anstellungsverhältnisse
-      workload: Arbeitspensum
-      end: Ende
       add_employment: Neues Anstellungsverhältnis
       open-ended: unbefristet
       confirm_delete: Löschen?
@@ -211,6 +215,3 @@ de:
       add_employment: Anstellungsverhältnis hinzufügen
     form:
       back: Zurück
-      workload: Arbeitspensum
-      start_date: Start
-      end_date: Ende
