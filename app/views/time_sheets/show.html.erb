@@ -27,7 +27,7 @@
                 <span class="day">
                   <%= l weekday, format: :weekday %>
                   <% if @absences[weekday] %>
-                    <i class="icon-sign-blank event-color<%=color_index_of_array(@absences[weekday])%>"></i>
+                    <%= @absences[weekday].map{ |chunk| icon_for_time_type(chunk.time_type) }.join.html_safe %>
                   <% end %>
                   <% if @public_holidays[weekday] %>
                     <i class="icon-sign-blank public-holiday-color"></i>
@@ -78,7 +78,7 @@
           <% if @absences[@day] %>
             <% @absences[@day].each do |time_chunk| %>
             <li>
-              <i class="icon-sign-blank event-color<%=color_index_of_element(time_chunk)%>"></i><%= time_chunk.time_type %>
+              <%= icon_for_time_type(time_chunk.time_type) %><%= time_chunk.time_type %>
               <div class="right">
                 <small><%= part_of_day(time_chunk) %></small>
               </div>

@@ -8,7 +8,7 @@ class TimeType < ActiveRecord::Base
 
   default_scope order(:name)
 
-  attr_accessible :is_vacation, :is_work, :name, :absence, :calculation_factor
+  attr_accessible :is_vacation, :is_work, :name, :absence, :calculation_factor, :icon
   validates_presence_of :name, :calculation_factor
   validates_numericality_of :calculation_factor, greater_than_or_equal_to: 0
 

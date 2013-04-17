@@ -1,0 +1,15 @@
+.content-time-types {
+  .list-of-icons {
+    float: left;
+
+    li {
+      float: left;
+      cursor: pointer;
+      color: gray;
+
+      > .active {
+        color: black;
+      }
+    }
+  }
+}

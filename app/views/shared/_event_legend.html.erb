@@ -8,7 +8,7 @@
 
   <% time_types.each do |time_type| %>
   <li>
-    <i class="icon-sign-blank event-color<%= color_index_of_time_type(time_type) %>"></i>
+    <%= icon_for_time_type(time_type) %>
     <%= time_type %>
   </li>
   <% end %>

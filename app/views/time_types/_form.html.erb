@@ -6,6 +6,14 @@
   </div>
 
   <div class="row">
+    <div class="small-3 columns">
+      <%= content_tag(:span, TimeType.human_attribute_name(:icon)) %> <small><a href="#" class="clear-icon"><%= t '.clear' %></a></small>
+      <%= f.hidden_field :icon %>
+      <%= list_available_icons(f.object.icon) %>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="small-12 columns">
       <%= f.text_field :calculation_factor, class: 'small-2 columns' %>
     </div>
@@ -22,6 +30,7 @@
       <%= f.check_box :is_vacation %>
     </div>
   </div>
+
 
   <div class="row buttons">
     <div class="small-12 columns">

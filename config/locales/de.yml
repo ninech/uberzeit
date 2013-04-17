@@ -20,6 +20,7 @@ de:
         time_types: Zeittypen
         calculation_factor: Berechnungsfaktor
         is_vacation: Wird von Ferien abgezählt
+        icon: Icon
       employment:
         workload: Arbeitspensum
         start_date: Start
@@ -86,6 +87,7 @@ de:
       acquired_as: Wird erfasst als
       work: Arbeit
       absence: Absenz
+      clear: zurücksetzen
     new:
       create_time_type: Zeittyp erstellen
   absences:

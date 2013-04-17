@@ -1,19 +1,14 @@
-<div class="row">
-  <div class="small-12 columns">
+<div class="content-time-types row">
+  <div class="large-12 columns">
     <h1>
       <%= TimeType.model_name.human %>
       <%= link_to icon('plus') + ' ' + t('.new_time_type'), new_time_type_path, class: 'button right' %>
     </h1>
 
-    <% if notice %>
-    <div id="notice" class="alert-box success">
-      <%= notice %>
-    </div>
-    <% end %>
-
     <table class="nice small-12 edit destroy">
       <thead>
         <tr>
+          <th>&nbsp;</th>
           <th><%= TimeType.human_attribute_name :name %></th>
           <th><%= TimeType.human_attribute_name :acquired_as %></th>
           <th><%= TimeType.human_attribute_name :calculation_factor %></th>
@@ -24,6 +19,7 @@
       <tbody>
       <% @time_types.each do |time_type| %>
       <tr>
+        <td><%= icon(time_type.icon) %></td>
         <td><%= time_type.name %></td>
         <td><%= t(".#{time_type.kind}") %></td>
         <td><%= number_with_precision(time_type.calculation_factor, strip_insignificant_zeros: true) %></td>
