@@ -50,7 +50,7 @@ module ApplicationHelper
   end
 
   def color_index_of_time_type(time_type)
-    TimeType.all.index(time_type)
+    time_type.color_index
   end
 
   def datefield(form, object_name, label, date, css_class)
