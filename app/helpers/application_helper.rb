@@ -71,4 +71,18 @@ module ApplicationHelper
       "%02i:%02i" % [hours, minutes]
     end
   end
+
+  def icon_class_for_time_type(time_type)
+    if time_type.icon.blank?
+      'icon-sign-blank'
+    else
+      "icon-#{time_type.icon}"
+    end
+  end
+
+  def icon_for_time_type(time_type)
+    color_index = color_index_of_time_type(time_type)
+    icon = icon_class_for_time_type(time_type)
+    content_tag(:i, '', class: "event-color#{color_index} #{icon}")
+  end
 end
