@@ -114,13 +114,3 @@ $ ->
     $(this).find('a.edit-time-entry-link').show()
   ), ->
     $(this).find('a.edit-time-entry-link').hide()
-
-  $('li.weeksummary.overtime').hide()
-
-  $('li.weeksummary.total').mouseenter ->
-    $(this).hide()
-    $('li.weeksummary.overtime').show()
-
-  $('li.weeksummary.overtime').mouseleave ->
-    $(this).hide()
-    $('li.weeksummary.total').show()
