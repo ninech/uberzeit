@@ -8,9 +8,12 @@ class TimeType < ActiveRecord::Base
 
   default_scope order(:name)
 
-  attr_accessible :is_vacation, :is_work, :name, :absence, :calculation_factor, :icon, :color_index
-  validates_presence_of :name, :calculation_factor
-  validates_numericality_of :calculation_factor, greater_than_or_equal_to: 0
+  attr_accessible :is_vacation, :is_work, :name, :absence
+  attr_accessible :bonus_factor, :exclude_from_calculation, :icon, :color_index
+
+  validates_presence_of :name, :bonus_factor
+  validates_inclusion_of :exclude_from_calculation, in: [true, false]
+  validates_numericality_of :bonus_factor, greater_than_or_equal_to: 0
 
   validates_uniqueness_of_without_deleted :name
 
@@ -36,6 +39,10 @@ class TimeType < ActiveRecord::Base
     else
       :work
     end
+  end
+
+  def exclude_from_calculation?
+    !!exclude_from_calculation
   end
 
   def type_for_entries

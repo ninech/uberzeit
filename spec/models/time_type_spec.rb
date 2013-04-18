@@ -22,7 +22,7 @@ describe TimeType do
     FactoryGirl.build(:time_type, name: 'Work').should_not be_valid
   end
 
-  it 'has a valid calculation facotr' do
-    FactoryGirl.build(:time_type, calculation_factor: -1.5).should_not be_valid
+  it 'has a valid bonus factor' do
+    FactoryGirl.build(:time_type, bonus_factor: -1.5).should_not be_valid
   end
 end

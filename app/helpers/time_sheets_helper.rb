@@ -33,12 +33,12 @@ module TimeSheetsHelper
   end
 
   def standard_calculation?(time_type)
-    time_type.calculation_factor == 1.0
+    time_type.bonus_factor == 1.0
   end
 
-  def time_type_calculation_percentage(time_type)
-    calculation_percent = time_type.calculation_factor * 100.0
-    "%s%%" % number_with_precision(calculation_percent, precision: 2, strip_insignificant_zeros: true)
+  def time_type_bonus_percentage(time_type)
+    bonus_percent = time_type.bonus_factor * 100.0
+    "%s%%" % number_with_precision(bonus_percent, precision: 2, strip_insignificant_zeros: true)
   end
 
   private

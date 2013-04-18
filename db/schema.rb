@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130417151146) do
+ActiveRecord::Schema.define(:version => 20130418114646) do
 
   create_table "absences", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -124,14 +124,15 @@ ActiveRecord::Schema.define(:version => 20130417151146) do
 
   create_table "time_types", :force => true do |t|
     t.string   "name"
-    t.boolean  "is_work",            :default => false
-    t.boolean  "is_vacation",        :default => false
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.boolean  "is_work",                  :default => false
+    t.boolean  "is_vacation",              :default => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.datetime "deleted_at"
-    t.float    "calculation_factor", :default => 1.0
     t.string   "icon"
-    t.integer  "color_index",        :default => 0
+    t.integer  "color_index",              :default => 0
+    t.float    "bonus_factor",             :default => 0.0
+    t.boolean  "exclude_from_calculation", :default => false
   end
 
   create_table "timers", :force => true do |t|

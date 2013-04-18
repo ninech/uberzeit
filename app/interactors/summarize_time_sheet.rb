@@ -40,18 +40,20 @@ class SummarizeTimeSheet
     effective_worked_by_type  = TimeType.work.each_with_object({}) { |time_type,hash| hash[time_type.name] = @time_sheet.total(range, time_type) }
     absent                    = @time_sheet.total(range, TimeType.absence)
     absent_by_type            = TimeType.absence.each_with_object({}) { |time_type,hash| hash[time_type.name] = @time_sheet.total(range, time_type) }
+    time_bonus                = @time_sheet.bonus(range, TimeType.work)
     overtime                  = @time_sheet.overtime(range)
 
     evaluator[:sum] = (evaluator[:sum] || 0) + overtime
 
-    {range: range, planned: planned, effective_worked: effective_worked, absent: absent, overtime: overtime, sum: evaluator[:sum], effective_worked_by_type: effective_worked_by_type, absent_by_type: absent_by_type}
+    {range: range, planned: planned, effective_worked: effective_worked, absent: absent, time_bonus: time_bonus, overtime: overtime, sum: evaluator[:sum], effective_worked_by_type: effective_worked_by_type, absent_by_type: absent_by_type}
   end
 
   def summarize_absence_range(range, evaluator)
     summary = {range: range}
     TimeType.absence.each_with_object(summary) do |time_type, hash|
       chunks = @time_sheet.find_chunks(range, time_type)
-      total_for_time_type = chunks.total(1.0) # override calculation factor defined in timet type, we are interested in the amount of days
+      chunks.ignore_exclusion_flag = true # include time types with exclusion flag in calcualtion (e.g. compensation)
+      total_for_time_type = chunks.total
       evaluator[time_type.id] = (evaluator[time_type.id] || 0) + total_for_time_type
       hash[time_type.id] = total_for_time_type
     end

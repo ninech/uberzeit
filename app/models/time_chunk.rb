@@ -23,6 +23,10 @@ class TimeChunk
     range.duration
   end
 
+  def time_bonus
+    range.duration * time_type.bonus_factor
+  end
+
   def time_type
     @time_type ||= parent.time_type
   end
@@ -31,12 +35,16 @@ class TimeChunk
     parent.respond_to?(:whole_day?)
   end
 
-  def effective_duration
-    duration * time_type.calculation_factor
-  end
+  # def effective_duration
+  #   duration * time_type.calculation_factor
+  # end
 
   def method_missing(sym, *args, &block)
     @parent.send(sym, *args, &block)
+  end
+
+  def exclude_from_calculation?
+    time_type.exclude_from_calculation?
   end
 
   def parent_id

@@ -97,14 +97,14 @@
               <small>
                 <%= time_chunk.time_type %>
                 <% unless standard_calculation?(time_chunk.time_type) %>
-                (<%= time_type_calculation_percentage(time_chunk.time_type) %>)
+                <small>(<%= t '.time_bonus' %> <%= time_type_bonus_percentage(time_chunk.time_type) %>: <%= format_duration(time_chunk.time_bonus) %>)</small>
                 <% end %>
               </small>
               <div class="right">
                 <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="edit-time-modal" data-reveal-url="<%= edit_time_sheet_time_entry_path(@time_sheet, time_chunk.parent) %>">
                   <%= icon(:edit) %>
                 </a>
-                <%= format_duration(time_chunk.effective_duration) %>
+                <%= format_duration(time_chunk.duration) %>
               </div>
             </li>
           <% end %>
@@ -125,7 +125,7 @@
         <% end %>
           <li class="summary">
             <div class="right">
-              <%= t '.total' %> <span class="time active">0:00</span>
+              <%= t '.total' %> <span class="time total">0:00</span>
             </div>
           </li>
         </ul>

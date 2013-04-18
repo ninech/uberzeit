@@ -5,6 +5,7 @@
   <td><%= link_to row[:name], row[:link], target: '_blank' %></td>
   <td><span <% unless tooltip_effective_worked.blank? %>class="has-tip" data-tooltip="<%=tooltip_effective_worked%>"<% end %>><%= format_hours(row[:effective_worked]) %></span></td>
   <td><span <% unless tooltip_absent.blank? %>class="has-tip" data-tooltip="<%=tooltip_absent%>"<% end %>><%= format_hours(row[:absent]) %></span></td>
+  <td><%= format_hours(row[:time_bonus]) %></td>
   <td><%= format_hours(row[:planned]) %></td>
   <td><%= format_hours(row[:overtime]) %></td>
   <td><%= format_hours(row[:sum]) %></td>

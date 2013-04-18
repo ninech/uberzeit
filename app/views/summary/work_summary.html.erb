@@ -7,6 +7,7 @@
           <th>&nbsp;</th>
           <th class="value work"><%= t '.effective_worked' %></th>
           <th class="value work"><%= t '.absent' %></th>
+          <th class="value work"><%= t '.time_bonuses' %></th>
           <th class="value work"><%= t '.target' %></th>
           <th class="value work"><%= t '.overtime' %></th>
           <th class="value work"><%= t '.running_overtime' %></th>
@@ -20,6 +21,7 @@
           <% tooltip_absent = types_to_tooltip_table(row[:absent_by_type]) %>
           <td><span <% unless tooltip_effective_worked.blank? %>class="has-tip" data-tooltip="<%=tooltip_effective_worked%>"<% end %>><%= format_hours(row[:effective_worked]) %></span></td>
           <td><span <% unless tooltip_absent.blank? %>class="has-tip" data-tooltip="<%=tooltip_absent%>"<% end %>><%= format_hours(row[:absent]) %></span></td>
+          <td><%= format_hours(row[:time_bonus]) %></td>
           <td><%= format_hours(row[:planned]) %></td>
           <td><%= format_hours(row[:overtime]) %></td>
           <td><%= format_hours(row[:sum]) %></td>

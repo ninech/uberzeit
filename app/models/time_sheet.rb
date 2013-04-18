@@ -26,6 +26,16 @@ class TimeSheet < ActiveRecord::Base
     chunks.total
   end
 
+  def bonus(date_or_range, time_types = TimeType.scoped)
+    chunks = find_chunks(date_or_range, time_types)
+    chunks.bonus
+  end
+
+  def total_with_bonuses
+    chunks = find_chunks(date_or_range, time_types)
+    chunks.total + chunks.bonus
+  end
+
   def planned_work(date_or_range)
     calculator = CalculatePlannedWorkingTime.new(date_or_range, user)
     calculator.total
