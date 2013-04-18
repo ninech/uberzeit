@@ -31,13 +31,16 @@ describe TimeChunkCollection do
         collection.total.should eq(9.5.hours)
       end
 
-      it 'uses the factor in the time type of every chunk' do
-        time_type_onduty.should_receive(:calculation_factor).and_return(2.0)
-        collection.total.should eq(10.0.hours)
+      it 'allows to ignore the exclusion flag' do
+        collection.ignore_exclusion_flag = true
+        collection.total.should eq(10.5.hours)
       end
+    end
 
-      it 'allows to override the calculation factor for all chunks' do
-        collection.total(2.0).should eq(21.hours)
+    describe '#bonus' do
+      it 'uses the bonus factor of the time type to calculate the overall time bonus' do
+        time_type_onduty.should_receive(:bonus_factor).and_return(1.0)
+        collection.bonus.should eq(0.5.hours)
       end
     end
 
@@ -71,7 +74,7 @@ describe TimeChunkCollection do
   end
 
   context 'with chunks which have a type where the calculation factor is not 1.0' do
-    let(:special_time_type) { FactoryGirl.create(:time_type, calculation_factor: 1.1) }
+    let(:special_time_type) { FactoryGirl.create(:time_type, bonus_factor: 0.1) }
     let(:time_chunks) do
       [
         TimeChunk.new(starts: '2013-04-12 01:10:00'.to_time, ends: '2013-04-12 01:25:00'.to_time, time_type: special_time_type),
@@ -81,8 +84,14 @@ describe TimeChunkCollection do
     end
 
     describe '#total' do
-      it 'returns the total duration as the sum of the rounded duration of each chunk' do
-        collection.total.should eq(17.minutes + 50.minutes + 11.minutes)
+      it 'returns the total duration' do
+        collection.total.should eq(15.minutes + 45.minutes + 10.minutes)
+      end
+    end
+
+    describe '#bonus' do
+      it 'returns the bonus as the sum of the rounded time bonus of each chunk' do
+        collection.bonus.should eq(2.minutes + 5.minutes + 1.minute)
       end
     end
   end

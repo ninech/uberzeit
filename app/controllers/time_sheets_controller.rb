@@ -59,6 +59,7 @@ class TimeSheetsController < ApplicationController
 
   def time
     @time = @time_sheet.total(@day) + @time_sheet.duration_of_timers(@day)
+    @bonus = @time_sheet.bonus(@day)
   end
 
   def timer

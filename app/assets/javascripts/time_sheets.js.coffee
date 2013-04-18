@@ -38,7 +38,8 @@ $ ->
 
   window.updateTimes = ->
     $.getJSON $('.ajax.time').attr('href'), (data) ->
-      $('.time.active').text data.time
+      $('.time.total').text data.total
+      $('.time.bonus').text data.bonus
 
     $.getJSON $('.ajax.timer').attr('href'), (data) ->
       $('.timer-current').text data.timer

@@ -15,13 +15,13 @@ de:
       time_type:
         name: Bezeichnung
         acquired_as: Wird erfasst als
-        calculation_factor: Berechnungsfaktor
+        bonus_factor: Zeitzuschlagsfaktor
         confirm_delete: Löschen bestägigen
         time_types: Zeittypen
-        calculation_factor: Berechnungsfaktor
         is_vacation: Wird von Ferien abgezählt
         icon: Icon
         color_index: Farbe
+        exclude_from_calculation: Ausgeschlossen von Berechnungen
       employment:
         workload: Arbeitspensum
         start_date: Start
@@ -157,6 +157,7 @@ de:
       effective_worked: Arbeitszeit
       absent: Absenzzeit
       expand: Ausklappen
+      time_bonuses: Zeitzuschläge
     absence_summary:
       absence_summary: Absenzübersicht
       total: Total
@@ -213,6 +214,9 @@ de:
       tooltip:
         starts: 'Beginnt am'
         ends: 'Endet am'
+      time_bonus: Zeitzuschlag
+      time_bonuses: Zeitzuschläge
+
   employments:
     edit:
       edit_employment: Anstellungsverhältnis bearbeiten
