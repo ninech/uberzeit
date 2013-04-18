@@ -28,7 +28,10 @@ class AbsencesController < ApplicationController
   def new
     @time_types = TimeType.absence
     @absence.build_recurring_schedule
-
+    if params[:date]
+      @absence.start_date = params[:date].to_date
+      @absence.end_date = @absence.start_date
+    end
     respond_with(@absence, :layout => !request.xhr?)
   end
 

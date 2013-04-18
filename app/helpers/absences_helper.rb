@@ -12,8 +12,13 @@ module AbsencesHelper
       css_class = "has-absences public-holiday-bg#{suffix_for_daypart(public_holiday)}"
       [tooltips_for_day(day, :tooltip_content_for_public_holiday), {:class => css_class}]
     else
-      css_class = "not-a-workday" unless UberZeit.is_weekday_a_workday?(day)
-      [day.mday, {:class => css_class}]
+      css_classes = ["has-no-absences"]
+      css_classes << "not-a-workday" unless UberZeit.is_weekday_a_workday?(day)
+
+      # click on empty cell will open the add absence dialogue with the clicked date
+      link_add_entry = content_tag(:span, day.mday, :class => "has-reveal remote-reveal", :'data-reveal-id' => 'add-absence-modal', :'data-reveal-url' => new_time_sheet_absence_path(@time_sheet, date: day))
+
+      [link_add_entry, {:class => css_classes.join(' ')}]
     end
   end
 

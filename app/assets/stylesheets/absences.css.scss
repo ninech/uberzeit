@@ -137,10 +137,10 @@
       &.otherMonth.weekendDay {
         background-color: #f5f5f5;
       }
-      &.has-absences {
+      &.has-absences, &.has-no-absences {
         padding: 0;
 
-        .has-click-tip {
+        .has-click-tip, .has-reveal {
           display: block;
           padding: 0.58em 0.625em;
           text-align: center;
