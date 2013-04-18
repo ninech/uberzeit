@@ -33,7 +33,7 @@ module TimeSheetsHelper
   end
 
   def standard_calculation?(time_type)
-    time_type.bonus_factor == 1.0
+    time_type.bonus_factor == 0.0
   end
 
   def time_type_bonus_percentage(time_type)
