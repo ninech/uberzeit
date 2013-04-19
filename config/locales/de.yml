@@ -133,8 +133,8 @@ de:
       confirm_delete: Löschen?
   layouts:
     reports_navigation:
-      work_summary: Arbeitsübersicht
-      absence_summary: Absenzenübersicht
+      my_work_summary: Meine Arbeitszeit
+      my_absences_summary: Meine Absenzen
     header:
       manage: Verwalten
       absences: Absenzen
