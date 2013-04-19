@@ -37,6 +37,14 @@ Uberzeit::Application.routes.draw do
     end
   end
 
+  resources :summaries, controller: 'overall_summary', only: [] do
+    member do
+      get '/vacation', action: 'overall_summary#vacation'
+    end
+  end
+
+  match '/summaries/vacation', to: 'overall_summary#vacation'
+
   scope "/manage" do
     resources :public_holidays
 

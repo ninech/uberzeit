@@ -16,4 +16,8 @@ class Team < ActiveRecord::Base
   def has_member?(user)
     members.include?(user)
   end
+
+  def leaders_and_members
+    leaders + members
+  end
 end
