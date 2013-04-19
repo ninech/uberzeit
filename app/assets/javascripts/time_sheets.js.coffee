@@ -37,11 +37,10 @@ $ ->
 
 
   window.updateTimes = ->
-    $.getJSON $('.ajax.time').attr('href'), (data) ->
+    $.getJSON $('.ajax.summary_for_date').attr('href'), (data) ->
       $('.time.total').text data.total
       $('.time.bonus').text data.bonus
 
-    $.getJSON $('.ajax.timer').attr('href'), (data) ->
       $('.timer-current').text data.timer
       # disable stop timer link if there is no timer duration (e.g. timer in future)
       if $('.timer-current').text() == "00:00"

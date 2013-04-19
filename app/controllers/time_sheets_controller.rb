@@ -57,12 +57,10 @@ class TimeSheetsController < ApplicationController
     render json: {}
   end
 
-  def time
-    @time = @time_sheet.total(@day) + @time_sheet.duration_of_timers(@day)
+  def summary_for_date
+    @total = @time_sheet.total(@day) + @time_sheet.duration_of_timers(@day)
     @bonus = @time_sheet.bonus(@day)
-  end
 
-  def timer
     active_timer = @time_sheet.timers.on(@day).first
     @timer =  if active_timer.nil?
                 0

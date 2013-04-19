@@ -8,8 +8,7 @@
       </div>
     <% end %>
 
-    <%= link_to '', {action: :timer, date: @day}, remote: true, class: 'hide ajax timer' %>
-    <%= link_to '', {action: :time, date: @day}, remote: true, class: 'hide ajax time' %>
+    <%= link_to '', {action: :summary_for_date, date: @day}, remote: true, class: 'hide ajax summary_for_date' %>
 
     <div class="timesheet">
       <div class="head">

@@ -20,8 +20,7 @@ Uberzeit::Application.routes.draw do
       get '/date/:date', to: 'time_sheets#show', as: :show_date
       put '/date/:date/stop-timer', to: 'time_sheets#stop_timer'
 
-      get '/date/:date/time', to: 'time_sheets#time'
-      get '/date/:date/timer', to: 'time_sheets#timer'
+      get '/date/:date/summary', to: 'time_sheets#summary_for_date'
     end
 
     resources :absences do
