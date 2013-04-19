@@ -28,5 +28,15 @@ describe TimeSheetsController do
         response.should render_template :show
       end
     end
+
+
+    describe 'GET "summary_for_date"' do
+      it 'assigns @total, @timer and @bonus' do
+        get :summary_for_date, id: sheet, date: Date.today, format: :javascript
+        assigns(:total).should_not be_nil
+        assigns(:timer).should_not be_nil
+        assigns(:bonus).should_not be_nil
+      end
+    end
   end
 end
