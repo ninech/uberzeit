@@ -149,7 +149,7 @@ de:
       date: '%e. %a.'
       month: '%B'
     work_summary:
-      hours: Stunden
+      hours_minutes: Stunden:Minuten
       overtime: Überzeit
       target: Sollzeit
       running_overtime: Laufende Überzeit
