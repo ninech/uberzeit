@@ -1,4 +1,4 @@
-class CalculateTotalRedeemedVacation
+class CalculateRedeemedVacation
 
   def initialize(user, range)
     @user = user

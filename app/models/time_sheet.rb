@@ -47,7 +47,7 @@ class TimeSheet < ActiveRecord::Base
 
   def vacation(year)
     range = UberZeit.year_as_range(year)
-    redeemed = CalculateTotalRedeemedVacation.new(user, range)
+    redeemed = CalculateRedeemedVacation.new(user, range)
     redeemed.total
   end
 

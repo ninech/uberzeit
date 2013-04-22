@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CalculateTotalRedeemedVacation do
+describe CalculateRedeemedVacation do
   def vacation(start_date, end_date, daypart = :whole_day)
     FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :vacation, time_sheet: time_sheet, daypart: daypart)
   end
@@ -9,7 +9,7 @@ describe CalculateTotalRedeemedVacation do
     let(:user) { FactoryGirl.create(:user) }
     let(:time_sheet) { user.current_time_sheet }
     let(:range) { Date.new(2013,1,1)..Date.new(2013,12,31) }
-    let(:redeemed) { CalculateTotalRedeemedVacation.new(user, range) }
+    let(:redeemed) { CalculateRedeemedVacation.new(user, range) }
 
     before do
       vacation('2013-04-22', '2013-04-24')
