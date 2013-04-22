@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   rolify
   acts_as_paranoid
 
+  default_scope order(:name)
+
   attr_accessible :uid, :name, :time_zone, :birthday, :given_name
 
   before_save :set_default_time_zone
