@@ -26,7 +26,7 @@ class SummaryController < ApplicationController
   def work_summary_per_month
     @year = params[:year].to_i
     @month = params[:month].to_i
-    range = range_for_month(@year, @month)
+    range = UberZeit.month_as_range(@year, @month)
     summarize_time_sheet = SummarizeTimeSheet.new(@time_sheet, range, 1.week, range.min.monday) # start with monday!
 
     @rows, @total = summarize_time_sheet.work
@@ -63,7 +63,7 @@ class SummaryController < ApplicationController
   def absence_summary_per_month
     @year = params[:year].to_i
     @month = params[:month].to_i
-    range = range_for_month(@year, @month)
+    range = UberZeit.month_as_range(@year, @month)
     summarize_time_sheet = SummarizeTimeSheet.new(@time_sheet, range, 1.week, range.min.monday) # start with monday!
 
     @rows, @total = summarize_time_sheet.absence
@@ -74,11 +74,4 @@ class SummaryController < ApplicationController
     end
   end
 
-  private
-
-  def range_for_month(year, month)
-    first_day_of_month = Date.new(year, month)
-    last_day_of_month = first_day_of_month.end_of_month
-    first_day_of_month..last_day_of_month
-  end
 end

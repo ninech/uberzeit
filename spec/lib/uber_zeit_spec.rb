@@ -28,6 +28,12 @@ describe UberZeit do
     range.max.should eq(Date.new(1986,12,31))
   end
 
+  it '::month_as_range' do
+    range = UberZeit.month_as_range(1986,7)
+    range.min.should eq(Date.new(1986,7,1))
+    range.max.should eq(Date.new(1986,7,31))
+  end
+
   it '::round' do
     UberZeit.round(10.5.minutes, 1.minute).should eq(11.minutes)
     UberZeit.round(77.minutes, 15.minutes).should eq(75.minutes)

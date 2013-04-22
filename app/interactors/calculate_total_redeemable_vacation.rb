@@ -3,13 +3,10 @@ class CalculateTotalRedeemableVacation
   def initialize(user, year)
     @user = user
     @year = year
-    @total = 0.0
   end
 
   def total_redeemable_for_year(round_result_to_half_work_days = true)
-    total = employments_for_year.inject(0.0) do |sum, employment|
-      sum + redeemable_vacation_for_employment(employment)
-    end
+    total = employments_for_year.inject(0.0) { |sum, employment| sum + redeemable_vacation_for_employment(employment) }
 
     if round_result_to_half_work_days
       round_to_half_work_days(total)
