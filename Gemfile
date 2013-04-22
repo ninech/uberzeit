@@ -23,8 +23,6 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem 'turbolinks'
-gem 'jquery-turbolinks'
 gem 'foundation_rails_helper'
 
 # Authentication

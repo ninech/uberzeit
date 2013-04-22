@@ -3,17 +3,17 @@ $(document).on 'ajax:error', '.reveal-modal.time form', (xhr, status, error) ->
 
 $(document).on 'ajax:success', '.reveal-modal.time form', (data, status, xhr) ->
   $(this).foundation('reveal', 'close')
-  Turbolinks.visit(window.location)
+  window.location.reload()
 
 $(document).on 'click', '.stop-timer', ->
   unless $('.stop-timer').hasClass 'disabled'
     $('.stop-timer i').removeClass('icon-spin')
 
 $(document).on 'ajax:complete', '.stop-timer', (xhr, status) ->
-  Turbolinks.visit(window.location)
+  window.location.reload()
 
 $(document).on 'ajax:complete', '.delete-time-entry-link', (xhr, status) ->
-  Turbolinks.visit(window.location)
+  window.location.reload()
 
 $(document).on 'click', '.unhider', ->
   $('.' + $(this).data('hide-class')).hide()

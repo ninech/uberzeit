@@ -14,8 +14,6 @@
 //= require jquery_ujs
 //= require foundation/foundation
 //= require foundation/foundation.reveal
-//= require turbolinks
-//= require jquery.turbolinks
 //= require pickadate
 //= require pickadate.de-DE
 //= require i18n
