@@ -29,10 +29,11 @@ class LdapSync
       end
 
       def sync_user_attributes(user, person)
-        if user.name != person.displayname
-          user.name = person.displayname
-          user.save!
-        end
+        user.name = person.sn
+        user.given_name = person.givenname
+        user.birthday = Date.parse(person.birthdate) unless person.birthdate.nil?
+
+        user.save!
       end
 
     end

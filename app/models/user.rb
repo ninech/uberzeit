@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   rolify
   acts_as_paranoid
 
-  attr_accessible :uid, :name, :time_zone
+  attr_accessible :uid, :name, :time_zone, :birthday, :given_name
 
   before_save :set_default_time_zone
 
@@ -53,6 +53,14 @@ class User < ActiveRecord::Base
       user.uid = auth['uid']
       user.name = auth['info']['name'] if auth['info']
     end
+  end
+
+  def to_s
+    display_name
+  end
+
+  def display_name
+    "#{given_name} #{name}"
   end
 
   private
