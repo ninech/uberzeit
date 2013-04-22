@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130418114646) do
+ActiveRecord::Schema.define(:version => 20130422142231) do
 
   create_table "absences", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -153,6 +153,8 @@ ActiveRecord::Schema.define(:version => 20130418114646) do
     t.datetime "updated_at", :null => false
     t.datetime "deleted_at"
     t.string   "time_zone"
+    t.string   "given_name"
+    t.date     "birthday"
   end
 
   create_table "users_roles", :id => false, :force => true do |t|

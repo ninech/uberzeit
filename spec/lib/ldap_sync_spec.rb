@@ -20,7 +20,9 @@ describe LdapSync do
 
     @person = OpenStruct.new({
       id: 'tofue',
-      displayname: 'Tobias Fuenke',
+      sn: 'Fuenke',
+      givenname: 'Tobias',
+      birthdate: '1990-09-29',
       mail: 'tofue@nine.ch',
       cancelled?: false
     })
@@ -65,7 +67,9 @@ describe LdapSync do
   end
 
   it 'assigns the properties of the user correctly' do
-    @user.name.should eq(@person.displayname)
+    @user.birthday.should eq(Date.new(1990,9,29))
+    @user.given_name.should eq(@person.givenname)
+    @user.name.should eq(@person.sn)
   end
 
   it 'assigns the properties of the teams correctly' do
