@@ -1,4 +1,52 @@
+$(document).on 'ajax:error', '.reveal-modal.time form', (xhr, status, error) ->
+  console.log xhr, status, error
+
+$(document).on 'ajax:success', '.reveal-modal.time form', (data, status, xhr) ->
+  $(this).foundation('reveal', 'close')
+  Turbolinks.visit(window.location)
+
+$(document).on 'click', '.stop-timer', ->
+  unless $('.stop-timer').hasClass 'disabled'
+    $('.stop-timer i').removeClass('icon-spin')
+
+$(document).on 'ajax:complete', '.stop-timer', (xhr, status) ->
+  Turbolinks.visit(window.location)
+
+$(document).on 'ajax:complete', '.delete-time-entry-link', (xhr, status) ->
+  Turbolinks.visit(window.location)
+
+$(document).on 'click', '.unhider', ->
+  $('.' + $(this).data('hide-class')).hide()
+  $('.' + $(this).data('unhide-class')).show()
+  false
+
+$(document).on 'keyup', '.reveal-modal.time form #time_entry_to_time, .reveal-modal.time form #time_entry_from_time', ->
+  form_id = "#" + $(this).parents('form').attr('id')
+  startEl = $("#{form_id} #time_entry_from_time")
+  endEl   = $("#{form_id} #time_entry_to_time")
+
+  unless $("#{form_id} #time_entry_submit").val() == I18n.t('time_entries.form.save')
+    if endEl.val()
+      $("#{form_id} #time_entry_submit").val(I18n.t('time_entries.form.add_entry'))
+    else
+      $("#{form_id} #time_entry_submit").val(I18n.t('time_entries.form.start_timer'))
+
+  startValue = $.fn.timepicker.parseTime startEl.val()
+  endValue   = $.fn.timepicker.parseTime endEl.val()
+
+  if startValue and endValue
+    start = startEl.timepicker().format(startValue)
+    end   = endEl.timepicker().format(endValue)
+
+    value = timeDiff(start, end, undefined, undefined, false)
+  else
+    value = ""
+
+  $("#{form_id} .time-difference").html(value)
+
+
 $ ->
+  # Do not put event listeners inside here (they will add up through turbolinks)
 
   # global functions
   window.timeDiff = (start_time, end_time, start_date, end_date, countdown = true) ->
@@ -35,7 +83,6 @@ $ ->
 
     "#{prefix}#{diffHours}:#{diffMinutes}"
 
-
   window.updateTimes = ->
     $.getJSON $('.ajax.summary_for_date').attr('href'), (data) ->
       $('.time.total').text data.total
@@ -52,7 +99,6 @@ $ ->
         $('.stop-timer').removeClass 'disabled'
         $('.stop-timer').unbind 'click'
 
-
   # on page load
   updateTimes()
   if $('.timer-current').length > 0 && window.timerStarted != true
@@ -61,54 +107,6 @@ $ ->
       updateTimes()
       setTimeout arguments.callee, 30000
       ), 0)
-
-  # summary
-  $('.unhider').click ->
-    $('.' + $(this).data('hide-class')).hide()
-    $('.' + $(this).data('unhide-class')).show()
-    false
-
-  # events
-  $(document).on 'keyup', '.reveal-modal.time form #time_entry_to_time, .reveal-modal.time form #time_entry_from_time', ->
-    form_id = "#" + $(this).parents('form').attr('id')
-    startEl = $("#{form_id} #time_entry_from_time")
-    endEl   = $("#{form_id} #time_entry_to_time")
-
-    unless $("#{form_id} #time_entry_submit").val() == I18n.t('time_entries.form.save')
-      if endEl.val()
-        $("#{form_id} #time_entry_submit").val(I18n.t('time_entries.form.add_entry'))
-      else
-        $("#{form_id} #time_entry_submit").val(I18n.t('time_entries.form.start_timer'))
-
-    startValue = $.fn.timepicker.parseTime startEl.val()
-    endValue   = $.fn.timepicker.parseTime endEl.val()
-
-    if startValue and endValue
-      start = startEl.timepicker().format(startValue)
-      end   = endEl.timepicker().format(endValue)
-
-      value = timeDiff(start, end, undefined, undefined, false)
-    else
-      value = ""
-
-    $("#{form_id} .time-difference").html(value)
-
-  $('.reveal-modal.time form').on 'ajax:error', (xhr, status, error) ->
-    console.log xhr, status, error
-
-  $(document).on 'ajax:success', '.reveal-modal.time form', (data, status, xhr) ->
-    $(this).foundation('reveal', 'close')
-    Turbolinks.visit(window.location)
-
-  $('.stop-timer').bind 'click', ->
-    unless $('.stop-timer').hasClass 'disabled'
-      $('.stop-timer i').removeClass('icon-spin')
-
-  $('.stop-timer').bind 'ajax:complete', (xhr, status) ->
-    Turbolinks.visit(window.location)
-
-  $('.delete-time-entry-link').bind 'ajax:complete', (xhr, status) ->
-    Turbolinks.visit(window.location)
 
   $('.entries ul li').hover (->
     $(this).find('a.edit-time-entry-link').show()

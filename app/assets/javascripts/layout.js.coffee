@@ -7,6 +7,26 @@ $(document)
   })
   .foundation('tooltips')
 
+# ===> Event Listeners
+# Bind event listeneners OUTSIDE of $(document).ready (cf. Turbolinks Troubleshooting)
+$(document).on 'click', '.toggle', (element) ->
+  $('#' + $(this).data('toggle-target')).toggle()
+
+$(document).on 'click', '.remote-reveal', (event) ->
+  element = $('#' + $(this).data('reveal-id'))
+  element.find('span.ajax-content').remove()
+  content_element = element.append('<span class="ajax-content"></span>')
+  content_element.find('span.ajax-content').load $(this).data('reveal-url'), () ->
+    init_pickdate()
+    init_picktime()
+
+$(document).on 'mouseover', '.has-tip', ->
+    $(this).popover
+      trigger: 'hover'
+      content: $(this).data('tooltip')
+      fadeSpeed: 0
+
+# ===> Document Ready
 $ ->
 
   window.init_picktime = () ->
@@ -17,13 +37,6 @@ $ ->
     })
 
   window.init_picktime()
-
-  # Toggler
-  # make sure we have only one toggle listener active
-  # (turbolinks will execute jQuery.ready with every request)
-  $(document).off 'click', '.toggle'
-  $(document).on 'click', '.toggle', (element) ->
-    $('#' + $(this).data('toggle-target')).toggle()
 
   # Pickadate
   window.init_pickdate = () ->
@@ -54,28 +67,10 @@ $ ->
         this.setDateLimit(fromDate)
 
     # Set initial dates (to isolate Rails' locale from Pickadate locale)
-    pickadate_from = picker_from.data('pickadate')
-    if(pickadate_from && picker_from.data('year'))
-      pickadate_from.setDate(picker_from.data('year'),picker_from.data('month'),picker_from.data('day'))
-
-    pickadate_to = picker_to.data('pickadate')
-    if(pickadate_to && picker_to.data('year'))
-      pickadate_to.setDate(picker_to.data('year'),picker_to.data('month'),picker_to.data('day'))
+    $("input[data-month]").each (i, date_input) ->
+      date_input = $(date_input)
+      pickadate = date_input.data('pickadate')
+      if(pickadate)
+        pickadate.setDate(date_input.data('year'),date_input.data('month'),date_input.data('day'))
 
   init_pickdate()
-
-  # Ajax modals / reveal
-  $(document).on 'click', '.remote-reveal', (event) ->
-    element = $('#' + $(this).data('reveal-id'))
-    element.find('span.ajax-content').remove()
-    content_element = element.append('<span class="ajax-content"></span>')
-    content_element.find('span.ajax-content').load $(this).data('reveal-url'), () ->
-      init_pickdate()
-      init_picktime()
-
-
-  $(document).on 'mouseover', '.has-tip', ->
-    $(this).popover
-      trigger: 'hover'
-      content: $(this).data('tooltip')
-      fadeSpeed: 0
