@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="small-12 columns">
+    <table class="nice small-12">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th><%= t '.taken_in_month', month: @month_date.strftime('%B'), year: @month_date.year %></th>
+          <th><%= t '.remaining' %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @rows.each do |row| %>
+        <tr class="summary-row" >
+          <td><%= row[:user] %></td>
+          <td><%= format_work_days(row[:redeemed_this_month]) %></td>
+          <td><%= format_work_days(row[:remaining]) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

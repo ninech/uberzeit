@@ -163,6 +163,10 @@ de:
       total: Total
       remaining: Verbleibend
       days: Tage
+  overall_summary:
+    vacation:
+      taken_in_month: 'Bezogen im %{month} %{year}'
+      remaining: Restliches Guthaben
   time_entries:
     edit:
       edit_time: 'Zeit bearbeiten'
