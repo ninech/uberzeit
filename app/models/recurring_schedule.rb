@@ -84,19 +84,15 @@ class RecurringSchedule < ActiveRecord::Base
 
     date_min = recurring_schedule_date_range.min
     date_max = [recurring_schedule_date_range.max, occurrences_date_range.max].min
-    cursor = date_min
-    while cursor <= date_max
-      unless has_exception_date_in_range?(exceptions, cursor...cursor+interval)
-        occurrence_start_time = start_time_of_associated_entry.change(year: cursor.year, month: cursor.month, day: cursor.day)
-        occurrence_end_time = occurrence_start_time + duration
+    each_date_between(date_min, date_max) do |cursor|
+      next if has_exception_date_in_range?(exceptions, cursor...cursor+interval)
+      occurrence_start_time = start_time_of_associated_entry.change(year: cursor.year, month: cursor.month, day: cursor.day)
+      occurrence_end_time = occurrence_start_time + duration
 
-        occurrence_range = (occurrence_start_time..occurrence_end_time)
-        if occurrence_range.intersects_with_duration?(occurrences_date_range)
-          occurrences << occurrence_start_time
-        end
+      occurrence_range = (occurrence_start_time..occurrence_end_time)
+      if occurrence_range.intersects_with_duration?(occurrences_date_range)
+        occurrences << occurrence_start_time
       end
-
-      cursor += interval
     end
 
     occurrences
@@ -110,5 +106,11 @@ class RecurringSchedule < ActiveRecord::Base
   def exceptions_in_range_by_date(range)
     key_value_array = exception_dates.in(range).map {|exception| [exception.date.to_s, exception]}
     Hash[key_value_array]
+  end
+
+  def each_date_between(date, date_end, &block)
+    begin
+      yield(date)
+    end while (date += interval) <= date_end
   end
 end
