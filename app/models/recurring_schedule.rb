@@ -83,7 +83,7 @@ class RecurringSchedule < ActiveRecord::Base
     occurrences = []
 
     cursor = recurring_schedule_date_range.min
-    while cursor <= recurring_schedule_date_range.max && cursor <= occurrences_date_range.max
+    while cursor <= [recurring_schedule_date_range.max, occurrences_date_range.max].min
       unless has_exception_date_in_range?(exceptions, cursor...cursor+interval)
         occurrence_start_time = start_time_of_associated_entry.change(year: cursor.year, month: cursor.month, day: cursor.day)
         occurrence_end_time = occurrence_start_time + duration
