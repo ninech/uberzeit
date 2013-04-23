@@ -43,24 +43,43 @@ Uberzeit::Application.routes.draw do
     end
   end
 
-  match '/summaries/vacation', to: 'overall_summary#vacation'
+  # namespace :summaries do
+  #   resources :work
+  #   resources :absences
+  #   resources :vacations
+  # end
 
-  scope "/manage" do
-    resources :public_holidays
+  # resources :users do
+  #   resources :summaries do
+  #     resource :work do
 
-    resources :users do
-      member do
-        get 'edit'
-        put 'update'
+  #     end
+  #   end
+  # end
+
+  # match '/summaries/vacation', to: 'overall_summary#vacation'
+
+  resources :public_holidays
+
+  resources :users, only: [:index, :show] do
+    resources :employments
+
+    namespace :summaries do
+      resource :work, only: [:show] do
+         get '/:year(/:month)', action: :show
       end
-      collection do
-        get 'index'
-      end
-      resources :employments
     end
 
-    resources :time_types
+    collection do
+      namespace :summaries do
+        resource :work, only: [:index] do
+          get '/:year(/:month)', action: :index
+        end
+      end
+    end
   end
+
+  resources :time_types
 
   match '/auth/:provider/callback', to: 'sessions#create'
 

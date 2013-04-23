@@ -1,11 +1,11 @@
-class SummarizeTimeSheet
-  def initialize(time_sheet, year_or_range, interval, start_from = nil)
-    @time_sheet = time_sheet
+class SummarizeUser
+  def initialize(user, year_or_range, interval, start_from = nil)
     if year_or_range.kind_of?(Range)
       @range = year_or_range
     else
       @range = UberZeit.year_as_range(year_or_range)
     end
+    @time_sheet = user.current_time_sheet
     @interval = interval
     @start_from = start_from
   end
@@ -23,7 +23,7 @@ class SummarizeTimeSheet
   private
 
   def summary
-    @ranges = SummarizeTimeSheet.generate_ranges(@range, @interval, @start_from)
+    @ranges = self.class.generate_ranges(@range, @interval, @start_from)
     @rows, @total = summarize
 
     return @rows, @total

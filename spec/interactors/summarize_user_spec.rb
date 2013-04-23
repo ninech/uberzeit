@@ -1,26 +1,26 @@
 require 'spec_helper'
 
-describe SummarizeTimeSheet do
+describe SummarizeUser do
   def work(start_time, end_time)
-    FactoryGirl.create(:time_entry, start_time: start_time.to_time, end_time: end_time.to_time, time_type: :work, time_sheet: @time_sheet)
+    FactoryGirl.create(:time_entry, start_time: start_time.to_time, end_time: end_time.to_time, time_type: :work, time_sheet: @user.current_time_sheet)
   end
 
   def vacation(start_date, end_date)
-    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :vacation, time_sheet: @time_sheet)
+    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :vacation, time_sheet: @user.current_time_sheet)
   end
 
   def compensation(start_date, end_date)
-    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :compensation, time_sheet: @time_sheet)
+    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :compensation, time_sheet: @user.current_time_sheet)
   end
 
   context 'work' do
     before do
-      @time_sheet = FactoryGirl.create(:time_sheet)
+      @user = FactoryGirl.create(:user, with_sheet: true)
 
       work '2013-03-25 09:00:00', '2013-03-25 12:00:00'
       work '2013-03-25 12:30:00', '2013-03-25 18:00:00'
 
-      summarize = SummarizeTimeSheet.new(@time_sheet, 2013, 1.month)
+      summarize = SummarizeUser.new(@user, 2013, 1.month)
       @rows, @total = summarize.work
       @month_row = @rows[2]
     end
@@ -58,13 +58,13 @@ describe SummarizeTimeSheet do
 
   context 'absence' do
     before do
-      @time_sheet = FactoryGirl.create(:time_sheet)
+      @user = FactoryGirl.create(:user, with_sheet: true)
 
       vacation '2013-02-11', '2013-02-13'
       vacation '2013-03-25', '2013-03-28'
       compensation '2013-03-29', '2013-03-29'
 
-      summarize = SummarizeTimeSheet.new(@time_sheet, 2013, 1.month)
+      summarize = SummarizeUser.new(@user, 2013, 1.month)
       @rows, @total = summarize.absence
       @month_row = @rows[2]
     end

@@ -144,39 +144,50 @@ de:
       public_holidays: Feiertage
       time_types: Zeittypen
       users: Benutzer
-  summary:
+  summaries:
     formats:
-      date: '%e. %a.'
-      month: '%B'
-    work_summary:
-      hours_minutes: Stunden:Minuten
-      overtime: Überzeit
-      target: Sollzeit
-      running_overtime: Laufende Überzeit
-      work_summary: Arbeitsübersicht
-      effective_worked: Arbeitszeit
-      absent: Absenzzeit
-      expand: Ausklappen
-      time_bonuses: Zeitzuschläge
-    absence_summary:
-      absence_summary: Absenzübersicht
-      total: Total
-      remaining: Verbleibend
-      days: Tage
-  overall_summary:
-    header:
-      month: Monat
-      year: Jahr
-      everyone: Alle
-      show: Anzeigen
-      users: Mitarbeiter
-      time_frame: Zeitraum
-    vacation:
-      taken_in_month: 'Bezogen im %{month} %{year}'
-      taken_in_year: 'Bezogen im Jahr %{year}'
-      remaining: Restliches Guthaben
-      title: Ferien Mitarbeiter
-      days: Tage
+        date: '%e. %a.'
+        month: '%B'
+    works:
+      effective_worked: BLUB
+      columns:
+        effective_worked: Arbeitszeit
+        absent: Absenzzeit
+        time_bonuses: Zeitzuschläge
+        running_overtime: Laufende Überzeit
+        target: Sollzeit
+        overtime: Überzeit
+      works:
+        expand: Ausklappen
+  #   work_summary:
+  #     hours_minutes: Stunden:Minuten
+  #     overtime: Überzeit
+  #     target: Sollzeit
+  #     running_overtime: Laufende Überzeit
+  #     work_summary: Arbeitsübersicht
+  #     effective_worked: Arbeitszeit
+  #     absent: Absenzzeit
+  #     expand: Ausklappen
+  #     time_bonuses: Zeitzuschläge
+  #   absence_summary:
+  #     absence_summary: Absenzübersicht
+  #     total: Total
+  #     remaining: Verbleibend
+  #     days: Tage
+  # overall_summary:
+  #   header:
+  #     month: Monat
+  #     year: Jahr
+  #     everyone: Alle
+  #     show: Anzeigen
+  #     users: Mitarbeiter
+  #     time_frame: Zeitraum
+  #   vacation:
+  #     taken_in_month: 'Bezogen im %{month} %{year}'
+  #     taken_in_year: 'Bezogen im Jahr %{year}'
+  #     remaining: Restliches Guthaben
+  #     title: Ferien Mitarbeiter
+  #     days: Tage
   time_entries:
     edit:
       edit_time: 'Zeit bearbeiten'
