@@ -25,6 +25,7 @@ class SummarizeTimeSheet
   def summary
     @ranges = SummarizeTimeSheet.generate_ranges(@range, @interval, @start_from)
     @rows, @total = summarize
+
     return @rows, @total
   end
 
@@ -35,7 +36,7 @@ class SummarizeTimeSheet
   end
 
   def summarize_work_range(range, evaluator)
-    planned                   =  @time_sheet.planned_work(range)
+    planned                   = @time_sheet.planned_work(range)
     effective_worked          = @time_sheet.total(range, TimeType.work)
     effective_worked_by_type  = TimeType.work.each_with_object({}) { |time_type,hash| hash[time_type.name] = @time_sheet.total(range, time_type) }
     absent                    = @time_sheet.total(range, TimeType.absence)
@@ -52,7 +53,7 @@ class SummarizeTimeSheet
     summary = {range: range}
     TimeType.absence.each_with_object(summary) do |time_type, hash|
       chunks = @time_sheet.find_chunks(range, time_type)
-      chunks.ignore_exclusion_flag = true # include time types with exclusion flag in calcualtion (e.g. compensation)
+      chunks.ignore_exclusion_flag = true # include time types with exclusion flag in calculation (e.g. compensation)
       total_for_time_type = chunks.total
       evaluator[time_type.id] = (evaluator[time_type.id] || 0) + total_for_time_type
       hash[time_type.id] = total_for_time_type

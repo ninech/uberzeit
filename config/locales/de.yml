@@ -164,9 +164,19 @@ de:
       remaining: Verbleibend
       days: Tage
   overall_summary:
+    header:
+      month: Monat
+      year: Jahr
+      everyone: Alle
+      show: Anzeigen
+      users: Mitarbeiter
+      time_frame: Zeitraum
     vacation:
       taken_in_month: 'Bezogen im %{month} %{year}'
+      taken_in_year: 'Bezogen im Jahr %{year}'
       remaining: Restliches Guthaben
+      title: Ferien Mitarbeiter
+      days: Tage
   time_entries:
     edit:
       edit_time: 'Zeit bearbeiten'

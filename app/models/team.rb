@@ -18,6 +18,6 @@ class Team < ActiveRecord::Base
   end
 
   def leaders_and_members
-    leaders + members
+    (leaders + members).uniq
   end
 end
