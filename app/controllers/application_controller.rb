@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
 
   around_filter :set_time_zone
+  before_filter :ensure_logged_in
 
   unless Rails.env.test?
     rescue_from CanCan::AccessDenied do |error|
@@ -13,6 +14,12 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def ensure_logged_in
+    if current_user.nil?
+      raise CanCan::AccessDenied, I18n.t(:not_logged_in)
+    end
+  end
 
   # U Can't touch this! Rails may leak zone to other request from another user in same thread
   # http://ilikestuffblog.com/2011/02/03/how-to-set-a-time-zone-for-each-request-in-rails/

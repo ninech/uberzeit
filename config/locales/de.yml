@@ -224,3 +224,6 @@ de:
       add_employment: Anstellungsverhältnis hinzufügen
     form:
       back: Zurück
+
+  not_logged_in: 'Sie sind nicht eingeloggt.'
+
