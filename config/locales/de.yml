@@ -157,8 +157,21 @@ de:
         running_overtime: Laufende Überzeit
         target: Sollzeit
         overtime: Überzeit
-      works:
-        expand: Ausklappen
+      shared:
+        header:
+          month: Monat
+          year: Jahr
+          everyone: Alle
+          show: Anzeigen
+          users: Mitarbeiter
+          time_frame: Zeitraum
+      work:
+        year:
+          title: Arbeitszeit Übersicht
+          unit: Stunden:Minuten
+        month:
+          title: Arbeitszeit Übersicht
+          unit: Stunden:Minuten
   #   work_summary:
   #     hours_minutes: Stunden:Minuten
   #     overtime: Überzeit

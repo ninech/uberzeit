@@ -74,8 +74,8 @@ Uberzeit::Application.routes.draw do
     collection do
       namespace :summaries do
         namespace :work do
-          get '/:year', to: 'work#year'
-          get '/:year/:month', to: 'work#month'
+          get '/:year(/team/:team_id)', to: 'work#year'
+          get '/:year/:month(/team/:team_id)', to: 'work#month'
         end
       end
     end

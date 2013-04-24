@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="small-12 columns">
+   <h1><%= title %> <small><%= unit%></small></h1>
+
+    <%= form_tag do %>
+    <div class="row">
+      <div class="small-5 columns">
+
+        <div class="row">
+          <div class="small-3 columns"><%= t '.users' %></div>
+          <div class="small-9 columns end"><%= select_tag :team, "<option value=\"\">#{t('.everyone')}</option>".html_safe + options_from_collection_for_select(@teams, :id, :name, @team ? @team.id : nil) %></div>
+        </div>
+
+        <div class="row">
+          <div class="small-3 columns"><%= t '.time_frame' %></div>
+          <div class="small-4 columns"><% unless @month.nil? %><%= select_month(@month) %><% end %></div>
+          <div class="small-5 columns end"><%= select_year(@year, start_year: Date.current.year-1, end_year: Date.current.year+1) %></div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 columns">
+            <%= hidden_field_tag :base_url, base_url %>
+            <%= button_tag t('.show'), id: 'summary_header_submit', type: 'button', class: 'tiny button' %>
+          </div>
+        </div>
+      </div>
+      <div class="small-7 columns end">
+        <dl class="sub-nav view-buttons">
+          <dd <%= 'class=active' if not @month.nil? %>>
+            <%= link_to t('.month'), url_for(action: :month, year: @year, month: @month || Date.current.month, team_id: @team) %>
+          </dd>
+          <dd <%= 'class=active' if @month.nil? %>>
+            <%= link_to t('.year'), url_for(action: :year, year: @year, team_id: @team) %>
+          </dd>
+        </dl>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
