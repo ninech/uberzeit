@@ -1,8 +1,4 @@
-<div class="row">
-  <div class="small-12 columns">
-   <h1><%= t '.title' %> <small><%= t '.unit' %></small></h1>
- </div>
-</div>
+<%= render partial: 'summaries/work/shared/header', locals: {base_url: "/users/#{@user.id}/summaries/work/:year", title: t('.title'), unit: t('.unit')} %>
 
 <div class="content-summary row">
   <div class="small-12 columns">
