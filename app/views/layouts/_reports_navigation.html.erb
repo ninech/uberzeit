@@ -5,6 +5,9 @@
         <dd<%= ' class=active' if controller.controller_name == 'my_work' %>>
           <%= link_to t('.my_work_summary'), user_summaries_work_year_path(current_user, Date.current.year) %>
         </dd>
+        <dd<%= ' class=active' if controller.controller_name == 'my_absences' %>>
+          <%= link_to t('.my_absences_summary'), user_summaries_absences_year_path(current_user, Date.current.year) %>
+        </dd>
         <dd<%= ' class=active' if controller.controller_name == 'work' %>>
           <%= link_to t('.work_summary'), month_summaries_work_users_path(Date.current.year, Date.current.month) %>
         </dd>
