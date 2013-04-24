@@ -167,10 +167,17 @@ de:
           time_frame: Zeitraum
       work:
         year:
-          title: Arbeitszeit Übersicht
+          title: Arbeitszeit Mitarbeiter
           unit: Stunden:Minuten
         month:
-          title: Arbeitszeit Übersicht
+          title: Arbeitszeit Mitarbeiter
+          unit: Stunden:Minuten
+      my_work:
+        year:
+          title: Meine Arbeitszeit
+          unit: Stunden:Minuten
+        month:
+          title: Meine Arbeitszeit
           unit: Stunden:Minuten
   #   work_summary:
   #     hours_minutes: Stunden:Minuten
