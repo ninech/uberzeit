@@ -4,7 +4,6 @@ class TimeType < ActiveRecord::Base
 
   scope :absence,   where(is_work: false)
   scope :work,      where(is_work: true)
-  scope :vacation,  where(is_vacation: true)
 
   default_scope order(:name)
 
@@ -16,6 +15,11 @@ class TimeType < ActiveRecord::Base
   validates_numericality_of :bonus_factor, greater_than_or_equal_to: 0
 
   validates_uniqueness_of_without_deleted :name
+
+  def self.vacation
+    # there can be only one vacation time type
+    scoped.where(is_vacation: true).first
+  end
 
   def to_s
     name

@@ -1,0 +1,43 @@
+
+<div class="row">
+  <div class="small-12 columns">
+    <table class="nice small-12">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <% TimeType.absence.each do |time_type| %>
+          <th class="value absence"><%= time_type.name %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @entries.each_pair do |range, entry| %>
+        <% user, summary = entry.first %>
+        <tr class="summary-row">
+          <td><%= range %></td>
+          <% TimeType.absence.each do |time_type| %>
+          <td><%= format_work_days(summary[time_type]) %></td>
+          <% end %>
+        </tr>
+        <% end %>
+        <tr class="total">
+          <td><%= t '.total' %></td>
+          <% TimeType.absence.each do |time_type| %>
+          <td><%= format_work_days(@table.total(time_type)) %></td>
+          <% end %>
+        </tr>
+        <tr class="total">
+          <td><%= t('.remaining') %></td>
+          <% TimeType.absence.each do |time_type| %>
+          <td>
+            <% unless @remaining[time_type].blank? %>
+              <%= format_work_days(@remaining[time_type]) %>
+            <% end %>
+          </td>
+          <% end %>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
