@@ -25,4 +25,5 @@ class Summaries::Work::MyWorkController < ApplicationController
     @table = Summarize::TableWithInterval.new(Summarize::Summarizer::Work, [@user], @range, 1.week, @range.min.monday)
     @entries = @table.entries
   end
+
 end

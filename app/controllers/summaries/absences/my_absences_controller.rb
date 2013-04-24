@@ -16,4 +16,12 @@ class Summaries::Absences::MyAbsencesController < ApplicationController
     @remaining = {TimeType.vacation => vacation_remaining}
   end
 
+  def month
+    @year = params[:year].to_i
+    @month = params[:month].to_i
+    @range = UberZeit.month_as_range(@year, @month)
+    @table = Summarize::TableWithInterval.new(Summarize::Summarizer::Absences, [@user], @range, 1.week, @range.min.monday)
+    @entries = @table.entries
+  end
+
 end

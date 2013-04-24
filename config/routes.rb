@@ -63,6 +63,7 @@ Uberzeit::Application.routes.draw do
       end
       namespace :absences do
         get '/:year', to: 'my_absences#year', as: :year
+        get '/:year/:month', to: 'my_absences#month', as: :month
       end
     end
 

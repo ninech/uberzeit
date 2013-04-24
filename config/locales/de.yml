@@ -158,14 +158,6 @@ de:
         running_overtime: Laufende Überzeit
         target: Sollzeit
         overtime: Überzeit
-      shared:
-        header:
-          month: Monat
-          year: Jahr
-          everyone: Alle
-          show: Anzeigen
-          users: Mitarbeiter
-          time_frame: Zeitraum
       work:
         year:
           title: Arbeitszeit Mitarbeiter
@@ -187,7 +179,19 @@ de:
           unit: Tage
           total: Total
           remaining: Verbleibend
+        month:
+          title: Meine Absenzen
+          unit: Tage
+          total: Total
 
+    shared:
+      header:
+        month: Monat
+        year: Jahr
+        everyone: Alle
+        show: Anzeigen
+        users: Mitarbeiter
+        time_frame: Zeitraum
   time_entries:
     edit:
       edit_time: 'Zeit bearbeiten'

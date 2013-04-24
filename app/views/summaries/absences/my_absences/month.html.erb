@@ -15,29 +15,18 @@
         <% @entries.each_pair do |range, entry| %>
         <% user, summary = entry.first %>
         <tr>
-          <td><%= label_for_month(range.min) %></td>
+          <td><%= label_for_range(range) %></td>
           <% TimeType.absence.each do |time_type| %>
           <td><%= format_work_days(summary[time_type]) %></td>
           <% end %>
         </tr>
         <% end %>
-        <tr>
+        <tr class="total">
           <td><%= t '.total' %></td>
           <% TimeType.absence.each do |time_type| %>
           <td><%= format_work_days(@table.total(time_type)) %></td>
           <% end %>
         </tr>
-        <tr class="total">
-          <td><%= t('.remaining') %></td>
-          <% TimeType.absence.each do |time_type| %>
-          <td>
-            <% unless @remaining[time_type].blank? %>
-              <%= format_work_days(@remaining[time_type]) %>
-            <% end %>
-          </td>
-          <% end %>
-        </tr>
-
       </tbody>
     </table>
   </div>
