@@ -3,7 +3,7 @@
     <div class="small-12 columns">
       <dl class="sub-nav">
         <dd<%= ' class=active' if controller.controller_name == 'my_work' %>>
-          <%= link_to t('.my_work_summary'), user_summaries_work_year_path(current_user, Date.current.year) %>
+          <%= link_to t('.my_work_summary'), user_summaries_work_month_path(current_user, Date.current.year, Date.current.month) %>
         </dd>
         <dd<%= ' class=active' if controller.controller_name == 'my_absence' %>>
           <%= link_to t('.my_absence_summary'), user_summaries_absence_year_path(current_user, Date.current.year) %>
