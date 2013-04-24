@@ -1,5 +1,4 @@
 class Summaries::Work::WorkController < ApplicationController
-  include SummariesHelper
 
   before_filter :load_team
   before_filter :load_teams
