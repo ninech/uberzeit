@@ -1,2 +1,0 @@
-module Summaries::WorksHelper
-end

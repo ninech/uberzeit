@@ -1,4 +1,4 @@
-module SummaryHelper
+module SummariesHelper
   def format_work_days(duration)
     text = number_with_precision(duration.to_work_days, precision: 1, strip_insignificant_zeros: true)
     content_tag(:span, text, style: "color: #{color_for_duration(duration)}")

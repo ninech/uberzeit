@@ -1,5 +1,5 @@
 class Summaries::Work::WorkController < ApplicationController
-  include SummaryHelper
+  include SummariesHelper
 
   load_and_authorize_resource :user
 

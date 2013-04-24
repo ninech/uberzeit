@@ -61,7 +61,7 @@ Uberzeit::Application.routes.draw do
 
   resources :public_holidays
 
-  resources :users, only: [:index, :show] do
+  resources :users, except: [:destroy] do
     resources :employments
 
     namespace :summaries do
