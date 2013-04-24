@@ -65,15 +65,17 @@ Uberzeit::Application.routes.draw do
     resources :employments
 
     namespace :summaries do
-      resource :work, only: [:show] do
-         get '/:year(/:month)', action: :show
+      namespace :work do
+        get '/:year', to: 'my_work#year'
+        get '/:year/:month', to: 'my_work#month'
       end
     end
 
     collection do
       namespace :summaries do
-        resource :work, only: [:index] do
-          get '/:year(/:month)', action: :index
+        namespace :work do
+          get '/:year', to: 'work#year'
+          get '/:year/:month', to: 'work#month'
         end
       end
     end

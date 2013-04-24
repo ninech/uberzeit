@@ -1,5 +1,5 @@
-class Summarize::User::Work
-  attr_reader :total
+class Summarize::Summarizer::Work
+  attr_reader :summary
 
   def initialize(user, range)
     @user = user
@@ -12,17 +12,13 @@ class Summarize::User::Work
   private
 
   def calculate
-    @total = summarize_work_range
+    @summary ||= summarize
   end
 
-  SUMMARIZE_ATTRIBUTES = [:range, :planned_work, :effective_worked, :effective_worked_by_type, :absent, :absent_by_type, :time_bonus, :overtime]
+  SUMMARIZE_ATTRIBUTES = [:planned_work, :effective_worked, :effective_worked_by_type, :absent, :absent_by_type, :time_bonus, :overtime]
 
-  def summarize_work_range
+  def summarize
     Hash[SUMMARIZE_ATTRIBUTES.collect { |summarize_attribute| [summarize_attribute, method(summarize_attribute).call] }]
-  end
-
-  def range
-    @range
   end
 
   def planned_work

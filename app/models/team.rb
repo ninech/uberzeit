@@ -1,4 +1,6 @@
 class Team < ActiveRecord::Base
+  include Enumerable
+
   acts_as_paranoid
 
   attr_accessible :uid, :name
@@ -19,5 +21,9 @@ class Team < ActiveRecord::Base
 
   def leaders_and_members
     (leaders + members).uniq
+  end
+
+  def each
+    leaders_and_members.each { |user| yield(user) }
   end
 end

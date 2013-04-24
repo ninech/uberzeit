@@ -16,4 +16,9 @@ describe Team do
     team.has_member?(team.members.first).should be_true
     team.has_member?(team.members.second).should be_true
   end
+
+  it 'acts as an enumerable' do
+    team = FactoryGirl.create(:team, leaders_count: 1, members_count: 2)
+    team.collect { |user| user }.length.should eq(3)
+  end
 end

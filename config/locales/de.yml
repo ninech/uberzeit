@@ -148,7 +148,7 @@ de:
     formats:
         date: '%e. %a.'
         month: '%B'
-    works:
+    work:
       effective_worked: BLUB
       columns:
         effective_worked: Arbeitszeit
