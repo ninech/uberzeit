@@ -5,14 +5,6 @@ Uberzeit::Application.routes.draw do
 
   resources :time_sheets, only: [:show] do
 
-    member do
-      get '/work_summary/year/:year', to: 'summary#work_summary', as: 'work_summary'
-      get '/work_summary_per_month/year/:year/month/:month', to: 'summary#work_summary_per_month'
-
-      get '/absence_summary/year/:year', to: 'summary#absence_summary', as: 'absence_summary'
-      get '/absence_summary_per_month/year/:year/month/:month', to: 'summary#absence_summary_per_month'
-    end
-
     resources :recurring_entries, except: [:show, :index]
     resources :timers, only: [:show, :edit, :update, :destroy]
 
@@ -66,16 +58,16 @@ Uberzeit::Application.routes.draw do
 
     namespace :summaries do
       namespace :work do
-        get '/:year', to: 'my_work#year'
-        get '/:year/:month', to: 'my_work#month'
+        get '/:year', to: 'my_work#year', as: :year
+        get '/:year/:month', to: 'my_work#month', as: :month
       end
     end
 
     collection do
       namespace :summaries do
         namespace :work do
-          get '/:year(/team/:team_id)', to: 'work#year'
-          get '/:year/:month(/team/:team_id)', to: 'work#month'
+          get '/:year(/team/:team_id)', to: 'work#year', as: :year
+          get '/:year/:month(/team/:team_id)', to: 'work#month', as: :month
         end
       end
     end

@@ -135,6 +135,7 @@ de:
     reports_navigation:
       my_work_summary: Meine Arbeitszeit
       my_absences_summary: Meine Absenzen
+      work_summary: Arbeitszeit Mitarbeiter
     header:
       manage: Verwalten
       absences: Absenzen
