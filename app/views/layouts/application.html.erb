@@ -34,7 +34,7 @@
 </head>
 <body class="content-<%= controller.controller_name %>">
   <%= render 'layouts/header' %>
-  <% if request.fullpath =~ %r[^/manage] %>
+  <% if request.fullpath =~ %r[^(/public_holidays|/time_types)] %>
     <%= render 'layouts/manage_navigation' %>
   <% end %>
   <% if request.fullpath =~ %r[^*summary] %>
