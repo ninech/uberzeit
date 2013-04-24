@@ -13,7 +13,7 @@
       </thead>
       <tbody>
         <% @entries.each_pair do |user, summary| %>
-        <tr class="summary-row">
+        <tr>
           <td><%= user %></td>
           <% tooltip_effective_worked = types_to_tooltip_table(summary[:effective_worked_by_type]) %>
           <% tooltip_absent = types_to_tooltip_table(summary[:absent_by_type]) %>

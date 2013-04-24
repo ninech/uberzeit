@@ -17,7 +17,7 @@
       <tbody>
         <% @entries.each_pair do |range, entry| %>
         <% user, summary = entry.first %>
-        <tr class="summary-row">
+        <tr>
           <td><%= link_to label_for_month(range.min), action: :month, month: range.min.month %></td>
           <% tooltip_effective_worked = types_to_tooltip_table(summary[:effective_worked_by_type]) %>
           <td><span <% unless tooltip_effective_worked.blank? %>class="has-tip" data-tooltip="<%=tooltip_effective_worked%>"<% end %>><%= format_hours(summary[:effective_worked]) %></span></td>
