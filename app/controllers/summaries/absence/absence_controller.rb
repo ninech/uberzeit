@@ -1,4 +1,4 @@
-class Summaries::Absences::AbsencesController < ApplicationController
+class Summaries::Absence::AbsenceController < ApplicationController
 
   before_filter :load_team
   before_filter :load_teams

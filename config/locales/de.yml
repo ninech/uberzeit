@@ -134,8 +134,9 @@ de:
   layouts:
     reports_navigation:
       my_work_summary: Meine Arbeitszeit
-      my_absences_summary: Meine Absenzen
+      my_absence_summary: Meine Absenzen
       work_summary: Arbeitszeit Mitarbeiter
+      absences_summary: Absenzen Mitarbeiter
     header:
       manage: Verwalten
       absences: Absenzen
@@ -172,8 +173,8 @@ de:
         month:
           title: Meine Arbeitszeit
           unit: Stunden:Minuten
-    absences:
-      my_absences:
+    absence:
+      my_absence:
         year:
           title: Meine Absenzen
           unit: Tage
@@ -183,8 +184,17 @@ de:
           title: Meine Absenzen
           unit: Tage
           total: Total
+      absence:
+        year:
+          title: Absenzen Mitarbeiter
+          unit: Tage
+        month:
+          title: Absenzen Mitarbeiter
+          unit: Tage
 
     shared:
+      users_absence_table:
+          total: Total
       header:
         month: Monat
         year: Jahr

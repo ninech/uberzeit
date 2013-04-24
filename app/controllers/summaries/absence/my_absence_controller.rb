@@ -1,4 +1,4 @@
-class Summaries::Absences::MyAbsencesController < ApplicationController
+class Summaries::Absence::MyAbsenceController < ApplicationController
 
   load_and_authorize_resource :user
 

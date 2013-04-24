@@ -61,9 +61,9 @@ Uberzeit::Application.routes.draw do
         get '/:year', to: 'my_work#year', as: :year
         get '/:year/:month', to: 'my_work#month', as: :month
       end
-      namespace :absences do
-        get '/:year', to: 'my_absences#year', as: :year
-        get '/:year/:month', to: 'my_absences#month', as: :month
+      namespace :absence do
+        get '/:year', to: 'my_absence#year', as: :year
+        get '/:year/:month', to: 'my_absence#month', as: :month
       end
     end
 
@@ -74,9 +74,9 @@ Uberzeit::Application.routes.draw do
           get '/:year/:month(/team/:team_id)', to: 'work#month', as: :month
         end
 
-        namespace :absences do
-          get '/:year', to: 'absences#year', as: :year
-          get '/:year/:month', to: 'absences#month', as: :month
+        namespace :absence do
+          get '/:year', to: 'absence#year', as: :year
+          get '/:year/:month', to: 'absence#month', as: :month
         end
       end
     end

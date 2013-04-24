@@ -1,0 +1,30 @@
+<div class="content-summary row">
+  <div class="small-12 columns">
+    <table class="nice small-12">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <% TimeType.absence.each do |time_type| %>
+          <th><%= time_type.name %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @entries.each_pair do |user, summary| %>
+        <tr>
+          <td><%= user %></td>
+          <% TimeType.absence.each do |time_type| %>
+          <td><%= format_work_days(summary[time_type]) %></td>
+          <% end %>
+        </tr>
+        <% end %>
+        <tr class="total">
+          <td><%= t '.total' %></td>
+          <% TimeType.absence.each do |time_type| %>
+          <td><%= format_work_days(@table.total(time_type)) %></td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
