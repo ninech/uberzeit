@@ -29,28 +29,6 @@ Uberzeit::Application.routes.draw do
     end
   end
 
-  resources :summaries, controller: 'overall_summary', only: [] do
-    member do
-      get '/vacation', action: 'overall_summary#vacation'
-    end
-  end
-
-  # namespace :summaries do
-  #   resources :work
-  #   resources :absences
-  #   resources :vacations
-  # end
-
-  # resources :users do
-  #   resources :summaries do
-  #     resource :work do
-
-  #     end
-  #   end
-  # end
-
-  # match '/summaries/vacation', to: 'overall_summary#vacation'
-
   resources :public_holidays
 
   resources :users, except: [:destroy] do
