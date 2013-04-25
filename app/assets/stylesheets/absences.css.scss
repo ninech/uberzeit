@@ -3,7 +3,6 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import 'compass/css3/images';
-@import "event.popover";
 
 .content-absences {
 
@@ -20,14 +19,7 @@
   .year-navigation {
     float: right;
     margin: 0;
-
-    // span {
-    //   font-size: 1.2em;
-    // }
-
   }
-
-  @include event-popover;
 
   table.calendar {
 

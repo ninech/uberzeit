@@ -1,6 +1,7 @@
 <%
   edit = true if local_assigns[:edit].nil?
 %>
+<div class='event'>
 <% absences.each do |absence| %>
   <h1>
     <%= icon_for_time_type(absence.time_type).gsub('"', '\'') %> <%= absence.time_type.name %>
@@ -19,3 +20,4 @@
   <% end %>
   <hr>
 <% end %>
+</div>
