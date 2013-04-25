@@ -194,6 +194,8 @@ de:
           unit: in Tagen
         calendar:
           month_in_year: '%B %Y'
+          title: 'Kalenderansicht'
+          unit: ''
     vacation:
       vacation:
         year:
@@ -213,6 +215,7 @@ de:
       header:
         month: Monat
         year: Jahr
+        calendar: Kalender
         everyone: Alle
         show: Anzeigen
         users: Mitarbeiter

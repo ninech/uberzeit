@@ -51,7 +51,7 @@ module SummariesHelper
 
   def render_absences(absences)
     return '' if absences.nil?
-    absences.collect { |absence| render_absence(absence).html_safe }.join
+    absences.collect { |absence| render_absence(absence) }.join
   end
 
   def render_absence(absence)
