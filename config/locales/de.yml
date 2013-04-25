@@ -191,6 +191,18 @@ de:
         month:
           title: Absenzen Mitarbeiter
           unit: Tage
+    vacation:
+      vacation:
+        year:
+          title: Ferien Mitarbeiter
+          unit: Tage
+          taken: 'Beanspruchte Ferientage im Jahr %{year}'
+          remaining: 'Restliche Ferientage für %{year}'
+        month:
+          title: Ferien Mitarbeiter
+          unit: Tage
+          taken: 'Beansprucht im %{month} %{year}'
+          remaining: 'Restliche Ferientage nach %{month} %{year}'
 
     shared:
       users_absence_table:

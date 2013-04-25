@@ -1,15 +1,13 @@
+<%= render partial: 'summaries/shared/header', locals: {base_url: "/users/summaries/vacation/:year", title: t('.title'), unit: t('.unit')} %>
+
 <div class="row">
   <div class="small-12 columns">
     <table class="nice small-12">
       <thead>
         <tr>
           <th>&nbsp;</th>
-          <% if @view == :month %>
-            <th><%= t '.taken_in_month', month: l(@month_as_date, format: '%B'), year: @month_as_date.year %></th>
-          <% else %>
-            <th><%= t '.taken_in_year', year: @year %></th>
-          <% end %>
-          <th><%= t '.remaining' %></th>
+          <th><%= t '.taken', year: @year %></th>
+          <th><%= t '.remaining', year: @year %></th>
         </tr>
       </thead>
       <tbody>
