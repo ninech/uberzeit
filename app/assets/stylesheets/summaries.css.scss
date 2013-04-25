@@ -30,6 +30,10 @@
     border-collapse: collapse;
 
     tr {
+      th {
+        width: 30px;
+        height: 30px;
+      }
       td, th {
         border: 1px solid #CCC;
         text-align: center;
@@ -55,10 +59,6 @@
       }
     }
   }
-}
-
-.calendar {
-  padding: 0;
 }
 
 .calendar .event-container { // container
