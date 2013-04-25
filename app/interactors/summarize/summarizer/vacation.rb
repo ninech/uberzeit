@@ -16,11 +16,22 @@ class Summarize::Summarizer::Vacation
   end
 
   def summarize
-    total_redeemable= CalculateTotalRedeemableVacation.new(@user, @range.min.year).total_redeemable_for_year
-    redeemed = CalculateRedeemedVacation.new(@user, @range).total
-    remaining = total_redeemable - redeemed
+    year = @range.min.year
+    year_as_range = UberZeit.year_as_range(@range.min.year)
 
-    { total_redeemable: total_redeemable, redeemed: redeemed, remaining: remaining }
+
+    total_redeemable= CalculateTotalRedeemableVacation.new(@user, year).total_redeemable_for_year
+    redeemed_until =  if year_as_range.min < @range.min
+                        until_range = year_as_range.min...@range.min
+                        CalculateRedeemedVacation.new(@user, until_range).total
+                      else
+                        0
+                      end
+    redeemed = CalculateRedeemedVacation.new(@user, @range).total
+
+    remaining = total_redeemable - (redeemed + redeemed_until)
+
+    { total_redeemable: total_redeemable, redeemed: redeemed, redeemed_until: redeemed_until, remaining: remaining }
   end
 
   def sum_of_time_type(time_type)
