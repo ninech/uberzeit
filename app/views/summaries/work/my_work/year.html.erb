@@ -15,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @entries.each_pair do |range, entry| %>
+        <% @table.entries.each_pair do |range, entry| %>
         <% user, summary = entry.first %>
         <tr>
           <td><%= link_to label_for_month(range.min), action: :month, month: range.min.month %></td>

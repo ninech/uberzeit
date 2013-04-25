@@ -133,10 +133,11 @@ de:
       confirm_delete: Löschen?
   layouts:
     reports_navigation:
-      my_work_summary: Meine Arbeitszeit
-      my_absence_summary: Meine Absenzen
-      work_summary: Arbeitszeit Mitarbeiter
-      absences_summary: Absenzen Mitarbeiter
+      my_work: Meine Arbeitszeit
+      my_absence: Meine Absenzen
+      work: Arbeitszeit Mitarbeiter
+      absences: Absenzen Mitarbeiter
+      vacation: Ferien Mitarbeiter
     header:
       manage: Verwalten
       absences: Absenzen
@@ -162,45 +163,45 @@ de:
       work:
         year:
           title: Arbeitszeit Mitarbeiter
-          unit: Stunden:Minuten
+          unit: in Stunden:Minuten
         month:
           title: Arbeitszeit Mitarbeiter
-          unit: Stunden:Minuten
+          unit: in Stunden:Minuten
       my_work:
         year:
           title: Meine Arbeitszeit
-          unit: Stunden:Minuten
+          unit: in Stunden:Minuten
         month:
           title: Meine Arbeitszeit
-          unit: Stunden:Minuten
+          unit: in Stunden:Minuten
     absence:
       my_absence:
         year:
           title: Meine Absenzen
-          unit: Tage
+          unit: in Tagen
           total: Total
           remaining: Verbleibend
         month:
           title: Meine Absenzen
-          unit: Tage
+          unit: in Tagen
           total: Total
       absence:
         year:
           title: Absenzen Mitarbeiter
-          unit: Tage
+          unit: in Tagen
         month:
           title: Absenzen Mitarbeiter
-          unit: Tage
+          unit: in Tagen
     vacation:
       vacation:
         year:
           title: Ferien Mitarbeiter
-          unit: Tage
+          unit: in Tagen
           taken: 'Beanspruchte Ferientage im Jahr %{year}'
           remaining: 'Restliche Ferientage für %{year}'
         month:
           title: Ferien Mitarbeiter
-          unit: Tage
+          unit: in Tagen
           taken: 'Beansprucht im %{month} %{year}'
           remaining: 'Restliche Ferientage nach %{month} %{year}'
 

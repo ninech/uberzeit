@@ -2,11 +2,11 @@ class Summaries::Absence::MyAbsenceController < ApplicationController
 
   load_and_authorize_resource :user
 
+  before_filter :set_year
+
   def year
-    @year = params[:year].to_i
     @range = UberZeit.year_as_range(@year)
     @table = Summarize::TableWithInterval.new(Summarize::Summarizer::Absences, [@user], @range, 1.month)
-    @entries = @table.entries
 
     # calculate remaining vacation days
     vacation_taken = @table.total(TimeType.vacation)
@@ -17,11 +17,15 @@ class Summaries::Absence::MyAbsenceController < ApplicationController
   end
 
   def month
-    @year = params[:year].to_i
     @month = params[:month].to_i
     @range = UberZeit.month_as_range(@year, @month)
     @table = Summarize::TableWithInterval.new(Summarize::Summarizer::Absences, [@user], @range, 1.week, @range.min.monday)
-    @entries = @table.entries
+  end
+
+  private
+
+  def set_year
+    @year = params[:year].to_i
   end
 
 end

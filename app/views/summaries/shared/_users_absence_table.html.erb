@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @entries.each_pair do |user, summary| %>
+        <% @table.entries.each_pair do |user, summary| %>
         <tr>
           <td><%= user %></td>
           <% TimeType.absence.each do |time_type| %>

@@ -23,7 +23,7 @@ describe Summaries::Absence::MyAbsenceController do
       it 'assigns the correct instance variables' do
         get :year, user_id: user, year: year
         assigns(:year).should_not be_nil
-        assigns(:entries).should_not be_nil
+        assigns(:table).should_not be_nil
       end
 
       it 'renders the :year template' do
@@ -37,7 +37,7 @@ describe Summaries::Absence::MyAbsenceController do
         get :month, user_id: user, year: year, month: month
         assigns(:year).should_not be_nil
         assigns(:month).should_not be_nil
-        assigns(:entries).should_not be_nil
+        assigns(:table).should_not be_nil
       end
 
       it 'renders the :month template' do

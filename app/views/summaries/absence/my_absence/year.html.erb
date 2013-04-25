@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @entries.each_pair do |range, entry| %>
+        <% @table.entries.each_pair do |range, entry| %>
         <% user, summary = entry.first %>
         <tr>
           <td><%= label_for_month(range.min) %></td>

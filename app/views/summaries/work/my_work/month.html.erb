@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @entries.each_pair do |range, entry| %>
+        <% @table.entries.each_pair do |range, entry| %>
         <% user, summary = entry.first %>
         <tr>
           <td><%= link_to label_for_range(range), controller: '/time_sheets', action: 'show', id: user.current_time_sheet, date: range.min %></td>
