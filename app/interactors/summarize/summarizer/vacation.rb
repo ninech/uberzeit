@@ -1,6 +1,8 @@
 class Summarize::Summarizer::Vacation
   attr_reader :summary
 
+  SUMMARIZE_ATTRIBUTES = [:total_redeemable, :redeemed, :redeemed_until, :remaining]
+
   def initialize(user, range)
     @user = user
     @range = range
