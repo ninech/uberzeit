@@ -194,7 +194,7 @@ de:
           unit: in Tagen
         calendar:
           month_in_year: '%B %Y'
-          title: 'Kalenderansicht'
+          title: Absenzen Mitarbeiter
           unit: ''
     vacation:
       vacation:

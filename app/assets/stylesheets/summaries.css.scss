@@ -36,9 +36,19 @@
     border-collapse: collapse;
 
     tr {
+      td {
+        &.public-holiday {
+          background-color: rgb(229,229,237);
+        }
+      }
       th {
         width: 30px;
         height: 30px;
+
+        &.public-holiday {
+          background-color: rgb(189,189,208);
+          color: white;
+        }
       }
       td, th {
         border: 1px solid #CCC;
@@ -56,6 +66,10 @@
         &:first-child {
           width: auto;
           white-space: nowrap;
+        }
+
+        &.non-work-day {
+          background-color: #FFFFD8;
         }
 
         i {

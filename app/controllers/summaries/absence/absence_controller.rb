@@ -19,6 +19,9 @@ class Summaries::Absence::AbsenceController < ApplicationController
     @range = UberZeit.month_as_range(@year, @month)
     @days = @range.to_a
 
+    @public_holidays = Hash[@days.collect { |day| [day, PublicHoliday.on(day)] }]
+    @work_days = Hash[@days.collect { |day| [day, UberZeit.is_weekday_a_workday?(day)] }]
+
     @absences = {}
     @users.each do |user|
       @absences[user] ||= {}
