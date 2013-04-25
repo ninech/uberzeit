@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
   end
 
   def display_name
-    "#{given_name} #{name}"
+    "#{name}, #{given_name}"
   end
 
   private

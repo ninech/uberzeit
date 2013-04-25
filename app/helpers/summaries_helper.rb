@@ -49,41 +49,29 @@ module SummariesHelper
     absences.find { |absence| absence.whole_day? }
   end
 
-  def render_absences_cell(absences)
-          # <% if absences.nil? %>
-          #   <td colspan="2" class="full">&nbsp;</td>
-          # <% else %>
-          #   <% if absences_only_half_day?(absences) %>
-          #     <% first_absence = first_half_day_absence(absences) %>
-          #     <% if first_absence.nil? %>
-          #       <td class="half">&nbsp;</td>
-          #     <% else %>
-          #       <td class="half event-bg<%=color_index_of_time_type(absences.first.time_type)%>"><%= icon_for_time_type(first_absence.time_type) %></td>
-          #     <% end %>
+  def render_absences(absences)
+    return '' if absences.nil?
+    absences.collect { |absence| render_absence(absence).html_safe }.join
+  end
 
-          #     <% second_absence = second_half_day_absence(absences) %>
-          #     <% if second_absence.nil? %>
-          #       <td class="half">&nbsp;</td>
-          #     <% else %>
-          #       <td class="half event-bg<%=color_index_of_time_type(absences.first.time_type)%>"><%= icon_for_time_type(second_absence.time_type) %></td>
-          #     <% end %>
-          #   <% else %>
-          #     <td colspan="2" class="not-empty full event-bg<%=color_index_of_time_type(absences.first.time_type)%>"><%= icon_for_time_type(absences.first.time_type) %></td>
-          #   <% end %>
-          # <% end %>
-      if absences.nil?
-        content_tag :td, '', colspan: 2, class: 'full'
-      else
-        if absences_only_half_day?(absences)
-          first_absence = first_half_day_absence(absences)
-          second_absence = second_half_day_absence(absences)
+  def render_absence(absence)
+    time_type = absence.time_type
 
-          content_tag :td, icon_for_time_type((first_absence||second_absence).time_type), colspan: 2, class: 'full'
-        else
-          full_absence = whole_day_absence(absences)
-          content_tag :td, icon_for_time_type(full_absence.time_type), colspan: 2, class: 'full'
+    content_tag :div, class: "event-bg#{suffix_for_daypart(absence)}#{color_index_of_time_type(time_type)}" do # overlay div event bg
+      css_class = if absence.first_half_day?
+                    'top-left'
+                  elsif absence.second_half_day?
+                    'bottom-right'
+                  else
+                    ''
+                  end
+
+      content_tag :div, class: css_class do # table div icon
+        content_tag :div do # cell div
+          icon_for_time_type(time_type)
         end
       end
+    end
   end
 
 end
