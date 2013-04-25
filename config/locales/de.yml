@@ -192,6 +192,8 @@ de:
         month:
           title: Absenzen Mitarbeiter
           unit: in Tagen
+        calendar:
+          month_in_year: '%B %Y'
     vacation:
       vacation:
         year:

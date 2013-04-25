@@ -1,0 +1,43 @@
+
+<div class="content-summary row">
+  <div class="small-12 columns">
+    <table class="nice small-12 calendar">
+      <tr>
+        <th><%= l @days.first, format: t('.month_in_year') %></td>
+        <% @days.each do |day| %>
+        <th><%= day.strftime('%d') %></th>
+        <% end %>
+      </tr>
+
+      <% @users.each do |user| %>
+      <tr>
+        <td><%= user %></td>
+        <% @days.each do |day| %>
+          <% absences = @absences[user][day] %>
+          <td style="padding: 0;">
+            <% if Kernel.rand(100) <= 1 %>
+              <div style="position: relative; width: 100%; height: 100%; ">
+                <div style="width: 100%; height: 100%; position: absolute; left: 0; top: 0;" class="event-bg-first-half4">
+                  <i style="color: white !important; position: absolute; left: 3px; top: 3px;" class="icon-road"></i>
+                </div>
+                <div style="width: 100%; height: 100%; position: absolute; left: 0; top: 0;" class="event-bg-second-half3">
+                  <i style="color: white !important; position: absolute; right: 3px; bottom: 3px;" class="icon-bell"></i>
+                </div>
+              </div>
+            <% elsif Kernel.rand(100) <= 1 %>
+              <div style="position: relative; width: 100%; height: 100%; ">
+                <div style="width: 100%; height: 100%; position: absolute; left: 0; top: 0; display:table;" class="event-bg5">
+                  <div style="width: 100%; height: 100%; display: table-cell; vertical-align: middle; text-align: center;">
+                    <i style="color: white !important; font-size: 1.5em;" class="icon-github"></i>
+
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

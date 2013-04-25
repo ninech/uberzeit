@@ -13,6 +13,27 @@ class Summaries::Absence::AbsenceController < ApplicationController
     @table = Summarize::Table.new(Summarize::Summarizer::Absences, @team || User.all, UberZeit.month_as_range(@year, @month))
   end
 
+  def calendar
+    @month = params[:month].to_i
+    @users = @team || User.all
+    @range = UberZeit.month_as_range(@year, @month)
+    @days = @range.to_a
+
+    @absences = {}
+    @users.each do |user|
+      @absences[user] ||= {}
+      next if user.current_time_sheet.nil?
+
+      find_time_chunks = FindTimeChunks.new(user.current_time_sheet.absences)
+      find_time_chunks.in_range(@range).each do |chunk|
+        chunk.range.to_date_range.each do |day|
+          @absences[user][day] ||= []
+          @absences[user][day] << chunk
+        end
+      end
+    end
+  end
+
   private
 
   def set_team
