@@ -1,3 +1,6 @@
+<%
+  edit = true if local_assigns[:edit].nil?
+%>
 <% absences.each do |absence| %>
   <h1>
     <%= icon_for_time_type(absence.time_type).gsub('"', '\'') %> <%= absence.time_type.name %>
@@ -9,8 +12,10 @@
   <% if absence.recurring_schedule.active? %>
     <p class='recurring'><%= absence_recurring(absence) %></p>
   <% end %>
+  <% if edit %>
   <a href='#' class='small button remote-reveal' data-reveal-id='edit-absence-modal' data-reveal-url='<%= edit_time_sheet_absence_path(@time_sheet, absence.parent_id) %>'>
     <%= t('.edit') %>
   </a>
+  <% end %>
   <hr>
 <% end %>

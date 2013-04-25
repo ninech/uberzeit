@@ -15,7 +15,7 @@
         <td><%= user %></td>
         <% @days.each do |day| %>
           <% absences = @absences[user][day] %>
-          <td class="event">
+          <td class="event <% unless absences.nil? %>has-click-tip<% end %>" <% unless absences.nil? %>data-tooltip="<%=render(partial: 'shared/absences_tooltip', locals: { absences: absences, edit: false}).to_s%>" <% end %>>
             <div class="event-container">
               <%= render_absences(absences).html_safe %>
             </div>

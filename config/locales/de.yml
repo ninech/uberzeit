@@ -75,6 +75,15 @@ de:
   shared:
     event_legend:
       public_holiday: Feiertag
+    absences_tooltip:
+      edit: Bearbeiten
+      first_half_day: Vormittags
+      second_half_day: Nachmittags
+      recurring_interval_until_date: "Wiederholung: Alle %{interval} Wochen bis zum %{ends}."
+      recurring_interval_endless: "Wiederholung: Alle %{interval} Wochen"
+    public_holiday_tooltip:
+      first_half_day: Vormittags
+      second_half_day: Nachmittags
   time_types:
     edit:
       edit_time_type: Zeittyp bearbeiten
@@ -111,15 +120,6 @@ de:
       first_half_day: Vormittags
       whole_day: Ganzer Tag
       delete: Löschen
-    absences_tooltip:
-      edit: Bearbeiten
-      first_half_day: Vormittags
-      second_half_day: Nachmittags
-      recurring_interval_until_date: "Wiederholung: Alle %{interval} Wochen bis zum %{ends}."
-      recurring_interval_endless: "Wiederholung: Alle %{interval} Wochen"
-    public_holiday_tooltip:
-      first_half_day: Vormittags
-      second_half_day: Nachmittags
     edit:
       edit_absence: Absenz bearbeiten
   users:
