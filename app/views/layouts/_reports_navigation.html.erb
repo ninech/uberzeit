@@ -12,7 +12,7 @@
           <%= link_to t('.work'), month_summaries_work_users_path(Date.current.year, Date.current.month) %>
         </dd>
         <dd<%= ' class=active' if controller.controller_name == 'absence' %>>
-          <%= link_to t('.absences'), month_summaries_absence_users_path(Date.current.year, Date.current.month) %>
+          <%= link_to t('.absences'), calendar_summaries_absence_users_path(Date.current.year, Date.current.month) %>
         </dd>
         <dd<%= ' class=active' if controller.controller_name == 'vacation' %>>
           <%= link_to t('.vacation'), year_summaries_vacation_users_path(Date.current.year) %>
