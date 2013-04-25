@@ -46,6 +46,21 @@ describe Summaries::Absence::AbsenceController do
       end
     end
 
+    describe 'GET "calendar"' do
+      it 'assigns the correct instance variables' do
+        get :calendar, year: year, month: month
+        assigns(:year).should_not be_nil
+        assigns(:month).should_not be_nil
+        assigns(:absences).should_not be_nil
+        assigns(:days).should_not be_nil
+      end
+
+      it 'renders the :calendar template' do
+        get :calendar, year: year, month: month
+        response.should render_template :calendar
+      end
+    end
+
   end
 
 end
