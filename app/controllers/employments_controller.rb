@@ -12,6 +12,10 @@ class EmploymentsController < ApplicationController
     @employment = Employment.find(params[:id])
   end
 
+  def index
+    @employments = @user.employments
+  end
+
   def create
     @employment = Employment.new(params[:employment])
     @user.employments << @employment

@@ -290,6 +290,11 @@ de:
       add_employment: Anstellungsverhältnis hinzufügen
     form:
       back: Zurück
+    index:
+      employments: Anstellungsverhältnisse
+      add_employment: Neues Anstellungsverhältnis
+      open_ended: unbefristet
+      confirm_delete: Löschen?
 
   not_logged_in: 'Sie sind nicht eingeloggt.'
 

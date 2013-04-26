@@ -9,11 +9,11 @@ describe EmploymentsController do
     FactoryGirl.create(:user).tap { |user| user.add_role(:admin) }
   end
 
-  # context 'for non-signed in users' do
-  #   it 'denies access' do
-  #     expect { get :index, user_id: user.id }.to raise_error(CanCan::AccessDenied)
-  #   end
-  # end
+  context 'for non-signed in users' do
+    it 'denies access' do
+      expect { get :index, user_id: user.id }.to raise_error(CanCan::AccessDenied)
+    end
+  end
 
   context 'for signed-in users' do
     # context 'as owner' do
@@ -60,6 +60,18 @@ describe EmploymentsController do
         it 'renders the :edit template' do
           get :edit, id: employment.id, user_id: user.id
           response.should render_template :edit
+        end
+      end
+
+      describe 'GET "index"' do
+        it 'assigns the to-be edited employment to @employment' do
+          get :index, user_id: user.id
+          assigns(:employments).should_not be_nil
+        end
+
+        it 'renders the :edit template' do
+          get :index, user_id: user.id
+          response.should render_template :index
         end
       end
 
