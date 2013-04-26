@@ -18,7 +18,7 @@
           <td class="event
           <% unless @public_holidays[day].empty? %>public-holiday<% end %>
           <% unless @work_days[day] %>non-work-day<% end %>
-          <% unless absences.nil? %>has-click-tip<% end %>"
+          <% unless absences.nil? %>has-tip<% end %>"
            <% unless absences.nil? %>data-tooltip="<%=render(partial: 'shared/absences_tooltip', locals: { absences: absences, edit: false}).to_s%>" <% end %>
             >
             <div class="event-container">
