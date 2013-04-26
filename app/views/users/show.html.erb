@@ -1,37 +1,5 @@
 <div class="row">
   <div class="small-12 columns">
     <h1><%= @user %></h1>
-
-    <h2>
-      <%= t '.employments' %>
-      <%= link_to t('.add_employment'), new_user_employment_path(@user), class: 'button right' %>
-    </h2>
-
-    <table class="nice small-12 edit destroy">
-      <thead>
-        <tr>
-          <th><%= Employment.human_attribute_name :start %></th>
-          <th><%= Employment.human_attribute_name :end %></th>
-          <th><%= Employment.human_attribute_name :workload %></th>
-          <th>&nbsp;</th>
-          <th>&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-      <% @user.employments.each do |employment| %>
-      <tr>
-        <td><%= l(employment.start_date, format: :long) %></td>
-        <td><%= employment.end_date.nil? ? t('.open-ended') : l(employment.end_date, format: :long) %></td>
-        <td><%= employment.workload %>&#037;</td>
-        <td>
-          <%= link_to icon('edit'), edit_user_employment_path(@user, employment)%>
-        </td>
-        <td>
-          <%= link_to icon('trash'), [@user, employment], :method => :delete, :data => { :confirm => t('.confirm_delete') } %>
-        </td>
-      </tr>
-      <% end %>
-      </tbody>
-    </table>
   </div>
 </div>
