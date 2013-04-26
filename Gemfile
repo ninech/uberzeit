@@ -50,8 +50,6 @@ gem 'jbuilder'
 gem 'validates_timeliness'
 gem 'acts_as_paranoid', '~>0.4.0'
 
-gem 'ice_cube'
-
 # regular tasks
 gem 'whenever'
 

@@ -138,7 +138,6 @@ GEM
     i18n (0.6.1)
     i18n-missing_translations (0.0.2)
       i18n (~> 0.6.0)
-    ice_cube (0.10.0)
     jbuilder (1.2.0)
       activesupport (>= 3.0.0)
     journey (1.0.4)
@@ -316,7 +315,6 @@ DEPENDENCIES
   foundation_rails_helper
   i18n-js!
   i18n-missing_translations
-  ice_cube
   jbuilder
   jquery-rails
   meta_request
