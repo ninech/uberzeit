@@ -8,7 +8,7 @@
         <ul>
           <li><%= nav_link(t('.timesheet'), time_sheet_path(current_user.current_time_sheet), [:time_sheets]) %></a></li>
           <li><%= nav_link(t('.absences'), time_sheet_absences_path(current_user.current_time_sheet), [:absences]) %></li>
-          <li><%= nav_link(t('.reports'), work_summary_time_sheet_path(current_user.current_time_sheet, Date.current.year), [:summary]) %></li>
+          <li><%= nav_link(t('.reports'), user_summaries_work_month_path(current_user, Date.current.year, Date.current.month), [:work, :my_work]) %></li>
           <% if show_manage_link_in_navigation? %>
             <li><%= nav_link(t('.manage'), public_holidays_path, [:public_holidays, :users, :time_types]) %></li>
           <% end %>

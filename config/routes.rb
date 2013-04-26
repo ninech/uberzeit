@@ -5,14 +5,6 @@ Uberzeit::Application.routes.draw do
 
   resources :time_sheets, only: [:show] do
 
-    member do
-      get '/work_summary/year/:year', to: 'summary#work_summary', as: 'work_summary'
-      get '/work_summary_per_month/year/:year/month/:month', to: 'summary#work_summary_per_month'
-
-      get '/absence_summary/year/:year', to: 'summary#absence_summary', as: 'absence_summary'
-      get '/absence_summary_per_month/year/:year/month/:month', to: 'summary#absence_summary_per_month'
-    end
-
     resources :recurring_entries, except: [:show, :index]
     resources :timers, only: [:show, :edit, :update, :destroy]
 
@@ -37,22 +29,44 @@ Uberzeit::Application.routes.draw do
     end
   end
 
-  scope "/manage" do
-    resources :public_holidays
+  resources :public_holidays
 
-    resources :users do
-      member do
-        get 'edit'
-        put 'update'
+  resources :users, except: [:destroy] do
+    resources :employments
+
+    namespace :summaries do
+      namespace :work do
+        get '/:year', to: 'my_work#year', as: :year
+        get '/:year/:month', to: 'my_work#month', as: :month
       end
-      collection do
-        get 'index'
+      namespace :absence do
+        get '/:year', to: 'my_absence#year', as: :year
+        get '/:year/:month', to: 'my_absence#month', as: :month
       end
-      resources :employments
     end
 
-    resources :time_types
+    collection do
+      namespace :summaries do
+        namespace :work do
+          get '/:year(/team/:team_id)', to: 'work#year', as: :year
+          get '/:year/:month(/team/:team_id)', to: 'work#month', as: :month
+        end
+
+        namespace :absence do
+          get '/:year(/team/:team_id)', to: 'absence#year', as: :year
+          get '/:year/:month(/team/:team_id)', to: 'absence#month', as: :month
+          get '/:year/:month/as/calendar', to: 'absence#calendar', as: :calendar
+        end
+
+        namespace :vacation do
+          get '/:year(/team/:team_id)', to: 'vacation#year', as: :year
+          get '/:year/:month(/team/:team_id)', to: 'vacation#month', as: :month
+        end
+      end
+    end
   end
+
+  resources :time_types
 
   match '/auth/:provider/callback', to: 'sessions#create'
 

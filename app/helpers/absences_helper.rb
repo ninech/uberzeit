@@ -38,12 +38,12 @@ module AbsencesHelper
 
   def tooltip_content_for_absence(day)
     absences = @absences[day.to_date.to_s]
-    render(partial: 'absences/absences_tooltip', locals: { absences: absences }).to_s
+    render(partial: 'shared/absences_tooltip', locals: { absences: absences }).to_s
   end
 
   def tooltip_content_for_public_holiday(day)
     public_holiday = @public_holidays[day.to_date.to_s]
-    render(partial: 'absences/public_holiday_tooltip', locals: { public_holiday: public_holiday }).to_s
+    render(partial: 'shared/public_holiday_tooltip', locals: { public_holiday: public_holiday }).to_s
   end
 
   def absence_period(absence)

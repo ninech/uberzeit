@@ -12,6 +12,7 @@ class LdapSync
 
       def sync_all_users
         Person.find_all.each { |person| sync_user(person) }
+        remove_deleted_persons
       end
 
       def sync_user(person)
@@ -25,6 +26,13 @@ class LdapSync
           end
 
           sync_user_attributes(user, person)
+        end
+      end
+
+      def remove_deleted_persons
+        User.all.each do |user|
+          person = Person.find_by_mail(user.uid)
+          user.destroy if person.nil?
         end
       end
 

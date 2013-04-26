@@ -1,8 +1,0 @@
-<% @rows.each do |row| %>
-<tr class="sub-summary-row" data-month="<%=@month%>">
-  <td><%= link_to row[:name], row[:link], target: '_blank' %></td>
-  <% TimeType.absence.each do |time_type| %>
-  <td><%= format_work_days(row[time_type.id]) %></td>
-  <% end %>
-</tr>
-<% end %>

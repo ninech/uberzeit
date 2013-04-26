@@ -2,11 +2,20 @@
   <div class="row">
     <div class="small-12 columns">
       <dl class="sub-nav">
-        <dd<%= ' class=active' if controller.action_name == 'work_summary' %>>
-          <%= link_to t('.work_summary'), work_summary_time_sheet_path(current_user.current_time_sheet, Date.current.year) %>
+        <dd<%= ' class=active' if controller.controller_name == 'my_work' %>>
+          <%= link_to t('.my_work'), user_summaries_work_month_path(current_user, Date.current.year, Date.current.month) %>
         </dd>
-        <dd<%= ' class=active' if controller.action_name == 'absence_summary' %>>
-          <%= link_to t('.absence_summary'), absence_summary_time_sheet_path(current_user.current_time_sheet, Date.current.year) %>
+        <dd<%= ' class=active' if controller.controller_name == 'my_absence' %>>
+          <%= link_to t('.my_absence'), user_summaries_absence_year_path(current_user, Date.current.year) %>
+        </dd>
+        <dd<%= ' class=active' if controller.controller_name == 'work' %>>
+          <%= link_to t('.work'), month_summaries_work_users_path(Date.current.year, Date.current.month) %>
+        </dd>
+        <dd<%= ' class=active' if controller.controller_name == 'absence' %>>
+          <%= link_to t('.absences'), calendar_summaries_absence_users_path(Date.current.year, Date.current.month) %>
+        </dd>
+        <dd<%= ' class=active' if controller.controller_name == 'vacation' %>>
+          <%= link_to t('.vacation'), year_summaries_vacation_users_path(Date.current.year) %>
         </dd>
       </dl>
     </div>

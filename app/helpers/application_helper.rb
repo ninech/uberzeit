@@ -2,7 +2,7 @@ module ApplicationHelper
   include TimeSheetsHelper
 
   def nav_link(name, link, match_controllers)
-    if match_controllers.include? controller.controller_name.to_sym
+    if match_controllers.map(&:to_sym).include? controller.controller_name.to_sym
       classes = 'active'
     end
     link_to name, link, class: classes

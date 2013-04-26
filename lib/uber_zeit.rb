@@ -14,6 +14,12 @@ module UberZeit
     Date.new(year)...Date.new(year+1)
   end
 
+  def self.month_as_range(year, month)
+    first_day_of_month = Date.new(year, month)
+    last_day_of_month = first_day_of_month.end_of_month
+    first_day_of_month..last_day_of_month
+  end
+
   def self.round(duration, smallest_unit = UberZeit::Config[:rounding])
     (duration.to_f / smallest_unit.to_f).round * smallest_unit
   end

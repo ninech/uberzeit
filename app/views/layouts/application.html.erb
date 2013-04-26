@@ -37,7 +37,7 @@
   <% if request.fullpath =~ %r[^(/public_holidays|/time_types)] %>
     <%= render 'layouts/manage_navigation' %>
   <% end %>
-  <% if request.fullpath =~ %r[^*summary] %>
+  <% if request.fullpath =~ %r[/summaries] %>
     <%= render 'layouts/reports_navigation' %>
   <% end %>
 

@@ -75,6 +75,15 @@ de:
   shared:
     event_legend:
       public_holiday: Feiertag
+    absences_tooltip:
+      edit: Bearbeiten
+      first_half_day: Vormittags
+      second_half_day: Nachmittags
+      recurring_interval_until_date: "Wiederholung: Alle %{interval} Wochen bis zum %{ends}."
+      recurring_interval_endless: "Wiederholung: Alle %{interval} Wochen"
+    public_holiday_tooltip:
+      first_half_day: Vormittags
+      second_half_day: Nachmittags
   time_types:
     edit:
       edit_time_type: Zeittyp bearbeiten
@@ -111,15 +120,6 @@ de:
       first_half_day: Vormittags
       whole_day: Ganzer Tag
       delete: Löschen
-    absences_tooltip:
-      edit: Bearbeiten
-      first_half_day: Vormittags
-      second_half_day: Nachmittags
-      recurring_interval_until_date: "Wiederholung: Alle %{interval} Wochen bis zum %{ends}."
-      recurring_interval_endless: "Wiederholung: Alle %{interval} Wochen"
-    public_holiday_tooltip:
-      first_half_day: Vormittags
-      second_half_day: Nachmittags
     edit:
       edit_absence: Absenz bearbeiten
   users:
@@ -133,8 +133,11 @@ de:
       confirm_delete: Löschen?
   layouts:
     reports_navigation:
-      work_summary: Arbeitsübersicht
-      absence_summary: Absenzenübersicht
+      my_work: Meine Arbeitszeit
+      my_absence: Meine Absenzen
+      work: Arbeitszeit Mitarbeiter
+      absences: Absenzen Mitarbeiter
+      vacation: Ferien Mitarbeiter
     header:
       manage: Verwalten
       absences: Absenzen
@@ -144,25 +147,79 @@ de:
       public_holidays: Feiertage
       time_types: Zeittypen
       users: Benutzer
-  summary:
+  summaries:
     formats:
-      date: '%e. %a.'
-      month: '%B'
-    work_summary:
-      hours_minutes: Stunden:Minuten
-      overtime: Überzeit
-      target: Sollzeit
-      running_overtime: Laufende Überzeit
-      work_summary: Arbeitsübersicht
-      effective_worked: Arbeitszeit
-      absent: Absenzzeit
-      expand: Ausklappen
-      time_bonuses: Zeitzuschläge
-    absence_summary:
-      absence_summary: Absenzübersicht
-      total: Total
-      remaining: Verbleibend
-      days: Tage
+        date: '%e. %a.'
+        month: '%B'
+    work:
+      effective_worked: BLUB
+      columns:
+        effective_worked: Arbeitszeit
+        absent: Absenzzeit
+        time_bonuses: Zeitzuschläge
+        running_overtime: Laufende Überzeit
+        target: Sollzeit
+        overtime: Überzeit
+      work:
+        year:
+          title: Arbeitszeit Mitarbeiter
+          unit: in Stunden:Minuten
+        month:
+          title: Arbeitszeit Mitarbeiter
+          unit: in Stunden:Minuten
+      my_work:
+        year:
+          title: Meine Arbeitszeit
+          unit: in Stunden:Minuten
+        month:
+          title: Meine Arbeitszeit
+          unit: in Stunden:Minuten
+    absence:
+      my_absence:
+        year:
+          title: Meine Absenzen
+          unit: in Tagen
+          total: Total
+          remaining: Verbleibend
+        month:
+          title: Meine Absenzen
+          unit: in Tagen
+          total: Total
+      absence:
+        year:
+          title: Absenzen Mitarbeiter
+          unit: in Tagen
+        month:
+          title: Absenzen Mitarbeiter
+          unit: in Tagen
+        calendar:
+          month_in_year: '%B %Y'
+          title: Absenzen Mitarbeiter
+          unit: ''
+    vacation:
+      vacation:
+        year:
+          title: Ferien Mitarbeiter
+          unit: in Tagen
+          taken: 'Beanspruchte Ferientage im Jahr %{year}'
+          remaining: 'Restliche Ferientage für %{year}'
+        month:
+          title: Ferien Mitarbeiter
+          unit: in Tagen
+          taken: 'Beansprucht im %{month} %{year}'
+          remaining: 'Restliche Ferientage nach %{month} %{year}'
+
+    shared:
+      users_absence_table:
+          total: Total
+      header:
+        month: Monat
+        year: Jahr
+        calendar: Kalender
+        everyone: Alle
+        show: Anzeigen
+        users: Mitarbeiter
+        time_frame: Zeitraum
   time_entries:
     edit:
       edit_time: 'Zeit bearbeiten'
