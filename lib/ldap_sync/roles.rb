@@ -4,7 +4,10 @@ class LdapSync
 
     class << self
 
-      NINE_UBERZEIT_ADMIN_DEPARTMENTS = %w(Management Administration Development)
+      NINE_UBERZEIT_ADMIN_DEPARTMENTS = %w(Management Administration)
+      if Rails.env.development?
+        NINE_UBERZEIT_ADMIN_DEPARTMENTS << 'Development'
+      end
 
       def sync
         sync_all_roles
