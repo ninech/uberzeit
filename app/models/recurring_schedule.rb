@@ -78,26 +78,20 @@ class RecurringSchedule < ActiveRecord::Base
     occurrences_date_range = date_or_range.to_range.to_date_range
     recurring_schedule_date_range = self.range.to_date_range
 
-    exceptions_in_range = exception_dates.in(recurring_schedule_date_range)
-    exceptions = exceptions_in_range.each_with_object({}) do |exception, hash|
-      hash[exception.date.to_s] = exception
-    end
+    exceptions = exceptions_in_range_by_date(recurring_schedule_date_range)
 
     occurrences = []
 
-    cursor = recurring_schedule_date_range.min
-    while cursor <= recurring_schedule_date_range.max && cursor <= occurrences_date_range.max
-      unless has_exception_date_in_range?(exceptions, cursor...cursor+interval)
-        occurrence_start_time = start_time_of_associated_entry.change(year: cursor.year, month: cursor.month, day: cursor.day)
-        occurrence_end_time = occurrence_start_time + duration
+    date_min = recurring_schedule_date_range.min
+    date_max = [recurring_schedule_date_range.max, occurrences_date_range.max].min
+    each_occurrence_between(date_min, date_max) do |date|
+      next if has_exception_date_in_range?(exceptions, date...date+interval)
 
-        occurrence_range = (occurrence_start_time..occurrence_end_time)
-        if occurrence_range.intersects_with_duration?(occurrences_date_range)
-          occurrences << occurrence_start_time
-        end
-      end
+      start_time = start_time_of_associated_entry.change(year: date.year, month: date.month, day: date.day)
+      end_time = start_time + duration
+      next unless (start_time..end_time).intersects_with_duration?(occurrences_date_range)
 
-      cursor += interval
+      occurrences << start_time
     end
 
     occurrences
@@ -105,5 +99,17 @@ class RecurringSchedule < ActiveRecord::Base
 
   def occurring?(date_or_range)
     occurrences(date_or_range).any?
+  end
+
+  private
+  def exceptions_in_range_by_date(range)
+    key_value_array = exception_dates.in(range).map {|exception| [exception.date.to_s, exception]}
+    Hash[key_value_array]
+  end
+
+  def each_occurrence_between(date, date_end, &block)
+    begin
+      yield(date)
+    end while (date += interval) <= date_end
   end
 end
