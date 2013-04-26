@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="small-12 columns">
+    <h1>
+      <%= t '.public_holidays_for_year', year: @year %>
+      <%= link_to icon('caret-left'), public_holidays_path(year: @year - 1) %>
+      <%= link_to icon('caret-right'), public_holidays_path(year: @year + 1) %>
+      <%= link_to icon('plus') + ' ' + t('.new_public_holiday'), new_public_holiday_path, class: 'button right' %></h3>
+    </h1>
+
+    <table class="nice small-12 edit destroy">
+      <thead>
+        <tr>
+          <th><%= PublicHoliday.human_attribute_name :start_date %></th>
+          <th><%= PublicHoliday.human_attribute_name :name %></th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @public_holidays.each do |public_holiday| %>
+          <tr>
+            <td>
+              <%= l(public_holiday.start_date, format: :long) %>
+              <% unless public_holiday.end_date.blank? || public_holiday.start_date == public_holiday.end_date %>
+                - <%= public_holiday.end_date %>
+              <% end %>
+            </td>
+            <td><%= public_holiday.name %></td>
+            <td>
+              <%= link_to icon('edit'), edit_public_holiday_path(public_holiday) %>
+            </td>
+            <td>
+              <%= link_to icon('trash'), public_holiday, method: :delete, confirm: t('.confirm_delete') %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

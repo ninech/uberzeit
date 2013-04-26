@@ -19,11 +19,11 @@ describe Employment do
 
   context 'for multiple employments per user' do
     before do
-      # create tricky employment scheme 
+      # create tricky employment scheme
       @user = FactoryGirl.create(:user, with_employment: false)
-      @user.employments << FactoryGirl.create(:employment, start_date: '2012-06-06', end_date: '2013-01-01', workload: 100)
-      @user.employments << FactoryGirl.create(:employment, start_date: '2013-01-01', end_date: '2013-02-11', workload: 50) # monday!
-      @user.employments << FactoryGirl.create(:employment, start_date: '2013-02-11', end_date: '2013-02-12', workload: 80) # 1 day test
+      @user.employments << FactoryGirl.create(:employment, start_date: '2012-06-06', end_date: '2012-12-31', workload: 100)
+      @user.employments << FactoryGirl.create(:employment, start_date: '2013-01-01', end_date: '2013-02-10', workload: 50)
+      @user.employments << FactoryGirl.create(:employment, start_date: '2013-02-11', end_date: '2013-02-11', workload: 80)
       @user.employments << FactoryGirl.create(:employment, start_date: '2013-02-12', end_date: nil, workload: 40)
     end
 
@@ -33,10 +33,10 @@ describe Employment do
 
     it 'returns the employments between two dates' do
       # try to select border-line instances
-      @user.employments.between('2013-01-01'.to_date, '2013-02-11'.to_date).length.should eq(1)
-      @user.employments.between('2013-01-01'.to_date, '2013-02-12'.to_date).length.should eq(2)
-      @user.employments.between('2013-02-11'.to_date, '2013-02-12'.to_date).length.should eq(1)
-      @user.employments.between('2012-01-01'.to_date, '2013-01-01'.to_date).length.should eq(1)
+      @user.employments.between('2013-01-01'.to_date...'2013-02-11'.to_date).length.should eq(1)
+      @user.employments.between('2013-01-01'.to_date..'2013-02-11'.to_date).length.should eq(2)
+      @user.employments.between('2013-02-11'.to_date..'2013-02-11'.to_date).length.should eq(1)
+      @user.employments.between('2012-01-01'.to_date..'2014-01-01'.to_date).length.should eq(4)
     end
 
     it 'returns the employment for a specific date' do

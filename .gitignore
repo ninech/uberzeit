@@ -17,3 +17,7 @@
 
 # Ignore PlainTask TODO File
 /TODO
+
+/config/database.yml
+
+/.powenv

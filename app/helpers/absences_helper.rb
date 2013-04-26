@@ -1,0 +1,87 @@
+module AbsencesHelper
+
+  def render_calendar_cell(day)
+    absences = @absences[day.to_date.to_s]
+    public_holiday = @public_holidays[day.to_date.to_s]
+
+
+    if absences
+      css_class = "has-absences event-bg#{suffix_for_daypart(absences.first)}#{color_index_of_array(absences)}"
+      [tooltips_for_day(day, :tooltip_content_for_absence), {:class => css_class}]
+    elsif public_holiday
+      css_class = "has-absences public-holiday-bg#{suffix_for_daypart(public_holiday)}"
+      [tooltips_for_day(day, :tooltip_content_for_public_holiday), {:class => css_class}]
+    else
+      css_classes = ["has-no-absences"]
+      css_classes << "not-a-workday" unless UberZeit.is_weekday_a_workday?(day)
+
+      # click on empty cell will open the add absence dialogue with the clicked date
+      link_add_entry = content_tag(:span, day.mday, :class => "has-reveal remote-reveal", :'data-reveal-id' => 'add-absence-modal', :'data-reveal-url' => new_time_sheet_absence_path(@time_sheet, date: day))
+
+      [link_add_entry, {:class => css_classes.join(' ')}]
+    end
+  end
+
+  def suffix_for_daypart(absence)
+    if absence.first_half_day?
+      "-first-half"
+    elsif absence.second_half_day?
+      "-second-half"
+    else
+      ""
+    end
+  end
+
+  def tooltips_for_day(day, content_method)
+    content_tag(:span, day.mday, class: 'has-click-tip', data: { tooltip: method(content_method).call(day) })
+  end
+
+  def tooltip_content_for_absence(day)
+    absences = @absences[day.to_date.to_s]
+    render(partial: 'shared/absences_tooltip', locals: { absences: absences }).to_s
+  end
+
+  def tooltip_content_for_public_holiday(day)
+    public_holiday = @public_holidays[day.to_date.to_s]
+    render(partial: 'shared/public_holiday_tooltip', locals: { public_holiday: public_holiday }).to_s
+  end
+
+  def absence_period(absence)
+    if absence.half_day_specific?
+      case
+      when absence.first_half_day?
+        t('.first_half_day')
+      when absence.second_half_day?
+        t('.second_half_day')
+      else
+        nil
+      end
+    end
+  end
+
+  def absence_date_range(absence)
+    absence_object = absence.parent
+
+    range = if absence_object.recurring?
+              (absence.starts..absence.starts+absence_object.duration).to_date_range
+            else
+              absence_object.range
+            end
+
+    if range.min == range.max
+      l(range.min)
+    else
+      "#{l(range.min)} - #{l(range.max)}"
+    end
+  end
+
+  def absence_recurring(absence)
+    if absence.recurring_schedule.active?
+      if absence.recurring_schedule.ends_on_date?
+        t('.recurring_interval_until_date', { interval: absence.recurring_schedule.weekly_repeat_interval, ends: l(absence.recurring_schedule.end_date) })
+      else
+        t('.recurring_interval_endless', { interval: absence.recurring_schedule.weekly_repeat_interval })
+      end
+    end
+  end
+end

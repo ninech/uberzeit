@@ -1,129 +1,153 @@
-<%
-  week = (Time.zone.today.at_beginning_of_week..Time.zone.today.next_week)
-  year = week.min.year
-%>
-<div class="hero-unit">
-  <h3><%= @time_sheet.user.name %></h3>
-  <table class="table">
-    <thead>
-      <tr>
-        <th colspan="2">Week Summary</th>
-        <th colspan="2">Vacation <%=year%></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Work</td>
-        <td><%= format_duration(@time_sheet.total(week, :work), :work) %></td>
-
-        <td>Redeemed</td>
-        <td><%= format_duration(@time_sheet.vacation(year), :vacation, :work_days) %></td>
-      </tr>
-      <tr>
-        <td>Overtime</td>
-        <td><%= format_duration(@time_sheet.overtime(week), :overtime) %></td>
-
-        <td>Remaining</td>
-        <td><%= format_duration(@time_sheet.remaining_vacation(year), :vacation, :work_days) %></td>
-      </tr>
-      <%
-        onduty = @time_sheet.total(week, :onduty)
-        if onduty != 0
-      %>
-      <tr>
-        <td>On duty</td>
-        <td><%= format_duration(onduty, :onduty) %></td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-      </tr>
-      <%
-        end
-      %>
-    </tbody>
-  </table>
-  <table class="table">
-    <tr>
-      <th>Current time</th>
-      <td><%=Time.zone.now%></td>
-    </tr>
-    <tr>
-      <th>Last visit</th>
-      <td><%=Time.zone.now%></td>
-    </tr>
-  </table>
-</div>
-<% if notice %>
-<div id="notice" class="alert alert-success">
-  <%= notice %>
-</div>
-<% end %>
-<%= link_to 'New Single Entry', new_time_sheet_single_entry_path(@time_sheet), class: 'btn btn-primary btn-small' %>
-<%= link_to 'New Recurring Entry', new_time_sheet_recurring_entry_path(@time_sheet), class: 'btn btn-primary btn-small' %>
-<br/>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Start</th>
-      <th>End</th>
-      <th>Duration</th>
-      <th>Type</th>
-      <th>&nbsp;</th>
-    </tr>
-  </thead>
-<%
-  days = week.to_a
-  days.pop # ignore the 8th day
-  days.each do |date|
-%>
-  <tr <%=raw UberZeit::is_work_day?(date) ? '' : 'style="background-color: #CCC"' %>>
-    <th colspan="5"><%=date.strftime('%A, %d.%m.%Y')%></th>
-  </tr>
-  <tbody>
-    <% @time_sheet.find_chunks(date).each do |entry| %>
-    <tr>
-      <%
-        if entry.parent.respond_to?(:whole_day?) && entry.parent.whole_day?
-      %>
-        <td colspan="2"><em>Whole day</em></td>
-      <%
-        else
-      %>
-        <td><%= entry.starts.strftime("%R")  %></td>
-        <td><%= entry.ends.strftime("%R") %></td>
-      <%
-        end
-      %>
-      <td><%= format_duration(entry.duration, entry.time_type) %></td>
-      <td><%= entry.time_type %></td>
-      <td>
-      <% case entry.parent %>
-      <% when SingleEntry %>
-        <%= link_to 'Edit', edit_time_sheet_single_entry_path(@time_sheet, entry.parent), :class => 'btn btn-small' %>
-        <%= link_to 'Destroy', [@time_sheet, entry.parent], :class => 'btn btn-danger btn-small', :method => :delete, :data => { :confirm => 'Are you sure?' } %>
-      <% when RecurringEntry %>
-        <%= link_to 'Edit', edit_time_sheet_recurring_entry_path(@time_sheet, entry.parent), :class => 'btn btn-small' %>
-        <%= link_to 'Destroy', [@time_sheet, entry.parent], :class => 'btn btn-danger btn-small', :method => :delete, :data => { :confirm => 'Are you sure?' } %>
-      <% end %>
-      </td>
-    </tr>
+<div class="row">
+  <div class="large-12 columns">
+    <% unless @timers_other_days.empty? %>
+      <div data-alert class="alert-box">
+        <i class='icon-time'></i>
+        <%= t '.timer_running_warning', count: @timers_other_days.length %>
+        <%= running_timer_dates(@timers_other_days) %>.
+      </div>
     <% end %>
 
-    <%
-      date_work = @time_sheet.total(date, :work)
-      date_overtime = @time_sheet.overtime(date)
-      if date_work != 0 || date_overtime != 0
-    %>
-    <tr>
-      <td colspan="5">
-        Daily Work: <%= format_duration(date_work, :work) %><br/>
-        Daily Overtime: <%= format_duration(date_overtime, :overtime)  %>
-      </td>
-    </tr>
-    <%
-      end
-    %>
-  </tbody>
-<%
-  end
-%>
-</table>
+    <%= link_to '', {action: :summary_for_date, date: @day}, remote: true, class: 'hide ajax summary_for_date' %>
+
+    <div class="timesheet">
+      <div class="head">
+        <%= l @weekdays.first, :format => :long %> – <%= l @weekdays.last, :format => :long %>
+        <div class="right">
+          <a href="<%= url_for(action: :show, date: @previous_week_day.to_formatted_s(:iso)) %>"><span class="icon-caret-left"></span></a>
+          <a href="<%= url_for(action: :show, date: @next_week_day.to_formatted_s(:iso)) %>"><span class="icon-caret-right"></span></a>
+        </div>
+      </div>
+      <div class="weekdays">
+        <ul>
+          <% @weekdays.each do |weekday| %>
+            <li>
+              <a href="<%= url_for(action: :show, date: weekday.to_formatted_s(:iso)) %>" class="<%= 'active' if weekday == @day %>">
+                <span class="day">
+                  <%= l weekday, format: :weekday %>
+                  <% if @absences[weekday] %>
+                    <%= @absences[weekday].map{ |chunk| icon_for_time_type(chunk.time_type) }.join.html_safe %>
+                  <% end %>
+                  <% if @public_holidays[weekday] %>
+                    <i class="icon-flag public-holiday-color"></i>
+                  <% end %>
+                </span>
+                <br>
+                <% if @public_holidays[weekday] && @public_holidays[weekday].whole_day? %>
+                  <span class="public-holiday"><%= @public_holidays[weekday].name %></span>
+                <% else %>
+                  <span class="time <%= 'active' if weekday == @day %>"><%= worktime_for_day(weekday) %></span>
+                <% end %>
+              </a>
+            </li>
+          <% end %>
+          <li class="weeksummary total">
+            <div>
+              <span class="total"><%= t '.total' %></span>
+              <br>
+              <span class="time">
+                <%= worktime_for_week(@week) %>
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="entries">
+        <% if @time_chunks.length > 0 || @timer_active || @public_holidays[@day] || @absences[@day] %>
+        <ul>
+          <!-- PUBLIC HOLIDAYS -->
+          <% if @public_holiday %>
+            <li>
+              <i class="icon-flag public-holiday-color"></i><%= @public_holiday.name %>
+              <div class="right">
+                <small><%= part_of_day(@public_holiday) %></small>
+              </div>
+            </li>
+          <% end %>
+          <!-- ABSENCES -->
+          <% if @absences[@day] %>
+            <% @absences[@day].each do |time_chunk| %>
+            <li>
+              <%= icon_for_time_type(time_chunk.time_type) %><%= time_chunk.time_type %>
+              <div class="right">
+                <small><%= part_of_day(time_chunk) %></small>
+              </div>
+            </li>
+            <% end %>
+          <% end %>
+          <!-- WORK -->
+          <% @time_chunks.each do |time_chunk| %>
+            <li>
+              <% if time_chunk.parent.start_time.to_date != @day %>
+                <span class="has-tip" data-tooltip="<%= t('.tooltip.starts') %> <%= l time_chunk.parent.start_time, format: :long %>">
+                  <%= l time_chunk.starts %>
+                </span>
+              <% else %>
+                <%= l time_chunk.starts %>
+              <% end %>
+              –
+              <% if time_chunk.parent.end_time.to_date != @day %>
+                <span class="has-tip" data-tooltip="<%= t('.tooltip.ends') %> <%= l time_chunk.parent.end_time, format: :long %>">
+                  <%= l time_chunk.ends %>
+                </span>
+              <% else %>
+                <%= l time_chunk.ends %>
+              <% end %>
+              <small>
+                <%= time_chunk.time_type %>
+                <% unless standard_calculation?(time_chunk.time_type) %>
+                <small>(<%= t '.time_bonus' %> <%= time_type_bonus_percentage(time_chunk.time_type) %>: <%= format_duration(time_chunk.time_bonus) %>)</small>
+                <% end %>
+              </small>
+              <div class="right">
+                <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="edit-time-modal" data-reveal-url="<%= edit_time_sheet_time_entry_path(@time_sheet, time_chunk.parent) %>">
+                  <%= icon(:edit) %>
+                </a>
+                <%= format_duration(time_chunk.duration) %>
+              </div>
+            </li>
+          <% end %>
+          <% if @timer_active %>
+          <li>
+            <%= @timer.from_time %> –
+            <small><%= @timer.time_type %></small>
+            <div class="right">
+              <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="edit-time-modal" data-reveal-url="<%= edit_time_sheet_timer_path(@time_sheet, @timer) %>">
+                <%= icon(:edit) %>
+              </a>
+              <a href="<%= url_for(action: :stop_timer, date: @day) %>" data-method="put" data-remote="true" class="stop-timer">
+                Stop
+              </a>
+              <span class="timer-current" data-timer-id="<%=@timer.id%>" data-startdate="<%= @timer.start_date %>" data-starttime="<%= @timer.from_time %>"></span>
+            </div>
+          </li>
+        <% end %>
+          <li class="summary">
+            <div class="right">
+              <%= t '.total' %> <span class="time total">0:00</span>
+            </div>
+          </li>
+        </ul>
+        <% else %>
+          <div class="no-entries-message">
+            <p>
+              <%= t '.no_entries_yet_message' %>
+              <br>
+              <a href="#" data-reveal-id="add-time-modal"><%= t '.add_time_now' %></a>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <%= render 'add_time_modal' %>
+    <%= render 'edit_time_modal' %>
+  </div>
+</div>
+<% if @legend_show_public_holiday || @legend_time_types.any? %>
+<div class="row">
+  <div class="small-12 columns">
+    <%= render 'shared/event_legend', show_public_holiday: @legend_show_public_holiday, time_types: @legend_time_types  %>
+  </div>
+</div>
+<% end %>
+

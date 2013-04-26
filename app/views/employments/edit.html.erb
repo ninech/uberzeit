@@ -1,5 +1,7 @@
-<h1>Edit employment</h1>
+<div class="row">
+  <div class="small-12 columns end">
+    <h1><%= t('.edit_employment') %></h1>
+    <%= render 'form' %>
+  </div>
+</div>
 
-<%= render 'form' %>
-
-<%= link_to 'Back', user_employments_path(@user), class: 'btn' %>

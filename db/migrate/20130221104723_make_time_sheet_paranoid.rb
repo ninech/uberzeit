@@ -1,6 +1,6 @@
 class MakeTimeSheetParanoid < ActiveRecord::Migration
   def up
-    add_column :time_sheets, :deleted_at, :time
+    add_column :time_sheets, :deleted_at, :datetime
   end
 
   def down

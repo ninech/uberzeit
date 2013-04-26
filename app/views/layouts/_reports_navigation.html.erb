@@ -1,0 +1,23 @@
+<div class="subnavigation container">
+  <div class="row">
+    <div class="small-12 columns">
+      <dl class="sub-nav">
+        <dd<%= ' class=active' if controller.controller_name == 'my_work' %>>
+          <%= link_to t('.my_work'), user_summaries_work_month_path(current_user, Date.current.year, Date.current.month) %>
+        </dd>
+        <dd<%= ' class=active' if controller.controller_name == 'my_absence' %>>
+          <%= link_to t('.my_absence'), user_summaries_absence_year_path(current_user, Date.current.year) %>
+        </dd>
+        <dd<%= ' class=active' if controller.controller_name == 'work' %>>
+          <%= link_to t('.work'), month_summaries_work_users_path(Date.current.year, Date.current.month) %>
+        </dd>
+        <dd<%= ' class=active' if controller.controller_name == 'absence' %>>
+          <%= link_to t('.absences'), calendar_summaries_absence_users_path(Date.current.year, Date.current.month) %>
+        </dd>
+        <dd<%= ' class=active' if controller.controller_name == 'vacation' %>>
+          <%= link_to t('.vacation'), year_summaries_vacation_users_path(Date.current.year) %>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</div>

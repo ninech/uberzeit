@@ -11,6 +11,9 @@ end
 SimpleCov.formatter(SimpleCov::Formatter::MergedFormatter)
 SimpleCov.start 'rails'
 
+require 'i18n/missing_translations'
+at_exit { I18n.missing_translations.dump }
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
@@ -47,6 +50,30 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  config.before(:suite) do
+    TEST_TIME_TYPES = {}
+    %w{work vacation compensation paid_absence onduty}.each do |time_type|
+      TEST_TIME_TYPES[time_type.to_sym] = FactoryGirl.create("time_type_#{time_type}", name: "test_#{time_type}")
+    end
+  end
+
+  config.before(:each) do
+    # Overwrite uZ config with default values
+    uberzeit_config = {
+      rounding: 1.minutes,
+      work_days:  [:monday, :tuesday, :wednesday, :thursday, :friday],
+      work_per_day:  8.5.hours,
+      vacation_per_year:  25.days
+    }
+    stub_const 'UberZeit::Config', uberzeit_config
+  end
+
+  config.after(:suite) do
+    TEST_TIME_TYPES.each do |name, entry|
+      entry.destroy!
+    end
+  end
 end
 
 OmniAuth.config.mock_auth[:cas] = OmniAuth::AuthHash.new({

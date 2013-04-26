@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="small-12 columns">
+    <h2><%= t '.edit_time' %></h2>
+  </div>
+</div>
+<%= form_for([@time_sheet, @entry], remote: true) do |form| %>
+  <%= render partial: 'form', locals: { f: form } %>
+<% end %>

@@ -1,0 +1,9 @@
+<div class='event'>
+  <h1>
+    <i class='icon-flag public-holiday-color'></i> <%= public_holiday.name %>
+  </h1>
+  <p class='date-range'><%= l public_holiday.start_date %></p>
+  <% if absence_period(public_holiday) %>
+    <p class='period'><%= absence_period(public_holiday) %></p>
+  <% end %>
+</div.

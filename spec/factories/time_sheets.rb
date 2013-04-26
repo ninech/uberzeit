@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :time_sheet do
-    user
+    association :user, with_sheet: false
   end
 end

@@ -16,9 +16,8 @@ describe TimeTypesController do
 
     describe 'GET "index"' do
       it 'populates an array of time types' do
-        time_type = FactoryGirl.create(:time_type)
         get :index
-        assigns(:time_types).should eq([time_type])
+        assigns(:time_types).sort.should eq(TEST_TIME_TYPES.values.sort)
       end
 
       it 'renders the :index template' do
@@ -41,7 +40,7 @@ describe TimeTypesController do
 
     describe 'GET "edit"' do
       before do
-        @time_type = FactoryGirl.create(:time_type)
+        @time_type = TEST_TIME_TYPES[:work]
       end
 
       it 'assigns the to-be edited time type to @time_type' do
@@ -69,7 +68,7 @@ describe TimeTypesController do
 
         it 'redirects to the updated time type' do
           put :update, id: @time_type, time_type: FactoryGirl.attributes_for(:time_type)
-          response.should redirect_to edit_time_type_path(@time_type)
+          response.should redirect_to time_types_path
         end
       end
 
@@ -89,7 +88,7 @@ describe TimeTypesController do
 
         it 'redirects to the new time type' do
           post :create, time_type: FactoryGirl.attributes_for(:time_type)
-          response.should redirect_to edit_time_type_path(TimeType.last)
+          response.should redirect_to time_types_path
         end
       end
 

@@ -1,20 +1,53 @@
 # SingleTimes, RecurringTimes etc. are converted to TimeChunks for calculations and display
 class TimeChunk
-  attr_accessor :starts, :ends, :time_type, :parent
+  attr_accessor :starts, :ends, :parent
+  attr_writer :duration, :time_type
 
   def initialize(opts)
     if opts[:range]
-      self.starts = opts[:range].min
-      self.ends = opts[:range].max
+      @starts = opts[:range].min
+      @ends = opts[:range].max
     else
-      self.starts = opts[:starts]
-      self.ends = opts[:ends]
+      @starts = opts[:starts]
+      @ends = opts[:ends]
     end
-    self.parent = opts[:parent]
-    self.time_type = opts[:time_type]
+    @parent = opts[:parent]
+    @time_type = opts[:time_type]
+  end
+
+  def range
+    (starts..ends)
   end
 
   def duration
-    (starts..ends).duration
+    range.duration
+  end
+
+  def time_bonus
+    range.duration * time_type.bonus_factor
+  end
+
+  def time_type
+    @time_type ||= parent.time_type
+  end
+
+  def half_day_specific?
+    parent.respond_to?(:whole_day?)
+  end
+
+  # def effective_duration
+  #   duration * time_type.calculation_factor
+  # end
+
+  def method_missing(sym, *args, &block)
+    @parent.send(sym, *args, &block)
+  end
+
+  def exclude_from_calculation?
+    time_type.exclude_from_calculation?
+  end
+
+  def parent_id
+    @parent_id ||= parent.id
   end
 end

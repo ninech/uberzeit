@@ -10,13 +10,18 @@ class Ability
       can :read, TimeType
       can :manage, TimeSheet, user_id: user.id
 
-      can :manage, SingleEntry, time_sheet: { user_id: user.id }
+      can :manage, TimeEntry, time_sheet: { user_id: user.id }
+      can :manage, Absence, time_sheet: { user_id: user.id }
+      can :manage, Timer, time_sheet: { user_id: user.id }
 
       if user.has_role?(:admin)
         can :manage, TimeType
         can :manage, TimeSheet
-        can :manage, SingleEntry
+        can :manage, TimeEntry
+        can :manage, Absence
         can :manage, Employment
+        can :manage, PublicHoliday
+        can :manage, User
       end
 
     end

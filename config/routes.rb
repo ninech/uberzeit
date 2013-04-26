@@ -1,21 +1,69 @@
 Uberzeit::Application.routes.draw do
 
+
   root :to => 'sessions#new'
 
-  resources :time_sheets do
-    resources :single_entries, except: [:show, :index]
+  resources :time_sheets, only: [:show] do
+
     resources :recurring_entries, except: [:show, :index]
+    resources :timers, only: [:show, :edit, :update, :destroy]
+
+    member do
+      get '/date/:date', to: 'time_sheets#show', as: :show_date
+      put '/date/:date/stop-timer', to: 'time_sheets#stop_timer'
+
+      get '/date/:date/summary', to: 'time_sheets#summary_for_date'
+    end
+
+    resources :absences do
+      collection do
+        get '/year/:year', to: 'absences#index', as: 'year'
+        resources :time_entries, controller: :absence_time_entries, as: :absence_time_entries, only: :create
+      end
+    end
+
+    resources :time_entries, except: [:show, :index] do
+      member do
+        put 'exception_date/:date', action: 'exception_date', as: :exception_date
+      end
+    end
   end
 
-  resources :users do
-    member do
-      get 'edit'
-      put 'update'
-    end
-    collection do
-      get 'index'
-    end
+  resources :public_holidays
+
+  resources :users, except: [:destroy] do
     resources :employments
+
+    namespace :summaries do
+      namespace :work do
+        get '/:year', to: 'my_work#year', as: :year
+        get '/:year/:month', to: 'my_work#month', as: :month
+      end
+      namespace :absence do
+        get '/:year', to: 'my_absence#year', as: :year
+        get '/:year/:month', to: 'my_absence#month', as: :month
+      end
+    end
+
+    collection do
+      namespace :summaries do
+        namespace :work do
+          get '/:year(/team/:team_id)', to: 'work#year', as: :year
+          get '/:year/:month(/team/:team_id)', to: 'work#month', as: :month
+        end
+
+        namespace :absence do
+          get '/:year(/team/:team_id)', to: 'absence#year', as: :year
+          get '/:year/:month(/team/:team_id)', to: 'absence#month', as: :month
+          get '/:year/:month(/team/:team_id)/as/calendar', to: 'absence#calendar', as: :calendar
+        end
+
+        namespace :vacation do
+          get '/:year(/team/:team_id)', to: 'vacation#year', as: :year
+          get '/:year/:month(/team/:team_id)', to: 'vacation#month', as: :month
+        end
+      end
+    end
   end
 
   resources :time_types
