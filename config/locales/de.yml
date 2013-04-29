@@ -131,22 +131,22 @@ de:
       add_employment: Neues Anstellungsverhältnis
       open-ended: unbefristet
       confirm_delete: Löschen?
-  layouts:
-    reports_navigation:
-      my_work: Meine Arbeitszeit
-      my_absence: Meine Absenzen
-      work: Arbeitszeit Mitarbeiter
-      absences: Absenzen Mitarbeiter
-      vacation: Ferien Mitarbeiter
-    header:
-      manage: Verwalten
-      absences: Absenzen
-      timesheet: Zeiterfassung
-      reports: Berichte
-    manage_navigation:
-      public_holidays: Feiertage
-      time_types: Zeittypen
-      users: Benutzer
+  navigation:
+    manage: Verwalten
+    absences: Absenzen
+    timesheet: Zeiterfassung
+    reports: Berichte
+    sub:
+      manage:
+        public_holidays: Feiertage
+        time_types: Zeittypen
+        users: Benutzer
+      reports:
+        my_work: Meine Arbeitszeit
+        my_absence: Meine Absenzen
+        work: Arbeitszeit Mitarbeiter
+        absences: Absenzen Mitarbeiter
+        vacation: Ferien Mitarbeiter
   summaries:
     formats:
         date: '%e. %a.'

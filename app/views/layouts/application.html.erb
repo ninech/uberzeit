@@ -34,12 +34,13 @@
 </head>
 <body class="content-<%= controller.controller_name %>">
   <%= render 'layouts/header' %>
-  <% if request.fullpath =~ %r[^(/public_holidays|/time_types|/users(/[0-9]+)?$)] %>
-    <%= render 'layouts/manage_navigation' %>
-  <% end %>
-  <% if request.fullpath =~ %r[/summaries] %>
-    <%= render 'layouts/reports_navigation' %>
-  <% end %>
+  <div class="subnavigation container">
+    <div class="row">
+      <div class="small-12 columns">
+        <%= render_navigation(level: 2, renderer: SubnavRenderer) %>
+      </div>
+    </div>
+  </div>
 
   <div class="content container">
 
