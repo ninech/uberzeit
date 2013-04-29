@@ -62,6 +62,8 @@ gem 'calendar_helper'
 gem 'rails-i18n', branch: 'rails-3-x'
 gem 'i18n-js', :git => 'git://github.com/fnando/i18n-js.git', :branch => 'master'
 
+gem 'simple-navigation'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'mysql2'
