@@ -5,14 +5,7 @@
         <%= link_to image_tag('logo.svg', size: '122x36'), time_sheet_path(current_user.current_time_sheet) %>
       </div>
       <div class="navigation">
-        <ul>
-          <li><%= nav_link(t('.timesheet'), time_sheet_path(current_user.current_time_sheet), [:time_sheets]) %></a></li>
-          <li><%= nav_link(t('.absences'), time_sheet_absences_path(current_user.current_time_sheet), [:absences]) %></li>
-          <li><%= nav_link(t('.reports'), user_summaries_work_month_path(current_user, Date.current.year, Date.current.month), [:work, :my_work]) %></li>
-          <% if show_manage_link_in_navigation? %>
-            <li><%= nav_link(t('.manage'), public_holidays_path, [:public_holidays, :users, :time_types]) %></li>
-          <% end %>
-        </ul>
+        <%= render_navigation level: 1 %>
       </div>
       <% if has_top_buttons? %>
         <%= render "#{controller.controller_name}/top_buttons" %>

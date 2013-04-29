@@ -248,6 +248,8 @@ GEM
     sextant (0.2.3)
       activesupport (>= 3.2)
       rails (>= 3.2)
+    simple-navigation (3.10.1)
+      activesupport (>= 2.3.2)
     simplecov (0.7.1)
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
@@ -331,6 +333,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 3.2.3)
   sextant
+  simple-navigation
   simplecov
   simplecov-rcov
   sqlite3
