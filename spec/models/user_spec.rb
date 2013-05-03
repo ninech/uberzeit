@@ -3,14 +3,9 @@ require 'spec_helper'
 describe User do
 
   let(:user) { FactoryGirl.create(:user) }
-  let(:leader) { FactoryGirl.create(:leader) }
 
   it 'has a valid factory' do
     FactoryGirl.build(:user).should be_valid
-  end
-
-  it 'provides subordinates' do
-    leader.subordinates.length.should eq(leader.teams.first.members.length)
   end
 
   it 'acts as paranoid' do

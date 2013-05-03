@@ -58,7 +58,7 @@ describe LdapSync do
     end
   end
 
-  it 'creates the teams which the user is leading of' do
+  it 'creates the teams which the user is leader of' do
     Department.find_all.each do |department|
       if department.managers.include?(@person)
         Team.find_by_uid(department.id).should_not be_nil
@@ -80,10 +80,10 @@ describe LdapSync do
 
   it 'removes missing leadership links' do
     team = Team.find_by_uid(@systems.id)
-    team.has_leader?(@user).should be_true
+    @user.has_role?(:team_leader, team).should be_true
     @systems.managers.delete(@person)
     LdapSync.all
-    team.reload.has_leader?(@user).should be_false
+    @user.has_role?(:team_leader, team).should be_false
   end
 
   it 'removes missing membership links' do
@@ -96,10 +96,10 @@ describe LdapSync do
 
   it 'detects the change from member to leader' do
     team = Team.find_by_uid(@administration.id)
-    team.has_leader?(@user).should be_false
+    @user.has_role?(:team_leader, team).should be_false
     @administration.managers.push(@person)
     LdapSync.all
-    team.reload.has_leader?(@user).should be_true
+    @user.has_role?(:team_leader, team).should be_true
   end
 
   it 'deletes "cancelled" persons' do

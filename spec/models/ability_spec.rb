@@ -176,4 +176,29 @@ describe Ability do
       it { should_not be_able_to(:destroy, employment) }
     end
   end
+
+  describe 'Team' do
+    let(:team) { FactoryGirl.create(:team) }
+    let(:team_leader) do
+      user.tap { |u| u.add_role(:team_leader, team) }
+    end
+
+    context 'as admin' do
+      let(:ability) { Ability.new(admin) }
+
+      it { should be_able_to(:read, team) }
+      it { should be_able_to(:update, team) }
+      it { should be_able_to(:create, team) }
+      it { should be_able_to(:destroy, team) }
+    end
+
+    context 'as team leader' do
+      let(:ability) { Ability.new(team_leader) }
+
+      it { should be_able_to(:read, team) }
+      it { should_not be_able_to(:update, team) }
+      it { should_not be_able_to(:create, team) }
+      it { should_not be_able_to(:destroy, team) }
+    end
+  end
 end
