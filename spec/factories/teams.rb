@@ -8,8 +8,12 @@ FactoryGirl.define do
     end
 
     after(:create) do |team, evaluator|
-      team.leaders += FactoryGirl.create_list(:user, evaluator.leaders_count)
       team.members += FactoryGirl.create_list(:user, evaluator.members_count)
+
+      evaluator.leaders_count.times do
+        user = FactoryGirl.create(:user)
+        user.add_role(:team_leader, team)
+      end
     end
   end
 end
