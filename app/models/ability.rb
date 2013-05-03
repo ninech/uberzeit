@@ -22,8 +22,10 @@ class Ability
         can :manage, Employment
         can :manage, PublicHoliday
         can :manage, User
+        can :manage, Team
       end
 
+      can :read, Team, id: Team.with_role(:team_leader, user).map(&:id)
     end
 
     # Define abilities for the passed in user here. For example:

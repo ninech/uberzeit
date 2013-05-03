@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 
   def subordinates
     # method chaining LIKE A BOSS
-    teams.select{ |t| t.has_leader?(self) }.collect{ |t| t.members }.flatten.uniq
+    Team.with_role(:team_leader, self).collect(&:members).flatten.uniq
   end
 
   def create_time_sheet_if_needed
