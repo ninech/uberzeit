@@ -3,9 +3,9 @@ class LdapSync
 
     def each_user_in_person_list(person_list)
       person_list.each do |person|
-        next if person.cancelled?
         user = User.find_by_uid(person.mail)
-        yield(user) if user
+        next if not user or person.cancelled?
+        yield(user)
       end
     end
 
