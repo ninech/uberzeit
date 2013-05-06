@@ -6,26 +6,37 @@ class Summaries::Work::WorkController < ApplicationController
 
   def year
     @year = params[:year].to_i
-    @table = Summarize::Table.new(Summarize::Summarizer::Work, @team || User.all, UberZeit.year_as_range(@year))
+    @table = Summarize::Table.new(Summarize::Summarizer::Work, users, UberZeit.year_as_range(@year))
   end
 
   def month
     @year = params[:year].to_i
     @month = params[:month].to_i
-    @table = Summarize::Table.new(Summarize::Summarizer::Work, @team || User.all, UberZeit.month_as_range(@year, @month))
+    @table = Summarize::Table.new(Summarize::Summarizer::Work, users, UberZeit.month_as_range(@year, @month))
   end
 
   private
 
   def set_team
-    @team = Team.find(params[:team_id]) unless params[:team_id].blank?
+    # this workaround where first thingy can be removed when this app runs on rails 4
+    # accessible_by filters by id, a subsequent where(id: id) will replace the first one
+    # (cf. rails activerecord/lib/active_record/relation/query_methods.rb, line 132)
+    @team = Team.accessible_by(current_ability).where('id = ?', params[:team_id]).first unless params[:team_id].blank?
   end
 
   def set_teams
-    @teams = Team.all
+    @teams = Team.accessible_by(current_ability)
   end
 
   def set_year
     @year = params[:year].to_i
+  end
+
+  def users
+    if @team
+      @team.members
+    else
+      @teams.collect(&:members).flatten.uniq
+    end
   end
 end

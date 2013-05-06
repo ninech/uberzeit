@@ -13,6 +13,7 @@ FactoryGirl.define do
       evaluator.leaders_count.times do
         user = FactoryGirl.create(:user)
         user.add_role(:team_leader, team)
+        team.members << user
       end
     end
   end
