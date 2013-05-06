@@ -14,6 +14,10 @@ class Team < ActiveRecord::Base
     members.include?(user)
   end
 
+  def leaders
+    members.select { |user| user.has_role?(:team_leader, self) }
+  end
+
   def each
     members.each { |user| yield(user) }
   end
