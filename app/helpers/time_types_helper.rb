@@ -1,14 +1,16 @@
 module TimeTypesHelper
 
-  def list_available_icons(active = nil)
-    icons_available = [ 'exchange','bell-alt','beer','coffee','food','user-md','ambulance',
-                        'medkit','github-alt','book','briefcase','bullhorn','camera','coffee',
-                        'cog','comments','fighter-jet','circle-blank','circle','group','home','legal',
-                        'road','truck','wrench','fire','ban-circle','shopping-cart','plane',
-                        'globe','leaf','adjust','asterisk']
+  ICONS_AVAILABLE = [ 'exchange','bell-alt','beer','coffee','food','user-md','ambulance',
+                      'medkit','github-alt','book','briefcase','bullhorn','camera','coffee',
+                      'cog','comments','fighter-jet','circle-blank','circle','group','home','legal',
+                      'road','truck','wrench','fire','ban-circle','shopping-cart','plane',
+                      'globe','leaf','adjust','asterisk']
 
+  NUMBER_OF_COLORS = 12
+
+  def list_available_icons(active = nil)
     content_tag(:ul, class: 'list-of-icons' ) do
-      icons_available.collect do |icon_name|
+      ICONS_AVAILABLE.collect do |icon_name|
         content_tag(:li) do
           css_classes = ["icon","icon-#{icon_name}"]
           css_classes << ["active"] if icon_name == active
@@ -20,7 +22,7 @@ module TimeTypesHelper
 
   def list_available_colors(active = nil)
     content_tag(:ul, class: 'list-of-colors' ) do
-      12.times.to_a.collect do |color_index|
+      NUMBER_OF_COLORS.times.to_a.collect do |color_index|
         content_tag(:li) do
           css_classes = ["color","icon-sign-blank","event-color#{color_index}"]
           css_classes << ["active"] if color_index == active

@@ -131,22 +131,22 @@ de:
       add_employment: Neues Anstellungsverhältnis
       open-ended: unbefristet
       confirm_delete: Löschen?
-  layouts:
-    reports_navigation:
-      my_work: Meine Arbeitszeit
-      my_absence: Meine Absenzen
-      work: Arbeitszeit Mitarbeiter
-      absences: Absenzen Mitarbeiter
-      vacation: Ferien Mitarbeiter
-    header:
-      manage: Verwalten
-      absences: Absenzen
-      timesheet: Zeiterfassung
-      reports: Berichte
-    manage_navigation:
-      public_holidays: Feiertage
-      time_types: Zeittypen
-      users: Benutzer
+  navigation:
+    manage: Verwalten
+    absences: Absenzen
+    timesheet: Zeiterfassung
+    reports: Berichte
+    sub:
+      manage:
+        public_holidays: Feiertage
+        time_types: Zeittypen
+        users: Benutzer
+      reports:
+        my_work: Meine Arbeitszeit
+        my_absence: Meine Absenzen
+        work: Arbeitszeit Mitarbeiter
+        absences: Absenzen Mitarbeiter
+        vacation: Ferien Mitarbeiter
   summaries:
     formats:
         date: '%e. %a.'
@@ -202,12 +202,12 @@ de:
           title: Ferien Mitarbeiter
           unit: in Tagen
           taken: 'Beanspruchte Ferientage im Jahr %{year}'
-          remaining: 'Restliche Ferientage für %{year}'
+          remaining: 'Noch verfügbare Ferientage in %{year}'
         month:
           title: Ferien Mitarbeiter
           unit: in Tagen
           taken: 'Beansprucht im %{month} %{year}'
-          remaining: 'Restliche Ferientage nach %{month} %{year}'
+          remaining: 'Noch verfügbare Ferientage nach %{month} %{year}'
 
     shared:
       users_absence_table:
