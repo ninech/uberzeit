@@ -1,4 +1,10 @@
 <%= form_for([@user,@employment]) do |f| %>
+  <% if f.object.errors.present? %>
+    <div class="alert-box alert">
+      <%= f.object.errors.full_messages.join('<br/>').html_safe %>
+    </div>
+  <% end %>
+
   <div class="row">
     <div class="small-2 columns">
       <%= f.text_field :workload %>

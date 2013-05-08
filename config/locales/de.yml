@@ -50,6 +50,11 @@ de:
               invalid_datetime: ist ein ungültiges Datum
         employment:
           error_outside_1_and_100_percent: muss innerhalb 1 und 100 Prozent liegen
+          attributes:
+            base:
+              there_is_another_open_ended_entry: Es existiert schon ein unbefristerer Eintrag.
+              overlaps_with_another_entry: Der gewählte Zeitraum überschneidet sich mit einem anderen Eintrag.
+              cannot_delete_single_employment: Das Löschen des letzten Anstellungsverhältnis ist nicht möglich.
 
   model_successfully_created: "%{model} wurde erfolgreich erstellt."
   model_successfully_updated: "%{model} wurde erfolgreich aktualisiert."
