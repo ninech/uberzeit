@@ -9,6 +9,9 @@ class Employment < ActiveRecord::Base
   validates_inclusion_of  :workload, :in => 1..100,
                           :message => I18n.t('.error_outside_1_and_100_percent', scope: [:activerecord, :errors, :models, :employment])
 
+  validates_datetime :start_date
+  validates_datetime :end_date, on_or_after: :start_date, unless: :open_ended?
+
   before_destroy :check_if_last
 
   before_validation :ensure_no_other_entry_is_open_ended, if: :open_ended?
