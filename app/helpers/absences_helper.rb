@@ -4,7 +4,6 @@ module AbsencesHelper
     absences = @absences[day.to_date.to_s]
     public_holiday = @public_holidays[day.to_date.to_s]
 
-
     if absences
       css_class = "has-absences event-bg#{suffix_for_daypart(absences.first)}#{color_index_of_array(absences)}"
       [tooltips_for_day(day, :tooltip_content_for_absence), {:class => css_class}]
