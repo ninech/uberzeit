@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   around_filter :set_time_zone
   before_filter :ensure_logged_in
 
-  unless Rails.env.test?
+  if Rails.env.staging? || Rails.env.production?
     rescue_from Exception, with: :render_500
     rescue_from ActionController::RoutingError, with: :render_404
     rescue_from ActionController::UnknownController, with: :render_404
