@@ -7,6 +7,13 @@ GIT
       i18n
 
 GIT
+  remote: git@git.nine.ch:gems/uberlog
+  revision: 9c3a88b27c82d1ab2a0828a0c9aa7211bbe78225
+  tag: 0.0.2
+  specs:
+    uberlog (0.0.2)
+
+GIT
   remote: git@git.nine.ch:nine-ldap.git
   revision: 00dfc14c3cef7ae6f2d83348b0ae9ea38c6b991d
   tag: 0.0.13
@@ -338,6 +345,7 @@ DEPENDENCIES
   simplecov-rcov
   sqlite3
   therubyracer
+  uberlog!
   uglifier (>= 1.0.3)
   validates_timeliness
   version_bumper
