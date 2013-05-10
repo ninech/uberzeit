@@ -3,7 +3,14 @@ require 'spec_helper'
 describe Summaries::Vacation::VacationController do
   render_views
 
-  let(:user) { FactoryGirl.create(:user) }
+  before do
+    @team = FactoryGirl.create(:team, members_count: 3, leaders_count: 1)
+    @another_team = FactoryGirl.create(:team, members_count: 7, leaders_count: 2)
+  end
+
+  let(:user) { @team.members.first }
+  let(:team_leader) { @team.leaders.first }
+  let(:admin) { FactoryGirl.create(:admin) }
   let(:year) { 2013 }
   let(:month) { 3 }
 
@@ -30,6 +37,17 @@ describe Summaries::Vacation::VacationController do
         get :year, year: year
         response.should render_template :year
       end
+
+      context 'rights and roles' do
+        it 'returns no rows for a simple user' do
+          get :year, year: year
+          assigns(:table).entries.should be_empty
+
+          get :year, year: year, team: @team.id
+          assigns(:table).entries.should be_empty
+        end
+      end
+
     end
 
     describe 'GET "month"' do
@@ -43,6 +61,84 @@ describe Summaries::Vacation::VacationController do
       it 'renders the :month template' do
         get :month, year: year, month: month
         response.should render_template :month
+      end
+    end
+
+  end
+
+  context 'for signed-in admins' do
+
+    before do
+      test_sign_in admin
+    end
+
+    describe 'GET "year"' do
+      context 'rights and roles' do
+        it 'returns rows for all users' do
+          get :year, year: year
+          assigns(:table).entries.count.should eq(@team.members.count + @another_team.members.count)
+        end
+
+        it 'returns rows for a specified team' do
+          get :year, year: year, team_id: @team.id
+          assigns(:table).entries.count.should eq(@team.members.count)
+        end
+      end
+    end
+
+    describe 'GET "month"' do
+      context 'rights and roles' do
+        it 'returns rows for all users' do
+          get :year, year: year, month: month
+          assigns(:table).entries.count.should eq(@team.members.count + @another_team.members.count)
+        end
+
+        it 'returns rows for a specified team' do
+          get :year, year: year, month: month, team_id: @team.id
+          assigns(:table).entries.count.should eq(@team.members.count)
+        end
+      end
+    end
+
+  end
+
+  context 'for signed-in team leaders' do
+
+    before do
+      test_sign_in team_leader
+    end
+
+    describe 'GET "year"' do
+      context 'rights and roles' do
+        it 'returns rows for users of his teams' do
+          get :year, year: year
+          assigns(:table).entries.count.should eq(@team.members.count)
+        end
+
+        it 'returns rows for a managed team' do
+          get :year, year: year, team_id: @team.id
+          assigns(:table).entries.count.should eq(@team.members.count)
+        end
+
+        it 'returns not the rows for a non-managed team' do
+          get :year, year: year, team_id: @another_team.id
+          assigns(:table).entries.any?{ |user, entry| @another_team.members.include?(user) }.should be_false
+        end
+
+      end
+    end
+
+    describe 'GET "month"' do
+      context 'rights and roles' do
+        it 'returns rows for all users' do
+          get :year, year: year, month: month
+          assigns(:table).entries.count.should eq(@team.members.count)
+        end
+
+        it 'returns rows for a specified team' do
+          get :year, year: year, month: month, team_id: @team.id
+          assigns(:table).entries.count.should eq(@team.members.count)
+        end
       end
     end
 

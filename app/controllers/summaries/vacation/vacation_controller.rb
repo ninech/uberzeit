@@ -5,26 +5,34 @@ class Summaries::Vacation::VacationController < ApplicationController
   before_filter :set_year
 
   def year
-    @table = Summarize::Table.new(Summarize::Summarizer::Vacation, @team || User.all, UberZeit.year_as_range(@year))
+    @table = Summarize::Table.new(Summarize::Summarizer::Vacation, users, UberZeit.year_as_range(@year))
   end
 
   def month
     @month = params[:month].to_i
     @month_as_date = Date.new(@year, @month)
-    @table = Summarize::Table.new(Summarize::Summarizer::Vacation, @team || User.all, UberZeit.month_as_range(@year, @month))
+    @table = Summarize::Table.new(Summarize::Summarizer::Vacation, users, UberZeit.month_as_range(@year, @month))
   end
 
   private
 
   def set_team
-    @team = Team.find(params[:team_id]) unless params[:team_id].blank?
+    @team = Team.accessible_by(current_ability).where('id = ?', params[:team_id]).first unless params[:team_id].blank?
   end
 
   def set_teams
-    @teams = Team.all
+    @teams = Team.accessible_by(current_ability)
   end
 
   def set_year
     @year = params[:year].to_i
+  end
+
+  def users
+    if @team
+      @team.members
+    else
+      @teams.collect(&:members).flatten.uniq
+    end
   end
 end
