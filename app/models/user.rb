@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
   end
 
   def current_time_sheet
+    ensure_timesheet_and_employment_exist
     time_sheets.first
   end
 
