@@ -25,7 +25,6 @@ class Summaries::Absence::AbsenceController < ApplicationController
     @absences = {}
     @users.each do |user|
       @absences[user] ||= {}
-      next if user.current_time_sheet.nil?
 
       find_time_chunks = FindTimeChunks.new(user.current_time_sheet.absences)
       find_time_chunks.in_range(@range).each do |chunk|
