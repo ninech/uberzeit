@@ -46,8 +46,8 @@ describe Summaries::Work::WorkController do
           get :year, year: year, team: @team.id
           assigns(:table).entries.should be_empty
         end
-
       end
+
     end
 
     describe 'GET "month"' do
@@ -122,8 +122,7 @@ describe Summaries::Work::WorkController do
 
         it 'returns not the rows for a non-managed team' do
           get :year, year: year, team_id: @another_team.id
-          raise "Fix this test... make it better. Make it: SUPER AWESOME"
-          #assigns(:table).entries.each { |entry| @team.members.include?(entry[:user]}
+          assigns(:table).entries.any?{ |user, entry| @another_team.members.include?(user) }.should be_false
         end
 
       end
@@ -133,7 +132,7 @@ describe Summaries::Work::WorkController do
       context 'rights and roles' do
         it 'returns rows for all users' do
           get :year, year: year, month: month
-          assigns(:table).entries.count.should eq(@team.members.count + @another_team.members.count)
+          assigns(:table).entries.count.should eq(@team.members.count)
         end
 
         it 'returns rows for a specified team' do

@@ -14,6 +14,8 @@ class Ability
       can :manage, Absence, time_sheet: { user_id: user.id }
       can :manage, Timer, time_sheet: { user_id: user.id }
 
+      can :read, Team, id: Team.with_role(:team_leader, user).map(&:id)
+
       if user.has_role?(:admin)
         can :manage, TimeType
         can :manage, TimeSheet
@@ -24,8 +26,6 @@ class Ability
         can :manage, User
         can :manage, Team
       end
-
-      can :read, Team, id: 1#Team.with_role(:team_leader, user).map(&:id)
     end
 
     # Define abilities for the passed in user here. For example:

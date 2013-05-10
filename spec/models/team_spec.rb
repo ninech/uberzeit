@@ -12,7 +12,7 @@ describe Team do
   end
 
   it 'acts as an enumerable' do
-    team = FactoryGirl.create(:team, members_count: 2)
+    team = FactoryGirl.create(:team, members_count: 2, leaders_count: 0)
     team.collect { |user| user }.length.should eq(2)
   end
 end
