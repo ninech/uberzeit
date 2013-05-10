@@ -87,4 +87,28 @@ module ApplicationHelper
     icon = icon_class_for_time_type(time_type)
     content_tag(:i, '', class: "event-color#{color_index} #{icon}")
   end
+
+  def show_user_select?
+    current_user.admin?
+  end
+
+  def user_path_time_sheet(user)
+    time_sheet_path(user.current_time_sheet)
+  end
+
+  def user_path_absences(user)
+    time_sheet_absences_path(user.current_time_sheet)
+  end
+
+  def user_path_my_work_summary(user)
+    user_summaries_work_month_path(user, Date.current.year, Date.current.month)
+  end
+
+  def user_path_work_summary(user)
+    user_summaries_work_month_path(user, Date.current.year, Date.current.month)
+  end
+
+  def user_path_absence_summary(user)
+    user_summaries_absence_year_path(user, Date.current.year)
+  end
 end
