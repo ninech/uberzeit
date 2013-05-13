@@ -35,7 +35,7 @@
                       <%= @absences[weekday].map{ |chunk| icon_for_time_type(chunk.time_type) }.join.html_safe %>
                     <% end %>
                     <% if @public_holidays[weekday] %>
-                      <i class="icon-flag public-holiday-color"></i>
+                      <i class="icon-flag public-holiday-color" title="<%= @public_holidays[weekday].name %>"></i>
                     <% end %>
                   </span>
                   <% if @public_holidays[weekday] && @public_holidays[weekday].whole_day? %>
