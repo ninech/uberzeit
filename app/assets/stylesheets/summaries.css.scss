@@ -40,10 +40,18 @@
         &.public-holiday {
           background-color: rgb(229,229,237);
         }
+
+        &.today {
+          background-color: #f1f1f1;
+        }
       }
       th {
         width: 30px;
         height: 30px;
+
+        &.today {
+          background-color: #f1f1f1;
+        }
 
         &.public-holiday {
           background-color: rgb(189,189,208);
