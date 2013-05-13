@@ -23,21 +23,27 @@
           <% @weekdays.each do |weekday| %>
             <li>
               <a href="<%= url_for(action: :show, date: weekday.to_formatted_s(:iso)) %>" class="<%= 'active' if weekday == @day %>">
-                <span class="day">
-                  <%= l weekday, format: :weekday %>
-                  <% if @absences[weekday] %>
-                    <%= @absences[weekday].map{ |chunk| icon_for_time_type(chunk.time_type) }.join.html_safe %>
-                  <% end %>
-                  <% if @public_holidays[weekday] %>
-                    <i class="icon-flag public-holiday-color"></i>
+                <span class="day-description">
+                  <span class="day">
+                    <span class="show-for-large-up">
+                      <%= l weekday, format: :weekday %>
+                    </span>
+                    <span class="show-for-medium-down">
+                      <%= l weekday, format: :short %>
+                    </span>
+                    <% if @absences[weekday] %>
+                      <%= @absences[weekday].map{ |chunk| icon_for_time_type(chunk.time_type) }.join.html_safe %>
+                    <% end %>
+                    <% if @public_holidays[weekday] %>
+                      <i class="icon-flag public-holiday-color"></i>
+                    <% end %>
+                  </span>
+                  <% if @public_holidays[weekday] && @public_holidays[weekday].whole_day? %>
+                    <span class="public-holiday"><%= @public_holidays[weekday].name %></span>
+                  <% else %>
+                    <span class="time <%= 'active' if weekday == @day %>"><%= worktime_for_day(weekday) %></span>
                   <% end %>
                 </span>
-                <br>
-                <% if @public_holidays[weekday] && @public_holidays[weekday].whole_day? %>
-                  <span class="public-holiday"><%= @public_holidays[weekday].name %></span>
-                <% else %>
-                  <span class="time <%= 'active' if weekday == @day %>"><%= worktime_for_day(weekday) %></span>
-                <% end %>
               </a>
             </li>
           <% end %>
