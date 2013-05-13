@@ -44,38 +44,46 @@ describe 'Roles and Rights' do
       end
 
       describe 'summaries' do
-        it 'has access to own summaries' do
-          should_have_access_to user_summaries_work_year_path(user.current_time_sheet, year)
-          should_have_access_to user_summaries_absence_year_path(user.current_time_sheet, year)
+        describe 'my work & my absences' do
+          it 'has access to own summaries' do
+            should_have_access_to user_summaries_work_year_path(user.current_time_sheet, year)
+            should_have_access_to user_summaries_absence_year_path(user.current_time_sheet, year)
+          end
+
+          it 'has no access to summaries of other users' do
+            should_not_have_access_to user_summaries_work_year_path(another_user.current_time_sheet, year)
+            should_not_have_access_to user_summaries_absence_year_path(another_user.current_time_sheet, year)
+          end
         end
 
-        it 'has no access to summaries of other users' do
-          should_not_have_access_to user_summaries_work_year_path(another_user.current_time_sheet, year)
-          should_not_have_access_to user_summaries_absence_year_path(another_user.current_time_sheet, year)
+        describe 'overall absence summary' do
+          it 'full access' do
+            user && another_user
+            visit calendar_summaries_absence_users_path(year, month)
+
+            page.should have_selector('td', text: user.display_name)
+            page.should have_selector('td', text: another_user.display_name)
+          end
         end
 
-        it 'has full access to overall absence summary' do
-          user && another_user
-          visit calendar_summaries_absence_users_path(year, month)
+        describe 'overall work summary' do
+          it 'shows an empty view' do
+            user && another_user
+            visit year_summaries_work_users_path(year, month)
 
-          page.should have_selector('td', text: user.display_name)
-          page.should have_selector('td', text: another_user.display_name)
+            page.should_not have_selector('td', text: user.display_name)
+            page.should_not have_selector('td', text: another_user.display_name)
+          end
         end
 
-        it 'receives an empty view for overall work summary' do
-          user && another_user
-          visit year_summaries_work_users_path(year, month)
+        describe 'overall vacation summary' do
+          it 'shows an empty view' do
+            user && another_user
+            visit year_summaries_vacation_users_path(year, month)
 
-          page.should_not have_selector('td', text: user.display_name)
-          page.should_not have_selector('td', text: another_user.display_name)
-        end
-
-        it 'receives an empty view for overall vacation summary' do
-          user && another_user
-          visit year_summaries_vacation_users_path(year, month)
-
-          page.should_not have_selector('td', text: user.display_name)
-          page.should_not have_selector('td', text: another_user.display_name)
+            page.should_not have_selector('td', text: user.display_name)
+            page.should_not have_selector('td', text: another_user.display_name)
+          end
         end
       end
 
@@ -145,46 +153,54 @@ describe 'Roles and Rights' do
       end
 
       describe 'summaries' do
-        it 'has access to own summaries' do
-          should_have_access_to user_summaries_work_year_path(user.current_time_sheet, year)
-          should_have_access_to user_summaries_absence_year_path(user.current_time_sheet, year)
+        describe 'my work & my absences' do
+          it 'has access to own summaries' do
+            should_have_access_to user_summaries_work_year_path(user.current_time_sheet, year)
+            should_have_access_to user_summaries_absence_year_path(user.current_time_sheet, year)
+          end
+
+          it 'has access to summaries of managed users' do
+            should_have_access_to user_summaries_work_year_path(managed_user.current_time_sheet, year)
+            should_have_access_to user_summaries_absence_year_path(managed_user.current_time_sheet, year)
+          end
+
+          it 'has no access to summaries of other users which are not in the managed team' do
+            should_not_have_access_to user_summaries_work_year_path(another_user_in_another_team.current_time_sheet, year)
+            should_not_have_access_to user_summaries_absence_year_path(another_user_in_another_team.current_time_sheet, year)
+          end
         end
 
-        it 'has access to summaries of managed users' do
-          should_have_access_to user_summaries_work_year_path(managed_user.current_time_sheet, year)
-          should_have_access_to user_summaries_absence_year_path(managed_user.current_time_sheet, year)
+        describe 'overall absence summary' do
+          it 'has full access' do
+            user && managed_user && another_user_in_another_team
+            visit calendar_summaries_absence_users_path(year, month)
+
+            page.should have_selector('td', text: user.display_name)
+            page.should have_selector('td', text: managed_user.display_name)
+            page.should have_selector('td', text: another_user_in_another_team.display_name)
+          end
         end
 
-        it 'has no access to summaries of other users which are not in the managed team' do
-          should_not_have_access_to user_summaries_work_year_path(another_user_in_another_team.current_time_sheet, year)
-          should_not_have_access_to user_summaries_absence_year_path(another_user_in_another_team.current_time_sheet, year)
+        describe 'overall work summary' do
+          it 'shows a list with an entry for each managed user' do
+            user && managed_user && another_user_in_another_team
+            visit year_summaries_work_users_path(year, month)
+
+            page.should have_selector('td', text: user.display_name)
+            page.should have_selector('td', text: managed_user.display_name)
+            page.should_not have_selector('td', text: another_user_in_another_team.display_name)
+          end
         end
 
-        it 'overall absence summary: has full access' do
-          user && managed_user && another_user_in_another_team
-          visit calendar_summaries_absence_users_path(year, month)
+        describe 'overall vacation summary' do
+          it 'shows a list with an entry for each managed user' do
+            user && managed_user && another_user_in_another_team
+            visit year_summaries_vacation_users_path(year, month)
 
-          page.should have_selector('td', text: user.display_name)
-          page.should have_selector('td', text: managed_user.display_name)
-          page.should have_selector('td', text: another_user_in_another_team.display_name)
-        end
-
-        it 'overall work summary: receives a list of users in the managed team' do
-          user && managed_user && another_user_in_another_team
-          visit year_summaries_work_users_path(year, month)
-
-          page.should have_selector('td', text: user.display_name)
-          page.should have_selector('td', text: managed_user.display_name)
-          page.should_not have_selector('td', text: another_user_in_another_team.display_name)
-        end
-
-        it 'overall vacation summary: receives an empty view for overall vacation summary' do
-          user && managed_user && another_user_in_another_team
-          visit year_summaries_vacation_users_path(year, month)
-
-          page.should have_selector('td', text: user.display_name)
-          page.should have_selector('td', text: managed_user.display_name)
-          page.should_not have_selector('td', text: another_user_in_another_team.display_name)
+            page.should have_selector('td', text: user.display_name)
+            page.should have_selector('td', text: managed_user.display_name)
+            page.should_not have_selector('td', text: another_user_in_another_team.display_name)
+          end
         end
       end
 
