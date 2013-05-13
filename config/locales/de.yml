@@ -267,6 +267,7 @@ de:
     add_time_modal:
       add_time: Zeit hinzufügen
     show:
+      today: Heute
       overtime: Überzeit
       total: Total
       add_time_now: Zeit jetzt eintragen
