@@ -3,8 +3,10 @@ require 'cancan/matchers'
 
 describe Ability do
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:team) { FactoryGirl.create(:team) }
+  let(:user) { FactoryGirl.create(:user, teams: [team]) }
+  let(:admin) { FactoryGirl.create(:admin, teams: [team]) }
+  let(:team_leader) { FactoryGirl.create(:team_leader, teams: [team]) }
 
   subject { ability }
 
@@ -19,10 +21,19 @@ describe Ability do
       it { should_not be_able_to(:destroy, user) }
     end
 
-    context 'as another User' do
+    context 'as another user' do
       let(:ability) { Ability.new(FactoryGirl.create(:user)) }
 
       it { should_not be_able_to(:read, user) }
+      it { should_not be_able_to(:update, user) }
+      it { should_not be_able_to(:create, User) }
+      it { should_not be_able_to(:destroy, user) }
+    end
+
+    context 'as a team leader' do
+      let(:ability) { Ability.new(team_leader) }
+
+      it { should be_able_to(:read, user) }
       it { should_not be_able_to(:update, user) }
       it { should_not be_able_to(:create, User) }
       it { should_not be_able_to(:destroy, user) }
@@ -178,17 +189,12 @@ describe Ability do
   end
 
   describe 'Team' do
-    let(:team) { FactoryGirl.create(:team) }
-    let(:team_leader) do
-      user.tap { |u| u.add_role(:team_leader, team) }
-    end
-
     context 'as admin' do
       let(:ability) { Ability.new(admin) }
 
       it { should be_able_to(:read, team) }
       it { should be_able_to(:update, team) }
-      it { should be_able_to(:create, team) }
+      it { should be_able_to(:create, Team) }
       it { should be_able_to(:destroy, team) }
     end
 
@@ -197,7 +203,7 @@ describe Ability do
 
       it { should be_able_to(:read, team) }
       it { should_not be_able_to(:update, team) }
-      it { should_not be_able_to(:create, team) }
+      it { should_not be_able_to(:create, Team) }
       it { should_not be_able_to(:destroy, team) }
     end
   end
