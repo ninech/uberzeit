@@ -74,14 +74,6 @@ class User < ActiveRecord::Base
     has_role?(:admin)
   end
 
-  def team_leader?
-    has_role?(:team_leader)
-  end
-
-  def admin?
-    has_role?(:admin)
-  end
-
   private
 
   def set_default_time_zone
