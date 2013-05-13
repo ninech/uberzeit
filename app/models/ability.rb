@@ -14,9 +14,12 @@ class Ability
       can :manage, Absence, time_sheet: { user_id: user.id }
       can :manage, Timer, time_sheet: { user_id: user.id }
 
-      can :read, Team, id: Team.with_role(:team_leader, user).map(&:id)
+      if user.team_leader?
+        can :read, Team, id: Team.with_role(:team_leader, user).map(&:id)
+        can :read, User, id: Team.with_role(:team_leader, user).map(&:members_without_leaders).flatten.map(&:id)
+      end
 
-      if user.has_role?(:admin)
+      if user.admin?
         can :manage, TimeType
         can :manage, TimeSheet
         can :manage, TimeEntry

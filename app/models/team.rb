@@ -18,6 +18,10 @@ class Team < ActiveRecord::Base
     members.select { |user| user.has_role?(:team_leader, self) }
   end
 
+  def members_without_leaders
+    members.reject { |user| user.has_role?(:team_leader, self) }
+  end
+
   def each
     members.each { |user| yield(user) }
   end

@@ -67,15 +67,7 @@ class User < ActiveRecord::Base
   end
 
   def team_leader?
-    has_role?(:team_leader)
-  end
-
-  def admin?
-    has_role?(:admin)
-  end
-
-  def team_leader?
-    has_role?(:team_leader)
+    Team.with_role(:team_leader, self).any?
   end
 
   def admin?
