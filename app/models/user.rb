@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
   end
 
   def display_name
-    "#{name}, #{given_name}"
+    [name, given_name].compact.join(', ')
   end
 
   private
