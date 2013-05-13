@@ -6,7 +6,13 @@
       <tr>
         <th><%= l @days.first, format: t('.month_in_year') %></td>
         <% @days.each do |day| %>
-          <th <% unless @public_holidays[day].empty? %>class="public-holiday has-tip" data-tooltip="<%=render(partial: 'shared/public_holiday_tooltip', locals: { public_holiday: @public_holidays[day].first }).to_s%>" <% end %>"><%= day.strftime('%d') %></th>
+          <% current_day_class = (day.today? ? 'today' : '') %>
+          <th class="
+            <% if day.today? %>today<% end %>
+            <% unless @public_holidays[day].empty? %>public-holiday has-tip<% end %>
+            "<% unless @public_holidays[day].empty? %> data-tooltip="<%=render(partial: 'shared/public_holiday_tooltip', locals: { public_holiday: @public_holidays[day].first }).to_s%>"<% end %>>
+            <%= day.strftime('%d') %>
+          </th>
         <% end %>
       </tr>
 
@@ -16,14 +22,16 @@
         <% @days.each do |day| %>
           <% absences = @absences[user][day] %>
           <td class="event
+          <% if day.today? %>today<% end %>
           <% unless @public_holidays[day].empty? %>public-holiday<% end %>
           <% unless @work_days[day] %>non-work-day<% end %>
           <% unless absences.nil? %>has-tip<% end %>"
-           <% unless absences.nil? %>data-tooltip="<%=render(partial: 'shared/absences_tooltip', locals: { absences: absences, edit: false}).to_s%>" <% end %>
-            >
-            <div class="event-container">
-              <%= render_absences(absences).html_safe %>
-            </div>
+          <% unless absences.nil? %>data-tooltip="<%=render(partial: 'shared/absences_tooltip', locals: { absences: absences, edit: false}).to_s%>" <% end %>>
+            <% unless absences.blank? %>
+              <div class="event-container">
+                <%= render_absences(absences).html_safe %>
+              </div>
+            <% end %>
           </td>
         <% end %>
       </tr>
