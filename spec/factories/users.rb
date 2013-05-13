@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :user do |f|
     sequence(:name) { |n| "user#{n}" }
     time_zone { Time.zone.name }
+    teams { FactoryGirl.create_list(:team, 1) }
 
     ignore do
       with_employment true
@@ -16,7 +17,7 @@ FactoryGirl.define do
     end
 
     factory :team_leader do
-      after(:create) { |user| user.add_role(:team_leader) }
+      after(:create) { |user| user.teams.each { |team| user.add_role(:team_leader, team) } }
     end
   end
 

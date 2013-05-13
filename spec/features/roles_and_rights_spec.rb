@@ -120,8 +120,8 @@ describe 'Roles and Rights' do
     end
   end
 
- context 'role: team leader' do
-    let(:team) { FactoryGirl.create(:team, leaders_count: 1, members_count: 1) }
+  context 'role: team leader' do
+    let(:team) { FactoryGirl.create(:team, leaders_count: 1, users_count: 1) }
     let(:team_leader) { team.leaders.first }
     let(:user) { team_leader }
     let(:managed_user) { team.members_without_leaders.first }
@@ -237,4 +237,109 @@ describe 'Roles and Rights' do
     end
   end
 
+  context 'role: admin' do
+    let(:admin) { FactoryGirl.create(:admin) }
+    let(:user) { admin }
+    let(:another_user) { FactoryGirl.create(:user) }
+
+    before do
+      login(admin)
+    end
+
+    context 'access' do
+      describe 'time sheets' do
+        it 'has access to own time sheet' do
+          should_have_access_to time_sheet_path(user.current_time_sheet)
+        end
+
+        it 'has access to another time sheet' do
+          should_have_access_to time_sheet_path(another_user.current_time_sheet)
+        end
+      end
+
+      describe 'absences' do
+        it 'has access to own absences' do
+          should_have_access_to time_sheet_absences_path(user.current_time_sheet)
+        end
+
+        it 'has access to summaries of other users' do
+          should_have_access_to time_sheet_absences_path(another_user.current_time_sheet)
+        end
+      end
+
+      describe 'summaries' do
+        describe 'my work & my absences' do
+          it 'has access to own summaries' do
+            should_have_access_to user_summaries_work_year_path(user.current_time_sheet, year)
+            should_have_access_to user_summaries_absence_year_path(user.current_time_sheet, year)
+          end
+
+          it 'has access to summaries of other users' do
+            should_have_access_to user_summaries_work_year_path(another_user.current_time_sheet, year)
+            should_have_access_to user_summaries_absence_year_path(another_user.current_time_sheet, year)
+          end
+        end
+
+        describe 'overall absence summary' do
+          it 'has full access' do
+            user && another_user
+            visit calendar_summaries_absence_users_path(year, month)
+
+            page.should have_selector('td', text: user.display_name)
+            page.should have_selector('td', text: another_user.display_name)
+          end
+        end
+
+        describe 'overall work summary' do
+          it 'shows a list with an entry for each user' do
+            user && another_user
+            visit year_summaries_work_users_path(year, month)
+
+            page.should have_selector('td', text: user.display_name)
+            page.should have_selector('td', text: another_user.display_name)
+          end
+        end
+
+        describe 'overall vacation summary' do
+          it 'shows a list with an entry for each user' do
+            user && another_user
+            visit year_summaries_vacation_users_path(year, month)
+            page.should have_selector('td', text: user.display_name)
+            page.should have_selector('td', text: another_user.display_name)
+          end
+        end
+      end
+
+      describe 'manage' do
+        it 'has acccess to public holidays' do
+          should_have_access_to public_holidays_path
+        end
+
+        it 'has acccess to users' do
+          should_have_access_to users_path
+        end
+
+        it 'has access to time types' do
+          should_have_access_to time_types_path
+        end
+      end
+    end
+
+    context 'UI' do
+      it 'shows the correct menu items for this role' do
+        visit user_summaries_work_year_path(user.current_time_sheet, year)
+
+        page.should have_selector('.navigation > ul > li', text: 'Zeiterfassung')
+        page.should have_selector('.navigation > ul > li', text: 'Absenzen')
+        page.should have_selector('.navigation > ul > li', text: 'Berichte')
+        page.should have_selector('.navigation > ul > li', text: 'Verwalten')
+
+        page.should have_selector('.sub-nav > dd', text: 'Meine Arbeitszeit')
+        page.should have_selector('.sub-nav > dd', text: 'Meine Absenzen')
+        page.should have_selector('.sub-nav > dd', text: 'Absenzen Mitarbeiter')
+        page.should have_selector('.sub-nav > dd', text: 'Arbeitszeit Mitarbeiter')
+        page.should have_selector('.sub-nav > dd', text: 'Ferien Mitarbeiter')
+      end
+    end
+  end
 end

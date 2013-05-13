@@ -6,13 +6,13 @@ describe Team do
   end
 
   it 'returns if a specified user is member of this team' do
-    team = FactoryGirl.create(:team, members_count: 2)
+    team = FactoryGirl.create(:team, users_count: 2)
     team.has_member?(team.members.first).should be_true
     team.has_member?(team.members.second).should be_true
   end
 
   it 'acts as an enumerable' do
-    team = FactoryGirl.create(:team, members_count: 2, leaders_count: 0)
-    team.collect { |user| user }.length.should eq(2)
+    team = FactoryGirl.create(:team, users_count: 2, leaders_count: 1)
+    team.collect(&:id).length.should eq(3)
   end
 end

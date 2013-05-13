@@ -4,13 +4,13 @@ describe Summaries::Vacation::VacationController do
   render_views
 
   before do
-    @team = FactoryGirl.create(:team, members_count: 3, leaders_count: 1)
-    @another_team = FactoryGirl.create(:team, members_count: 7, leaders_count: 2)
+    @team = FactoryGirl.create(:team, users_count: 3, leaders_count: 1)
+    @another_team = FactoryGirl.create(:team, users_count: 7, leaders_count: 2)
   end
 
   let(:user) { @team.members.first }
   let(:team_leader) { @team.leaders.first }
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:admin) { FactoryGirl.create(:admin, teams: [@team]) }
   let(:year) { 2013 }
   let(:month) { 3 }
 
