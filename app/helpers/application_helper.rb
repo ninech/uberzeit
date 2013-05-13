@@ -89,7 +89,7 @@ module ApplicationHelper
   end
 
   def show_user_select?
-    current_user.admin?
+    current_user.admin? or current_user.team_leader?
   end
 
   def user_path_time_sheet(user)
@@ -111,4 +111,9 @@ module ApplicationHelper
   def user_path_absence_summary(user)
     user_summaries_absence_year_path(user, Date.current.year)
   end
+
+  def selectable_users
+    User.accessible_by(current_ability)
+  end
+
 end

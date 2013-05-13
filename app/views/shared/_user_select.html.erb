@@ -2,7 +2,7 @@
   <div class="small-2 columns"><%= t '.user' %></div>
   <div class="small-4 columns">
     <select name="user">
-      <% User.all.each do |user| %>
+      <% selectable_users.each do |user| %>
         <option data-link="<%= method(link_generator).call(user) %>" <% if user == selected_user %>selected="selected"<% end %>><%= user %></option>
       <% end %>
     </select>

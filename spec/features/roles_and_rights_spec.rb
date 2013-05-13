@@ -118,6 +118,11 @@ describe 'Roles and Rights' do
         page.should_not have_selector('.sub-nav > dd', text: 'Ferien Mitarbeiter')
       end
     end
+
+    it 'has no select box for selecting another user' do
+      visit time_sheet_path(user.current_time_sheet)
+      page.should_not have_selector("select[name='user']")
+    end
   end
 
   context 'role: team leader' do
@@ -234,6 +239,11 @@ describe 'Roles and Rights' do
         page.should have_selector('.sub-nav > dd', text: 'Arbeitszeit Mitarbeiter')
         page.should have_selector('.sub-nav > dd', text: 'Ferien Mitarbeiter')
       end
+
+      it 'has a select box for selecting another user' do
+        visit time_sheet_path(user.current_time_sheet)
+        page.should have_selector("select[name='user']")
+      end
     end
   end
 
@@ -339,6 +349,11 @@ describe 'Roles and Rights' do
         page.should have_selector('.sub-nav > dd', text: 'Absenzen Mitarbeiter')
         page.should have_selector('.sub-nav > dd', text: 'Arbeitszeit Mitarbeiter')
         page.should have_selector('.sub-nav > dd', text: 'Ferien Mitarbeiter')
+      end
+
+      it 'has a select box for selecting another user' do
+        visit time_sheet_path(user.current_time_sheet)
+        page.should have_selector("select[name='user']")
       end
     end
   end
