@@ -53,7 +53,7 @@ describe AbsencesHelper do
       @time_types = TimeType.absence
       @absences['2013-01-01'] = [time_chunk]
       @time_sheet = stub_model(TimeSheet)
-      helper.render_calendar_cell(date).to_s.should =~ /event-bg#{TEST_TIME_TYPES.index(:vacation)}/
+      helper.render_calendar_cell(date).to_s.should =~ /event-bg#{TEST_TIME_TYPES.key(:vacation)}/
     end
   end
 
