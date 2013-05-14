@@ -91,50 +91,50 @@
       }
     }
   }
-}
 
-.calendar .event-container { // container
-  position: relative;
-  width: 100%;
-  height: 100%;
-
-  i {
-    color: white; // icons
-  }
-
-  > div { // overlay div (full size)
+  .calendar .event-container { // container
+    position: relative;
     width: 100%;
     height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
 
-    > div { // table div
-      position: absolute;
-      display:table;
+    i {
+      color: white; // icons
+    }
+
+    > div { // overlay div (full size)
       width: 100%;
       height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
 
-      font-size: 1.314159em;
+      > div { // table div
+        position: absolute;
+        display:table;
+        width: 100%;
+        height: 100%;
 
-      &.bottom-right, &.top-left {
-        width: 50%;
-        height: 50%;
-        font-size: 1.0em;
-      }
-      &.top-right {
-        left: 0;
-        top: 0;
-      }
-      &.bottom-right {
-        right: 0;
-        bottom: 0;
-      }
+        font-size: 1.314159em;
 
-      > div { // cell div to center content vertically
-        display: table-cell;
-        vertical-align: middle;
-        text-align: center;
+        &.bottom-right, &.top-left {
+          width: 50%;
+          height: 50%;
+          font-size: 1.0em;
+        }
+        &.top-right {
+          left: 0;
+          top: 0;
+        }
+        &.bottom-right {
+          right: 0;
+          bottom: 0;
+        }
+
+        > div { // cell div to center content vertically
+          display: table-cell;
+          vertical-align: middle;
+          text-align: center;
+        }
       }
     }
   }
