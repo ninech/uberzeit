@@ -9,7 +9,7 @@ module ApplicationHelper
   end
 
   def has_top_buttons?
-    return false unless @exception.nil?
+    return false if @exception
     lookup_context.template_exists? 'top_buttons', controller.controller_name, true
   end
 
