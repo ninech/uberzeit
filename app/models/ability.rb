@@ -15,8 +15,8 @@ class Ability
       can :manage, Timer, time_sheet: { user_id: user.id }
 
       if user.team_leader?
-        can :read, Team, id: Team.with_role(:team_leader, user).map(&:id)
-        can :read, User, id: Team.with_role(:team_leader, user).map(&:members_without_leaders).flatten.map(&:id)
+        can :read, Team, id: Team.with_role(:team_leader, user).pluck(:id)
+        can :read, User, id: User.joins(:teams).where(teams: {id: Team.with_role(:team_leader, user)}).pluck(:id)
       end
 
       if user.admin?

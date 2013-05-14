@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   rolify
   acts_as_paranoid
 
-  default_scope order(:name)
+  default_scope order('users.name')
 
   attr_accessible :uid, :name, :time_zone, :birthday, :given_name
 
