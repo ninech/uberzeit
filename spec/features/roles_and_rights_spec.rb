@@ -126,10 +126,9 @@ describe 'Roles and Rights' do
   end
 
   context 'role: team leader' do
-    let(:team) { FactoryGirl.create(:team, leaders_count: 1, users_count: 1) }
-    let(:team_leader) { team.leaders.first }
+    let(:team_leader) { FactoryGirl.create(:team_leader) }
     let(:user) { team_leader }
-    let(:managed_user) { team.members_without_leaders.first }
+    let(:managed_user) { FactoryGirl.create(:user, teams: team_leader.teams) }
     let(:another_user_in_another_team) { FactoryGirl.create(:user) }
 
     before do
