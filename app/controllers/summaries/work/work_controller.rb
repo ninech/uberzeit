@@ -36,7 +36,7 @@ class Summaries::Work::WorkController < ApplicationController
     if @team
       @team.members
     else
-      @teams.collect(&:members).flatten.uniq
+      User.joins(:teams).where(teams: {id: @teams.pluck(:id)})
     end
   end
 end
