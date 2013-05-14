@@ -15,11 +15,7 @@ class Team < ActiveRecord::Base
   end
 
   def leaders
-    members.select { |user| user.has_role?(:team_leader, self) }
-  end
-
-  def members_without_leaders
-    members.reject { |user| user.has_role?(:team_leader, self) }
+    members.with_role(:team_leader, self)
   end
 
   def each
