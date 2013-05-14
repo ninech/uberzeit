@@ -76,6 +76,14 @@ describe Ability do
       it { should be_able_to(:destroy, time_sheet) }
     end
 
+    context 'as a team leader' do
+      let(:ability) { Ability.new(team_leader) }
+
+      it { should be_able_to(:read, time_sheet) }
+      it { should_not be_able_to(:update, time_sheet) }
+      it { should_not be_able_to(:destroy, time_sheet) }
+    end
+
     context 'as the owner' do
       let(:ability) { Ability.new(user) }
 
