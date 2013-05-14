@@ -10,11 +10,13 @@
 	<!-- Uncomment to make IE8 render like IE7 -->
 	<!-- <meta http-equiv="X-UA-Compatible" content="IE=7" /> -->
 
-	<!-- Set the viewport width to device width for mobile -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<title><%= content_for?(:title) ? yield(:title) : "uberZeit" %></title>
+  <title><%= content_for?(:title) ? yield(:title) : "uberZeit" %></title>
 
+  <link rel="icon" href="<%= ENV['RAILS_RELATIVE_URL_ROOT'] %>/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="<%= ENV['RAILS_RELATIVE_URL_ROOT'] %>/favicon.ico" type="image/x-icon">
 	<%= stylesheet_link_tag    "application" %>
 	<%= javascript_include_tag "vendor/custom.modernizr" %>
   <%= javascript_include_tag "application" %>
