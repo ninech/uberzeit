@@ -141,8 +141,12 @@ describe 'Roles and Rights' do
           should_have_access_to time_sheet_path(user.current_time_sheet)
         end
 
-        it 'has no access to another time sheet' do
-          should_not_have_access_to time_sheet_path(managed_user.current_time_sheet)
+        it 'has access to time sheet of a team member' do
+          should_have_access_to time_sheet_path(managed_user.current_time_sheet)
+        end
+
+        it 'has no access to time sheet of a user of another team' do
+          should_not_have_access_to time_sheet_path(another_user_in_another_team.current_time_sheet)
         end
       end
 
@@ -151,8 +155,12 @@ describe 'Roles and Rights' do
           should_have_access_to time_sheet_absences_path(user.current_time_sheet)
         end
 
-        it 'has no access to summaries of other users' do
-          should_not_have_access_to time_sheet_absences_path(managed_user.current_time_sheet)
+        it 'has access to absences of a team member' do
+          should_have_access_to time_sheet_absences_path(managed_user.current_time_sheet)
+        end
+
+        it 'has no access to absences of a user of another team' do
+          should_not_have_access_to time_sheet_path(another_user_in_another_team.current_time_sheet)
         end
       end
 
