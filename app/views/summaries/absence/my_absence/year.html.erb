@@ -1,4 +1,4 @@
-<%= render(partial: 'shared/user_select', locals: { link_generator: :user_path_absence_summary, selected_user: @user }) if show_user_select? %>
+<%= render(partial: 'shared/user_select', locals: { link_generator: :user_path_absence_summary, selected_user: @user }) %>
 
 <%= render partial: 'summaries/shared/header', locals: {base_url: "/users/#{@user.id}/summaries/absence/:year", title: t('.title'), unit: t('.unit')} %>
 
