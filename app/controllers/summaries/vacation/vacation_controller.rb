@@ -4,6 +4,8 @@ class Summaries::Vacation::VacationController < ApplicationController
   before_filter :set_teams
   before_filter :set_year
 
+  before_filter :check_access
+
   def year
     @table = Summarize::Table.new(Summarize::Summarizer::Vacation, users, UberZeit.year_as_range(@year))
   end
@@ -15,6 +17,10 @@ class Summaries::Vacation::VacationController < ApplicationController
   end
 
   private
+
+  def check_access
+    raise CanCan::AccessDenied unless current_user.admin? or current_user.team_leader?
+  end
 
   def set_team
     @team = Team.accessible_by(current_ability).where('id = ?', params[:team_id]).first unless params[:team_id].blank?

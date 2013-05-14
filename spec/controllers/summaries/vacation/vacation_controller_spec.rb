@@ -25,40 +25,14 @@ describe Summaries::Vacation::VacationController do
     end
 
     describe 'GET "year"' do
-      it 'assigns the correct instance variables' do
-        get :year, year: year
-        assigns(:year).should_not be_nil
-        assigns(:table).should_not be_nil
+      it 'denies access' do
+        expect { get :year, year: year }.to raise_error(CanCan::AccessDenied)
       end
-
-      it 'renders the :year template' do
-        get :year, year: year
-        response.should render_template :year
-      end
-
-      context 'rights and roles' do
-        it 'returns no rows for a simple user' do
-          get :year, year: year
-          assigns(:table).entries.should be_empty
-
-          get :year, year: year, team: team.id
-          assigns(:table).entries.should be_empty
-        end
-      end
-
     end
 
     describe 'GET "month"' do
-      it 'assigns the correct instance variables' do
-        get :month, year: year, month: month
-        assigns(:year).should_not be_nil
-        assigns(:month).should_not be_nil
-        assigns(:table).should_not be_nil
-      end
-
-      it 'renders the :month template' do
-        get :month, year: year, month: month
-        response.should render_template :month
+      it 'denies access' do
+        expect { get :year, year: year }.to raise_error(CanCan::AccessDenied)
       end
     end
 

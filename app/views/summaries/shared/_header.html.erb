@@ -1,7 +1,6 @@
 <%
-  with_calendar = false if local_assigns[:with_calendar].nil?
-  append_to_url = '' if local_assigns[:append_to_url].nil?
-%>
+  append_to_url = '' unless local_assigns[:append_to_url]
+%>s
 
 <div class="row content-summary-header">
   <div class="small-12 columns">
@@ -32,20 +31,26 @@
           </div>
         </div>
       </div>
+
       <div class="small-7 columns end">
         <dl class="sub-nav view-buttons">
-          <% if with_calendar %>
+          <% if controller.respond_to?(:calendar) %>
           <dd <%= 'class=active' if controller.action_name == 'calendar' %>>
             <%= link_to t('.calendar'), url_for(action: :calendar, year: @year, month: @month || Date.current.month, team_id: @team) %>
           </dd>
           <% end %>
 
+          <% if controller.respond_to?(:month) %>
           <dd <%= 'class=active' if controller.action_name == 'month' %>>
             <%= link_to t('.month'), url_for(action: :month, year: @year, month: @month || Date.current.month, team_id: @team) %>
           </dd>
+          <% end %>
+
+          <% if controller.respond_to?(:year) %>
           <dd <%= 'class=active' if controller.action_name == 'year' %>>
             <%= link_to t('.year'), url_for(action: :year, year: @year, team_id: @team) %>
           </dd>
+          <% end %>
         </dl>
       </div>
     </div>
