@@ -14,7 +14,6 @@ class Summaries::Absence::AbsenceController < ApplicationController
   end
 
   def calendar
-    # accessible by all users
     @month = params[:month].to_i
     @users = @team || User.all
     @range = UberZeit.month_as_range(@year, @month)
