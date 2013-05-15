@@ -1,37 +1,24 @@
 module AbsencesHelper
 
   def render_calendar_cell(day)
-    absences =       @absences[day.to_date.to_s]
+    absences = @absences[day.to_date.to_s]
     public_holiday = @public_holidays[day.to_date.to_s]
-    is_work_day =    UberZeit.is_weekday_a_workday?(day)
 
-    cls = []
-    cls << 'non-work-day' unless is_work_day
-    cls << 'public-holiday' if public_holiday
+    if absences
+      css_class = "has-absences event-bg#{suffix_for_daypart(absences.first)}#{color_index_of_array(absences)}"
+      [tooltips_for_day(day, :tooltip_content_for_absence), {:class => css_class}]
+    elsif public_holiday
+      css_class = "has-absences public-holiday-bg#{suffix_for_daypart(public_holiday)}"
+      [tooltips_for_day(day, :tooltip_content_for_public_holiday), {:class => css_class}]
+    else
+      css_classes = ["has-no-absences"]
+      css_classes << "not-a-workday" unless UberZeit.is_weekday_a_workday?(day)
 
-    content = if absences
-                content_tag :div, class: 'event-container' do
-                  render_absences(absences, day.mday).html_safe
-                end
-              else
-                day.mday
-              end
+      # click on empty cell will open the add absence dialogue with the clicked date
+      link_add_entry = content_tag(:span, day.mday, :class => "has-reveal remote-reveal", :'data-reveal-id' => 'add-absence-modal', :'data-reveal-url' => new_time_sheet_absence_path(@time_sheet, date: day))
 
-    tooltip = if absences
-                tooltip_content_for_absence(day)
-              elsif public_holiday
-                tooltip_content_for_public_holiday(day)
-              else
-                ''
-              end
-
-    cls << 'has-click-tip' unless tooltip.blank?
-
-    unless absences or public_holiday
-      cls << "has-reveal remote-reveal"
+      [link_add_entry, {:class => css_classes.join(' ')}]
     end
-
-    [content, {:class => cls.join(' '), :'data-tooltip' => tooltip, :'data-reveal-id' => 'add-absence-modal', :'data-reveal-url' => new_time_sheet_absence_path(@time_sheet, date: day)}]
   end
 
   def suffix_for_daypart(absence)
@@ -42,6 +29,10 @@ module AbsencesHelper
     else
       ""
     end
+  end
+
+  def tooltips_for_day(day, content_method)
+    content_tag(:span, day.mday, class: 'has-click-tip', data: { tooltip: method(content_method).call(day) })
   end
 
   def tooltip_content_for_absence(day)

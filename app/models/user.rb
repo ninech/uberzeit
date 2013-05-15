@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   rolify
   acts_as_paranoid
 
-  default_scope order(:name)
+  default_scope order('users.name')
 
   attr_accessible :uid, :name, :time_zone, :birthday, :given_name
 
@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 
   def subordinates
     # method chaining LIKE A BOSS
-    teams.select{ |t| t.has_leader?(self) }.collect{ |t| t.members }.flatten.uniq
+    Team.with_role(:team_leader, self).collect(&:members).flatten.uniq
   end
 
   def create_time_sheet_if_needed
@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
   end
 
   def current_time_sheet
+    ensure_timesheet_and_employment_exist
     time_sheets.first
   end
 
@@ -63,6 +64,14 @@ class User < ActiveRecord::Base
 
   def display_name
     [name, given_name].compact.join(', ')
+  end
+
+  def team_leader?
+    Team.with_role(:team_leader, self).any?
+  end
+
+  def admin?
+    has_role?(:admin)
   end
 
   private
