@@ -8,10 +8,10 @@ GIT
 
 GIT
   remote: git@git.nine.ch:gems/uberlog
-  revision: f5170ff37ba1a9617d5e6951d74e5374084c1e59
-  tag: 0.3.0
+  revision: ba0cca026a1c599bf3fd83d7a35b8d666382f6b8
+  tag: 0.4.1
   specs:
-    uberlog (0.3.0)
+    uberlog (0.4.1)
       logstash-event (~> 1.1)
 
 GIT
