@@ -278,7 +278,7 @@ describe 'Roles and Rights' do
 
     describe 'select box to select another user' do
       before do
-        visit time_sheet_path(user.current_time_sheet)
+        visit time_sheet_path(current_user.current_time_sheet)
       end
 
       context 'as user' do
