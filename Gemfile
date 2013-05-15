@@ -65,7 +65,7 @@ gem 'simple-navigation'
 # Logging
 gem 'uberlog',
   git: 'git@git.nine.ch:gems/uberlog',
-  tag: '0.3.0'
+  tag: '0.4.1'
 
 group :development, :test do
   gem 'sqlite3'
