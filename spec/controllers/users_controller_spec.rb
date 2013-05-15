@@ -40,24 +40,23 @@ describe UsersController do
       end
     end
 
-
     describe 'PUT "update"' do
       context 'with valid attributes' do
         it 'changes the time zone' do
-          put :update, id: user.id, user: FactoryGirl.attributes_for(:user, time_zone: 'Tokyo')
+          put :update, id: user.id, user: { time_zone: 'Tokyo' }
           user.reload
           user.time_zone.should eq('Tokyo')
         end
 
         it 'should redirect to updated user' do
-          put :update, id: user.id, user: FactoryGirl.attributes_for(:user, time_zone: 'Tokyo')
+          put :update, id: user.id, user: { time_zone: 'Tokyo' }
           response.should redirect_to edit_user_path(user)
         end
       end
 
       context 'with invalid attributes' do
         it 're-renders the :edit template' do
-          put :update, id: user.id, user: FactoryGirl.attributes_for(:user, time_zone: 'Utopia')
+          put :update, id: user.id, user: { time_zone: 'Utopia' }
           response.should render_template :edit
         end
       end

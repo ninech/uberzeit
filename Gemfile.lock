@@ -7,6 +7,14 @@ GIT
       i18n
 
 GIT
+  remote: git@git.nine.ch:gems/uberlog
+  revision: ba0cca026a1c599bf3fd83d7a35b8d666382f6b8
+  tag: 0.4.1
+  specs:
+    uberlog (0.4.1)
+      logstash-event (~> 1.1)
+
+GIT
   remote: git@git.nine.ch:nine-ldap.git
   revision: 00dfc14c3cef7ae6f2d83348b0ae9ea38c6b991d
   tag: 0.0.13
@@ -146,6 +154,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.7.7)
     libv8 (3.11.8.17)
+    logstash-event (1.1.5)
     mail (2.5.3)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -338,6 +347,7 @@ DEPENDENCIES
   simplecov-rcov
   sqlite3
   therubyracer
+  uberlog!
   uglifier (>= 1.0.3)
   validates_timeliness
   version_bumper

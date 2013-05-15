@@ -52,14 +52,16 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            when the item should be highlighted, you can set a regexp which is matched
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
-    primary.item :timesheet, t('navigation.timesheet'), time_sheet_path(current_user.current_time_sheet)
-    primary.item :absences, t('navigation.absences'), time_sheet_absences_path(current_user.current_time_sheet)
-    primary.item :reports, t('navigation.reports'), user_summaries_work_month_path(current_user, Date.current.year, Date.current.month), highlights_on: %r$\A/users/summaries$ do |second|
-      second.item :my_work, t('navigation.sub.reports.my_work'), user_summaries_work_month_path(current_user, Date.current.year, Date.current.month)
-      second.item :my_absence, t('navigation.sub.reports.my_absence'), user_summaries_absence_year_path(current_user, Date.current.year)
-      second.item :work, t('navigation.sub.reports.work'), month_summaries_work_users_path(Date.current.year, Date.current.month), highlights_on: %r$\A/users/summaries/work$
-      second.item :absences, t('navigation.sub.reports.absences'), calendar_summaries_absence_users_path(Date.current.year, Date.current.month), highlights_on: %r$\A/users/summaries/absence$
-      second.item :vacation, t('navigation.sub.reports.vacation'), year_summaries_vacation_users_path(Date.current.year), highlights_on: %r$\A/users/summaries/vacation$
+    primary.item :timesheet, t('navigation.timesheet'), time_sheet_path(current_user.current_time_sheet), highlights_on: %r!\A/time_sheets/\d+\z!
+    primary.item :absences, t('navigation.absences'), time_sheet_absences_path(current_user.current_time_sheet), highlights_on: %r!\A/time_sheets/\d+/absences!
+    primary.item :reports, t('navigation.reports'), user_summaries_work_month_path(current_user, Date.current.year, Date.current.month), highlights_on: %r!\A/users(/\d*)*/summaries! do |second|
+      second.item :my_work, t('navigation.sub.reports.my_work'), user_summaries_work_month_path(current_user, Date.current.year, Date.current.month), highlights_on: %r!\A/users/\d*/summaries/work!
+      second.item :my_absence, t('navigation.sub.reports.my_absence'), user_summaries_absence_year_path(current_user, Date.current.year), highlights_on: %r!\A/users/\d*/summaries/absence!
+      second.item :absences, t('navigation.sub.reports.absences'), calendar_summaries_absence_users_path(Date.current.year, Date.current.month), highlights_on: %r!\A/users/summaries/absence!
+      if current_user.team_leader? || current_user.admin?
+        second.item :work, t('navigation.sub.reports.work'), month_summaries_work_users_path(Date.current.year, Date.current.month), highlights_on: %r!\A/users/summaries/work!
+        second.item :vacation, t('navigation.sub.reports.vacation'), year_summaries_vacation_users_path(Date.current.year), highlights_on: %r!\A/users/summaries/vacation!
+      end
       second.dom_class = 'sub-nav'
     end
     primary.item :manage, t('navigation.manage'), public_holidays_path, if: -> { show_manage_link_in_navigation? } do |second|

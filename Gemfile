@@ -62,6 +62,11 @@ gem 'i18n-js', :git => 'git://github.com/fnando/i18n-js.git', :branch => 'master
 
 gem 'simple-navigation'
 
+# Logging
+gem 'uberlog',
+  git: 'git@git.nine.ch:gems/uberlog',
+  tag: '0.4.1'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'mysql2'

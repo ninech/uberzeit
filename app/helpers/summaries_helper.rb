@@ -1,4 +1,5 @@
 module SummariesHelper
+
   def format_work_days(duration)
     text = number_with_precision(duration.to_work_days, precision: 1, strip_insignificant_zeros: true)
     content_tag(:span, text, style: "color: #{color_for_duration(duration)}")
@@ -49,12 +50,12 @@ module SummariesHelper
     absences.find { |absence| absence.whole_day? }
   end
 
-  def render_absences(absences)
+  def render_absences(absences, text = nil)
     return '' if absences.nil?
-    absences.collect { |absence| render_absence(absence) }.join
+    absences.collect { |absence| render_absence(absence, text) }.join
   end
 
-  def render_absence(absence)
+  def render_absence(absence, text = nil)
     time_type = absence.time_type
 
     content_tag :div, class: "event-bg#{suffix_for_daypart(absence)}#{color_index_of_time_type(time_type)}" do # overlay div event bg
@@ -67,8 +68,12 @@ module SummariesHelper
                   end
 
       content_tag :div, class: css_class do # table div icon
-        content_tag :div do # cell div
-          icon_for_time_type(time_type)
+        if text
+          content_tag :div, text # cell div
+        else
+          content_tag :div do # cell div
+            icon_for_time_type(time_type)
+          end
         end
       end
     end

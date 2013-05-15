@@ -9,8 +9,14 @@ class Employment < ActiveRecord::Base
   validates_inclusion_of  :workload, :in => 1..100,
                           :message => I18n.t('.error_outside_1_and_100_percent', scope: [:activerecord, :errors, :models, :employment])
 
+  validates_datetime :start_date
+  validates_datetime :end_date, on_or_after: :start_date, unless: :open_ended?
+
   before_destroy :check_if_last
-  before_save :resolve_conflicts
+
+  before_validation :ensure_no_other_entry_is_open_ended, if: :open_ended?
+  before_validation :ensure_no_overlaps, unless: :open_ended?
+
   before_validation :set_default_values, unless: :persisted?
 
   default_scope order(:start_date)
@@ -42,22 +48,30 @@ class Employment < ActiveRecord::Base
     start_date <= date and end_date.nil? || date <= end_date
   end
 
+  def range
+    (start_date..end_date)
+  end
+
   private
 
-  def resolve_conflicts
-    employments = user.employments
-    employments.find do |other|
-      next if self == other
+  def other_employments
+    user.employments.select{ |other| other != self }
+  end
 
-      if other.open_ended? && self.open_ended?
-        other.end_date = self.start_date - 1.day
-        other.save
-      end
-    end
+  def ensure_no_other_entry_is_open_ended
+    any_other_open_ended = other_employments.any? { |other| other.open_ended? }
+    errors.add(:base, :there_is_another_open_ended_entry) if any_other_open_ended
+    not any_other_open_ended
+  end
+
+  def ensure_no_overlaps
+    any_overlaps = other_employments.reject{ |other| other.open_ended? }.any? { |other| other.range.intersects_with_duration?(self.range) }
+    errors.add(:base, :overlaps_with_another_entry) if any_overlaps
+    not any_overlaps
   end
 
   def check_if_last
-    errors.add(:base, 'Cannot delete the last employment of the user') if user.employments.length <= 1
+    errors.add(:base, :cannot_delete_single_employment) if user.employments.length <= 1
     errors.blank?
   end
 end

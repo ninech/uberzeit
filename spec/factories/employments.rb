@@ -3,8 +3,9 @@
 FactoryGirl.define do
   factory :employment do
     user
-    start_date Time.zone.now.beginning_of_year.to_date
+    start_date '2010-01-01'
     end_date nil
+
     workload 100
 
     factory :invalid_employment do

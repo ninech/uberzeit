@@ -3,6 +3,7 @@ class TimeTypesController < ApplicationController
   load_and_authorize_resource
 
   def index
+    authorize! :manage, TimeType
   end
 
   def new

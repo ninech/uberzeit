@@ -18,9 +18,13 @@
 
       .right {
         margin-top: -4px;
-        a {
+        a.next, a.previous {
           font-size: 1.5em;
           margin-left: 7px;
+        }
+        a.today {
+          font-size: 0.5em;
+          margin-bottom: 0;
         }
       }
     }
@@ -63,12 +67,18 @@
             span.time {
               font-weight: 400;
               font-size: 1.2em;
-              // display: block;
+              display: block;
             }
 
             span.public-holiday {
               font-weight: 400;
               font-style: italic;
+            }
+
+            span.day-description {
+              display: block;
+              max-height: 40px;
+              overflow: hidden;
             }
           }
 

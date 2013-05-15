@@ -5,11 +5,12 @@ class EmploymentsController < ApplicationController
   before_filter :load_user
 
   def new
-    @employment = Employment.new
   end
 
   def edit
-    @employment = Employment.find(params[:id])
+  end
+
+  def index
   end
 
   def create

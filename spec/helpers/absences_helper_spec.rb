@@ -46,14 +46,14 @@ describe AbsencesHelper do
 
     it 'renders a calendar cell without a date' do
       assign(:time_sheet, time_sheet)
-      helper.render_calendar_cell(date).first.to_s.should =~ />1</
+      helper.render_calendar_cell(date).first.to_s.should eq("1")
     end
 
     it 'renders a calendar cell with a date' do
       @time_types = TimeType.absence
       @absences['2013-01-01'] = [time_chunk]
       @time_sheet = stub_model(TimeSheet)
-      helper.render_calendar_cell(date).to_s.should =~ /event-bg#{TEST_TIME_TYPES.index(:vacation)}/
+      helper.render_calendar_cell(date).to_s.should =~ /event-bg#{TEST_TIME_TYPES.key(:vacation)}/
     end
   end
 

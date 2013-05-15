@@ -1,4 +1,14 @@
 de:
+  errors:
+    e403:
+      title: 'Zugriff verweigert'
+      message: 'Sie haben keinen Zugriff auf diese Ressource.'
+    e404:
+      title: 'Oops.'
+      message: Die gewünschte Ressource konnte nicht gefunden werden.
+    e500:
+      title: 'Ouch.'
+      message: 'Es tut uns Leid, ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später noch einmal.<br>Wir wurden automatisch darüber informiert und arbeiten an einer Lösung.'
   activerecord:
     models:
       employment: Anstellungsverhältnis
@@ -39,7 +49,7 @@ de:
         absence:
           attributes:
             end_date:
-              on_or_after: Am oder Nach
+              on_or_after: muss an oder nach dem Startdatum liegen
         recurring_schedule:
           attributes:
             ends_date:
@@ -50,6 +60,15 @@ de:
               invalid_datetime: ist ein ungültiges Datum
         employment:
           error_outside_1_and_100_percent: muss innerhalb 1 und 100 Prozent liegen
+          attributes:
+            start_date:
+              invalid_datetime: ist ein ungültiges Datum
+            end_date:
+              on_or_after: muss an oder nach dem Startdatum liegen
+            base:
+              there_is_another_open_ended_entry: Es existiert schon ein unbefristerer Eintrag.
+              overlaps_with_another_entry: Der gewählte Zeitraum überschneidet sich mit einem anderen Eintrag.
+              cannot_delete_single_employment: Das Löschen des letzten Anstellungsverhältnis ist nicht möglich.
 
   model_successfully_created: "%{model} wurde erfolgreich erstellt."
   model_successfully_updated: "%{model} wurde erfolgreich aktualisiert."
@@ -84,6 +103,8 @@ de:
     public_holiday_tooltip:
       first_half_day: Vormittags
       second_half_day: Nachmittags
+    user_select:
+      user: Mitarbeiter
   time_types:
     edit:
       edit_time_type: Zeittyp bearbeiten
@@ -258,6 +279,7 @@ de:
     add_time_modal:
       add_time: Zeit hinzufügen
     show:
+      today: Heute
       overtime: Überzeit
       total: Total
       add_time_now: Zeit jetzt eintragen
@@ -281,6 +303,11 @@ de:
       add_employment: Anstellungsverhältnis hinzufügen
     form:
       back: Zurück
+    index:
+      employments: Anstellungsverhältnisse
+      add_employment: Neues Anstellungsverhältnis
+      open_ended: unbefristet
+      confirm_delete: Löschen?
 
   not_logged_in: 'Sie sind nicht eingeloggt.'
 
