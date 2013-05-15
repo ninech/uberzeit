@@ -1,4 +1,14 @@
 de:
+  errors:
+    e403:
+      title: 'Zugriff verweigert'
+      message: 'Sie haben keinen Zugriff auf diese Ressource.'
+    e404:
+      title: 'Oops.'
+      message: Die gewünschte Ressource konnte nicht gefunden werden.
+    e500:
+      title: 'Ouch.'
+      message: 'Es tut uns Leid, ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später noch einmal.<br>Wir wurden automatisch darüber informiert und arbeiten an einer Lösung.'
   activerecord:
     models:
       employment: Anstellungsverhältnis
@@ -93,6 +103,8 @@ de:
     public_holiday_tooltip:
       first_half_day: Vormittags
       second_half_day: Nachmittags
+    user_select:
+      user: Mitarbeiter
   time_types:
     edit:
       edit_time_type: Zeittyp bearbeiten
@@ -291,6 +303,11 @@ de:
       add_employment: Anstellungsverhältnis hinzufügen
     form:
       back: Zurück
+    index:
+      employments: Anstellungsverhältnisse
+      add_employment: Neues Anstellungsverhältnis
+      open_ended: unbefristet
+      confirm_delete: Löschen?
 
   not_logged_in: 'Sie sind nicht eingeloggt.'
 

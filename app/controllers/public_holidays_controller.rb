@@ -2,6 +2,8 @@ class PublicHolidaysController < ApplicationController
   load_and_authorize_resource
 
   def index
+    authorize! :manage, PublicHoliday
+
     @year = (params[:year] || session[:year] || Time.current.year).to_i
     session[:year] = @year
 
