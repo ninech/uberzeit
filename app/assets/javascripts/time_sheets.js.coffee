@@ -1,3 +1,5 @@
+document.originalTitle = document.title
+
 $(document).on 'ajax:error', '.reveal-modal.time form', (xhr, status, error) ->
   console.log xhr, status, error
 
@@ -85,6 +87,10 @@ $ ->
 
   window.updateTimes = ->
     $.getJSON $('.ajax.summary_for_date').attr('href'), (data) ->
+      # title bar
+      if window.timerStarted
+        document.title = '[' + data.total + '] ' + document.originalTitle
+
       $('.time.total').text data.total
       $('.time.bonus').text data.bonus
 
