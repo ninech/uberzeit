@@ -295,6 +295,7 @@ de:
         ends: 'Endet am'
       time_bonus: Zeitzuschlag
       time_bonuses: Zeitzuschläge
+      week_number: KW
 
   employments:
     edit:
