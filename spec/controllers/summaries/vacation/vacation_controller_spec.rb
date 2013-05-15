@@ -13,8 +13,9 @@ describe Summaries::Vacation::VacationController do
   let(:month) { 3 }
 
   context 'for non-signed in users' do
-    it 'denies access' do
-      expect { get :year, year: year }.to raise_error(CanCan::AccessDenied)
+    it 'redirects to login' do
+      get :year, year: year
+      response.should redirect_to(new_session_path)
     end
   end
 

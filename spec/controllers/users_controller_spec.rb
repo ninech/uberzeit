@@ -6,8 +6,9 @@ describe UsersController do
   let(:user) { FactoryGirl.create(:user) }
 
   context 'for non-signed in users' do
-    it 'denies access' do
-      expect { get :edit, id: user }.to raise_error(CanCan::AccessDenied)
+    it 'redirects to login' do
+      get :edit, id: user
+      response.should redirect_to(new_session_path)
     end
   end
 

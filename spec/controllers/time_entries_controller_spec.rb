@@ -6,9 +6,10 @@ describe TimeEntriesController do
   render_views
 
   context 'for non-signed in users' do
-    it 'denies access' do
+    it 'redirects to login' do
       time_sheet = FactoryGirl.create(:time_sheet)
-      expect { get :new, time_sheet_id: time_sheet.id }.to raise_error(CanCan::AccessDenied)
+      get :new, time_sheet_id: time_sheet.id
+      response.should redirect_to(new_session_path)
     end
   end
 

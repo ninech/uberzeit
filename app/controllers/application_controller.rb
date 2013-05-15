@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
 
   def ensure_logged_in
     if current_user.nil?
-      raise CanCan::AccessDenied, I18n.t(:not_logged_in)
+      redirect_to new_session_path
     end
   end
 

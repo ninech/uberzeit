@@ -4,8 +4,9 @@ describe TimeTypesController do
   render_views
 
   context 'for non-signed in users' do
-    it 'denies access' do
-      expect { get :index }.to raise_error(CanCan::AccessDenied)
+    it 'redirects to login' do
+      get :index
+      response.should redirect_to(new_session_path)
     end
   end
 
