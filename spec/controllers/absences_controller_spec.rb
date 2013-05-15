@@ -6,8 +6,9 @@ describe AbsencesController do
   let(:time_sheet) { user.time_sheets.first }
 
   context 'for non-signed in users' do
-    it 'denies access' do
-      expect { get :index, time_sheet_id: time_sheet }.to raise_error(CanCan::AccessDenied)
+    it 'redirects to login' do
+      get :index, time_sheet_id: time_sheet
+      response.should redirect_to(new_session_path)
     end
   end
 

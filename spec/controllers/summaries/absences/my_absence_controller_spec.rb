@@ -8,8 +8,9 @@ describe Summaries::Absence::MyAbsenceController do
   let(:month) { 3 }
 
   context 'for non-signed in users' do
-    it 'denies access' do
-      expect { get :year, user_id: user, year: year }.to raise_error(CanCan::AccessDenied)
+    it 'redirects to login' do
+      get :year, user_id: user, year: year
+      response.should redirect_to(new_session_path)
     end
   end
 

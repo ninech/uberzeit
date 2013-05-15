@@ -69,6 +69,8 @@ Uberzeit::Application.routes.draw do
 
   resources :time_types
 
+  resource :session, only: [:new, :create]
+
   match '/auth/:provider/callback', to: 'sessions#create'
 
   # The priority is based upon order of creation:

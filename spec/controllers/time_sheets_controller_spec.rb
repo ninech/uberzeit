@@ -7,8 +7,9 @@ describe TimeSheetsController do
   let(:sheet) { user.time_sheets.first }
 
   context 'for non-signed in users' do
-    it 'denies access' do
-      expect { get :show, id: sheet, date: Date.today }.to raise_error(CanCan::AccessDenied)
+    it 'redirects to login' do
+      get :show, id: sheet, date: Date.today
+      response.should redirect_to(new_session_path)
     end
   end
 

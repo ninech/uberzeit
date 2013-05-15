@@ -9,7 +9,6 @@ module ApplicationHelper
   end
 
   def has_top_buttons?
-    return false if @exception
     lookup_context.template_exists? 'top_buttons', controller.controller_name, true
   end
 
