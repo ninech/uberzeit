@@ -33,9 +33,13 @@
 
       tr.dayName {
         th {
-          width: 14.285714286%;
+          width: 13.5714286%;
           padding: 0.5em 0 0.625em;
           text-align: center;
+        }
+
+        th:first-child {
+          width: 5%;
         }
       }
     }
@@ -71,6 +75,12 @@
 
       &.public-holiday {
         background-color: #e5e5ed;
+      }
+
+      &.weekNumber {
+        font-size: 60%;
+        border: none;
+        padding-top: 2px;
       }
 
       > div.event-container { // container

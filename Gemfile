@@ -54,7 +54,7 @@ gem 'acts_as_paranoid', '~>0.4.0'
 gem 'whenever'
 
 # calendar
-gem 'calendar_helper'
+gem 'calendar_helper', github: 'topfunky/calendar_helper'
 
 # rails localization
 gem 'rails-i18n', branch: 'rails-3-x'
