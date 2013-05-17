@@ -46,7 +46,7 @@ module AbsencesHelper
 
   def tooltip_content_for_absence(day)
     absences = @absences[day.to_date.to_s]
-    render(partial: 'shared/absences_tooltip', locals: { absences: absences }).to_s
+    render(partial: 'shared/absences_tooltip', locals: { absences: absences, day: day, time_sheet: @time_sheet }).to_s
   end
 
   def tooltip_content_for_public_holiday(day)
