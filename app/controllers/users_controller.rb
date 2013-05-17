@@ -7,14 +7,13 @@ class UsersController < ApplicationController
   end
 
   def show
+    redirect_to user_employments_path(@user), flash: flash
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       redirect_to edit_user_path(@user), :notice => 'Settings were successfully updated.'
     else

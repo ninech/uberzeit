@@ -3,7 +3,7 @@ class Employment < ActiveRecord::Base
 
   belongs_to :user
 
-  attr_accessible :end_date, :start_date, :workload
+  attr_accessible :end_date, :start_date, :workload, :user
 
   validates_presence_of :user, :start_date, :workload
   validates_inclusion_of  :workload, :in => 1..100,
@@ -55,7 +55,7 @@ class Employment < ActiveRecord::Base
   private
 
   def other_employments
-    user.employments.select{ |other| other != self }
+    user.employments.select{ |other| other != self && other.persisted? }
   end
 
   def ensure_no_other_entry_is_open_ended

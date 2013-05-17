@@ -29,17 +29,17 @@ describe UsersController do
       end
     end
 
-    describe 'GET "show"' do
-      it 'assigns the user to @user' do
-        get :show, id: user.id
-        assigns(:user).should eq(user)
-      end
+    # describe 'GET "show"' do
+    #   it 'assigns the user to @user' do
+    #     get :show, id: user.id
+    #     assigns(:user).should eq(user)
+    #   end
 
-      it 'renders the :show template' do
-        get :show, id: user
-        response.should render_template :show
-      end
-    end
+    #   it 'renders the :show template' do
+    #     get :show, id: user
+    #     response.should render_template :show
+    #   end
+    # end
 
     describe 'PUT "update"' do
       context 'with valid attributes' do
