@@ -115,6 +115,15 @@ describe Ability do
       it { should be_able_to(:destroy, time_entry) }
     end
 
+    context 'as a team leader' do
+      let(:ability) { Ability.new(team_leader) }
+
+      it { should be_able_to(:read, time_entry) }
+      it { should be_able_to(:update, time_entry) }
+      it { should be_able_to(:create, TimeEntry) }
+      it { should be_able_to(:destroy, time_entry) }
+    end
+
     context 'as the owner' do
       let(:ability) { Ability.new(user) }
 
@@ -146,6 +155,15 @@ describe Ability do
       it { should be_able_to(:destroy, absence) }
     end
 
+    context 'as a team leader' do
+      let(:ability) { Ability.new(team_leader) }
+
+      it { should be_able_to(:read, absence) }
+      it { should be_able_to(:update, absence) }
+      it { should be_able_to(:create, Absence) }
+      it { should be_able_to(:destroy, absence) }
+    end
+
     context 'as the owner' do
       let(:ability) { Ability.new(user) }
 
@@ -161,6 +179,46 @@ describe Ability do
       it { should_not be_able_to(:read, absence) }
       it { should_not be_able_to(:update, absence) }
       it { should_not be_able_to(:destroy, absence) }
+    end
+  end
+
+  describe 'Timer' do
+
+    let(:timer) { FactoryGirl.create(:timer, time_sheet: user.time_sheets.first) }
+
+    context 'as a user with the administration role' do
+      let(:ability) { Ability.new(admin) }
+
+      it { should be_able_to(:read, timer) }
+      it { should be_able_to(:update, timer) }
+      it { should be_able_to(:create, Timer) }
+      it { should be_able_to(:destroy, timer) }
+    end
+
+    context 'as a team leader' do
+      let(:ability) { Ability.new(team_leader) }
+
+      it { should be_able_to(:read, timer) }
+      it { should be_able_to(:update, timer) }
+      it { should be_able_to(:create, Timer) }
+      it { should be_able_to(:destroy, timer) }
+    end
+
+    context 'as the owner' do
+      let(:ability) { Ability.new(user) }
+
+      it { should be_able_to(:read, timer) }
+      it { should be_able_to(:update, timer) }
+      it { should be_able_to(:create, Timer) }
+      it { should be_able_to(:destroy, timer) }
+    end
+
+    context 'as another user' do
+      let(:ability) { Ability.new(FactoryGirl.create(:user)) }
+
+      it { should_not be_able_to(:read, timer) }
+      it { should_not be_able_to(:update, timer) }
+      it { should_not be_able_to(:destroy, timer) }
     end
   end
 
