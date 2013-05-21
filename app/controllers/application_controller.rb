@@ -15,6 +15,8 @@ class ApplicationController < ActionController::Base
     rescue_from CanCan::AccessDenied, with: :render_403
   end
 
+  layout proc { |controller| controller.request.xhr? ? nil : 'application' }
+
   private
 
   def render_exception(status = 500, exception)
@@ -51,6 +53,5 @@ class ApplicationController < ActionController::Base
   ensure
     Time.zone = old_time_zone
   end
-
 
 end
