@@ -30,7 +30,7 @@ class Summarize::Summarizer::Work
   end
 
   def effective_worked_by_type
-    TimeType.work.each_with_object({}) { |time_type, hash| hash[time_type.name] = total_of_time_sheet(time_type) }
+    TimeType.work.each_with_object({}) { |time_type, hash| hash[time_type] = total_of_time_sheet(time_type) }
   end
 
   def absent
