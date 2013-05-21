@@ -17,17 +17,14 @@ class Ability
         can :read, Team, id: manageable_team_ids(user)
         can :read, User, id: manageable_user_ids(user)
         can :read, TimeSheet, user_id: manageable_user_ids(user)
+
+        can :manage, TimeEntry, time_sheet: { user_id: manageable_user_ids(user) }
+        can :manage, Absence, time_sheet: { user_id: manageable_user_ids(user) }
+        can :manage, Timer, time_sheet: { user_id: manageable_user_ids(user) }
       end
 
       if user.admin?
-        can :manage, TimeType
-        can :manage, TimeSheet
-        can :manage, TimeEntry
-        can :manage, Absence
-        can :manage, Employment
-        can :manage, PublicHoliday
-        can :manage, User
-        can :manage, Team
+        can :manage, :all
       end
     end
   end
