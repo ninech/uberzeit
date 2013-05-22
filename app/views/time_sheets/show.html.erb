@@ -16,7 +16,7 @@
       <div class="head">
         <%= l @weekdays.first, :format => :long %> – <%= l @weekdays.last, :format => :long %> (<%= t('.week_number') %> <%= @weekdays.first.cweek %>)
         <div class="right">
-          <% unless @day == Date.today %>
+          <% unless @day.today? %>
             <a href="<%= url_for(action: :show, date: Date.today.to_formatted_s(:iso)) %>" class="small secondary today button"><%= t '.today' %></a>
           <% end %>
           <a href="<%= url_for(action: :show, date: @previous_week_day.to_formatted_s(:iso)) %>" class="previous"><span class="icon-caret-left"></span></a>

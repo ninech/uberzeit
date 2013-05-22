@@ -16,8 +16,8 @@ class Ability
       if user.team_leader?
         can :read, Team, id: manageable_team_ids(user)
         can :read, User, id: manageable_user_ids(user)
-        can :read, TimeSheet, user_id: manageable_user_ids(user)
 
+        can :manage, TimeSheet, user_id: manageable_user_ids(user)
         can :manage, TimeEntry, time_sheet: { user_id: manageable_user_ids(user) }
         can :manage, Absence, time_sheet: { user_id: manageable_user_ids(user) }
         can :manage, Timer, time_sheet: { user_id: manageable_user_ids(user) }

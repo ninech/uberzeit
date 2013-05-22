@@ -9,12 +9,18 @@ module SummariesHelper
     "<span style='color: #{color_for_duration(duration)}'>#{display_in_hours(duration)}</span>".html_safe
   end
 
-  def types_to_tooltip_table(hash)
+  def types_to_tooltip_table(time_type_time_hash)
     tooltip = ""
 
-    hash.each_pair do |name, time|
+    time_type_time_hash.each_pair do |time_type, time|
       next if time == 0
-      tooltip += ("<div class='tr'><div class='td'>#{name}</div><div class='td'>#{format_hours(time)}</div></div>").html_safe
+      formatted_duration =  if time_type.is_absence?
+                              "#{format_work_days(time)} d"
+                            else
+                              "#{format_hours(time)}"
+                            end
+
+      tooltip += ("<div class='tr'><div class='td'>#{time_type.name}</div><div class='td'>#{formatted_duration}</div></div>").html_safe
     end
 
     unless tooltip.blank?

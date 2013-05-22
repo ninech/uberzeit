@@ -86,24 +86,25 @@ $ ->
     "#{prefix}#{diffHours}:#{diffMinutes}"
 
   window.updateTimes = ->
-    $.getJSON $('.ajax.summary_for_date').attr('href'), (data) ->
-      # title bar
-      if window.timerStarted
-        document.title = '[' + data.total + '] ' + document.originalTitle
+    if $('.ajax.summary_for_date').length
+      $.getJSON $('.ajax.summary_for_date').attr('href'), (data) ->
+        # title bar
+        if window.timerStarted
+          document.title = '[' + data.total + '] ' + document.originalTitle
 
-      $('.time.total').text data.total
-      $('.time.bonus').text data.bonus
+        $('.time.total').text data.total
+        $('.time.bonus').text data.bonus
 
-      $('.timer-current').text data.timer
-      # disable stop timer link if there is no timer duration (e.g. timer in future)
-      if $('.timer-current').text() == "00:00"
-        $('.stop-timer').addClass 'disabled'
-        $('.stop-timer').bind 'click', (e) ->
-          e.preventDefault()
-          false
-      else
-        $('.stop-timer').removeClass 'disabled'
-        $('.stop-timer').unbind 'click'
+        $('.timer-current').text data.timer
+        # disable stop timer link if there is no timer duration (e.g. timer in future)
+        if $('.timer-current').text() == "00:00"
+          $('.stop-timer').addClass 'disabled'
+          $('.stop-timer').bind 'click', (e) ->
+            e.preventDefault()
+            false
+        else
+          $('.stop-timer').removeClass 'disabled'
+          $('.stop-timer').unbind 'click'
 
   # on page load
   updateTimes()
