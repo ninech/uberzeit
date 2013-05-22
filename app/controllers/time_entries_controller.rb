@@ -17,6 +17,7 @@ class TimeEntriesController < ApplicationController
 
     if params[:time_entry][:to_time].blank?
       @entry = @time_sheet.timers.new(params[:time_entry].except(:to_time))
+      @entry.start_date = Date.current
       @entry.save
     else
       @entry = @time_sheet.time_entries.new(params[:time_entry])
