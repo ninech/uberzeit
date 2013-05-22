@@ -1,29 +1,27 @@
 class TimeEntriesController < ApplicationController
   load_and_authorize_resource :time_sheet
-  authorize_resource :time_entry, through: :time_sheet
+  load_and_authorize_resource :time_entry, through: :time_sheet
+
+  before_filter :load_time_types
 
   def new
   end
 
   def edit
-    @entry = TimeEntry.find(params[:id])
-    @time_types = TimeType.find_all_by_is_work(true)
-
-    render 'edit', layout: false
+    @time_entry = TimeEntry.find(params[:id])
   end
 
   def create
-    @time_types = TimeType.find_all_by_is_work(true)
 
     if params[:time_entry][:to_time].blank?
-      @entry = @time_sheet.timers.new(params[:time_entry].except(:to_time))
-      @entry.save
+      @time_entry = @time_sheet.timers.new(params[:time_entry].except(:to_time))
+      @time_entry.save
     else
-      @entry = @time_sheet.time_entries.new(params[:time_entry])
-      @entry.save
+      @time_entry = @time_sheet.time_entries.new(params[:time_entry])
+      @time_entry.save
     end
 
-    render json: @entry.errors
+    render json: @time_entry.errors
   end
 
   def update
@@ -52,5 +50,11 @@ class TimeEntriesController < ApplicationController
     rs.exception_dates.build(date: params[:date])
     rs.save!
     redirect_to @time_sheet, :notice => 'Exception date successfully added.'
+  end
+
+  private
+
+  def load_time_types
+    @time_types = TimeType.work
   end
 end

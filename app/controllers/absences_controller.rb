@@ -1,10 +1,10 @@
 class AbsencesController < ApplicationController
-  before_filter :load_time_types
-
   load_and_authorize_resource :time_sheet
   load_and_authorize_resource :absence, through: :time_sheet
 
   respond_to :html, :json
+
+  before_filter :load_time_types
 
   def index
     year = params[:year] || Time.current.year
@@ -36,9 +36,7 @@ class AbsencesController < ApplicationController
 
   def create
     if @absence.save
-      respond_with(@absence) do |format|
-        format.js { render js: "window.location = #{default_return_location.to_json}" }
-      end
+      respond_with(@absence, location: default_return_location)
     else
       respond_with(@absence, status: 400)
     end
@@ -51,9 +49,7 @@ class AbsencesController < ApplicationController
 
   def update
     if @absence.update_attributes(params[:absence])
-      respond_with(@absence) do |format|
-        format.js { render js: "window.location = #{default_return_location.to_json}" }
-      end
+      respond_with(@absence, location: default_return_location)
     else
       respond_with(@absence, status: 400)
     end

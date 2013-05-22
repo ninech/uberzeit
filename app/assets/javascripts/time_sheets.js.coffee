@@ -1,9 +1,9 @@
 document.originalTitle = document.title
 
-$(document).on 'ajax:error', '.reveal-modal.time form', (xhr, status, error) ->
+$(document).on 'ajax:error', '.reveal-modal form', (xhr, status, error) ->
   console.log xhr, status, error
 
-$(document).on 'ajax:success', '.reveal-modal.time form', (data, status, xhr) ->
+$(document).on 'ajax:success', '.reveal-modal form', (data, status, xhr) ->
   $(this).foundation('reveal', 'close')
   window.location.reload()
 
