@@ -4,7 +4,6 @@ $(document)
     opened: (e) ->
       if e.target.id == 'add-time-modal'
         $('#time_entry_from_time').val(moment().format('HH:mm'))
-        $("#time_entry_start_date").val(moment().format('YYYY-MM-DD'))
   })
   .foundation('tooltips')
 
