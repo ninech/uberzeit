@@ -67,7 +67,7 @@ class TimeEntry < ActiveRecord::Base
 
   def to_time=(value)
     self.end_time = "#{self.end_date} #{value}:00"
-    if self.end_time < self.start_time
+    if self.start_time && self.end_time && self.end_time < self.start_time
       self.end_time = self.end_time + 1.day
     end
   end

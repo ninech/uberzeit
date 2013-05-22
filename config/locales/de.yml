@@ -245,6 +245,8 @@ de:
   time_entries:
     edit:
       edit_time: 'Zeit bearbeiten'
+    new:
+      add_entry: Zeit hinzufügen
     form:
       cancel: Abbrechen
       add_entry: Neuer Eintrag
