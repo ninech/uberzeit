@@ -54,15 +54,15 @@ describe AbsencesController do
       end
 
       context 'html' do
-        it 'renders the new template without a layout' do
-          controller.should_receive(:respond_with).with(instance_of(Absence), layout: true)
+        it 'renders the new template' do
+          controller.should_receive(:respond_with).with(instance_of(Absence))
           get :new, time_sheet_id: time_sheet.id
         end
       end
 
       context 'xhr' do
-        it 'renders the new template without a layout' do
-          controller.should_receive(:respond_with).with(instance_of(Absence), layout: false)
+        it 'renders the new template' do
+          controller.should_receive(:respond_with).with(instance_of(Absence))
           xhr :get, :new, time_sheet_id: time_sheet.id
         end
       end
@@ -95,15 +95,15 @@ describe AbsencesController do
       end
 
       context 'html' do
-        it 'renders the new template without a layout' do
-          controller.should_receive(:respond_with).with(instance_of(Absence), layout: true)
+        it 'renders the new template' do
+          controller.should_receive(:respond_with).with(instance_of(Absence))
           get :edit, time_sheet_id: time_sheet.id, id: absence.id
         end
       end
 
       context 'xhr' do
-        it 'renders the new template without a layout' do
-          controller.should_receive(:respond_with).with(instance_of(Absence), layout: false)
+        it 'renders the new template' do
+          controller.should_receive(:respond_with).with(instance_of(Absence))
           xhr :get, :edit, time_sheet_id: time_sheet.id, id: absence.id
         end
       end
