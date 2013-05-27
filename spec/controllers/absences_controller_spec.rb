@@ -3,19 +3,13 @@ require 'spec_helper'
 describe AbsencesController do
 
   let(:user) { FactoryGirl.create(:user) }
+  let(:admin) { FactoryGirl.create(:admin) }
   let(:time_sheet) { user.time_sheets.first }
 
-  context 'for non-signed in users' do
-    it 'redirects to login' do
-      get :index, time_sheet_id: time_sheet
-      response.should redirect_to(new_session_path)
-    end
-  end
-
-  context 'for signed-in users' do
+  context 'for signed-in admins' do
 
     before do
-      test_sign_in user
+      test_sign_in admin
     end
 
     describe 'GET "index"' do

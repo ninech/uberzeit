@@ -55,9 +55,9 @@ describe 'Roles and Rights' do
     describe 'absences' do
       let(:path) { time_sheet_absences_path(user.current_time_sheet) }
 
-      context 'as ouserwner' do
+      context 'as owner' do
         let(:current_user) { user }
-        include_examples :access_granted
+        include_examples :access_denied
       end
 
       context 'as another user' do
@@ -243,7 +243,7 @@ describe 'Roles and Rights' do
         let(:current_user) { user }
 
         describe 'main menu' do
-          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte'], ['Verwalten']
+          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Berichte'], ['Absenzen','Verwalten']
         end
 
         describe 'summary menu' do
