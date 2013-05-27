@@ -1,20 +1,41 @@
 class TimeEntry < ActiveRecord::Base
-  include CommonEntry
 
-  default_scope order(:start_time)
+  acts_as_paranoid
 
+  belongs_to :time_sheet
+  belongs_to :time_type, with_deleted: true
+
+  attr_accessible :time_sheet_id, :time_type_id, :type
   attr_accessible :start_time, :end_time, :start_date, :end_date, :from_time, :to_time
 
-  before_validation :round_times
-
+  validates_presence_of :time_sheet, :time_type
   validates_presence_of :start_time, :end_time
-
   validates_datetime :start_time
   validates_datetime :end_time, after: :start_time
 
-  def self.nonrecurring_entries_in_range(range)
+  default_scope order(:start_time)
+
+  before_validation :round_times
+
+
+
+  def self.entries_in_range(range)
     time_range = range.to_time_range
-    nonrecurring_entries.find(:all, conditions: ['(start_time < ? AND end_time > ?)', time_range.max, time_range.min])
+    find(:all, conditions: ['(start_time < ? AND end_time > ?)', time_range.max, time_range.min])
+  end
+
+
+
+  def duration
+    range.duration
+  end
+
+  def range
+    (starts..ends)
+  end
+
+  def occurrences(date_or_range)
+    [starts]
   end
 
   def starts
