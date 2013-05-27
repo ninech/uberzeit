@@ -21,22 +21,25 @@ class LdapSync
       end
 
       def drop_revoked_roles
-        # Admin
-        User.with_role(:admin).each do |user|
-          user.remove_role(:admin) unless admin_in_ldap?(user)
-        end
+        User.all.each do |user|
+          revoked_roles = user.roles.reject do |role|
+            is_role_valid = false
 
-        # Team Leaders
-        Team.all.each do |team|
-          department = Department.find(team.uid)
-
-          team.members.each do |member|
-            person = Person.find_by_mail(member.uid)
-
-            if member.has_role?(:team_leader, team) && !department.managers.include?(person)
-              member.remove_role(:team_leader, team)
+            if role.name == 'admin' && admin_in_ldap?(user)
+              is_role_valid = true
             end
+
+            if role.name == 'team_leader' && role.resource_id
+              team = Team.find(role.resource_id)
+              if team_leader_in_ldap?(user, team)
+                is_role_valid = true
+              end
+            end
+
+            is_role_valid
           end
+
+          user.roles.delete(revoked_roles)
         end
       end
 
@@ -58,6 +61,13 @@ class LdapSync
       def admin_in_ldap?(user)
         person = Person.find_by_mail(user.uid)
         person.departments.any? { |department| NINE_UBERZEIT_ADMIN_DEPARTMENTS.include?(department.cn) }
+      end
+
+      def team_leader_in_ldap?(user, team)
+        person = Person.find_by_mail(user.uid)
+        department = Department.find(team.uid)
+        return false if person.nil? or department.nil?
+        department.managers.include?(person)
       end
     end
   end
