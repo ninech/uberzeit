@@ -168,9 +168,9 @@ describe Ability do
       let(:ability) { Ability.new(user) }
 
       it { should be_able_to(:read, absence) }
-      it { should be_able_to(:update, absence) }
-      it { should be_able_to(:create, Absence) }
-      it { should be_able_to(:destroy, absence) }
+      it { should_not be_able_to(:update, absence) }
+      it { should_not be_able_to(:create, Absence) }
+      it { should_not be_able_to(:destroy, absence) }
     end
 
     context 'as another user' do
@@ -178,6 +178,7 @@ describe Ability do
 
       it { should_not be_able_to(:read, absence) }
       it { should_not be_able_to(:update, absence) }
+      it { should_not be_able_to(:create, Absence) }
       it { should_not be_able_to(:destroy, absence) }
     end
   end

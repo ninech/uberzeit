@@ -6,6 +6,8 @@ class AbsencesController < ApplicationController
   respond_to :html, :json
 
   def index
+    authorize! :manage, Absence
+
     year = params[:year] || Time.current.year
     @year = year.to_i
 
