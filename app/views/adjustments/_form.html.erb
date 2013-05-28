@@ -16,12 +16,17 @@
 </div>
 <div class="row">
   <div class="small-4 columns">
-    <%= f.select :time_type_id, TimeType.all.collect { |time_type| [time_type, time_type.id] }, label: Adjustment.human_attribute_name(:time_type) %>
+    <%= f.select :time_type_id, options_for_select(TimeType.all.collect{ |time_type| [time_type, time_type.id, {'data-is-absence' => time_type.is_absence?}] }, selected: f.object.time_type_id), label: Adjustment.human_attribute_name(:time_type) %>
   </div>
 </div>
-<div class="row">
-  <div class="small-4 columns">
-    <%= f.text_field :duration %>
+<div class="row work-days">
+  <div class="small-3 columns">
+    <%= f.text_field :duration_in_work_days, label: Adjustment.human_attribute_name(:duration_in_work_days) %>
+  </div>
+</div>
+<div class="row hours">
+  <div class="small-3 columns">
+    <%= f.text_field :duration_in_hours, label: Adjustment.human_attribute_name(:duration_in_hours) %>
   </div>
 </div>
 <div class="row">

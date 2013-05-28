@@ -4,7 +4,7 @@ class Adjustment < ActiveRecord::Base
   belongs_to :time_sheet
   belongs_to :time_type
 
-  attr_accessible :date, :duration, :label, :time_sheet_id, :time_type_id, :user_id
+  attr_accessible :date, :duration, :label, :time_sheet_id, :time_type_id, :user_id, :duration_in_work_days, :duration_in_hours
 
   validates_presence_of       :time_sheet, :time_type, :date, :duration
   validates_numericality_of   :duration
@@ -20,5 +20,21 @@ class Adjustment < ActiveRecord::Base
 
   def user
     time_sheet && time_sheet.user
+  end
+
+  def duration_in_work_days
+    duration && duration.to_work_days
+  end
+
+  def duration_in_work_days=(num_work_days)
+    self.duration = num_work_days.to_f.work_days
+  end
+
+  def duration_in_hours
+    duration && duration.to_hours
+  end
+
+  def duration_in_hours=(num_hours)
+    self.duration = num_hours.to_f.hours
   end
 end

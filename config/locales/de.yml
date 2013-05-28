@@ -38,6 +38,8 @@ de:
         user: Benutzer
         time_type: Zeittyp
         duration: Wert
+        duration_in_work_days: Wert in Arbeitstagen
+        duration_in_hours: Wert in Stunden
         label: Bezeichnung
       employment:
         workload: Arbeitspensum
