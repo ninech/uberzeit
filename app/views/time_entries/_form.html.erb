@@ -4,7 +4,7 @@
   </div>
 </div>
 
-<% if f.object.start_date != f.object.end_date %>
+<% if f.object.start_date != f.object.end_date && !f.object.end_date.blank? %>
 
   <div class="row">
     <div class="small-2 columns">
