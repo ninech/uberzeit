@@ -3,6 +3,12 @@ class AdjustmentsController < ApplicationController
 
   def index
     authorize! :manage, Adjustment
+
+    @year = (params[:year] || session[:year] || Time.current.year).to_i
+    session[:year] = @year
+
+    year_range = UberZeit.year_as_range(@year)
+    @adjustments = @adjustments.where('date <= ? AND date >= ?', year_range.max, year_range.min)
   end
 
   def new

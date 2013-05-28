@@ -32,6 +32,12 @@ de:
         icon: Icon
         color_index: Farbe
         exclude_from_calculation: Ausgeschlossen von Berechnungen
+      adjustment:
+        date: Datum
+        user: Benutzer
+        time_type: Zeittyp
+        duration: Dauer
+        label: Bezeichnung
       employment:
         workload: Arbeitspensum
         start_date: Start
@@ -278,6 +284,17 @@ de:
       whole_day: Ganzer Tag
     new:
       add_public_holiday: Feiertag hinzufügen
+  adjustments:
+    edit:
+      title: Anpassung bearbeiten
+    index:
+      title: 'Anpassungen im Jahr %{year}'
+      new_adjustment: Neue Anpassung
+      confirm_delete: Wirklich löschen?
+    form:
+      back: Zurück
+    new:
+      title: Feiertag hinzufügen
   time_sheets:
     top_buttons:
       add_time: Zeit hinzufügen
