@@ -8,24 +8,24 @@
 
   <div class="row">
     <div class="small-2 columns">
-      <%= f.label :from_time %>
+      <%= f.label :start_time %>
     </div>
     <div class="small-7 columns">
-      <%= datefield(f, :start_date, false, f.object.start_date.to_date, :date) %>
+      <%= datefield(f, :start_date, false, f.object.start_date, :date) %>
     </div>
     <div class="small-3 columns">
-      <%= f.text_field :from_time, label: false, class: 'time' %>
+      <%= f.text_field :start_time, label: false, class: 'time' %>
     </div>
   </div>
   <div class="row">
     <div class="small-2 columns">
-      <%= f.label :to_time %>
+      <%= f.label :end_time %>
     </div>
     <div class="small-7 columns">
-      <%= datefield(f, :end_date, false, f.object.end_date.to_date, :date) %>
+      <%= datefield(f, :end_date, false, f.object.end_date, :date) %>
     </div>
     <div class="small-3 columns">
-      <%= f.text_field :to_time, label: false, class: 'time' %>
+      <%= f.text_field :end_time, label: false, class: 'time' %>
     </div>
   </div>
 
@@ -33,10 +33,10 @@
   <div class="row">
     <div class="small-4 columns">
       <%= f.hidden_field :start_date %>
-      <%= f.text_field :from_time, class: 'time' %>
+      <%= f.text_field :start_time, class: 'time' %>
     </div>
     <div class="small-4 columns">
-      <%= f.text_field :to_time, class: 'time' %>
+      <%= f.text_field :end_time, class: 'time' %>
     </div>
     <div class="small-4 columns time-difference">
 

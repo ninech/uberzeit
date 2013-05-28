@@ -44,11 +44,11 @@ module TimeSheetsHelper
   private
 
   def work_for_range(date_or_range)
-    @time_sheet.work(date_or_range) + @time_sheet.duration_of_timers(date_or_range)
+    @time_sheet.work(date_or_range)
   end
 
   def overtime_for_range(date_or_range)
-    @time_sheet.overtime(date_or_range) + @time_sheet.duration_of_timers(date_or_range)
+    @time_sheet.overtime(date_or_range)
   end
 
   def running_timer_dates(timers)

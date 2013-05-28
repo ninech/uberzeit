@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130503101350) do
+ActiveRecord::Schema.define(:version => 20130528064952) do
 
   create_table "absences", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -103,8 +103,8 @@ ActiveRecord::Schema.define(:version => 20130503101350) do
   create_table "time_entries", :force => true do |t|
     t.integer  "time_sheet_id"
     t.integer  "time_type_id"
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "starts"
+    t.datetime "ends"
     t.datetime "deleted_at"
   end
 

@@ -81,6 +81,7 @@ group :development, :test do
   gem 'capybara'
   gem 'i18n-missing_translations'
   gem 'capistrano_database_yml'
+  gem 'timecop'
 end
 
 group :development do

@@ -3,9 +3,9 @@ class TimeSheet < ActiveRecord::Base
 
   belongs_to :user
 
-  has_many :time_entries
+  has_many :time_entries, conditions: ['ends IS NOT NULL']
   has_many :absences
-  has_many :timers
+  has_many :timers, class_name: 'TimeEntry', conditions: {ends: nil}
 
   validates_presence_of :user
 

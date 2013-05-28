@@ -5,7 +5,7 @@ describe TimeSheet do
   let(:time_sheet) { FactoryGirl.create(:time_sheet) }
 
   def work(start_time, end_time)
-    FactoryGirl.create(:time_entry, start_time: start_time.to_time, end_time: end_time.to_time, time_type: :work, time_sheet: time_sheet)
+    FactoryGirl.create(:time_entry, starts: start_time.to_time, ends: end_time.to_time, time_type: :work, time_sheet: time_sheet)
   end
 
   def vacation(start_date, end_date, daypart = :whole_day)
@@ -14,6 +14,10 @@ describe TimeSheet do
 
   def paid_absence(start_date, end_date, daypart = :whole_day)
     FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :paid_absence, time_sheet: time_sheet, daypart: daypart)
+  end
+
+  it 'has a valid factory' do
+    time_sheet.should be_valid
   end
 
   context 'time-sheet with a complex weekly schedule (time entries)' do
@@ -57,10 +61,6 @@ describe TimeSheet do
 
       # tue-wed next week free
       vacation '2013-02-12', '2013-02-13'
-    end
-
-    it 'has a valid factory' do
-      time_sheet.should be_valid
     end
 
     it 'acts as paranoid' do

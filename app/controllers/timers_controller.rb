@@ -14,8 +14,8 @@ class TimersController < ApplicationController
 
   def update
     @timer = Timer.find(params[:id])
-    if params[:timer][:to_time].blank?
-      @timer.update_attributes(params[:timer].except(:to_time))
+    if params[:timer][:end_time].blank?
+      @timer.update_attributes(params[:timer].except(:end_time))
     else
       @timer.stop
     end

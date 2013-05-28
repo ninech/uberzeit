@@ -6,7 +6,7 @@ describe Summarize::Summarizer::Work do
   let(:range) { '2013-01-01'.to_date..'2013-12-31'.to_date }
 
   it 'summarizes a users\' time by the given range' do
-    FactoryGirl.create(:time_entry, start_time: '2013-04-24 9:00:00', end_time: '2013-04-24 18:00:00', time_type: :work, time_sheet: user.current_time_sheet)
+    FactoryGirl.create(:time_entry, starts: '2013-04-24 9:00:00', ends: '2013-04-24 18:00:00', time_type: :work, time_sheet: user.current_time_sheet)
 
     summarizer = Summarize::Summarizer::Work.new(user, range)
     summarizer.summary[:effective_worked].should eq(9.hours)

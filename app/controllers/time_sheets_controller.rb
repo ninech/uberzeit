@@ -58,14 +58,14 @@ class TimeSheetsController < ApplicationController
   end
 
   def summary_for_date
-    @total = @time_sheet.total(@day) + @time_sheet.duration_of_timers(@day)
+    @total = @time_sheet.total(@day)
     @bonus = @time_sheet.bonus(@day)
 
     active_timer = @time_sheet.timers.on(@day).first
     @timer =  if active_timer.nil?
                 0
               else
-                active_timer.duration(@day)
+                active_timer.duration
               end
   end
 

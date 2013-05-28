@@ -11,7 +11,7 @@ en:
       models:
         time_entry:
           attributes:
-            end_time:
+            ends:
               after: 'End time must be after start time'
   time:
     formats:

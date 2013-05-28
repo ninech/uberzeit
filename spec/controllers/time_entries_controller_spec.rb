@@ -57,11 +57,11 @@ describe TimeEntriesController do
 
       context 'with valid attributes' do
         it 'changes time_entry\'s attributes' do
-          time_now = Time.zone.now.round
-          put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: FactoryGirl.attributes_for(:time_entry, start_time: time_now, end_time: time_now + 1.hour)
+          Timecop.freeze('2013-02-02')
+          put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: {start_time: '11:00', end_time: '12:00'}
           time_entry.reload
-          time_entry.start_time.to_i.should eq(time_now.to_i)
-          time_entry.end_time.to_i.should eq(time_now.to_i + 1.hour)
+          time_entry.starts.should eq('2013-02-02 11:00 +0100'.to_time)
+          time_entry.ends.should eq('2013-02-02 12:00 +0100'.to_time)
         end
 
         it 'redirects to the sheet overview' do
@@ -73,7 +73,7 @@ describe TimeEntriesController do
       context 'with invalid attributes' do
         it 're-renders the :edit template' do
           put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: FactoryGirl.attributes_for(:invalid_time_entry)
-          response.body.should == '{"end_time":["Endzeit muss nach Startzeit sein"]}'
+          response.body.should == '{"ends":["Endzeit muss nach Startzeit sein"]}'
         end
       end
     end
@@ -101,7 +101,7 @@ describe TimeEntriesController do
 
         it 'returns json errors' do
           post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:invalid_time_entry)
-          response.body.should == '{"time_type":["muss ausgefüllt werden"],"end_time":["Endzeit muss nach Startzeit sein"]}'
+          response.body.should == '{"time_type":["muss ausgefüllt werden"],"ends":["Endzeit muss nach Startzeit sein"]}'
         end
       end
     end

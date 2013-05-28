@@ -22,10 +22,10 @@ $(document).on 'click', '.unhider', ->
   $('.' + $(this).data('unhide-class')).show()
   false
 
-$(document).on 'keyup', '.reveal-modal.time form #time_entry_to_time, .reveal-modal.time form #time_entry_from_time', ->
+$(document).on 'keyup', '.reveal-modal.time form #time_entry_end_time, .reveal-modal.time form #time_entry_start_time', ->
   form_id = "#" + $(this).parents('form').attr('id')
-  startEl = $("#{form_id} #time_entry_from_time")
-  endEl   = $("#{form_id} #time_entry_to_time")
+  startEl = $("#{form_id} #time_entry_start_time")
+  endEl   = $("#{form_id} #time_entry_end_time")
 
   unless $("#{form_id} #time_entry_submit").val() == I18n.t('time_entries.form.save')
     if endEl.val()

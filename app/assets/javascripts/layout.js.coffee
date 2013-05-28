@@ -3,7 +3,7 @@ $(document)
     closeOnBackgroundClick: false,
     opened: (e) ->
       if e.target.id == 'add-time-modal'
-        $('#time_entry_from_time').val(moment().format('HH:mm'))
+        $('#time_entry_start_time').val(moment().format('HH:mm'))
   })
   .foundation('tooltips')
 

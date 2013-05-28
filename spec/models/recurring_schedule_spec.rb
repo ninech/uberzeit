@@ -70,7 +70,7 @@ describe RecurringSchedule do
     context 'time entries' do
       it 'returns the time independent of the daylight saving time' do
         time = Time.zone.parse('2013-01-20 08:00:00')
-        time_entry = FactoryGirl.build(:time_entry, start_time: time, end_time: time + 2.hours)
+        time_entry = FactoryGirl.build(:time_entry, starts: time, ends: time + 2.hours)
         recurring_schedule = FactoryGirl.build(:active_recurring_schedule, enterable: time_entry, ends: 'date', ends_date: '2014-01-01')
         occurence_start_time = recurring_schedule.occurrences('2013-07-21'.to_date).first
         occurence_start_time.strftime('%X').should eq(time.strftime('%X'))
