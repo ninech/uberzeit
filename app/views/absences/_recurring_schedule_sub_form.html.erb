@@ -22,7 +22,7 @@
           <span class="postfix prefix"><%= t '.weeks_until' %></span>
         </div>
         <div class="small-3 columns end">
-          <%= rs.text_field :ends_date, class: :date, label: false %>
+          <%= rs.text_field :ends_date,  value:(l(rs.object.ends_date, format: :long) if rs.object.ends_date), class: :date, label: false %>
         </div>
       </span>
     <% end %>

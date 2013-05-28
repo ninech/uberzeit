@@ -8,7 +8,6 @@ $(document)
   .foundation('tooltips')
 
 # ===> Event Listeners
-# Bind event listeneners OUTSIDE of $(document).ready (cf. Turbolinks Troubleshooting)
 $(document).on 'click', '.toggle', (element) ->
   $('#' + $(this).data('toggle-target')).toggle()
 
@@ -16,9 +15,13 @@ $(document).on 'click', '.remote-reveal', (event) ->
   element = $('#' + $(this).data('reveal-id'))
   element.find('span.ajax-content').remove()
   content_element = element.append('<span class="ajax-content"></span>')
-  content_element.find('span.ajax-content').load $(this).data('reveal-url'), () ->
-    init_pickdate()
-    init_picktime()
+  content_element.find('span.ajax-content').load $(this).data('reveal-url')
+
+$(document).ajaxComplete () ->
+  initControls()
+
+$(document).ajaxError () ->
+  initControls()
 
 $(document).on 'mouseover', '.has-tip', ->
     $(this).popover
@@ -26,20 +29,30 @@ $(document).on 'mouseover', '.has-tip', ->
       content: $(this).data('tooltip')
       fadeSpeed: 0
 
+$(document).on 'ajax:error', 'form', (xhr, status) ->
+  statusCode = status.status
+  if statusCode >= 400 and statusCode < 500
+    newForm = $(status.responseText).filter('form')
+    $(this).replaceWith(newForm)
+  if statusCode >= 500 && statusCode < 600
+    alert "Error occured during request: #{status.statusText}"
+
 # ===> Document Ready
 $ ->
 
-  window.init_picktime = () ->
+  window.initControls = () ->
+    initTimePicker()
+    initDatePicker()
+
+  window.initTimePicker = () ->
     # Timepicker
     $('input.time').timepicker({
       dropdown: false,
       timeFormat: 'HH:mm'
     })
 
-  window.init_picktime()
-
   # Pickadate
-  window.init_pickdate = () ->
+  window.initDatePicker = () ->
 
     $('input.date').pickadate()
 
@@ -73,4 +86,4 @@ $ ->
       if(pickadate)
         pickadate.setDate(date_input.data('year'),date_input.data('month'),date_input.data('day'))
 
-  init_pickdate()
+  initControls()

@@ -1,9 +1,10 @@
 class AbsencesController < ApplicationController
-
   load_and_authorize_resource :time_sheet
   load_and_authorize_resource :absence, through: :time_sheet
 
   respond_to :html, :json
+
+  before_filter :load_time_types
 
   def index
     authorize! :manage, Absence
@@ -11,7 +12,6 @@ class AbsencesController < ApplicationController
     year = params[:year] || Time.current.year
     @year = year.to_i
 
-    @time_types = TimeType.absence
     @absences = {}
     time_chunks_finder = FindTimeChunks.new(@time_sheet.absences)
     time_chunks_finder.in_year(@year).each do |chunk|
@@ -28,29 +28,33 @@ class AbsencesController < ApplicationController
   end
 
   def new
-    @time_types = TimeType.absence
     @absence.build_recurring_schedule
     if params[:date]
       @absence.start_date = params[:date].to_date
       @absence.end_date = @absence.start_date
     end
-    respond_with(@absence, :layout => !request.xhr?)
+    respond_with(@absence)
   end
 
   def create
-    @absence.save
-    respond_with(@absence, location: default_return_location)
+    if @absence.save
+      respond_with(@absence, location: default_return_location)
+    else
+      respond_with(@absence, status: 400)
+    end
   end
 
   def edit
-    @time_types = TimeType.absence
     @absence.build_recurring_schedule unless @absence.recurring_schedule
-    respond_with(@absence, :layout => !request.xhr?)
+    respond_with(@absence)
   end
 
   def update
-    @absence.update_attributes(params[:absence])
-    respond_with(@absence, location: default_return_location)
+    if @absence.update_attributes(params[:absence])
+      respond_with(@absence, location: default_return_location)
+    else
+      respond_with(@absence, status: 400)
+    end
   end
 
   def destroy
@@ -63,4 +67,7 @@ class AbsencesController < ApplicationController
     year_time_sheet_absences_path(@time_sheet, @absence.start_date.year)
   end
 
+  def load_time_types
+    @time_types = TimeType.absence
+  end
 end

@@ -1,24 +1,21 @@
 class TimeEntriesController < ApplicationController
   load_and_authorize_resource :time_sheet
-  authorize_resource :time_entry, through: :time_sheet
+  load_and_authorize_resource :time_entry, through: :time_sheet
+
+  before_filter :load_time_types
 
   def new
   end
 
   def edit
-    @entry = TimeEntry.find(params[:id])
-    @time_types = TimeType.find_all_by_is_work(true)
-
-    render 'edit', layout: false
+    @time_entry = TimeEntry.find(params[:id])
   end
 
   def create
-    @time_types = TimeType.find_all_by_is_work(true)
-
     @entry = @time_sheet.time_entries.new(params[:time_entry])
     @entry.save
 
-    render json: @entry.errors
+    render json: @time_entry.errors
   end
 
   def update
@@ -31,5 +28,10 @@ class TimeEntriesController < ApplicationController
     @time_entry = TimeEntry.find(params[:id])
     @time_entry.destroy
     render json: {}
+  end
+
+  private
+  def load_time_types
+    @time_types = TimeType.work
   end
 end
