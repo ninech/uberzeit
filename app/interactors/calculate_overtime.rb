@@ -9,7 +9,7 @@ class CalculateOvertime
   def total
     # planned work is immutable
     # entries count towards the planned work time for the specified date range
-    total_worktime + total_bonuses + total_absences - planned_work
+    total_worktime + total_bonuses + total_absences + total_adjustments - planned_work
   end
 
   private
@@ -28,6 +28,10 @@ class CalculateOvertime
 
   def total_absences
     @total_absences ||= @time_sheet.total(@date_or_range, TimeType.absence)
+  end
+
+  def total_adjustments
+    @total_adjustments ||= @time_sheet.adjustments.exclude_vacation.in(@date_or_range).sum(&:duration)
   end
 end
 

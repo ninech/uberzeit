@@ -1,7 +1,7 @@
 class Summarize::Summarizer::Work
   attr_reader :summary
 
-  SUMMARIZE_ATTRIBUTES = [:planned_work, :effective_worked, :effective_worked_by_type, :absent, :absent_by_type, :time_bonus, :overtime]
+  SUMMARIZE_ATTRIBUTES = [:planned_work, :effective_worked, :effective_worked_by_type, :absent, :absent_by_type, :time_bonus, :overtime, :adjustments, :adjustments_by_type]
 
   def initialize(user, range)
     @user = user
@@ -42,14 +42,22 @@ class Summarize::Summarizer::Work
   end
 
   def time_bonus
-    @time_sheet && @time_sheet.bonus(@range, TimeType.work) or 0
+    @time_sheet.bonus(@range, TimeType.work)
   end
 
   def overtime
-    @time_sheet && @time_sheet.overtime(@range) or 0
+    @time_sheet.overtime(@range)
+  end
+
+  def adjustments
+    @time_sheet.adjustments.exclude_vacation.in(@range).sum(&:duration)
+  end
+
+  def adjustments_by_type
+    @time_sheet.adjustments.exclude_vacation.in(@range).each_with_object({}) { |adjustment, hash| hash[adjustment] = adjustment.duration }
   end
 
   def total_of_time_sheet(time_types)
-    @time_sheet && @time_sheet.total(@range, time_types) or 0
+    @time_sheet.total(@range, time_types)
   end
 end

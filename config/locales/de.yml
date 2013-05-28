@@ -195,6 +195,7 @@ de:
         running_overtime: Laufende Überzeit
         target: Sollzeit
         overtime: Überzeit
+        adjustments: Anpassungen
       work:
         year:
           title: Arbeitszeit Mitarbeiter

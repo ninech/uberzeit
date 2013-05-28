@@ -1,7 +1,12 @@
 class Adjustment < ActiveRecord::Base
   acts_as_paranoid
 
-  default_scope includes(:time_sheet => :user).order('users.name, users.given_name, adjustments.date')
+  default_scope order(:date)
+
+  scope :in, lambda { |range| date_range = range.to_range.to_date_range; { conditions: ['(date >= ? AND date <= ?)', date_range.min, date_range.max] } }
+
+  scope :exclude_vacation, joins: :time_type, conditions: ['is_vacation = ?', false]
+  scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
 
   belongs_to :time_sheet
   belongs_to :time_type
@@ -40,4 +45,7 @@ class Adjustment < ActiveRecord::Base
     self.duration = num_hours.to_f.hours
   end
 
+  def to_s
+    label
+  end
 end

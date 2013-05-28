@@ -10,8 +10,8 @@
     <table class="nice small-12 edit destroy">
       <thead>
         <tr>
-          <th><%= Adjustment.human_attribute_name :user %></th>
           <th><%= Adjustment.human_attribute_name :date %></th>
+          <th><%= Adjustment.human_attribute_name :user %></th>
           <th><%= Adjustment.human_attribute_name :time_type %></th>
           <th><%= Adjustment.human_attribute_name :duration %></th>
           <th><%= Adjustment.human_attribute_name :label %></th>
@@ -22,8 +22,8 @@
       <tbody>
         <% @adjustments.each do |adjustment| %>
           <tr>
-            <td><%= adjustment.user %></td>
             <td><%= l(adjustment.date, format: :long) %></td>
+            <td><%= adjustment.user %></td>
             <td><%= adjustment.time_type %></td>
             <td>
               <% if adjustment.time_type.is_absence? %>
