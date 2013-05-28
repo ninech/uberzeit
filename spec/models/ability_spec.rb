@@ -183,6 +183,39 @@ describe Ability do
     end
   end
 
+
+  describe 'Adjustment' do
+
+    let(:adjustment) { FactoryGirl.create(:adjustment, time_sheet: user.time_sheets.first) }
+
+    context 'as a user with the administration role' do
+      let(:ability) { Ability.new(admin) }
+
+      it { should be_able_to(:read, adjustment) }
+      it { should be_able_to(:update, adjustment) }
+      it { should be_able_to(:create, Adjustment) }
+      it { should be_able_to(:destroy, adjustment) }
+    end
+
+    context 'as the owner' do
+      let(:ability) { Ability.new(user) }
+
+      it { should be_able_to(:read, adjustment) }
+      it { should_not be_able_to(:update, adjustment) }
+      it { should_not be_able_to(:create, Adjustment) }
+      it { should_not be_able_to(:destroy, adjustment) }
+    end
+
+    context 'as another user' do
+      let(:ability) { Ability.new(FactoryGirl.create(:user)) }
+
+      it { should_not be_able_to(:read, adjustment) }
+      it { should_not be_able_to(:update, adjustment) }
+      it { should_not be_able_to(:create, Adjustment) }
+      it { should_not be_able_to(:destroy, adjustment) }
+    end
+  end
+
   describe 'Timer' do
 
     let(:timer) { FactoryGirl.create(:timer, time_sheet: user.time_sheets.first) }

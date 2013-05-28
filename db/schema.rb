@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130503101350) do
+ActiveRecord::Schema.define(:version => 20130527153022) do
 
   create_table "absences", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -25,6 +25,20 @@ ActiveRecord::Schema.define(:version => 20130503101350) do
 
   add_index "absences", ["time_sheet_id"], :name => "index_date_entries_on_time_sheet_id"
   add_index "absences", ["time_type_id"], :name => "index_date_entries_on_time_type_id"
+
+  create_table "adjustments", :force => true do |t|
+    t.integer  "time_sheet_id"
+    t.integer  "time_type_id"
+    t.date     "date"
+    t.integer  "duration"
+    t.string   "label"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.datetime "deleted_at"
+  end
+
+  add_index "adjustments", ["time_sheet_id"], :name => "index_adjustments_on_time_sheet_id"
+  add_index "adjustments", ["time_type_id"], :name => "index_adjustments_on_time_type_id"
 
   create_table "employments", :force => true do |t|
     t.integer  "user_id"
@@ -50,10 +64,12 @@ ActiveRecord::Schema.define(:version => 20130503101350) do
   create_table "memberships", :force => true do |t|
     t.integer  "team_id"
     t.integer  "user_id"
+    t.string   "role"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
+  add_index "memberships", ["team_id", "user_id", "role"], :name => "index_memberships_on_team_id_and_user_id_and_role", :unique => true
   add_index "memberships", ["team_id"], :name => "index_memberships_on_team_id"
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 

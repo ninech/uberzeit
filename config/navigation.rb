@@ -70,6 +70,7 @@ SimpleNavigation::Configuration.run do |navigation|
       second.item :public_holidays, t('navigation.sub.manage.public_holidays'), public_holidays_path
       second.item :users, t('navigation.sub.manage.users'), users_path
       second.item :time_types, t('navigation.sub.manage.time_types'), time_types_path
+      second.item :adjustments, t('navigation.sub.manage.adjustments'), adjustments_path
       second.dom_class = 'sub-nav'
     end
 

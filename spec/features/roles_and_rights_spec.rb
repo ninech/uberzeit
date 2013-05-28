@@ -214,6 +214,11 @@ describe 'Roles and Rights' do
         let(:path) { time_types_path }
         include_examples :manage_access
       end
+
+      describe 'adjustments' do
+        let(:path) { adjustments_path }
+        include_examples :manage_access
+      end
     end
   end
 

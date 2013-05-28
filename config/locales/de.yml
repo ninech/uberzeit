@@ -69,7 +69,10 @@ de:
               there_is_another_open_ended_entry: Es existiert schon ein unbefristerer Eintrag.
               overlaps_with_another_entry: Der gewählte Zeitraum überschneidet sich mit einem anderen Eintrag.
               cannot_delete_single_employment: Das Löschen des letzten Anstellungsverhältnis ist nicht möglich.
-
+        adjustment:
+          attributes:
+            date:
+              invalid_date: ist ein ungültiges Datum
   model_successfully_created: "%{model} wurde erfolgreich erstellt."
   model_successfully_updated: "%{model} wurde erfolgreich aktualisiert."
   model_successfully_deleted: "%{model} wurde erfolgreich gelöscht."
@@ -163,6 +166,7 @@ de:
         public_holidays: Feiertage
         time_types: Zeittypen
         users: Benutzer
+        adjustments: Anpassungen
       reports:
         my_work: Meine Arbeitszeit
         my_absence: Meine Absenzen
