@@ -294,6 +294,8 @@ de:
       title: 'Anpassungen im Jahr %{year}'
       new_adjustment: Neue Anpassung
       confirm_delete: Wirklich löschen?
+      unit_work_days: Arbeitstage
+      unit_hours: Stunden
     form:
       back: Zurück
     new:

@@ -1,6 +1,8 @@
 class Adjustment < ActiveRecord::Base
   acts_as_paranoid
 
+  default_scope includes(:time_sheet => :user).order('users.name, users.given_name, adjustments.date')
+
   belongs_to :time_sheet
   belongs_to :time_type
 
@@ -37,4 +39,5 @@ class Adjustment < ActiveRecord::Base
   def duration_in_hours=(num_hours)
     self.duration = num_hours.to_f.hours
   end
+
 end
