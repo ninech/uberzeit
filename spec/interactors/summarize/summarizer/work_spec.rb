@@ -19,7 +19,7 @@ describe Summarize::Summarizer::Work do
 
   describe 'adjustments' do
     context 'adjustment is for vacation' do
-      let!(:adjustment) { FactoryGirl.create(:adjustment, time_sheet: time_sheet, time_type: TEST_TIME_TYPES[:vacation], duration: 1.0.work_days) }
+      let!(:adjustment) { FactoryGirl.create(:adjustment, time_sheet: time_sheet, time_type: TEST_TIME_TYPES[:vacation], duration: 1.0.work_days, date: range.min) }
 
       it 'excludes the adjustment for the total adjustment duration' do
         summarizer.summary[:adjustments].should eq(0)
@@ -27,7 +27,7 @@ describe Summarize::Summarizer::Work do
     end
 
     context 'adjustment is not for vacation' do
-      let!(:adjustment) { FactoryGirl.create(:adjustment, time_sheet: time_sheet, time_type: TEST_TIME_TYPES[:paid_absence], duration: 1.0.work_days) }
+      let!(:adjustment) { FactoryGirl.create(:adjustment, time_sheet: time_sheet, time_type: TEST_TIME_TYPES[:paid_absence], duration: 1.0.work_days, date: range.min) }
 
       it 'includes the adjustment for the total adjustment duration' do
         summarizer.summary[:adjustments].should eq(1.0.work_days)

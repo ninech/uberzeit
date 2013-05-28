@@ -69,7 +69,7 @@ describe CalculateTotalRedeemableVacation do
 
     context 'adjustments' do
       it 'includes adjustments for vacation' do
-        adjustment = FactoryGirl.create(:adjustment, time_sheet: time_sheet, time_type: TEST_TIME_TYPES[:vacation], duration: 5.work_days)
+        adjustment = FactoryGirl.create(:adjustment, time_sheet: time_sheet, time_type: TEST_TIME_TYPES[:vacation], duration: 5.work_days, date: '2013-07-20')
         vacation.total_redeemable_for_year.should eq(30.work_days)
       end
     end
