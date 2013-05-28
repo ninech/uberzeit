@@ -27,5 +27,7 @@
   </div>
 <% end %>
 
-<%= render 'add_absence_modal' %>
-<%= render 'edit_absence_modal' %>
+<% if can?(:manage, Absence) %>
+  <%= render 'add_absence_modal' %>
+  <%= render 'edit_absence_modal' %>
+<% end %>
