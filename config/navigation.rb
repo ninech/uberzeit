@@ -52,7 +52,7 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            when the item should be highlighted, you can set a regexp which is matched
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
-    primary.item :timesheet, t('navigation.timesheet'), time_sheet_path(current_user.current_time_sheet), highlights_on: %r!\A/time_sheets/\d+(/date/[\w-]+)?!
+    primary.item :timesheet, t('navigation.timesheet'), time_sheet_path(current_user.current_time_sheet), highlights_on: %r!\A/time_sheets/\d+(/date/[\w-]+)?\z!
     if can? :manage, Absence
       primary.item :absences, t('navigation.absences'), time_sheet_absences_path(current_user.current_time_sheet), highlights_on: %r!\A/time_sheets/\d+/absences!
     end
