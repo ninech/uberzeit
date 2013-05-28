@@ -57,7 +57,7 @@ describe 'Roles and Rights' do
 
       context 'as owner' do
         let(:current_user) { user }
-        include_examples :access_denied
+        include_examples :access_granted
       end
 
       context 'as another user' do
@@ -243,7 +243,7 @@ describe 'Roles and Rights' do
         let(:current_user) { user }
 
         describe 'main menu' do
-          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Berichte'], ['Absenzen','Verwalten']
+          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte'], ['Verwalten']
         end
 
         describe 'summary menu' do
@@ -273,6 +273,29 @@ describe 'Roles and Rights' do
         describe 'summary menu' do
           include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Ferien Mitarbeiter'], []
         end
+      end
+    end
+
+    describe 'absence overview' do
+      before do
+        visit time_sheet_absences_path(current_user.current_time_sheet)
+      end
+
+      let(:add_absence_selector) { "*[data-reveal-url^='#{new_time_sheet_absence_path(current_user.current_time_sheet)}']" }
+
+      context 'as user' do
+        let(:current_user) { user }
+        it { should_not have_selector(add_absence_selector) }
+      end
+
+      context 'as team leader' do
+        let(:current_user) { team_leader }
+        it { should have_selector(add_absence_selector) }
+      end
+
+      context 'as admin' do
+        let(:current_user) { admin }
+        it { should have_selector(add_absence_selector) }
       end
     end
 

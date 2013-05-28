@@ -27,11 +27,16 @@ module AbsencesHelper
 
     cls << 'has-click-tip' unless tooltip.blank?
 
-    unless absences or public_holiday
+    unless absences || public_holiday || !can?(:manage, Absence)
       cls << "has-reveal remote-reveal"
     end
 
-    [content, {:class => cls.join(' '), :'data-tooltip' => tooltip, :'data-reveal-id' => 'add-absence-modal', :'data-reveal-url' => new_time_sheet_absence_path(@time_sheet, date: day)}]
+    options = {:class => cls.join(' '), :'data-tooltip' => tooltip}
+    if can? :manage, Absence
+      options.merge! :'data-reveal-id' => 'add-absence-modal', :'data-reveal-url' => new_time_sheet_absence_path(@time_sheet, date: day)
+    end
+
+    [content, options]
   end
 
   def suffix_for_daypart(absence)
