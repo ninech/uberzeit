@@ -20,6 +20,7 @@ class TimeEntry < ActiveRecord::Base
 
 
   before_validation :round_times
+  before_validation :ensure_ends_is_after_start
   before_create :check_active_timers_on_same_date, if: :timer?
 
 
@@ -114,5 +115,11 @@ class TimeEntry < ActiveRecord::Base
 
   def date_and_time_to_datetime_format(date, time)
     "#{date} #{time}:00"
+  end
+
+  def ensure_ends_is_after_start
+    if ends < starts
+      self.ends = starts + 1.day
+    end
   end
 end
