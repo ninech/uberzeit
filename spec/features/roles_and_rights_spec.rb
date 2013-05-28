@@ -18,13 +18,15 @@ describe 'Roles and Rights' do
   describe 'access' do
     shared_examples :access_granted do
       it 'allows access' do
-        expect { visit path }.to_not raise_error(CanCan::AccessDenied)
+        visit path
+        page.status_code.should == 200
       end
     end
 
     shared_examples :access_denied do
       it 'denies access' do
-        expect { visit path }.to raise_error(CanCan::AccessDenied)
+        visit path
+        page.status_code.should == 403
       end
     end
 
