@@ -262,9 +262,9 @@ de:
       save: Speichern
   public_holidays:
     edit:
-      edit_public_holiday: Feiertag bearbeiten
+      title: Feiertag bearbeiten
     index:
-      public_holidays_for_year: 'Feiertage im Jahr %{year}'
+      title: 'Feiertage im Jahr %{year}'
       new_public_holiday: Neuer Feiertag
       confirm_delete: Wirklich löschen?
     form:
@@ -273,7 +273,7 @@ de:
       back: Zurück
       whole_day: Ganzer Tag
     new:
-      add_public_holiday: Feiertag hinzufügen
+      title: Feiertag hinzufügen
   time_sheets:
     top_buttons:
       add_time: Zeit hinzufügen
