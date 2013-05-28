@@ -1,0 +1,36 @@
+<%= form_for(@adjustment) do |f| %>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.text_field :label %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.text_field :date, value: (l(f.object.date, format: :long) if f.object.date), class: 'date' %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.select :user_id, User.all.collect { |user| [user, user.id] }, label: Adjustment.human_attribute_name(:user) %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.select :time_type_id, TimeType.all.collect { |time_type| [time_type, time_type.id] }, label: Adjustment.human_attribute_name(:time_type) %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.text_field :duration %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-3 columns">
+    <%= f.submit class: 'button'%>
+  </div>
+  <div class="small-2 columns end">
+    <%= link_to t('.back'), adjustments_path, class: "secondary button" %>
+  </div>
+</div>
+<% end %>
+

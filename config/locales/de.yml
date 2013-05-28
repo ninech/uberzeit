@@ -15,6 +15,7 @@ de:
       public_holiday: Feiertag
       time_type: Zeittyp
       absence: Absenz
+      adjustment: Anpassung
     attributes:
       time_entry:
         from_time: Von
@@ -36,7 +37,7 @@ de:
         date: Datum
         user: Benutzer
         time_type: Zeittyp
-        duration: Dauer
+        duration: Wert
         label: Bezeichnung
       employment:
         workload: Arbeitspensum
@@ -294,7 +295,7 @@ de:
     form:
       back: Zurück
     new:
-      title: Feiertag hinzufügen
+      title: Anpassung hinzufügen
   time_sheets:
     top_buttons:
       add_time: Zeit hinzufügen
