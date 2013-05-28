@@ -23,6 +23,9 @@
         <% @adjustments.each do |adjustment| %>
           <tr>
             <td><%= l(adjustment.date, format: :long) %></td>
+            <td><%= adjustment.user %></td>
+            <td><%= adjustment.time_type %></td>
+            <td><%= adjustment.duration %></td>
             <td><%= adjustment.label %></td>
             <td><%= link_to icon('edit'), edit_adjustment_path(adjustment) %></td>
             <td><%= link_to icon('trash'), adjustment, method: :delete, confirm: t('.confirm_delete') %></td>
