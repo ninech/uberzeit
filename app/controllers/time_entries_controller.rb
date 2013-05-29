@@ -20,15 +20,15 @@ class TimeEntriesController < ApplicationController
   end
 
   def update
-    @time_entry = TimeEntry.find(params[:id])
     @time_entry.update_attributes(params[:time_entry])
-    render json: @time_entry.errors
+    respond_with @time_entry
   end
 
   def destroy
-    @time_entry = TimeEntry.find(params[:id])
     @time_entry.destroy
-    render json: {}
+    respond_with(@time_entry) do |format|
+      format.js { render nothing: true }
+    end
   end
 
   private
