@@ -125,7 +125,8 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def ensure_ends_is_after_start
-    if ends && ends < starts
+
+    if ends && starts && ends < starts
       self.ends = starts + 1.day
     end
   end

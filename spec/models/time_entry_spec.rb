@@ -89,6 +89,12 @@ describe TimeEntry do
       subject.starts.should eq("2013-04-13 05:00:00 +0200".to_time)
     end
 
+    it 'handles a blank start time' do
+      subject.start_time = ''
+      subject.end_time = '9:00'
+      expect { subject.valid? }.to_not raise_error
+    end
+
     it 'supports mass assignment' do
       Timecop.freeze('2013-05-20 05:00:00 +0200')
       time_entry = TimeEntry.new(start_date: '2013-04-12', start_time: '09:00')
