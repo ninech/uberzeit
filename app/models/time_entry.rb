@@ -9,7 +9,7 @@ class TimeEntry < ActiveRecord::Base
   attr_accessible :start_time, :start_date, :end_date, :end_time
 
   validates_presence_of :time_sheet, :time_type
-  validates_presence_of :starts
+  validates_presence_of :starts, :start_time, :start_date
   validates_presence_of :ends, unless: :timer?
   validates_datetime :starts
   validates_datetime :ends, after: :starts, unless: :timer?
@@ -48,19 +48,23 @@ class TimeEntry < ActiveRecord::Base
 
 
   def start_date
+    return @start_date if @start_date
     (starts || Time.current).to_date
   end
 
   def start_date=(value)
+    @start_date = value
     self.starts = date_and_time_to_datetime_format(value, start_time)
   end
 
   def start_time
+    return @start_time if @start_time
     my_starts = (starts || Time.current)
     hour_and_min_to_time_string(my_starts.hour, my_starts.min)
   end
 
   def start_time=(value)
+    @start_time = value
     self.starts = date_and_time_to_datetime_format(start_date, value)
   end
 

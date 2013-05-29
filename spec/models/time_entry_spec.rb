@@ -94,6 +94,18 @@ describe TimeEntry do
       time_entry = TimeEntry.new(start_date: '2013-04-12', start_time: '09:00')
       time_entry.starts.should eq("2013-04-12 09:00:00 +0200".to_time)
     end
+
+    it 'validates a blank start_time' do
+      time_entry = TimeEntry.new(start_time: '')
+      time_entry.valid?
+      time_entry.should have(1).errors_on(:start_time)
+    end
+
+    it 'validates a blank start_date' do
+      time_entry = TimeEntry.new(start_date: '')
+      time_entry.valid?
+      time_entry.should have(1).errors_on(:start_date)
+    end
   end
 
   context 'timer' do

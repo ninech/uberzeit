@@ -2,6 +2,8 @@ class TimeEntriesController < ApplicationController
   load_and_authorize_resource :time_sheet
   load_and_authorize_resource :time_entry, through: :time_sheet
 
+  respond_to :html, :json, :js
+
   before_filter :load_time_types
 
   def new
@@ -12,10 +14,11 @@ class TimeEntriesController < ApplicationController
   end
 
   def create
-    @entry = @time_sheet.time_entries.new(params[:time_entry])
-    @entry.save
+    @time_entry.save
 
-    render json: @time_entry.errors
+    Rails.logger.info @time_entry.errors.inspect
+
+    respond_with(@time_entry)
   end
 
   def update
