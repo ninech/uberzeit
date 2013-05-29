@@ -15,6 +15,7 @@ de:
       public_holiday: Feiertag
       time_type: Zeittyp
       absence: Absenz
+      adjustment: Anpassung
     attributes:
       time_entry:
         from_time: Von
@@ -32,6 +33,14 @@ de:
         icon: Icon
         color_index: Farbe
         exclude_from_calculation: Ausgeschlossen von Berechnungen
+      adjustment:
+        date: Datum
+        user: Benutzer
+        time_type: Zeittyp
+        duration: Wert
+        duration_in_work_days: Wert in Arbeitstagen
+        duration_in_hours: Wert in Stunden
+        label: Bezeichnung
       employment:
         workload: Arbeitspensum
         start_date: Start
@@ -69,7 +78,10 @@ de:
               there_is_another_open_ended_entry: Es existiert schon ein unbefristerer Eintrag.
               overlaps_with_another_entry: Der gewählte Zeitraum überschneidet sich mit einem anderen Eintrag.
               cannot_delete_single_employment: Das Löschen des letzten Anstellungsverhältnis ist nicht möglich.
-
+        adjustment:
+          attributes:
+            date:
+              invalid_date: ist ein ungültiges Datum
   model_successfully_created: "%{model} wurde erfolgreich erstellt."
   model_successfully_updated: "%{model} wurde erfolgreich aktualisiert."
   model_successfully_deleted: "%{model} wurde erfolgreich gelöscht."
@@ -163,6 +175,7 @@ de:
         public_holidays: Feiertage
         time_types: Zeittypen
         users: Benutzer
+        adjustments: Anpassungen
       reports:
         my_work: Meine Arbeitszeit
         my_absence: Meine Absenzen
@@ -182,6 +195,7 @@ de:
         running_overtime: Laufende Überzeit
         target: Sollzeit
         overtime: Überzeit
+        adjustments: Anpassungen
       work:
         year:
           title: Arbeitszeit Mitarbeiter
@@ -274,6 +288,19 @@ de:
       whole_day: Ganzer Tag
     new:
       title: Feiertag hinzufügen
+  adjustments:
+    edit:
+      title: Anpassung bearbeiten
+    index:
+      title: 'Anpassungen im Jahr %{year}'
+      new_adjustment: Neue Anpassung
+      confirm_delete: Wirklich löschen?
+      unit_work_days: Arbeitstage
+      unit_hours: Stunden
+    form:
+      back: Zurück
+    new:
+      title: Anpassung hinzufügen
   time_sheets:
     top_buttons:
       add_time: Zeit hinzufügen

@@ -17,9 +17,6 @@ class PublicHolidaysController < ApplicationController
   def edit
   end
 
-  def show
-  end
-
   def create
     @public_holiday = PublicHoliday.new(params[:public_holiday])
     @public_holiday.end_date = @public_holiday.start_date

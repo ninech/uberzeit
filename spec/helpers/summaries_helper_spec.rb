@@ -1,10 +1,12 @@
 require 'spec_helper'
 
 describe SummariesHelper do
-  describe '#types_to_tooltip_table' do
-    let(:time_type_time_hash) { Hash[TEST_TIME_TYPES[:work], 4.5.hours, TEST_TIME_TYPES[:vacation], 2.work_days] }
+  describe '#time_per_time_type_to_tooltip_table' do
+    let(:time_type_time_hash) do
+      { TEST_TIME_TYPES[:work] => 4.5.hours, TEST_TIME_TYPES[:vacation] => 2.work_days }
+    end
 
-    subject { helper.types_to_tooltip_table(time_type_time_hash ) }
+    subject { helper.time_per_time_type_to_tooltip_table(time_type_time_hash ) }
 
     it { should have_selector('div', text: '2 d') }
     it { should have_selector('div', text: '04:30') }

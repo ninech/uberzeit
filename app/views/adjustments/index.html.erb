@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="small-12 columns">
+    <h1>
+      <%= t '.title', year: @year %>
+      <%= link_to icon('caret-left'), adjustments_path(year: @year - 1) %>
+      <%= link_to icon('caret-right'), adjustments_path(year: @year + 1) %>
+      <%= link_to icon('plus') + ' ' + t('.new_adjustment'), new_adjustment_path, class: 'button right' %></h3>
+    </h1>
+
+    <table class="nice small-12 edit destroy">
+      <thead>
+        <tr>
+          <th><%= Adjustment.human_attribute_name :date %></th>
+          <th><%= Adjustment.human_attribute_name :user %></th>
+          <th><%= Adjustment.human_attribute_name :time_type %></th>
+          <th><%= Adjustment.human_attribute_name :duration %></th>
+          <th><%= Adjustment.human_attribute_name :label %></th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @adjustments.each do |adjustment| %>
+          <tr>
+            <td><%= l(adjustment.date, format: :long) %></td>
+            <td><%= adjustment.user %></td>
+            <td><%= adjustment.time_type %></td>
+            <td>
+              <% if adjustment.time_type.is_absence? %>
+                <%= adjustment.duration.to_work_days %> <%= t '.unit_work_days' %>
+              <% else %>
+                <%= adjustment.duration.to_hours %> <%= t '.unit_hours' %>
+              <% end %>
+
+            </td>
+            <td><%= adjustment.label %></td>
+            <td><%= link_to icon('edit'), edit_adjustment_path(adjustment) %></td>
+            <td><%= link_to icon('trash'), adjustment, method: :delete, confirm: t('.confirm_delete') %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
