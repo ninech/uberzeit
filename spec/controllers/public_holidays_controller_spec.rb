@@ -3,11 +3,8 @@ require 'spec_helper'
 describe PublicHolidaysController do
   render_views
 
-  let(:user) { FactoryGirl.create(:user) }
   let(:public_holiday) { FactoryGirl.create(:public_holiday) }
-  let(:admin) do
-    FactoryGirl.create(:user).tap { |user| user.add_role(:admin) }
-  end
+  let(:admin) { FactoryGirl.create(:admin) }
 
   context 'for non-signed in users' do
     it 'redirects to login' do
@@ -35,7 +32,7 @@ describe PublicHolidaysController do
       end
 
       describe 'GET "index"' do
-        it 'assigns the publci holidays to to @public_holidays' do
+        it 'assigns the public holidays to to @public_holidays' do
           get :index
           assigns(:public_holidays).should_not be_nil
         end
@@ -66,9 +63,10 @@ describe PublicHolidaysController do
       describe 'PUT "update"' do
         context 'with valid attributes' do
           it 'changes public_holiday\'s attributes' do
-            put :update, id: public_holiday, public_holiday: FactoryGirl.attributes_for(:public_holiday, name: 'New Public Holiday Name')
-            public_holiday.reload
-            public_holiday.name.should eq('New Public Holiday Name')
+            expect {
+              put :update, id: public_holiday, public_holiday: FactoryGirl.attributes_for(:public_holiday, name: 'New Public Holiday Name')
+              public_holiday.reload
+            }.to change(public_holiday, :name).to('New Public Holiday Name')
           end
 
           it 'redirects to the overview' do
@@ -79,10 +77,10 @@ describe PublicHolidaysController do
 
         context 'with invalid attributes' do
           it 'does not change public_holiday\'s attributes' do
-            name_before = public_holiday.name.dup
-            put :update, id: public_holiday, public_holiday: FactoryGirl.attributes_for(:invalid_public_holiday, name: nil)
-            public_holiday.reload
-            public_holiday.name.should eq(name_before)
+            expect {
+              put :update, id: public_holiday, public_holiday: FactoryGirl.attributes_for(:invalid_public_holiday, name: nil);
+              public_holiday.reload
+            }.not_to change(public_holiday, :name)
           end
 
           it 're-renders the :edit template' do

@@ -6,6 +6,7 @@ class TimeSheet < ActiveRecord::Base
   has_many :time_entries
   has_many :absences
   has_many :timers
+  has_many :adjustments
 
   validates_presence_of :user
 
@@ -65,4 +66,5 @@ class TimeSheet < ActiveRecord::Base
     timers_in_range = timers.select { |timer| range.intersects_with_duration?(timer.range) }
     timers_in_range.inject(0) { |sum,timer| sum + timer.duration(range) }
   end
+
 end

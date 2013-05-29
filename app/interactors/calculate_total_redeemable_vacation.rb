@@ -6,7 +6,7 @@ class CalculateTotalRedeemableVacation
   end
 
   def total_redeemable_for_year(round_result_to_half_work_days = true)
-    total = employments_for_year.inject(0.0) { |sum, employment| sum + redeemable_vacation_for_employment(employment) }
+    total = total_from_employments + total_from_adjustments
 
     if round_result_to_half_work_days
       round_to_half_work_days(total)
@@ -16,6 +16,15 @@ class CalculateTotalRedeemableVacation
   end
 
   private
+
+  def total_from_employments
+    employments_for_year.inject(0.0) { |sum, employment| sum + redeemable_vacation_for_employment(employment) }
+  end
+
+  def total_from_adjustments
+    adjustments_in_year.total_duration
+  end
+
   def first_day_of_year
     @first_day_of_year ||= Date.new(@year,1,1)
   end
@@ -70,6 +79,14 @@ class CalculateTotalRedeemableVacation
 
   def half_work_day
     0.5*UberZeit::Config[:work_per_day]
+  end
+
+  def adjustments
+    Adjustment.vacation.joins(:time_sheet).where(:time_sheets => { user_id: @user })
+  end
+
+  def adjustments_in_year
+    adjustments.in(year_as_range)
   end
 end
 

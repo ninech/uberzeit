@@ -12,8 +12,8 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::UnknownController, with: :render_404
     rescue_from AbstractController::ActionNotFound, with: :render_404 # To prevent Rails 3.2.8 deprecation warnings
     rescue_from ActiveRecord::RecordNotFound, with: :render_404
-    rescue_from CanCan::AccessDenied, with: :render_403
   end
+  rescue_from CanCan::AccessDenied, with: :render_403
 
   private
 

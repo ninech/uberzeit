@@ -29,7 +29,9 @@ Uberzeit::Application.routes.draw do
     end
   end
 
-  resources :public_holidays
+  resources :public_holidays, except: [:show]
+  resources :time_types, except: [:show]
+  resources :adjustments, except: [:show]
 
   resources :users, except: [:destroy] do
 
@@ -66,8 +68,6 @@ Uberzeit::Application.routes.draw do
       end
     end
   end
-
-  resources :time_types
 
   resource :session, only: [:new, :create]
 

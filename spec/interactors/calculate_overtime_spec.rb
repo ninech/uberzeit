@@ -31,6 +31,15 @@ describe CalculateOvertime do
       work '2013-03-12 9:00:00', '2013-03-12 12:30:00'
       CalculateOvertime.new(time_sheet, date).total.should eq(-5.hours)
     end
+
+    context 'with adjustments' do
+      it 'includes adjustments in the overtime calculation' do
+        work '2013-03-12 9:00:00', '2013-03-12 18:00:00'
+        FactoryGirl.create(:adjustment, time_sheet: time_sheet, time_type: TEST_TIME_TYPES[:work], duration: -3.hours, date: date)
+
+        CalculateOvertime.new(time_sheet, date).total.should eq(-2.5.hours)
+      end
+    end
   end
 
   context 'part time employment' do

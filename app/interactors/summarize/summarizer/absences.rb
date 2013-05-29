@@ -16,14 +16,23 @@ class Summarize::Summarizer::Absences
   end
 
   def summarize
-    Hash[TimeType.absence.collect { |time_type| [time_type, sum_of_time_type(time_type)] }]
+    absences_sum = TimeType.absence.collect { |absence| [absence, sum_of_absence(absence)] }
+    Hash[absences_sum]
   end
 
-  def sum_of_time_type(time_type)
-    return 0 if @time_sheet.nil?
+  def sum_of_absence(absence)
+    chunks = @time_sheet.find_chunks(@range, absence)
+    chunks.ignore_exclusion_flag = true # include all time types, even those with the calculation exclusion flag set (e.g. compensation)
 
-    chunks = @time_sheet.find_chunks(@range, time_type)
-    chunks.ignore_exclusion_flag = true # include time types with exclusion flag in calculation (e.g. compensation)
-    chunks.total
+    total = if absence.is_vacation?
+              # vacation adjustments are added to the reedemable days
+              chunks.total
+            else
+              chunks.total + duration_of_adjustments(absence)
+            end
+  end
+
+  def duration_of_adjustments(absence)
+    @time_sheet.adjustments.where(time_type_id: absence).in(@range).total_duration
   end
 end

@@ -36,11 +36,4 @@ class Summarize::Summarizer::Vacation
     { total_redeemable: total_redeemable, redeemed: redeemed, redeemed_until: redeemed_until, remaining: remaining }
   end
 
-  def sum_of_time_type(time_type)
-    return 0 if @time_sheet.nil?
-
-    chunks = @time_sheet.find_chunks(@range, time_type)
-    chunks.ignore_exclusion_flag = true # include time types with exclusion flag in calculation (e.g. compensation)
-    chunks.total
-  end
 end

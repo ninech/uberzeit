@@ -1,5 +1,5 @@
 <%
-  edit = true if local_assigns[:edit].nil?
+  edit = can?(:manage, Absence) if local_assigns[:edit].nil?
 %>
 <div class='event'>
 <% absences.each do |absence| %>
@@ -20,7 +20,7 @@
   <% end %>
   <hr>
 <% end %>
-<% if defined?(time_sheet) %>
+<% if defined?(time_sheet) && can?(:manage, Absence) %>
   <a href='#' class='has-reveal remote-reveal' data-reveal-id='add-absence-modal' data-reveal-url='<%= new_time_sheet_absence_path(time_sheet, date: day) %>'><%= t '.add_absence' %></a>
 <% end %>
 </div>
