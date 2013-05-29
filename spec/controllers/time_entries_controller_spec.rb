@@ -22,34 +22,6 @@ describe TimeEntriesController do
       test_sign_in user
     end
 
-    # describe 'GET "new"' do
-    #   it 'assigns a single entry to time_entry' do
-    #     get :new, time_sheet_id: time_sheet.id
-    #     assigns(:time_entry).class.should be(TimeEntry)
-    #   end
-
-    #   it 'renders the :new template' do
-    #     get :new, time_sheet_id: time_sheet.id
-    #     response.should render_template :new
-    #   end
-    # end
-
-    # describe 'GET "edit"' do
-    #   before do
-    #     time_entry = FactoryGirl.create(:time_entry, time_sheet: time_sheet)
-    #   end
-
-    #   it 'assigns the to-be entry to time_entry' do
-    #     get :edit, id: time_entry, time_sheet_id: time_entry.time_sheet
-    #     assigns(:time_entry).should eq(time_entry)
-    #   end
-
-    #   it 'renders the :edit template' do
-    #     get :edit, id: time_entry, time_sheet_id: time_entry.time_sheet
-    #     assigns(:time_entry).should eq(time_entry)
-    #   end
-    # end
-
     describe 'PUT "update"' do
       before do
         time_entry = FactoryGirl.create(:time_entry, time_sheet: time_sheet)
@@ -66,14 +38,14 @@ describe TimeEntriesController do
 
         it 'redirects to the sheet overview' do
           put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: FactoryGirl.attributes_for(:time_entry)
-          response.body.should == '{}'
+          response.body.should redirect_to(time_sheet_path(time_sheet))
         end
       end
 
       context 'with invalid attributes' do
         it 're-renders the :edit template' do
-          put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: FactoryGirl.attributes_for(:invalid_time_entry)
-          response.body.should == '{"ends":["Endzeit muss nach Startzeit sein"]}'
+          put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: FactoryGirl.attributes_for(:time_entry, start_time: '')
+          response.body.should =~ /muss ausgefüllt werden/
         end
       end
     end
@@ -90,7 +62,7 @@ describe TimeEntriesController do
         it 'returns empty json (no errors)' do
           time_type = FactoryGirl.create(:time_type_work)
           post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:time_entry, time_type_id: time_type.id)
-          response.body.should == '{}'
+          response.body.should redirect_to(time_sheet_path(time_sheet))
         end
       end
 
@@ -100,8 +72,8 @@ describe TimeEntriesController do
         end
 
         it 'returns json errors' do
-          post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:invalid_time_entry)
-          response.body.should == '{"time_type":["muss ausgefüllt werden"],"ends":["Endzeit muss nach Startzeit sein"]}'
+          post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:time_entry, start_time: '')
+          response.body.should =~ /muss ausgefüllt werden/
         end
       end
     end

@@ -16,22 +16,26 @@ class TimeEntriesController < ApplicationController
   def create
     @time_entry.save
 
-    respond_with(@time_entry)
+    respond_with @time_entry, location: default_return_location
   end
 
   def update
     @time_entry.update_attributes(params[:time_entry])
-    respond_with @time_entry
+    respond_with @time_entry, location: default_return_location
   end
 
   def destroy
     @time_entry.destroy
-    respond_with(@time_entry) do |format|
+    respond_with(@time_entry, location: default_return_location) do |format|
       format.js { render nothing: true }
     end
   end
 
   private
+  def default_return_location
+    time_sheet_path(@time_sheet)
+  end
+
   def load_time_types
     @time_types = TimeType.work
   end
