@@ -31,7 +31,7 @@ class CalculateOvertime
   end
 
   def total_adjustments
-    @total_adjustments ||= @time_sheet.adjustments.exclude_vacation.in(@date_or_range).sum(&:duration)
+    @total_adjustments ||= @time_sheet.adjustments.exclude_vacation.in(@date_or_range).total_duration
   end
 end
 

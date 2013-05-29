@@ -22,7 +22,7 @@ class CalculateTotalRedeemableVacation
   end
 
   def total_from_adjustments
-    adjustments_in_year.sum(&:duration)
+    adjustments_in_year.total_duration
   end
 
   def first_day_of_year

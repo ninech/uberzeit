@@ -17,6 +17,10 @@ class Adjustment < ActiveRecord::Base
   validates_numericality_of   :duration
   validates_date              :date
 
+  def self.total_duration
+    sum(:duration)
+  end
+
   def user_id=(user_id)
     self.time_sheet = User.find(user_id).current_time_sheet
   end

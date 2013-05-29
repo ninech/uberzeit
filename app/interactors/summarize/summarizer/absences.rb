@@ -34,6 +34,6 @@ class Summarize::Summarizer::Absences
   end
 
   def duration_of_adjustments(absence)
-    @time_sheet.adjustments.where(time_type_id: absence).in(@range).sum(&:duration)
+    @time_sheet.adjustments.where(time_type_id: absence).in(@range).total_duration
   end
 end

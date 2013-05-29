@@ -50,7 +50,7 @@ class Summarize::Summarizer::Work
   end
 
   def adjustments
-    @time_sheet.adjustments.exclude_vacation.in(@range).sum(&:duration)
+    @time_sheet.adjustments.exclude_vacation.in(@range).total_duration
   end
 
   def adjustments_by_type
