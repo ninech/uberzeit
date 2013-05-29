@@ -17,11 +17,7 @@ class AdjustmentsController < ApplicationController
   def edit
   end
 
-  def show
-  end
-
   def create
-    @adjustment = Adjustment.new(params[:adjustment])
     if @adjustment.save
       redirect_to adjustments_path, flash: {success: t('model_successfully_created', model: Adjustment.model_name.human)}
     else
