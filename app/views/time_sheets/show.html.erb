@@ -144,7 +144,7 @@
             <p>
               <%= t '.no_entries_yet_message' %>
               <br>
-              <a href="#" data-reveal-id="add-time-modal"><%= t '.add_time_now' %></a>
+              <a href="#" class="remote-reveal" data-reveal-id="add-time-modal" data-reveal-url="<%= new_time_sheet_time_entry_path(@time_sheet) %>"><%= t '.add_time_now' %></a>
             </p>
           </div>
         <% end %>
