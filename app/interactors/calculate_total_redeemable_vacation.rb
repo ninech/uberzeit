@@ -6,9 +6,7 @@ class CalculateTotalRedeemableVacation
   end
 
   def total_redeemable_for_year(round_result_to_half_work_days = true)
-    total_from_employments = employments_for_year.inject(0.0) { |sum, employment| sum + redeemable_vacation_for_employment(employment) }
-
-    total = total_from_employments + total_adjustments_for_year
+    total = total_from_employments + total_from_adjustments
 
     if round_result_to_half_work_days
       round_to_half_work_days(total)
@@ -19,7 +17,11 @@ class CalculateTotalRedeemableVacation
 
   private
 
-  def total_adjustments_for_year
+  def total_from_employments
+    employments_for_year.inject(0.0) { |sum, employment| sum + redeemable_vacation_for_employment(employment) }
+  end
+
+  def total_from_adjustments
     adjustments_in_year.sum(&:duration)
   end
 
