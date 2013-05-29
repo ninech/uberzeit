@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe SummariesHelper do
   describe '#time_per_time_type_to_tooltip_table' do
-    let(:time_type_time_hash) { Hash[TEST_TIME_TYPES[:work], 4.5.hours, TEST_TIME_TYPES[:vacation], 2.work_days] }
+    let(:time_type_time_hash) do
+      { TEST_TIME_TYPES[:work] => 4.5.hours, TEST_TIME_TYPES[:vacation] => 2.work_days }
+    end
 
     subject { helper.time_per_time_type_to_tooltip_table(time_type_time_hash ) }
 

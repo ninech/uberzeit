@@ -16,7 +16,8 @@ class Summarize::Summarizer::Absences
   end
 
   def summarize
-    Hash[TimeType.absence.collect { |absence| [absence, sum_of_absence(absence)] }]
+    absences_sum = TimeType.absence.collect { |absence| [absence, sum_of_absence(absence)] }
+    Hash[absences_sum]
   end
 
   def sum_of_absence(absence)

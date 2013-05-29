@@ -5,7 +5,7 @@ describe Summarize::Summarizer::Absences do
   let(:user) { FactoryGirl.create(:user, with_sheet: true) }
   let(:time_sheet) { user.current_time_sheet }
   let(:range) { '2013-01-01'.to_date..'2013-12-31'.to_date }
-  let(:summarizer) { summarizer = Summarize::Summarizer::Absences.new(user, range) }
+  let(:summarizer) { Summarize::Summarizer::Absences.new(user, range) }
 
   it 'sums up each absence time type' do
     FactoryGirl.create(:absence, start_date: '2013-04-24', end_date: '2013-04-25', time_type: :vacation, time_sheet: user.current_time_sheet)
