@@ -2,7 +2,7 @@ class AbsencesController < ApplicationController
   load_and_authorize_resource :time_sheet
   load_and_authorize_resource :absence, through: :time_sheet
 
-  respond_to :html, :json
+  respond_to :html, :json, :js
 
   before_filter :load_time_types
 
@@ -37,11 +37,8 @@ class AbsencesController < ApplicationController
   end
 
   def create
-    if @absence.save
-      respond_with(@absence, location: default_return_location)
-    else
-      respond_with(@absence, status: 400)
-    end
+    @absence.save
+    respond_with @absence, location: default_return_location
   end
 
   def edit
@@ -50,11 +47,8 @@ class AbsencesController < ApplicationController
   end
 
   def update
-    if @absence.update_attributes(params[:absence])
-      respond_with(@absence, location: default_return_location)
-    else
-      respond_with(@absence, status: 400)
-    end
+    @absence.update_attributes(params[:absence])
+    respond_with @absence, location: default_return_location
   end
 
   def destroy
@@ -64,7 +58,7 @@ class AbsencesController < ApplicationController
 
   private
   def default_return_location
-    year_time_sheet_absences_path(@time_sheet, @absence.start_date.year)
+    year_time_sheet_absences_path(@time_sheet, @absence.start_date.year) if @absence.start_date
   end
 
   def load_time_types

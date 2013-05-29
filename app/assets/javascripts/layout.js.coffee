@@ -13,9 +13,9 @@ $(document).on 'click', '.toggle', (element) ->
 
 $(document).on 'click', '.remote-reveal', (event) ->
   element = $('#' + $(this).data('reveal-id'))
-  element.find('span.ajax-content').remove()
-  content_element = element.append('<span class="ajax-content"></span>')
-  content_element.find('span.ajax-content').load $(this).data('reveal-url')
+  element.find('div.ajax-content').remove()
+  content_element = element.append('<div class="ajax-content"></div>')
+  content_element.find('div.ajax-content').load $(this).data('reveal-url')
 
 $(document).ajaxComplete () ->
   initControls()
@@ -28,14 +28,6 @@ $(document).on 'mouseover', '.has-tip', ->
       trigger: 'hover'
       content: $(this).data('tooltip')
       fadeSpeed: 0
-
-$(document).on 'ajax:error', 'form', (xhr, status) ->
-  statusCode = status.status
-  if statusCode >= 400 and statusCode < 500
-    newForm = $(status.responseText).filter('form')
-    $(this).replaceWith(newForm)
-  if statusCode >= 500 && statusCode < 600
-    alert "Error occured during request: #{status.statusText}"
 
 # ===> Document Ready
 $ ->
