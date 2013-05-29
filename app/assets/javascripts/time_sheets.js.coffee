@@ -94,6 +94,7 @@ $ ->
 
         $('.time.total').text data.total
         $('.time.bonus').text data.bonus
+        $('.time.week-total').text data.week_total
 
         $('.timer-current').text data.timer
         # disable stop timer link if there is no timer duration (e.g. timer in future)

@@ -62,11 +62,10 @@ class TimeSheetsController < ApplicationController
     @bonus = @time_sheet.bonus(@day)
 
     active_timer = @time_sheet.timers.on(@day).first
-    @timer =  if active_timer.nil?
-                0
-              else
-                active_timer.duration(@day)
-              end
+    @timer =  active_timer ? active_timer.duration(@day) : 0
+
+    week = @day.at_beginning_of_week..@day.at_end_of_week
+    @week_total = @time_sheet.total(week) + @time_sheet.duration_of_timers(week)
   end
 
   private
