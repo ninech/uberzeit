@@ -18,6 +18,9 @@ class TimeEntry < ActiveRecord::Base
   scope :on, lambda { |date| range = date.to_range.to_time_range; { conditions: ['(starts >= ? AND starts <= ?)', range.min, range.max] } }
   scope :others, lambda { |date| range = date.to_range.to_time_range; { conditions: ['(starts < ? OR starts > ?)', range.min, range.max] } }
 
+  scope :timers_only, where(ends: nil)
+  scope :except_timers, where('time_entries.ends IS NOT NULL')
+
 
   before_validation :round_times
   before_validation :ensure_ends_is_after_start
@@ -98,7 +101,7 @@ class TimeEntry < ActiveRecord::Base
 
   private
   def check_active_timers_on_same_date
-    timers = self.time_sheet.timers.on(self.start_date.to_date)
+    timers = time_sheet.time_entries.timers_only.on(self.start_date.to_date)
     unless timers.empty?
       timers.first.stop
     end

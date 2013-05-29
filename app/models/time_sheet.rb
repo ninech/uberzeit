@@ -3,9 +3,8 @@ class TimeSheet < ActiveRecord::Base
 
   belongs_to :user
 
-  has_many :time_entries, conditions: ['ends IS NOT NULL']
+  has_many :time_entries
   has_many :absences
-  has_many :timers, class_name: 'TimeEntry', conditions: {ends: nil}
 
   validates_presence_of :user
 
@@ -62,7 +61,7 @@ class TimeSheet < ActiveRecord::Base
 
   def duration_of_timers(date_or_range)
     range = date_or_range.to_range.to_date_range
-    timers_in_range = timers.select { |timer| range.intersects_with_duration?(timer.range) }
+    timers_in_range = time_entries.timers_only.select { |timer| range.intersects_with_duration?(timer.range) }
     timers_in_range.inject(0) { |sum,timer| sum + timer.duration(range) }
   end
 end
