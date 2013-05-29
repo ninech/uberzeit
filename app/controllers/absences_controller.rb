@@ -53,7 +53,9 @@ class AbsencesController < ApplicationController
 
   def destroy
     @absence.destroy
-    respond_with(@absence, location: default_return_location)
+    respond_with(@absence, location: default_return_location) do |format|
+      format.js { render nothing: true }
+    end
   end
 
   private
