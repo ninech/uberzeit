@@ -1,16 +1,16 @@
 module TimeSheetsHelper
-  def worktime_for_day(day)
-    worktime = work_for_range(day)
+  def formatted_worktime_for_day(day)
+    worktime = worktime_for_range(day)
     format_duration(worktime)
   end
 
-  def worktime_for_week(week)
-    worktime = work_for_range(week)
+  def formatted_worktime_for_range(range)
+    worktime = worktime_for_range(range)
     format_duration(worktime)
   end
 
-  def overtime_for_week(week)
-    overtime = overtime_for_range(week)
+  def formatted_overtime_for_range(range)
+    overtime = overtime_for_range(range)
     format_duration(overtime)
   end
 
@@ -41,9 +41,7 @@ module TimeSheetsHelper
     "%s%%" % number_with_precision(bonus_percent, precision: 2, strip_insignificant_zeros: true)
   end
 
-  private
-
-  def work_for_range(date_or_range)
+  def worktime_for_range(date_or_range)
     @time_sheet.work(date_or_range) + @time_sheet.duration_of_timers(date_or_range)
   end
 

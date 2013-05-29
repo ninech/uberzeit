@@ -46,7 +46,7 @@
                   <% if @public_holidays[weekday] && @public_holidays[weekday].whole_day? %>
                     <span class="public-holiday"><%= @public_holidays[weekday].name %></span>
                   <% else %>
-                    <span class="time <%= 'active' if weekday == @day %>"><%= worktime_for_day(weekday) %></span>
+                    <span class="time <%= 'active' if weekday == @day %>"><%= formatted_worktime_for_day(weekday) %></span>
                   <% end %>
                 </span>
               </a>
@@ -57,7 +57,7 @@
               <span class="total"><%= t '.total' %></span>
               <br>
               <span class="time">
-                <%= worktime_for_week(@week) %>
+                <%= formatted_worktime_for_range(@week) %>
               </span>
             </div>
           </li>
