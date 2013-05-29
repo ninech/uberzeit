@@ -13,10 +13,10 @@ module SummariesHelper
     tooltip = ""
 
     hash.each_pair do |key, value|
-      label, value = yield(key, value) if block_given?
-      next if key.nil?
+      key, value = yield(key, value) if block_given?
+      next if key.nil? or value.nil?
 
-      tooltip += ("<div class='tr'><div class='td'>#{label}</div><div class='td'>#{value}</div></div>").html_safe
+      tooltip += ("<div class='tr'><div class='td'>#{key}</div><div class='td'>#{value}</div></div>").html_safe
     end
 
     tooltip = "<div class='tbl-tooltip'>#{tooltip}</div>" unless tooltip.blank?
@@ -25,17 +25,19 @@ module SummariesHelper
   def time_per_time_type_to_tooltip_table(time_per_time_type)
     hash_to_tooltip_table(time_per_time_type) do |time_type, duration|
       return nil if duration == 0
-      formatted_duration = time_type.is_absence? ? "#{format_work_days(duration)} d" : format_hours(duration)
-      [time_type, formatted_duration]
+      [time_type, format_duration_by_time_type(duration, time_type)]
     end
   end
 
   def time_per_adjustment_to_tooltip_table(time_per_adjustment_hash)
     hash_to_tooltip_table(time_per_adjustment_hash) do |adjustment, duration|
       return nil if duration == 0
-      formatted_duration = adjustment.time_type.is_absence? ? "#{format_work_days(duration)} d" : format_hours(duration)
-      [adjustment, formatted_duration]
+      [adjustment, format_duration_by_time_type(duration, adjustment.time_type)]
     end
+  end
+
+  def format_duration_by_time_type(duration, time_type)
+    time_type.is_absence? ? "#{format_work_days(duration)} d" : "#{format_hours(duration)}"
   end
 
   def label_for_month(date)
