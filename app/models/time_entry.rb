@@ -51,7 +51,7 @@ class TimeEntry < ActiveRecord::Base
 
 
   def start_date
-    return @start_date if @start_date
+    return @start_date.to_date if @start_date
     (starts || Time.current).to_date
   end
 
