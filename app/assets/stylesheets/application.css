@@ -10,6 +10,6 @@
  *
  *= require_self
  *= require foundation_and_overrides
- *= require _font-awesome
+ *= require font-awesome
  *= require_tree .
  */

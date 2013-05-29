@@ -139,6 +139,60 @@
       }
     }
   }
+  .panel.sensational {
+    text-align: center;
+
+    p {
+      font-size: 1.2em;
+      margin: 0;
+      padding: 0;
+      color: #666;
+
+      &.crazy {
+        font-size: 1.5em;
+        color: #333;
+      }
+    }
+
+    span {
+      &.awesome {
+        font-size: 1.8em;
+        font-weight: bold;
+      }
+    }
+
+    .yo {
+      transform: rotate(3deg);
+      -ms-transform: rotate(3deg);
+      -webkit-transform: rotate(3deg);
+    }
+
+    .lo {
+      transform: rotate(-3deg);
+      -ms-transform: rotate(-3deg);
+      -webkit-transform: rotate(-3deg);
+    }
+
+    .icon-background {
+      width: 100% !important;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0.1;
+      font-size: 200px;
+    }
+  }
+  .panel.sensational.callout {
+    p {
+      color: #DEDEDE;
+
+      &.crazy {
+        color: #FFFFFF;
+      }
+    }
+  }
+
 }
 
 // Table emulation for summary tooltips
