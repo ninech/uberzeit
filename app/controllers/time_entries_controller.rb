@@ -16,8 +16,6 @@ class TimeEntriesController < ApplicationController
   def create
     @time_entry.save
 
-    Rails.logger.info @time_entry.errors.inspect
-
     respond_with(@time_entry)
   end
 
