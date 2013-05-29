@@ -21,10 +21,8 @@ class Summarize::Summarizer::Absences
   end
 
   def sum_of_absence(absence)
-    return 0 if @time_sheet.nil?
-
     chunks = @time_sheet.find_chunks(@range, absence)
-    chunks.ignore_exclusion_flag = true # include time types with exclusion flag in calculation (e.g. compensation)
+    chunks.ignore_exclusion_flag = true # include all time types, even those with the calculation exclusion flag set (e.g. compensation)
 
     total = if absence.is_vacation?
               # vacation adjustments are added to the reedemable days
