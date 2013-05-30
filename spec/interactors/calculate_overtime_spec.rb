@@ -12,7 +12,7 @@ describe CalculateOvertime do
   end
 
   def vacation(start_time, end_time)
-    FactoryGirl.create(:time_entry, stars: start_time.to_time, ends: end_time.to_time, time_type: :vacation, time_sheet: time_sheet)
+    FactoryGirl.create(:time_entry, starts: start_time.to_time, ends: end_time.to_time, time_type: :vacation, time_sheet: time_sheet)
   end
 
   context 'full time employment' do
