@@ -65,7 +65,7 @@ class TimeSheetsController < ApplicationController
     @timer =  if active_timer.nil?
                 0
               else
-                active_timer.duration
+                active_timer.duration(@day)
               end
   end
 
