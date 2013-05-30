@@ -10,7 +10,6 @@ class TimeEntriesController < ApplicationController
   end
 
   def edit
-    @time_entry = TimeEntry.find(params[:id])
   end
 
   def create
