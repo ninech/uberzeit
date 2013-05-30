@@ -89,10 +89,15 @@
     <div class="row">
       <div class="large-6 columns">
         <div class="panel sensational callout">
-          <p><%= t('.panels.uberstunden.info1_html') %></p>
-          <p class="crazy lo"><%= awesome_hours_and_minutes(@uberstunden) %></p>
-          <p><%= t('.panels.uberstunden.info2_html') %></p>
-          <p class="crazy yo"><%= awesome_work_days(@uberstunden) %>!</p>
+          <% if @uberstunden < 0 %>
+            <p><%= t('.panels.uberstunden.info1_html') %></p>
+            <p class="crazy lo"><%= awesome_hours_and_minutes(@uberstunden) %></p>
+            <p><%= t('.panels.uberstunden.info2_html') %></p>
+            <p class="crazy yo"><%= awesome_work_days(@uberstunden) %>!</p>
+          <% else %>
+            <p class="lo"><%= t '.panels.uberstunden.info1_alt_html' %></p>
+            <p class="crazy lo"><%= t '.panels.uberstunden.emphasis1_alt_html' %>.</p>
+          <% end %>
         </div>
       </div>
       <div class="large-6 columns">
@@ -102,24 +107,6 @@
           <p><%= t('.panels.month.info2_html') %></p>
           <p class="crazy lo"><%= awesome_hours_and_minutes(@month_total_work) %>!</p>
           <i class="icon-wrench icon-background swingitbaby"></i>
-        </div>
-      </div>
-      <div class="large-6 columns">
-        <div class="panel sensational">
-          <h1 class="lo">Deine Absenzen <small>der nächsten 7 Tage</small></h1>
-          <div class="absence-list">
-          <% @personal_absences.each_pair do |date, absences| %>
-            <% absences.each do |absence| %>
-              <div class="row entry">
-                <div class="date"><%= l date, format: :medium %> <%=raw "<small>#{absence_period(absence)}</small>" %></div>
-                <div class="absence label event-bg<%= color_index_of_element(absence) %>">
-                  <%= icon_for_time_type(absence.time_type) %>
-                  <small><%= absence.time_type %></small>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
-          </div>
         </div>
       </div>
       <div class="large-6 columns">
@@ -146,6 +133,24 @@
             <% end %>
           <% end %>
          </div>
+        </div>
+      </div>
+      <div class="large-6 columns">
+        <div class="panel sensational">
+          <h1 class="lo">Deine Absenzen <small>der nächsten 7 Tage</small></h1>
+          <div class="absence-list">
+          <% @personal_absences.each_pair do |date, absences| %>
+            <% absences.each do |absence| %>
+              <div class="row entry">
+                <div class="date"><%= l date, format: :medium %> <%=raw "<small>#{absence_period(absence)}</small>" %></div>
+                <div class="absence label event-bg<%= color_index_of_element(absence) %>">
+                  <%= icon_for_time_type(absence.time_type) %>
+                  <small><%= absence.time_type %></small>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+          </div>
         </div>
       </div>
       <div class="large-6 columns">

@@ -198,6 +198,8 @@ de:
           uberstunden:
             info1_html: 'Dein aktuelles Überstunden-Saldo beträgt'
             info2_html: 'Das sind'
+            info1_alt_html: 'Du hast im Moment'
+            emphasis1_alt_html: 'keine Überstunden'
           month:
             info1_html: 'Du hast im %{month} bereits'
             emphasis1_html: '%{percent} der Sollzeit'
