@@ -209,6 +209,12 @@ de:
             emphasis1_html: '%{redeemed} Ferientage eingetragen'
             info2_html: 'und noch'
             emphasis2_html: '%{remaining} Ferientage zu Gute!'
+          team:
+            title: 'Team Absenzen'
+            time_frame: 'der nächsten 7 Tage'
+          personal:
+            title: 'Deine Absenzen'
+            time_frame: 'der nächsten 7 Tage'
     work:
       effective_worked: BLUB
       columns:

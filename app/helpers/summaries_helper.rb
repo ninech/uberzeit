@@ -95,10 +95,6 @@ module SummariesHelper
     end
   end
 
-  def awesome_percent(percent)
-    awesome_tag("%i%%" % percent)
-  end
-
   def awesome_hours_and_minutes(duration)
     hours = awesome_tag("%i" % duration.to_hours)
     minutes = awesome_tag("%i" % (duration % 1.hour).to_minutes)

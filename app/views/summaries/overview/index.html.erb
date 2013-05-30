@@ -9,6 +9,17 @@
     -webkit-animation:swingitbaby 0.45s 2;
   }
 
+  @-webkit-keyframes planecrash
+  {
+    25%      {left: -100px;}
+    50%     {left: -100px; -webkit-transform: rotate(40deg);}
+    75%    {left: 100px; -webkit-transform: rotate(40deg);}
+  }
+
+  .planecrash:hover {
+    position: relative;
+    -webkit-animation:planecrash 2s 1;
+  }
 </style>
 
 <script>
@@ -103,7 +114,7 @@
       <div class="large-6 columns">
         <div class="panel sensational">
           <p><%= t('.panels.month.info1_html', month: awesome_tag(l(Date.today, format: '%B'))) %><p>
-          <p class="crazy yo"><%= t('.panels.month.emphasis1_html', percent: awesome_percent(@month_percent_done)) %></p>
+          <p class="crazy yo"><%= t('.panels.month.emphasis1_html', percent: awesome_tag("%g%%" % @month_percent_done)) %></p>
           <p><%= t('.panels.month.info2_html') %></p>
           <p class="crazy lo"><%= awesome_hours_and_minutes(@month_total_work) %>!</p>
           <i class="icon-wrench icon-background swingitbaby"></i>
@@ -111,7 +122,7 @@
       </div>
       <div class="large-6 columns">
         <div class="panel sensational">
-          <h1 class="yo">Team Absenzen <small>der nächsten 7 Tage</small></h1>
+          <h1 class="yo"><%= t('.panels.team.title') %> <small><%= t('.panels.team.time_frame') %></small></h1>
 
           <div class="absence-list">
           <% @team_absences.each_pair do |date, team_absences| %>
@@ -132,12 +143,13 @@
               </div>
             <% end %>
           <% end %>
-         </div>
+          </div>
+          <i class="icon-user icon-background"></i>
         </div>
       </div>
       <div class="large-6 columns">
         <div class="panel sensational">
-          <h1 class="lo">Deine Absenzen <small>der nächsten 7 Tage</small></h1>
+          <h1 class="lo"><%= t('.panels.personal.title') %> <small><%= t('.panels.personal.time_frame') %></small></h1>
           <div class="absence-list">
           <% @personal_absences.each_pair do |date, absences| %>
             <% absences.each do |absence| %>
@@ -151,6 +163,7 @@
             <% end %>
           <% end %>
           </div>
+          <i class="icon-group icon-background"></i>
         </div>
       </div>
       <div class="large-6 columns">
@@ -159,7 +172,7 @@
           <p class="crazy yo"><%= t('.panels.vacation.emphasis1_html', redeemed: awesome_tag("%g" % @vacation_redeemed.to_work_days)) %></p>
           <p><%= t('.panels.vacation.info2_html') %></p>
           <p class="crazy lo"><%= t('.panels.vacation.emphasis2_html', remaining: awesome_tag("%g" % @vacation_remaining.to_work_days)) %></p>
-          <i class="icon-plane icon-background"></i>
+          <i class="icon-plane icon-background planecrash"></i>
         </div>
       </div>
   </div>
