@@ -185,8 +185,26 @@ de:
         vacation: Ferien Mitarbeiter
   summaries:
     formats:
-        date: '%e. %a.'
-        month: '%B'
+      date: '%e. %a.'
+      month: '%B'
+    overview:
+      index:
+        formats:
+          hours_and_minutes_html: '%{hours} Stunden und %{minutes} Minuten'
+          work_days_html: '%{work_days} Arbeitstage'
+        panels:
+          uberstunden:
+            info1_html: 'Dein aktuelles Überstunden-Saldo beträgt'
+            info2_html: 'Das sind'
+          month:
+            info1_html: 'Du hast im %{month} bereits'
+            emphasis1_html: '%{percent} der Sollzeit'
+            info2_html: 'erreicht. Das entspricht einer Arbeitszeit von'
+          vacation:
+            info1_html: 'Du hast bisher'
+            emphasis1_html: '%{redeemed} Ferientage eingetragen'
+            info2_html: 'und noch'
+            emphasis2_html: '%{remaining} Ferientage zu Gute!'
     work:
       effective_worked: BLUB
       columns:

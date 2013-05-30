@@ -95,4 +95,28 @@ module SummariesHelper
     end
   end
 
+  def awesome_percent(percent)
+    awesome_tag("%i%%" % percent)
+  end
+
+  def awesome_hours_and_minutes(duration)
+    hours = awesome_tag("%i" % duration.to_hours)
+    minutes = awesome_tag("%i" % (duration % 1.hour).to_minutes)
+
+    t('.formats.hours_and_minutes_html' , hours: hours, minutes: minutes)
+  end
+
+  def awesome_work_days(duration)
+    work_days = awesome_tag("%g" % duration.to_work_days)
+    t('.formats.work_days_html', work_days: work_days)
+  end
+
+  def awesome_tag(text)
+    data = {}
+    if text =~ /^[-+]?[0-9]*\.?[0-9]+%?$/
+      data[:'count-from'] = 0
+      data[:'count-to'] = text
+    end
+    content_tag(:span, text, class: 'awesome', data: data)
+  end
 end

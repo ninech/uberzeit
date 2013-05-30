@@ -1,21 +1,73 @@
+<style type="text/css">
+  @-webkit-keyframes swingitbaby
+  {
+    50%     {-webkit-transform: rotate(20deg);}
+    100%     {-webkit-transform: rotate(0deg);}
+  }
+
+  .swingitbaby:hover{
+    -webkit-animation:swingitbaby 0.45s 2;
+  }
+</style>
+
+<script>
+  $(document).ready(function() {
+    function timedCount(element, counter, interval, end, timeout) {
+        if(counter <= parseFloat(end)) {
+            counter = counter + interval;
+            setTimeout(timedCount, timeout, element, counter, interval, end, timeout);
+        } else {
+            counter = parseFloat(end);
+        }
+        decimal_places = 1;
+        if(parseFloat(end) % 1 === 0) {
+          decimal_places = 0;
+        }
+        suffix = '';
+        if(end.toString().indexOf('%') >= 0) {
+          suffix = '%';
+        }
+        element.html(counter.toFixed(decimal_places) + suffix);
+    }
+
+    $('[data-count-from][data-count-to]').each(function(index, element) {
+        var start, end, interval, counter, timeout;
+
+        element = $(element);
+        start = element.data('count-from');
+        end = element.data('count-to');
+        timeout = element.data('count-timeout');
+        if(timeout == undefined) {
+             timeout = 20;
+        }
+
+        interval = parseFloat(end) / 90;
+        counter = parseFloat(start);
+
+        element.html(start);
+        timedCount(element, counter, interval, end, timeout);
+    });
+  });
+</script>
+
 <div class="content-summary row">
   <div class="large-12 columns">
     <div class="row">
       <div class="large-6 columns">
         <div class="panel sensational callout">
-          <p>Dein aktuelles Überstunden-Saldo beträgt</p>
-          <p class="crazy lo"><span class="awesome">24</span> Stunden und <span class="awesome">24</span> Minuten</p>
-          <p>Das sind</p>
-          <p class="crazy yo"><span class="awesome">4.1</span> Arbeitstage!</p>
+          <p><%= t('.panels.uberstunden.info1_html') %></p>
+          <p class="crazy lo"><%= awesome_hours_and_minutes(@uberstunden) %></p>
+          <p><%= t('.panels.uberstunden.info2_html') %></p>
+          <p class="crazy yo"><%= awesome_work_days(@uberstunden) %>!</p>
         </div>
       </div>
       <div class="large-6 columns">
         <div class="panel sensational">
-          <p>Du hast im März bereits<p>
-          <p class="crazy yo"><span class="awesome">60%</span> der Sollzeit</p>
-          <p>Das entspricht einer Arbeitszeit von</p>
-          <p class="crazy lo"><span class="awesome">164</span> Stunden und <span class="awesome">24</span> Minuten</p>
-          <i class="icon-wrench icon-background"></i>
+          <p><%= t('.panels.month.info1_html', month: awesome_tag(l(Date.today, format: '%B'))) %><p>
+          <p class="crazy yo"><%= t('.panels.month.emphasis1_html', percent: awesome_percent(@month_percent_done)) %></p>
+          <p><%= t('.panels.month.info2_html') %></p>
+          <p class="crazy lo"><%= awesome_hours_and_minutes(@month_total_work) %>!</p>
+          <i class="icon-wrench icon-background swingitbaby"></i>
         </div>
       </div>
       <div class="large-6 columns">
@@ -37,10 +89,10 @@
       </div>
       <div class="large-6 columns">
         <div class="panel sensational">
-          <p>Du hast bisher</p>
-          <p class="crazy yo"><span class="awesome">3</span> Ferientage eingetragen</p>
-          <p>und noch</p>
-          <p class="crazy lo"><span class="awesome">22</span> Ferientage zu Gute!</p>
+          <p><%= t('.panels.vacation.info1_html') %><p>
+          <p class="crazy yo"><%= t('.panels.vacation.emphasis1_html', redeemed: awesome_tag("%g" % @vacation_redeemed.to_work_days)) %></p>
+          <p><%= t('.panels.vacation.info2_html') %></p>
+          <p class="crazy lo"><%= t('.panels.vacation.emphasis2_html', remaining: awesome_tag("%g" % @vacation_remaining.to_work_days)) %></p>
           <i class="icon-plane icon-background"></i>
         </div>
       </div>

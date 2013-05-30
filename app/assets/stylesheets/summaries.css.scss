@@ -139,6 +139,7 @@
       }
     }
   }
+
   .panel.sensational {
     text-align: center;
 
@@ -148,18 +149,22 @@
       padding: 0;
       color: #666;
 
+      .awesome {
+        font-size: 1.4em;
+        font-weight: bold;
+      }
+
       &.crazy {
         font-size: 1.5em;
         color: #333;
+
+        .awesome {
+          font-size: 1.8em;
+          font-weight: bold;
+        }
       }
     }
 
-    span {
-      &.awesome {
-        font-size: 1.8em;
-        font-weight: bold;
-      }
-    }
 
     .yo {
       transform: rotate(3deg);
