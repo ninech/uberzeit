@@ -94,6 +94,7 @@ de:
       default: '%d.%m.%Y'
       long: '%A, %d. %B %Y'
       weekday: '%a, %d. %b'
+      medium: '%a, %d. %B %Y'
   js:
     pickadate:
       firstDay: 1
@@ -102,6 +103,10 @@ de:
   number:
     format:
       separator: ! '.'
+
+  whole_day: Ganzer Tag
+  first_half_day: Vormittags
+  second_half_day: Nachmittags
 
   shared:
     event_legend:
@@ -150,9 +155,6 @@ de:
       start_date: Start
       end_date: Ende
       daypart: Dauer
-      second_half_day: Nachmittags
-      first_half_day: Vormittags
-      whole_day: Ganzer Tag
       delete: Löschen
     edit:
       edit_absence: Absenz bearbeiten
@@ -301,10 +303,7 @@ de:
       new_public_holiday: Neuer Feiertag
       confirm_delete: Wirklich löschen?
     form:
-      second_half_day: Nachmittags
-      first_half_day: Vormittags
       back: Zurück
-      whole_day: Ganzer Tag
     new:
       title: Feiertag hinzufügen
   adjustments:
@@ -331,9 +330,6 @@ de:
       total: Total
       add_time_now: Zeit jetzt eintragen
       no_entries_yet_message: Noch keine Einträge vorhanden
-      whole_day: Ganzer Tag
-      first_half_day: Vormittags
-      second_half_day: Nachmittags
       timer_running_warning:
         one: 'An dem folgenden Tag ist noch ein Timer aktiv:'
         other: "An den folgenden Tagen sind noch Timer aktiv:"

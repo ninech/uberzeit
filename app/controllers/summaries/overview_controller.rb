@@ -13,10 +13,33 @@ class Summaries::OverviewController < ApplicationController
     @month_percent_done = 100 * (planned_work - remaining_work) / planned_work
     @month_total_work = planned_work - remaining_work
 
-    @personal_absences = []
-    @team_absences = []
+    absence_range = Date.today..Date.today+7.days
 
-    @vacation_redeemed = 5.work_days
-    @vacation_remaining = 20.work_days
+    @personal_absences = {}
+    time_chunks_finder = FindTimeChunks.new(time_sheet.absences)
+    time_chunks_finder.in_range(absence_range).each do |chunk|
+      chunk.range.to_date_range.each do |date|
+        @personal_absences[date] ||= []
+        @personal_absences[date] << chunk
+      end
+    end
+
+    time_sheets_from_team = TimeSheet.joins(:user => :teams).where(memberships: {team_id: @user.teams}).where('users.id != ?', @user)
+    @team_absences = {}
+
+    time_sheets_from_team.each do |ts|
+      time_chunks_finder = FindTimeChunks.new(ts.absences)
+      time_chunks_finder.in_range(absence_range).each do |chunk|
+        chunk.range.to_date_range.each do |date|
+          @team_absences[date] ||= []
+          @team_absences[date] << {user: ts.user, chunk: chunk}
+        end
+      end
+    end
+
+    @team_absences = Hash[@team_absences.sort_by { |date, _| date }]
+
+    @vacation_redeemed = time_sheet.vacation(Date.today.year)
+    @vacation_remaining = time_sheet.remaining_vacation(Date.today.year)
   end
 end
