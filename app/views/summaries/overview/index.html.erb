@@ -89,7 +89,7 @@
     <div class="row">
       <div class="large-6 columns">
         <div class="panel sensational callout">
-          <% if @uberstunden < 0 %>
+          <% if @uberstunden > 0 %>
             <p><%= t('.panels.uberstunden.info1_html') %></p>
             <p class="crazy lo"><%= awesome_hours_and_minutes(@uberstunden) %></p>
             <p><%= t('.panels.uberstunden.info2_html') %></p>
