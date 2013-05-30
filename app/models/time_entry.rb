@@ -57,7 +57,7 @@ class TimeEntry < ActiveRecord::Base
 
   def start_date
     return @start_date.to_date if @start_date
-    (starts || Time.current).to_date
+    (starts || Date.current).to_date
   end
 
   def start_date=(value)
@@ -106,7 +106,7 @@ class TimeEntry < ActiveRecord::Base
 
   private
   def check_active_timers_on_same_date
-    timers = time_sheet.time_entries.timers_only.on(self.start_date.to_date)
+    timers = time_sheet.time_entries.timers_only.on(start_date)
     unless timers.empty?
       timers.first.stop
     end
