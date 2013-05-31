@@ -340,3 +340,6 @@ de:
 
   not_logged_in: 'Sie sind nicht eingeloggt.'
 
+  layouts:
+    footer:
+      info-rule: 'Stunden müssen von allen Mitarbeitern bis zum Ende der Kalenderwoche erfasst sein.'
