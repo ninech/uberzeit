@@ -13,6 +13,9 @@ class TimeEntriesController < ApplicationController
   end
 
   def create
+    if @time_entry.ends && @time_entry.starts && @time_entry.ends < @time_entry.starts
+      @time_entry.ends = @time_entry.starts + 1.day
+    end
     @time_entry.save
 
     respond_with @time_entry, location: default_return_location
