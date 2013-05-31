@@ -6,9 +6,9 @@ FactoryGirl.define do
     end
 
     time_sheet
-    start_date { Time.current.to_date.to_s(:db) }
+    start_date { Date.current }
     start_time { '8:00' }
-    end_date { Time.current.to_date.to_s(:db) }
+    end_date { Date.current }
     end_time   { '12:00' }
 
     after(:build) do |entry, evaluator|
