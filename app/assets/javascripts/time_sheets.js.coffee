@@ -92,7 +92,7 @@ $ ->
         if window.timerStarted
           document.title = '[' + data.total + '] ' + document.originalTitle
 
-        $('.time.total').text data.total
+        $('.time.total.active').text data.total
         $('.time.bonus').text data.bonus
         $('.time.week-total').text data.week_total
 
