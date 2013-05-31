@@ -38,6 +38,8 @@ Uberzeit::Application.routes.draw do
     resources :employments
 
     namespace :summaries do
+      get '/overview', to: 'overview#index', as: :overview
+
       namespace :work do
         get '/:year', to: 'my_work#year', as: :year
         get '/:year/:month', to: 'my_work#month', as: :month

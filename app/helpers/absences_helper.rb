@@ -63,9 +63,9 @@ module AbsencesHelper
     if absence.half_day_specific?
       case
       when absence.first_half_day?
-        t('.first_half_day')
+        t('first_half_day')
       when absence.second_half_day?
-        t('.second_half_day')
+        t('second_half_day')
       else
         nil
       end

@@ -20,13 +20,13 @@ module TimeSheetsHelper
 
   def part_of_day(absence)
     if absence.whole_day?
-      t('.whole_day')
+      t('whole_day')
     else
       case
       when absence.first_half_day?
-        t('.first_half_day')
+        t('first_half_day')
       when absence.second_half_day?
-        t('.second_half_day')
+        t('second_half_day')
       else
       end
     end

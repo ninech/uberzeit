@@ -94,6 +94,7 @@ de:
       default: '%d.%m.%Y'
       long: '%A, %d. %B %Y'
       weekday: '%a, %d. %b'
+      medium: '%a, %d. %B %Y'
   js:
     pickadate:
       firstDay: 1
@@ -102,6 +103,10 @@ de:
   number:
     format:
       separator: ! '.'
+
+  whole_day: Ganzer Tag
+  first_half_day: Vormittags
+  second_half_day: Nachmittags
 
   shared:
     event_legend:
@@ -150,9 +155,6 @@ de:
       start_date: Start
       end_date: Ende
       daypart: Dauer
-      second_half_day: Nachmittags
-      first_half_day: Vormittags
-      whole_day: Ganzer Tag
       delete: Löschen
     edit:
       edit_absence: Absenz bearbeiten
@@ -177,6 +179,7 @@ de:
         users: Benutzer
         adjustments: Anpassungen
       reports:
+        overview: Übersicht
         my_work: Meine Arbeitszeit
         my_absence: Meine Absenzen
         work: Arbeitszeit Mitarbeiter
@@ -184,8 +187,34 @@ de:
         vacation: Ferien Mitarbeiter
   summaries:
     formats:
-        date: '%e. %a.'
-        month: '%B'
+      date: '%e. %a.'
+      month: '%B'
+    overview:
+      index:
+        formats:
+          hours_and_minutes_html: '%{hours} Stunden und %{minutes} Minuten'
+          work_days_html: '%{work_days} Arbeitstage'
+        panels:
+          uberstunden:
+            info1_html: 'Dein aktuelles Überstunden-Saldo beträgt'
+            info2_html: 'Das sind'
+            info1_alt_html: 'Du hast im Moment'
+            emphasis1_alt_html: 'keine Überstunden'
+          month:
+            info1_html: 'Du hast im %{month} bereits'
+            emphasis1_html: '%{percent} der Sollzeit'
+            info2_html: 'erreicht. Das entspricht einer Arbeitszeit von'
+          vacation:
+            info1_html: 'Du hast bisher'
+            emphasis1_html: '%{redeemed} Ferientage eingetragen'
+            info2_html: 'und noch'
+            emphasis2_html: '%{remaining} Ferientage zu Gute!'
+          team:
+            title: 'Team Absenzen'
+            time_frame: 'der nächsten 7 Tage'
+          personal:
+            title: 'Deine Absenzen'
+            time_frame: 'der nächsten 7 Tage'
     work:
       effective_worked: BLUB
       columns:
@@ -282,10 +311,7 @@ de:
       new_public_holiday: Neuer Feiertag
       confirm_delete: Wirklich löschen?
     form:
-      second_half_day: Nachmittags
-      first_half_day: Vormittags
       back: Zurück
-      whole_day: Ganzer Tag
     new:
       title: Feiertag hinzufügen
   adjustments:
@@ -312,9 +338,6 @@ de:
       total: Total
       add_time_now: Zeit jetzt eintragen
       no_entries_yet_message: Noch keine Einträge vorhanden
-      whole_day: Ganzer Tag
-      first_half_day: Vormittags
-      second_half_day: Nachmittags
       timer_running_warning:
         one: 'An dem folgenden Tag ist noch ein Timer aktiv:'
         other: "An den folgenden Tagen sind noch Timer aktiv:"
