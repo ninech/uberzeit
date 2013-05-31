@@ -7,12 +7,19 @@ class TimeEntriesController < ApplicationController
   before_filter :load_time_types
 
   def new
+    if params[:date]
+      @time_entry.start_date = params[:date]
+    end
   end
 
   def edit
   end
 
   def create
+    if @time_entry.timer?
+      @time_entry.start_date = Date.current
+    end
+
     if @time_entry.ends && @time_entry.starts && @time_entry.ends < @time_entry.starts
       @time_entry.ends = @time_entry.starts + 1.day
     end

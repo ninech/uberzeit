@@ -91,7 +91,7 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def end_time=(value)
-    self.ends = date_and_time_to_datetime_format(end_date, value)
+    self.ends = date_and_time_to_datetime_format((end_date || start_date), value)
   end
 
   def occurrences_as_time_ranges(date_or_range)

@@ -22,6 +22,14 @@ describe TimeEntriesController do
       test_sign_in user
     end
 
+    describe 'GET "new"' do
+      it 'sets the start date if provided' do
+        Timecop.freeze('2013-07-22')
+        get :new, time_sheet_id: time_sheet, date: '2013-07-20'
+        assigns(:time_entry).start_date.should eq('2013-07-20'.to_date)
+      end
+    end
+
     describe 'PUT "update"' do
       before do
         time_entry = FactoryGirl.create(:time_entry, time_sheet: time_sheet)
@@ -52,17 +60,23 @@ describe TimeEntriesController do
 
     describe 'POST "create"' do
       context 'with valid attributes' do
+        let(:time_type) { TEST_TIME_TYPES[:work] }
+
         it 'creates a new single entry' do
           expect do
-            time_type = FactoryGirl.create(:time_type_work)
-            post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:time_entry, time_type_id: time_type.id)
+            post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:time_entry, time_type_id: time_type)
           end.to change(TimeEntry,:count).by(1)
         end
 
         it 'returns empty json (no errors)' do
-          time_type = FactoryGirl.create(:time_type_work)
-          post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:time_entry, time_type_id: time_type.id)
+          post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:time_entry, time_type_id: time_type)
           response.body.should redirect_to(time_sheet_path(time_sheet))
+        end
+
+        it 'creates a timer on the current date' do
+          Timecop.freeze('2013-07-22')
+          post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:time_entry, time_type_id: time_type, start_time: '09:00', start_date: '2013-07-20', end_time: '', end_date: nil)
+          assigns(:time_entry).start_date.should eq('2013-07-22'.to_date)
         end
       end
 
