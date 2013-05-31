@@ -1,101 +1,3 @@
-<style type="text/css">
-  @-webkit-keyframes swingitbaby
-  {
-    0%     {-webkit-transform: rotate(0deg); -webkit-transform-origin: 60% 15%;}
-    50%     {-webkit-transform: rotate(20deg); -webkit-transform-origin: 60% 15%;}
-    100%     {-webkit-transform: rotate(0deg); -webkit-transform-origin: 60% 15%;}
-  }
-
-  .swingitbaby:hover{
-    -webkit-animation:swingitbaby 0.45s 2;
-  }
-
-  @-webkit-keyframes planecrash
-  {
-    25%      {left: -100px;}
-    50%     {left: -100px; -webkit-transform: rotate(40deg);}
-    75%    {left: 100px; -webkit-transform: rotate(40deg);}
-  }
-
-  .planecrash:hover {
-    position: relative;
-    -webkit-animation:planecrash 2s 1;
-  }
-</style>
-
-<script>
-  $(document).ready(function() {
-    function timedCount(element, counter, interval, end, timeout) {
-        if(counter <= parseFloat(end)) {
-            counter = counter + interval;
-            setTimeout(timedCount, timeout, element, counter, interval, end, timeout);
-        } else {
-            counter = parseFloat(end);
-        }
-        decimal_places = 1;
-        if(parseFloat(end) % 1 === 0) {
-          decimal_places = 0;
-        }
-        suffix = '';
-        if(end.toString().indexOf('%') >= 0) {
-          suffix = '%';
-        }
-        element.html(counter.toFixed(decimal_places) + suffix);
-    }
-
-    $('[data-count-from][data-count-to]').each(function(index, element) {
-        var start, end, interval, counter, timeout;
-
-        element = $(element);
-        start = element.data('count-from');
-        end = element.data('count-to');
-        timeout = element.data('count-timeout');
-        if(timeout == undefined) {
-             timeout = 20;
-        }
-
-        interval = parseFloat(end) / 90;
-        counter = parseFloat(start);
-
-        element.html(start);
-        timedCount(element, counter, interval, end, timeout);
-    });
-  });
-</script>
-
-<style>
-  .absence-list {
-    font-size: 1em;
-    font-weight: bold;
-    color: #333;
-  }
-
-  .absence-list .date {
-    float: left;
-    font-size: 1em;
-    font-weight: bold;
-    color: #333;
-  }
-
-  .absence-list .user {
-    float: left;
-    width: 5em;
-    text-align: left;
-  }
-
-  .absence-list .entry {
-    margin: 0.3em;
-  }
-
-  .absence-list .absence {
-    float: right;
-  }
-
-  .absence-list i {
-    color: white ;
-  }
-</style>
-
 <div class="content-summary row">
   <div class="large-12 columns">
     <div class="row">
@@ -118,7 +20,7 @@
           <p class="crazy yo"><%= t('.panels.month.emphasis1_html', percent: awesome_tag("%g%%" % @month_percent_done)) %></p>
           <p><%= t('.panels.month.info2_html') %></p>
           <p class="crazy lo"><%= awesome_hours_and_minutes(@month_total_work) %>!</p>
-          <i class="icon-wrench icon-background swingitbaby"></i>
+          <i class="icon-wrench icon-background gimmicks swingitbaby"></i>
         </div>
       </div>
       <div class="large-6 columns">
@@ -173,7 +75,7 @@
           <p class="crazy yo"><%= t('.panels.vacation.emphasis1_html', redeemed: awesome_tag("%g" % @vacation_redeemed.to_work_days)) %></p>
           <p><%= t('.panels.vacation.info2_html') %></p>
           <p class="crazy lo"><%= t('.panels.vacation.emphasis2_html', remaining: awesome_tag("%g" % @vacation_remaining.to_work_days)) %></p>
-          <i class="icon-plane icon-background planecrash"></i>
+          <i class="icon-plane icon-background gimmicks planecrash"></i>
         </div>
       </div>
     </div>
