@@ -46,7 +46,7 @@
                   <% if @public_holidays[weekday] && @public_holidays[weekday].whole_day? %>
                     <span class="public-holiday"><%= @public_holidays[weekday].name %></span>
                   <% else %>
-                    <span class="time <%= 'active' if weekday == @day %>"><%= formatted_worktime_for_day(weekday) %></span>
+                    <span class="time total <%= 'active' if weekday == @day %>"><%= formatted_worktime_for_day(weekday) %></span>
                   <% end %>
                 </span>
               </a>
@@ -133,7 +133,7 @@
         <% end %>
           <li class="summary">
             <div class="right">
-              <%= t '.total' %> <span class="time total">0:00</span>
+              <%= t '.total' %> <span class="time total active">0:00</span>
             </div>
           </li>
         </ul>
