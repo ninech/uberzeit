@@ -11,11 +11,6 @@ $ ->
     suffix = "%"  if end.toString().indexOf("%") >= 0
     element.html counter.toFixed(decimal_places) + suffix
   $("[data-count-from][data-count-to]").each (index, element) ->
-    start = undefined
-    end = undefined
-    interval = undefined
-    counter = undefined
-    timeout = undefined
     element = $(element)
     start = element.data("count-from")
     end = element.data("count-to")
