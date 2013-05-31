@@ -1,57 +1,44 @@
 class TimeEntriesController < ApplicationController
   load_and_authorize_resource :time_sheet
-  authorize_resource :time_entry, through: :time_sheet
+  load_and_authorize_resource :time_entry, through: :time_sheet
+
+  respond_to :html, :json, :js
+
+  before_filter :load_time_types
 
   def new
   end
 
   def edit
-    @entry = TimeEntry.find(params[:id])
-    @time_types = TimeType.find_all_by_is_work(true)
-
-    render 'edit', layout: false
   end
 
   def create
-    @time_types = TimeType.find_all_by_is_work(true)
-
-    if params[:time_entry][:to_time].blank?
-      @entry = @time_sheet.timers.new(params[:time_entry].except(:to_time))
-      @entry.start_date = Date.current
-      @entry.save
-    else
-      @entry = @time_sheet.time_entries.new(params[:time_entry])
-      @entry.save
+    if @time_entry.ends && @time_entry.starts && @time_entry.ends < @time_entry.starts
+      @time_entry.ends = @time_entry.starts + 1.day
     end
+    @time_entry.save
 
-    render json: @entry.errors
+    respond_with @time_entry, location: default_return_location
   end
 
   def update
-    @time_entry = TimeEntry.find(params[:id])
-
-    if params[:time_entry][:to_time].blank?
-      @timer = @time_sheet.timers.new(params[:time_entry].except(:to_time))
-      @timer.save
-      @time_entry.destroy
-
-      render json: @timer.errors
-    else
-      @time_entry.update_attributes(params[:time_entry])
-      render json: @time_entry.errors
-    end
+    @time_entry.update_attributes(params[:time_entry])
+    respond_with @time_entry, location: default_return_location
   end
 
   def destroy
-    @time_entry = TimeEntry.find(params[:id])
     @time_entry.destroy
-    render json: {}
+    respond_with(@time_entry, location: default_return_location) do |format|
+      format.js { render nothing: true }
+    end
   end
 
-  def exception_date
-    rs = @time_entry.recurring_schedule
-    rs.exception_dates.build(date: params[:date])
-    rs.save!
-    redirect_to @time_sheet, :notice => 'Exception date successfully added.'
+  private
+  def default_return_location
+    time_sheet_path(@time_sheet)
+  end
+
+  def load_time_types
+    @time_types = TimeType.work
   end
 end

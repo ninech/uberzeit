@@ -6,7 +6,6 @@ Uberzeit::Application.routes.draw do
   resources :time_sheets, only: [:show] do
 
     resources :recurring_entries, except: [:show, :index]
-    resources :timers, only: [:show, :edit, :update, :destroy]
 
     member do
       get '/date/:date', to: 'time_sheets#show', as: :show_date

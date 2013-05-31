@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130527153022) do
+ActiveRecord::Schema.define(:version => 20130528130247) do
 
   create_table "absences", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -117,8 +117,8 @@ ActiveRecord::Schema.define(:version => 20130527153022) do
   create_table "time_entries", :force => true do |t|
     t.integer  "time_sheet_id"
     t.integer  "time_type_id"
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "starts"
+    t.datetime "ends"
     t.datetime "deleted_at"
   end
 
@@ -146,17 +146,6 @@ ActiveRecord::Schema.define(:version => 20130527153022) do
     t.float    "bonus_factor",             :default => 0.0
     t.boolean  "exclude_from_calculation", :default => false
   end
-
-  create_table "timers", :force => true do |t|
-    t.integer  "time_sheet_id"
-    t.integer  "time_type_id"
-    t.datetime "start_time"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  add_index "timers", ["time_sheet_id"], :name => "index_timers_on_time_sheet_id"
-  add_index "timers", ["time_type_id"], :name => "index_timers_on_time_type_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

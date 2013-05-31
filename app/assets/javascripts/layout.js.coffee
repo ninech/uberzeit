@@ -3,22 +3,25 @@ $(document)
     closeOnBackgroundClick: false,
     opened: (e) ->
       if e.target.id == 'add-time-modal'
-        $('#time_entry_from_time').val(moment().format('HH:mm'))
+        $('#time_entry_start_time').val(moment().format('HH:mm'))
   })
   .foundation('tooltips')
 
 # ===> Event Listeners
-# Bind event listeneners OUTSIDE of $(document).ready (cf. Turbolinks Troubleshooting)
 $(document).on 'click', '.toggle', (element) ->
   $('#' + $(this).data('toggle-target')).toggle()
 
 $(document).on 'click', '.remote-reveal', (event) ->
   element = $('#' + $(this).data('reveal-id'))
-  element.find('span.ajax-content').remove()
-  content_element = element.append('<span class="ajax-content"></span>')
-  content_element.find('span.ajax-content').load $(this).data('reveal-url'), () ->
-    init_pickdate()
-    init_picktime()
+  element.find('div.ajax-content').remove()
+  content_element = element.append('<div class="ajax-content"></div>')
+  content_element.find('div.ajax-content').load $(this).data('reveal-url')
+
+$(document).ajaxComplete () ->
+  initControls()
+
+$(document).ajaxError () ->
+  initControls()
 
 $(document).on 'mouseover', '.has-tip', ->
     $(this).popover
@@ -29,17 +32,19 @@ $(document).on 'mouseover', '.has-tip', ->
 # ===> Document Ready
 $ ->
 
-  window.init_picktime = () ->
+  window.initControls = () ->
+    initTimePicker()
+    initDatePicker()
+
+  window.initTimePicker = () ->
     # Timepicker
     $('input.time').timepicker({
       dropdown: false,
       timeFormat: 'HH:mm'
     })
 
-  window.init_picktime()
-
   # Pickadate
-  window.init_pickdate = () ->
+  window.initDatePicker = () ->
 
     $('input.date').pickadate()
 
@@ -73,4 +78,4 @@ $ ->
       if(pickadate)
         pickadate.setDate(date_input.data('year'),date_input.data('month'),date_input.data('day'))
 
-  init_pickdate()
+  initControls()

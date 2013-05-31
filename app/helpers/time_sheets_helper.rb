@@ -42,17 +42,17 @@ module TimeSheetsHelper
   end
 
   def worktime_for_range(date_or_range)
-    @time_sheet.work(date_or_range) + @time_sheet.duration_of_timers(date_or_range)
+    @time_sheet.work(date_or_range)
   end
 
   def overtime_for_range(date_or_range)
-    @time_sheet.overtime(date_or_range) + @time_sheet.duration_of_timers(date_or_range)
+    @time_sheet.overtime(date_or_range)
   end
 
   def running_timer_dates(timers)
     if timers
       links = timers.map do |timer|
-        link_to l(timer.start_time, format: :weekday), show_date_time_sheet_path(@time_sheet, date: timer.start_date)
+        link_to l(timer.starts, format: :weekday), show_date_time_sheet_path(@time_sheet, date: timer.start_date)
       end
       links.to_sentence.html_safe
     end

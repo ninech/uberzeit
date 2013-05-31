@@ -87,16 +87,16 @@
           <!-- WORK -->
           <% @time_chunks.each do |time_chunk| %>
             <li>
-              <% if time_chunk.parent.start_time.to_date != @day %>
-                <span class="has-tip" data-tooltip="<%= t('.tooltip.starts') %> <%= l time_chunk.parent.start_time, format: :long %>">
+              <% if time_chunk.start_date != @day %>
+                <span class="has-tip" data-tooltip="<%= t('.tooltip.starts') %> <%= l time_chunk.parent.starts, format: :long %>">
                   <%= l time_chunk.starts %>
                 </span>
               <% else %>
                 <%= l time_chunk.starts %>
               <% end %>
               –
-              <% if time_chunk.parent.end_time.to_date != @day %>
-                <span class="has-tip" data-tooltip="<%= t('.tooltip.ends') %> <%= l time_chunk.parent.end_time, format: :long %>">
+              <% if time_chunk.end_date != @day %>
+                <span class="has-tip" data-tooltip="<%= t('.tooltip.ends') %> <%= l time_chunk.parent.ends, format: :long %>">
                   <%= l time_chunk.ends %>
                 </span>
               <% else %>
@@ -118,16 +118,16 @@
           <% end %>
           <% if @timer_active %>
           <li>
-            <%= @timer.from_time %> –
+            <%= @timer.start_time %> –
             <small><%= @timer.time_type %></small>
             <div class="right">
-              <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="edit-time-modal" data-reveal-url="<%= edit_time_sheet_timer_path(@time_sheet, @timer) %>">
+              <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="edit-time-modal" data-reveal-url="<%= edit_time_sheet_time_entry_path(@time_sheet, @timer) %>">
                 <%= icon(:edit) %>
               </a>
               <a href="<%= url_for(action: :stop_timer, date: @day) %>" data-method="put" data-remote="true" class="stop-timer">
                 Stop
               </a>
-              <span class="timer-current" data-timer-id="<%=@timer.id%>" data-startdate="<%= @timer.start_date %>" data-starttime="<%= @timer.from_time %>"></span>
+              <span class="timer-current" data-timer-id="<%=@timer.id%>" data-startdate="<%= @timer.start_date %>" data-starttime="<%= @timer.start_time %>"></span>
             </div>
           </li>
         <% end %>
@@ -142,7 +142,7 @@
             <p>
               <%= t '.no_entries_yet_message' %>
               <br>
-              <a href="#" data-reveal-id="add-time-modal"><%= t '.add_time_now' %></a>
+              <a href="#" class="remote-reveal" data-reveal-id="add-time-modal" data-reveal-url="<%= new_time_sheet_time_entry_path(@time_sheet) %>"><%= t '.add_time_now' %></a>
             </p>
           </div>
         <% end %>

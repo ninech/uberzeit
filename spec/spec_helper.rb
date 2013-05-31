@@ -51,6 +51,8 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
+  Time.zone = 'Bern'
+
   config.before(:suite) do
     TEST_TIME_TYPES = {}
     %w{work vacation compensation paid_absence onduty}.each do |time_type|
@@ -67,6 +69,10 @@ RSpec.configure do |config|
       vacation_per_year:  25.days
     }
     stub_const 'UberZeit::Config', uberzeit_config
+  end
+
+  config.after(:each) do
+    Timecop.return
   end
 
   config.after(:suite) do

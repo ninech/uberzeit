@@ -39,5 +39,15 @@ describe TimeSheetsController do
         assigns(:week_total).should_not be_nil
       end
     end
+
+    it 'limits the timer to the range of the requested day' do
+      timer = FactoryGirl.create(:time_entry, time_sheet: sheet, starts: '2013-07-20 18:00:00', ends: nil)
+
+      Timecop.freeze('2013-07-21 12:00:00'.to_time)
+      get :summary_for_date, id: sheet, date: '2013-07-20'.to_date, format: :javascript
+      assigns(:timer).should eq(6.hours)
+      Timecop.return
+    end
+
   end
 end

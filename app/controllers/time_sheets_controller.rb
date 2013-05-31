@@ -19,11 +19,11 @@ class TimeSheetsController < ApplicationController
     end
     @time_types = TimeType.work
 
-    @timer = @time_sheet.timers.on(@day).first
+    @timer = @time_sheet.time_entries.timers_only.on(@day).first
     unless @timer.nil?
       @timer_active = (@timer.start_date.to_date == @day.to_date) # (params[:date] || Time.current.to_date.to_s(:db))
     end
-    @timers_other_days = @time_sheet.timers.others(@day).order('start_time')
+    @timers_other_days = @time_sheet.time_entries.timers_only.others(@day).order('starts')
 
     @public_holiday = PublicHoliday.on(@day).first
 
@@ -51,18 +51,22 @@ class TimeSheetsController < ApplicationController
   end
 
   def stop_timer
-    timer = @time_sheet.timers.on(@day).first
+    timer = @time_sheet.time_entries.timers_only.on(@day).first
     timer.stop
 
     render json: {}
   end
 
   def summary_for_date
-    @total = @time_sheet.total(@day) + @time_sheet.duration_of_timers(@day)
+    @total = @time_sheet.total(@day)
     @bonus = @time_sheet.bonus(@day)
 
-    active_timer = @time_sheet.timers.on(@day).first
-    @timer =  active_timer ? active_timer.duration(@day) : 0
+    active_timer = @time_sheet.time_entries.timers_only.on(@day).first
+    @timer =  if active_timer.nil?
+                0
+              else
+                active_timer.duration(@day)
+              end
 
     week = @day.at_beginning_of_week..@day.at_end_of_week
     @week_total = @time_sheet.total(week) + @time_sheet.duration_of_timers(week)

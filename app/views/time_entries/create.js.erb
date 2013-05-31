@@ -1,0 +1,6 @@
+<% if @time_entry.errors.any? %>
+  $('.ajax-content').html('<%= escape_javascript(render(template: 'time_entries/new')) %>');
+<% else %>
+  window.location = '<%= time_sheet_path(@time_sheet) %>';
+<% end %>
+

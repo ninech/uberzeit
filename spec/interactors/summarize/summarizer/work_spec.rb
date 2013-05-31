@@ -8,7 +8,7 @@ describe Summarize::Summarizer::Work do
   let(:summarizer) { Summarize::Summarizer::Work.new(user, range) }
 
   it 'sums up each work time type' do
-    FactoryGirl.create(:time_entry, start_time: '2013-04-24 9:00:00', end_time: '2013-04-24 18:00:00', time_type: :work, time_sheet: user.current_time_sheet)
+    FactoryGirl.create(:time_entry, starts: '2013-04-24 9:00:00', ends: '2013-04-24 18:00:00', time_type: :work, time_sheet: user.current_time_sheet)
 
     summarizer.summary[:effective_worked].should eq(9.hours)
   end
