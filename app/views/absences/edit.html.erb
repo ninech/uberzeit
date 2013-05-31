@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="small-12 columns">
+    <h2><%= t('.edit_absence') %>
+  </div>
+</div>
+<%= form_for [@time_sheet, @absence], remote: true, :html => {:'data-type' => 'script'} do |f| %>
+  <%= render partial: 'form', locals: {f: f} %>
+<% end %>
+

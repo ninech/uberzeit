@@ -1,21 +1,65 @@
 <!DOCTYPE html>
-<html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7 ]> <html class="ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
 <head>
-  <title>uberZeit</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+	<meta charset="utf-8" />
+
+  <meta name="apple-mobile-web-app-title" content="uberZeit">
+
+	<!-- Uncomment to make IE8 render like IE7 -->
+	<!-- <meta http-equiv="X-UA-Compatible" content="IE=7" /> -->
+
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title><%= content_for?(:title) ? yield(:title) : "uberZeit" %></title>
+
+  <link rel="icon" href="<%= ENV['RAILS_RELATIVE_URL_ROOT'] %>/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="<%= ENV['RAILS_RELATIVE_URL_ROOT'] %>/favicon.ico" type="image/x-icon">
+	<%= stylesheet_link_tag    "application" %>
+	<%= javascript_include_tag "vendor/custom.modernizr" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+
+  <%= javascript_tag do %>
+    $.extend( $.fn.pickadate.defaults,
+      <%= pickadate_js_localization %>
+    );
+  <% end %>
+
+  <script type="text/javascript">
+    I18n.defaultLocale = "<%= I18n.default_locale %>";
+    I18n.locale = "<%= I18n.locale %>";
+  </script>
 </head>
-<body>
-
-
-<div class="container">
-  <div class="page-header">
-    <h1>uberZeit <small><%= Faker::Company.catch_phrase %></small></h1>
+<body class="content-<%= controller.controller_name %>">
+  <%= render 'layouts/header' %>
+  <div class="subnavigation container">
+    <div class="row">
+      <div class="small-12 columns">
+        <%= render_navigation(level: 2, renderer: SubnavRenderer) %>
+      </div>
+    </div>
   </div>
-  <%= render 'layouts/navigation' %>
-  <%= yield %>
-</div>
 
+  <div class="content container">
+
+    <% flash.each do |key,val| %>
+      <div class="row">
+        <div class="small-12 columns">
+          <div class="alert-box <%= key %>">
+            <%= val %>
+            <%= link_to '×', '', class: 'close' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <%= yield %>
+  </div>
+  <%= render 'layouts/footer' %>
 </body>
 </html>

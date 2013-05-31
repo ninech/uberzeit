@@ -1,37 +1,53 @@
 <%= form_for(@time_type) do |f| %>
-  <% if @time_type.errors.any? %>
-    <div id="error_explanation" class="alert alert-error">
-      <h2><%= pluralize(@time_type.errors.count, "error") %> prohibited this entry from being saved:</h2>
-
-      <ul>
-      <% @time_type.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.text_field :name %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
   </div>
 
-  <div class="field">
-    <%= f.label :is_work %>
-    <%= f.check_box :is_work %>
+  <div class="row">
+    <div class="small-3 columns">
+      <%= content_tag(:span, TimeType.human_attribute_name(:icon)) %> <small><a href="#" class="clear-icon"><%= t '.clear' %></a></small>
+      <%= f.hidden_field :icon %>
+      <%= list_available_icons(f.object.icon) %>
+    </div>
+    <div class="small-2 columns">
+      <%= content_tag(:div, TimeType.human_attribute_name(:color_index)) %>
+      <%= f.hidden_field :color_index %>
+      <%= list_available_colors(f.object.color_index) %>
+    </div>
+    <div class="small-7 columns"></div>
   </div>
 
-  <div class="field">
-    <%= f.label :is_vacation %>
-    <%= f.check_box :is_vacation %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.text_field :bonus_factor, class: 'small-2 columns' %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :is_onduty %>
-    <%= f.check_box :is_onduty %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.check_box :exclude_from_calculation, class: 'small-2 columns' %>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= f.submit class: 'btn btn-primary' %>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.select :is_work, [[t('.work'), true], [ t('.absence'), false]], label: t('.acquired_as') %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.check_box :is_vacation %>
+    </div>
+  </div>
+
+
+  <div class="row buttons">
+    <div class="small-12 columns">
+      <%= f.submit class: 'button' %>
+      <%= link_to t('.back'), time_types_path, class: 'button secondary' %>
+    </div>
   </div>
 <% end %>

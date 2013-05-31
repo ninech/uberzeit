@@ -1,0 +1,39 @@
+.header.container {
+  padding-top: 20px;
+  margin-bottom: 20px;
+
+  .logo {
+    float: left;
+    width: 122px;
+    height: 36px;
+  }
+
+  .navigation {
+    float: left;
+    padding: 9px 0 0 50px;
+
+    ul {
+      list-style-type: none;
+
+      li {
+        float: left;
+        padding: 0 20px;
+
+        a {
+
+          text-transform: uppercase;
+          font-weight: 700;
+
+          &.active {
+            border-bottom: 3px solid #b0d4eb;
+          }
+        }
+      }
+    }
+  }
+
+  .top-buttons {
+    float: right;
+    margin: 0;
+  }
+}

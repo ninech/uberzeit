@@ -1,0 +1,59 @@
+<%
+  append_to_url = '' unless local_assigns[:append_to_url]
+%>
+
+<div class="row content-summary-header">
+  <div class="small-12 columns">
+   <h1><%= title %> <small><%= unit%></small></h1>
+
+    <%= form_tag do %>
+    <div class="row">
+      <div class="small-5 columns">
+
+        <% unless @teams.blank? %>
+        <div class="row">
+          <div class="small-3 columns"><%= t '.users' %></div>
+          <div class="small-9 columns end"><%= select_tag :team, options_for_select(@teams.collect { |team| [team.name, team.id] }.prepend([t('.everyone'), nil]), @team.nil? ? nil : @team.id) %></div>
+        </div>
+        <% end %>
+
+        <div class="row">
+          <div class="small-3 columns"><%= t '.time_frame' %></div>
+          <div class="small-4 columns"><% unless @month.nil? %><%= select_month(@month) %><% end %></div>
+          <div class="small-5 columns end"><%= select_year(@year, start_year: Date.current.year-1, end_year: Date.current.year+1) %></div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 columns">
+            <%= hidden_field_tag :base_url, base_url %>
+            <%= hidden_field_tag :append_to_url, append_to_url %>
+            <%= button_tag t('.show'), id: 'summary_header_submit', type: 'button', class: 'tiny button' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="small-7 columns end">
+        <dl class="sub-nav view-buttons">
+          <% if controller.respond_to?(:calendar) %>
+          <dd <%= 'class=active' if controller.action_name == 'calendar' %>>
+            <%= link_to t('.calendar'), url_for(action: :calendar, year: @year, month: @month || Date.current.month, team_id: @team) %>
+          </dd>
+          <% end %>
+
+          <% if controller.respond_to?(:month) %>
+          <dd <%= 'class=active' if controller.action_name == 'month' %>>
+            <%= link_to t('.month'), url_for(action: :month, year: @year, month: @month || Date.current.month, team_id: @team) %>
+          </dd>
+          <% end %>
+
+          <% if controller.respond_to?(:year) %>
+          <dd <%= 'class=active' if controller.action_name == 'year' %>>
+            <%= link_to t('.year'), url_for(action: :year, year: @year, team_id: @team) %>
+          </dd>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>

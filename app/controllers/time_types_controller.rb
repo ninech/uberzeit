@@ -3,6 +3,7 @@ class TimeTypesController < ApplicationController
   load_and_authorize_resource
 
   def index
+    authorize! :manage, TimeType
   end
 
   def new
@@ -13,7 +14,7 @@ class TimeTypesController < ApplicationController
 
   def create
     if @time_type.save
-      redirect_to edit_time_type_path(@time_type), :notice => 'Time Type was successfully created.'
+      redirect_to time_types_path, flash: {success: t('model_successfully_created', model: TimeType.model_name.human)}
     else
       render :action => 'new'
     end
@@ -21,7 +22,7 @@ class TimeTypesController < ApplicationController
 
   def update
     if @time_type.update_attributes(params[:time_type])
-      redirect_to edit_time_type_path(@time_type), :notice => 'Time Type was successfully updated.'
+      redirect_to time_types_path, flash: {success: t('model_successfully_updated', model: TimeType.model_name.human)}
     else
       render :action => 'edit'
     end
@@ -29,7 +30,7 @@ class TimeTypesController < ApplicationController
 
   def destroy
     if @time_type.destroy
-      redirect_to time_types_path, :notice => 'Time Type was successfully deleted.'
+      redirect_to time_types_path, flash: {success: t('model_successfully_deleted', model: TimeType.model_name.human)}
     else
       render :action => 'edit'
     end

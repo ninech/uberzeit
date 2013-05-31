@@ -1,0 +1,114 @@
+// Place all the styles related to the Absences controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import 'compass/css3/images';
+
+.content-absences {
+
+  form.nice {
+    .recurring-checkbox {
+      margin: 10px 0;
+    }
+
+    .absence-delete-link {
+      margin-left: 10px;
+    }
+  }
+
+  .year-navigation {
+    float: right;
+    margin: 0;
+  }
+
+  table.calendar {
+
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    border-collapse: collapse;
+    width: 100%;
+
+    thead {
+      @include background-image(linear-gradient(top center, #F5F5F5 0%, #E0E0E0 90%));
+
+      tr.dayName {
+        th {
+          width: 13.5714286%;
+          padding: 0.5em 0 0.625em;
+          text-align: center;
+        }
+
+        th:first-child {
+          width: 5%;
+        }
+      }
+    }
+
+    tr {
+      border-collapse: collapse;
+    }
+
+    td {
+      text-align: center;
+      color: inherit !important;
+      border: 1px solid #ccc;
+      padding: 0;
+      width: 2em;
+      height: 2em;
+
+      &.has-click-tip, &.has-reveal {
+        cursor: pointer;
+      }
+
+      &.otherMonth {
+        color: #adadad !important;
+      }
+      &.today {
+        font-weight: 800;
+      }
+      &.non-work-day {
+        background-color: #FFFFD8;
+      }
+      &.otherMonth.weekendDay {
+        background-color: #FFFFD8;
+      }
+
+      &.public-holiday {
+        background-color: #e5e5ed;
+      }
+
+      &.weekNumber {
+        font-size: 60%;
+        border: none;
+        padding-top: 2px;
+      }
+
+      > div.event-container { // container
+        position: relative;
+        width: 100%;
+        height: 100%;
+
+        > div { // overlay div (full size)
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          top: 0;
+
+          > div { // table div
+            position: absolute;
+            display: table;
+            width: 100%;
+            height: 100%;
+
+            > div { // cell div to center content vertically
+              display: table-cell;
+              vertical-align: middle;
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+}

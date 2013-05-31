@@ -1,0 +1,33 @@
+<div class="content-summary row">
+  <div class="small-12 columns">
+    <table class="nice small-12">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th><%= t 'summaries.work.columns.effective_worked' %></th>
+          <th><%= t 'summaries.work.columns.absent' %></th>
+          <th><%= t 'summaries.work.columns.time_bonuses' %></th>
+          <th><%= t 'summaries.work.columns.adjustments' %></th>
+          <th><%= t 'summaries.work.columns.target' %></th>
+          <th><%= t 'summaries.work.columns.overtime' %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @table.entries.each_pair do |user, summary| %>
+        <tr>
+          <td><%= user %></td>
+          <% tooltip_effective_worked = time_per_time_type_to_tooltip_table(summary[:effective_worked_by_type]) %>
+          <% tooltip_absent = time_per_time_type_to_tooltip_table(summary[:absent_by_type]) %>
+          <td><span <% unless tooltip_effective_worked.blank? %>class="has-tip" data-tooltip="<%=tooltip_effective_worked%>"<% end %>><%= format_hours(summary[:effective_worked]) %></span></td>
+          <td><span <% unless tooltip_absent.blank? %>class="has-tip" data-tooltip="<%=tooltip_absent%>"<% end %>><%= format_hours(summary[:absent]) %></span></td>
+          <td><%= format_hours(summary[:time_bonus]) %></td>
+          <% tooltip_adjustments = time_per_adjustment_to_tooltip_table(summary[:adjustments_by_type]) %>
+          <td><span <% unless tooltip_adjustments.blank? %>class="has-tip" data-tooltip="<%=tooltip_adjustments%>"<% end %>><%= format_hours(summary[:adjustments]) %></span></td>
+          <td><%= format_hours(summary[:planned_work]) %></td>
+          <td><%= format_hours(summary[:overtime]) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

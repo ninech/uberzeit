@@ -1,70 +1,69 @@
 class TimeSheet < ActiveRecord::Base
   acts_as_paranoid
-  
+
   belongs_to :user
-  
-  has_many :single_entries
-  has_many :recurring_entries
+
+  has_many :time_entries
+  has_many :absences
+  has_many :adjustments
 
   validates_presence_of :user
 
   # returns time chunks (which are limited to the given date or range)
-  def find_chunks(date_or_range, time_type_scope = nil)
-    chunks = []
-    chunks += single_entries.find_chunks(date_or_range, time_type_scope)
-    chunks += recurring_entries.find_chunks(date_or_range, time_type_scope)
+  def find_chunks(date_or_range, time_types = TimeType.scoped)
+    entries = [time_entries.where(time_type_id: time_types), absences.where(time_type_id: time_types)]
 
-    chunks
+    find_chunks = FindTimeChunks.new(entries)
+    find_chunks.in_range(date_or_range)
   end
 
-  def total(date_or_range, type)
-    chunks = find_chunks(date_or_range, type)
+  def work(date_or_range)
+    CalculateWorkingTime.new(self, date_or_range).total
+  end
 
-    total = chunks.inject(0) do |sum, chunk|
-      duration = chunk.duration
+  def total(date_or_range, time_types = TimeType.scoped)
+    chunks = find_chunks(date_or_range, time_types)
+    chunks.total
+  end
 
-      if chunk.parent.respond_to?(:whole_day?) && chunk.parent.whole_day?
-        duration = (chunk.starts.to_date...chunk.ends.to_date).inject(0) do |sum_chunk, date| 
-          # whole day is independent of users workload
-          sum_chunk + user.planned_work(date, true)
-        end
-      end
-      
-      sum + duration
-    end
+  def bonus(date_or_range, time_types = TimeType.scoped)
+    chunks = find_chunks(date_or_range, time_types)
+    chunks.bonus
+  end
 
-    total
+  def total_with_bonuses
+    chunks = find_chunks(date_or_range, time_types)
+    chunks.total + chunks.bonus
+  end
+
+  def planned_work(date_or_range)
+    calculator = CalculatePlannedWorkingTime.new(date_or_range, user)
+    calculator.total
   end
 
   def overtime(date_or_range)
-    if date_or_range.kind_of?(Date) 
-      date = date_or_range
-      workload = user.workload_on(date)
-
-      if workload >= 100
-        # For full time position, the overtime per day is based on the excess of time relative to the planned work per day
-        remaining_work_on_date = user.planned_work(date)
-      else
-        # special case for people with no fulltime position
-        # calculate the daily overtime not based on the daily work hour (because it might be like 6.8 hours for 80% workload)
-        # but calculate the overtime based on the status of the current week
-        planned_week = user.planned_work(date.monday..date.next_week)
-        remaining_work_on_date = [planned_week - total(date.monday..date.to_date, :work), 0].max
-      end
-
-      overtime = [total(date, :work) - remaining_work_on_date, 0].max
-    else
-      overtime = total(date_or_range, :work) - user.planned_work(date_or_range)
-    end
+    CalculateOvertime.new(self, date_or_range).total
   end
 
   def vacation(year)
-    current_year = Time.zone.now.beginning_of_year.to_date
-    range = (current_year..current_year + 1.year)
-    total(range, :vacation)
+    range = UberZeit.year_as_range(year)
+    redeemed = CalculateRedeemedVacation.new(user, range)
+    redeemed.total
+  end
+
+  def total_reedemable_vacation(year)
+    vacation = CalculateTotalRedeemableVacation.new(user, year)
+    vacation.total_redeemable_for_year
   end
 
   def remaining_vacation(year)
-    user.total_vacation(year) - vacation(year)
+    total_reedemable_vacation(year) - vacation(year)
   end
+
+  def duration_of_timers(date_or_range)
+    range = date_or_range.to_range.to_date_range
+    timers_in_range = time_entries.timers_only.select { |timer| range.intersects_with_duration?(timer.range) }
+    timers_in_range.inject(0) { |sum,timer| sum + timer.duration(range) }
+  end
+
 end

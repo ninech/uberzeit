@@ -1,0 +1,9 @@
+<% provide(:title, t("errors.e#{@status}.title")) %>
+<div class="row">
+  <div class="twelve columns">
+    <h4><%= t "errors.e#{@status}.title" %></h4>
+    <div class="alert-box alert">
+      <%= raw t("errors.e#{@status}.message") %>
+    </div>
+  </div>
+</div>

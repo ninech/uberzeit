@@ -3,8 +3,10 @@ require 'cancan/matchers'
 
 describe Ability do
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:team) { FactoryGirl.create(:team) }
+  let(:user) { FactoryGirl.create(:user, teams: [team]) }
+  let(:admin) { FactoryGirl.create(:admin, teams: [team]) }
+  let(:team_leader) { FactoryGirl.create(:team_leader, teams: [team]) }
 
   subject { ability }
 
@@ -19,10 +21,19 @@ describe Ability do
       it { should_not be_able_to(:destroy, user) }
     end
 
-    context 'as another User' do
+    context 'as another user' do
       let(:ability) { Ability.new(FactoryGirl.create(:user)) }
 
       it { should_not be_able_to(:read, user) }
+      it { should_not be_able_to(:update, user) }
+      it { should_not be_able_to(:create, User) }
+      it { should_not be_able_to(:destroy, user) }
+    end
+
+    context 'as a team leader' do
+      let(:ability) { Ability.new(team_leader) }
+
+      it { should be_able_to(:read, user) }
       it { should_not be_able_to(:update, user) }
       it { should_not be_able_to(:create, User) }
       it { should_not be_able_to(:destroy, user) }
@@ -65,6 +76,14 @@ describe Ability do
       it { should be_able_to(:destroy, time_sheet) }
     end
 
+    context 'as a team leader' do
+      let(:ability) { Ability.new(team_leader) }
+
+      it { should be_able_to(:read, time_sheet) }
+      it { should be_able_to(:update, time_sheet) }
+      it { should be_able_to(:destroy, time_sheet) }
+    end
+
     context 'as the owner' do
       let(:ability) { Ability.new(user) }
 
@@ -83,34 +102,116 @@ describe Ability do
     end
   end
 
-  describe 'SingleEntry' do
+  describe 'TimeEntry' do
 
-    let(:single_entry) { FactoryGirl.create(:single_entry, time_sheet: user.sheets.first) }
+    let(:time_entry) { FactoryGirl.create(:time_entry, time_sheet: user.time_sheets.first) }
 
     context 'as a user with the administration role' do
       let(:ability) { Ability.new(admin) }
 
-      it { should be_able_to(:read, single_entry) }
-      it { should be_able_to(:update, single_entry) }
-      it { should be_able_to(:create, SingleEntry) }
-      it { should be_able_to(:destroy, single_entry) }
+      it { should be_able_to(:read, time_entry) }
+      it { should be_able_to(:update, time_entry) }
+      it { should be_able_to(:create, TimeEntry) }
+      it { should be_able_to(:destroy, time_entry) }
+    end
+
+    context 'as a team leader' do
+      let(:ability) { Ability.new(team_leader) }
+
+      it { should be_able_to(:read, time_entry) }
+      it { should be_able_to(:update, time_entry) }
+      it { should be_able_to(:create, TimeEntry) }
+      it { should be_able_to(:destroy, time_entry) }
     end
 
     context 'as the owner' do
       let(:ability) { Ability.new(user) }
 
-      it { should be_able_to(:read, single_entry) }
-      it { should be_able_to(:update, single_entry) }
-      it { should be_able_to(:create, SingleEntry) }
-      it { should be_able_to(:destroy, single_entry) }
+      it { should be_able_to(:read, time_entry) }
+      it { should be_able_to(:update, time_entry) }
+      it { should be_able_to(:create, TimeEntry) }
+      it { should be_able_to(:destroy, time_entry) }
     end
 
     context 'as another user' do
       let(:ability) { Ability.new(FactoryGirl.create(:user)) }
 
-      it { should_not be_able_to(:read, single_entry) }
-      it { should_not be_able_to(:update, single_entry) }
-      it { should_not be_able_to(:destroy, single_entry) }
+      it { should_not be_able_to(:read, time_entry) }
+      it { should_not be_able_to(:update, time_entry) }
+      it { should_not be_able_to(:destroy, time_entry) }
+    end
+  end
+
+  describe 'Absence' do
+
+    let(:absence) { FactoryGirl.create(:absence, time_sheet: user.time_sheets.first) }
+
+    context 'as a user with the administration role' do
+      let(:ability) { Ability.new(admin) }
+
+      it { should be_able_to(:read, absence) }
+      it { should be_able_to(:update, absence) }
+      it { should be_able_to(:create, Absence) }
+      it { should be_able_to(:destroy, absence) }
+    end
+
+    context 'as a team leader' do
+      let(:ability) { Ability.new(team_leader) }
+
+      it { should be_able_to(:read, absence) }
+      it { should be_able_to(:update, absence) }
+      it { should be_able_to(:create, Absence) }
+      it { should be_able_to(:destroy, absence) }
+    end
+
+    context 'as the owner' do
+      let(:ability) { Ability.new(user) }
+
+      it { should be_able_to(:read, absence) }
+      it { should_not be_able_to(:update, absence) }
+      it { should_not be_able_to(:create, Absence) }
+      it { should_not be_able_to(:destroy, absence) }
+    end
+
+    context 'as another user' do
+      let(:ability) { Ability.new(FactoryGirl.create(:user)) }
+
+      it { should_not be_able_to(:read, absence) }
+      it { should_not be_able_to(:update, absence) }
+      it { should_not be_able_to(:create, Absence) }
+      it { should_not be_able_to(:destroy, absence) }
+    end
+  end
+
+  describe 'Adjustment' do
+
+    let(:adjustment) { FactoryGirl.create(:adjustment, time_sheet: user.time_sheets.first) }
+
+    context 'as a user with the administration role' do
+      let(:ability) { Ability.new(admin) }
+
+      it { should be_able_to(:read, adjustment) }
+      it { should be_able_to(:update, adjustment) }
+      it { should be_able_to(:create, Adjustment) }
+      it { should be_able_to(:destroy, adjustment) }
+    end
+
+    context 'as the owner' do
+      let(:ability) { Ability.new(user) }
+
+      it { should be_able_to(:read, adjustment) }
+      it { should_not be_able_to(:update, adjustment) }
+      it { should_not be_able_to(:create, Adjustment) }
+      it { should_not be_able_to(:destroy, adjustment) }
+    end
+
+    context 'as another user' do
+      let(:ability) { Ability.new(FactoryGirl.create(:user)) }
+
+      it { should_not be_able_to(:read, adjustment) }
+      it { should_not be_able_to(:update, adjustment) }
+      it { should_not be_able_to(:create, Adjustment) }
+      it { should_not be_able_to(:destroy, adjustment) }
     end
   end
 
@@ -143,6 +244,26 @@ describe Ability do
       it { should_not be_able_to(:update, employment) }
       it { should_not be_able_to(:create, Employment) }
       it { should_not be_able_to(:destroy, employment) }
+    end
+  end
+
+  describe 'Team' do
+    context 'as admin' do
+      let(:ability) { Ability.new(admin) }
+
+      it { should be_able_to(:read, team) }
+      it { should be_able_to(:update, team) }
+      it { should be_able_to(:create, Team) }
+      it { should be_able_to(:destroy, team) }
+    end
+
+    context 'as team leader' do
+      let(:ability) { Ability.new(team_leader) }
+
+      it { should be_able_to(:read, team) }
+      it { should_not be_able_to(:update, team) }
+      it { should_not be_able_to(:create, Team) }
+      it { should_not be_able_to(:destroy, team) }
     end
   end
 end

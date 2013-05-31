@@ -4,15 +4,45 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
 
   around_filter :set_time_zone
+  before_filter :ensure_logged_in
 
-  unless Rails.env.test?
-    rescue_from CanCan::AccessDenied do |error|
-      flash[:error] = error.message
-      redirect_to root_path
-    end
+  if Rails.env.staging? || Rails.env.production?
+    rescue_from Exception, with: :render_500
+    rescue_from ActionController::RoutingError, with: :render_404 # TODO: DOES NOT WITH RAILS 3.2 ANYMORE! Workarounds are ugly...
+    rescue_from ActionController::UnknownController, with: :render_404
+    rescue_from AbstractController::ActionNotFound, with: :render_404 # To prevent Rails 3.2.8 deprecation warnings
+    rescue_from ActiveRecord::RecordNotFound, with: :render_404
   end
+  rescue_from CanCan::AccessDenied, with: :render_403
+
+  layout proc { |controller| controller.request.xhr? ? nil : 'application' }
 
   private
+
+  def render_exception(status = 500, exception)
+    notify_airbrake(exception) if status >= 500
+    @exception = exception
+    @status = status
+    render template: "errors/error", formats: [:html], layout: 'application', status: @status
+  end
+
+  def render_403(exception = nil)
+    render_exception(403, exception)
+  end
+
+  def render_404(exception = nil)
+    render_exception(404, exception)
+  end
+
+  def render_500(exception = nil)
+    render_exception(500, exception)
+  end
+
+  def ensure_logged_in
+    if current_user.nil?
+      redirect_to new_session_path
+    end
+  end
 
   # U Can't touch this! Rails may leak zone to other request from another user in same thread
   # http://ilikestuffblog.com/2011/02/03/how-to-set-a-time-zone-for-each-request-in-rails/
@@ -23,6 +53,5 @@ class ApplicationController < ActionController::Base
   ensure
     Time.zone = old_time_zone
   end
-
 
 end

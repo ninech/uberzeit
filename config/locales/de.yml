@@ -1,0 +1,370 @@
+de:
+  errors:
+    e403:
+      title: 'Zugriff verweigert'
+      message: 'Sie haben keinen Zugriff auf diese Ressource.'
+    e404:
+      title: 'Oops.'
+      message: Die gewünschte Ressource konnte nicht gefunden werden.
+    e500:
+      title: 'Ouch.'
+      message: 'Es tut uns Leid, ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später noch einmal.<br>Wir wurden automatisch darüber informiert und arbeiten an einer Lösung.'
+  activerecord:
+    models:
+      employment: Anstellungsverhältnis
+      public_holiday: Feiertag
+      time_type: Zeittyp
+      absence: Absenz
+      adjustment: Anpassung
+    attributes:
+      time_entry:
+        start_time: Von
+        end_time: Bis
+      timer:
+        start_time: Von
+        end_time: Bis
+      time_type:
+        name: Bezeichnung
+        acquired_as: Wird erfasst als
+        bonus_factor: Zeitzuschlagsfaktor
+        confirm_delete: Löschen bestägigen
+        time_types: Zeittypen
+        is_vacation: Wird von Ferien abgezählt
+        icon: Icon
+        color_index: Farbe
+        exclude_from_calculation: Ausgeschlossen von Berechnungen
+      adjustment:
+        date: Datum
+        user: Benutzer
+        time_type: Zeittyp
+        duration: Wert
+        duration_in_work_days: Wert in Arbeitstagen
+        duration_in_hours: Wert in Stunden
+        label: Bezeichnung
+      employment:
+        workload: Arbeitspensum
+        start_date: Start
+        end_date: Ende
+      public_holiday:
+        name: Name
+        start_date: Datum
+        daypart: Dauer
+    errors:
+      models:
+        time_entry:
+          attributes:
+            ends:
+              after: Endzeit muss nach Startzeit sein
+        absence:
+          attributes:
+            end_date:
+              on_or_after: muss an oder nach dem Startdatum liegen
+        recurring_schedule:
+          attributes:
+            ends_date:
+              invalid_date: ist ein ungültiges Datum
+        public_holiday:
+          attributes:
+            start_date:
+              invalid_datetime: ist ein ungültiges Datum
+        employment:
+          error_outside_1_and_100_percent: muss innerhalb 1 und 100 Prozent liegen
+          attributes:
+            start_date:
+              invalid_datetime: ist ein ungültiges Datum
+            end_date:
+              on_or_after: muss an oder nach dem Startdatum liegen
+            base:
+              there_is_another_open_ended_entry: Es existiert schon ein unbefristerer Eintrag.
+              overlaps_with_another_entry: Der gewählte Zeitraum überschneidet sich mit einem anderen Eintrag.
+              cannot_delete_single_employment: Das Löschen des letzten Anstellungsverhältnis ist nicht möglich.
+        adjustment:
+          attributes:
+            date:
+              invalid_date: ist ein ungültiges Datum
+  model_successfully_created: "%{model} wurde erfolgreich erstellt."
+  model_successfully_updated: "%{model} wurde erfolgreich aktualisiert."
+  model_successfully_deleted: "%{model} wurde erfolgreich gelöscht."
+  time:
+    formats:
+      default: '%H:%M'
+      weekday: '%a, %d. %b'
+  date:
+    formats:
+      default: '%d.%m.%Y'
+      long: '%A, %d. %B %Y'
+      weekday: '%a, %d. %b'
+      medium: '%a, %d. %B %Y'
+  js:
+    pickadate:
+      firstDay: 1
+      format: dddd, dd. mmmm yyyy
+
+  number:
+    format:
+      separator: ! '.'
+
+  whole_day: Ganzer Tag
+  first_half_day: Vormittags
+  second_half_day: Nachmittags
+
+  shared:
+    event_legend:
+      public_holiday: Feiertag
+    absences_tooltip:
+      edit: Bearbeiten
+      first_half_day: Vormittags
+      second_half_day: Nachmittags
+      recurring_interval_until_date: "Wiederholung: Alle %{interval} Wochen bis zum %{ends}."
+      recurring_interval_endless: "Wiederholung: Alle %{interval} Wochen"
+      add_absence: 'Absenz hinzufügen'
+    public_holiday_tooltip:
+      first_half_day: Vormittags
+      second_half_day: Nachmittags
+    user_select:
+      user: Mitarbeiter
+  time_types:
+    edit:
+      edit_time_type: Zeittyp bearbeiten
+    index:
+      new_time_type: Neuer Zeittyp
+      work: Arbeit
+      absence: Absenz
+      confirm_delete: Löschen?
+    form:
+      back: Zurück
+      acquired_as: Wird erfasst als
+      work: Arbeit
+      absence: Absenz
+      clear: zurücksetzen
+    new:
+      create_time_type: Zeittyp erstellen
+  absences:
+    top_buttons:
+      add_absence: Absenz hinzufügen
+    recurring_schedule_sub_form:
+      recurring_active: Wiederholen...
+      repeat_every: Wiederhole jede
+      weeks_until: Woche bis
+      repeat: Wiederholen
+    new:
+      add_absence: Absenz hinzufügen
+    form:
+      create_absence: Absenz erstellen
+      time_type: Zeittyp
+      start_date: Start
+      end_date: Ende
+      daypart: Dauer
+      delete: Löschen
+    edit:
+      edit_absence: Absenz bearbeiten
+  users:
+    index:
+      list_of_users: Liste der Benutzer
+      user: Benutzer
+    show:
+      employments: Anstellungsverhältnisse
+      add_employment: Neues Anstellungsverhältnis
+      open-ended: unbefristet
+      confirm_delete: Löschen?
+  navigation:
+    manage: Verwalten
+    absences: Absenzen
+    timesheet: Zeiterfassung
+    reports: Berichte
+    sub:
+      manage:
+        public_holidays: Feiertage
+        time_types: Zeittypen
+        users: Benutzer
+        adjustments: Anpassungen
+      reports:
+        overview: Übersicht
+        my_work: Meine Arbeitszeit
+        my_absence: Meine Absenzen
+        work: Arbeitszeit Mitarbeiter
+        absences: Absenzen Mitarbeiter
+        vacation: Ferien Mitarbeiter
+  summaries:
+    formats:
+      date: '%e. %a.'
+      month: '%B'
+    overview:
+      index:
+        formats:
+          hours_and_minutes_html: '%{hours} Stunden und %{minutes} Minuten'
+          work_days_html: '%{work_days} Arbeitstage'
+        panels:
+          uberstunden:
+            info1_html: 'Dein aktuelles Überstunden-Saldo beträgt'
+            info2_html: 'Das sind'
+            info1_alt_html: 'Du hast im Moment'
+            emphasis1_alt_html: 'keine Überstunden'
+          month:
+            info1_html: 'Du hast im %{month} bereits'
+            emphasis1_html: '%{percent} der Sollzeit'
+            info2_html: 'erreicht. Das entspricht einer Arbeitszeit von'
+          vacation:
+            info1_html: 'Du hast bisher'
+            emphasis1_html: '%{redeemed} Ferientage eingetragen'
+            info2_html: 'und noch'
+            emphasis2_html: '%{remaining} Ferientage zu Gute!'
+          team:
+            title: 'Team Absenzen'
+            time_frame: 'der nächsten 7 Tage'
+          personal:
+            title: 'Deine Absenzen'
+            time_frame: 'der nächsten 7 Tage'
+    work:
+      effective_worked: BLUB
+      columns:
+        effective_worked: Arbeitszeit
+        absent: Absenzzeit
+        time_bonuses: Zeitzuschläge
+        running_overtime: Laufende Überzeit
+        target: Sollzeit
+        overtime: Überzeit
+        adjustments: Anpassungen
+      work:
+        year:
+          title: Arbeitszeit Mitarbeiter
+          unit: in Stunden:Minuten
+        month:
+          title: Arbeitszeit Mitarbeiter
+          unit: in Stunden:Minuten
+      my_work:
+        year:
+          title: Meine Arbeitszeit
+          unit: in Stunden:Minuten
+        month:
+          title: Meine Arbeitszeit
+          unit: in Stunden:Minuten
+    absence:
+      my_absence:
+        year:
+          title: Meine Absenzen
+          unit: in Tagen
+          total: Total
+          remaining: Verbleibend
+        month:
+          title: Meine Absenzen
+          unit: in Tagen
+          total: Total
+      absence:
+        year:
+          title: Absenzen Mitarbeiter
+          unit: in Tagen
+        month:
+          title: Absenzen Mitarbeiter
+          unit: in Tagen
+        calendar:
+          month_in_year: '%B %Y'
+          title: Absenzen Mitarbeiter
+          unit: ''
+    vacation:
+      vacation:
+        year:
+          title: Ferien Mitarbeiter
+          unit: in Tagen
+          taken: 'Beanspruchte Ferientage im Jahr %{year}'
+          remaining: 'Noch verfügbare Ferientage in %{year}'
+        month:
+          title: Ferien Mitarbeiter
+          unit: in Tagen
+          taken: 'Beansprucht im %{month} %{year}'
+          remaining: 'Noch verfügbare Ferientage nach %{month} %{year}'
+
+    shared:
+      users_absence_table:
+          total: Total
+      header:
+        month: Monat
+        year: Jahr
+        calendar: Kalender
+        everyone: Alle
+        show: Anzeigen
+        users: Mitarbeiter
+        time_frame: Zeitraum
+  time_entries:
+    edit:
+      edit_time: 'Zeit bearbeiten'
+    new:
+      add_entry: Zeit hinzufügen
+    form:
+      cancel: Abbrechen
+      add_entry: Neuer Eintrag
+      start_timer: Timer starten
+      delete: Löschen
+      save: Speichern
+  timers:
+    edit:
+      edit_time: 'Zeit bearbeiten'
+    form:
+      cancel: Abbrechen
+      add_entry: Neuer Eintrag
+      start_timer: Timer starten
+      delete: Löschen
+      save: Speichern
+  public_holidays:
+    edit:
+      title: Feiertag bearbeiten
+    index:
+      title: 'Feiertage im Jahr %{year}'
+      new_public_holiday: Neuer Feiertag
+      confirm_delete: Wirklich löschen?
+    form:
+      back: Zurück
+    new:
+      title: Feiertag hinzufügen
+  adjustments:
+    edit:
+      title: Anpassung bearbeiten
+    index:
+      title: 'Anpassungen im Jahr %{year}'
+      new_adjustment: Neue Anpassung
+      confirm_delete: Wirklich löschen?
+      unit_work_days: Arbeitstage
+      unit_hours: Stunden
+    form:
+      back: Zurück
+    new:
+      title: Anpassung hinzufügen
+  time_sheets:
+    top_buttons:
+      add_time: Zeit hinzufügen
+    add_time_modal:
+      add_time: Zeit hinzufügen
+    show:
+      today: Heute
+      overtime: Überzeit
+      total: Total
+      add_time_now: Zeit jetzt eintragen
+      no_entries_yet_message: Noch keine Einträge vorhanden
+      timer_running_warning:
+        one: 'An dem folgenden Tag ist noch ein Timer aktiv:'
+        other: "An den folgenden Tagen sind noch Timer aktiv:"
+      tooltip:
+        starts: 'Beginnt am'
+        ends: 'Endet am'
+      time_bonus: Zeitzuschlag
+      time_bonuses: Zeitzuschläge
+      week_number: KW
+
+  employments:
+    edit:
+      edit_employment: Anstellungsverhältnis bearbeiten
+    new:
+      add_employment: Anstellungsverhältnis hinzufügen
+    form:
+      back: Zurück
+    index:
+      employments: Anstellungsverhältnisse
+      add_employment: Neues Anstellungsverhältnis
+      open_ended: unbefristet
+      confirm_delete: Löschen?
+
+  not_logged_in: 'Sie sind nicht eingeloggt.'
+
+  layouts:
+    footer:
+      info-rule: 'Stunden müssen von allen Mitarbeitern bis zum Ende der Kalenderwoche erfasst sein.'

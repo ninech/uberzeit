@@ -1,0 +1,11 @@
+<div class="top-buttons">
+  <% if @timer && @timer.start_date.to_date != @day %>
+  <a href="<%= url_for(action: :show, date: @timer.start_date.to_date) %>" class="button"><i class="icon-spin icon-repeat"></i> <%= t '.timer' %></a>
+  <% end %>
+
+  <a href="#" class="button remote-reveal" data-reveal-id="add-time-modal" data-reveal-url="<%= new_time_sheet_time_entry_path(@time_sheet) %>">
+    <%= icon(:plus) %>
+    <%= t '.add_time' %>
+  </a>
+
+</div>

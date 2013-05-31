@@ -4,10 +4,7 @@ namespace :uberzeit do
 
     desc 'Synchronize the configured ldap service'
     task :ldap => :environment do
-      User.all.each do |user|
-        puts "Synchronizing #{user.uid}"
-        LdapSync.sync_person(user.uid)
-      end
+      LdapSync.all
     end
 
   end

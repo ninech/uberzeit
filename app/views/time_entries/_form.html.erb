@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="small-12 columns">
+    <%= f.collection_select :time_type_id, @time_types, :id, :name %>
+  </div>
+</div>
+
+<% if f.object.start_date != f.object.end_date && !f.object.end_date.blank? %>
+
+  <div class="row">
+    <div class="small-2 columns">
+      <%= f.label :start_time %>
+    </div>
+    <div class="small-7 columns">
+      <%= datefield(f, :start_date, false, f.object.start_date, :date) %>
+    </div>
+    <div class="small-3 columns">
+      <%= f.text_field :start_time, label: false, class: 'time' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="small-2 columns">
+      <%= f.label :end_time %>
+    </div>
+    <div class="small-7 columns">
+      <%= datefield(f, :end_date, false, f.object.end_date, :date) %>
+    </div>
+    <div class="small-3 columns">
+      <%= f.text_field :end_time, label: false, class: 'time' %>
+    </div>
+  </div>
+
+<% else %>
+  <div class="row">
+    <div class="small-4 columns">
+      <%= f.hidden_field :start_date %>
+      <%= f.text_field :start_time, class: 'time' %>
+    </div>
+    <div class="small-4 columns">
+      <%= f.text_field :end_time, class: 'time' %>
+    </div>
+    <div class="small-4 columns time-difference">
+
+    </div>
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="small-12 columns">
+    <%= f.submit t('.save'), id: 'time_entry_submit', class: 'primary medium button' %>
+    <%= link_to t('.cancel'), '#', class: 'close-reveal-modal link' %>
+    <% if @time_entry && @time_entry.persisted? %>
+      <%= link_to t('.delete'), time_sheet_time_entry_path(@time_sheet, @time_entry), method: :delete, remote: true, class: 'delete-time-entry-link' %>
+    <% end %>
+  </div>
+</div>
+
