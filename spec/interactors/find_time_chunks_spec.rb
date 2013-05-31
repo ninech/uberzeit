@@ -3,8 +3,8 @@ require 'spec_helper'
 describe FindTimeChunks do
   let(:time_entries) do
     [
-      FactoryGirl.build(:time_entry, start_time: '2013-07-22 08:00:00', end_time: '2013-07-22 18:00:00', time_type: :work),
-      FactoryGirl.build(:time_entry, start_time: '2013-12-31 23:00:00', end_time: '2014-01-01 12:00:00', time_type: :work)
+      FactoryGirl.build(:time_entry, starts: '2013-07-22 08:00:00', ends: '2013-07-22 18:00:00', time_type: :work),
+      FactoryGirl.build(:time_entry, starts: '2013-12-31 23:00:00', ends: '2014-01-01 12:00:00', time_type: :work)
     ]
   end
 
