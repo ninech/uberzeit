@@ -112,6 +112,12 @@ describe TimeEntry do
       time_entry.valid?
       time_entry.should have(1).errors_on(:start_date)
     end
+
+    it 'sets the end date to the start date if end time is set and no end date was set' do
+      Timecop.freeze('2013-07-22')
+      time_entry = TimeEntry.new(start_date: '2013-07-20', start_time: '09:00', end_time: '12:00')
+      time_entry.ends.should eq('2013-07-20 12:00:00 +0200'.to_time)
+    end
   end
 
   context 'timer' do
