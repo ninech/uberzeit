@@ -29,7 +29,7 @@ module Uberzeit
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
 
     # This is the default time zone which is set for each user at creation
-    #config.time_zone = 'Bern'
+    # config.time_zone = 'Bern'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     #config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
