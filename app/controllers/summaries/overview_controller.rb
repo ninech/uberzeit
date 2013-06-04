@@ -7,11 +7,14 @@ class Summaries::OverviewController < ApplicationController
 
     @uberzeit = time_sheet.overtime(range_of_year_till_yesterday)
 
-    planned_work = time_sheet.planned_work(range_of_current_month)
-    remaining_work = -1 * time_sheet.overtime(range_of_current_month)
+    overtime_till_today = time_sheet.overtime(range_of_current_month_till_today)
+    planned_work_till_today = time_sheet.planned_work(range_of_current_month_till_today)
+    accomplished_work_till_today = overtime_till_today + planned_work_till_today
 
-    @month_total_work = planned_work - remaining_work
-    @month_percent_done = 100 * @month_total_work / planned_work
+    planned_work_whole_month = time_sheet.planned_work(range_of_current_month)
+
+    @month_total_work = accomplished_work_till_today
+    @month_percent_done = 100 * @month_total_work / planned_work_whole_month
 
     @personal_absences = get_personal_absences
     @team_absences = Hash[get_team_absences.sort_by { |date, _| date }]
@@ -57,6 +60,10 @@ class Summaries::OverviewController < ApplicationController
 
   def range_of_current_month
     @range_of_current_month ||= Date.today.at_beginning_of_month..Date.today.at_end_of_month
+  end
+
+  def range_of_current_month_till_today
+    @range_of_current_month_till_today ||= Date.today.at_beginning_of_month..Date.today
   end
 
   def range_of_year_till_yesterday
