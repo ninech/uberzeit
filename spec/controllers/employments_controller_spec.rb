@@ -103,7 +103,7 @@ describe EmploymentsController do
           end
 
           it 're-renders the :edit template' do
-            put :update, id: @employment, user_id: @employment.user, employment: FactoryGirl.attributes_for(:invalid_employment)
+            put :update, id: @employment, user_id: @employment.user, employment: FactoryGirl.attributes_for(:employment, workload: -100)
             response.should render_template :edit
           end
         end
@@ -128,11 +128,11 @@ describe EmploymentsController do
 
         context 'with invalid attributes' do
           it 'does not save the new employment' do
-            expect { post :create, user_id: @user, employment: FactoryGirl.attributes_for(:invalid_employment) }.to_not change(Employment,:count)
+            expect { post :create, user_id: @user, employment: FactoryGirl.attributes_for(:employment, workload: -100) }.to_not change(Employment,:count)
           end
 
           it 're-renders the :new template' do
-            post :create, user_id: @user, employment: FactoryGirl.attributes_for(:invalid_employment)
+            post :create, user_id: @user, employment: FactoryGirl.attributes_for(:employment, workload: -100)
             response.should render_template :new
           end
         end
