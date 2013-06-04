@@ -20,7 +20,7 @@ describe Summaries::OverviewController do
     describe 'GET "index"' do
       it 'assigns the correct instance variables' do
         get :index, user_id: user
-        assigns(:uberstunden).should_not be_nil
+        assigns(:uberzeit).should_not be_nil
         assigns(:month_total_work).should_not be_nil
         assigns(:month_percent_done).should_not be_nil
         assigns(:personal_absences).should_not be_nil

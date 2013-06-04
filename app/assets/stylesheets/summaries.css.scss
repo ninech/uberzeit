@@ -201,10 +201,10 @@
         opacity: 0.1;
         font-size: 200px;
       }
+    }
 
-      .center {
-        padding: 60px;
-      }
+    &.center {
+      padding-top: 50px !important;
     }
 
     &.callout {

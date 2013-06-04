@@ -5,7 +5,7 @@ class Summaries::OverviewController < ApplicationController
   def index
     time_sheet = @user.current_time_sheet
 
-    @uberstunden = time_sheet.overtime(range_of_year_till_yesterday)
+    @uberzeit = time_sheet.overtime(range_of_year_till_yesterday)
 
     planned_work = time_sheet.planned_work(range_of_current_month)
     remaining_work = -1 * time_sheet.overtime(range_of_current_month)

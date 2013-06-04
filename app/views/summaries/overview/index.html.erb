@@ -2,19 +2,21 @@
   <div class="large-12 columns">
     <div class="row">
       <div class="large-6 columns">
-        <div class="panel sensational callout">
-          <% if @uberstunden > 0 %>
+        <% if @uberzeit > 0 %>
+          <div class="panel sensational callout">
             <p><%= t('.panels.uberstunden.info1_html') %></p>
-            <p class="crazy lo"><%= awesome_hours_and_minutes(@uberstunden) %></p>
+            <p class="crazy lo"><%= awesome_hours_and_minutes(@uberzeit) %></p>
             <p><%= t('.panels.uberstunden.info2_html') %></p>
-            <p class="crazy yo"><%= awesome_work_days(@uberstunden) %>!</p>
-          <% else %>
-          <div class="center">
-            <p class="lo"><%= t '.panels.uberstunden.info1_alt_html' %></p>
-            <p class="crazy lo"><%= t '.panels.uberstunden.emphasis1_alt_html' %>.</p>
+            <p class="crazy yo"><%= awesome_work_days(@uberzeit) %>!</p>
           </div>
-          <% end %>
-        </div>
+        <% else %>
+          <% @underzeit = -1 * @uberzeit %>
+          <div class="panel sensational callout center">
+            <p><%= t('.panels.understunden.info1_html') %></p>
+            <p class="crazy lo"><%= awesome_hours_and_minutes(@underzeit) %></p>
+            <p><%= t('.panels.understunden.info2_html') %></p>
+          </div>
+        <% end %>
       </div>
       <div class="large-6 columns">
         <div class="panel sensational">
