@@ -34,8 +34,8 @@ describe Employment do
       employment.should_not be_valid
     end
 
-    it 'makes sure the workload is between 1 and 100' do
-      FactoryGirl.build(:employment, workload: 0).should_not be_valid
+    it 'makes sure the workload is between 0 and 100' do
+      FactoryGirl.build(:employment, workload: 0).should be_valid
       FactoryGirl.build(:employment, workload: 150).should_not be_valid
       FactoryGirl.build(:employment, workload: -5).should_not be_valid
       FactoryGirl.build(:employment, workload: 50).should be_valid
