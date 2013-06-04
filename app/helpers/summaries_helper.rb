@@ -115,4 +115,8 @@ module SummariesHelper
     end
     content_tag(:span, text, class: 'awesome', data: data)
   end
+
+  def given_name_with_one_lettered_last_name(user)
+    [user.given_name, "#{user.name.chars.first}."].compact.join(' ')
+  end
 end
