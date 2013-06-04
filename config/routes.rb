@@ -74,6 +74,9 @@ Uberzeit::Application.routes.draw do
 
   match '/auth/:provider/callback', to: 'sessions#create'
 
+  # API
+  mount UberZeit::API => '/'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

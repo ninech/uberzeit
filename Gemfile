@@ -67,6 +67,10 @@ gem 'uberlog',
   git: 'git@git.nine.ch:gems/uberlog',
   tag: '0.4.1'
 
+# API
+# http://www.youtube.com/watch?v=mqgiEQXGetI
+gem 'grape', git: 'git://github.com/intridea/grape.git'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'mysql2'

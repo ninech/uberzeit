@@ -51,6 +51,13 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
+  # In Rails, HTTP request tests would go into the spec/requests group. You may
+  # want your API code to go into app/api - you can match that layout under
+  # spec by adding the following in spec/spec_helper.rb.
+  config.include RSpec::Rails::RequestExampleGroup, type: :request, example_group: {
+    file_path: /spec\/api/
+  }
+
   Time.zone = 'Bern'
 
   config.before(:suite) do
