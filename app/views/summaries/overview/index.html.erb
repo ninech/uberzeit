@@ -40,7 +40,7 @@
             %>
               <div class="row entry">
                 <div class="user">
-                  <%= user.given_name %>
+                  <%= given_name_with_one_lettered_last_name(user) %>
                 </div>
                 <div class="date"><%= l date, format: :medium %> <%=raw "<small>#{absence_period(absence)}</small>" %></div>
                 <div class="absence label event-bg<%= color_index_of_element(absence) %>">
