@@ -53,6 +53,8 @@ de:
       models:
         time_entry:
           attributes:
+            starts:
+              invalid_datetime: ist ungültig
             ends:
               after: Endzeit muss nach Startzeit sein
         absence:
