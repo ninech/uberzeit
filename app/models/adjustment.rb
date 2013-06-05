@@ -45,8 +45,13 @@ class Adjustment < ActiveRecord::Base
     duration && duration.to_hours
   end
 
-  def duration_in_hours=(num_hours)
-    self.duration = num_hours.to_f.hours
+  def duration_in_hours=(hours)
+    self.duration =   if hours.to_s.index(':')
+                        num_hours, num_minutes = hours.split(':').map(&:to_f)
+                        num_hours.hours + num_minutes.minutes
+                      else
+                        hours.to_f.hours
+                      end
   end
 
   def to_s
