@@ -36,38 +36,27 @@ class RecurringSchedule < ActiveRecord::Base
     ends == 'counter'
   end
 
-  def start_date
-    entry.starts.to_date
+  def recurring_start_date
+    entry.start_date
   end
 
-  def start_time_of_associated_entry
-    if entry.starts.kind_of?(Date) # convert it to time for date entries
-      entry.starts.midnight
-    else
-      entry.starts
-    end
-  end
-
-  def end_date
+  def recurring_end_date
     if ends_on_counter?
-      start_date + interval.to_days * (ends_counter - 1)
+      recurring_start_date + interval.to_days * (ends_counter - 1)
     elsif ends_on_date?
-      ends_date.to_date
+      # make sure the recurring schedule end date is at least the end date of the associated entry
+      entry.end_date >= ends_date ? entry.end_date : ends_date
     else
-      nil
+      raise "No valid end condition for recurring schedule"
     end
   end
 
-  def range
-    (start_date..end_date)
+  def recurring_date_range
+    (recurring_start_date..recurring_end_date)
   end
 
   def interval
     weekly_repeat_interval.weeks
-  end
-
-  def duration
-    entry.duration
   end
 
   def has_exception_date_in_range?(exceptions, range)
@@ -75,23 +64,21 @@ class RecurringSchedule < ActiveRecord::Base
   end
 
   def occurrences(date_or_range)
-    occurrences_date_range = date_or_range.to_range.to_date_range
-    recurring_schedule_date_range = self.range.to_date_range
-
-    exceptions = exceptions_in_range_by_date(recurring_schedule_date_range)
+    find_in_date_range = date_or_range.to_range.to_date_range
+    exceptions = exceptions_in_range_by_date(recurring_date_range)
 
     occurrences = []
 
-    date_min = recurring_schedule_date_range.min
-    date_max = [recurring_schedule_date_range.max, occurrences_date_range.max].min
+    date_min = recurring_date_range.min
+    date_max = [recurring_date_range.max, find_in_date_range.max].min
     each_occurrence_between(date_min, date_max) do |date|
       next if has_exception_date_in_range?(exceptions, date...date+interval)
 
-      start_time = start_time_of_associated_entry.change(year: date.year, month: date.month, day: date.day)
-      end_time = start_time + duration
-      next unless (start_time..end_time).intersects_with_duration?(occurrences_date_range)
+      start_date = date
+      end_date = start_date + entry.num_days
+      next unless (start_date..end_date).intersects_with_duration?(find_in_date_range)
 
-      occurrences << start_time
+      occurrences << start_date
     end
 
     occurrences
