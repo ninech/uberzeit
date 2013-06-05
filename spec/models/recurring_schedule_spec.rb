@@ -20,7 +20,7 @@ describe RecurringSchedule do
   end
 
   it 'returns the entry it is associated to' do
-    entry = FactoryGirl.build(:time_entry)
+    entry = FactoryGirl.build(:absence)
     FactoryGirl.build(:active_recurring_schedule, enterable: entry).entry.should eq(entry)
   end
 
@@ -60,21 +60,11 @@ describe RecurringSchedule do
     let(:date) { '2013-03-14'.to_date }
     let(:entry) { FactoryGirl.build(:absence, start_date: date, end_date: date) }
 
-    it 'returns the occurrences as start times with time zone support' do
-      recurring_schedule = FactoryGirl.build(:active_recurring_schedule, enterable: entry)
-      recurring_schedule.occurrences(date).each do |occurrence|
-        occurrence.should be_kind_of(ActiveSupport::TimeWithZone)
-      end
-    end
+    it 'ignores the repeating character of an entry when the ends date is BEFORE the end date of the absence' do
+      recurring_schedule = FactoryGirl.build(:active_recurring_schedule, enterable: entry, ends: 'date', ends_date: entry.end_date - 42.days)
 
-    context 'time entries' do
-      it 'returns the time independent of the daylight saving time' do
-        time = Time.zone.parse('2013-01-20 08:00:00')
-        time_entry = FactoryGirl.build(:time_entry, starts: time, ends: time + 2.hours)
-        recurring_schedule = FactoryGirl.build(:active_recurring_schedule, enterable: time_entry, ends: 'date', ends_date: '2014-01-01')
-        occurence_start_time = recurring_schedule.occurrences('2013-07-21'.to_date).first
-        occurence_start_time.strftime('%X').should eq(time.strftime('%X'))
-      end
+      occurrences = recurring_schedule.occurrences('2013-01-01'.to_date..'2013-12-31'.to_date)
+      occurrences.should eq([entry.end_date])
     end
 
     context 'with weekly repeats' do
