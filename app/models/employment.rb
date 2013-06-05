@@ -6,8 +6,8 @@ class Employment < ActiveRecord::Base
   attr_accessible :end_date, :start_date, :workload, :user
 
   validates_presence_of :user, :start_date, :workload
-  validates_inclusion_of  :workload, :in => 1..100,
-                          :message => I18n.t('.error_outside_1_and_100_percent', scope: [:activerecord, :errors, :models, :employment])
+  validates_numericality_of :workload, greater_than_or_equal_to: 0, less_than_or_equal_to: 100
+
 
   validates_datetime :start_date
   validates_datetime :end_date, on_or_after: :start_date, unless: :open_ended?
