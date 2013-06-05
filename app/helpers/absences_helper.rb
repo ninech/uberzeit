@@ -76,7 +76,7 @@ module AbsencesHelper
     absence_object = absence.parent
 
     range = if absence_object.recurring?
-              (absence.starts..absence.starts+absence_object.duration).to_date_range
+              (absence.starts..absence.ends).to_date_range
             else
               absence_object.range
             end
