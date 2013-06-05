@@ -16,7 +16,7 @@ class RecurringSchedule < ActiveRecord::Base
 
   validates_presence_of :weekly_repeat_interval, if: :active?
 
-  validates_date :ends_date, if: lambda { active? && ends_on_date? }
+  validates_date :ends_date, on_or_after: lambda { |rs| rs.entry.end_date }, if: lambda { active? && ends_on_date? }
 
   validates_uniqueness_of :enterable_id, scope: :enterable_type
 

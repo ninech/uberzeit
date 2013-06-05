@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe RecurringSchedule do
 
+  let(:date) { '2013-03-14'.to_date }
+  let(:entry) { FactoryGirl.build(:absence, start_date: date, end_date: date) }
+
   it 'has a valid factory' do
     FactoryGirl.build(:recurring_schedule).should be_valid
   end
@@ -53,12 +56,14 @@ describe RecurringSchedule do
         FactoryGirl.build(:active_recurring_schedule, ends: 'date', ends_date: '1000 B.C.').should_not be_valid
         FactoryGirl.build(:active_recurring_schedule, ends: 'date', ends_date: '2013-07-20').should be_valid
       end
+
+      it 'enforces that the end date is on or after the end date of the associated entry'  do
+        FactoryGirl.build(:active_recurring_schedule, enterable: entry, ends: 'date', ends_date: entry.end_date - 1.day).should_not be_valid
+      end
     end
   end
 
   context '#occurrences' do
-    let(:date) { '2013-03-14'.to_date }
-    let(:entry) { FactoryGirl.build(:absence, start_date: date, end_date: date) }
 
     it 'ignores the repeating character of an entry when the ends date is BEFORE the end date of the absence' do
       recurring_schedule = FactoryGirl.build(:active_recurring_schedule, enterable: entry, ends: 'date', ends_date: entry.end_date - 42.days)

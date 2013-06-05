@@ -63,6 +63,7 @@ de:
           attributes:
             ends_date:
               invalid_date: ist ein ungültiges Datum
+              on_or_after: ist ungültig
         public_holiday:
           attributes:
             start_date:
