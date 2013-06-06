@@ -1,9 +1,6 @@
 $(document)
   .foundation('reveal', {
-    closeOnBackgroundClick: false,
-    opened: (e) ->
-      if e.target.id == 'add-time-modal'
-        $('#time_entry_start_time').val(moment().format('HH:mm'))
+    closeOnBackgroundClick: false
   })
   .foundation('tooltips')
 
