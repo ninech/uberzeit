@@ -86,6 +86,10 @@ group :development, :test do
   gem 'i18n-missing_translations'
   gem 'capistrano_database_yml'
   gem 'timecop'
+  gem 'phantomjs'
+  # gem 'poltergeist', git: 'git://github.com/jonleighton/poltergeist.git', branch: 'master'
+  gem 'database_cleaner'
+  gem 'launchy'
 end
 
 group :development do

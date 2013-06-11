@@ -76,7 +76,7 @@ module AbsencesHelper
     absence_object = absence.parent
 
     range = if absence_object.recurring?
-              (absence.starts..absence.starts+absence_object.duration).to_date_range
+              (absence.starts..absence.ends).to_date_range
             else
               absence_object.range
             end
@@ -91,7 +91,7 @@ module AbsencesHelper
   def absence_recurring(absence)
     if absence.recurring_schedule.active?
       if absence.recurring_schedule.ends_on_date?
-        t('.recurring_interval_until_date', { interval: absence.recurring_schedule.weekly_repeat_interval, ends: l(absence.recurring_schedule.end_date) })
+        t('.recurring_interval_until_date', { interval: absence.recurring_schedule.weekly_repeat_interval, ends: l(absence.recurring_schedule.ends_date) })
       else
         t('.recurring_interval_endless', { interval: absence.recurring_schedule.weekly_repeat_interval })
       end
