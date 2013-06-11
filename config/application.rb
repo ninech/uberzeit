@@ -69,6 +69,13 @@ module Uberzeit
       UberZeit::Config[:vacation_per_year] = 25.days
     end
 
+    config.middleware.use Rack::Cors, debug: true do
+      allow do
+        origins 'http://localhost:9292'
+        resource '*', headers: ['content-type'], methods: [:get, :post, :options], max_age: 0
+      end
+    end
+
 =begin
     # general
 

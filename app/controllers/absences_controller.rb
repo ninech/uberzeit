@@ -23,6 +23,8 @@ class AbsencesController < ApplicationController
     PublicHoliday.in_year(@year).each do |public_holiday|
       @public_holidays[public_holiday.start_date.to_s] = public_holiday
     end
+
+    respond_with(@absences)
   end
 
   def new
