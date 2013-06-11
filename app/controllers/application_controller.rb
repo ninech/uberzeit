@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   include SessionsHelper
 
+  before_filter :cors
   around_filter :set_time_zone
   before_filter :ensure_logged_in
 
@@ -16,6 +17,15 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied, with: :render_403
 
   layout proc { |controller| controller.request.xhr? ? nil : 'application' }
+
+  def cors
+    headers['Access-Control-Allow-Origin']  = %w{http://localhost:9292}.join(' ')
+    headers['Access-Control-Allow-Methods'] = %w{GET POST PUT DELETE}.join(',')
+    headers['Access-Control-Allow-Headers'] = %w{Origin Accept Content-Type X-Requested-With X-CSRF-Token}.join(',')
+    headers['Access-Control-Allow-Credentials'] =
+    headers['Access-Control-Max-Age'] = '0'
+    head(:ok) if request.request_method == 'OPTIONS'
+  end
 
   private
 

@@ -1,6 +1,8 @@
 Uberzeit::Application.routes.draw do
 
 
+  match '*all' => 'application#cors', constraints: {:method => 'OPTIONS'}
+
   root :to => 'sessions#new'
 
   resources :time_sheets, only: [:show] do
