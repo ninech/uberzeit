@@ -15,6 +15,8 @@ module UberZeit
     #  password = 'apiaccess42'
     #end
 
+    add_swagger_documentation
+
     before do
       authenticate! # authenticate all api requests
       Time.zone = current_user.time_zone if current_user.time_zone
