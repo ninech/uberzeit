@@ -7,6 +7,14 @@ GIT
       i18n
 
 GIT
+  remote: git://github.com/intridea/grape-entity.git
+  revision: 97beee528bdb98ed5c6a18c139dafcf102273936
+  specs:
+    grape-entity (0.3.0)
+      activesupport
+      multi_json (>= 1.3.2)
+
+GIT
   remote: git://github.com/intridea/grape.git
   revision: 948696f459dccd5a8f3ec3211b00be0b792719e0
   specs:
@@ -371,6 +379,7 @@ DEPENDENCIES
   font-awesome-rails
   foundation_rails_helper
   grape!
+  grape-entity!
   i18n-js!
   i18n-missing_translations
   jbuilder

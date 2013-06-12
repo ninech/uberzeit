@@ -70,6 +70,7 @@ gem 'uberlog',
 # API
 # http://www.youtube.com/watch?v=mqgiEQXGetI
 gem 'grape', git: 'git://github.com/intridea/grape.git'
+gem 'grape-entity', git: 'git://github.com/intridea/grape-entity.git'
 
 group :development, :test do
   gem 'sqlite3'
