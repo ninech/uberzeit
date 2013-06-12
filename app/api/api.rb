@@ -1,7 +1,6 @@
-require_relative 'validators/time_type_for_timer'
+require_relative 'api/validators/time_type_for_timer'
 
 class API < Grape::API
-  prefix 'api'
   version 'v1', using: :header, vendor: 'nine.ch'
 
   format :json
@@ -32,7 +31,6 @@ class API < Grape::API
   #
   # Exceptions
   #
-  # more verbose validation exception response
   rescue_from Grape::Exceptions::Validation do |e|
     Rack::Response.new({
       'status' => e.status,
