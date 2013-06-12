@@ -20,7 +20,8 @@ class ApplicationController < ActionController::Base
   layout proc { |controller| controller.request.xhr? ? nil : 'application' }
 
   def cors
-    headers['Access-Control-Allow-Origin']  = %w{http://localhost:9292}.join(' ')
+    return unless request.headers["HTTP_ORIGIN"]
+    headers['Access-Control-Allow-Origin']  = request.headers['HTTP_ORIGIN'] if UberZeit::Config.ubertrack_hosts.include?(request.headers['ORIGIN'])
     headers['Access-Control-Allow-Methods'] = %w{GET POST PUT DELETE}.join(',')
     headers['Access-Control-Allow-Headers'] = %w{Origin Accept Content-Type X-Requested-With X-CSRF-Token}.join(',')
     headers['Access-Control-Allow-Credentials'] = 'true'
