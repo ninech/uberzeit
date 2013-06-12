@@ -62,6 +62,8 @@ gem 'i18n-js', :git => 'git://github.com/fnando/i18n-js.git', :branch => 'master
 
 gem 'simple-navigation'
 
+gem 'rack-cors'
+
 # Logging
 gem 'uberlog',
   git: 'git@git.nine.ch:gems/uberlog',

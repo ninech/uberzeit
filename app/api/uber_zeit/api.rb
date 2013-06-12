@@ -2,15 +2,18 @@ require_relative 'validators/time_type_for_timer'
 
 module UberZeit
   class API < Grape::API
+
     prefix 'api'
 
     format :json
 
     version 'v1', using: :header, vendor: 'nine.ch'
 
-    http_basic do |username, password|
-      password = 'apiaccess42'
-    end
+    logger Rails.logger
+
+    #http_basic do |username, password|
+    #  password = 'apiaccess42'
+    #end
 
     before do
       authenticate! # authenticate all api requests

@@ -1,7 +1,7 @@
 Uberzeit::Application.routes.draw do
 
 
-  match '*all' => 'application#cors', constraints: {:method => 'OPTIONS'}
+  #match '*all' => 'application#cors', constraints: {:method => 'OPTIONS'}
 
   root :to => 'sessions#new'
 

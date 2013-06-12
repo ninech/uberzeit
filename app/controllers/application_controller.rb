@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
 
   include SessionsHelper
 
-  before_filter :cors
   around_filter :set_time_zone
   before_filter :ensure_logged_in
   after_filter  :set_csrf_cookie_for_cors
@@ -18,22 +17,6 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied, with: :render_403
 
   layout proc { |controller| controller.request.xhr? ? nil : 'application' }
-
-  def cors
-    return unless request.headers["HTTP_ORIGIN"]
-    headers['Access-Control-Allow-Origin']  = request.headers['HTTP_ORIGIN'] if UberZeit::Config.ubertrack_hosts.include?(request.headers['ORIGIN'])
-    headers['Access-Control-Allow-Methods'] = %w{GET POST PUT DELETE}.join(',')
-    headers['Access-Control-Allow-Headers'] = %w{Origin Accept Content-Type X-Requested-With X-CSRF-Token}.join(',')
-    headers['Access-Control-Allow-Credentials'] = 'true'
-    headers['Access-Control-Max-Age'] = '0'
-    head(:ok) if request.request_method == 'OPTIONS'
-  end
-
-  protected
-
-  def verified_request?
-    super || (!form_authenticity_token.blank? && form_authenticity_token == cookies['XSRF-TOKEN'])
-  end
 
   private
 
@@ -70,10 +53,6 @@ class ApplicationController < ActionController::Base
     yield
   ensure
     Time.zone = old_time_zone
-  end
-
-  def set_csrf_cookie_for_cors
-    cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
   end
 
 end
