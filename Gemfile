@@ -88,7 +88,7 @@ group :development, :test do
   gem 'capistrano_database_yml'
   gem 'timecop'
   gem 'phantomjs'
-  # gem 'poltergeist', git: 'git://github.com/jonleighton/poltergeist.git', branch: 'master'
+  gem 'poltergeist', git: 'git://github.com/jonleighton/poltergeist.git', branch: 'master'
   gem 'database_cleaner'
   gem 'launchy'
 end
