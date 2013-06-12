@@ -61,6 +61,10 @@ module Uberzeit
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    # API via grape
+    config.paths.add "app/api", glob: "**/*.rb"
+    config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
+
     # uberZeit specific time settings
     Uberzeit::Application.config.to_prepare do
       config_path = File.join(Rails.root, 'config', 'uberzeit.yml')

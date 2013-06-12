@@ -67,6 +67,10 @@ gem 'uberlog',
   git: 'git@git.nine.ch:gems/uberlog',
   tag: '0.4.1'
 
+# API
+# http://www.youtube.com/watch?v=mqgiEQXGetI
+gem 'grape', git: 'git://github.com/intridea/grape.git'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'mysql2'
@@ -82,6 +86,10 @@ group :development, :test do
   gem 'i18n-missing_translations'
   gem 'capistrano_database_yml'
   gem 'timecop'
+  gem 'phantomjs'
+  # gem 'poltergeist', git: 'git://github.com/jonleighton/poltergeist.git', branch: 'master'
+  gem 'database_cleaner'
+  gem 'launchy'
 end
 
 group :development do

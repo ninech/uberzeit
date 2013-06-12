@@ -42,14 +42,41 @@ class Adjustment < ActiveRecord::Base
   end
 
   def duration_in_hours
-    duration && duration.to_hours
+    duration && duration_in_hhmm(duration)
   end
 
-  def duration_in_hours=(num_hours)
-    self.duration = num_hours.to_f.hours
+  def duration_in_hours=(hours)
+    self.duration =   if hours.to_s.index(':')
+                        hhmm_in_duration(hours)
+                      else
+                        hours.to_f.hours
+                      end
   end
 
   def to_s
     label
+  end
+
+  private
+
+  def duration_in_hhmm(duration)
+    hours = duration.to_hours.to_i
+    minutes = (duration - hours * 1.hour).to_minutes.round
+    is_negative = hours < 0 || minutes < 0
+
+    if is_negative
+      "-%02i:%02i" % [hours.abs, minutes.abs]
+    else
+      "%02i:%02i" % [hours, minutes]
+    end
+  end
+
+  def hhmm_in_duration(hhmm)
+    hours, minutes = hhmm.split(':').map(&:to_f)
+    if hhmm.index('-')
+      -1 * (hours.hours.abs + minutes.minutes.abs)
+    else
+      hours.hours + minutes.minutes
+    end
   end
 end
