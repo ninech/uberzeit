@@ -14,3 +14,8 @@ if TimeType.count == 0
   TimeType.create(name: 'Compensation', is_work: false, is_vacation: false, exclude_from_calculation: true, color_index: 7, icon: :'circle-blank')
   TimeType.create(name: 'Absence by law', is_work: false, is_vacation: false, color_index: 8, icon: :legal)
 end
+
+if ActivityType.count == 0
+  ActivityType.create(name: 'Maintenance')
+  ActivityType.create(name: 'Setup Server')
+end

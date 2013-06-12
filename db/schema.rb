@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130528130247) do
+ActiveRecord::Schema.define(:version => 20130612082932) do
+
+  create_table "absence_types", :force => true do |t|
+    t.string   "name"
+    t.string   "icon"
+    t.integer  "color_index",             :default => 0
+    t.boolean  "deducts_vacation",        :default => false
+    t.boolean  "reimburses_working_time", :default => true
+    t.datetime "deleted_at"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+  end
 
   create_table "absences", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -21,10 +32,38 @@ ActiveRecord::Schema.define(:version => 20130528130247) do
     t.boolean  "first_half_day",  :default => false
     t.boolean  "second_half_day", :default => false
     t.datetime "deleted_at"
+    t.integer  "absence_type_id",                    :null => false
   end
 
   add_index "absences", ["time_sheet_id"], :name => "index_date_entries_on_time_sheet_id"
   add_index "absences", ["time_type_id"], :name => "index_date_entries_on_time_type_id"
+
+  create_table "activities", :force => true do |t|
+    t.integer  "activity_type_id"
+    t.integer  "user_id"
+    t.date     "date"
+    t.integer  "duration"
+    t.text     "description"
+    t.integer  "customer_id"
+    t.integer  "project_id"
+    t.integer  "redmine_ticket_id"
+    t.integer  "otrs_ticket_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "activities", ["activity_type_id"], :name => "index_activities_on_activity_type_id"
+  add_index "activities", ["customer_id"], :name => "index_activities_on_customer_id"
+  add_index "activities", ["otrs_ticket_id"], :name => "index_activities_on_otrs_ticket_id"
+  add_index "activities", ["project_id"], :name => "index_activities_on_project_id"
+  add_index "activities", ["redmine_ticket_id"], :name => "index_activities_on_redmine_ticket_id"
+  add_index "activities", ["user_id"], :name => "index_activities_on_user_id"
+
+  create_table "activity_types", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "adjustments", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -70,6 +109,16 @@ ActiveRecord::Schema.define(:version => 20130528130247) do
 
   add_index "memberships", ["team_id"], :name => "index_memberships_on_team_id"
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
+
+  create_table "metadata", :force => true do |t|
+    t.string   "name"
+    t.string   "value"
+    t.integer  "time_entry_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "metadata", ["time_entry_id"], :name => "index_metadata_on_time_entry_id"
 
   create_table "public_holidays", :force => true do |t|
     t.date     "start_date"
@@ -146,6 +195,17 @@ ActiveRecord::Schema.define(:version => 20130528130247) do
     t.float    "bonus_factor",             :default => 0.0
     t.boolean  "exclude_from_calculation", :default => false
   end
+
+  create_table "timers", :force => true do |t|
+    t.integer  "time_sheet_id"
+    t.integer  "time_type_id"
+    t.datetime "start_time"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "timers", ["time_sheet_id"], :name => "index_timers_on_time_sheet_id"
+  add_index "timers", ["time_type_id"], :name => "index_timers_on_time_type_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

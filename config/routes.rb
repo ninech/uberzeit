@@ -1,6 +1,9 @@
 Uberzeit::Application.routes.draw do
 
 
+  resources :activities
+
+
   root :to => 'sessions#new'
 
   resources :time_sheets, only: [:show] do
