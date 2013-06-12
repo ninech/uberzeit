@@ -4,6 +4,7 @@ class API < Grape::API
       expose :id
       expose :activity_type_id
       expose :duration
+      expose :date
       expose :description
       expose :customer_id
       expose :project_id

@@ -6,6 +6,11 @@ describe API::Resources::ActivityTypes do
   let(:api_user) { FactoryGirl.create(:user) }
   let(:parsed_json) { JSON.parse(response.body) }
 
+  shared_examples 'an activity_type' do
+    its(['id']) { should be_present }
+    its(['name']) { should be_present }
+  end
+
   describe 'GET /api/activity_types' do
     let!(:activity_type) { FactoryGirl.create(:activity_type) }
 
@@ -17,11 +22,8 @@ describe API::Resources::ActivityTypes do
       parsed_json.should have(1).items
     end
 
-    describe 'attributes' do
+    it_behaves_like 'an activity_type' do
       subject { parsed_json.first }
-
-      its(['id']) { should eq(activity_type.id) }
-      its(['name']) { should eq(activity_type.name) }
     end
   end
 

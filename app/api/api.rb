@@ -33,10 +33,18 @@ class API < Grape::API
   #
   rescue_from Grape::Exceptions::Validation do |e|
     Rack::Response.new({
-      'status' => e.status,
+      'status' => 422,
       'message' => e.message,
-      'param' => e.param
-    }.to_json, e.status)
+      'errors' => {e.param => e.message}
+    }.to_json, 422)
+  end
+
+  rescue_from ActiveRecord::RecordInvalid do |e|
+    Rack::Response.new({
+      'status' => 422,
+      'message' => e.record.errors.full_messages.to_sentence,
+      'errors' => e.record.errors
+    }.to_json, 422)
   end
 
   #

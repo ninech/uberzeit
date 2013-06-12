@@ -33,26 +33,26 @@ describe API::Resources::Timers do
     describe 'validations' do
       it 'validates the presence of time type' do
         auth_post '/api/timers', {}
-        response.status.should eq(400)
-        parsed_json['param'].should eq('time_type_id')
+        response.status.should eq(422)
+        parsed_json['errors'].should include('time_type_id')
       end
 
       it 'makes sure that the supplied time type is not an absence time type' do
         auth_post '/api/timers', { time_type_id: TEST_TIME_TYPES[:vacation].id }
-        response.status.should eq(400)
-        parsed_json['param'].should eq('time_type_id')
+        response.status.should eq(422)
+        parsed_json['errors'].should include('time_type_id')
       end
 
       it 'validates the date' do
         auth_post '/api/timers', { time_type_id: TEST_TIME_TYPES[:work].id, start_date: '20.07.1986' }
-        response.status.should eq(400)
-        parsed_json['param'].should eq('start_date')
+        response.status.should eq(422)
+        parsed_json['errors'].should include('start_date')
       end
 
       it 'validates the time' do
         auth_post '/api/timers', { time_type_id: TEST_TIME_TYPES[:work].id, start_time: 'Around 5 o\'clock' }
-        response.status.should eq(400)
-        parsed_json['param'].should eq('start_time')
+        response.status.should eq(422)
+        parsed_json['errors'].should include('start_time')
       end
     end
   end

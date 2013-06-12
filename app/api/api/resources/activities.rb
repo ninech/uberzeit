@@ -5,7 +5,7 @@ class API < Grape::API
       resource :activities do
         desc 'Lists all activities'
         get do
-          present Activity.all, with: Entities::Activity
+          present Activity.by_user(current_user), with: Entities::Activity
         end
 
         desc 'Creates an activity.'
@@ -20,7 +20,7 @@ class API < Grape::API
           optional :otrs_ticket_id, type: Integer
         end
         post do
-          activity = Activity.create(
+          activity = Activity.create!(
             activity_type_id: params[:activity_type_id],
             date: params[:date],
             duration: params[:duration],
@@ -40,7 +40,7 @@ class API < Grape::API
             requires :redmine_ticket_id
           end
           get ':redmine_ticket_id' do
-            present Activity.redmine_ticket(params[:redmine_ticket_id]), with: Entities::Activity
+            present Activity.by_redmine_ticket(params[:redmine_ticket_id]), with: Entities::Activity
           end
         end
       end
