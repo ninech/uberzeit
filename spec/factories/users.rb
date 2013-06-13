@@ -1,6 +1,8 @@
 FactoryGirl.define do
   factory :user do |f|
+    sequence(:uid) { |n| "user#{n}@nine.ch" }
     sequence(:name) { |n| "user#{n}" }
+
     time_zone { Time.zone.name }
     teams { FactoryGirl.create_list(:team, 1) }
 

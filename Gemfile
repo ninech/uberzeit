@@ -74,6 +74,7 @@ gem 'uberlog',
 gem 'grape', git: 'git://github.com/intridea/grape.git'
 gem 'grape-entity', git: 'git://github.com/intridea/grape-entity.git'
 gem 'grape-swagger'
+gem 'warden'
 
 group :development, :test do
   gem 'sqlite3'
@@ -91,7 +92,7 @@ group :development, :test do
   gem 'capistrano_database_yml'
   gem 'timecop'
   gem 'phantomjs'
-  # gem 'poltergeist', git: 'git://github.com/jonleighton/poltergeist.git', branch: 'master'
+  gem 'poltergeist', git: 'git://github.com/jonleighton/poltergeist.git', branch: 'master'
   gem 'database_cleaner'
   gem 'launchy'
 end

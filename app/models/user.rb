@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include TokenAuthenticable
+
   rolify
   acts_as_paranoid
 
