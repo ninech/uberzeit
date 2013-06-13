@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130613100306) do
+ActiveRecord::Schema.define(:version => 20130613122126) do
 
   create_table "absences", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -67,6 +67,15 @@ ActiveRecord::Schema.define(:version => 20130613100306) do
   add_index "adjustments", ["time_sheet_id"], :name => "index_adjustments_on_time_sheet_id"
   add_index "adjustments", ["time_type_id"], :name => "index_adjustments_on_time_type_id"
 
+  create_table "customers", :id => false, :force => true do |t|
+    t.integer  "id"
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "customers", ["id"], :name => "index_customers_on_id", :unique => true
+
   create_table "employments", :force => true do |t|
     t.integer  "user_id"
     t.date     "start_date"
@@ -97,6 +106,15 @@ ActiveRecord::Schema.define(:version => 20130613100306) do
 
   add_index "memberships", ["team_id"], :name => "index_memberships_on_team_id"
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
+
+  create_table "projects", :force => true do |t|
+    t.integer  "customer_id"
+    t.string   "name"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "projects", ["customer_id"], :name => "index_projects_on_customer_id"
 
   create_table "public_holidays", :force => true do |t|
     t.date     "start_date"
