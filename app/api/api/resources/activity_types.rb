@@ -1,14 +1,8 @@
-class API < Grape::API
-  module Resources
-    class ActivityTypes < Grape::API
-
-      resource :activity_types do
-        desc 'Lists all available activity types'
-        get do
-          present ActivityType.all, with: Entities::ActivityType
-        end
-      end
-
+class API::Resources::ActivityTypes < Grape::API
+  resource :activity_types do
+    desc 'Lists all available activity types'
+    get do
+      present ActivityType.all, with: API::Entities::ActivityType
     end
   end
 end
