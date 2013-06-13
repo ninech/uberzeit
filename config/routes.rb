@@ -1,6 +1,8 @@
 Uberzeit::Application.routes.draw do
 
 
+  #match '*all' => 'application#cors', constraints: {:method => 'OPTIONS'}
+
   root :to => 'sessions#new'
 
   resources :time_sheets, only: [:show] do
@@ -21,7 +23,7 @@ Uberzeit::Application.routes.draw do
       end
     end
 
-    resources :time_entries, except: [:show, :index] do
+    resources :time_entries, except: [:show] do
       member do
         put 'exception_date/:date', action: 'exception_date', as: :exception_date
       end
@@ -70,9 +72,14 @@ Uberzeit::Application.routes.draw do
     end
   end
 
+  resources :activities
+
   resource :session, only: [:new, :create]
 
   match '/auth/:provider/callback', to: 'sessions#create'
+
+  # API
+  mount API => '/api'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

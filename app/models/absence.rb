@@ -50,8 +50,6 @@ class Absence < ActiveRecord::Base
     recurring_entries_in_range(range) + nonrecurring_entries_in_range(range)
   end
 
-
-
   def duration
     range.duration
   end
@@ -137,23 +135,16 @@ class Absence < ActiveRecord::Base
     (time_start..time_end)
   end
 
-  def days_length
-    (end_date - start_date).to_i
+  def num_days
+    end_date - start_date
   end
 
   def occurrences_as_time_ranges(date_or_range)
     # for date entries we have to generate a occurrence range for each day (half days are not continuous)
-    occurrences(date_or_range).collect do |start_time|
-      date_range = range_for_other_start_time(start_time)
+    occurrences(date_or_range).collect do |start_date|
+      date_range = start_date..(start_date+num_days)
       date_range.collect { |day| time_range_for_date(day) }
     end.flatten
-  end
-
-  private
-
-  def range_for_other_start_time(other_start_time)
-    other_start_date = other_start_time.to_date
-    (other_start_date..other_start_date+days_length)
   end
 
 end

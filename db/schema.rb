@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130528130247) do
+ActiveRecord::Schema.define(:version => 20130612082932) do
 
   create_table "absences", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -25,6 +25,33 @@ ActiveRecord::Schema.define(:version => 20130528130247) do
 
   add_index "absences", ["time_sheet_id"], :name => "index_date_entries_on_time_sheet_id"
   add_index "absences", ["time_type_id"], :name => "index_date_entries_on_time_type_id"
+
+  create_table "activities", :force => true do |t|
+    t.integer  "activity_type_id"
+    t.integer  "user_id"
+    t.date     "date"
+    t.integer  "duration"
+    t.text     "description"
+    t.integer  "customer_id"
+    t.integer  "project_id"
+    t.integer  "redmine_ticket_id"
+    t.integer  "otrs_ticket_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "activities", ["activity_type_id"], :name => "index_activities_on_activity_type_id"
+  add_index "activities", ["customer_id"], :name => "index_activities_on_customer_id"
+  add_index "activities", ["otrs_ticket_id"], :name => "index_activities_on_otrs_ticket_id"
+  add_index "activities", ["project_id"], :name => "index_activities_on_project_id"
+  add_index "activities", ["redmine_ticket_id"], :name => "index_activities_on_redmine_ticket_id"
+  add_index "activities", ["user_id"], :name => "index_activities_on_user_id"
+
+  create_table "activity_types", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "adjustments", :force => true do |t|
     t.integer  "time_sheet_id"

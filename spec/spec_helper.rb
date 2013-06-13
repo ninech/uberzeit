@@ -21,6 +21,8 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'capybara/poltergeist'
+require 'phantomjs'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -38,7 +40,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
@@ -51,16 +53,49 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
+  # In Rails, HTTP request tests would go into the spec/requests group. You may
+  # want your API code to go into app/api - you can match that layout under
+  # spec by adding the following in spec/spec_helper.rb.
+  config.include RSpec::Rails::RequestExampleGroup, type: :request, example_group: {
+    file_path: /spec\/api/
+  }
+
   Time.zone = 'Bern'
 
+
   config.before(:suite) do
+    # Begin by cleaning the db
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with :truncation
+
+    # Register poltergeist
+    Capybara.register_driver :poltergeist do |app|
+      Capybara::Poltergeist::Driver.new(app, phantomjs: Phantomjs.path, inspector: true, js_errors: true)
+    end
+    Capybara.javascript_driver = :poltergeist
+
+    # Set up time types
     TEST_TIME_TYPES = {}
     %w{work vacation compensation paid_absence onduty}.each do |time_type|
       TEST_TIME_TYPES[time_type.to_sym] = FactoryGirl.create("time_type_#{time_type}", name: "test_#{time_type}")
     end
   end
 
+  config.after(:suite) do
+    TEST_TIME_TYPES.each do |name, entry|
+      entry.destroy!
+    end
+  end
+
   config.before(:each) do
+    # Start database cleaning
+    if example.metadata[:js]
+      DatabaseCleaner.strategy = :truncation, {except: ['time_types']}
+    else
+      DatabaseCleaner.strategy = :transaction
+      DatabaseCleaner.start
+    end
+
     # Overwrite uZ config with default values
     uberzeit_config = {
       rounding: 1.minutes,
@@ -72,13 +107,11 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do
-    Timecop.return
-  end
+    # Clean database
+    DatabaseCleaner.clean
 
-  config.after(:suite) do
-    TEST_TIME_TYPES.each do |name, entry|
-      entry.destroy!
-    end
+    # Stop those time travellers NOW!
+    Timecop.return
   end
 end
 

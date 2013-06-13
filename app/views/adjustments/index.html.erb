@@ -27,9 +27,9 @@
             <td><%= adjustment.time_type %></td>
             <td>
               <% if adjustment.time_type.is_absence? %>
-                <%= adjustment.duration.to_work_days %> <%= t '.unit_work_days' %>
+                <%= adjustment.duration_in_work_days %> <%= t '.unit_work_days' %>
               <% else %>
-                <%= adjustment.duration.to_hours %> <%= t '.unit_hours' %>
+                <%= adjustment.duration_in_hours %> <%= t '.unit_hours' %>
               <% end %>
 
             </td>

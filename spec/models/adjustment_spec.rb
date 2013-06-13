@@ -13,6 +13,11 @@ describe Adjustment do
     expect { Adjustment.with_deleted.find(adjustment.id) }.to_not raise_error
   end
 
+  it 'accepts a HH:MM duration' do
+    adjustment = FactoryGirl.build(:adjustment, duration_in_hours: '4:30')
+    adjustment.duration.should eq(4.5.hours)
+  end
+
   describe 'validations' do
     it 'requires a time sheet' do
       FactoryGirl.build(:adjustment, time_sheet: nil).should_not be_valid

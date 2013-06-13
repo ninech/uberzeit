@@ -4,19 +4,13 @@
   }
 }
 
-    @-webkit-keyframes swingitbaby
-    {
-      0%     {-webkit-transform: rotate(0deg); -webkit-transform-origin: 60% 15%;}
-      50%    {-webkit-transform: rotate(20deg); -webkit-transform-origin: 60% 15%;}
-      100%   {-webkit-transform: rotate(0deg); -webkit-transform-origin: 60% 15%;}
-    }
+@-webkit-keyframes swingitbaby
+{
+  0%     {-webkit-transform: rotate(0deg); -webkit-transform-origin: 60% 15%;}
+  50%    {-webkit-transform: rotate(20deg); -webkit-transform-origin: 60% 15%;}
+  100%   {-webkit-transform: rotate(0deg); -webkit-transform-origin: 60% 15%;}
+}
 
-    @-webkit-keyframes planecrash
-    {
-      25%    {left: -100px;}
-      50%    {left: -100px; -webkit-transform: rotate(40deg);}
-      75%    {left: 75px; -webkit-transform: rotate(40deg);}
-    }
 .content-summary {
   table.nice {
     tr {

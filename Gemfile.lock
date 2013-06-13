@@ -7,6 +7,29 @@ GIT
       i18n
 
 GIT
+  remote: git://github.com/intridea/grape-entity.git
+  revision: 97beee528bdb98ed5c6a18c139dafcf102273936
+  specs:
+    grape-entity (0.3.0)
+      activesupport
+      multi_json (>= 1.3.2)
+
+GIT
+  remote: git://github.com/intridea/grape.git
+  revision: 948696f459dccd5a8f3ec3211b00be0b792719e0
+  specs:
+    grape (0.4.2)
+      activesupport
+      builder
+      hashie (>= 1.2.0)
+      multi_json (>= 1.3.2)
+      multi_xml (>= 0.5.2)
+      rack (>= 1.3.0)
+      rack-accept
+      rack-mount
+      virtus
+
+GIT
   remote: git://github.com/topfunky/calendar_helper.git
   revision: 34b3bad61cc5baf45e377287ef7779efecd4e450
   specs:
@@ -67,6 +90,7 @@ GEM
       builder
       json
     arel (3.0.2)
+    backports (3.3.1)
     better_errors (0.7.2)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -95,7 +119,7 @@ GEM
       capistrano (>= 2.0.0)
     capistrano_database_yml (1.1.3)
       capistrano (~> 2.0)
-    capybara (2.0.2)
+    capybara (2.0.3)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
@@ -122,9 +146,12 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
+    database_cleaner (1.0.1)
     debug_inspector (0.0.2)
+    descendants_tracker (0.0.1)
     diff-lcs (1.2.1)
     erubis (2.7.0)
+    eventmachine (1.0.3)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (4.2.0)
@@ -135,18 +162,24 @@ GEM
     faker (1.1.2)
       i18n (~> 0.5)
     fastercsv (1.5.5)
-    ffi (1.6.0)
+    faye-websocket (0.4.7)
+      eventmachine (>= 0.12.0)
+    ffi (1.9.0)
     font-awesome-rails (3.1.1.2)
       railties (>= 3.2, < 5.0)
     foundation_rails_helper (0.3)
       actionpack (~> 3.0)
       railties (~> 3.0)
     fssm (0.2.10)
+    grape-swagger (0.5.0)
+      grape (>= 0.2.0)
+      kramdown
     haml (4.0.1)
       tilt
     hashie (1.2.0)
     highline (1.6.16)
     hike (1.2.1)
+    http_parser.rb (0.5.3)
     i18n (0.6.1)
     i18n-missing_translations (0.0.2)
       i18n (~> 0.6.0)
@@ -157,6 +190,9 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.7.7)
+    kramdown (1.0.2)
+    launchy (2.3.0)
+      addressable (~> 2.3)
     libv8 (3.11.8.17)
     logstash-event (1.1.5)
     mail (2.5.3)
@@ -166,8 +202,10 @@ GEM
     meta_request (0.2.2)
       rack-contrib
       railties
-    mime-types (1.21)
-    multi_json (1.7.2)
+    mime-types (1.23)
+    mini_portile (0.5.0)
+    multi_json (1.7.6)
+    multi_xml (0.5.3)
     mysql2 (0.3.11)
     net-ldap (0.2.2)
     net-scp (1.1.0)
@@ -177,7 +215,8 @@ GEM
     net-ssh (2.6.6)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
-    nokogiri (1.5.9)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
     omniauth (1.1.3)
       hashie (~> 1.2)
       rack
@@ -192,13 +231,25 @@ GEM
       rubyntlm (~> 0.1.1)
     open4 (1.3.0)
     pg (0.14.1)
+    phantomjs (1.8.1.1)
+      poltergeist
+    poltergeist (1.1.2)
+      capybara (~> 2.0.1)
+      faye-websocket (~> 0.4.4)
+      http_parser.rb (~> 0.5.3)
     polyglot (0.3.3)
     pyu-ruby-sasl (0.0.3.3)
     rack (1.4.5)
+    rack-accept (0.4.5)
+      rack (>= 0.4)
     rack-cache (1.2)
       rack (>= 0.4)
     rack-contrib (1.1.0)
       rack (>= 0.9.1)
+    rack-cors (0.2.8)
+      rack
+    rack-mount (0.8.3)
+      rack (>= 1.0.0)
     rack-ssl (1.3.3)
       rack
     rack-test (0.6.2)
@@ -220,7 +271,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
-    rake (10.0.3)
+    rake (10.0.4)
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.4)
@@ -252,7 +303,7 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    selenium-webdriver (2.31.0)
+    selenium-webdriver (2.33.0)
       childprocess (>= 0.2.5)
       multi_json (~> 1.0)
       rubyzip
@@ -298,6 +349,9 @@ GEM
       timeliness (~> 0.3.6)
     version_bumper (0.3.0)
     version_reader (1.0.0)
+    virtus (0.5.5)
+      backports (~> 3.3)
+      descendants_tracker (~> 0.0.1)
     websocket (1.0.7)
     whenever (0.8.2)
       activesupport (>= 2.3.4)
@@ -325,14 +379,19 @@ DEPENDENCIES
   ci_reporter
   coffee-rails (~> 3.2.1)
   compass-rails
+  database_cleaner
   factory_girl_rails
   faker
   font-awesome-rails
   foundation_rails_helper
+  grape!
+  grape-swagger
+  grape-entity!
   i18n-js!
   i18n-missing_translations
   jbuilder
   jquery-rails
+  launchy
   meta_request
   mysql2
   nine-ldap!
@@ -340,6 +399,8 @@ DEPENDENCIES
   omniauth-cas
   omniauth-ldap
   pg
+  phantomjs
+  rack-cors
   rails (= 3.2.13)
   rails-i18n
   rolify

@@ -62,10 +62,18 @@ gem 'i18n-js', :git => 'git://github.com/fnando/i18n-js.git', :branch => 'master
 
 gem 'simple-navigation'
 
+gem 'rack-cors'
+
 # Logging
 gem 'uberlog',
   git: 'git@git.nine.ch:gems/uberlog',
   tag: '0.4.1'
+
+# API
+# http://www.youtube.com/watch?v=mqgiEQXGetI
+gem 'grape', git: 'git://github.com/intridea/grape.git'
+gem 'grape-entity', git: 'git://github.com/intridea/grape-entity.git'
+gem 'grape-swagger'
 
 group :development, :test do
   gem 'sqlite3'
@@ -82,6 +90,10 @@ group :development, :test do
   gem 'i18n-missing_translations'
   gem 'capistrano_database_yml'
   gem 'timecop'
+  gem 'phantomjs'
+  # gem 'poltergeist', git: 'git://github.com/jonleighton/poltergeist.git', branch: 'master'
+  gem 'database_cleaner'
+  gem 'launchy'
 end
 
 group :development do

@@ -1,9 +1,6 @@
 $(document)
   .foundation('reveal', {
-    closeOnBackgroundClick: false,
-    opened: (e) ->
-      if e.target.id == 'add-time-modal'
-        $('#time_entry_start_time').val(moment().format('HH:mm'))
+    closeOnBackgroundClick: false
   })
   .foundation('tooltips')
 
@@ -63,7 +60,7 @@ $ ->
         from_moment = moment(this.getDate(true))
         to_moment = moment(picker_to.data('pickadate').getDate(true))
 
-        if to_moment.isBefore(from_moment) && picker_to.not(":empty")
+        if to_moment.isBefore(from_moment) && picker_to.val().length > 0
           picker_to.data('pickadate').setDate(from_moment.year(), from_moment.months() + 1, from_moment.date())
 
     picker_to = $(picker_to_element).pickadate
