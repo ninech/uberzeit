@@ -1,16 +1,13 @@
 module ApiHelpers
-  def headers
-    {
-      'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(api_user.uid, 'apiaccess42'),
-      'HTTP_ACCEPT' => 'application/vnd.nine.ch-v1+json'
-    }
+  def auth_headers
+    { 'X-AUTH-TOKEN' => api_user.authentication_token }
   end
 
   def auth_post(route, params = {})
-    post route, params, headers
+    post route, params, auth_headers
   end
 
   def auth_get(route, params = {})
-    get route, params, headers
+    get route, params, auth_headers
   end
 end
