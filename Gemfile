@@ -72,6 +72,7 @@ gem 'uberlog',
 # API
 # http://www.youtube.com/watch?v=mqgiEQXGetI
 gem 'grape', git: 'git://github.com/intridea/grape.git'
+gem 'grape-entity', git: 'git://github.com/intridea/grape-entity.git'
 gem 'grape-swagger'
 
 group :development, :test do
