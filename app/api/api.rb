@@ -45,5 +45,6 @@ class API < Grape::API
   mount API::Resources::ActivityTypes
   mount API::Resources::Activities
   mount API::Resources::Timers
+  mount API::Resources::Customers
 
 end
