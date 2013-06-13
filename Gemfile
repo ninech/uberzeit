@@ -40,9 +40,6 @@ gem 'nine-ldap',
     git: 'git@git.nine.ch:nine-ldap.git',
     tag: '0.0.13'
 
-# To use local Git repos, run this on console:
-# bundle config local.nine-ldap ~/projects/nine-ldap
-
 gem 'version_reader'
 gem 'airbrake'
 gem 'jbuilder'
@@ -60,8 +57,10 @@ gem 'calendar_helper', github: 'topfunky/calendar_helper'
 gem 'rails-i18n', branch: 'rails-3-x'
 gem 'i18n-js', :git => 'git://github.com/fnando/i18n-js.git', :branch => 'master'
 
+# navigation
 gem 'simple-navigation'
 
+# raf <3 CORS
 gem 'rack-cors'
 
 # Logging
@@ -75,6 +74,17 @@ gem 'grape', git: 'git://github.com/intridea/grape.git'
 gem 'grape-entity', git: 'git://github.com/intridea/grape-entity.git'
 gem 'grape-swagger'
 gem 'warden'
+
+# Customers
+gem 'mynine-plugin_helpers',
+    require: 'plugin_helpers',
+    git: 'git@git.nine.ch:mynine/plugin_helpers.git',
+    tag: '1.1.1'
+
+gem 'mynine-customer_plugin',
+    require: 'customer_plugin',
+    git: 'git@git.nine.ch:mynine/customer_plugin.git',
+    tag: '1.1.2'
 
 group :development, :test do
   gem 'sqlite3'

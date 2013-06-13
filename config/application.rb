@@ -82,17 +82,8 @@ module Uberzeit
       UberZeit::Config[:vacation_per_year] = 25.days
     end
 
-=begin
-    # general
+    YAML::ENGINE.yamler = 'syck'
+    config.uration = YAML.load(File.open(File.join(Rails.root, 'config', 'extensions.yml'))).with_indifferent_access[Rails.env]
 
-    # overtime
-    config.uberzeit.overtime_limit_per_day = 2.hours
-    config.uberzeit.overtime_limit_per_year = 170.hours
-
-    # pikett
-    config.uberzeit.onduty_limit_per_block = 7.days
-    config.uberzeit.onduty_block_length = 4.weeks
-    config.uberzeit.onduty_block_break_length = 2.weeks
-=end
   end
 end
