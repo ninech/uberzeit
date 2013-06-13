@@ -21,8 +21,9 @@ class TimeEntriesController < ApplicationController
     end
 
     if @time_entry.ends && @time_entry.starts && @time_entry.ends < @time_entry.starts
-      @time_entry.ends = @time_entry.starts + 1.day
+      @time_entry.ends = @time_entry.ends + 1.day
     end
+
     @time_entry.save
 
     respond_with @time_entry, location: default_return_location
