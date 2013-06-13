@@ -385,8 +385,8 @@ DEPENDENCIES
   font-awesome-rails
   foundation_rails_helper
   grape!
-  grape-swagger
   grape-entity!
+  grape-swagger
   i18n-js!
   i18n-missing_translations
   jbuilder
