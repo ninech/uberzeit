@@ -2,7 +2,8 @@
 
 FactoryGirl.define do
   factory :activity do
-    activity_type nil
+    activity_type
+    user
     date "2013-06-12"
     duration 1
     description "MyText"

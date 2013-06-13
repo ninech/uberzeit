@@ -1,0 +1,2 @@
+module API::Resources
+end
