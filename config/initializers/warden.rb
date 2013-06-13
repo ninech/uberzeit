@@ -1,5 +1,5 @@
 Warden::Manager.serialize_into_session { |user| user.id }
-Warden::Manager.serialize_from_session { |id| User.get(id) }
+Warden::Manager.serialize_from_session { |id| User.find(id) }
 
 Warden::Strategies.add(:token) do
   def valid?
