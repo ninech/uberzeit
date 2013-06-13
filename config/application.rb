@@ -69,8 +69,11 @@ module Uberzeit
     Uberzeit::Application.config.to_prepare do
       config_path = File.join(Rails.root, 'config', 'uberzeit.yml')
       yaml_config = YAML.load_file(config_path)
-      yaml_config[Rails.env].each do |key, value|
-        UberZeit::Config.send("#{key}=", value)
+
+      if yaml_config[Rails.env]
+        yaml_config[Rails.env].each do |key, value|
+          UberZeit::Config.send("#{key}=", value)
+        end
       end
 
       UberZeit::Config[:rounding] = 1.minutes

@@ -379,8 +379,8 @@ DEPENDENCIES
   font-awesome-rails
   foundation_rails_helper
   grape!
-  grape-swagger
   grape-entity!
+  grape-swagger
   i18n-js!
   i18n-missing_translations
   jbuilder
@@ -394,8 +394,8 @@ DEPENDENCIES
   omniauth-ldap
   pg
   phantomjs
-  rack-cors
   poltergeist!
+  rack-cors
   rails (= 3.2.13)
   rails-i18n
   rolify

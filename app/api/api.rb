@@ -10,7 +10,7 @@ class API < Grape::API
   #
   use Warden::Manager do |manager|
     manager.default_strategies :token, :session
-    manager.failure_app = API
+    manager.failure_app = ::API
   end
 
   before do
@@ -61,4 +61,9 @@ class API < Grape::API
   get :ping do
     'pong'
   end
+
+  #
+  # Documentation
+  #
+  add_swagger_documentation
 end

@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
 
   around_filter :set_time_zone
   before_filter :ensure_logged_in
-  after_filter  :set_csrf_cookie_for_cors
 
   if Rails.env.staging? || Rails.env.production?
     rescue_from Exception, with: :render_500
