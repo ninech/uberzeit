@@ -78,6 +78,14 @@ describe TimeEntriesController do
           post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:time_entry, time_type_id: time_type, start_time: '09:00', start_date: '2013-07-20', end_time: '', end_date: nil)
           assigns(:time_entry).start_date.should eq('2013-07-22'.to_date)
         end
+
+        it 'understands a time range which spans over midnight' do
+          Timecop.freeze('2013-02-02 16:00 +0100')
+          post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:time_entry, time_type_id: time_type, start_time: '23:00', end_time: '01:00', end_date: nil)
+          assigns(:time_entry).start_date.should eq('2013-02-02'.to_date)
+          assigns(:time_entry).end_date.should eq('2013-02-03'.to_date)
+          assigns(:time_entry).duration.should eq(2.hours)
+        end
       end
 
       context 'with invalid attributes' do
