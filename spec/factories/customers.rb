@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :customer do
-    id 1
-    name "MyString"
+    sequence(:id)
+    name "Yolo Inc."
   end
 end

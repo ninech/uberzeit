@@ -13,6 +13,10 @@ describe API::Resources::Projects do
   end
 
   describe 'GET /api/customers/2/projects' do
+    let!(:customer) { FactoryGirl.create(:customer, id: 2) }
+    let!(:project1) { FactoryGirl.create(:project, customer: customer) }
+    let!(:project2) { FactoryGirl.create(:project, customer: customer) }
+
     before do
       auth_get '/api/customers/2/projects'
     end

@@ -3,11 +3,7 @@ class API::Resources::Customers < Grape::API
   resource :customers do
     desc 'Lists all customers'
     get do
-      customers = [
-        OpenStruct.new({name: 'Blubb AG', id: 1}),
-        OpenStruct.new({name: 'Yolo Inc.', id: 2})
-      ]
-      present customers, with: API::Entities::Customer
+      present Customer.all, with: API::Entities::Customer
     end
 
     namespace ':customer_id' do

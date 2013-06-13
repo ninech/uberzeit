@@ -5,4 +5,5 @@ class Project < ActiveRecord::Base
 
   validates_presence_of :customer, :name
 
+  scope :by_customer, ->(user) { where(customer_id: user)}
 end

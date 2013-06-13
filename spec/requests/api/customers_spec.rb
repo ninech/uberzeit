@@ -12,6 +12,9 @@ describe API::Resources::Customers do
   end
 
   describe 'GET /api/customers' do
+    let!(:customer1) { FactoryGirl.create(:customer) }
+    let!(:customer2) { FactoryGirl.create(:customer) }
+
     before do
       auth_get '/api/customers'
     end

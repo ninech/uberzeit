@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :project do
-    customer nil
+    customer
     name "MyString"
   end
 end
