@@ -372,3 +372,10 @@ de:
   layouts:
     footer:
       info-rule: 'Stunden müssen von allen Mitarbeitern bis zum Ende der Kalenderwoche erfasst sein.'
+
+  grape:
+    errors:
+      messages:
+        coerce: '%{attribute} ist ungültig'
+        presence: '%{attribute} fehlt'
+        regexp: '%{attribute} ist ungültig'

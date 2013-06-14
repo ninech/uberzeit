@@ -36,7 +36,7 @@ class API < Grape::API
     Rack::Response.new({
       'status' => 422,
       'message' => e.message,
-      'errors' => {e.param => e.message}
+      'errors' => {e.param => [e.message]}
     }.to_json, 422)
   end
 
