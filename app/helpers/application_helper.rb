@@ -62,8 +62,9 @@ module ApplicationHelper
   end
 
   def display_in_hours(duration)
-    hours = duration.to_hours.to_i
-    minutes = (duration - hours * 1.hour).to_minutes.round
+    rounded_duration = UberZeit.round(duration)
+    hours = rounded_duration.to_hours.to_i
+    minutes = (rounded_duration - hours * 1.hour).to_minutes.to_i
     is_negative = hours < 0 || minutes < 0
 
     if is_negative
