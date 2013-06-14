@@ -1,6 +1,6 @@
 module ApiHelpers
   def auth_headers
-    { 'X-AUTH-TOKEN' => api_user.authentication_token }
+    { 'HTTP_X_AUTH_TOKEN' => api_user.authentication_token }
   end
 
   def auth_post(route, params = {})
