@@ -96,7 +96,11 @@ $ ->
         $('.time.bonus').text data.bonus
         $('.time.week-total').text data.week_total
 
-        $('.timer-current').text data.timer
+        $('.timer-current').text data.timer_duration_for_day
+        if data.timer_duration_for_day != data.timer_duration_since_start
+          $('.timer-overall').text data.timer_duration_since_start
+          $('.timer-overall-label').removeClass('hidden')
+
         # disable stop timer link if there is no timer duration (e.g. timer in future)
         if $('.timer-current').text() == "00:00"
           $('.stop-timer').addClass 'disabled'
