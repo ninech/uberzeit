@@ -1,4 +1,5 @@
 require_relative 'api/validators/time_type_for_timer'
+require_relative 'api/validators/inclusion'
 
 class API < Grape::API
   version 'v1', using: :header, vendor: 'nine.ch'

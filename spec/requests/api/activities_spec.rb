@@ -13,8 +13,11 @@ describe API::Resources::Activities do
   shared_examples 'an activity' do
     its(['id']) { should be_present }
     its(['activity_type_id']) { should be_present }
+    its(['activity_type']) { should be_present }
     its(['date']) { should be_present }
     its(['duration']) { should be_present }
+    its(['user_id']) { should be_present }
+    its(['user']) { should_not be_present }
   end
 
   describe 'GET /api/activities' do
@@ -26,14 +29,29 @@ describe API::Resources::Activities do
       auth_get '/api/activities'
     end
 
-    it 'returns a list of activities of the current user' do
-      parsed_json.should have(1).items
+    it 'returns all activities' do
+      parsed_json.should have(2).items
     end
 
     it_behaves_like 'an activity' do
       subject { parsed_json.first }
     end
+
+    describe 'GET /api/acitivities?embed=user' do
+      before do
+        auth_get '/api/activities?embed=user'
+      end
+
+      subject { parsed_json.first['user'] }
+
+      its(['id']) { should be_present }
+      its(['name']) { should be_present }
+      its(['uid']) { should_not be_present }
+      its(['authentication_token']) { should_not be_present }
+      its(['birthday']) { should_not be_present }
+    end
   end
+
 
   describe 'POST /api/activities' do
     context 'with the required attributes' do
