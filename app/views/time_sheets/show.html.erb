@@ -140,7 +140,7 @@
               <a href="<%= url_for(action: :stop_timer, date: @day) %>" data-method="put" data-remote="true" class="stop-timer">
                 Stop
               </a>
-              <small><span class="timer-overall-label hidden"><%= t '.total' %> </span><span class="timer-overall" data-timer-id="<%=@timer.id%>"></span></small>
+              <small><span class="timer-overall-label hidden has-tip" data-tooltip="<%= t '.info-timer-exceeds-day' %>"><%= t '.timer' %> <span class="timer-overall" data-timer-id="<%=@timer.id%>"></span></span></small>
               <span class="timer-current" data-timer-id="<%=@timer.id%>"></span>
             </div>
           </li>
