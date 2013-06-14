@@ -51,17 +51,11 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def range
-    max = if ends
-            ends
-          else
-            if Time.current < starts
-              starts
-            else
-              Time.current
-            end
-          end
-
-    (starts..max)
+    if timer?
+      (starts..[Time.current, starts].max)
+    else
+      (starts..ends)
+    end
   end
 
   def occurrences(date_or_range)
