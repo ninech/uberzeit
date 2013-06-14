@@ -51,11 +51,10 @@ describe TimeSheetsController do
         FactoryGirl.create(:time_entry, time_sheet: sheet, starts: '2013-07-21 09:00:00 +0200', ends: '2013-07-21 11:00:00 +0200')
         FactoryGirl.create(:time_entry, time_sheet: sheet, starts: '2013-07-21 11:00:00 +0200', ends: nil)
 
-        Timecop.freeze('2013-07-21 12:00:00 +0200'.to_time)
-        get :summary_for_date,  id: sheet, date: '2013-07-21'.to_date, format: :javascript
+        Timecop.freeze('2013-07-21 12:00:00 +0200')
+        get :summary_for_date,  id: sheet, date: '2013-07-21', format: :javascript
         assigns(:total).should eq(3.hours)
       end
-
     end
   end
 end
