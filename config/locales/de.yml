@@ -379,3 +379,4 @@ de:
         coerce: '%{attribute} ist ungültig'
         presence: '%{attribute} fehlt'
         regexp: '%{attribute} ist ungültig'
+        invalid: '%{attribute} ist ungültig'

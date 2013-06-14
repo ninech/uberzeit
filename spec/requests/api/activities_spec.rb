@@ -12,7 +12,7 @@ describe API::Resources::Activities do
 
   shared_examples 'an activity' do
     its(['id']) { should be_present }
-    its(['activity_type_id']) { should be_present }
+    its(['activity_type_id']) { should_not be_present }
     its(['activity_type']) { should be_present }
     its(['date']) { should be_present }
     its(['duration']) { should be_present }
@@ -37,7 +37,7 @@ describe API::Resources::Activities do
       subject { parsed_json.first }
     end
 
-    describe 'GET /api/acitivities?embed=user' do
+    describe 'GET /api/activities?embed=user' do
       before do
         auth_get '/api/activities?embed=user'
       end
@@ -50,8 +50,15 @@ describe API::Resources::Activities do
       its(['authentication_token']) { should_not be_present }
       its(['birthday']) { should_not be_present }
     end
-  end
 
+    describe 'GET /api/activities?embed=babo' do
+      it 'validates the embed parameter' do
+        auth_get '/api/activities?embed=babo'
+        response.status.should eq(422)
+        parsed_json['errors'].should include('embed')
+      end
+    end
+  end
 
   describe 'POST /api/activities' do
     context 'with the required attributes' do
@@ -64,7 +71,11 @@ describe API::Resources::Activities do
       its(['id']) { should eq(Activity.last.id) }
       its(['date']) { '2013-07-20' }
       its(['duration']) { should eq(2.hours) }
-      its(['activity_type_id']) { should eq(activity_type.id) }
+
+      it 'embeds the activity type' do
+        subject['activity_type']['id'].should eq(activity_type.id)
+        subject['activity_type']['name'].should eq(activity_type.name)
+      end
 
       it_behaves_like 'an activity'
 
