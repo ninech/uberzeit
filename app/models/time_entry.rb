@@ -21,16 +21,21 @@ class TimeEntry < ActiveRecord::Base
   scope :timers_only, where(ends: nil)
   scope :except_timers, where('time_entries.ends IS NOT NULL')
 
-
   before_validation :round_times
   before_create :check_active_timers_on_same_date, if: :timer?
-
 
   def self.entries_in_range(range)
     time_range = range.to_time_range
     find(:all, conditions: ['(starts < ? AND ends > ?)', time_range.max, time_range.min])
   end
 
+  def self.timers_in_range(range)
+    timers_only.select { |timer| range.intersect(timer.range) }
+  end
+
+  def self.timers_not_in_range(range)
+    timers_only.reject { |timer| range.intersect(timer.range) }
+  end
 
   def timer?
     ends.blank?
@@ -46,7 +51,17 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def range
-    (starts..(ends || Time.current))
+    max = if ends
+            ends
+          else
+            if Time.current < starts
+              starts
+            else
+              Time.current
+            end
+          end
+
+    (starts..max)
   end
 
   def occurrences(date_or_range)

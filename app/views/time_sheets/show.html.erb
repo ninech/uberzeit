@@ -62,7 +62,7 @@
         </ul>
       </div>
       <div class="entries">
-        <% if @time_chunks.length > 0 || @timer_active || @public_holidays[@day] || @absences[@day] %>
+        <% if @time_chunks.length > 0 || @timer || @public_holidays[@day] || @absences[@day] %>
         <ul>
           <!-- PUBLIC HOLIDAYS -->
           <% if @public_holiday %>
@@ -116,9 +116,22 @@
               </div>
             </li>
           <% end %>
-          <% if @timer_active %>
+          <% if @timer %>
           <li>
-            <%= @timer.start_time %> –
+            <% if @timer.start_date != @day %>
+              <span class="has-tip" data-tooltip="<%= t('.tooltip.starts') %> <%= l @timer.starts, format: :long %>">
+                <%= l @timer_range.min %>
+              </span>
+            <% else %>
+              <%= l @timer_range.min %>
+            <% end %>
+            –
+            <% if @day != Date.current %>
+              <span class="has-tip" data-tooltip="<%= t('.tooltip.ends') %> <%= l Time.current, format: :long %>">
+                <%= l @timer_range.max %>
+              </span>
+            <% end %>
+
             <small><%= @timer.time_type %></small>
             <div class="right">
               <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="edit-time-modal" data-reveal-url="<%= edit_time_sheet_time_entry_path(@time_sheet, @timer) %>">
@@ -127,7 +140,8 @@
               <a href="<%= url_for(action: :stop_timer, date: @day) %>" data-method="put" data-remote="true" class="stop-timer">
                 Stop
               </a>
-              <span class="timer-current" data-timer-id="<%=@timer.id%>" data-startdate="<%= @timer.start_date %>" data-starttime="<%= @timer.start_time %>"></span>
+              <small><span class="timer-overall-label hidden"><%= t '.total' %> </span><span class="timer-overall" data-timer-id="<%=@timer.id%>"></span></small>
+              <span class="timer-current" data-timer-id="<%=@timer.id%>"></span>
             </div>
           </li>
         <% end %>
