@@ -19,11 +19,11 @@ class TimeSheetsController < ApplicationController
     end
     @time_types = TimeType.work
 
-    @timer = @time_sheet.time_entries.timers_only.on(@day).first
-    unless @timer.nil?
-      @timer_active = (@timer.start_date.to_date == @day.to_date) # (params[:date] || Time.current.to_date.to_s(:db))
+    @timer = timer_on_day
+    if @timer
+      @timer_range = @timer.range.intersect(@day.to_range)
     end
-    @timers_other_days = @time_sheet.time_entries.timers_only.others(@day).order('starts')
+    @timers_other_days = @time_sheet.time_entries.timers_not_in_range(@day.to_range)
 
     @public_holiday = PublicHoliday.on(@day).first
 
@@ -51,9 +51,7 @@ class TimeSheetsController < ApplicationController
   end
 
   def stop_timer
-    timer = @time_sheet.time_entries.timers_only.on(@day).first
-    timer.stop
-
+    timer_on_day.stop if timer_on_day
     render json: {}
   end
 
@@ -61,12 +59,8 @@ class TimeSheetsController < ApplicationController
     @total = @time_sheet.total(@day) + @time_sheet.duration_of_timers(@day)
     @bonus = @time_sheet.bonus(@day)
 
-    active_timer = @time_sheet.time_entries.timers_only.on(@day).first
-    @timer =  if active_timer.nil?
-                0
-              else
-                active_timer.duration(@day)
-              end
+    @timer_duration_for_day = timer_on_day ? timer_on_day.duration(@day) : 0
+    @timer_duration_since_start = timer_on_day ? timer_on_day.duration : 0
 
     week = @day.at_beginning_of_week..@day.at_end_of_week
     @week_total = @time_sheet.total(week) + @time_sheet.duration_of_timers(week)
@@ -79,6 +73,10 @@ class TimeSheetsController < ApplicationController
       @day = Time.zone.parse(params[:date]).to_date
     end
     @day ||= Time.zone.today
+  end
+
+  def timer_on_day
+    @timer_on_day ||= @time_sheet.time_entries.timers_in_range(@day.to_range).first
   end
 
 end
