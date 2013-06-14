@@ -12,3 +12,8 @@
 
 3. Login with your email address (`shortname`@nine.ch)
 4. Party!
+
+
+## API
+
+curl -v -H 'X-Auth-Token: YourSuperSecretToken' -X GET uberzeit.dev/api/ping
