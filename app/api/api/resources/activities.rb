@@ -1,8 +1,12 @@
 class API::Resources::Activities < Grape::API
   resource :activities do
     desc 'Lists all activities'
+    params do
+      optional :embed, type: Array, inclusion: %w{user}
+    end
     get do
-      present Activity.by_user(current_user), with: API::Entities::Activity
+      activities = Activity.includes(:activity_type).includes(params[:embed])
+      present activities, with: API::Entities::Activity, embed: params[:embed]
     end
 
     desc 'Creates an activity.'
