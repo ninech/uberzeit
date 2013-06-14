@@ -15,5 +15,9 @@ describe ApplicationHelper do
       helper.display_in_hours(2.hours + 1.4.minutes).should eq("02:01")
       helper.display_in_hours(2.hours + 1.5.minutes).should eq("02:02")
     end
+
+    it 'rounds correctly' do
+      helper.display_in_hours(3586).should eq("01:00")
+    end
   end
 end
