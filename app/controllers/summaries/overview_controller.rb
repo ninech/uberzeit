@@ -75,6 +75,6 @@ class Summaries::OverviewController < ApplicationController
   end
 
   def time_sheets_from_team
-    @time_sheets_from_team ||= TimeSheet.joins(:user => :teams).where(memberships: {team_id: @user.teams}).where('users.id != ?', @user)
+    @time_sheets_from_team ||= TimeSheet.joins(:user => :teams).where(memberships: {team_id: @user.teams}).uniq.where('users.id != ?', @user)
   end
 end
