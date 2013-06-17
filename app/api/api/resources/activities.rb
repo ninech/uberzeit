@@ -1,12 +1,18 @@
 class API::Resources::Activities < Grape::API
   resource :activities do
+
+    before do
+      @activities = Activity.scoped
+      @activities = @activities.includes(:activity_type)
+      @activities = @activities.includes(params[:embed]) if params[:embed]
+    end
+
     desc 'Lists all activities'
     params do
       optional :embed, type: Array, inclusion: %w{user}
     end
     get do
-      activities = Activity.includes(:activity_type).includes(params[:embed])
-      present activities, with: API::Entities::Activity, embed: params[:embed]
+      present @activities, with: API::Entities::Activity, embed: params[:embed]
     end
 
     desc 'Creates an activity.'
@@ -41,7 +47,7 @@ class API::Resources::Activities < Grape::API
         requires :redmine_ticket_id
       end
       get ':redmine_ticket_id' do
-        present Activity.by_redmine_ticket(params[:redmine_ticket_id]), with: API::Entities::Activity
+        present @activities.by_redmine_ticket(params[:redmine_ticket_id]), with: API::Entities::Activity, embed: params[:embed]
       end
     end
   end
