@@ -1,4 +1,5 @@
 json.total display_in_hours(@total)
 json.bonus display_in_hours(@bonus)
-json.timer display_in_hours(@timer)
+json.timer_duration_for_day display_in_hours(@timer_duration_for_day)
+json.timer_duration_since_start display_in_hours(@timer_duration_since_start)
 json.week_total display_in_hours(@week_total)

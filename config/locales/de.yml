@@ -353,6 +353,8 @@ de:
       time_bonus: Zeitzuschlag
       time_bonuses: Zeitzuschläge
       week_number: KW
+      timer: Timer
+      info-timer-exceeds-day: Dies ist ein Timer, der die Tagesgrenze überschreitet.
 
   employments:
     edit:
@@ -372,3 +374,11 @@ de:
   layouts:
     footer:
       info-rule: 'Stunden müssen von allen Mitarbeitern bis zum Ende der Kalenderwoche erfasst sein.'
+
+  grape:
+    errors:
+      messages:
+        coerce: '%{attribute} ist ungültig'
+        presence: '%{attribute} fehlt'
+        regexp: '%{attribute} ist ungültig'
+        invalid: '%{attribute} ist ungültig'

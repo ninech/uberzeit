@@ -1,5 +1,5 @@
 require_relative 'api/validators/time_type_for_timer'
-require_relative 'api/validators/inclusion'
+require_relative 'api/validators/includes'
 
 class API < Grape::API
   version 'v1', using: :header, vendor: 'nine.ch'
@@ -37,7 +37,7 @@ class API < Grape::API
     Rack::Response.new({
       'status' => 422,
       'message' => e.message,
-      'errors' => {e.param => e.message}
+      'errors' => {e.param => [e.message]}
     }.to_json, 422)
   end
 

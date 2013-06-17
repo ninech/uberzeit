@@ -1,6 +1,5 @@
 class API::Entities::Activity < Grape::Entity
   expose :id
-  expose :activity_type_id
   expose :duration
   expose :date
   expose :description

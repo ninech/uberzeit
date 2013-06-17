@@ -12,7 +12,7 @@ describe 'API::Authentication' do
 
   describe 'token' do
     it 'authenticates' do
-      get '/api/ping', {}, { 'X-AUTH-TOKEN' => user.authentication_token }
+      get '/api/ping', {}, { 'HTTP_X_AUTH_TOKEN' => user.authentication_token }
       response.status.should eq(200)
     end
   end

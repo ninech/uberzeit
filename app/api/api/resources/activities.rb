@@ -9,7 +9,7 @@ class API::Resources::Activities < Grape::API
 
     desc 'Lists all activities'
     params do
-      optional :embed, type: Array, inclusion: %w{user}
+      optional :embed, type: Array, includes: %w[user]
     end
     get do
       present @activities, with: API::Entities::Activity, embed: params[:embed]
