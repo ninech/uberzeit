@@ -2,3 +2,4 @@ development:
   ubertrack_hosts:
     - 'http://localhost:9292'
     - 'http://redmine.dev'
+    - 'http://10.10.10.17'
