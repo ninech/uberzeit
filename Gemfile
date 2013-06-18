@@ -79,7 +79,7 @@ gem 'warden'
 gem 'mynine-plugin_helpers',
     require: 'plugin_helpers',
     git: 'git@git.nine.ch:mynine/plugin_helpers.git',
-    tag: '1.1.1'
+    tag: '1.1.2'
 
 gem 'mynine-customer_plugin',
     require: 'customer_plugin',
