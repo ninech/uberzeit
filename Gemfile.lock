@@ -56,8 +56,8 @@ GIT
 
 GIT
   remote: git@git.nine.ch:mynine/customer_plugin.git
-  revision: 2b4132f58ad24bf805e05fe2410b7cac9893204e
-  tag: 1.1.2
+  revision: 9b55fab9f62741f970a883d77a57367f24ab4813
+  tag: 1.1.3
   specs:
     mynine-customer_plugin (1.1.3)
       bcrypt-ruby (~> 3.0.1)

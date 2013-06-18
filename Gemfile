@@ -84,7 +84,7 @@ gem 'mynine-plugin_helpers',
 gem 'mynine-customer_plugin',
     require: 'customer_plugin',
     git: 'git@git.nine.ch:mynine/customer_plugin.git',
-    tag: '1.1.2'
+    tag: '1.1.3'
 
 group :development, :test do
   gem 'sqlite3'
