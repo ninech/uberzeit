@@ -23,4 +23,25 @@ module UberZeit
   def self.round(duration, smallest_unit = UberZeit::Config[:rounding])
     (duration.to_f / smallest_unit.to_f).round * smallest_unit
   end
+
+  def self.duration_in_hhmm(duration)
+    hours = duration.to_hours.to_i
+    minutes = (duration - hours * 1.hour).to_minutes.round
+    is_negative = hours < 0 || minutes < 0
+
+    if is_negative
+      "-%02i:%02i" % [hours.abs, minutes.abs]
+    else
+      "%02i:%02i" % [hours, minutes]
+    end
+  end
+
+  def self.hhmm_in_duration(hhmm)
+    hours, minutes = hhmm.split(':').map(&:to_f)
+    if hhmm.index('-')
+      -1 * (hours.hours.abs + minutes.minutes.abs)
+    else
+      hours.hours + minutes.minutes
+    end
+  end
 end
