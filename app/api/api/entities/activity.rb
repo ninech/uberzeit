@@ -1,6 +1,8 @@
 class API::Entities::Activity < Grape::Entity
   expose :id
-  expose :duration
+  expose :duration do |activity|
+    UberZeit.duration_in_hhmm(activity.duration)
+  end
   expose :date
   expose :description
   expose :customer_id
