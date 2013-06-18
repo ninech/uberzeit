@@ -63,15 +63,7 @@ module ApplicationHelper
 
   def display_in_hours(duration)
     rounded_duration = UberZeit.round(duration)
-    hours = rounded_duration.to_hours.to_i
-    minutes = (rounded_duration - hours * 1.hour).to_minutes.to_i
-    is_negative = hours < 0 || minutes < 0
-
-    if is_negative
-      "-%02i:%02i" % [hours.abs, minutes.abs]
-    else
-      "%02i:%02i" % [hours, minutes]
-    end
+    UberZeit.duration_in_hhmm(rounded_duration)
   end
 
   def icon_class_for_time_type(time_type)
