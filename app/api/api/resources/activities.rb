@@ -52,5 +52,15 @@ class API::Resources::Activities < Grape::API
         present @activities.by_redmine_ticket(params[:redmine_ticket_id]), with: API::Entities::Activity, embed: params[:embed]
       end
     end
+
+    namespace :otrs_ticket do
+      desc 'Retrieves all activities associated with the supplied orts ticket id'
+      params do
+        requires :otrs_ticket_id
+      end
+      get ':otrs_ticket_id' do
+        present @activities.by_otrs_ticket(params[:otrs_ticket_id]), with: API::Entities::Activity, embed: params[:embed]
+      end
+    end
   end
 end
