@@ -25,6 +25,8 @@ class API::Resources::Activities < Grape::API
       optional :project_id, type: Integer
       optional :redmine_ticket_id, type: Integer
       optional :otrs_ticket_id, type: Integer
+
+      optional :embed, type: Array, includes: %w[user]
     end
     post do
       activity = Activity.create!(
@@ -38,7 +40,7 @@ class API::Resources::Activities < Grape::API
         otrs_ticket_id: params[:otrs_ticket_id],
         user_id: current_user.id
       )
-      present activity, with: API::Entities::Activity
+      present activity, with: API::Entities::Activity, embed: params[:embed]
     end
 
     namespace :redmine_ticket do
