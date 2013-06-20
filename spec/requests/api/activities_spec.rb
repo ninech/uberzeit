@@ -7,7 +7,7 @@ describe API::Resources::Activities do
   let(:parsed_json) { JSON.parse(response.body) }
   let(:activity_type) { FactoryGirl.create(:activity_type) }
   let(:required_attributes) do
-    { activity_type_id: activity_type.id, date: '2013-07-20', duration: 2, customer_id: 1 }
+    { activity_type_id: activity_type.id, date: '2013-07-20', duration: 7200, customer_id: 1 }
   end
 
   shared_examples 'an activity' do
@@ -71,7 +71,7 @@ describe API::Resources::Activities do
 
       its(['id']) { should eq(Activity.last.id) }
       its(['date']) { '2013-07-20' }
-      its(['duration']) { should eq('02:00') }
+      its(['duration']) { should eq(7200) }
 
       it 'embeds the activity type' do
         subject['activity_type']['id'].should eq(activity_type.id)
@@ -102,14 +102,9 @@ describe API::Resources::Activities do
     end
 
     describe 'duration' do
-      it 'accepts hh:mm' do
+      it 'does not accept hh:mm' do
         auth_post '/api/activities', required_attributes.merge(duration: '03:15')
-        parsed_json['duration'].should eq('03:15')
-      end
-
-      it 'accepts decimal' do
-        auth_post '/api/activities', required_attributes.merge(duration: 2.5)
-        parsed_json['duration'].should eq('02:30')
+        response.status.should eq(422)
       end
     end
   end

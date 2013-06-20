@@ -19,7 +19,7 @@ class API::Resources::Activities < Grape::API
     params do
       requires :activity_type_id, type: Integer
       requires :date, type: Date
-      requires :duration, type: String, desc: 'Activity duration in hours (either in hh:mm or decimal format)'
+      requires :duration, type: Integer, desc: 'Activity duration in seconds'
       requires :customer_id, type: Integer
       optional :description, type: String
       optional :project_id, type: Integer
@@ -30,16 +30,10 @@ class API::Resources::Activities < Grape::API
     end
     post do
 
-      duration =  if params[:duration].index(':')
-                    UberZeit.hhmm_in_duration(params[:duration])
-                  else
-                    params[:duration].to_f.hours
-                  end
-
       activity = Activity.create!(
         activity_type_id: params[:activity_type_id],
         date: params[:date],
-        duration: duration,
+        duration: params[:duration],
         description: params[:description],
         customer_id: params[:customer_id],
         project_id: params[:project_id],
