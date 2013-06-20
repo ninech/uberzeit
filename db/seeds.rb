@@ -14,3 +14,21 @@ if TimeType.count == 0
   TimeType.create(name: 'Compensation', is_work: false, is_vacation: false, exclude_from_calculation: true, color_index: 7, icon: :'circle-blank')
   TimeType.create(name: 'Absence by law', is_work: false, is_vacation: false, color_index: 8, icon: :legal)
 end
+
+if ActivityType.count == 0
+  ActivityType.create(name: 'Maintenance')
+  ActivityType.create(name: 'Setup Server')
+end
+
+if Customer.count == 0
+  Customer.create(id: 1, name: 'Yolo Inc')
+  Customer.create(id: 2, name: 'Nils\'s Vacuum Cleaners Inc')
+end
+
+if Project.count == 0
+  Project.create(customer_id: 1, name: 'Mustached Spice')
+  Project.create(customer_id: 1, name: 'Overwhelming Matterhorn')
+
+  Project.create(customer_id: 2, name: 'Cleaning with Fun Cluster 1')
+  Project.create(customer_id: 2, name: 'Demo @ nine HeadQuarters including an apero')
+end

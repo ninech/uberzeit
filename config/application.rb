@@ -61,25 +61,29 @@ module Uberzeit
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    # API via grape
+    config.paths.add "app/api", glob: "**/*.rb"
+    config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
+
     # uberZeit specific time settings
     Uberzeit::Application.config.to_prepare do
+      config_path = File.join(Rails.root, 'config', 'uberzeit.yml')
+      yaml_config = YAML.load_file(config_path)
+
+      if yaml_config[Rails.env]
+        yaml_config[Rails.env].each do |key, value|
+          UberZeit::Config.send("#{key}=", value)
+        end
+      end
+
       UberZeit::Config[:rounding] = 1.minutes
       UberZeit::Config[:work_days] = [:monday, :tuesday, :wednesday, :thursday, :friday]
       UberZeit::Config[:work_per_day] = 8.5.hours
       UberZeit::Config[:vacation_per_year] = 25.days
     end
 
-=begin
-    # general
+    YAML::ENGINE.yamler = 'syck'
+    config.uration = YAML.load(File.open(File.join(Rails.root, 'config', 'extensions.yml'))).with_indifferent_access[Rails.env]
 
-    # overtime
-    config.uberzeit.overtime_limit_per_day = 2.hours
-    config.uberzeit.overtime_limit_per_year = 170.hours
-
-    # pikett
-    config.uberzeit.onduty_limit_per_block = 7.days
-    config.uberzeit.onduty_block_length = 4.weeks
-    config.uberzeit.onduty_block_break_length = 2.weeks
-=end
   end
 end

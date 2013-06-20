@@ -6,6 +6,10 @@ class TimeEntriesController < ApplicationController
 
   before_filter :load_time_types
 
+  def index
+    respond_with(@time_entries)
+  end
+
   def new
     if params[:date]
       @time_entry.start_date = params[:date]

@@ -38,4 +38,14 @@ describe UberZeit do
     UberZeit.round(10.5.minutes, 1.minute).should eq(11.minutes)
     UberZeit.round(77.minutes, 15.minutes).should eq(75.minutes)
   end
+
+  it '::duration_in_hhmm' do
+    UberZeit.duration_in_hhmm(4.5.hours).should eq('04:30')
+    UberZeit.duration_in_hhmm(-1.25.hours).should eq('-01:15')
+  end
+
+  it '::hhmm_in_duration' do
+    UberZeit.hhmm_in_duration('04:30').should eq(4.5.hours)
+    UberZeit.hhmm_in_duration('-00:15').should eq(-0.25.hours)
+  end
 end

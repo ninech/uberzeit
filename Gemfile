@@ -40,9 +40,6 @@ gem 'nine-ldap',
     git: 'git@git.nine.ch:nine-ldap.git',
     tag: '0.0.13'
 
-# To use local Git repos, run this on console:
-# bundle config local.nine-ldap ~/projects/nine-ldap
-
 gem 'version_reader'
 gem 'airbrake'
 gem 'jbuilder'
@@ -60,12 +57,32 @@ gem 'calendar_helper', github: 'topfunky/calendar_helper'
 gem 'rails-i18n', branch: 'rails-3-x'
 gem 'i18n-js', :git => 'git://github.com/fnando/i18n-js.git', :branch => 'master'
 
+# navigation
 gem 'simple-navigation'
+
+# raf <3 CORS
+gem 'rack-cors'
 
 # Logging
 gem 'uberlog',
   git: 'git@git.nine.ch:gems/uberlog',
   tag: '0.4.1'
+
+# API
+# http://www.youtube.com/watch?v=mqgiEQXGetI
+gem 'grape', git: 'git://github.com/intridea/grape.git'
+gem 'grape-entity', git: 'git://github.com/intridea/grape-entity.git'
+gem 'grape-swagger'
+gem 'warden'
+
+# Customers
+gem 'mynine-plugin_helpers',
+    require: 'plugin_helpers',
+    git: 'git@git.nine.ch:mynine/plugin_helpers.git'
+
+gem 'mynine-customer_plugin',
+    require: 'customer_plugin',
+    git: 'git@git.nine.ch:mynine/customer_plugin.git'
 
 group :development, :test do
   gem 'sqlite3'
@@ -82,6 +99,10 @@ group :development, :test do
   gem 'i18n-missing_translations'
   gem 'capistrano_database_yml'
   gem 'timecop'
+  gem 'phantomjs'
+  gem 'poltergeist', git: 'git://github.com/jonleighton/poltergeist.git', branch: 'master'
+  gem 'database_cleaner'
+  gem 'launchy'
 end
 
 group :development do
