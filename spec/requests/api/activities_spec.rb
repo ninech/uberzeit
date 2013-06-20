@@ -7,7 +7,7 @@ describe API::Resources::Activities do
   let(:parsed_json) { JSON.parse(response.body) }
   let(:activity_type) { FactoryGirl.create(:activity_type) }
   let(:required_attributes) do
-    { activity_type_id: activity_type.id, date: '2013-07-20', duration: 2 }
+    { activity_type_id: activity_type.id, date: '2013-07-20', duration: 2, customer_id: 1 }
   end
 
   shared_examples 'an activity' do
@@ -18,6 +18,7 @@ describe API::Resources::Activities do
     its(['duration']) { should be_present }
     its(['user_id']) { should be_present }
     its(['user']) { should_not be_present }
+    its(['customer_id']) { should be_present }
   end
 
   describe 'GET /api/activities' do

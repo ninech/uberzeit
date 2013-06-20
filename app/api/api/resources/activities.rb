@@ -20,8 +20,8 @@ class API::Resources::Activities < Grape::API
       requires :activity_type_id, type: Integer
       requires :date, type: Date
       requires :duration, type: String, desc: 'Activity duration in hours (either in hh:mm or decimal format)'
+      requires :customer_id, type: Integer
       optional :description, type: String
-      optional :customer_id, type: Integer
       optional :project_id, type: Integer
       optional :redmine_ticket_id, type: Integer
       optional :otrs_ticket_id, type: Integer
