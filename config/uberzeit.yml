@@ -3,3 +3,13 @@ development:
     - 'http://localhost:9292'
     - 'http://redmine.dev'
     - 'http://10.10.10.17'
+
+staging:
+  ubertrack_hosts:
+    - 'https://redmine-staging.nine.ch'
+    - 'https://otrs-staging.nine.ch'
+
+production:
+  ubertrack_hosts:
+    - 'https://redmine.nine.ch'
+    - 'https://otrs.nine.ch'
