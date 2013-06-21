@@ -1,9 +1,3 @@
-$(document)
-  .foundation('reveal', {
-    closeOnBackgroundClick: false
-  })
-  .foundation('tooltips')
-
 # ===> Event Listeners
 $(document).on 'click', '.toggle', (element) ->
   $('#' + $(this).data('toggle-target')).toggle()
@@ -26,8 +20,19 @@ $(document).on 'mouseover', '.has-tip', ->
       content: $(this).data('tooltip')
       fadeSpeed: 0
 
+# Hacky hack
+# Foundation adds styles to a functional class (close-reveal-modal)
+# Adding the class to the button messes up with the style, cf. https://github.com/zurb/foundation/pull/1381
+# Use a custom css class to work around
+$(document).on 'click', '.close-reveal-modal-button', (event) ->
+  $(this).closest(".reveal-modal").foundation "reveal", "close"
+  false
+
 # ===> Document Ready
 $ ->
+  $(document)
+    .foundation('reveal')
+    .foundation('tooltips')
 
   window.initControls = () ->
     initTimePicker()

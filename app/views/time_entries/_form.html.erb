@@ -6,7 +6,7 @@
 
 <div class="row">
   <div class="small-2 columns">
-    <%= f.label :start_time %>
+    <%= f.label :start_time, class: 'right inline' %>
   </div>
   <div class="small-7 columns">
     <%= datefield(f, :start_date, false, f.object.start_date, :date) %>
@@ -15,9 +15,11 @@
     <%= f.text_field :start_time, label: false, class: 'time' %>
   </div>
 </div>
+
+
 <div class="row">
   <div class="small-2 columns">
-    <%= f.label :end_time %>
+    <%= f.label :end_time, class: 'right inline' %>
   </div>
   <div class="small-7 columns">
     <%= datefield(f, :end_date, false, f.object.end_date, :date) %>
@@ -29,12 +31,23 @@
 
 
 <div class="row">
-  <div class="small-12 columns">
-    <%= f.submit t('.save'), id: 'time_entry_submit', class: 'primary medium button' %>
-    <%= link_to t('.cancel'), '#', class: 'close-reveal-modal link' %>
-    <% if @time_entry && @time_entry.persisted? %>
-      <%= link_to t('.delete'), time_sheet_time_entry_path(@time_sheet, @time_entry), method: :delete, remote: true, class: 'delete-time-entry-link' %>
-    <% end %>
+  <div class="small-12 columns center">
+    <div class="button-bar">
+      <ul class="button-group">
+        <li>
+          <%= f.submit t('.save'), id: 'time_entry_submit', class: 'medium button' %>
+        </li>
+      </ul>
+      <ul class="button-group">
+        <li>
+        <% if @time_entry && @time_entry.persisted? %>
+          <%= link_to t('.delete'), time_sheet_time_entry_path(@time_sheet, @time_entry), method: :delete, remote: true, class: 'medium button alert' %>
+        <% else %>
+          <%= link_to t('.cancel'), '', class: 'medium button secondary close-reveal-modal-button' %>
+        <% end %>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 

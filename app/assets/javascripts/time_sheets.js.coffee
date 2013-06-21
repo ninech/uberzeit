@@ -14,9 +14,6 @@ $(document).on 'click', '.stop-timer', ->
 $(document).on 'ajax:complete', '.stop-timer', (xhr, status) ->
   window.location.reload()
 
-$(document).on 'ajax:complete', '.delete-time-entry-link', (xhr, status) ->
-  window.location.reload()
-
 $(document).on 'click', '.unhider', ->
   $('.' + $(this).data('hide-class')).hide()
   $('.' + $(this).data('unhide-class')).show()
