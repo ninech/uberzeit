@@ -1,6 +1,7 @@
 class Activity < ActiveRecord::Base
-  belongs_to :activity_type
-  belongs_to :user
+  belongs_to :activity_type, with_deleted: true
+  belongs_to :project, with_deleted: true
+  belongs_to :user, with_deleted: true
 
   attr_accessible :customer_id, :date, :description, :duration, :otrs_ticket_id, :project_id, :redmine_ticket_id, :activity_type_id, :user_id
 

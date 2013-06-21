@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130618132736) do
+ActiveRecord::Schema.define(:version => 20130621094004) do
 
   create_table "absences", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20130618132736) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.datetime "deleted_at"
   end
 
   create_table "adjustments", :force => true do |t|
@@ -112,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20130618132736) do
     t.string   "name"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.datetime "deleted_at"
   end
 
   add_index "projects", ["customer_id"], :name => "index_projects_on_customer_id"
