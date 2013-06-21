@@ -3,6 +3,7 @@ require 'spec_helper'
 describe ProjectsController do
 
   let(:admin) { FactoryGirl.create(:admin) }
+  let(:customer) { FactoryGirl.create(:customer) }
 
   context 'for non-signed in users' do
     it 'redirects to login' do
@@ -33,10 +34,27 @@ describe ProjectsController do
       end
     end
 
-    describe "GET 'create'" do
-      it "returns http success" do
-        get 'create'
-        response.should be_success
+    describe 'POST "create"' do
+      context 'with valid attributes' do
+        it 'creates a new project' do
+          expect { post :create, project: FactoryGirl.attributes_for(:project, customer_id: customer.id) }.to change(Project,:count).by(1)
+        end
+
+        it 'redirects to the overview' do
+          post :create, project: FactoryGirl.attributes_for(:project, customer_id: customer.id)
+          response.should redirect_to projects_path
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'does not save the new project' do
+          expect { post :create, project: FactoryGirl.attributes_for(:project, name: '') }.to_not change(Project,:count)
+        end
+
+        it 're-renders the :new template' do
+          post :create, project: FactoryGirl.attributes_for(:project, name: '')
+          response.should render_template :new
+        end
       end
     end
 

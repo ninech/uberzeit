@@ -338,6 +338,10 @@ de:
     index:
       title: 'Projekte'
       new: 'Neues Projekt hinzufügen'
+    new:
+      title: 'Neues Projekt hinzufügen'
+    form:
+      back: 'Zurück'
   time_sheets:
     top_buttons:
       add_time: Zeit hinzufügen
