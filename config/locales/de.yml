@@ -334,6 +334,9 @@ de:
       back: Zurück
     new:
       title: Anpassung hinzufügen
+  projects:
+    index:
+      title: 'Projekte'
   time_sheets:
     top_buttons:
       add_time: Zeit hinzufügen

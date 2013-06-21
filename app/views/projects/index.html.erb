@@ -1,2 +1,23 @@
-<h1>Projects#index</h1>
-<p>Find me in app/views/projects/index.html.erb</p>
+<div class="row">
+  <div class="small-12 columns">
+    <h1>
+      <%= t '.title' %>
+    </h1>
+
+    <% @projects.each do |customer, projects| %>
+      <h2><%= customer.name %></h2>
+      <table class="nice small-12 edit destroy">
+        <tbody>
+          <% projects.each do |project| %>
+            <tr>
+              <td><%= project.name %></td>
+              <td><%= link_to icon('edit'), edit_project_path(project) %></td>
+              <td><%= link_to icon('trash'), project, method: :delete, confirm: t('.confirm_delete') %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>
+
