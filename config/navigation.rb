@@ -57,6 +57,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :absences, t('navigation.absences'), time_sheet_absences_path(current_user.current_time_sheet), highlights_on: %r!\A/time_sheets/\d+/absences!
 
     primary.item :reports, t('navigation.reports'), user_summaries_overview_path(current_user), highlights_on: %r!\A/users(/\d*)*/summaries! do |second|
+      second.dom_class = 'sub-nav'
       second.item :overview, t('navigation.sub.reports.overview'), user_summaries_overview_path(current_user), highlights_on: %r!\A/users/\d*/summaries/overview!
       second.item :my_work, t('navigation.sub.reports.my_work'), user_summaries_work_month_path(current_user, Date.current.year, Date.current.month), highlights_on: %r!\A/users/\d*/summaries/work!
       second.item :my_absence, t('navigation.sub.reports.my_absence'), user_summaries_absence_year_path(current_user, Date.current.year), highlights_on: %r!\A/users/\d*/summaries/absence!
@@ -65,14 +66,13 @@ SimpleNavigation::Configuration.run do |navigation|
         second.item :work, t('navigation.sub.reports.work'), month_summaries_work_users_path(Date.current.year, Date.current.month), highlights_on: %r!\A/users/summaries/work!
         second.item :vacation, t('navigation.sub.reports.vacation'), year_summaries_vacation_users_path(Date.current.year), highlights_on: %r!\A/users/summaries/vacation!
       end
-      second.dom_class = 'sub-nav'
     end
     primary.item :manage, t('navigation.manage'), public_holidays_path, if: -> { show_manage_link_in_navigation? } do |second|
+      second.dom_class = 'sub-nav'
       second.item :public_holidays, t('navigation.sub.manage.public_holidays'), public_holidays_path, highlights_on: %r!\A#{public_holidays_path}!
       second.item :users, t('navigation.sub.manage.users'), users_path
       second.item :time_types, t('navigation.sub.manage.time_types'), time_types_path, highlights_on: %r!\A#{time_types_path}!
       second.item :adjustments, t('navigation.sub.manage.adjustments'), adjustments_path, highlights_on: %r!\A#{adjustments_path}!
-      second.dom_class = 'sub-nav'
     end
 
   end
