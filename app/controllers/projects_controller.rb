@@ -16,7 +16,12 @@ class ProjectsController < ApplicationController
     respond_with(@project, location: projects_path)
   end
 
+  def edit
+  end
+
   def update
+    @project.update_attributes(params[:project])
+    respond_with(@project, location: projects_path)
   end
 
   def destroy

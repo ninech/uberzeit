@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe ProjectsController do
 
+  let(:project) { FactoryGirl.create(:project) }
   let(:admin) { FactoryGirl.create(:admin) }
   let(:customer) { FactoryGirl.create(:customer) }
 
@@ -58,10 +59,45 @@ describe ProjectsController do
       end
     end
 
-    describe "GET 'update'" do
-      it "returns http success" do
-        get 'update'
-        response.should be_success
+    describe 'GET "edit"' do
+      it 'assigns the to-be edited project to @project' do
+        get :edit, id: project.id
+        assigns(:project).should eq(project)
+      end
+
+      it 'renders the :edit template' do
+        get :edit, id: project.id
+        response.should render_template :edit
+      end
+    end
+
+    describe 'PUT "update"' do
+      context 'with valid attributes' do
+        it 'changes project\'s attributes' do
+          expect {
+            put :update, id: project, project: FactoryGirl.attributes_for(:project, name: 'Project 1337')
+            project.reload
+          }.to change(project, :name).to('Project 1337')
+        end
+
+        it 'redirects to the overview' do
+          put :update, id: project, project: FactoryGirl.attributes_for(:project)
+          response.should redirect_to projects_path
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'does not change project\'s attributes' do
+          expect {
+            put :update, id: project, project: FactoryGirl.attributes_for(:project, name: nil)
+            project.reload
+          }.not_to change(project, :name)
+        end
+
+        it 're-renders the :edit template' do
+          put :update, id: project, project: FactoryGirl.attributes_for(:project, name: nil)
+          response.should render_template :edit
+        end
       end
     end
 

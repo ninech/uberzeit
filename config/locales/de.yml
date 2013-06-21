@@ -340,6 +340,8 @@ de:
       new: 'Neues Projekt hinzufügen'
     new:
       title: 'Neues Projekt hinzufügen'
+    edit:
+      title: 'Projekt editieren'
     form:
       back: 'Zurück'
   time_sheets:
