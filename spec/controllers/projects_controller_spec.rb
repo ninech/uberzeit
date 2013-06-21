@@ -101,10 +101,15 @@ describe ProjectsController do
       end
     end
 
-    describe "GET 'destroy'" do
-      it "returns http success" do
-        get 'destroy'
-        response.should be_success
+    describe 'DELETE "destroy"' do
+      it 'deletes the entry' do
+        project
+        expect { delete :destroy, id: project }.to change(Project,:count).by(-1)
+      end
+
+      it 'redirects to the overview' do
+        delete :destroy, id: project
+        response.should redirect_to projects_path
       end
     end
   end

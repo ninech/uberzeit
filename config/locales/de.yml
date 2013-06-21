@@ -338,6 +338,7 @@ de:
     index:
       title: 'Projekte'
       new: 'Neues Projekt hinzufügen'
+      confirm_delete: 'Wirklich löschen?'
     new:
       title: 'Neues Projekt hinzufügen'
     edit:
