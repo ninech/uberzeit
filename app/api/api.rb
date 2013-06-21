@@ -33,11 +33,14 @@ class API < Grape::API
   #
   # Exceptions
   #
-  rescue_from Grape::Exceptions::Validation do |e|
+  collect_validation_errors true
+
+  rescue_from Grape::Exceptions::Validations do |e|
+    errors_per_param = Hash[e.errors.collect { |error| [error.param, error.message] }]
     Rack::Response.new({
       'status' => 422,
       'message' => e.message,
-      'errors' => {e.param => [e.message]}
+      'errors' => errors_per_param
     }.to_json, 422)
   end
 
@@ -61,7 +64,7 @@ class API < Grape::API
   # Ping? Pong!
   #
   get :ping do
-    'pong'
+    { pong: Time.now }
   end
 
   #
