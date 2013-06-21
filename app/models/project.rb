@@ -1,4 +1,6 @@
 class Project < ActiveRecord::Base
+  acts_as_paranoid
+
   belongs_to :customer, primary_key: :id
 
   attr_accessible :name, :customer, :customer_id
