@@ -25,6 +25,6 @@ class ActivityTypesController < ApplicationController
 
   def destroy
     @activity_type.destroy
-    respond_with(@activity_type)
+    respond_with(@activity_type, location: activity_types_path)
   end
 end
