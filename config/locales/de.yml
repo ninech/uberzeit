@@ -351,6 +351,7 @@ de:
       title: 'Aktivitätstypen'
       new: 'Neuen Aktivitätstyp hinzufügen'
       confirm_delete: 'Wirklich löschen?'
+      total_activities: 'Anzahl erfasste Aktivitäten'
     new:
       title: 'Neuen Aktivitätstyp hinzufügen'
     edit:
