@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="small-12 columns">
+    <h1>
+      <%= t '.title' %>
+      <%= link_to icon('plus') + ' ' + t('.new'), new_activity_type_path, class: 'button right' %></h3>
+    </h1>
+
+    <table class="nice small-12 edit destroy">
+      <tbody>
+        <% @activity_types.each do |activity_type| %>
+          <tr>
+            <td><%= activity_type.name %></td>
+           <td><%= link_to icon('edit'), edit_activity_type_path(activity_type) %></td>
+          <td><%= link_to icon('trash'), activity_type, method: :delete, confirm: t('.confirm_delete') %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
