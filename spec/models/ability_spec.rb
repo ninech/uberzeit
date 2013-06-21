@@ -266,4 +266,50 @@ describe Ability do
       it { should_not be_able_to(:destroy, team) }
     end
   end
+
+  describe 'Project' do
+
+    let(:project) { FactoryGirl.create(:project) }
+
+    context 'as a user with the administration role' do
+      let(:ability) { Ability.new(admin) }
+
+      it { should be_able_to(:read, project) }
+      it { should be_able_to(:update, project) }
+      it { should be_able_to(:create, Project) }
+      it { should be_able_to(:destroy, project) }
+    end
+
+    context 'as a normal user' do
+      let(:ability) { Ability.new(user) }
+
+      it { should be_able_to(:read, project) }
+      it { should_not be_able_to(:update, project) }
+      it { should_not be_able_to(:create, Project) }
+      it { should_not be_able_to(:destroy, project) }
+    end
+  end
+
+  describe 'ActivityType' do
+
+    let(:activity_type) { FactoryGirl.create(:activity_type) }
+
+    context 'as a user with the administration role' do
+      let(:ability) { Ability.new(admin) }
+
+      it { should be_able_to(:read, activity_type) }
+      it { should be_able_to(:update, activity_type) }
+      it { should be_able_to(:create, ActivityType) }
+      it { should be_able_to(:destroy, activity_type) }
+    end
+
+    context 'as a normal user' do
+      let(:ability) { Ability.new(user) }
+
+      it { should be_able_to(:read, activity_type) }
+      it { should_not be_able_to(:update, activity_type) }
+      it { should_not be_able_to(:create, ActivityType) }
+      it { should_not be_able_to(:destroy, activity_type) }
+    end
+  end
 end
