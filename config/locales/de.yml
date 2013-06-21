@@ -181,6 +181,7 @@ de:
         time_types: Zeittypen
         users: Benutzer
         adjustments: Anpassungen
+        projects: 'Projekte'
       reports:
         overview: Übersicht
         my_work: Meine Arbeitszeit
@@ -333,6 +334,17 @@ de:
       back: Zurück
     new:
       title: Anpassung hinzufügen
+  projects:
+    index:
+      title: 'Projekte'
+      new: 'Neues Projekt hinzufügen'
+      confirm_delete: 'Wirklich löschen?'
+    new:
+      title: 'Neues Projekt hinzufügen'
+    edit:
+      title: 'Projekt editieren'
+    form:
+      back: 'Zurück'
   time_sheets:
     top_buttons:
       add_time: Zeit hinzufügen
