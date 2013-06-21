@@ -1,14 +1,18 @@
 require 'spec_helper'
 
 describe API::Resources::Customers do
-  include ApiHelpers
+  include Warden::Test::Helpers
 
   let(:api_user) { FactoryGirl.create(:user) }
-  let(:parsed_json) { JSON.parse(response.body) }
+  let(:json) { JSON.parse(response.body) }
 
   shared_examples 'a customer' do
     its(['id']) { should be_present }
     its(['name']) { should be_present }
+  end
+
+  before do
+    login_as api_user
   end
 
   describe 'GET /api/customers' do
@@ -16,15 +20,15 @@ describe API::Resources::Customers do
     let!(:customer2) { FactoryGirl.create(:customer) }
 
     before do
-      auth_get '/api/customers'
+      get '/api/customers'
     end
 
     it 'returns a list of the customers' do
-      parsed_json.should have(2).customers
+      json.should have(2).customers
     end
 
     it_behaves_like 'a customer' do
-      subject { parsed_json.first }
+      subject { json.first }
     end
   end
 

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe API::Resources::Activities do
-  include ApiHelpers
+  include Warden::Test::Helpers
 
   let(:api_user) { FactoryGirl.create(:user) }
-  let(:parsed_json) { JSON.parse(response.body) }
+  let(:json) { JSON.parse(response.body) }
   let(:activity_type) { FactoryGirl.create(:activity_type) }
   let(:required_attributes) do
     { activity_type_id: activity_type.id, date: '2013-07-20', duration: 7200, customer_id: 1 }
@@ -21,29 +21,33 @@ describe API::Resources::Activities do
     its(['customer_id']) { should be_present }
   end
 
+  before do
+    login_as api_user
+  end
+
   describe 'GET /api/activities' do
     let!(:activity) { FactoryGirl.create(:activity, user: api_user) }
     let!(:another_user) { FactoryGirl.create(:user) }
     let!(:activity_of_another_user) { FactoryGirl.create(:activity, user: another_user) }
 
     before do
-      auth_get '/api/activities'
+      get '/api/activities'
     end
 
     it 'returns all activities' do
-      parsed_json.should have(2).items
+      json.should have(2).items
     end
 
     it_behaves_like 'an activity' do
-      subject { parsed_json.first }
+      subject { json.first }
     end
 
     describe 'GET /api/activities?embed=user' do
       before do
-        auth_get '/api/activities?embed=user'
+        get '/api/activities?embed=user'
       end
 
-      subject { parsed_json.first['user'] }
+      subject { json.first['user'] }
 
       its(['id']) { should be_present }
       its(['name']) { should be_present }
@@ -54,9 +58,9 @@ describe API::Resources::Activities do
 
     describe 'GET /api/activities?embed=babo' do
       it 'validates the embed parameter' do
-        auth_get '/api/activities?embed=babo'
+        get '/api/activities?embed=babo'
         response.status.should eq(422)
-        parsed_json['errors'].should include('embed')
+        json['errors'].should include('embed')
       end
     end
   end
@@ -64,10 +68,10 @@ describe API::Resources::Activities do
   describe 'POST /api/activities' do
     context 'with the required attributes' do
       before do
-        auth_post '/api/activities', required_attributes
+        post '/api/activities', required_attributes
       end
 
-      subject { parsed_json }
+      subject { json }
 
       its(['id']) { should eq(Activity.last.id) }
       its(['date']) { '2013-07-20' }
@@ -87,13 +91,13 @@ describe API::Resources::Activities do
 
     context 'with optional attributes' do
       before do
-        auth_post '/api/activities', required_attributes.merge(redmine_ticket_id: 42,
+        post '/api/activities', required_attributes.merge(redmine_ticket_id: 42,
                                                                customer_id: 22,
                                                                project_id: 1,
                                                                otrs_ticket_id: 137)
       end
 
-      subject { parsed_json }
+      subject { json }
 
       its(['redmine_ticket_id']) { should eq(42) }
       its(['customer_id']) { should eq(22) }
@@ -103,7 +107,7 @@ describe API::Resources::Activities do
 
     describe 'duration' do
       it 'does not accept hh:mm' do
-        auth_post '/api/activities', required_attributes.merge(duration: '03:15')
+        post '/api/activities', required_attributes.merge(duration: '03:15')
         response.status.should eq(422)
       end
     end
@@ -114,15 +118,15 @@ describe API::Resources::Activities do
     let!(:another_activity) { FactoryGirl.create(:activity, user: api_user, redmine_ticket_id: 1337) }
 
     before do
-      auth_get '/api/activities/redmine_ticket/42'
+      get '/api/activities/redmine_ticket/42'
     end
 
     it 'returns a list of activities with the given redmine ticket' do
-      parsed_json.should have(1).items
+      json.should have(1).items
     end
 
     it_behaves_like 'an activity' do
-      subject { parsed_json.first }
+      subject { json.first }
     end
   end
 end
