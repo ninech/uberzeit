@@ -21,13 +21,7 @@ class CustomerSync
   end
 
   def sync_customer(remote_customer)
-    local_customer =  begin
-                        ::Customer.find(remote_customer.id)
-                      rescue ActiveRecord::RecordNotFound
-                        nil
-                      end
-
-    local_customer ||= ::Customer.create(id: remote_customer.id)
+    local_customer = Customer.find_or_create_by_id(remote_customer.id)
 
     sync_customer_attributes(local_customer, remote_customer)
   end
@@ -39,7 +33,7 @@ class CustomerSync
   end
 
   def sync_customer_attributes(local_customer, remote_customer)
-    local_customer.name = remote_customer.companyname
+    local_customer.name = "#{remote_customer.firstname} #{remote_customer.companyname}".strip
     local_customer.save!
   end
 end
