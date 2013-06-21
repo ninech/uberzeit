@@ -2,6 +2,7 @@
   <div class="small-12 columns">
     <h1>
       <%= t '.title' %>
+      <%= link_to icon('plus') + ' ' + t('.new'), new_project_path, class: 'button right' %></h3>
     </h1>
 
     <% @projects.each do |customer, projects| %>

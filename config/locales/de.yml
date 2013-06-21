@@ -337,6 +337,7 @@ de:
   projects:
     index:
       title: 'Projekte'
+      new: 'Neues Projekt hinzufügen'
   time_sheets:
     top_buttons:
       add_time: Zeit hinzufügen
