@@ -1,8 +1,5 @@
 Uberzeit::Application.routes.draw do
 
-
-  #match '*all' => 'application#cors', constraints: {:method => 'OPTIONS'}
-
   root :to => 'sessions#new'
 
   resources :time_sheets, only: [:show] do
@@ -33,6 +30,7 @@ Uberzeit::Application.routes.draw do
   resources :public_holidays, except: [:show]
   resources :time_types, except: [:show]
   resources :adjustments, except: [:show]
+  resources :projects, except: [:show]
 
   resources :users, except: [:destroy] do
 
