@@ -1,0 +1,17 @@
+<%= form_for(@activity_type) do |f| %>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.text_field :name %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-3 columns">
+    <%= f.submit class: 'button'%>
+  </div>
+  <div class="small-2 columns end">
+    <%= link_to t('.back'), activity_types_path, class: "secondary button" %>
+  </div>
+</div>
+<% end %>
+
+

@@ -31,6 +31,7 @@ Uberzeit::Application.routes.draw do
   resources :time_types, except: [:show]
   resources :adjustments, except: [:show]
   resources :projects, except: [:show]
+  resources :activity_types, except: [:show]
 
   resources :users, except: [:destroy] do
 

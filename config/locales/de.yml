@@ -182,6 +182,7 @@ de:
         users: Benutzer
         adjustments: Anpassungen
         projects: 'Projekte'
+        activity_types: 'Aktivitätstypen'
       reports:
         overview: Übersicht
         my_work: Meine Arbeitszeit
@@ -343,6 +344,17 @@ de:
       title: 'Neues Projekt hinzufügen'
     edit:
       title: 'Projekt editieren'
+    form:
+      back: 'Zurück'
+  activity_types:
+    index:
+      title: 'Aktivitätstypen'
+      new: 'Neuen Aktivitätstyp hinzufügen'
+      confirm_delete: 'Wirklich löschen?'
+    new:
+      title: 'Neuen Aktivitätstyp hinzufügen'
+    edit:
+      title: 'Aktivitätstyp editieren'
     form:
       back: 'Zurück'
   time_sheets:

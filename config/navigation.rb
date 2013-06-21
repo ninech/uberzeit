@@ -74,6 +74,7 @@ SimpleNavigation::Configuration.run do |navigation|
       second.item :time_types, t('navigation.sub.manage.time_types'), time_types_path, highlights_on: %r!\A#{time_types_path}!
       second.item :adjustments, t('navigation.sub.manage.adjustments'), adjustments_path, highlights_on: %r!\A#{adjustments_path}!
       second.item :projects, t('navigation.sub.manage.projects'), projects_path, highlights_on: %r!\A#{projects_path}!
+      second.item :activity_types, t('navigation.sub.manage.activity_types'), activity_types_path, highlights_on: %r!\A#{activity_types_path}!
     end
 
   end
