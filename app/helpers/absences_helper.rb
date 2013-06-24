@@ -31,7 +31,10 @@ module AbsencesHelper
       cls << "has-reveal remote-reveal"
     end
 
-    options = {:class => cls.join(' '), :'data-tooltip' => tooltip}
+    options = {:class => cls.join(' ')}
+    unless tooltip.blank?
+      options.merge! :'data-tooltip' => tooltip
+    end
     if can? :manage, Absence
       options.merge! :'data-reveal-id' => 'add-absence-modal', :'data-reveal-url' => new_time_sheet_absence_path(@time_sheet, date: day)
     end
