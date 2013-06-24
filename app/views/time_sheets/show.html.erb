@@ -109,7 +109,7 @@
                 <% end %>
               </small>
               <div class="right">
-                <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="edit-time-modal" data-reveal-url="<%= edit_time_sheet_time_entry_path(@time_sheet, time_chunk.parent) %>">
+                <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= edit_time_sheet_time_entry_path(@time_sheet, time_chunk.parent) %>">
                   <%= icon(:edit) %>
                 </a>
                 <%= format_duration(time_chunk.duration) %>
@@ -134,7 +134,7 @@
 
             <small><%= @timer.time_type %></small>
             <div class="right">
-              <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="edit-time-modal" data-reveal-url="<%= edit_time_sheet_time_entry_path(@time_sheet, @timer) %>">
+              <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= edit_time_sheet_time_entry_path(@time_sheet, @timer) %>">
                 <%= icon(:edit) %>
               </a>
               <a href="<%= url_for(action: :stop_timer, date: @day) %>" data-method="put" data-remote="true" class="stop-timer">
@@ -156,14 +156,13 @@
             <p>
               <%= t '.no_entries_yet_message' %>
               <br>
-              <a href="#" class="remote-reveal" data-reveal-id="add-time-modal" data-reveal-url="<%= new_time_sheet_time_entry_path(@time_sheet, date: @day) %>"><%= t '.add_time_now' %></a>
+              <a href="#" class="remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= new_time_sheet_time_entry_path(@time_sheet, date: @day) %>"><%= t '.add_time_now' %></a>
             </p>
           </div>
         <% end %>
       </div>
     </div>
-    <%= render 'add_time_modal' %>
-    <%= render 'edit_time_modal' %>
+    <%= render 'time_modal' %>
   </div>
 </div>
 <% if @legend_show_public_holiday || @legend_time_types.any? %>
