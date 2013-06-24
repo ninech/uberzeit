@@ -31,7 +31,7 @@ $(document).on 'click', '.close-reveal-modal-button', (event) ->
 # ===> Document Ready
 $ ->
   $(document)
-    .foundation('reveal')
+    .foundation('reveal', { closeOnBackgroundClick: false, closeOnEsc: false })
     .foundation('tooltips')
 
   window.initControls = () ->
