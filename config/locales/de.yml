@@ -303,6 +303,7 @@ de:
       delete: Löschen
       date: Datum
       save: Speichern
+      now: jetzt
   timers:
     edit:
       edit_time: 'Zeit bearbeiten'

@@ -6,13 +6,8 @@ $(document).on 'click', '.remote-reveal', (event) ->
   element = $('#' + $(this).data('reveal-id'))
   element.find('div.ajax-content').remove()
   content_element = element.append('<div class="ajax-content"></div>')
-  content_element.find('div.ajax-content').load $(this).data('reveal-url')
-
-$(document).ajaxComplete () ->
-  initControls()
-
-$(document).ajaxError () ->
-  initControls()
+  content_element.find('div.ajax-content').load $(this).data('reveal-url'), ->
+    initControls()
 
 $(document).on 'mouseover', '.has-tip', ->
     $(this).popover
@@ -37,6 +32,7 @@ $ ->
   window.initControls = () ->
     initTimePicker()
     initDatePicker()
+    initTimeNowButtons()
 
   window.initTimePicker = () ->
     # Timepicker
@@ -79,5 +75,15 @@ $ ->
       pickadate = date_input.data('pickadate')
       if(pickadate)
         pickadate.setDate(date_input.data('year'),date_input.data('month'),date_input.data('day'))
+
+  # Add button for start and time to allow the use of the current time
+  window.initTimeNowButtons = () ->
+    $('label[for=time_entry_end_time]').each (index, element) =>
+      a = $("<a class='right'><small>#{I18n.t('time_entries.form.now')}</small></a>")
+      a.click ->
+        target = $('#' + $(this).closest('label').attr('for'))
+        target.val moment().format('HH:mm')
+        target.trigger 'change'
+      $(element).append a
 
   initControls()
