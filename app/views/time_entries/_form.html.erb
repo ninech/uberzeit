@@ -5,49 +5,30 @@
 </div>
 
 <div class="row">
-  <div class="small-2 columns">
-    <%= f.label :start_time, class: 'right inline' %>
-  </div>
-  <div class="small-7 columns">
-    <%= datefield(f, :start_date, false, f.object.start_date, :date) %>
-  </div>
-  <div class="small-3 columns">
-    <%= f.text_field :start_time, label: false, class: 'time' %>
+  <div class="small-8 columns">
+    <%= datefield(f, :start_date, t('.date'), f.object.start_date, :date) %>
   </div>
 </div>
 
-
 <div class="row">
-  <div class="small-2 columns">
-    <%= f.label :end_time, class: 'right inline' %>
+  <div class="small-4 columns">
+    <%= f.text_field :start_time, class: 'time' %>
   </div>
-  <div class="small-7 columns">
-    <%= datefield(f, :end_date, false, f.object.end_date, :date) %>
+  <div class="small-4 columns">
+    <%= f.text_field :end_time, class: 'time' %>
   </div>
-  <div class="small-3 columns">
-    <%= f.text_field :end_time, label: false, class: 'time' %>
+  <div class="small-4 columns time-difference">
+
   </div>
 </div>
 
-
-<div class="row">
-  <div class="small-12 columns center">
-    <div class="button-bar">
-      <ul class="button-group">
-        <li>
-          <%= f.submit t('.save'), id: 'time_entry_submit', class: 'medium button' %>
-        </li>
-      </ul>
-      <ul class="button-group">
-        <li>
-        <% if @time_entry && @time_entry.persisted? %>
-          <%= link_to t('.delete'), time_sheet_time_entry_path(@time_sheet, @time_entry), method: :delete, remote: true, class: 'medium button alert' %>
-        <% else %>
-          <%= link_to t('.cancel'), '', class: 'medium button secondary close-reveal-modal-button' %>
-        <% end %>
-        </li>
-      </ul>
-    </div>
+<div class="row" font-s>
+  <div class="small-12 columns">
+    <%= f.submit f.object.timer? ? t('.start_timer') : t('.save'), class: 'medium button', id: 'time_entry_submit' %>
+    <%= link_to t('.cancel'), '', class: 'medium button secondary close-reveal-modal-button' %>
+    <% if @time_entry && @time_entry.persisted? %>
+      <%= link_to t('.delete'), time_sheet_time_entry_path(@time_sheet, @time_entry), method: :delete, remote: true, class: 'medium button alert' %>
+    <% end %>
   </div>
 </div>
 

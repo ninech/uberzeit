@@ -301,6 +301,7 @@ de:
       add_entry: Neuer Eintrag
       start_timer: Timer starten
       delete: Löschen
+      date: Datum
       save: Speichern
   timers:
     edit:
