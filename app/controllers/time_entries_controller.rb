@@ -20,16 +20,15 @@ class TimeEntriesController < ApplicationController
   end
 
   def create
-    if !@time_entry.timer? && @time_entry.ends <= @time_entry.starts
-      @time_entry.end_date = @time_entry.start_date + 1
-    end
-
+    adjust_timer_day_boundary
     @time_entry.save
     respond_with @time_entry, location: default_return_location
   end
 
   def update
     @time_entry.update_attributes(params[:time_entry])
+    adjust_timer_day_boundary
+    @time_entry.save
     respond_with @time_entry, location: default_return_location
   end
 
@@ -39,6 +38,12 @@ class TimeEntriesController < ApplicationController
   end
 
   private
+  def adjust_timer_day_boundary
+    if !@time_entry.timer? && @time_entry.ends <= @time_entry.starts
+      @time_entry.end_date = @time_entry.start_date + 1
+    end
+  end
+
   def default_return_location
     time_sheet_path(@time_sheet)
   end

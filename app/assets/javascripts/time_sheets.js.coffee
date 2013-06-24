@@ -6,6 +6,9 @@ $(document).on 'ajax:error', '.reveal-modal form', (xhr, status, error) ->
 $(document).on 'ajax:complete', '.reveal-modal form', (xhr, status) ->
   $(this).foundation('reveal', 'close')
 
+$(document).on 'ajax:complete', '.stop-timer', (xhr, status) ->
+  window.location.reload()
+
 $(document).on 'click', '.stop-timer', ->
   unless $('.stop-timer').hasClass 'disabled'
     $('.stop-timer i').removeClass('icon-spin')
@@ -15,7 +18,8 @@ $(document).on 'click', '.unhider', ->
   $('.' + $(this).data('unhide-class')).show()
   false
 
-$(document).on 'keyup', '.reveal-modal.time form #time_entry_end_time, .reveal-modal.time form #time_entry_start_time', ->
+$(document).on 'keyup change', '#time_entry_end_time, #time_entry_start_time', ->
+
   startEl = $("#time_entry_start_time")
   endEl   = $("#time_entry_end_time")
 
