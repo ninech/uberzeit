@@ -15,6 +15,12 @@ $(document).on 'mouseover', '.has-tip', ->
       content: $(this).data('tooltip')
       fadeSpeed: 0
 
+$(document).on 'click', '.time-now', ->
+  target = $('#' + $(this).siblings('label').attr('for'))
+  target.val moment().format('HH:mm')
+  target.trigger 'change'
+  false
+
 # Hacky hack
 # Foundation adds styles to a functional class (close-reveal-modal)
 # Adding the class to the button messes up with the style, cf. https://github.com/zurb/foundation/pull/1381
@@ -32,7 +38,6 @@ $ ->
   window.initControls = () ->
     initTimePicker()
     initDatePicker()
-    initTimeNowButtons()
 
   window.initTimePicker = () ->
     # Timepicker
@@ -75,15 +80,5 @@ $ ->
       pickadate = date_input.data('pickadate')
       if(pickadate)
         pickadate.setDate(date_input.data('year'),date_input.data('month'),date_input.data('day'))
-
-  # Add button for start and time to allow the use of the current time
-  window.initTimeNowButtons = () ->
-    $('label[for=time_entry_end_time]').each (index, element) =>
-      a = $("<a class='right'><small>#{I18n.t('time_entries.form.now')}</small></a>")
-      a.click ->
-        target = $('#' + $(this).closest('label').attr('for'))
-        target.val moment().format('HH:mm')
-        target.trigger 'change'
-      $(element).append a
 
   initControls()
