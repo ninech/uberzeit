@@ -3,16 +3,12 @@ document.originalTitle = document.title
 $(document).on 'ajax:error', '.reveal-modal form', (xhr, status, error) ->
   console.log xhr, status, error
 
-$(document).on 'ajax:success', '.reveal-modal form', (data, status, xhr) ->
+$(document).on 'ajax:complete', '.reveal-modal form', (xhr, status) ->
   $(this).foundation('reveal', 'close')
-  window.location.reload()
 
 $(document).on 'click', '.stop-timer', ->
   unless $('.stop-timer').hasClass 'disabled'
     $('.stop-timer i').removeClass('icon-spin')
-
-$(document).on 'ajax:complete', '.stop-timer', (xhr, status) ->
-  window.location.reload()
 
 $(document).on 'click', '.unhider', ->
   $('.' + $(this).data('hide-class')).hide()
@@ -20,15 +16,13 @@ $(document).on 'click', '.unhider', ->
   false
 
 $(document).on 'keyup', '.reveal-modal.time form #time_entry_end_time, .reveal-modal.time form #time_entry_start_time', ->
-  form_id = "#" + $(this).parents('form').attr('id')
-  startEl = $("#{form_id} #time_entry_start_time")
-  endEl   = $("#{form_id} #time_entry_end_time")
+  startEl = $("#time_entry_start_time")
+  endEl   = $("#time_entry_end_time")
 
-  unless $("#{form_id} #time_entry_submit").val() == I18n.t('time_entries.form.save')
-    if endEl.val()
-      $("#{form_id} #time_entry_submit").val(I18n.t('time_entries.form.add_entry'))
-    else
-      $("#{form_id} #time_entry_submit").val(I18n.t('time_entries.form.start_timer'))
+  if endEl.val()
+    $("#time_entry_submit").val(I18n.t('time_entries.form.save'))
+  else
+    $("#time_entry_submit").val(I18n.t('time_entries.form.start_timer'))
 
   startValue = $.fn.timepicker.parseTime startEl.val()
   endValue   = $.fn.timepicker.parseTime endEl.val()
@@ -41,8 +35,7 @@ $(document).on 'keyup', '.reveal-modal.time form #time_entry_end_time, .reveal-m
   else
     value = ""
 
-  $("#{form_id} .time-difference").html(value)
-
+  $(".time-difference").html(value)
 
 $ ->
   # Do not put event listeners inside here (they will add up through turbolinks)
