@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require foundation
 //= require foundation/foundation
 //= require foundation/foundation.reveal
 //= require pickadate
