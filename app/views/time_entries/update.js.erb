@@ -1,5 +1,5 @@
 <% if @time_entry.errors.any? %>
   $('.ajax-content').html('<%= escape_javascript(render(template: 'time_entries/edit')) %>');
 <% else %>
-  window.location = '<%= time_sheet_path(@time_sheet) %>';
+  window.location.href = '<%= show_date_time_sheet_path(@time_sheet, date: @time_entry.start_date) %>';
 <% end %>
