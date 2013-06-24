@@ -126,7 +126,7 @@
               <%= l @timer_range.min %>
             <% end %>
             –
-            <% if @day != Date.current %>
+            <% if @day != @timer.start_date %>
               <span class="has-tip" data-tooltip="<%= t('.tooltip.ends') %> <%= l Time.current, format: :long %>">
                 <%= l @timer_range.max %>
               </span>
