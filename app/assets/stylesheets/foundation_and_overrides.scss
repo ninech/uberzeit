@@ -1267,3 +1267,11 @@ $table-margin-bottom: emCalc(20px);
 // $topbar-sticky-class: ".sticky";
 
 @import 'foundation';
+
+.notice small,
+small.notice {
+  @include form-error-message;
+  background-color: #e0e0e0;
+  color: #000;
+  font-weight: normal;
+}

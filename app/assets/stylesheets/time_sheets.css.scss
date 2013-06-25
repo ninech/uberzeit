@@ -1,5 +1,4 @@
 @import 'compass/css3/images';
-@import 'foundation_and_overrides';
 
 .content-time_sheets {
 
@@ -169,13 +168,5 @@
   a.delete-timer-link {
     display: block;
     margin-top: 15px;
-  }
-
-  .notice small,
-  small.notice {
-    @include form-error-message;
-    background-color: #d0d0d0;
-    color: #333;
-    font-weight: normal;
   }
 }
