@@ -17,6 +17,7 @@
   <div class="small-4 columns">
     <%= f.label :end_time, class: 'left' %> <%= link_to(content_tag(:small,t('.now')), '#', tabindex: -1, class: 'right time-now') %>
     <%= f.text_field :end_time, label: false, class: 'time' %>
+    <small class="notice"><%= t '.end_time_notice' %></small>
   </div>
   <div class="small-4 columns time-difference">
 
