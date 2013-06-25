@@ -1,0 +1,22 @@
+<%= form_for(@project) do |f| %>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.text_field :name %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.select :customer_id, Customer.all.collect { |customer| [customer.name, customer.id] }, label: Project.human_attribute_name(:customer) %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-3 columns">
+    <%= f.submit class: 'button'%>
+  </div>
+  <div class="small-2 columns end">
+    <%= link_to t('.back'), projects_path, class: "secondary button" %>
+  </div>
+</div>
+<% end %>
+
+
