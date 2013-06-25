@@ -33,7 +33,6 @@ $(document).on 'click', '.close-reveal-modal-button', (event) ->
 $ ->
   $(document)
     .foundation('reveal', { closeOnBackgroundClick: false, closeOnEsc: false })
-    .foundation('tooltips')
 
   window.initControls = () ->
     initTimePicker()
