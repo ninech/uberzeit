@@ -36,7 +36,7 @@ module AbsencesHelper
       options.merge! :'data-tooltip' => tooltip
     end
     if can? :manage, Absence
-      options.merge! :'data-reveal-id' => 'add-absence-modal', :'data-reveal-url' => new_time_sheet_absence_path(@time_sheet, date: day)
+      options.merge! :'data-reveal-id' => 'absence-modal', :'data-reveal-url' => new_time_sheet_absence_path(@time_sheet, date: day)
     end
 
     [content, options]
