@@ -18,13 +18,17 @@
 
       .right {
         margin-top: -4px;
-        a.next, a.previous {
+        a.next, a.previous, a.date-picker {
           font-size: 1.5em;
           margin-left: 7px;
         }
         a.today {
           top: -5px;
           margin-bottom: 0;
+        }
+        form,input {
+          display: inline-block;
+          margin: 0px;
         }
       }
     }

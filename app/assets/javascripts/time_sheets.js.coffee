@@ -124,3 +124,6 @@ $ ->
     $(this).find('a.edit-time-entry-link').show()
   ), ->
     $(this).find('a.edit-time-entry-link').hide()
+
+
+  console.log $('.date-picker').closest('input.date')

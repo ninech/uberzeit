@@ -94,6 +94,7 @@ de:
       weekday: '%a, %d. %b'
   date:
     formats:
+      iso: '%Y-%m-%d'
       default: '%d.%m.%Y'
       long: '%A, %d. %B %Y'
       weekday: '%a, %d. %b'

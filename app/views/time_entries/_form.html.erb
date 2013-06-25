@@ -6,26 +6,28 @@
 
 <% if f.object.start_date != f.object.end_date && !f.object.end_date.blank? %>
 
-  <div class="row">
-    <div class="small-2 columns">
-      <%= f.label :start_time %>
+  <div class="from_to_date">
+    <div class="row">
+      <div class="small-2 columns">
+        <%= f.label :start_time %>
+      </div>
+      <div class="small-7 columns">
+        <%= datefield(f, :start_date, false, f.object.start_date, :from_date) %>
+      </div>
+      <div class="small-3 columns">
+        <%= f.text_field :start_time, label: false, class: 'time' %>
+      </div>
     </div>
-    <div class="small-7 columns">
-      <%= datefield(f, :start_date, false, f.object.start_date, :date) %>
-    </div>
-    <div class="small-3 columns">
-      <%= f.text_field :start_time, label: false, class: 'time' %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="small-2 columns">
-      <%= f.label :end_time %>
-    </div>
-    <div class="small-7 columns">
-      <%= datefield(f, :end_date, false, f.object.end_date, :date) %>
-    </div>
-    <div class="small-3 columns">
-      <%= f.text_field :end_time, label: false, class: 'time' %>
+    <div class="row">
+      <div class="small-2 columns">
+        <%= f.label :end_time %>
+      </div>
+      <div class="small-7 columns">
+        <%= datefield(f, :end_date, false, f.object.end_date, :to_date) %>
+      </div>
+      <div class="small-3 columns">
+        <%= f.text_field :end_time, label: false, class: 'time' %>
+      </div>
     </div>
   </div>
 

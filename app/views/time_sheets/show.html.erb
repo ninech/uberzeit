@@ -19,6 +19,11 @@
           <% unless @day.today? %>
             <a href="<%= url_for(action: :show, date: Date.today.to_formatted_s(:iso)) %>" class="small secondary today button"><%= t '.today' %></a>
           <% end %>
+
+          <form>
+          <input type="text" class="date">
+          </form>
+          <a href="#" class="date-picker"><i class="icon-calendar"></i></a>
           <a href="<%= url_for(action: :show, date: @previous_week_day.to_formatted_s(:iso)) %>" class="previous"><span class="icon-caret-left"></span></a>
           <a href="<%= url_for(action: :show, date: @next_week_day.to_formatted_s(:iso)) %>" class="next"><span class="icon-caret-right"></span></a>
         </div>

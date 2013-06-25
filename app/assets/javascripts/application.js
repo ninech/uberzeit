@@ -15,7 +15,6 @@
 //= require foundation/foundation
 //= require foundation/foundation.reveal
 //= require pickadate
-//= require pickadate.de-DE
 //= require i18n
 //= require i18n/translations
 //= require_tree .
