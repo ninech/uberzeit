@@ -43,7 +43,7 @@ $ ->
   # Pickadate
   window.initDatePicker = () ->
 
-    $('input.date').pickadate
+    $('input.date').pickadate()
 
     picker_from_element = $('.from_to_date').find('input.from_date')
     picker_to_element = $('.from_to_date').find('input.to_date')
