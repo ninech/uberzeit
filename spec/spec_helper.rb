@@ -73,6 +73,7 @@ RSpec.configure do |config|
       Capybara::Poltergeist::Driver.new(app, phantomjs: Phantomjs.path, inspector: true, js_errors: true)
     end
     Capybara.javascript_driver = :poltergeist
+    Capybara.default_wait_time = 5
 
     # Set up time types
     TEST_TIME_TYPES = {}
