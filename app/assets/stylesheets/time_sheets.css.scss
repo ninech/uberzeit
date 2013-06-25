@@ -17,14 +17,22 @@
       @include background-image(linear-gradient(top center, #F5F5F5 0%, #E0E0E0 90%));
 
       .right {
-        margin-top: -4px;
-        a.next, a.previous, a.jump-date-starter {
-          font-size: 1.5em;
-          margin-left: 7px;
+        margin-top: -8px;
+
+        span {
+          vertical-align: middle;
         }
-        a.today {
-          top: -5px;
-          margin-bottom: 0;
+        a {
+          margin-left: 7px;
+
+          &.next, &.previous {
+            font-size: 1.5em;
+            margin-left: 7px;
+          }
+          &.today {
+            //top: -3px;
+            margin-bottom: 0;
+          }
         }
         form {
           margin: 0px;
