@@ -1,5 +1,6 @@
 <% if @absence.errors.any? %>
   $('.ajax-content').html('<%= escape_javascript(render(template: 'absences/new')) %>');
+  initControls();
 <% else %>
   window.location = '<%= time_sheet_absences_path(@time_sheet) %>';
 <% end %>
