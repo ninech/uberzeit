@@ -126,6 +126,12 @@
             }
           }
 
+          &:hover {
+            a.edit-time-entry-link {
+              display: inline;
+            }
+          }
+
           small {
             font-weight: 300;
             font-size: 0.8em;
@@ -180,5 +186,15 @@
   a.delete-timer-link {
     display: block;
     margin-top: 15px;
+  }
+}
+
+.touch .content-time_sheets .timesheet .entries {
+  ul {
+    li {
+      a.edit-time-entry-link {
+        display: inline;
+      }
+    }
   }
 }
