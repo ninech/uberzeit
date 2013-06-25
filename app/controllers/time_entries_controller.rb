@@ -5,6 +5,7 @@ class TimeEntriesController < ApplicationController
   respond_to :html, :json, :js
 
   before_filter :load_time_types
+  before_filter :set_end_date, only: [:create, :update]
 
   def index
     respond_with(@time_entries)
@@ -41,6 +42,12 @@ class TimeEntriesController < ApplicationController
   def adjust_timer_day_boundary
     if !@time_entry.timer? && @time_entry.ends <= @time_entry.starts
       @time_entry.end_date = @time_entry.start_date + 1
+    end
+  end
+
+  def set_end_date
+    unless params[:time_entry][:end_date]
+      params[:time_entry][:end_date] ||= params[:time_entry][:start_date]
     end
   end
 
