@@ -75,3 +75,11 @@ $ ->
         pickadate.set('select', date_input.data('year'),date_input.data('month'),date_input.data('day'))
 
   initControls()
+
+
+  #$('.touch .navigation li:first-child').click (e) ->
+  #  e.stopPropagation()
+  #  $('.touch .navigation li:not(:first-child)').toggle()
+
+  #$(document).click () ->
+  #  $('.touch .navigation li:not(:first-child)').hide()
