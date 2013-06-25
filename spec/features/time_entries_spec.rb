@@ -84,6 +84,7 @@ describe 'messing around with time entries' do
       find('li', text: /17:00 . 18:00/).hover
       find('.icon-edit').click
       click_link 'Löschen'
+
       page.should have_content('Total 00:00')
       page.should_not have_content(/17:00 - 18:00/)
     end

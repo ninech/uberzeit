@@ -80,9 +80,9 @@ describe TimeEntriesController do
           response.body.should redirect_to(time_sheet_path(time_sheet))
         end
 
-        it 'creates a timer on the current date' do
+        it 'creates a timer on the selected date' do
           Timecop.freeze('2013-07-22')
-          post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:time_entry, time_type_id: time_type, start_time: '09:00', start_date: '2013-07-20', end_time: '', end_date: nil)
+          post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:time_entry, time_type_id: time_type, start_time: '09:00')
           assigns(:time_entry).start_date.should eq('2013-07-22'.to_date)
         end
 
