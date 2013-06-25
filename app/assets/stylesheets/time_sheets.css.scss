@@ -169,25 +169,16 @@
   }
 
   .reveal-modal.time {
-    label {
-      font-weight: 600;
-    }
-
-    input, label {
-      font-size: 1.2em;
-    }
-
-    select {
-      font-size: 1.1em;
+    input, label, button, select, .button {
+      font-size: 1.0em;
     }
 
     top: 50px;
 
     .time-difference {
-      padding-top: 1.9em;
-      font-size: 1.2em;
+      padding-top: 1.2em;
+      font-size: 1.4em;
     }
-
   }
 
   a.delete-time-entry-link,

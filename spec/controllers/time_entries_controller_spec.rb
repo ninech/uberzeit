@@ -37,8 +37,7 @@ describe TimeEntriesController do
 
       context 'with valid attributes' do
         it 'changes time_entry\'s attributes' do
-          Timecop.freeze('2013-02-02')
-          put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: {start_time: '11:00', end_time: '12:00'}
+          put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: {start_date: '2013-02-02', start_time: '11:00', end_time: '12:00'}
           time_entry.reload
           time_entry.starts.should eq('2013-02-02 11:00 +0100'.to_time)
           time_entry.ends.should eq('2013-02-02 12:00 +0100'.to_time)
@@ -48,6 +47,14 @@ describe TimeEntriesController do
           put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: FactoryGirl.attributes_for(:time_entry)
           response.body.should redirect_to(time_sheet_path(time_sheet))
         end
+
+        it 'updates start and end date of the corresponding time entry' do
+          put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: {start_date: '2013-02-05', start_time: '23:00', end_time: '01:00'}
+          time_entry.reload
+          time_entry.starts.should eq("2013-02-05 23:00 +0100".to_time)
+          time_entry.ends.should eq("2013-02-06 01:00 +0100".to_time)
+        end
+
       end
 
       context 'with invalid attributes' do
@@ -73,9 +80,9 @@ describe TimeEntriesController do
           response.body.should redirect_to(time_sheet_path(time_sheet))
         end
 
-        it 'creates a timer on the current date' do
+        it 'creates a timer on the selected date' do
           Timecop.freeze('2013-07-22')
-          post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:time_entry, time_type_id: time_type, start_time: '09:00', start_date: '2013-07-20', end_time: '', end_date: nil)
+          post :create, time_sheet_id: time_sheet.id, time_entry: FactoryGirl.attributes_for(:time_entry, time_type_id: time_type, start_time: '09:00')
           assigns(:time_entry).start_date.should eq('2013-07-22'.to_date)
         end
 
