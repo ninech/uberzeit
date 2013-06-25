@@ -4,7 +4,7 @@
 
       <div class="row">
         <div class="small-12 columns recurring-checkbox">
-          <%= rs.check_box :active, label: t('.recurring_active'), class: 'toggle', :'data-toggle-target' => 'recurring-form' %>
+          <%= rs.check_box :active, label: ActiveSupport::SafeBuffer.new('&nbsp;') + t('.recurring_active'), class: 'toggle', :'data-toggle-target' => 'recurring-form' %>
         </div>
       </div>
 
