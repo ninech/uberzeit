@@ -57,7 +57,7 @@ describe 'messing around with time entries' do
       fill_in 'Von', with: '17:00'
       fill_in 'Bis', with: '22:00'
       find('#time_entry_start_date').click
-      find('div.pickadate__day', text: '15').click
+      find('form#new_time_entry div.picker__day', text: '15').click
       click_on 'Speichern'
       page.should have_content('15. Apr')
       page.should have_content('Total 05:00')
@@ -72,7 +72,7 @@ describe 'messing around with time entries' do
       fill_in 'Von', with: '23:00'
       fill_in 'Bis', with: '01:00'
       find('#time_entry_start_date').click
-      find('div.pickadate__day', text: '20').click
+      find('div#time-modal form div.picker__day', text: '20').click
       click_on 'Speichern'
       page.should have_content('20. Apr')
       page.should have_content('Total 01:00')
