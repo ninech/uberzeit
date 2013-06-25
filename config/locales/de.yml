@@ -190,7 +190,7 @@ de:
         my_absence: Meine Absenzen
         work: Arbeitszeit Mitarbeiter
         absences: Absenzen Mitarbeiter
-        vacation: Ferien Mitarbeiter
+        vacation: Feriensaldo
   summaries:
     formats:
       date: '%e. %a.'
