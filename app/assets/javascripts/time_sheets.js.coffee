@@ -120,7 +120,16 @@ $ ->
       setTimeout arguments.callee, 30000
       ), 0)
 
-  $('.entries ul li').hover (->
-    $(this).find('a.edit-time-entry-link').show()
-  ), ->
-    $(this).find('a.edit-time-entry-link').hide()
+
+  $('.jump-date').pickadate
+    format: 'yyyy-mm-dd'
+
+  $('.jump-date').on 'change', (event) ->
+    el = $(@)
+    console.log el.val(), el.data('current-day')
+    if el.val().length > 0 && el.val() != el.data('current-day')
+      window.location.href = el.data('jump-url') + el.val()
+
+  $('.jump-date-starter').on 'click', (event) ->
+    $('.jump-date').data('pickadate').open()
+    event.stopPropagation()

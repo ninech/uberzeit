@@ -15,13 +15,21 @@
     <div class="timesheet">
       <div class="head">
         <%= l @weekdays.first, :format => :long %> – <%= l @weekdays.last, :format => :long %> (<%= t('.week_number') %> <%= @weekdays.first.cweek %>)
+
         <div class="right">
-          <% unless @day.today? %>
-            <a href="<%= url_for(action: :show, date: Date.today.to_formatted_s(:iso)) %>" class="small secondary today button"><%= t '.today' %></a>
-          <% end %>
-          <a href="<%= url_for(action: :show, date: @previous_week_day.to_formatted_s(:iso)) %>" class="previous"><span class="icon-caret-left"></span></a>
-          <a href="<%= url_for(action: :show, date: @next_week_day.to_formatted_s(:iso)) %>" class="next"><span class="icon-caret-right"></span></a>
+          <span>
+            <form>
+              <input type="text" class="jump-date hidden" data-jump-url="<%= url_for(action: :show, date: '') %>" data-current-day="<%= @day.to_formatted_s(:iso) %>">
+            </form>
+            <% unless @day.today? %>
+              <a href="<%= url_for(action: :show, date: Date.today.to_formatted_s(:iso)) %>" class="small secondary today button"><%= t '.today' %></a>
+            <% end %>
+            <a href="#" class="jump-date-starter"><i class="icon-calendar"></i></a>
+            <a href="<%= url_for(action: :show, date: @previous_week_day.to_formatted_s(:iso)) %>" class="previous"><span class="icon-caret-left"></span></a>
+            <a href="<%= url_for(action: :show, date: @next_week_day.to_formatted_s(:iso)) %>" class="next"><span class="icon-caret-right"></span></a>
+          </span>
         </div>
+
       </div>
       <div class="weekdays">
         <ul>
