@@ -9,7 +9,7 @@ unless Rails.env.production? || Rails.env.staging?
     desc "Run all specs"
     RSpec::Core::RakeTask.new do |t|
       t.name = 'spec'
-      t.rspec_opts = %w{--require ci/reporter/rake/rspec_loader --format CI::Reporter::RSpec --format documentation --no-drb --colour}
+      t.rspec_opts = %w{--require ci/reporter/rake/rspec_loader --format CI::Reporter::RSpec --format documentation --no-drb --colour -t ~js}
       t.pattern = '**/spec/'
     end
 
