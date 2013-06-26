@@ -271,12 +271,12 @@ de:
     vacation:
       vacation:
         year:
-          title: Ferien Mitarbeiter
+          title: Feriensaldo
           unit: in Tagen
           taken: 'Beanspruchte Ferientage im Jahr %{year}'
           remaining: 'Noch verfügbare Ferientage in %{year}'
         month:
-          title: Ferien Mitarbeiter
+          title: Feriensaldo
           unit: in Tagen
           taken: 'Beansprucht im %{month} %{year}'
           remaining: 'Noch verfügbare Ferientage nach %{month} %{year}'
