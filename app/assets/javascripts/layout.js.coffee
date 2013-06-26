@@ -8,6 +8,9 @@ $(document).on 'click', '.remote-reveal', (event) ->
   content_element = element.append('<div class="ajax-content"></div>')
   content_element.find('div.ajax-content').load $(this).data('reveal-url'), ->
     initControls()
+    setTimeout ->
+      $('#time_entry_start_time').focus()
+    , 100
 
 $(document).on 'mouseover', '.has-tip', ->
     $(this).popover
