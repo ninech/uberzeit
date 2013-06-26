@@ -254,7 +254,7 @@ describe 'Roles and Rights' do
         end
 
         describe 'summary menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter'], ['Arbeitszeit Mitarbeiter', 'Ferien Mitarbeiter']
+          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter'], ['Arbeitszeit Mitarbeiter', 'Feriensaldo']
         end
       end
 
@@ -266,7 +266,7 @@ describe 'Roles and Rights' do
         end
 
         describe 'summary menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Ferien Mitarbeiter'], []
+          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo'], []
         end
       end
 
@@ -278,7 +278,7 @@ describe 'Roles and Rights' do
         end
 
         describe 'summary menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Ferien Mitarbeiter'], []
+          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo'], []
         end
       end
     end
