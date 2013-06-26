@@ -5,7 +5,7 @@
 </div>
 
 <div class="row">
-  <div class="small-8 columns">
+  <div class="small-10 columns">
     <%= datefield(f, :start_date, t('.date'), f.object.start_date, :date) %>
   </div>
 </div>
@@ -17,7 +17,6 @@
   <div class="small-4 columns">
     <%= f.label :end_time, class: 'left' %> <%= link_to(content_tag(:small,t('.now')), '#', tabindex: -1, class: 'right time-now') %>
     <%= f.text_field :end_time, label: false, class: 'time' %>
-    <small class="notice"><%= t '.end_time_notice' %></small>
   </div>
   <div class="small-4 columns time-difference">
 
@@ -25,12 +24,13 @@
 </div>
 
 <div class="row" font-s>
+
   <div class="small-12 columns">
-    <%= f.submit f.object.timer? ? t('.start_timer') : t('.save'), class: 'tiny medium button', id: 'time_entry_submit' %>
-    <%= link_to t('.cancel'), '', class: 'tiny button secondary close-reveal-modal-button' %>
-    <% if @time_entry && @time_entry.persisted? %>
-      <%= link_to t('.delete'), time_sheet_time_entry_path(@time_sheet, @time_entry), method: :delete, remote: true, class: 'tiny button alert' %>
-    <% end %>
-  </div>
+  <%= f.submit f.object.timer? ? t('.start_timer') : t('.save'), id: 'time_entry_submit', class: 'primary medium button' %>
+  <%= link_to t('.cancel'), '#', class: 'close-reveal-modal link' %>
+  <% if @time_entry && @time_entry.persisted? %>
+    <%= link_to t('.delete'), time_sheet_time_entry_path(@time_sheet, @time_entry), method: :delete, remote: true, class: 'delete-time-entry-link' %>
+  <% end %>
+
 </div>
 

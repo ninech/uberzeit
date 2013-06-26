@@ -172,7 +172,7 @@
     top: 50px;
 
     .time-difference {
-      padding-top: 1.2em;
+      padding-top: 1.5em;
       font-size: 1.4em;
     }
   }
@@ -181,6 +181,16 @@
   a.delete-timer-link {
     display: block;
     margin-top: 15px;
+  }
+
+  .reveal-modal.time {
+    label {
+      font-weight: bold;
+    }
+
+    input, select, label {
+      font-size: 1.2em;
+    }
   }
 }
 
