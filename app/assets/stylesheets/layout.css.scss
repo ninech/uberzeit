@@ -132,4 +132,13 @@ table {
   }
 }
 
+.reveal-modal {
+  label {
+    font-weight: bold;
+  }
+
+  input, label, button, select, .button {
+    font-size: 1.0em;
+  }
+}
 
