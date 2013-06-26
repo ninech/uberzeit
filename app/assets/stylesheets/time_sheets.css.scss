@@ -17,14 +17,25 @@
       @include background-image(linear-gradient(top center, #F5F5F5 0%, #E0E0E0 90%));
 
       .right {
-        margin-top: -4px;
-        a.next, a.previous {
-          font-size: 1.5em;
-          margin-left: 7px;
+        margin-top: -8px;
+
+        span {
+          vertical-align: middle;
         }
-        a.today {
-          top: -5px;
-          margin-bottom: 0;
+        a {
+          margin-left: 7px;
+
+          &.next, &.previous {
+            font-size: 1.5em;
+            margin-left: 7px;
+          }
+          &.today {
+            //top: -3px;
+            margin-bottom: 0;
+          }
+        }
+        form {
+          margin: 0px;
         }
       }
     }
@@ -123,6 +134,12 @@
             }
           }
 
+          &:hover {
+            a.edit-time-entry-link {
+              display: inline;
+            }
+          }
+
           small {
             font-weight: 300;
             font-size: 0.8em;
@@ -152,30 +169,31 @@
   }
 
   .reveal-modal.time {
-    label {
-      font-weight: 600;
-    }
-
-    input, label {
-      font-size: 1.2em;
-    }
-
-    select {
-      font-size: 1.1em;
+    input, label, button, select, .button {
+      font-size: 1.0em;
     }
 
     top: 50px;
 
     .time-difference {
-      padding-top: 1.9em;
-      font-size: 1.2em;
+      padding-top: 1.2em;
+      font-size: 1.4em;
     }
-
   }
 
   a.delete-time-entry-link,
   a.delete-timer-link {
     display: block;
     margin-top: 15px;
+  }
+}
+
+.touch .content-time_sheets .timesheet .entries {
+  ul {
+    li {
+      a.edit-time-entry-link {
+        display: inline;
+      }
+    }
   }
 }

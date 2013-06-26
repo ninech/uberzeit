@@ -15,13 +15,21 @@
     <div class="timesheet">
       <div class="head">
         <%= l @weekdays.first, :format => :long %> – <%= l @weekdays.last, :format => :long %> (<%= t('.week_number') %> <%= @weekdays.first.cweek %>)
+
         <div class="right">
-          <% unless @day.today? %>
-            <a href="<%= url_for(action: :show, date: Date.today.to_formatted_s(:iso)) %>" class="small secondary today button"><%= t '.today' %></a>
-          <% end %>
-          <a href="<%= url_for(action: :show, date: @previous_week_day.to_formatted_s(:iso)) %>" class="previous"><span class="icon-caret-left"></span></a>
-          <a href="<%= url_for(action: :show, date: @next_week_day.to_formatted_s(:iso)) %>" class="next"><span class="icon-caret-right"></span></a>
+          <span>
+            <form>
+              <input type="text" class="jump-date hidden" data-jump-url="<%= url_for(action: :show, date: '') %>" data-current-day="<%= @day.to_formatted_s(:iso) %>">
+            </form>
+            <% unless @day.today? %>
+              <a href="<%= url_for(action: :show, date: Date.today.to_formatted_s(:iso)) %>" class="small secondary today button"><%= t '.today' %></a>
+            <% end %>
+            <a href="#" class="jump-date-starter"><i class="icon-calendar"></i></a>
+            <a href="<%= url_for(action: :show, date: @previous_week_day.to_formatted_s(:iso)) %>" class="previous"><span class="icon-caret-left"></span></a>
+            <a href="<%= url_for(action: :show, date: @next_week_day.to_formatted_s(:iso)) %>" class="next"><span class="icon-caret-right"></span></a>
+          </span>
         </div>
+
       </div>
       <div class="weekdays">
         <ul>
@@ -109,7 +117,7 @@
                 <% end %>
               </small>
               <div class="right">
-                <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="edit-time-modal" data-reveal-url="<%= edit_time_sheet_time_entry_path(@time_sheet, time_chunk.parent) %>">
+                <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= edit_time_sheet_time_entry_path(@time_sheet, time_chunk.parent) %>">
                   <%= icon(:edit) %>
                 </a>
                 <%= format_duration(time_chunk.duration) %>
@@ -126,7 +134,7 @@
               <%= l @timer_range.min %>
             <% end %>
             –
-            <% if @day != Date.current %>
+            <% if @day != @timer.start_date %>
               <span class="has-tip" data-tooltip="<%= t('.tooltip.ends') %> <%= l Time.current, format: :long %>">
                 <%= l @timer_range.max %>
               </span>
@@ -134,7 +142,7 @@
 
             <small><%= @timer.time_type %></small>
             <div class="right">
-              <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="edit-time-modal" data-reveal-url="<%= edit_time_sheet_time_entry_path(@time_sheet, @timer) %>">
+              <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= edit_time_sheet_time_entry_path(@time_sheet, @timer) %>">
                 <%= icon(:edit) %>
               </a>
               <a href="<%= url_for(action: :stop_timer, date: @day) %>" data-method="put" data-remote="true" class="stop-timer">
@@ -156,14 +164,13 @@
             <p>
               <%= t '.no_entries_yet_message' %>
               <br>
-              <a href="#" class="remote-reveal" data-reveal-id="add-time-modal" data-reveal-url="<%= new_time_sheet_time_entry_path(@time_sheet, date: @day) %>"><%= t '.add_time_now' %></a>
+              <a href="#" class="remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= new_time_sheet_time_entry_path(@time_sheet, date: @day) %>"><%= t '.add_time_now' %></a>
             </p>
           </div>
         <% end %>
       </div>
     </div>
-    <%= render 'add_time_modal' %>
-    <%= render 'edit_time_modal' %>
+    <%= render 'time_modal' %>
   </div>
 </div>
 <% if @legend_show_public_holiday || @legend_time_types.any? %>

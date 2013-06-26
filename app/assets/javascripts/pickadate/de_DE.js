@@ -1,5 +1,5 @@
 // German
-// 2013/04/02: Customize hiddenSuffix field
+
 $.extend( $.fn.pickadate.defaults, {
     monthsFull: [ 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ],
     monthsShort: [ 'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez' ],
@@ -9,6 +9,5 @@ $.extend( $.fn.pickadate.defaults, {
     clear: 'Löschen',
     firstDay: 1,
     format: 'dddd, dd. mmmm yyyy',
-    formatSubmit: 'yyyy/mm/dd',
-    hiddenSuffix: '' // overwrite default field
+    formatSubmit: 'yyyy/mm/dd'
 });

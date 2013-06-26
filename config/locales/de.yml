@@ -94,6 +94,7 @@ de:
       weekday: '%a, %d. %b'
   date:
     formats:
+      iso: '%Y-%m-%d'
       default: '%d.%m.%Y'
       long: '%A, %d. %B %Y'
       weekday: '%a, %d. %b'
@@ -189,7 +190,7 @@ de:
         my_absence: Meine Absenzen
         work: Arbeitszeit Mitarbeiter
         absences: Absenzen Mitarbeiter
-        vacation: Ferien Mitarbeiter
+        vacation: Feriensaldo
   summaries:
     formats:
       date: '%e. %a.'
@@ -270,12 +271,12 @@ de:
     vacation:
       vacation:
         year:
-          title: Ferien Mitarbeiter
+          title: Feriensaldo
           unit: in Tagen
           taken: 'Beanspruchte Ferientage im Jahr %{year}'
           remaining: 'Noch verfügbare Ferientage in %{year}'
         month:
-          title: Ferien Mitarbeiter
+          title: Feriensaldo
           unit: in Tagen
           taken: 'Beansprucht im %{month} %{year}'
           remaining: 'Noch verfügbare Ferientage nach %{month} %{year}'
@@ -301,7 +302,10 @@ de:
       add_entry: Neuer Eintrag
       start_timer: Timer starten
       delete: Löschen
+      date: Datum
       save: Speichern
+      now: jetzt
+      end_time_notice: Leer lassen zum Timer starten
   timers:
     edit:
       edit_time: 'Zeit bearbeiten'

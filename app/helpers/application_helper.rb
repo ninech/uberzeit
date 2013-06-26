@@ -56,7 +56,7 @@ module ApplicationHelper
   def datefield(form, object_name, label, date, css_class)
     opts = {label: label, class: css_class}
     unless date.nil?
-      opts.merge!({value: l(date, format: :long), 'data-year' => date.year, 'data-month' => date.month, 'data-day' => date.day})
+      opts.merge!({'data-value' => l(date, format: :iso)})
     end
     form.text_field object_name, opts
   end

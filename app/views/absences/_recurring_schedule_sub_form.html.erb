@@ -4,7 +4,7 @@
 
       <div class="row">
         <div class="small-12 columns recurring-checkbox">
-          <%= rs.check_box :active, label: t('.recurring_active'), class: 'toggle', :'data-toggle-target' => 'recurring-form' %>
+          <%= rs.check_box :active, label: ActiveSupport::SafeBuffer.new('&nbsp;') + t('.recurring_active'), class: 'toggle', :'data-toggle-target' => 'recurring-form' %>
         </div>
       </div>
 
@@ -22,7 +22,7 @@
           <span class="postfix prefix"><%= t '.weeks_until' %></span>
         </div>
         <div class="small-3 columns end">
-          <%= rs.text_field :ends_date,  value:(l(rs.object.ends_date, format: :long) if rs.object.ends_date), class: :date, label: false %>
+          <%= datefield(rs, :ends_date, false, rs.object.ends_date, :date) %>
         </div>
       </span>
     <% end %>

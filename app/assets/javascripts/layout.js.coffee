@@ -1,9 +1,3 @@
-$(document)
-  .foundation('reveal', {
-    closeOnBackgroundClick: false
-  })
-  .foundation('tooltips')
-
 # ===> Event Listeners
 $(document).on 'click', '.toggle', (element) ->
   $('#' + $(this).data('toggle-target')).toggle()
@@ -12,13 +6,8 @@ $(document).on 'click', '.remote-reveal', (event) ->
   element = $('#' + $(this).data('reveal-id'))
   element.find('div.ajax-content').remove()
   content_element = element.append('<div class="ajax-content"></div>')
-  content_element.find('div.ajax-content').load $(this).data('reveal-url')
-
-$(document).ajaxComplete () ->
-  initControls()
-
-$(document).ajaxError () ->
-  initControls()
+  content_element.find('div.ajax-content').load $(this).data('reveal-url'), ->
+    initControls()
 
 $(document).on 'mouseover', '.has-tip', ->
     $(this).popover
@@ -26,8 +15,24 @@ $(document).on 'mouseover', '.has-tip', ->
       content: $(this).data('tooltip')
       fadeSpeed: 0
 
+$(document).on 'click', '.time-now', ->
+  target = $('#' + $(this).siblings('label').attr('for'))
+  target.val moment().format('HH:mm')
+  target.trigger 'change'
+  false
+
+# Hacky hack
+# Foundation adds styles to a functional class (close-reveal-modal)
+# Adding the class to the button messes up with the style, cf. https://github.com/zurb/foundation/pull/1381
+# Use a custom css class to work around
+$(document).on 'click', '.close-reveal-modal-button', (event) ->
+  $(this).closest(".reveal-modal").foundation "reveal", "close"
+  false
+
 # ===> Document Ready
 $ ->
+  $(document)
+    .foundation('reveal', { closeOnBackgroundClick: false, closeOnEsc: false })
 
   window.initControls = () ->
     initTimePicker()
@@ -45,34 +50,41 @@ $ ->
 
     $('input.date').pickadate()
 
-    createDateArray = (date) ->
-      date.split('-').map (value) ->
-        + value
-
     picker_from_element = $('.from_to_date').find('input.from_date')
     picker_to_element = $('.from_to_date').find('input.to_date')
 
     picker_from = $(picker_from_element).pickadate
-      onSelect: () ->
-        fromDate = createDateArray(this.getDate('yyyy-mm-dd'))
-        picker_to.data('pickadate').setDateLimit(fromDate)
+      onSet: () ->
+        selected_from_date = moment(@get('select', 'yyyy-mm-dd'))
+        selected_from_date_array = [selected_from_date.year(), selected_from_date.month(), selected_from_date.date()]
+        to_date = moment(picker_to_element.data('pickadate').get('select', 'yyyy-mm-dd'))
 
-        from_moment = moment(this.getDate(true))
-        to_moment = moment(picker_to.data('pickadate').getDate(true))
+        # set the min value for the to date
+        picker_to_element.data('pickadate').set('min', selected_from_date_array)
 
-        if to_moment.isBefore(from_moment) && picker_to.val().length > 0
-          picker_to.data('pickadate').setDate(from_moment.year(), from_moment.months() + 1, from_moment.date())
+        # set the selected from date as to date, if needed
+        if to_date.isBefore(selected_from_date) and picker_to_element.val().length > 0
+          picker_to_element.data('pickadate').set('select', selected_from_date_array)
 
     picker_to = $(picker_to_element).pickadate
       onStart: () ->
-        fromDate = createDateArray(picker_from.data('pickadate').getDate('yyyy-mm-dd'))
-        this.setDateLimit(fromDate)
+        selected_from_date = moment(picker_from_element.pickadate().data('pickadate').get('select', 'yyyy-mm-dd'))
+        selected_from_date_array = [selected_from_date.year(), selected_from_date.month(), selected_from_date.date()]
+        @set 'min', selected_from_date_array
 
     # Set initial dates (to isolate Rails' locale from Pickadate locale)
     $("input[data-month]").each (i, date_input) ->
       date_input = $(date_input)
       pickadate = date_input.data('pickadate')
       if(pickadate)
-        pickadate.setDate(date_input.data('year'),date_input.data('month'),date_input.data('day'))
+        pickadate.set('select', date_input.data('year'),date_input.data('month'),date_input.data('day'))
 
   initControls()
+
+
+  #$('.touch .navigation li:first-child').click (e) ->
+  #  e.stopPropagation()
+  #  $('.touch .navigation li:not(:first-child)').toggle()
+
+  #$(document).click () ->
+  #  $('.touch .navigation li:not(:first-child)').hide()

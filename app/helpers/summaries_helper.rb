@@ -15,7 +15,6 @@ module SummariesHelper
     hash.each_pair do |key, value|
       key, value = yield(key, value) if block_given?
       next if key.nil? or value.nil?
-
       tooltip += ("<div class='tr'><div class='td'>#{key}</div><div class='td'>#{value}</div></div>").html_safe
     end
 
@@ -24,15 +23,13 @@ module SummariesHelper
 
   def time_per_time_type_to_tooltip_table(time_per_time_type)
     hash_to_tooltip_table(time_per_time_type) do |time_type, duration|
-      return nil if duration == 0
-      [time_type, format_duration_by_time_type(duration, time_type)]
+      duration == 0 ? nil : [time_type, format_duration_by_time_type(duration, time_type)]
     end
   end
 
   def time_per_adjustment_to_tooltip_table(time_per_adjustment_hash)
     hash_to_tooltip_table(time_per_adjustment_hash) do |adjustment, duration|
-      return nil if duration == 0
-      [adjustment, format_duration_by_time_type(duration, adjustment.time_type)]
+      duration == 0 ? nil : [adjustment, format_duration_by_time_type(duration, adjustment.time_type)]
     end
   end
 
