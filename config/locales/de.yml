@@ -305,7 +305,6 @@ de:
       date: Datum
       save: Speichern
       now: jetzt
-      end_time_notice: Leer lassen zum Timer starten
   timers:
     edit:
       edit_time: 'Zeit bearbeiten'
