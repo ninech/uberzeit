@@ -14,14 +14,14 @@ class AbsencesController < ApplicationController
     time_chunks_finder = FindTimeChunks.new(@time_sheet.absences)
     time_chunks_finder.in_year(@year).each do |chunk|
       chunk.range.to_date_range.each do |day|
-        @absences[day.to_s] ||= []
-        @absences[day.to_s] << chunk
+        @absences[day] ||= []
+        @absences[day] << chunk
       end
     end
 
     @public_holidays = {}
     PublicHoliday.in_year(@year).each do |public_holiday|
-      @public_holidays[public_holiday.start_date.to_s] = public_holiday
+      @public_holidays[public_holiday.start_date] = public_holiday
     end
 
     respond_with(@absences)

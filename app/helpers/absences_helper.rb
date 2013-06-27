@@ -1,8 +1,8 @@
 module AbsencesHelper
 
   def render_calendar_cell(day)
-    absences =       @absences[day.to_date.to_s]
-    public_holiday = @public_holidays[day.to_date.to_s]
+    absences =       @absences[day.to_date]
+    public_holiday = @public_holidays[day.to_date]
     is_work_day =    UberZeit.is_weekday_a_workday?(day)
 
     cls = []
@@ -53,12 +53,12 @@ module AbsencesHelper
   end
 
   def tooltip_content_for_absence(day)
-    absences = @absences[day.to_date.to_s]
+    absences = @absences[day.to_date]
     render(partial: 'shared/absences_tooltip', locals: { absences: absences, day: day, time_sheet: @time_sheet }).to_s
   end
 
   def tooltip_content_for_public_holiday(day)
-    public_holiday = @public_holidays[day.to_date.to_s]
+    public_holiday = @public_holidays[day.to_date]
     render(partial: 'shared/public_holiday_tooltip', locals: { public_holiday: public_holiday }).to_s
   end
 
