@@ -33,19 +33,12 @@ class TimeSheetsController < ApplicationController
     @weekdays.each do |weekday|
       absences =  @time_sheet.find_chunks(weekday, TimeType.absence)
       unless absences.empty?
-        @absences[weekday] = absences
+        @absences[weekday] = absences.chunks
       end
 
       public_holiday = PublicHoliday.on(weekday).first
       if public_holiday
         @public_holidays[weekday] = public_holiday
-      end
-    end
-
-    @legend_show_public_holiday = @public_holidays.any?
-    @legend_time_types = TimeType.absence.select do |time_type|
-      @absences.any? do |date, absences|
-        absences.chunks.any? { |absence| absence.time_type == time_type }
       end
     end
   end

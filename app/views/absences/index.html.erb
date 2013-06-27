@@ -3,7 +3,7 @@
 <div class="row">
   <div class="small-10 columns">
     <ul class="event-legend">
-      <%= render 'shared/event_legend', show_public_holiday: true, time_types: TimeType.absence  %>
+      <%= render 'shared/event_legend', show_public_holiday: true, time_types: time_types_in_absences(@absences) %>
     </ul>
   </div>
   <div class="small-2 columns">
