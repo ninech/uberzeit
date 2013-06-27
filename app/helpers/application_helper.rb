@@ -108,4 +108,8 @@ module ApplicationHelper
     User.accessible_by(current_ability)
   end
 
+  def time_types_in_absences(absences_per_day)
+    all_absences = absences_per_day.values.flatten
+    all_absences.collect(&:time_type).uniq
+  end
 end
