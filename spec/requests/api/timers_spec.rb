@@ -22,6 +22,7 @@ describe API::Resources::Timer do
       its(['start']) { should eq('13:00') }
       its(['date']) { should eq('2013-07-20') }
       its(['end']) { should be_nil }
+      its(['duration']) { should be_nil }
     end
 
     context 'with start time and date supplied' do
@@ -35,6 +36,7 @@ describe API::Resources::Timer do
       its(['start']) { should eq('09:00') }
       its(['date']) { should eq('2013-07-24') }
       its(['end']) { should be_nil }
+      its(['duration']) { should be_nil }
     end
 
     describe 'validations' do
@@ -82,6 +84,7 @@ describe API::Resources::Timer do
         its(['start']) { should eq('15:00') }
         its(['end']) { should eq('18:00') }
         its(['date']) { should eq('2013-07-30') }
+        its(['duration']) { should eq('03:00') }
       end
 
       describe 'stopping timer with end = true' do
@@ -92,6 +95,7 @@ describe API::Resources::Timer do
         subject { json }
 
         its(['end']) { should eq('13:00') }
+        its(['duration']) { should eq('05:00') }
       end
 
       context 'when the end time is before start time' do
