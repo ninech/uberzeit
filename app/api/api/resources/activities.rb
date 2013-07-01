@@ -15,6 +15,15 @@ class API::Resources::Activities < Grape::API
       present @activities, with: API::Entities::Activity, embed: params[:embed]
     end
 
+    desc 'Deletes an activity'
+    params do
+      requires :id, type: Integer, desc: 'Activity ID.'
+      optional :embed, type: Array, includes: %w[user]
+    end
+    delete ':id' do
+      present Activity.find(params[:id]).destroy, with: API::Entities::Activity, embed: params[:embed]
+    end
+
     desc 'Creates an activity.'
     params do
       requires :activity_type_id, type: Integer
