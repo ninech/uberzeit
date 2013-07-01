@@ -18,5 +18,10 @@ FactoryGirl.define do
     factory :invalid_time_entry do
       end_time { start_time }
     end
+
+    factory :timer do
+      end_date nil
+      end_time nil
+    end
   end
 end

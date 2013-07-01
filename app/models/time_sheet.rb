@@ -61,4 +61,8 @@ class TimeSheet < ActiveRecord::Base
     timers_in_range.inject(0) { |sum,timer| sum + timer.duration(range) }
   end
 
+  def timer
+    time_entries.timers_only.first
+  end
+
 end

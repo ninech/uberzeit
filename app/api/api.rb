@@ -53,12 +53,18 @@ class API < Grape::API
     }.to_json, 422)
   end
 
+  rescue_from ActiveRecord::RecordNotFound do |e|
+    Rack::Response.new({
+      'status' => 404
+    }.to_json, 404)
+  end
+
   #
   # Resources
   #
   mount API::Resources::ActivityTypes
   mount API::Resources::Activities
-  mount API::Resources::Timers
+  mount API::Resources::Timer
   mount API::Resources::Customers
 
   #
