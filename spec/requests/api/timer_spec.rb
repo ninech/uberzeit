@@ -22,21 +22,21 @@ describe API::Resources::Timer do
       its(['start']) { should eq('13:00') }
       its(['date']) { should eq('2013-07-20') }
       its(['end']) { should be_nil }
-      its(['duration']) { should be_nil }
+      its(['duration']) { should eq('00:00') }
     end
 
     context 'with start time and date supplied' do
       before do
-        Timecop.freeze('2013-07-20')
-        post '/api/timer', { time_type_id: TEST_TIME_TYPES[:work].id, date: '2013-07-24', start: '09:00' }
+        Timecop.freeze('2013-07-20T01:00:00+0200')
+        post '/api/timer', { time_type_id: TEST_TIME_TYPES[:work].id, date: '2013-07-19', start: '23:00' }
       end
 
       subject { json }
 
-      its(['start']) { should eq('09:00') }
-      its(['date']) { should eq('2013-07-24') }
+      its(['start']) { should eq('23:00') }
+      its(['date']) { should eq('2013-07-19') }
       its(['end']) { should be_nil }
-      its(['duration']) { should be_nil }
+      its(['duration']) { should eq('02:00') }
     end
 
     describe 'validations' do
@@ -111,6 +111,31 @@ describe API::Resources::Timer do
     context 'with no active timer' do
       it 'fails miserably' do
         put '/api/timer', { end: '10:00' }
+        response.status.should eq(404)
+      end
+    end
+  end
+
+  describe 'GET /api/timer' do
+    context 'with an active timer' do
+      let!(:timer) { FactoryGirl.create(:timer, time_sheet: api_user.current_time_sheet, start_date: '2013-07-20', start_time: '08:00') }
+
+      describe 'retrieval' do
+        before do
+          get '/api/timer'
+        end
+
+        subject { json }
+
+        its(['start']) { should eq('08:00') }
+        its(['date']) { should eq('2013-07-20') }
+        its(['end']) { should be_nil }
+      end
+    end
+
+    context 'with no active timer' do
+      it 'fails miserably' do
+        get '/api/timer'
         response.status.should eq(404)
       end
     end

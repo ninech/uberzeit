@@ -7,11 +7,5 @@ class API::Entities::Timer < Grape::Entity
   expose :start_date, as: :date
   expose :start_time, as: :start
   expose :end_time, as: :end
-  expose :duration do |timer|
-    if timer.ends.nil?
-      nil
-    else
-      UberZeit.duration_in_hhmm(timer.duration)
-    end
-  end
+  expose :duration, format_with: :duration_in_hhmm
 end

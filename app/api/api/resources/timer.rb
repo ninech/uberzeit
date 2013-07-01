@@ -1,5 +1,11 @@
 class API::Resources::Timer < Grape::API
   resource :timer do
+    desc 'Gets the current timer.'
+    get do
+      timer = current_user.current_time_sheet.timer
+      raise ActiveRecord::RecordNotFound if timer.nil?
+      present timer, with: API::Entities::Timer
+    end
 
     desc 'Starts a timer.'
     params do
@@ -8,8 +14,6 @@ class API::Resources::Timer < Grape::API
       optional :start, type: String, regexp: /\A\d{1,2}:\d{1,2}\z/,  desc: 'A start time in the format HH:MM. Defaults to current time.'
     end
     post do
-      current_user.ability.authorize! :create, TimeEntry
-
       start_date = params[:date] || Date.current
       start_time = params[:start] || Time.current.strftime('%H:%M')
       time_type_id = params[:time_type_id]
