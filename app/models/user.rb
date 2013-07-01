@@ -76,6 +76,10 @@ class User < ActiveRecord::Base
     has_role?(:admin)
   end
 
+  def ability
+    @ability ||= Ability.new(self)
+  end
+
   private
 
   def set_default_time_zone
