@@ -32,7 +32,7 @@ describe TimeEntriesController do
 
     describe 'PUT "update"' do
       before do
-        time_entry = FactoryGirl.create(:time_entry, time_sheet: time_sheet)
+        time_entry = FactoryGirl.create(:time_entry, time_sheet: time_sheet, start_date: '2013-02-01', end_date: '2013-02-01', start_time: '06:00', end_time: '09:00:00')
       end
 
       context 'with valid attributes' do
@@ -55,6 +55,12 @@ describe TimeEntriesController do
           time_entry.ends.should eq("2013-02-06 01:00 +0100".to_time)
         end
 
+        it 'will restart a timer when the end time is empty' do
+          expect {
+            put :update, id: time_entry, time_sheet_id: time_entry.time_sheet, time_entry: {start_date: '2013/02/05', start_time: '23:00', end_time: ''}
+            time_entry.reload
+          }.to change(time_entry, :timer?).from(false).to(true)
+        end
       end
 
       context 'with invalid attributes' do

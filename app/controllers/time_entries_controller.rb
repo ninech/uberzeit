@@ -46,7 +46,7 @@ class TimeEntriesController < ApplicationController
   end
 
   def set_end_date
-    unless params[:time_entry][:end_date]
+    if params[:time_entry][:end_date].blank? && params[:time_entry][:end_time].present?
       params[:time_entry][:end_date] ||= params[:time_entry][:start_date]
     end
   end
