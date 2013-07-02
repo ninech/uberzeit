@@ -38,6 +38,17 @@ describe TimeEntry do
     entry.duration.should eq(1.5.hours)
   end
 
+  describe 'timer' do
+    let(:time_entry) { FactoryGirl.create(:time_entry, start_date: '2013-07-20', start_time: '08:00', end_date: '2013-07-20', end_time: '10:00') }
+
+    it 'marks the time entry as a timer when the end time is set to empty' do
+      expect {
+        time_entry.end_time = ''
+        time_entry.save!
+      }.to change(time_entry, :timer?).from(false).to(true)
+    end
+  end
+
   context 'occurrences' do
     it 'respects the time zone' do
       entry = FactoryGirl.create(:time_entry, starts: '2013-01-23 9:00:00 +0000', ends: '2013-01-23 12:00:00 +0000')
