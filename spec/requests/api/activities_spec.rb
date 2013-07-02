@@ -65,6 +65,24 @@ describe API::Resources::Activities do
     end
   end
 
+  describe 'DELETE /api/activities/:id' do
+    context 'with an existing activity' do
+      let!(:activity) { FactoryGirl.create(:activity, user: api_user) }
+      let!(:other_activity) { FactoryGirl.create(:activity, user: api_user) }
+
+      it 'is successful' do
+        delete "/api/activities/#{activity.id}"
+        response.status.should eq(200)
+      end
+
+      it 'deletes the activity' do
+        expect {
+          delete "/api/activities/#{activity.id}"
+        }.to change(Activity, :count).by(-1)
+      end
+    end
+  end
+
   describe 'POST /api/activities' do
     context 'with the required attributes' do
       before do
