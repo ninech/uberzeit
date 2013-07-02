@@ -5,7 +5,7 @@ require ::File.expand_path('../config/environment',  __FILE__)
 use Rack::Cors, logger: Rails.logger do
   allow do
     origins(*UberZeit::Config.ubertrack_hosts)
-    resource '*', headers: :any, methods: [:get, :post], credentials: true, max_age: 0
+    resource '*', headers: :any, methods: [:get, :post, :delete], credentials: true, max_age: 0
   end
 end
 
