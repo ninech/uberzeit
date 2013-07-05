@@ -22,7 +22,7 @@
               <input type="text" class="jump-date hidden" data-jump-url="<%= url_for(action: :show, date: '') %>" data-current-day="<%= @day.to_formatted_s(:iso) %>">
             </form>
             <% unless @day.today? %>
-              <a href="<%= url_for(action: :show, date: Date.today.to_formatted_s(:iso)) %>" class="small secondary today button"><%= t '.today' %></a>
+              <a href="<%= url_for(action: :show, date: nil) %>" class="small secondary today button"><%= t '.today' %></a>
             <% end %>
             <a href="#" class="jump-date-starter"><i class="icon-calendar"></i></a>
             <a href="<%= url_for(action: :show, date: @previous_week_day.to_formatted_s(:iso)) %>" class="previous"><span class="icon-caret-left"></span></a>
