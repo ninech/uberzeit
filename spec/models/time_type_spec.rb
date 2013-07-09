@@ -22,7 +22,11 @@ describe TimeType do
     FactoryGirl.build(:time_type, name: 'Work').should_not be_valid
   end
 
-  it 'has a valid bonus factor' do
-    FactoryGirl.build(:time_type, bonus_factor: -1.5).should_not be_valid
+  it 'has a valid bonus calculator' do
+    FactoryGirl.build(:time_type, bonus_calculator: 'blubber').should_not be_valid
+  end
+
+  it 'allows a bonus calculator null' do
+    FactoryGirl.build(:time_type, bonus_calculator: '').should be_valid
   end
 end

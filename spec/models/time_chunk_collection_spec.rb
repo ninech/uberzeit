@@ -21,7 +21,7 @@ describe TimeChunkCollection do
       [
         TimeChunk.new(starts: '2013-03-07 09:00:00'.to_time, ends: '2013-03-07 12:00:00'.to_time, time_type: time_type_work),
         TimeChunk.new(starts: '2013-03-07 12:30:00'.to_time, ends: '2013-03-07 18:30:00'.to_time, time_type: time_type_work),
-        TimeChunk.new(starts: '2013-03-07 20:00:00'.to_time, ends: '2013-03-07 20:30:00'.to_time, time_type: time_type_onduty),
+        TimeChunk.new(starts: '2013-03-07 23:15:00'.to_time, ends: '2013-03-07 23:45:00'.to_time, time_type: time_type_onduty),
         TimeChunk.new(starts: '2013-03-07 21:00:00'.to_time, ends: '2013-03-07 22:00:00'.to_time, time_type: time_type_compensation)
       ]
     end
@@ -38,9 +38,9 @@ describe TimeChunkCollection do
     end
 
     describe '#bonus' do
-      it 'uses the bonus factor of the time type to calculate the overall time bonus' do
-        time_type_onduty.should_receive(:bonus_factor).and_return(1.0)
-        collection.bonus.should eq(0.5.hours)
+      it 'uses the bonus calculator of the time type to calculate the overall time bonus' do
+        time_type_onduty.should_receive(:bonus_calculator).and_return(:pikett_bonus)
+        collection.bonus.should eq(3.minutes)
       end
     end
 
@@ -74,7 +74,7 @@ describe TimeChunkCollection do
   end
 
   context 'with chunks which have a type where the calculation factor is not 1.0' do
-    let(:special_time_type) { FactoryGirl.create(:time_type, bonus_factor: 0.1) }
+    let(:special_time_type) { FactoryGirl.create(:time_type, bonus_calculator: 'pikett_bonus') }
     let(:time_chunks) do
       [
         TimeChunk.new(starts: '2013-04-12 01:10:00'.to_time, ends: '2013-04-12 01:25:00'.to_time, time_type: special_time_type),

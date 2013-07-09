@@ -21,7 +21,7 @@
 
   <div class="row">
     <div class="small-12 columns">
-      <%= f.text_field :bonus_factor, class: 'small-2 columns' %>
+      <%= f.select :bonus_calculator, UberZeit::TimeTypeCalculators.available_calculators.map { |name, klass| [klass.name, name] }, class: 'small-2 columns', include_blank: true %>
     </div>
   </div>
 
