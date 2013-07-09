@@ -1,4 +1,4 @@
-class UberZeit::TimeTypeCalculators::PikettBonus
+class UberZeit::TimeTypeCalculators::NineOnDuty
   BONUS_FACTOR = 0.1
   BONUS_ACTIVE = { ends: 6, starts: 23 }
   DESCRIPTION = 'Calculates the bonus for work during pikett'.freeze
