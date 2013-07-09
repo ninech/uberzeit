@@ -1,17 +1,19 @@
 class UberZeit::TimeTypeCalculators::PikettBonus
   BONUS_FACTOR = 0.1
   BONUS_ACTIVE = { ends: 6, starts: 23 }
+  DESCRIPTION = 'Calculates the bonus for work during pikett'.freeze
+  NAME ='Nine Pikett Bonus'.freeze
 
   def self.factor
     BONUS_FACTOR
   end
 
   def self.description
-    'Calculates the bonus for work during pikett'.freeze
+    DESCRIPTION
   end
 
   def self.name
-    'Nine Pikett Bonus'.freeze
+    NAME
   end
 
   def initialize(time_chunk)
