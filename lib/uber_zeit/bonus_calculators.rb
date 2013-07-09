@@ -1,4 +1,4 @@
-module UberZeit::TimeTypeCalculators
+module UberZeit::BonusCalculators
 
   @@available_calculators = HashWithIndifferentAccess.new
   mattr_reader :available_calculators
@@ -8,7 +8,7 @@ module UberZeit::TimeTypeCalculators
   end
 
   def self.use(identifier, params)
-    return UberZeit::TimeTypeCalculators::Dummy.new if identifier.blank?
+    return UberZeit::BonusCalculators::Dummy.new if identifier.blank?
     @@available_calculators[identifier].new(params)
   end
 

@@ -1,4 +1,4 @@
-class UberZeit::TimeTypeCalculators::Dummy
+class UberZeit::BonusCalculators::Dummy
 
   def self.factor
     0.0

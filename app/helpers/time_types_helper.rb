@@ -33,7 +33,7 @@ module TimeTypesHelper
   end
 
   def display_name_bonus_calculator(calculator)
-    UberZeit::TimeTypeCalculators.available_calculators[calculator].name if UberZeit::TimeTypeCalculators.available_calculators[calculator]
+    UberZeit::BonusCalculators.available_calculators[calculator].name if UberZeit::BonusCalculators.available_calculators[calculator]
   end
 
 end

@@ -12,7 +12,7 @@ class TimeType < ActiveRecord::Base
 
   validates_presence_of :name
   validates_inclusion_of :exclude_from_calculation, in: [true, false]
-  validates_inclusion_of :bonus_calculator, in: UberZeit::TimeTypeCalculators.available_calculators.keys, allow_blank: true
+  validates_inclusion_of :bonus_calculator, in: UberZeit::BonusCalculators.available_calculators.keys, allow_blank: true
 
   validates_uniqueness_of_without_deleted :name
 

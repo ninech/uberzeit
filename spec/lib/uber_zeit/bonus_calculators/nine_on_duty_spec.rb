@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe UberZeit::TimeTypeCalculators::NineOnDuty do
+describe UberZeit::BonusCalculators::NineOnDuty do
 
   describe 'class' do
-    subject { UberZeit::TimeTypeCalculators::NineOnDuty }
+    subject { UberZeit::BonusCalculators::NineOnDuty }
     its(:factor) { should eq(0.1) }
     its(:description) { should be_instance_of(String) }
     its(:name) { should be_instance_of(String) }
   end
 
   describe 'an instance' do
-    let(:pikett_bonus) { UberZeit::TimeTypeCalculators::NineOnDuty.new(time_chunk) }
+    let(:pikett_bonus) { UberZeit::BonusCalculators::NineOnDuty.new(time_chunk) }
     let(:time_chunk) do
       TimeChunk.new starts: starts, ends: ends
     end
