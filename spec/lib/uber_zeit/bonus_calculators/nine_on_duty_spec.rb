@@ -6,8 +6,6 @@ describe UberZeit::BonusCalculators::NineOnDuty do
   describe 'class' do
     subject { UberZeit::BonusCalculators::NineOnDuty }
     its(:factor) { should eq(0.1) }
-    its(:description) { should be_instance_of(String) }
-    its(:name) { should be_instance_of(String) }
   end
 
   describe 'an instance' do
