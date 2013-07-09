@@ -3,6 +3,6 @@ class UberZeit::BonusCalculators::NineOnDuty
 
   FACTOR = 0.1
   ACTIVE = { ends: 6, starts: 23 }
-  DESCRIPTION = 'Calculates the bonus for work during pikett'.freeze
-  NAME = 'Nine On Duty Bonus'.freeze
+  DESCRIPTION = 'Calculates the bonus for worktime during the Nine OnDuty hours'.freeze
+  NAME = 'OnDuty Hours'.freeze
 end

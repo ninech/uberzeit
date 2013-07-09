@@ -26,7 +26,7 @@ de:
       time_type:
         name: Bezeichnung
         acquired_as: Wird erfasst als
-        bonus_factor: Zeitzuschlagsfaktor
+        bonus_calculator: Bonusrechner
         confirm_delete: Löschen bestägigen
         time_types: Zeittypen
         is_vacation: Wird von Ferien abgezählt
