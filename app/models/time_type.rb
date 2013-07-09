@@ -8,11 +8,11 @@ class TimeType < ActiveRecord::Base
   default_scope order(:name)
 
   attr_accessible :is_vacation, :is_work, :name, :absence
-  attr_accessible :bonus_factor, :exclude_from_calculation, :icon, :color_index
+  attr_accessible :bonus_calculator, :exclude_from_calculation, :icon, :color_index
 
-  validates_presence_of :name, :bonus_factor
+  validates_presence_of :name
   validates_inclusion_of :exclude_from_calculation, in: [true, false]
-  validates_numericality_of :bonus_factor, greater_than_or_equal_to: 0
+  validates_inclusion_of :bonus_calculator, in: UberZeit::BonusCalculators.available_calculators.keys, allow_blank: true
 
   validates_uniqueness_of_without_deleted :name
 

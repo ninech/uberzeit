@@ -11,7 +11,7 @@
           <th>&nbsp;</th>
           <th><%= TimeType.human_attribute_name :name %></th>
           <th><%= TimeType.human_attribute_name :acquired_as %></th>
-          <th><%= TimeType.human_attribute_name :bonus_factor %></th>
+          <th><%= TimeType.human_attribute_name :bonus_calculator %></th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
         </tr>
@@ -22,7 +22,7 @@
         <td><%= icon_for_time_type(time_type) %></td>
         <td><%= time_type.name %></td>
         <td><%= t(".#{time_type.kind}") %></td>
-        <td><%= number_with_precision(time_type.bonus_factor, strip_insignificant_zeros: true) %></td>
+        <td><%= display_name_bonus_calculator time_type.bonus_calculator %></td>
         <td>
           <%= link_to icon('edit'), edit_time_type_path(time_type) %>
         </td>
