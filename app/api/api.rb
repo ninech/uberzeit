@@ -33,7 +33,7 @@ class API < Grape::API
   #
   # Exceptions
   #
-  collect_validation_errors true
+  # collect_validation_errors true
 
   rescue_from Grape::Exceptions::Validations do |e|
     # convert the errors per attribute into the rails format
@@ -66,10 +66,12 @@ class API < Grape::API
   mount API::Resources::Activities
   mount API::Resources::Timer
   mount API::Resources::Customers
+  mount API::Resources::TimeTypes
 
   #
   # Ping? Pong!
   #
+  desc 'Ping? Pong!'
   get :ping do
     { pong: Time.now }
   end
@@ -77,5 +79,7 @@ class API < Grape::API
   #
   # Documentation
   #
-  add_swagger_documentation
+  add_swagger_documentation api_version: 'v1',
+                            base_path: lambda { |request| "#{request.base_url}/api" },
+                            hide_documentation_path: true
 end

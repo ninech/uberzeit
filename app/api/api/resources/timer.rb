@@ -32,7 +32,7 @@ class API::Resources::Timer < Grape::API
     params do
       optional :date, type: String, regexp: /\A\d{4}-\d{1,2}-\d{1,2}\z/, desc: 'A date in the format YYYY-MM-DD.'
       optional :start, type: String, regexp: /\A\d{1,2}:\d{1,2}\z/,  desc: 'A start time in the format HH:MM.'
-      optional :end, type: String, regexp: /\A((\d{1,2}:\d{1,2})|true)\z/,  desc: 'A end time in the format HH:MM or true. \'true\' will default to current time.'
+      optional :end, type: String, regexp: /\A((\d{1,2}:\d{1,2})|true|now)\z/,  desc: 'A end time in the format HH:MM or true. \'now\' will default to current time.'
     end
     put do
       timer = current_user.current_time_sheet.timer
@@ -44,7 +44,7 @@ class API::Resources::Timer < Grape::API
 
       if params[:end].present?
         timer.end_date = timer.start_date
-        timer.end_time = params[:end] == 'true' ? Time.current.strftime('%H:%M') : params[:end]
+        timer.end_time = (params[:end] == 'true' || params[:end] == 'now') ? Time.current.strftime('%H:%M') : params[:end]
       end
 
       if params[:date].present?
