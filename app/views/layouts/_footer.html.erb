@@ -4,9 +4,20 @@
       <%= t '.info-rule' %>
     </div>
   </div>
+
   <div class="row">
     <div class="small-12 columns">
-      nine.ch - from dev-team with <i class="icon-heart"></i>
+      nine.ch - from dev-team with <i class="icon-heart api-show-token"></i>
+      <div class='api-token-popup'>
+        <span class='token'>
+          <p>This is a gift...</p>
+          <p>Don't tell anyone..</p>
+          <p>Your API Token is</p>
+          <p><strong><%= current_user && current_user.authentication_token %></strong></p>
+        </span>
+        <i class="icon-heart"></i>
+      </div>
     </div>
   </div>
+
 </div>
