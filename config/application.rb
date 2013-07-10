@@ -82,6 +82,7 @@ module Uberzeit
       UberZeit::Config[:vacation_per_year] = 25.days
 
       UberZeit::BonusCalculators.register :nine_on_duty, UberZeit::BonusCalculators::NineOnDuty
+      UberZeit::BonusCalculators.register :nine_planned_on_duty_work, UberZeit::BonusCalculators::NinePlannedOnDutyWork
     end
 
     YAML::ENGINE.yamler = 'syck'

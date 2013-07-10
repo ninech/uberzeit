@@ -1,21 +1,21 @@
 require 'spec_helper'
 require 'support/shared_examples_calculators'
 
-describe UberZeit::BonusCalculators::NineOnDuty do
+describe UberZeit::BonusCalculators::NinePlannedOnDutyWork do
 
   describe 'class' do
-    subject { UberZeit::BonusCalculators::NineOnDuty }
-    its(:factor) { should eq(0.1) }
+    subject { UberZeit::BonusCalculators::NinePlannedOnDutyWork }
+    its(:factor) { should eq(0.25) }
   end
 
   describe 'an instance' do
-    let(:pikett_bonus) { UberZeit::BonusCalculators::NineOnDuty.new(time_chunk) }
+    let(:pikett_bonus) { UberZeit::BonusCalculators::NinePlannedOnDutyWork.new(time_chunk) }
     let(:time_chunk) do
       TimeChunk.new starts: starts, ends: ends
     end
 
     subject { pikett_bonus }
-    let(:factor) { 0.1 }
+    let(:factor) { 0.25 }
 
     context 'summer' do
       before do
@@ -36,3 +36,4 @@ describe UberZeit::BonusCalculators::NineOnDuty do
   end
 
 end
+

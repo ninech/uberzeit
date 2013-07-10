@@ -22,7 +22,11 @@
         <td><%= icon_for_time_type(time_type) %></td>
         <td><%= time_type.name %></td>
         <td><%= t(".#{time_type.kind}") %></td>
-        <td><%= display_name_bonus_calculator time_type.bonus_calculator %></td>
+        <td>
+          <% unless time_type.bonus_calculator.blank? %>
+            <span class="has-tip" data-tooltip="<%= t("bonus_calculator.#{time_type.bonus_calculator}.description") %>"><%= t("bonus_calculator.#{time_type.bonus_calculator}.name") %></span>
+          <% end %>
+        </td>
         <td>
           <%= link_to icon('edit'), edit_time_type_path(time_type) %>
         </td>
