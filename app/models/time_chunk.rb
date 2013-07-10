@@ -24,7 +24,8 @@ class TimeChunk
   end
 
   def time_bonus
-    range.duration * time_type.bonus_factor
+    calculator = UberZeit::BonusCalculators.use(time_type.bonus_calculator, self)
+    calculator.result
   end
 
   def time_type

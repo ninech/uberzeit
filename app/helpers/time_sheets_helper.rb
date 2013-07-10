@@ -33,11 +33,11 @@ module TimeSheetsHelper
   end
 
   def standard_calculation?(time_type)
-    time_type.bonus_factor == 0.0
+    time_type.bonus_calculator.blank?
   end
 
   def time_type_bonus_percentage(time_type)
-    bonus_percent = time_type.bonus_factor * 100.0
+    bonus_percent = UberZeit::BonusCalculators.available_calculators[time_type.bonus_calculator].factor * 100.0
     "%s%%" % number_with_precision(bonus_percent, precision: 2, strip_insignificant_zeros: true)
   end
 

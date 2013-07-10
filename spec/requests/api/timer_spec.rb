@@ -87,9 +87,9 @@ describe API::Resources::Timer do
         its(['duration']) { should eq('03:00') }
       end
 
-      describe 'stopping timer with end = true' do
+      describe 'stopping timer with end = now' do
         before do
-          put '/api/timer', { end: true }
+          put '/api/timer', { end: 'now' }
         end
 
         subject { json }

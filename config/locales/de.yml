@@ -26,7 +26,7 @@ de:
       time_type:
         name: Bezeichnung
         acquired_as: Wird erfasst als
-        bonus_factor: Zeitzuschlagsfaktor
+        bonus_calculator: Bonusrechner
         confirm_delete: Löschen bestägigen
         time_types: Zeittypen
         is_vacation: Wird von Ferien abgezählt
@@ -227,7 +227,7 @@ de:
       columns:
         effective_worked: Arbeitszeit
         absent: Absenzzeit
-        time_bonuses: Zeitzuschläge
+        time_bonuses: Nachtzuschläge
         running_overtime: Laufende Überzeit
         target: Sollzeit
         overtime: Überzeit
@@ -378,8 +378,8 @@ de:
       tooltip:
         starts: 'Beginnt am'
         ends: 'Endet am'
-      time_bonus: Zeitzuschlag
-      time_bonuses: Zeitzuschläge
+      time_bonus: Nachtzuschlag
+      time_bonuses: Nachtzuschläge
       week_number: KW
       timer: Timer
       info-timer-exceeds-day: Dies ist ein Timer, der die Tagesgrenze überschreitet.
@@ -410,3 +410,12 @@ de:
         presence: '%{attribute} fehlt'
         regexp: '%{attribute} ist ungültig'
         invalid: '%{attribute} ist ungültig'
+
+  bonus_calculator:
+    nine_on_duty:
+      name: 'Normale Piketteinsätze'
+      description: 'Während der im nine.ch Pikett-Reglement spezifizierten Tageszeiten wird die geleistete Arbeitzeit zu 110% gutgeschrieben.'
+    nine_planned_on_duty_work:
+      name: 'Geplante Pikettarbeiten'
+      description: 'Während der im nine.ch Pikett-Reglement spezifizierten Tageszeiten wird die geleistete Arbeitzeit zu 125% gutgeschrieben.'
+

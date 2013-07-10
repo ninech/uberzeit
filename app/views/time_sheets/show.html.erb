@@ -113,7 +113,9 @@
               <small>
                 <%= time_chunk.time_type %>
                 <% unless standard_calculation?(time_chunk.time_type) %>
-                <small>(<%= t '.time_bonus' %> <%= time_type_bonus_percentage(time_chunk.time_type) %>: <%= format_duration(time_chunk.time_bonus) %>)</small>
+                  <% if time_chunk.time_bonus != 0 %>
+                    <small> (<%= time_type_bonus_percentage(time_chunk.time_type) %> <%= t '.time_bonus' %>: <%= format_duration(time_chunk.time_bonus) %>) </small>
+                  <% end %>
                 <% end %>
               </small>
               <div class="right">
