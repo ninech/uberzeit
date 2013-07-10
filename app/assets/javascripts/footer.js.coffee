@@ -1,13 +1,16 @@
 $ ->
   $('.api-show-token').click ->
     $toggler = $(this)
+    $toggler.css 'visibility', 'hidden'
+
     $popup = $('.api-token-popup').clone()
     $popup.detach().appendTo 'body'
     $popup.show()
-    $popup.css 'position', 'absolute'
-    $popup.css 'left', $toggler.offset().left
-    $popup.css 'top', $toggler.offset().top
-    $toggler.hide()
+    $popup.css
+      position: 'absolute'
+      left: $toggler.offset().left
+      top: $toggler.offset().top
+
     $('.token', $popup).hide()
 
     animatedAttributes = {
@@ -22,7 +25,7 @@ $ ->
       $('.token', $popup).show()
 
       $('html').one 'click', ->
-        $toggler.show()
+        $toggler.css 'visibility', ''
         $popup.remove()
 
       $popup.click (evt) ->
