@@ -66,6 +66,7 @@ class API < Grape::API
   mount API::Resources::Activities
   mount API::Resources::Timer
   mount API::Resources::Customers
+  mount API::Resources::TimeTypes
 
   #
   # Ping? Pong!
