@@ -37,6 +37,8 @@ Uberzeit::Application.routes.draw do
 
     resources :employments
 
+    resources :activities, only: :index
+
     namespace :summaries do
       get '/overview', to: 'overview#index', as: :overview
 
@@ -70,8 +72,6 @@ Uberzeit::Application.routes.draw do
       end
     end
   end
-
-  resources :activities
 
   resource :session, only: [:new, :create]
 

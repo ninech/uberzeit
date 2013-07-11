@@ -174,7 +174,9 @@ de:
   navigation:
     manage: Verwalten
     absences: Absenzen
-    timesheet: Zeiterfassung
+    time_tracking: Zeiterfassung
+    timesheet: Präsenzzeit
+    activities: Aktivitäten
     reports: Berichte
     sub:
       manage:
