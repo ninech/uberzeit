@@ -54,6 +54,30 @@ describe 'Roles and Rights' do
       end
     end
 
+    describe 'activities' do
+      let(:path) { user_activities_path(user) }
+
+      context 'as owner' do
+        let(:current_user) { user }
+        include_examples :access_granted
+      end
+
+      context 'as another user' do
+        let(:current_user) { other_user }
+        include_examples :access_denied
+      end
+
+      context 'as team leader of owner' do
+        let(:current_user) { team_leader }
+        include_examples :access_granted
+      end
+
+      context 'as admin' do
+        let(:current_user) { admin }
+        include_examples :access_granted
+      end
+    end
+
     describe 'absences' do
       let(:path) { time_sheet_absences_path(user.current_time_sheet) }
 
