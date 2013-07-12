@@ -53,10 +53,10 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
 
-    primary.item :timesheet, t('navigation.time_tracking'), time_sheet_path(current_user.current_time_sheet), highlights_on: %r!\A/time_sheets/\d+(/date/[\w-]+)?\z! do |second|
+    primary.item :timesheet, t('navigation.time_tracking'), time_sheet_path(current_user.current_time_sheet), highlights_on: %r!\A/(time_sheets/\d+|users/\d+/activities)(/date/[\w-]+)?\z! do |second|
       second.dom_class = 'sub-nav'
       second.item :timesheet, t('navigation.timesheet'), time_sheet_path(current_user.current_time_sheet), highlights_on: %r!\A/time_sheets/\d+(/date/[\w-]+)?\z!
-      second.item :activities, t('navigation.activities'), user_activities_path(current_user)
+      second.item :activities, t('navigation.activities'), user_activities_path(current_user), highlights_on: %r!\A/users/\d+/activities(/date/[\w-]+)?\z!
     end
     primary.item :absences, t('navigation.absences'), time_sheet_absences_path(current_user.current_time_sheet), highlights_on: %r!\A/time_sheets/\d+/absences!
 
