@@ -1,5 +1,7 @@
 class TimeSheetsController < ApplicationController
 
+  include DateHelper
+
   load_and_authorize_resource :time_sheet
 
   before_filter :load_day
@@ -60,13 +62,6 @@ class TimeSheetsController < ApplicationController
   end
 
   private
-
-  def load_day
-    unless params[:date].nil?
-      @day = Time.zone.parse(params[:date]).to_date
-    end
-    @day ||= Time.zone.today
-  end
 
   def timer_on_day
     @timer_on_day ||= @time_sheet.time_entries.timers_in_range(@day.to_range).first

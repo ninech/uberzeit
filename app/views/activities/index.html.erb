@@ -1,2 +1,7 @@
-<h1>Activities#index</h1>
-<p>Find me in app/views/activities/index.html.erb</p>
+<%= render(partial: 'shared/user_select', locals: { link_generator: :user_path_time_sheet, selected_user: @user }) %>
+
+<div class="row">
+  <div class="large-12 columns">
+    <%= debug @activities %>
+  </div>
+</div>
