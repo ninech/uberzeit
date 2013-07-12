@@ -37,7 +37,11 @@ Uberzeit::Application.routes.draw do
 
     resources :employments
 
-    resources :activities, only: :index
+    resources :activities, only: :index do
+      collection do
+        get '/date/:date', to: 'activities#index', as: :show_date
+      end
+    end
 
     namespace :summaries do
       get '/overview', to: 'overview#index', as: :overview

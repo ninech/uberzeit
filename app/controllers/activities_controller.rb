@@ -1,6 +1,7 @@
 class ActivitiesController < ApplicationController
 
   include WeekViewHelper
+  include ActivitiesHelper
 
   load_and_authorize_resource :user
   load_and_authorize_resource :activity, through: :user
