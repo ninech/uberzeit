@@ -1,18 +1,14 @@
 class TimeSheetsController < ApplicationController
 
-  include DateHelper
+  include WeekViewHelper
 
   load_and_authorize_resource :time_sheet
 
   before_filter :load_day
 
-  def show
-    @week     = @day.at_beginning_of_week..@day.at_end_of_week
-    @weekdays = @week.to_a
-    @year     = @week.min.year
-    @previous_week_day = (@week.min - 1).at_beginning_of_week
-    @next_week_day = @week.max + 1
+  before_filter :prepare_week_view, only: :show
 
+  def show
     @time_chunks = @time_sheet.find_chunks(@day, TimeType.work)
     # stuff for add form in modal
     @time_entry = TimeEntry.new
@@ -26,23 +22,6 @@ class TimeSheetsController < ApplicationController
       @timer_range = @timer.range.intersect(@day.to_range)
     end
     @timers_other_days = @time_sheet.time_entries.timers_not_in_range(@day.to_range)
-
-    @public_holiday = PublicHoliday.on(@day).first
-
-    @absences = {}
-    @public_holidays = {}
-
-    @weekdays.each do |weekday|
-      absences =  @time_sheet.find_chunks(weekday, TimeType.absence)
-      unless absences.empty?
-        @absences[weekday] = absences.chunks
-      end
-
-      public_holiday = PublicHoliday.on(weekday).first
-      if public_holiday
-        @public_holidays[weekday] = public_holiday
-      end
-    end
   end
 
   def stop_timer

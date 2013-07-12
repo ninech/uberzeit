@@ -127,6 +127,12 @@ de:
       second_half_day: Nachmittags
     user_select:
       user: Mitarbeiter
+    week_view:
+      head:
+        today: Heute
+        week_number: KW
+      weekdays:
+        total: Total
   time_types:
     edit:
       edit_time_type: Zeittyp bearbeiten
@@ -368,9 +374,7 @@ de:
     add_time_modal:
       add_time: Zeit hinzufügen
     show:
-      today: Heute
       overtime: Überzeit
-      total: Total
       add_time_now: Zeit jetzt eintragen
       no_entries_yet_message: Noch keine Einträge vorhanden
       timer_running_warning:
@@ -381,7 +385,6 @@ de:
         ends: 'Endet am'
       time_bonus: Nachtzuschlag
       time_bonuses: Nachtzuschläge
-      week_number: KW
       timer: Timer
       info-timer-exceeds-day: Dies ist ein Timer, der die Tagesgrenze überschreitet.
 

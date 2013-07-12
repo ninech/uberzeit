@@ -2,6 +2,14 @@
 
 <div class="row">
   <div class="large-12 columns">
-    <%= debug @activities %>
+
+    <div class="activities week-view">
+      <%= render(partial: 'shared/week_view/head') %>
+      <%= render(partial: 'shared/week_view/weekdays') %>
+
+      <div class="entries">
+        <%= debug @activities %>
+      </div>
+    </div>
   </div>
 </div>

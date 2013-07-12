@@ -12,63 +12,10 @@
 
     <%= link_to '', {action: :summary_for_date, date: @day}, remote: true, class: 'hide ajax summary_for_date' %>
 
-    <div class="timesheet">
-      <div class="head">
-        <%= l @weekdays.first, :format => :long %> – <%= l @weekdays.last, :format => :long %> (<%= t('.week_number') %> <%= @weekdays.first.cweek %>)
+    <div class="timesheet week-view">
+      <%= render(partial: 'shared/week_view/head') %>
+      <%= render(partial: 'shared/week_view/weekdays') %>
 
-        <div class="right">
-          <span>
-            <form>
-              <input type="text" class="jump-date hidden" data-jump-url="<%= url_for(action: :show, date: '') %>" data-current-day="<%= @day.to_formatted_s(:iso) %>">
-            </form>
-            <% unless @day.today? %>
-              <a href="<%= url_for(action: :show, date: nil) %>" class="small secondary today button"><%= t '.today' %></a>
-            <% end %>
-            <a href="#" class="jump-date-starter"><i class="icon-calendar"></i></a>
-            <a href="<%= url_for(action: :show, date: @previous_week_day.to_formatted_s(:iso)) %>" class="previous"><span class="icon-caret-left"></span></a>
-            <a href="<%= url_for(action: :show, date: @next_week_day.to_formatted_s(:iso)) %>" class="next"><span class="icon-caret-right"></span></a>
-          </span>
-        </div>
-
-      </div>
-      <div class="weekdays">
-        <ul>
-          <% @weekdays.each do |weekday| %>
-            <li>
-              <a href="<%= url_for(action: :show, date: weekday.to_formatted_s(:iso)) %>" class="<%= 'active' if weekday == @day %>">
-                <span class="day-description">
-                  <span class="day">
-                    <span class="show-for-large-up">
-                      <%= l weekday, format: :weekday %>
-                    </span>
-                    <span class="show-for-medium-down">
-                      <%= l weekday, format: :short %>
-                    </span>
-                    <% if @absences[weekday] %>
-                      <%= @absences[weekday].map{ |chunk| icon_for_time_type(chunk.time_type) }.join.html_safe %>
-                    <% end %>
-                    <% if @public_holidays[weekday] %>
-                      <i class="icon-flag public-holiday-color" title="<%= @public_holidays[weekday].name %>"></i>
-                    <% end %>
-                  </span>
-                  <% if @public_holidays[weekday] && @public_holidays[weekday].whole_day? %>
-                    <span class="public-holiday"><%= @public_holidays[weekday].name %></span>
-                  <% else %>
-                    <span class="time total <%= 'active' if weekday == @day %>"><%= formatted_worktime_for_day(weekday) %></span>
-                  <% end %>
-                </span>
-              </a>
-            </li>
-          <% end %>
-          <li class="weeksummary total">
-            <div>
-              <span class="total"><%= t '.total' %></span>
-              <br>
-              <span class="time week-total">00:00</span>
-            </div>
-          </li>
-        </ul>
-      </div>
       <div class="entries">
         <% if @time_chunks.length > 0 || @timer || @public_holidays[@day] || @absences[@day] %>
         <ul>
