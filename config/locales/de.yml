@@ -225,7 +225,6 @@ de:
             title: 'Deine Absenzen'
             time_frame: 'der nächsten 7 Tage'
     work:
-      effective_worked: BLUB
       columns:
         effective_worked: Arbeitszeit
         absent: Absenzzeit
@@ -285,7 +284,7 @@ de:
 
     shared:
       users_absence_table:
-          total: Total
+        total: Total
       header:
         month: Monat
         year: Jahr
