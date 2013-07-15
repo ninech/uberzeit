@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include SessionsHelper
+  include SummariesHelper
   include TimeSheetsHelper
 
   def nav_link(name, link, match_controllers)

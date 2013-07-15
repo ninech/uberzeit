@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  include SessionsHelper
+  include ApplicationHelper
 
   around_filter :set_time_zone
   before_filter :ensure_logged_in
