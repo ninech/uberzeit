@@ -4,7 +4,7 @@ describe ActivitiesController do
   render_views
 
   let(:user) { FactoryGirl.create(:user) }
-  let(:sheet) { user.time_sheets.first }
+  let(:activities) { user.activities }
 
   context 'for non-signed in users' do
     it 'redirects to login' do
@@ -19,11 +19,7 @@ describe ActivitiesController do
     end
 
     describe 'GET "index"' do
-      it 'assigns @lala' do
-        get :index, user_id: user.id
-      end
-
-      it 'renders the :show template' do
+      it 'renders the :index template' do
         get :index, user_id: user.id
         response.should render_template :index
       end

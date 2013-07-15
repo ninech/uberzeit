@@ -133,6 +133,8 @@ de:
         week_number: KW
       weekdays:
         total: Total
+      summary:
+        total: Total
   time_types:
     edit:
       edit_time_type: Zeittyp bearbeiten
@@ -388,6 +390,13 @@ de:
       timer: Timer
       info-timer-exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
       total: 'Total'
+  activities:
+    top_buttons:
+      add_activity: Aktivität hinzufügen
+    index:
+      no_entries_yet_message: 'Noch keine Einträge vorhanden'
+      redmine: 'Redmine: %{ticket_url}'
+      otrs: 'OTRS: %{ticket_url}'
 
   employments:
     edit:
