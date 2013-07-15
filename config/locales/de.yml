@@ -386,7 +386,8 @@ de:
       time_bonus: Nachtzuschlag
       time_bonuses: Nachtzuschläge
       timer: Timer
-      info-timer-exceeds-day: Dies ist ein Timer, der die Tagesgrenze überschreitet.
+      info-timer-exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
+      total: 'Total'
 
   employments:
     edit:
