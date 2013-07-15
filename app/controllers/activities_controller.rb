@@ -10,6 +10,8 @@ class ActivitiesController < ApplicationController
 
   def index
     @activities = @activities.where(date: @day)
+    week = @day.at_beginning_of_week..@day.at_end_of_week
+    @week_total = @user.activities.where(date: week).sum(:duration)
   end
 
   private

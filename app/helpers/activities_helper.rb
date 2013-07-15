@@ -1,6 +1,6 @@
 module ActivitiesHelper
   def formatted_worktime_for_day(day)
-    format_duration @activities.where(date: day).sum(:duration)
+    format_duration @user.activities.where(date: day).sum(:duration)
   end
 
   def activity_source_information(activity)
@@ -15,7 +15,7 @@ module ActivitiesHelper
 
   private
   def ticket_url(ticketing_system, ticket_id)
-    base_url = UberZeit::Config.ubertrack_hosts["#{ticketing_system}"]
+    base_url = UberZeit::Config[:ubertrack_hosts]["#{ticketing_system}"]
     case(ticketing_system)
     when :redmine
       return "#{base_url}/issues/#{ticket_id}"

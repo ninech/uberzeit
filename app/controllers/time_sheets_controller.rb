@@ -5,8 +5,8 @@ class TimeSheetsController < ApplicationController
   load_and_authorize_resource :time_sheet
 
   before_filter :load_day
-
   before_filter :prepare_week_view, only: :show
+  before_filter :load_week_total
 
   def show
     @time_chunks = @time_sheet.find_chunks(@day, TimeType.work)
@@ -35,15 +35,17 @@ class TimeSheetsController < ApplicationController
 
     @timer_duration_for_day = timer_on_day ? timer_on_day.duration(@day) : 0
     @timer_duration_since_start = timer_on_day ? timer_on_day.duration : 0
-
-    week = @day.at_beginning_of_week..@day.at_end_of_week
-    @week_total = @time_sheet.total(week) + @time_sheet.duration_of_timers(week)
   end
 
   private
 
   def timer_on_day
     @timer_on_day ||= @time_sheet.time_entries.timers_in_range(@day.to_range).first
+  end
+
+  def load_week_total
+    week = @day.at_beginning_of_week..@day.at_end_of_week
+    @week_total = @time_sheet.total(week) + @time_sheet.duration_of_timers(week)
   end
 
 end
