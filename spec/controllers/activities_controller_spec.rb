@@ -56,7 +56,7 @@ describe ActivitiesController do
 
         it 'redirects back' do
           delete :destroy, user_id: user.id, id: activity.id
-          response.should redirect_to(user_activities_path(user_id: user.id, date: date))
+          response.should redirect_to(show_date_user_activities_path(user, date: date))
         end
       end
 

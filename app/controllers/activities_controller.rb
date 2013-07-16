@@ -18,7 +18,7 @@ class ActivitiesController < ApplicationController
 
   def destroy
     @activity.destroy
-    respond_with @time_entry, location: user_activities_path(@user, date: @activity.date)
+    respond_with @time_entry, location: show_date_user_activities_path(@user, date: @activity.date)
   end
 
   private
