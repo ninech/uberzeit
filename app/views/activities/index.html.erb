@@ -13,7 +13,9 @@
           <ul>
             <% @activities.each do |activity| %>
               <li>
-                <%= activity.activity_type.name %>
+                <div class="activity">
+                  <%= activity.activity_type.name %>
+                </div>
                 <div class="metadata">
                   <small>Kunde: <%= activity.customer_id %></small>
                   <small><%= activity_source_information(activity) %></small>
