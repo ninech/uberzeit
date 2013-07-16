@@ -399,7 +399,15 @@ de:
       redmine: 'Redmine: %{ticket_url}'
       otrs: 'OTRS: %{ticket_url}'
     edit:
-      edit_time: 'Aktivität bearbeiten'
+      edit_activity: 'Aktivität bearbeiten'
+    form:
+       date: 'Datum'
+       save: 'Speichern'
+       cancel: 'Abbrechen'
+       delete: 'Löschen'
+       redmine_ticket: 'Redmine #'
+       otrs_ticket: 'OTRS #'
+       description: 'Beschreibung'
 
   employments:
     edit:

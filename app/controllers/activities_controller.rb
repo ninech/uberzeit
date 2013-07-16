@@ -21,6 +21,10 @@ class ActivitiesController < ApplicationController
     respond_with @time_entry, location: show_date_user_activities_path(@user, date: @activity.date)
   end
 
+  def edit
+    @customers = Customer.all
+  end
+
   private
   def load_time_sheet
     @time_sheet = @user.current_time_sheet
