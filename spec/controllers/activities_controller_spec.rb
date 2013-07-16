@@ -89,6 +89,41 @@ describe ActivitiesController do
       end
     end
 
+    describe 'PUT "create"' do
+      let(:customer) { FactoryGirl.create :customer }
+      let(:activity_type) { FactoryGirl.create :activity_type }
+      let(:date) { '1993-05-01' }
+
+      context 'with valid parameters' do
+        let(:params_activity) do
+          {
+            customer_id: customer.id,
+            activity_type_id: activity_type.id,
+            date: date,
+            duration: '00:20'
+          }
+        end
+
+        let(:params) do
+          {
+            user_id: user.id,
+            activity: params_activity
+          }
+        end
+
+        it 'redirects back' do
+          put :create, params
+          response.should redirect_to(show_date_user_activities_path(user, date: date))
+        end
+
+        it 'creates an activity' do
+          lambda do
+            put :create, params
+          end.should change(Activity, :count).by(1)
+        end
+      end
+    end
+
     describe 'DELETE "destroy"' do
       context 'with an existing activitiy' do
         let(:date) { '1997-01-07' }
