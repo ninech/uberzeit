@@ -15,7 +15,8 @@ module ActivitiesHelper
 
   def customer_link(customer_id)
     stats_url = UberZeit::Config[:ubertrack_hosts]["stats"]
-    link_to(customer_id, "#{stats_url}/admin/customerdetail.php?id=#{customer_id}")
+    customer = Customer.find(customer_id)
+    link_to(customer.name, "#{stats_url}/admin/customerdetail.php?id=#{customer_id}")
   end
 
   private
