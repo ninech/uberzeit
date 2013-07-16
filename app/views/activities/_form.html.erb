@@ -21,7 +21,7 @@
 
 <div class="row">
   <div class="small-10 columns">
-    <%= f.text_field :duration, label: t('.duration'), value: display_in_hours(@activity.duration) %>
+    <%= f.text_field :duration, value: display_in_hours(@activity.duration) %>
   </div>
 </div>
 
@@ -33,10 +33,10 @@
 
 <div class="row">
   <div class="small-5 columns">
-    <%= f.text_field :redmine_ticket_id, label: t('.redmine_ticket') %>
+    <%= f.text_field :redmine_ticket_id %>
   </div>
   <div class="small-5 columns">
-    <%= f.text_field :otrs_ticket_id, label: t('.otrs_ticket') %>
+    <%= f.text_field :otrs_ticket_id %>
   </div>
   <div class="small-2 columns">
     &nbsp;
@@ -45,7 +45,7 @@
 
 <div class="row">
   <div class="small-10 columns">
-    <%= f.text_area :description, label: t('.description') %>
+    <%= f.text_area :description %>
   </div>
 </div>
 

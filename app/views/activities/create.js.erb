@@ -1,0 +1,6 @@
+<% if @activity.errors.any? %>
+  $('.ajax-content').html('<%= escape_javascript(render(template: 'activities/new')) %>');
+  initControls();
+<% else %>
+  window.location.href = '<%= show_date_user_activities_path(@user, date: @activity.date) %>';
+<% end %>
