@@ -66,7 +66,7 @@
                 <% end %>
               </small>
               <div class="right">
-                <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= edit_time_sheet_time_entry_path(@time_sheet, time_chunk.parent) %>">
+                <a href='#' class="edit-entry edit-time-entry-link remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= edit_time_sheet_time_entry_path(@time_sheet, time_chunk.parent) %>">
                   <%= icon(:edit) %>
                 </a>
                 <%= format_duration(time_chunk.duration) %>

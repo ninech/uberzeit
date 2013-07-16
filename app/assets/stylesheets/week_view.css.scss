@@ -133,7 +133,7 @@
         }
 
         &:hover {
-          a.edit-time-entry-link {
+          a.edit-entry {
             display: inline;
           }
         }
@@ -146,7 +146,7 @@
       }
     }
 
-    a.edit-time-entry-link {
+    a.edit-entry {
       color: #D6D6D6;
       display: none;
 
