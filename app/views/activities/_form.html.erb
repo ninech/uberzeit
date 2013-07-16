@@ -21,7 +21,7 @@
 
 <div class="row">
   <div class="small-10 columns">
-    <%= f.text_field :duration, label: t('.duration') %>
+    <%= f.text_field :duration, label: t('.duration'), value: display_in_hours(@activity.duration) %>
   </div>
 </div>
 
