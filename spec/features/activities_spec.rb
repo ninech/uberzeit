@@ -5,15 +5,16 @@ describe 'taking a look at the activities' do
   include RequestHelpers
 
   let(:user) { FactoryGirl.create(:user) }
+  let(:customer) { FactoryGirl.create(:customer) }
 
   before(:each) do
     Timecop.travel('2013-07-16 12:00:00 +0200')
     # last week:
-    FactoryGirl.create_list(:activity, 2, user: user, duration: 1800, date: '2013-07-14')
+    FactoryGirl.create_list(:activity, 2, user: user, duration: 1800, date: '2013-07-14', customer_id: customer.id)
     # this week, yesterday:
-    FactoryGirl.create_list(:activity, 1, user: user, duration: 1800, date: '2013-07-15')
+    FactoryGirl.create_list(:activity, 1, user: user, duration: 1800, date: '2013-07-15', customer_id: customer.id)
     # this week, today:
-    FactoryGirl.create_list(:activity, 3, user: user, duration: 1600, date: '2013-07-16')
+    FactoryGirl.create_list(:activity, 3, user: user, duration: 1600, date: '2013-07-16', customer_id: customer.id)
     login user
   end
 
