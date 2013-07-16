@@ -17,7 +17,7 @@
                   <%= activity.activity_type.name %>
                 </div>
                 <div class="metadata">
-                  <small>Kunde: <%= activity.customer_id %></small>
+                  <small><%= t('.customer', customer_url: customer_link(activity.customer_id)).html_safe %></small>
                   <small><%= activity_source_information(activity) %></small>
                 </div>
                 <div class="right">

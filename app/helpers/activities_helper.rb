@@ -13,6 +13,11 @@ module ActivitiesHelper
     end
   end
 
+  def customer_link(customer_id)
+    stats_url = UberZeit::Config[:ubertrack_hosts]["stats"]
+    link_to(customer_id, "#{stats_url}/admin/customerdetail.php?id=#{customer_id}")
+  end
+
   private
   def ticket_url(ticketing_system, ticket_id)
     base_url = UberZeit::Config[:ubertrack_hosts]["#{ticketing_system}"]

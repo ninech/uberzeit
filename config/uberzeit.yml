@@ -2,13 +2,16 @@ development:
   ubertrack_hosts:
     redmine: 'http://redmine.dev'
     otrs: 'http://10.10.10.17'
+    stats: 'http://10.10.10.12'
 
 staging:
   ubertrack_hosts:
     redmine: 'https://redmine-staging.nine.ch'
     otrs: 'https://otrs-staging.nine.ch'
+    stats: 'https://stats-staging.nine.ch'
 
 production:
   ubertrack_hosts:
     redmine: 'https://redmine.nine.ch'
     otrs: 'https://otrs.nine.ch'
+    stats: 'https://stats.nine.ch'

@@ -394,6 +394,7 @@ de:
     top_buttons:
       add_activity: Aktivität hinzufügen
     index:
+      customer: 'Kunde: %{customer_url}'
       no_entries_yet_message: 'Noch keine Einträge vorhanden'
       redmine: 'Redmine: %{ticket_url}'
       otrs: 'OTRS: %{ticket_url}'
