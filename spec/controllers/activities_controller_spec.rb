@@ -24,6 +24,13 @@ describe ActivitiesController do
       end
     end
 
+    describe 'GET "new"' do
+      it 'renders the :new template' do
+        get :new, user_id: user.id
+        response.should render_template :new
+      end
+    end
+
     describe 'GET "edit"' do
       context 'with an existing activitiy' do
         let!(:activity) { FactoryGirl.create(:activity, user: user) }

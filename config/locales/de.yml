@@ -16,7 +16,17 @@ de:
       time_type: Zeittyp
       absence: Absenz
       adjustment: Anpassung
+      activity: 'Aktivität'
     attributes:
+      activity:
+        customer: 'Kunde'
+        project: 'Projekt'
+        activity_type: 'Aktivitätsanzeige'
+        duration: 'Dauer'
+        date: 'Datum'
+        description: 'Beschreibung'
+        redmine_ticket_id: 'Redmine #'
+        otrs_ticket_id: 'OTRS #'
       time_entry:
         start_time: Von
         end_time: Bis
@@ -398,6 +408,8 @@ de:
       no_entries_yet_message: 'Noch keine Einträge vorhanden'
       redmine: 'Redmine: %{ticket_url}'
       otrs: 'OTRS: %{ticket_url}'
+    new:
+      add_activity: 'Aktivität hinzufügen'
     edit:
       edit_activity: 'Aktivität bearbeiten'
     form:
