@@ -24,6 +24,25 @@ describe ActivitiesController do
       end
     end
 
+    describe 'GET "edit"' do
+      context 'with an existing activitiy' do
+        let!(:activity) { FactoryGirl.create(:activity, user: user) }
+
+        it 'renders the :edit template' do
+          get :edit, user_id: user.id, id: activity
+          response.should render_template :edit
+        end
+      end
+
+      context 'without an existing activitiy' do
+        it 'raises an error' do
+          lambda do
+            get :edit, user_id: user.id, id: 'one does not simply edit a not-existing activity'
+          end.should raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
+
     describe 'DELETE "destroy"' do
       context 'with an existing activitiy' do
         let(:date) { '1997-01-07' }

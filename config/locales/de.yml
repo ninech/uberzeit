@@ -398,6 +398,8 @@ de:
       no_entries_yet_message: 'Noch keine Einträge vorhanden'
       redmine: 'Redmine: %{ticket_url}'
       otrs: 'OTRS: %{ticket_url}'
+    edit:
+      edit_time: 'Aktivität bearbeiten'
 
   employments:
     edit:
