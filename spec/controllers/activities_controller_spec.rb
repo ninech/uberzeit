@@ -4,7 +4,6 @@ describe ActivitiesController do
   render_views
 
   let(:user) { FactoryGirl.create(:user) }
-  let(:activities) { user.activities }
 
   context 'for non-signed in users' do
     it 'redirects to login' do
@@ -22,6 +21,32 @@ describe ActivitiesController do
       it 'renders the :index template' do
         get :index, user_id: user.id
         response.should render_template :index
+      end
+    end
+
+    describe 'DELETE "destroy"' do
+      context 'with an existing activitiy' do
+        let(:date) { '1997-01-07' }
+        let!(:activity) { FactoryGirl.create(:activity, user: user, date: date) }
+
+        it 'deletes the activity' do
+          lambda do
+            delete :destroy, user_id: user.id, id: activity.id
+          end.should change(Activity, :count).by(-1)
+        end
+
+        it 'redirects back' do
+          delete :destroy, user_id: user.id, id: activity.id
+          response.should redirect_to(user_activities_path(user_id: user.id, date: date))
+        end
+      end
+
+      context 'without an existing activitiy' do
+        it 'raises an error' do
+          lambda do
+            delete :destroy, user_id: user.id, id: 'abc'
+          end.should raise_error(ActiveRecord::RecordNotFound)
+        end
       end
     end
   end

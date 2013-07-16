@@ -55,8 +55,8 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item :timesheet, t('navigation.time_tracking'), time_sheet_path(current_user.current_time_sheet), highlights_on: %r!\A/(time_sheets/\d+|users/\d+/activities)(/date/[\w-]+)?\z! do |second|
       second.dom_class = 'sub-nav'
-      second.item :timesheet, t('navigation.timesheet'), time_sheet_path(current_user.current_time_sheet), highlights_on: %r!\A/time_sheets/\d+(/date/[\w-]+)?\z!
-      second.item :activities, t('navigation.activities'), user_activities_path(current_user), highlights_on: %r!\A/users/\d+/activities(/date/[\w-]+)?\z!
+      second.item :timesheet, t('navigation.timesheet'), show_date_time_sheet_path(current_user.current_time_sheet, date: @day || Time.now), highlights_on: %r!\A/time_sheets/\d+(/date/[\w-]+)?\z!
+      second.item :activities, t('navigation.activities'), show_date_user_activities_path(current_user, date: @day || Time.now), highlights_on: %r!\A/users/\d+/activities(/date/[\w-]+)?\z!
     end
     primary.item :absences, t('navigation.absences'), time_sheet_absences_path(current_user.current_time_sheet), highlights_on: %r!\A/time_sheets/\d+/absences!
 
