@@ -23,7 +23,10 @@ class ActivitiesController < ApplicationController
 
   def edit
     @customers = Customer.all
-    @projects = @activity.customer.projects
+    @projects = @activity.customer.projects.to_a
+    if @projects
+      @projects.unshift OpenStruct.new(id: '', name: '-')
+    end
     @activity_types = ActivityType.all
   end
 

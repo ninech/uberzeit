@@ -1,4 +1,8 @@
 do ($ = jQuery) ->
+  addOption = (select, value, text) ->
+    option = $('<option>').attr('value', value).text(text)
+    select.append(option)
+
   customerChanged = ->
     project_select = $('#activity_project_id')
     project_select_row = project_select.closest('div.row')
@@ -9,9 +13,9 @@ do ($ = jQuery) ->
         project_select.empty()
         if projects.length
           project_select_row.show()
+          addOption(project_select, '', '-')
           $.each projects, (index, project) ->
-            option = $('<option>').attr('value', project.id).text(project.name)
-            project_select.append(option)
+            addOption(project_select, project.id, project.name)
         else
           project_select_row.hide()
 
