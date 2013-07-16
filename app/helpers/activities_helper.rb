@@ -11,6 +11,7 @@ module ActivitiesHelper
         return t(".#{source}", { ticket_id: ticket_id, ticket_url: url }).html_safe
       end
     end
+    nil
   end
 
   def customer_link(customer_id)
