@@ -20,31 +20,25 @@
 </div>
 
 <div class="row">
-  <div class="small-10 columns">
+  <div class="small-4 columns">
     <%= f.text_field :duration, value: display_in_hours(@activity.duration) %>
   </div>
-</div>
-
-<div class="row">
-  <div class="small-10 columns">
+  <div class="small-8 columns">
     <%= datefield(f, :date, t('.date'), f.object.date, :date) %>
   </div>
 </div>
 
 <div class="row">
-  <div class="small-5 columns">
+  <div class="small-4 columns">
     <%= f.text_field :redmine_ticket_id %>
   </div>
-  <div class="small-5 columns">
+  <div class="small-8 columns">
     <%= f.text_field :otrs_ticket_id %>
-  </div>
-  <div class="small-2 columns">
-    &nbsp;
   </div>
 </div>
 
 <div class="row">
-  <div class="small-10 columns">
+  <div class="small-12 columns">
     <%= f.text_area :description %>
   </div>
 </div>
