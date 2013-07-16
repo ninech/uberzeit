@@ -1,6 +1,27 @@
 <div class="row">
   <div class="small-12 columns">
+    <%= f.label :customer, class: 'left' %>
     <%= f.collection_select :customer_id, @customers, :id, :name %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+    <%= f.label :project, class: 'left' %>
+    <%= f.collection_select :project, [], :id, :name %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 columns">
+    <%= f.label :activity_type, class: 'left' %>
+    <%= f.collection_select :activity_type_id, @activity_types, :id, :name %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-10 columns">
+    <%= f.text_field :duration, label: t('.duration') %>
   </div>
 </div>
 

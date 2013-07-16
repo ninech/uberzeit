@@ -405,6 +405,7 @@ de:
        save: 'Speichern'
        cancel: 'Abbrechen'
        delete: 'Löschen'
+       duration: 'Dauer'
        redmine_ticket: 'Redmine #'
        otrs_ticket: 'OTRS #'
        description: 'Beschreibung'

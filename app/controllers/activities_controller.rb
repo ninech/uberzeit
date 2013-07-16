@@ -23,6 +23,7 @@ class ActivitiesController < ApplicationController
 
   def edit
     @customers = Customer.all
+    @activity_types = ActivityType.all
   end
 
   private
