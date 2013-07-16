@@ -37,7 +37,7 @@ Uberzeit::Application.routes.draw do
 
     resources :employments
 
-    resources :activities, only: :index do
+    resources :activities, only: [:index, :destroy] do
       collection do
         get '/date/:date', to: 'activities#index', as: :show_date
       end
