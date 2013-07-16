@@ -183,6 +183,7 @@ GEM
     faraday (0.8.7)
       multipart-post (~> 1.1)
     fastercsv (1.5.5)
+    fivemat (1.2.1)
     font-awesome-rails (3.1.1.2)
       railties (>= 3.2, < 5.0)
     foundation_rails_helper (0.3)
@@ -397,6 +398,7 @@ DEPENDENCIES
   database_cleaner
   factory_girl_rails
   faker
+  fivemat
   font-awesome-rails
   foundation_rails_helper
   grape!

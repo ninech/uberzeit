@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :teams, through: :memberships
 
   has_many :time_sheets
+  has_many :activities
   has_many :employments
 
   validates_inclusion_of :time_zone, :in => ActiveSupport::TimeZone.zones_map { |m| m.name }, :message => "is not a valid Time Zone"

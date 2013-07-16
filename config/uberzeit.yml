@@ -1,15 +1,17 @@
 development:
   ubertrack_hosts:
-    - 'http://localhost:9292'
-    - 'http://redmine.dev'
-    - 'http://10.10.10.17'
+    redmine: 'http://redmine.dev'
+    otrs: 'http://10.10.10.17'
+    stats: 'http://10.10.10.12'
 
 staging:
   ubertrack_hosts:
-    - 'https://redmine-staging.nine.ch'
-    - 'https://otrs-staging.nine.ch'
+    redmine: 'https://redmine-staging.nine.ch'
+    otrs: 'https://otrs-staging.nine.ch'
+    stats: 'https://stats-staging.nine.ch'
 
 production:
   ubertrack_hosts:
-    - 'https://redmine.nine.ch'
-    - 'https://otrs.nine.ch'
+    redmine: 'https://redmine.nine.ch'
+    otrs: 'https://otrs.nine.ch'
+    stats: 'https://stats.nine.ch'

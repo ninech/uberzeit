@@ -103,6 +103,7 @@ group :development, :test do
   gem 'poltergeist', git: 'git://github.com/jonleighton/poltergeist.git', branch: 'master'
   gem 'database_cleaner'
   gem 'launchy'
+  gem 'fivemat'
 end
 
 group :development do
