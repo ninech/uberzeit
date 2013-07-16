@@ -5,10 +5,10 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row"<%= ' style="display: none"'.html_safe unless @projects %>>
   <div class="small-12 columns">
     <%= f.label :project, class: 'left' %>
-    <%= f.collection_select :project, [], :id, :name %>
+    <%= f.collection_select :project_id, @projects, :id, :name %>
   </div>
 </div>
 
