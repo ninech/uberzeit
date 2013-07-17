@@ -109,6 +109,8 @@ GEM
       activesupport
       builder
       json
+    annotate (2.5.0)
+      rake
     arel (3.0.2)
     backports (3.3.3)
     bcrypt-ruby (3.0.1)
@@ -383,6 +385,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_paranoid (~> 0.4.0)
   airbrake
+  annotate
   better_errors
   binding_of_caller
   brakeman

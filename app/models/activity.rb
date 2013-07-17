@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: activities
+#
+#  id                :integer          not null, primary key
+#  activity_type_id  :integer
+#  user_id           :integer
+#  date              :date
+#  duration          :integer
+#  description       :text
+#  customer_id       :integer
+#  project_id        :integer
+#  redmine_ticket_id :integer
+#  otrs_ticket_id    :integer
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#
+
 class Activity < ActiveRecord::Base
   belongs_to :activity_type, with_deleted: true
   belongs_to :project, with_deleted: true

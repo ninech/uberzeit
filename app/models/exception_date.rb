@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: exception_dates
+#
+#  id                    :integer          not null, primary key
+#  recurring_schedule_id :integer
+#  date                  :date
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#
+
 class ExceptionDate < ActiveRecord::Base
   belongs_to :recurring_schedule
   attr_accessible :date

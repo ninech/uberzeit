@@ -104,6 +104,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'fivemat'
+  gem 'annotate'
 end
 
 group :development do

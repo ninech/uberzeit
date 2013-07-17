@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: time_types
+#
+#  id                       :integer          not null, primary key
+#  name                     :string(255)
+#  is_work                  :boolean          default(FALSE)
+#  is_vacation              :boolean          default(FALSE)
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  deleted_at               :datetime
+#  icon                     :string(255)
+#  color_index              :integer          default(0)
+#  exclude_from_calculation :boolean          default(FALSE)
+#  bonus_calculator         :string(255)
+#
+
 class TimeType < ActiveRecord::Base
   acts_as_paranoid
   validates_as_paranoid
