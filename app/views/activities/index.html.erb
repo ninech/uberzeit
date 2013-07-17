@@ -15,6 +15,9 @@
               <li>
                 <div class="activity">
                   <%= activity.activity_type.name %>
+                  <% unless activity.description.blank? %>
+                    <span class="icon-info-sign has-tip" data-tooltip="<%= simple_format(activity.description) %>"></span>
+                  <% end %>
                 </div>
                 <div class="metadata">
                   <small><%= t('.customer', customer_url: customer_link(activity.customer_id)).html_safe %></small>

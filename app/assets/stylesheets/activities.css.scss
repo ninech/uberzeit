@@ -10,6 +10,14 @@
           font-size: 0.7em;
         }
 
+        .activity {
+          span.has-tip {
+            font-size: 0.8em;
+            color: #d3d3d3;
+            border-bottom: none;
+          }
+        }
+
         .metadata {
           margin-top: -0.5em
         }
