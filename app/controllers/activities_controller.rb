@@ -11,6 +11,7 @@ class ActivitiesController < ApplicationController
   before_filter :load_day, :load_time_sheet, :prepare_week_view, only: :index
   before_filter :prepare_form, only: [:edit, :update, :new, :create]
   before_filter :parse_duration_to_seconds, only: [:update, :create]
+  before_filter :extract_customer_id, only: [:update, :create]
 
   DURATION_IN_MINUTES_REGEX = /\A\d{1,3}\z/
 
@@ -26,13 +27,11 @@ class ActivitiesController < ApplicationController
   end
 
   def update
-    params[:activity][:customer_id] = params[:activity][:customer_id].match(/\d+/)[0] if params[:activity][:customer_id]
     @activity.update_attributes(params[:activity])
     respond_with @activity, location: show_date_user_activities_path(@user, date: @activity.date)
   end
 
   def create
-    params[:activity][:customer_id] = params[:activity][:customer_id].match(/\d+/)[0] if params[:activity][:customer_id]
     @activity.update_attributes(params[:activity])
     respond_with @activity, location: show_date_user_activities_path(@user, date: @activity.date || Time.now)
   end
@@ -52,6 +51,13 @@ class ActivitiesController < ApplicationController
 
   def load_time_sheet
     @time_sheet = @user.current_time_sheet
+  end
+
+  def extract_customer_id
+    unless params[:activity][:customer_id].blank?
+      match = params[:activity][:customer_id].match(/\d+/)
+      match[0] if match
+    end
   end
 
   def prepare_form
