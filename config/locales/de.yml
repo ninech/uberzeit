@@ -16,7 +16,18 @@ de:
       time_type: Zeittyp
       absence: Absenz
       adjustment: Anpassung
+      activity: 'Aktivität'
     attributes:
+      activity:
+        customer: 'Kunde'
+        project: 'Projekt'
+        activity_type: 'Aktivität'
+        duration: 'Dauer'
+        date: 'Datum'
+        description: 'Beschreibung'
+        redmine_ticket_id: 'Redmine #'
+        otrs_ticket_id: 'OTRS #'
+        customer_id: 'Kunde'
       time_entry:
         start_time: Von
         end_time: Bis
@@ -127,6 +138,14 @@ de:
       second_half_day: Nachmittags
     user_select:
       user: Mitarbeiter
+    week_view:
+      head:
+        today: Heute
+        week_number: KW
+      weekdays:
+        total: Total
+      summary:
+        total: Total
   time_types:
     edit:
       edit_time_type: Zeittyp bearbeiten
@@ -174,7 +193,9 @@ de:
   navigation:
     manage: Verwalten
     absences: Absenzen
-    timesheet: Zeiterfassung
+    time_tracking: Zeiterfassung
+    timesheet: Präsenzzeit
+    activities: Aktivitäten
     reports: Berichte
     sub:
       manage:
@@ -223,7 +244,6 @@ de:
             title: 'Deine Absenzen'
             time_frame: 'der nächsten 7 Tage'
     work:
-      effective_worked: BLUB
       columns:
         effective_worked: Arbeitszeit
         absent: Absenzzeit
@@ -283,7 +303,7 @@ de:
 
     shared:
       users_absence_table:
-          total: Total
+        total: Total
       header:
         month: Monat
         year: Jahr
@@ -367,9 +387,7 @@ de:
     add_time_modal:
       add_time: Zeit hinzufügen
     show:
-      today: Heute
       overtime: Überzeit
-      total: Total
       add_time_now: Zeit jetzt eintragen
       no_entries_yet_message: Noch keine Einträge vorhanden
       timer_running_warning:
@@ -380,9 +398,26 @@ de:
         ends: 'Endet am'
       time_bonus: Nachtzuschlag
       time_bonuses: Nachtzuschläge
-      week_number: KW
       timer: Timer
-      info-timer-exceeds-day: Dies ist ein Timer, der die Tagesgrenze überschreitet.
+      info-timer-exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
+      total: 'Total'
+  activities:
+    top_buttons:
+      add_activity: Aktivität hinzufügen
+    index:
+      customer: 'Kunde: %{customer_url}'
+      no_entries_yet_message: 'Noch keine Einträge vorhanden'
+      redmine: 'Redmine: %{ticket_url}'
+      otrs: 'OTRS: %{ticket_url}'
+    new:
+      add_activity: 'Aktivität hinzufügen'
+    edit:
+      edit_activity: 'Aktivität bearbeiten'
+    form:
+       save: 'Speichern'
+       cancel: 'Abbrechen'
+       delete: 'Löschen'
+       date: 'Datum'
 
   employments:
     edit:

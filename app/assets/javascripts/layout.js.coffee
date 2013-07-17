@@ -6,8 +6,9 @@ $(document).on 'click', '.remote-reveal', (event) ->
   element = $('#' + $(this).data('reveal-id'))
   element.find('div.ajax-content').remove()
   content_element = element.append('<div class="ajax-content"></div>')
-  content_element.find('div.ajax-content').load $(this).data('reveal-url'), ->
+  content_element.find('div.ajax-content').load $(this).data('reveal-url'), =>
     initControls()
+    $.event.trigger("modal:#{$(this).data('reveal-id')}:form-loaded")
     setTimeout ->
       $('#time_entry_start_time').focus()
     , 100
@@ -39,6 +40,14 @@ $ ->
       dropdown: false,
       timeFormat: 'HH:mm'
     })
+
+  window.initTypeAhead = () ->
+    $('#activity-modal #activity_customer_id').typeahead
+      name: 'customers'
+      prefetch: '/api/customers.json'
+      valueKey: 'display_name'
+      limit: 10
+
 
   # Pickadate
   window.initDatePicker = () ->

@@ -1,0 +1,38 @@
+.content-activities {
+  .week-view .entries {
+    ul {
+      li {
+        padding: 15px;
+
+        small {
+          margin-left: 0;
+          margin-right: 10px;
+          font-size: 0.7em;
+        }
+
+        .metadata {
+          margin-top: -0.5em
+        }
+
+        .right {
+          margin-top: -2.1em;
+        }
+
+        &.summary {
+          .right {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .reveal-modal.activity {
+    top: 10px !important;
+  }
+
+  a.delete-activity-link {
+    display: block;
+    margin-top: 15px;
+  }
+}

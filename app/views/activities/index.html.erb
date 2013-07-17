@@ -1,0 +1,46 @@
+<%= render(partial: 'shared/user_select', locals: { link_generator: :user_activities_path, selected_user: @user }) %>
+
+<div class="row">
+  <div class="large-12 columns">
+
+    <div class="activities week-view">
+      <%= render(partial: 'shared/week_view/head') %>
+      <%= render(partial: 'shared/week_view/weekdays') %>
+
+      <div class="entries">
+
+        <% unless @activities.blank? %>
+          <ul>
+            <% @activities.each do |activity| %>
+              <li>
+                <div class="activity">
+                  <%= activity.activity_type.name %>
+                </div>
+                <div class="metadata">
+                  <small><%= t('.customer', customer_url: customer_link(activity.customer_id)).html_safe %></small>
+                  <small><%= activity_source_information(activity) %></small>
+                </div>
+                <div class="right">
+                  <a href='#' class="edit-entry remote-reveal" data-reveal-id="activity-modal" data-reveal-url="<%= edit_user_activity_path(@user, activity) %>">
+                    <%= icon(:edit) %>
+                  </a>
+                  <%= format_duration(activity.duration) %>
+                </div>
+              </li>
+            <% end %>
+            <%= render(partial: 'shared/week_view/summary') %>
+          </ul>
+        <% else %>
+          <div class="no-entries-message">
+            <p>
+              <%= t '.no_entries_yet_message' %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div id="activity-modal" class="small reveal-modal activity">
+      <a class="close-reveal-modal">&#215;</a>
+    </div>
+  </div>
+</div>

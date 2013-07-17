@@ -102,7 +102,11 @@ RSpec.configure do |config|
       rounding: 1.minutes,
       work_days:  [:monday, :tuesday, :wednesday, :thursday, :friday],
       work_per_day:  8.5.hours,
-      vacation_per_year:  25.days
+      vacation_per_year:  25.days,
+      ubertrack_hosts: {
+        redmine: 'https://redmine.yolo',
+        otrs: 'https://otrs.howdoyouturnthison'
+      }
     }
     stub_const 'UberZeit::Config', uberzeit_config
   end

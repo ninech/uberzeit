@@ -51,7 +51,7 @@ gem 'acts_as_paranoid', '~>0.4.0'
 gem 'whenever'
 
 # calendar
-gem 'calendar_helper', github: 'topfunky/calendar_helper'
+gem 'calendar_helper', '~> 0.2'
 
 # rails localization
 gem 'rails-i18n', branch: 'rails-3-x'
@@ -103,6 +103,7 @@ group :development, :test do
   gem 'poltergeist', git: 'git://github.com/jonleighton/poltergeist.git', branch: 'master'
   gem 'database_cleaner'
   gem 'launchy'
+  gem 'fivemat'
 end
 
 group :development do

@@ -40,13 +40,6 @@ GIT
       virtus
 
 GIT
-  remote: git://github.com/topfunky/calendar_helper.git
-  revision: 34b3bad61cc5baf45e377287ef7779efecd4e450
-  specs:
-    calendar_helper (0.2.5)
-      open4
-
-GIT
   remote: git@git.nine.ch:gems/uberlog
   revision: ba0cca026a1c599bf3fd83d7a35b8d666382f6b8
   tag: 0.4.1
@@ -136,6 +129,8 @@ GEM
       slim (~> 1.3.6)
       terminal-table (~> 1.4)
     builder (3.0.4)
+    calendar_helper (0.2.5)
+      open4
     cancan (1.6.9)
     capistrano (2.13.5)
       highline
@@ -188,6 +183,7 @@ GEM
     faraday (0.8.7)
       multipart-post (~> 1.1)
     fastercsv (1.5.5)
+    fivemat (1.2.1)
     font-awesome-rails (3.1.1.2)
       railties (>= 3.2, < 5.0)
     foundation_rails_helper (0.3)
@@ -390,7 +386,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   brakeman
-  calendar_helper!
+  calendar_helper (~> 0.2)
   cancan
   capistrano (~> 2.13.0)
   capistrano-maintenance
@@ -402,6 +398,7 @@ DEPENDENCIES
   database_cleaner
   factory_girl_rails
   faker
+  fivemat
   font-awesome-rails
   foundation_rails_helper
   grape!
