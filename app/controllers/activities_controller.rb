@@ -26,11 +26,13 @@ class ActivitiesController < ApplicationController
   end
 
   def update
+    params[:activity][:customer_id] = params[:activity][:customer_id].match(/\d+/)[0]
     @activity.update_attributes(params[:activity])
     respond_with @activity, location: show_date_user_activities_path(@user, date: @activity.date)
   end
 
   def create
+    params[:activity][:customer_id] = params[:activity][:customer_id].match(/\d+/)[0]
     @activity.update_attributes(params[:activity])
     respond_with @activity, location: show_date_user_activities_path(@user, date: @activity.date || Time.now)
   end
@@ -53,8 +55,6 @@ class ActivitiesController < ApplicationController
   end
 
   def prepare_form
-    @customers = Customer.all
-    @customers.unshift OpenStruct.new(id: '', name: '-')
     if @activity.customer
       @projects = @activity.customer.projects.to_a
       unless @projects.empty?

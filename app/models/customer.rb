@@ -6,4 +6,8 @@ class Customer < ActiveRecord::Base
   attr_accessible :id, :name
 
   validates_presence_of :id
+
+  def display_name
+    "#{id}: #{name}"
+  end
 end

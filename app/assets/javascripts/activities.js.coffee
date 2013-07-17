@@ -6,7 +6,7 @@ do ($ = jQuery) ->
   customerChanged = ->
     project_select = $('#activity_project_id')
     project_select_row = project_select.closest('div.row')
-    customer_id = $('#activity_customer_id').val()
+    customer_id = $('#activity_customer_id').val().match(/\d+/)?[0]
     if customer_id
       console.info('Nuclear launch detected!')
       $.getJSON '/api/customers/' + customer_id + '/projects/', (projects) ->
@@ -20,4 +20,6 @@ do ($ = jQuery) ->
           project_select_row.hide()
 
 
-  $(document).on 'change', '#activity_customer_id', customerChanged
+  $(document).on 'typeahead:selected', '#activity_customer_id', customerChanged
+  $(document).bind 'modal:activity-modal:form-loaded', (event) =>
+    initTypeAhead()

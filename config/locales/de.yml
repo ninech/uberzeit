@@ -21,12 +21,13 @@ de:
       activity:
         customer: 'Kunde'
         project: 'Projekt'
-        activity_type: 'Aktivitätsanzeige'
+        activity_type: 'Aktivität'
         duration: 'Dauer'
         date: 'Datum'
         description: 'Beschreibung'
         redmine_ticket_id: 'Redmine #'
         otrs_ticket_id: 'OTRS #'
+        customer_id: 'Kunde'
       time_entry:
         start_time: Von
         end_time: Bis
@@ -413,14 +414,10 @@ de:
     edit:
       edit_activity: 'Aktivität bearbeiten'
     form:
-       date: 'Datum'
        save: 'Speichern'
        cancel: 'Abbrechen'
        delete: 'Löschen'
-       duration: 'Dauer'
-       redmine_ticket: 'Redmine #'
-       otrs_ticket: 'OTRS #'
-       description: 'Beschreibung'
+       date: 'Datum'
 
   employments:
     edit:

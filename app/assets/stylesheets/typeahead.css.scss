@@ -1,0 +1,23 @@
+.twitter-typeahead {
+  width: 100%;
+
+  .tt-dropdown-menu {
+    margin-top: -20px;
+    width: 100%;
+    background: white;
+    border: 1px solid #999999;
+    border-top: none;
+
+    .tt-suggestions {
+      p {
+        margin: 0;
+        padding: .5em 0 .5em .5em;
+      }
+
+      .tt-is-under-cursor {
+        background: #ecf0f1;
+
+      }
+    }
+  }
+}

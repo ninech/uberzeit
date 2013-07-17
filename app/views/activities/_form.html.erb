@@ -1,7 +1,6 @@
 <div class="row">
   <div class="small-12 columns">
-    <%= f.label :customer, class: 'left' %>
-    <%= f.collection_select :customer_id, @customers, :id, :name %>
+    <%= f.text_field :customer_id, value: (f.object.customer.display_name if f.object.customer) %>
   </div>
 </div>
 

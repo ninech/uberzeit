@@ -21,7 +21,7 @@
                   <small><%= activity_source_information(activity) %></small>
                 </div>
                 <div class="right">
-                  <a href='#' class="edit-entry remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= edit_user_activity_path(@user, activity) %>">
+                  <a href='#' class="edit-entry remote-reveal" data-reveal-id="activity-modal" data-reveal-url="<%= edit_user_activity_path(@user, activity) %>">
                     <%= icon(:edit) %>
                   </a>
                   <%= format_duration(activity.duration) %>
@@ -39,6 +39,8 @@
         <% end %>
       </div>
     </div>
-    <%= render 'shared/nice_modal' %>
+    <div id="activity-modal" class="small reveal-modal activity">
+      <a class="close-reveal-modal">&#215;</a>
+    </div>
   </div>
 </div>
