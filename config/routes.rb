@@ -77,9 +77,10 @@ Uberzeit::Application.routes.draw do
     end
   end
 
-  resource :session, only: [:new, :create]
+  resource :session, only: [:new, :create, :destroy]
 
   match '/auth/:provider/callback', to: 'sessions#create'
+  match '/logout', to: 'sessions#destroy', as: 'logout'
 
   # API
   mount API => '/api'
@@ -131,11 +132,11 @@ Uberzeit::Application.routes.draw do
   #     resources :products
   #   end
 
-  # You can have the root of your site routed with "root"
+  # You can have the root of your site routed with 'root'
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
 
-  # See how all your routes lay out with "rake routes"
+  # See how all your routes lay out with 'rake routes'
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.

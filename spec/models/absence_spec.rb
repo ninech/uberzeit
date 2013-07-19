@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: absences
+#
+#  id              :integer          not null, primary key
+#  time_sheet_id   :integer
+#  time_type_id    :integer
+#  start_date      :date
+#  end_date        :date
+#  first_half_day  :boolean          default(FALSE)
+#  second_half_day :boolean          default(FALSE)
+#  deleted_at      :datetime
+#
+
 require 'spec_helper'
 
 describe Absence do

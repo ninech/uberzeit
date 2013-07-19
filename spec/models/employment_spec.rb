@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: employments
+#
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  start_date :date
+#  end_date   :date
+#  workload   :float            default(100.0)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  deleted_at :datetime
+#
+
 require 'spec_helper'
 
 describe Employment do

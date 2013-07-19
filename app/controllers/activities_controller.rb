@@ -15,6 +15,15 @@ class ActivitiesController < ApplicationController
 
   DURATION_IN_MINUTES_REGEX = /\A\d{1,3}\z/
 
+  def new
+    if params[:date]
+      @activity.date = params[:date]
+    end
+  end
+
+  def edit
+  end
+
   def index
     @activities = @activities.where(date: @day)
     week = @day.at_beginning_of_week..@day.at_end_of_week

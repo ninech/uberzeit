@@ -16,4 +16,9 @@ class SessionsController < ApplicationController
       redirect_to time_sheet_path(user.time_sheets.last)
     end
   end
+
+  def destroy
+    sign_out
+    redirect_to "#{Uberzeit::Application.config.cas_url}/logout"
+  end
 end

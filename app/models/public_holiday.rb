@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: public_holidays
+#
+#  id              :integer          not null, primary key
+#  start_date      :date
+#  end_date        :date
+#  name            :string(255)
+#  first_half_day  :boolean          default(FALSE)
+#  second_half_day :boolean          default(FALSE)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  deleted_at      :datetime
+#
+
 class PublicHoliday < ActiveRecord::Base
   acts_as_paranoid
 

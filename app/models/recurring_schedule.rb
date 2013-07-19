@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: recurring_schedules
+#
+#  id                     :integer          not null, primary key
+#  active                 :boolean          default(FALSE)
+#  enterable_id           :integer
+#  enterable_type         :string(255)
+#  ends                   :string(255)
+#  ends_counter           :integer
+#  ends_date              :date
+#  weekly_repeat_interval :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  deleted_at             :datetime
+#
+
 class RecurringSchedule < ActiveRecord::Base
   acts_as_paranoid
 

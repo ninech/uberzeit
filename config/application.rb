@@ -90,5 +90,11 @@ module Uberzeit
     YAML::ENGINE.yamler = 'syck'
     config.uration = YAML.load(File.open(File.join(Rails.root, 'config', 'extensions.yml'))).with_indifferent_access[Rails.env]
 
+    config.cas_url = if Rails.env.production?
+      'https://sso.nine.ch'
+    else
+      "https://sso-#{Rails.env}.nine.ch"
+    end
+
   end
 end

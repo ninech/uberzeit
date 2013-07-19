@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: adjustments
+#
+#  id            :integer          not null, primary key
+#  time_sheet_id :integer
+#  time_type_id  :integer
+#  date          :date
+#  duration      :integer
+#  label         :string(255)
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  deleted_at    :datetime
+#
+
 require 'spec_helper'
 
 describe Adjustment do

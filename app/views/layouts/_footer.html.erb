@@ -7,6 +7,12 @@
 
   <div class="row">
     <div class="small-12 columns">
+      v<%= Uberzeit::Application.version.normal %> | <%= link_to t('.logout'), logout_path %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-12 columns">
       nine.ch - from dev-team with <i class="icon-heart api-show-token"></i>
       <div class='api-token-popup'>
         <span class='token'>

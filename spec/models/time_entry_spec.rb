@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: time_entries
+#
+#  id            :integer          not null, primary key
+#  time_sheet_id :integer
+#  time_type_id  :integer
+#  starts        :datetime
+#  ends          :datetime
+#  deleted_at    :datetime
+#
+
 require 'spec_helper'
 
 describe TimeEntry do
