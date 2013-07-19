@@ -37,6 +37,8 @@
           <div class="no-entries-message">
             <p>
               <%= t '.no_entries_yet_message' %>
+              <br>
+              <a href="#" class="remote-reveal" data-reveal-id="activity-modal" data-reveal-url="<%= new_user_activity_path(@user, date: @day) %>"><%= t '.add_activity_now' %></a>
             </p>
           </div>
         <% end %>
