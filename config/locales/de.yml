@@ -438,6 +438,7 @@ de:
   layouts:
     footer:
       info-rule: 'Stunden müssen von allen Mitarbeitern bis zum Ende der Kalenderwoche erfasst sein.'
+      logout: 'Logout'
 
   grape:
     errors:
