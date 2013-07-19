@@ -21,6 +21,9 @@
                 </div>
                 <div class="metadata">
                   <small><%= t('.customer', customer_url: customer_link(activity.customer_id)).html_safe %></small>
+                  <% if activity.project %>
+                    <small><%= t('.project', project: activity.project.name) %></small>
+                  <% end %>
                   <small><%= activity_source_information(activity) %></small>
                 </div>
                 <div class="right">

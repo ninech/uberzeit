@@ -407,6 +407,7 @@ de:
     index:
       add_activity_now: Aktivität hinzufügen
       customer: 'Kunde: %{customer_url}'
+      project: 'Projekt: %{project}'
       no_entries_yet_message: 'Noch keine Einträge vorhanden'
       redmine: 'Redmine: %{ticket_url}'
       otrs: 'OTRS: %{ticket_url}'
