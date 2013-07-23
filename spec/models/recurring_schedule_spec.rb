@@ -69,6 +69,7 @@ describe RecurringSchedule do
       end
 
       it 'requires a valid date when ending condition is set to date' do
+        Timecop.travel('2013-05-01')
         FactoryGirl.build(:active_recurring_schedule, ends: 'date', ends_date: nil).should_not be_valid
         FactoryGirl.build(:active_recurring_schedule, ends: 'date', ends_date: '1000 B.C.').should_not be_valid
         FactoryGirl.build(:active_recurring_schedule, ends: 'date', ends_date: '2013-07-20').should be_valid
