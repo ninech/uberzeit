@@ -105,6 +105,7 @@ group :development, :test do
   gem 'launchy'
   gem 'fivemat'
   gem 'annotate'
+  gem 'parallel_tests'
 end
 
 group :development do
