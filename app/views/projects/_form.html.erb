@@ -6,14 +6,12 @@
 </div>
 <div class="row">
   <div class="small-4 columns">
-    <%= f.select :customer_id, Customer.all.collect { |customer| [customer.name, customer.id] }, label: Project.human_attribute_name(:customer) %>
+    <%= f.text_field :customer_id, value: (f.object.customer.display_name if f.object.customer) %>
   </div>
 </div>
 <div class="row">
-  <div class="small-3 columns">
+  <div class="small-4 columns">
     <%= f.submit class: 'button'%>
-  </div>
-  <div class="small-2 columns end">
     <%= link_to t('.back'), projects_path, class: "secondary button" %>
   </div>
 </div>

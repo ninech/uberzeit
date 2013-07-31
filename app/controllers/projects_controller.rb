@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
   load_and_authorize_resource
+  before_filter :extract_customer_id, only: [:update, :create]
 
   respond_to :html
 
@@ -27,5 +28,13 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     respond_with(@project, location: projects_path)
+  end
+
+  private
+  def extract_customer_id
+    unless params[:project][:customer_id].blank?
+      match = params[:project][:customer_id].match(/\d+/)
+      match[0] if match
+    end
   end
 end
