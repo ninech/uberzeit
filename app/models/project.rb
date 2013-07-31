@@ -19,5 +19,6 @@ class Project < ActiveRecord::Base
 
   validates_presence_of :customer, :name
 
+  default_scope order(:name)
   scope :by_customer, ->(user) { where(customer_id: user)}
 end
