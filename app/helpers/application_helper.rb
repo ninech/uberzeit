@@ -2,6 +2,7 @@ module ApplicationHelper
   include SessionsHelper
   include SummariesHelper
   include TimeSheetsHelper
+  include AbsencesHelper
 
   def nav_link(name, link, match_controllers)
     if match_controllers.map(&:to_sym).include? controller.controller_name.to_sym
