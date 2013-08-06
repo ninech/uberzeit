@@ -1,4 +1,13 @@
 
+1.5.10
+======
+Date:        2013-08-06
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/1.5.9...1.5.10
+
+  * Bug #7122 Kalenderwochen werden nicht mehr angezeigt (Steven Schmid)
+
+
 1.5.9
 =====
 Date:        2013-07-31
