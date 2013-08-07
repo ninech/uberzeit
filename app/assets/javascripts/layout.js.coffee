@@ -29,6 +29,7 @@ $(document).on 'click', '.time-now', ->
 $ ->
   $(document)
     .foundation('reveal', { closeOnBackgroundClick: false, closeOnEsc: false })
+    .foundation('section')
 
   window.initControls = () ->
     initTimePicker()

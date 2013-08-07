@@ -10,6 +10,7 @@
 
 class Customer < ActiveRecord::Base
   has_many :projects
+  has_many :activities
 
   self.primary_key = :id
 
@@ -19,5 +20,9 @@ class Customer < ActiveRecord::Base
 
   def display_name
     "#{id}: #{name}"
+  end
+
+  def to_s
+    display_name
   end
 end

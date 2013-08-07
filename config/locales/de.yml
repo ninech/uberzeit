@@ -300,6 +300,13 @@ de:
           unit: in Tagen
           taken: 'Beansprucht im %{month} %{year}'
           remaining: 'Noch verfügbare Ferientage nach %{month} %{year}'
+    activity:
+      billability:
+        index:
+          title: Verrechenbarkeit
+          unit: in Stunden:Minuten
+        activities_by_type:
+          is_billable: Verrechenbar?
 
     shared:
       users_absence_table:

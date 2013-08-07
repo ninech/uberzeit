@@ -1,0 +1,24 @@
+<%= render partial: 'summaries/shared/header', locals: {base_url: "/users/summaries/billability", title: t('.title'), unit: t('.unit'), show_form: false} %>
+
+<div class="row">
+  <div class="small-12 columns">
+
+    <div class="section-container vertical-tabs" data-section="vertical-tabs">
+      <% @grouped_activities.each_pair do |customer, activities_by_type| %>
+      <section>
+        <p class="title" data-section-title>
+          <a href="#">
+            <%= customer %><br/>
+          </a>
+        </p>
+        <div class="content" data-section-content>
+          <h1><%= customer.name %></h1>
+          <%= render partial: 'activities_by_type', locals: {activities_by_type: activities_by_type} %>
+        </div>
+      </section>
+      <% end %>
+    </div>
+
+  </div>
+</div>
+
