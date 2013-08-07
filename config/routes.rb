@@ -73,6 +73,10 @@ Uberzeit::Application.routes.draw do
           get '/:year(/team/:team_id)', to: 'vacation#year', as: :year
           get '/:year/:month(/team/:team_id)', to: 'vacation#month', as: :month
         end
+
+        namespace :activities do
+          get '/billability', to: 'billability#index', as: :billability
+        end
       end
     end
   end
