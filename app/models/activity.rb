@@ -17,6 +17,9 @@
 #
 
 class Activity < ActiveRecord::Base
+
+  acts_as_paranoid
+
   belongs_to :activity_type, with_deleted: true
   belongs_to :project, with_deleted: true
   belongs_to :user, with_deleted: true
@@ -30,4 +33,5 @@ class Activity < ActiveRecord::Base
   scope :by_user, ->(user) { where(user_id: user)}
   scope :by_redmine_ticket, ->(redmine_ticket_id) { where(redmine_ticket_id: redmine_ticket_id) }
   scope :by_otrs_ticket, ->(otrs_ticket_id) { where(otrs_ticket_id: otrs_ticket_id) }
+
 end
