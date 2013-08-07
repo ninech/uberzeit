@@ -89,6 +89,9 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    # GC Optimization
+    GC.disable
+
     # Start database cleaning
     if example.metadata[:js]
       DatabaseCleaner.strategy = :truncation, {except: ['time_types']}
@@ -111,7 +114,17 @@ RSpec.configure do |config|
     stub_const 'UberZeit::Config', uberzeit_config
   end
 
+  run_counter = 0
+
   config.after(:each) do
+    # GC Optimization
+    run_counter += 1
+    if run_counter % 10 == 0
+      GC.enable
+      GC.start
+      GC.disable
+    end
+
     # Clean database
     DatabaseCleaner.clean
 
