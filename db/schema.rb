@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130807085048) do
+ActiveRecord::Schema.define(:version => 20130807140808) do
 
   create_table "absences", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -36,9 +36,10 @@ ActiveRecord::Schema.define(:version => 20130807085048) do
     t.integer  "project_id"
     t.integer  "redmine_ticket_id"
     t.integer  "otrs_ticket_id",    :limit => 8
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
     t.datetime "deleted_at"
+    t.boolean  "billable",                       :default => false
   end
 
   add_index "activities", ["activity_type_id"], :name => "index_activities_on_activity_type_id"
@@ -106,7 +107,6 @@ ActiveRecord::Schema.define(:version => 20130807085048) do
     t.datetime "updated_at", :null => false
   end
 
-  add_index "memberships", ["team_id", "user_id"], :name => "index_memberships_on_team_id_and_user_id_and_role", :unique => true
   add_index "memberships", ["team_id"], :name => "index_memberships_on_team_id"
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
