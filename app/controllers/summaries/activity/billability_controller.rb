@@ -4,8 +4,9 @@ class Summaries::Activity::BillabilityController < ApplicationController
 
   def index
     @activities = ::Activity.joins(:user)
-                          .joins(:user => :teams)
-                          .where(:teams => {id: Team.accessible_by(current_ability)})
+                            .joins(:user => :teams)
+                            .where(:teams => {id: Team.accessible_by(current_ability)})
+                            .uniq
 
     # group activities so the result looks like this:
     #  yolo_inc => { support => [a1, a2], maintenance => [a3] },

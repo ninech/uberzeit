@@ -16,3 +16,15 @@ $ ->
     url = url + append_to_url
 
     window.location = url
+
+  $('input[name="activity_billable_toggle"]').change ->
+    $.ajax
+      type: $(this).data('method')
+      url: $(this).data('action')
+      contentType: 'application/json'
+      dataType: 'json'
+      data: JSON.stringify
+        activity:
+          billable: $(this).is(':checked')
+      error: (xhr, status, error) ->
+        alert error

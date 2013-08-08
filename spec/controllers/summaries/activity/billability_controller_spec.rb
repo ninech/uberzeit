@@ -59,6 +59,7 @@ describe Summaries::Activity::BillabilityController do
   end
 
   describe 'activities' do
+
     let(:user_of_another_team) { FactoryGirl.create(:user) }
 
     let(:swag_ag) { FactoryGirl.create(:customer) }
@@ -73,31 +74,44 @@ describe Summaries::Activity::BillabilityController do
 
     let!(:activity4) { FactoryGirl.create(:activity, user: user_of_another_team, duration: 30.minutes) }
 
-    context 'as teamleader' do
+    describe 'index' do
+      context 'as teamleader' do
+        before do
+          test_sign_in team_leader
+        end
+
+        it 'loads the activities of the team members' do
+          get :index
+          assigns(:activities).should =~ [upgrade_hard_disk, reboot_server, swap_ram_module]
+        end
+
+        it 'groups the activities by customer and type' do
+          get :index
+          assigns(:grouped_activities).should eq(swag_ag => {support => [upgrade_hard_disk], maintenance => [reboot_server]}, yolo_inc => {support => [swap_ram_module]})
+        end
+
+        it 'does not load locked activities'
+      end
+
+      context 'as admin' do
+        before do
+          test_sign_in admin
+        end
+
+        it 'loads all activities' do
+          get :index
+          assigns(:activities).should =~ [upgrade_hard_disk, reboot_server, swap_ram_module, activity4]
+        end
+      end
+    end
+
+    describe 'submit' do
       before do
         test_sign_in team_leader
       end
 
-      it 'loads the activities of the team members' do
-        get :index
-        assigns(:activities).should =~ [upgrade_hard_disk, reboot_server, swap_ram_module]
-      end
-
-      it 'groups the activities by customer and type' do
-        get :index
-        assigns(:grouped_activities).should eq(swag_ag => {support => [upgrade_hard_disk], maintenance => [reboot_server]}, yolo_inc => {support => [swap_ram_module]})
-      end
-    end
-
-    context 'as admin' do
-      before do
-        test_sign_in admin
-      end
-
-      it 'loads all activities' do
-        get :index
-        assigns(:activities).should =~ [upgrade_hard_disk, reboot_server, swap_ram_module, activity4]
-      end
+      it 'locks all submitted activities'
+      it 'won\'t lock submitted activities of non-team members (security check)'
     end
   end
 end
