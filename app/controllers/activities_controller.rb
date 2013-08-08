@@ -13,8 +13,6 @@ class ActivitiesController < ApplicationController
   before_filter :parse_duration_to_seconds, only: [:update, :create]
   before_filter :extract_customer_id, only: [:update, :create]
 
-  DURATION_IN_MINUTES_REGEX = /\A\d{1,3}\z/
-
   def new
     if params[:date]
       @activity.date = params[:date]
@@ -47,13 +45,16 @@ class ActivitiesController < ApplicationController
 
   private
   def parse_duration_to_seconds
-    if params[:activity] &&
+    if params[:activity] && params[:activity][:duration]
       duration = params[:activity][:duration]
-      if DURATION_IN_MINUTES_REGEX.match duration
-        duration = duration.to_i * 60
-      elsif duration.include? ':'
-        duration = UberZeit.hhmm_in_duration duration
-      end
+      duration = case
+                 when duration =~ /\A\d{1,3}\z/
+                   duration.to_i * 60
+                 when duration.include?('.')
+                   duration.to_f.hours
+                 when duration.include?(':')
+                   UberZeit.hhmm_in_duration duration
+                 end
       params[:activity][:duration] = duration
     end
   end

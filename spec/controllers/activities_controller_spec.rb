@@ -5,6 +5,26 @@ describe ActivitiesController do
 
   let(:user) { FactoryGirl.create(:user) }
 
+  shared_examples 'correct duration handling' do
+    it 'handles a float in hours' do
+      params[:activity][:duration] = '1.5'
+      put :create, params
+      assigns(:activity).duration.should == 1.5.hours
+    end
+
+    it 'handles an integer in minutes' do
+      params[:activity][:duration] = '5'
+      put :create, params
+      assigns(:activity).duration.should == 5.minutes
+    end
+
+    it 'handles HH:MM' do
+      params[:activity][:duration] = '1:15'
+      put :create, params
+      assigns(:activity).duration.should == 1.25.hours
+    end
+  end
+
   context 'for non-signed in users' do
     it 'redirects to login' do
       get :index, user_id: user.id
@@ -86,6 +106,8 @@ describe ActivitiesController do
           activity.activity_type_id.should == activity_type.id
           activity.duration.should == 1200
         end
+
+        it_behaves_like 'correct duration handling'
       end
     end
 
@@ -121,6 +143,8 @@ describe ActivitiesController do
             put :create, params
           end.should change(Activity, :count).by(1)
         end
+
+        it_behaves_like 'correct duration handling'
       end
     end
 
