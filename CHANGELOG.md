@@ -1,4 +1,13 @@
 
+1.5.11
+======
+Date:        2013-08-08
+Released by: Raffael Schmid
+Diff:        https://git.nine.ch/uberzeit/compare/1.5.10...1.5.11
+
+  * Feature #7168 Eingabe der Dauer bei Aktivitätserfassung (Raffael Schmid)
+
+
 1.5.10
 ======
 Date:        2013-08-06
