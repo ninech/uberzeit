@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130807140808) do
+ActiveRecord::Schema.define(:version => 20130808092058) do
 
   create_table "absences", :force => true do |t|
     t.integer  "time_sheet_id"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20130807140808) do
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
     t.datetime "deleted_at"
-    t.boolean  "billable",                       :default => false
+    t.boolean  "billable",                       :default => false, :null => false
   end
 
   add_index "activities", ["activity_type_id"], :name => "index_activities_on_activity_type_id"
