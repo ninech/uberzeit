@@ -305,9 +305,10 @@ de:
         index:
           title: Verrechenbarkeit
           unit: in Stunden:Minuten
+          changes_saved: Änderungen gespeichert
         activities_by_type:
           is_billable: Verrechenbar?
-
+          finish: Abschliessen
     shared:
       users_absence_table:
         total: Total

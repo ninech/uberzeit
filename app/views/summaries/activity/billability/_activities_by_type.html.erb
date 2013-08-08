@@ -1,28 +1,31 @@
 <div class="row">
   <div class="small-12 columns">
-    <table class="nice small-12">
-      <% activities_by_type.each_pair do |type, activities| %>
-      <thead>
-        <tr>
-          <th><%= type %></th>
-          <th>00:00</th>
-          <th><%= t '.is_billable' %></th>
-          <th>00:00</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% activities.each do |activity| %>
-        <tr class="summary-row" >
-          <td><%= activity.date %> - <%= activity.user %> - <%= activity.description %></td>
-          <td><%= format_duration(activity.duration) %></td>
-          <td>
-            <%= check_box_tag "activity_billable_toggle", '1', activity.billable?, { id: nil, data: {action: polymorphic_path([activity.user, activity]), method: :put } } %>
-          </td>
-          <td>&nbsp;</td>
-        </tr>
+    <%= form_tag '#', name: 'activity_billability' do %>
+      <table class="nice small-12">
+        <% activities_by_type.each_pair do |type, activities| %>
+        <thead>
+          <tr>
+            <th><%= type %></th>
+            <th>00:00</th>
+            <th><%= t '.is_billable' %></th>
+            <th>00:00</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% activities.each do |activity| %>
+          <tr class="summary-row" >
+            <td><%= activity.date %> - <%= activity.user %> - <%= activity.description %></td>
+            <td><%= format_duration(activity.duration) %></td>
+            <td>
+              <%= check_box_tag "activity_billable_toggle", '1', activity.billable?, { id: nil, data: {action: polymorphic_path([activity.user, activity]), method: :put } } %>
+            </td>
+            <td>&nbsp;</td>
+          </tr>
+          <% end %>
+        </tbody>
         <% end %>
-      </tbody>
-      <% end %>
-    </table>
+      </table>
+      <%= submit_tag t('.finish'), class: 'medium button right' %>
+    <% end %>
   </div>
 </div>

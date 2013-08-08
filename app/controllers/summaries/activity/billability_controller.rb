@@ -6,6 +6,7 @@ class Summaries::Activity::BillabilityController < ApplicationController
     @activities = ::Activity.joins(:user)
                             .joins(:user => :teams)
                             .where(:teams => {id: Team.accessible_by(current_ability)})
+                            .where(locked: false)
                             .uniq
 
     # group activities so the result looks like this:

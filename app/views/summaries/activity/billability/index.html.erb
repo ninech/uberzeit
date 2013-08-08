@@ -8,11 +8,12 @@
       <section>
         <p class="title" data-section-title>
           <a href="#">
-            <%= customer %><br/>
+            <span class="left"><%= customer %></span>
+            <span class="right hidden customer-ok"><i class="icon-ok green-tick"></i></span>
           </a>
         </p>
         <div class="content" data-section-content>
-          <h1><%= customer.name %></h1>
+          <h1 class="left"><%= customer.name %></h1>
           <%= render partial: 'activities_by_type', locals: {activities_by_type: activities_by_type} %>
         </div>
       </section>

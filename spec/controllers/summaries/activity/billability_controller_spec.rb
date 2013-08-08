@@ -72,7 +72,9 @@ describe Summaries::Activity::BillabilityController do
     let!(:reboot_server) { FactoryGirl.create(:activity, user: user, duration: 5.minutes, activity_type: maintenance, customer: swag_ag) }
     let!(:swap_ram_module) { FactoryGirl.create(:activity, user: user, duration: 30.minutes, activity_type: support, customer: yolo_inc) }
 
-    let!(:activity4) { FactoryGirl.create(:activity, user: user_of_another_team, duration: 30.minutes) }
+    let!(:build_datacenter) { FactoryGirl.create(:activity, user: user, duration: 3.months, activity_type: support, customer: swag_ag, locked: true) }
+
+    let!(:coffee_machine_cleaning) { FactoryGirl.create(:activity, user: user_of_another_team, duration: 30.minutes) }
 
     describe 'index' do
       context 'as teamleader' do
@@ -80,7 +82,7 @@ describe Summaries::Activity::BillabilityController do
           test_sign_in team_leader
         end
 
-        it 'loads the activities of the team members' do
+        it 'loads the unlocked activities of the team members' do
           get :index
           assigns(:activities).should =~ [upgrade_hard_disk, reboot_server, swap_ram_module]
         end
@@ -89,8 +91,6 @@ describe Summaries::Activity::BillabilityController do
           get :index
           assigns(:grouped_activities).should eq(swag_ag => {support => [upgrade_hard_disk], maintenance => [reboot_server]}, yolo_inc => {support => [swap_ram_module]})
         end
-
-        it 'does not load locked activities'
       end
 
       context 'as admin' do
@@ -98,19 +98,12 @@ describe Summaries::Activity::BillabilityController do
           test_sign_in admin
         end
 
-        it 'loads all activities' do
+        it 'loads all unlocked activities' do
           get :index
-          assigns(:activities).should =~ [upgrade_hard_disk, reboot_server, swap_ram_module, activity4]
+          assigns(:activities).should =~ [upgrade_hard_disk, reboot_server, swap_ram_module, coffee_machine_cleaning]
         end
       end
     end
 
-    describe 'submit' do
-      before do
-        test_sign_in team_leader
-      end
-
-      it 'locks all submitted activities'
-    end
   end
 end
