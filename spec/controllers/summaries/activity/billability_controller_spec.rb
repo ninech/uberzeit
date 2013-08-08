@@ -111,7 +111,6 @@ describe Summaries::Activity::BillabilityController do
       end
 
       it 'locks all submitted activities'
-      it 'won\'t lock submitted activities of non-team members (security check)'
     end
   end
 end
