@@ -1,0 +1,18 @@
+.content-summary {
+  table.billability {
+    th, td {
+    }
+    th:first-child, td:first-child {
+      width: 25em;
+    }
+    td.billable {
+      text-align: left;
+      width: 5em;
+
+      > div {
+        padding-left: 2.5em;
+      }
+    }
+  }
+
+}

@@ -1,30 +1,41 @@
 <div class="row">
   <div class="small-12 columns">
     <%= form_tag '#', name: 'activity_billability' do %>
-      <table class="nice small-12">
-        <% activities_by_type.each_pair do |type, activities| %>
-        <thead>
-          <tr>
-            <th><%= type %></th>
-            <th>00:00</th>
-            <th><%= t '.is_billable' %></th>
-            <th>00:00</th>
-          </tr>
-        </thead>
+      <table class="nice small-12 billability">
         <tbody>
+        <% activities_by_type.each_pair do |type, activities| %>
+          <tr class="thead">
+            <th><%= type %></th>
+            <th><span data-activity-sum-durations data-activity-sum-customer="<%= customer.id %>" data-activity-sum-type="<%= type.id %>"><%= format_duration(0) %></span></th>
+            <th><%= t '.is_billable' %></th>
+            <th><span data-activity-sum-durations data-activity-sum-customer="<%= customer.id %>" data-activity-sum-type="<%= type.id %>" data-activity-sum-only-billable><%= format_duration(0) %></th>
+          </tr>
           <% activities.each do |activity| %>
           <tr class="summary-row" >
             <td><%= activity.date %> - <%= activity.user %> - <%= activity.description %></td>
-            <td><%= format_duration(activity.duration) %></td>
-            <td>
-              <%= check_box_tag "activity_billable_toggle", '1', activity.billable?, { id: nil, data: {action: polymorphic_path([activity.user, activity]), method: :put } } %>
+            <td><span data-activity-duration="<%= activity.duration %>" data-activity-type="<%= type.id %>" data-activity-customer="<%= customer.id %>" data-activity="<%= activity.id %>"><%= format_duration(activity.duration) %></span></td>
+            <td class="billable">
+              <div>
+                <%= check_box_tag "activity_billable_toggle", '1', activity.billable?, { id: nil, data: { action: polymorphic_path([activity.user, activity]), method: :put, activity: activity.id } } %>
+              </div>
             </td>
-            <td>&nbsp;</td>
+            <td><span data-activity-sum-durations data-activity-sum-activity="<%= activity.id %>" data-activity-sum-only-billable data-activity-sum-hide-zero></td>
           </tr>
           <% end %>
-        </tbody>
         <% end %>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <td>Total</td>
+            <td><span data-activity-sum-durations data-activity-sum-customer="<%= customer.id %>"><%= format_duration(0) %></span></td>
+            <td>&nbsp;</td>
+            <td><span data-activity-sum-durations data-activity-sum-customer="<%= customer.id %>" data-activity-sum-only-billable><%= format_duration(0) %></span></td>
+          </tr>
+        </tfoot>
+
       </table>
+
       <%= submit_tag t('.finish'), class: 'medium button right' %>
     <% end %>
   </div>
