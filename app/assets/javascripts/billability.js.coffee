@@ -1,4 +1,7 @@
 $ ->
+  ACTIVITY_FADE_TIME          = 500
+  ACTIVITY_FADE_TO_OPACITY    = 0.5
+
   update_activity = (action, method, activity, success) ->
     $.ajax
       url: action
@@ -16,7 +19,7 @@ $ ->
     $(this).after(ajax_indicator)
     update_activity $(this).data('action'), $(this).data('method'), { billable: $(this).is(':checked') }, =>
       ajax_indicator.replaceWith ->
-        $('<i class="icon-ok green-tick">').delay(500).fadeOut()
+        $('<i class="icon-ok green-tick">').delay(ACTIVITY_FADE_TIME).fadeOut()
 
   $('form[name=activity_billability]').submit ->
     # disable submit button
@@ -25,9 +28,10 @@ $ ->
     activities.attr('disabled', 'disabled')
     activities.each (index, element) =>
       update_activity $(element).data('action'), $(element).data('method'), { locked: true }, =>
-        $(element).closest('tr').fadeTo(500, 0.5)
+        $(element).closest('tr').fadeTo(ACTIVITY_FADE_TIME, ACTIVITY_FADE_TO_OPACITY)
 
-    #$(this).closest('.customer-ok').removeClass('hidden')
-    console.log $(this).closest('section').find('.customer-ok').removeClass('hidden')
+    section = $(this).closest('section')
+    section.find('.customer-status').append('<i class="icon-ok green-tick">')
+    section.find('.customer-title').fadeTo(ACTIVITY_FADE_TIME, ACTIVITY_FADE_TO_OPACITY)
 
     false # do not submit
