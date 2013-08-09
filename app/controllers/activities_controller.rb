@@ -5,6 +5,8 @@ class ActivitiesController < ApplicationController
 
   respond_to :html, :json, :js
 
+  before_filter :remove_locked_attribute, only: [:update, :create], unless: :can_lock_an_activity?
+
   load_and_authorize_resource :user
   load_and_authorize_resource :activity, through: :user
 
@@ -79,5 +81,13 @@ class ActivitiesController < ApplicationController
       @projects = []
     end
     @activity_types = ActivityType.all
+  end
+
+  def remove_locked_attribute
+    params[:activity].delete(:locked)
+  end
+
+  def can_lock_an_activity?
+    can? :lock, @activity || Activity
   end
 end

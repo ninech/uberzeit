@@ -3,11 +3,8 @@ class Summaries::Activity::BillabilityController < ApplicationController
   before_filter :check_access
 
   def index
-    @activities = ::Activity.joins(:user)
-                            .joins(:user => :teams)
-                            .where(:teams => {id: Team.accessible_by(current_ability)})
+    @activities = ::Activity.accessible_by(current_ability)
                             .where(locked: false)
-                            .uniq
 
     # group activities so the result looks like this:
     #  yolo_inc => { support => [a1, a2], maintenance => [a3] },
