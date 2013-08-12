@@ -106,8 +106,7 @@ group :development, :test do
   gem 'fivemat'
   gem 'annotate'
   gem 'parallel_tests'
-  gem 'spring'
-  gem 'observr'
+  gem 'guard-spring'
 end
 
 group :development do
