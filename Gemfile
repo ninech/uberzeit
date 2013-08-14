@@ -63,6 +63,8 @@ gem 'simple-navigation'
 # raf <3 CORS
 gem 'rack-cors'
 
+gem 'gaffe'
+
 # Logging
 gem 'uberlog',
   git: 'git@git.nine.ch:gems/uberlog',
