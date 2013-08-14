@@ -1,4 +1,13 @@
 
+1.5.13
+======
+Date:        2013-08-14
+Released by: Raffael Schmid
+Diff:        https://git.nine.ch/uberzeit/compare/1.5.12...1.5.13
+
+  * Bug #6901 [production][summaries/absence/absence#month] ArgumentError: invalid date (Raffael Schmid)
+
+
 1.5.12
 ======
 Date:        2013-08-14
