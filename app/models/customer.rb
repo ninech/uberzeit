@@ -19,6 +19,8 @@ class Customer < ActiveRecord::Base
   validates_presence_of :id
 
   def display_name
-    "#{id}: #{name} (#{abbreviation})"
+    display_name = "#{id}: #{name}"
+    display_name += " (#{abbreviation})" unless abbreviation.blank?
+    display_name
   end
 end
