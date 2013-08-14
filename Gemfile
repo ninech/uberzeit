@@ -63,6 +63,8 @@ gem 'simple-navigation'
 # raf <3 CORS
 gem 'rack-cors'
 
+gem 'gaffe'
+
 # Logging
 gem 'uberlog',
   git: 'git@git.nine.ch:gems/uberlog',
@@ -106,8 +108,7 @@ group :development, :test do
   gem 'fivemat'
   gem 'annotate'
   gem 'parallel_tests'
-  gem 'spring'
-  gem 'observr'
+  gem 'guard-spring'
 end
 
 group :development do
