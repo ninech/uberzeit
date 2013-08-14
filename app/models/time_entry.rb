@@ -14,6 +14,8 @@ class TimeEntry < ActiveRecord::Base
 
   acts_as_paranoid
 
+  default_scope order(:starts)
+
   belongs_to :time_sheet
   belongs_to :time_type, with_deleted: true
 
@@ -25,8 +27,8 @@ class TimeEntry < ActiveRecord::Base
   validates_presence_of :ends, unless: :timer?
   validates_datetime :starts
   validates_datetime :ends, after: :starts, unless: :timer?
+  validate :must_be_only_timer_on_date, if: :timer?
 
-  default_scope order(:starts)
   scope :on, lambda { |date| range = date.to_range.to_time_range; { conditions: ['(starts >= ? AND starts <= ?)', range.min, range.max] } }
   scope :others, lambda { |date| range = date.to_range.to_time_range; { conditions: ['(starts < ? OR starts > ?)', range.min, range.max] } }
 
@@ -34,7 +36,6 @@ class TimeEntry < ActiveRecord::Base
   scope :except_timers, where('time_entries.ends IS NOT NULL')
 
   before_validation :round_times
-  before_create :check_active_timers_on_same_date, if: :timer?
 
   def self.entries_in_range(range)
     time_range = range.to_time_range
@@ -125,11 +126,16 @@ class TimeEntry < ActiveRecord::Base
   end
 
   private
-  def check_active_timers_on_same_date
-    timers = time_sheet.time_entries.timers_only.on(start_date)
-    unless timers.empty?
-      timers.first.stop
+
+  def must_be_only_timer_on_date
+    if other_timers_on_same_date.any?
+      errors.add(:start_date, :timer_exists_on_date_already)
     end
+  end
+
+  def other_timers_on_same_date
+    return [] if time_sheet.nil?
+    time_sheet.time_entries.timers_only.on(start_date) - [self]
   end
 
   def round_times

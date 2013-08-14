@@ -1,4 +1,13 @@
 
+1.5.12
+======
+Date:        2013-08-14
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/1.5.11...1.5.12
+
+  * Bug #6870 Timer verschwindet - Problem (Steven Schmid)
+
+
 1.5.11
 ======
 Date:        2013-08-08
