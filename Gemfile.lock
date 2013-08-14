@@ -194,6 +194,8 @@ GEM
       actionpack (~> 3.0)
       railties (~> 3.0)
     fssm (0.2.10)
+    gaffe (0.2.1)
+      rails (>= 3.2.0)
     grape-swagger (0.6.0)
       grape (>= 0.2.0)
       kramdown
@@ -435,6 +437,7 @@ DEPENDENCIES
   fivemat
   font-awesome-rails
   foundation_rails_helper
+  gaffe
   grape!
   grape-entity!
   grape-swagger

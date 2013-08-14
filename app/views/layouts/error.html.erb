@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+<head>
+	<meta charset="utf-8" />
+  <meta name="apple-mobile-web-app-title" content="uberZeit">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= "#{@status_code} #{@rescue_response.to_s.titleize}" %></title>
+  <link rel="icon" href="<%= ENV['RAILS_RELATIVE_URL_ROOT'] %>/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="<%= ENV['RAILS_RELATIVE_URL_ROOT'] %>/favicon.ico" type="image/x-icon">
+	<%= stylesheet_link_tag    "application" %>
+	<%= javascript_include_tag "vendor/custom.modernizr" %>
+  <%= javascript_include_tag "application" %>
+</head>
+<body class="content-<%= controller.controller_name %>">
+  <%= render 'layouts/header' %>
+  <div class="content container">
+    <div class="row">
+      <div class="twelve columns">
+        <h4><%= "#{@status_code} #{@rescue_response.to_s.titleize}" %></h4>
+        <div class="alert-box alert">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= render 'layouts/footer' %>
+</body>
+</html>

@@ -1,5 +1,7 @@
 Uberzeit::Application.routes.draw do
 
+  year_month_team_id_constraints = {year: /\d+/, month: /\d+/, team_id: /\d+/}
+
   root :to => 'sessions#new'
 
   resources :time_sheets, only: [:show] do
@@ -64,9 +66,9 @@ Uberzeit::Application.routes.draw do
         end
 
         namespace :absence do
-          get '/:year(/team/:team_id)', to: 'absence#year', as: :year
-          get '/:year/:month(/team/:team_id)', to: 'absence#month', as: :month
-          get '/:year/:month(/team/:team_id)/as/calendar', to: 'absence#calendar', as: :calendar
+          get '/:year(/team/:team_id)', to: 'absence#year', as: :year, constraints: year_month_team_id_constraints
+          get '/:year/:month(/team/:team_id)', to: 'absence#month', as: :month, constraints: year_month_team_id_constraints
+          get '/:year/:month(/team/:team_id)/as/calendar', to: 'absence#calendar', as: :calendar, constraints: year_month_team_id_constraints
         end
 
         namespace :vacation do

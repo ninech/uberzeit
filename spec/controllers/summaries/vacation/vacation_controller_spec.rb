@@ -27,15 +27,13 @@ describe Summaries::Vacation::VacationController do
 
     describe 'GET "year"' do
       it 'denies access' do
-        get :year, year: year
-        response.status.should == 403
+        expect { get :year, year: year }.to raise_error(CanCan::AccessDenied)
       end
     end
 
     describe 'GET "month"' do
       it 'denies access' do
-        get :year, year: year
-        response.status.should == 403
+        expect { get :year, year: year, month: month }.to raise_error(CanCan::AccessDenied)
       end
     end
 
