@@ -34,6 +34,7 @@ class CustomerSync
 
   def sync_customer_attributes(local_customer, remote_customer)
     local_customer.name = "#{remote_customer.firstname} #{remote_customer.companyname}".strip
+    local_customer.abbreviation = CustomerPlugin::CustomerLogin.find(remote_customer.id).login
     local_customer.save!
   end
 end
