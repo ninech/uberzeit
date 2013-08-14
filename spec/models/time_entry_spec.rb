@@ -71,32 +71,6 @@ describe TimeEntry do
     end
   end
 
-  context 'for multiple entries' do
-    before do
-      @entry1 = FactoryGirl.create(:time_entry, time_type: :work, starts: '2013-01-23 9:00:00 +0000', ends: '2013-01-23 12:00:00 +0000')
-      @entry2 = FactoryGirl.create(:time_entry, time_type: :compensation, starts: '2013-01-23 12:00:00 +0000', ends: '2013-01-23 12:30:00 +0000')
-      @entry3 = FactoryGirl.create(:time_entry, time_type: :work, starts: '2013-01-23 12:30:00 +0000', ends: '2013-01-24 00:00:00 +0000')
-      @entry4 = FactoryGirl.create(:time_entry, time_type: :work, starts: '2013-01-24 9:30:00 +0000', ends: '2013-01-24 12:30:00 +0000')
-    end
-
-    # it 'returns entries between two dates' do
-    #   TimeEntry.between('2013-01-23'.to_date..'2013-01-30'.to_date).should =~ [@entry1,@entry2,@entry3,@entry4]
-    #   TimeEntry.between('2013-01-23'.to_date..'2013-01-24'.to_date).should =~ [@entry1,@entry2,@entry3,@entry4]
-    #   TimeEntry.between('2013-01-24'.to_date..'2013-01-27'.to_date).should =~ [@entry3,@entry4]
-    #   TimeEntry.between('2013-01-25'.to_date..'2013-01-26'.to_date).should =~ []
-    # end
-
-    # it 'returns entries between two times (and respects the time-zone)' do
-    #   zone_before = Time.zone
-    #   Time.zone = 'Athens' # GMT + 2
-    #   TimeEntry.between(Time.zone.parse('2013-01-24 00:00:00')..Time.zone.parse('2013-01-24 11:30:00')).should =~ [@entry3]
-    #   TimeEntry.between(Time.zone.parse('2013-01-24 02:00:00')..Time.zone.parse('2013-01-25 02:00:00')).should =~ [@entry4]
-    #   TimeEntry.between(Time.zone.parse('2013-01-25 00:00:00')..Time.zone.parse('2013-01-26 12:00:00')).should =~ []
-    #   TimeEntry.between(Time.zone.parse('2013-01-24 01:00:00')..Time.zone.parse('2013-01-27 12:00:00')).should =~ [@entry3,@entry4]
-    #   Time.zone = zone_before
-    # end
-  end
-
   context 'virtual attributes' do
     subject { TimeEntry.new }
 
@@ -144,8 +118,9 @@ describe TimeEntry do
   end
 
   context 'timer' do
-    let(:time_entry) { TimeEntry.new(start_date: '2013-04-12', start_time: '09:00') }
-    subject { time_entry }
+    let(:timer) { FactoryGirl.build(:timer, start_date: '2013-04-12', start_time: '09:00') }
+
+    subject { timer }
 
     it 'allows end to not be filled in' do
       subject.ends = nil
@@ -159,6 +134,11 @@ describe TimeEntry do
       subject.range.should eq(('2013-04-12 09:00:00 +0200'.to_time)..('2013-04-12 10:00:00 +0200'.to_time))
     end
 
+    it 'validates that only one timer runs on given date' do
+      expect {
+        FactoryGirl.create(:timer, start_date: '2013-04-12', start_time: '08:00', time_sheet: subject.time_sheet)
+      }.to change(subject, :valid?).to(false)
+    end
   end
 
 end
