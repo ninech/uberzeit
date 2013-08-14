@@ -145,9 +145,13 @@ describe 'routing of the summaries' do
         )
       end
 
+      it 'does not route /users/summaries/absence/calendar' do
+        expect(get: '/users/summaries/absence/calendar').not_to be_routable
+      end
     end
 
     describe 'vacation' do
+
       it 'routes /users/summaries/vacation/2013 to vacation#year' do
         expect(get: '/users/summaries/vacation/2013').to route_to(
           controller: 'summaries/vacation/vacation',
