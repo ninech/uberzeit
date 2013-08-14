@@ -68,6 +68,8 @@ module Uberzeit
     # Don't automagically load all helpers
     config.action_controller.include_all_helpers = false
 
+    config.action_dispatch.rescue_responses.merge!('CanCan::AccessDenied' => :forbidden)
+
     # uberZeit specific time settings
     Uberzeit::Application.config.to_prepare do
       config_path = File.join(Rails.root, 'config', 'uberzeit.yml')

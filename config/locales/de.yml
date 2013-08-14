@@ -1,14 +1,4 @@
 de:
-  errors:
-    e403:
-      title: 'Zugriff verweigert'
-      message: 'Sie haben keinen Zugriff auf diese Ressource.'
-    e404:
-      title: 'Oops.'
-      message: Die gewünschte Ressource konnte nicht gefunden werden.
-    e500:
-      title: 'Ouch.'
-      message: 'Es tut uns Leid, ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später noch einmal.<br>Wir wurden automatisch darüber informiert und arbeiten an einer Lösung.'
   activerecord:
     models:
       employment: Anstellungsverhältnis
