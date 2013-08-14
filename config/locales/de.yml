@@ -58,6 +58,8 @@ de:
               invalid_datetime: ist ungültig
             ends:
               after: Endzeit muss nach Startzeit sein
+            start_date:
+              timer_exists_on_date_already: An diesem Datum läuft schon ein Timer.
         absence:
           attributes:
             end_date:
