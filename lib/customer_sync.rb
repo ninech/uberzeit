@@ -34,7 +34,11 @@ class CustomerSync
 
   def sync_customer_attributes(local_customer, remote_customer)
     local_customer.name = "#{remote_customer.firstname} #{remote_customer.companyname}".strip
-    local_customer.abbreviation = CustomerPlugin::CustomerLogin.find(remote_customer.id).login
+    begin
+      local_customer.abbreviation = CustomerPlugin::CustomerLogin.find(remote_customer.id).login
+    rescue => error
+      Rails.logger.error "Error #{error.inspect} when syncing Customer ##{remote_customer.id} #{local_customer.name}"
+    end
     local_customer.save!
   end
 end

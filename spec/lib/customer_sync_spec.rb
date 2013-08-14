@@ -40,6 +40,17 @@ describe CustomerSync do
     expect { Customer.find(customer2.id) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
+  context 'customer does not have a login' do
+    let(:customer4) { OpenStruct.new id: 4, companyname: 'No', firstname: 'Login'}
+    before do
+      customers.concat [customer4]
+    end
+    it 'does not raise an error' do
+      CustomerPlugin::CustomerLogin.should_receive(:find).with(4) { raise Faraday::Error::ResourceNotFound, 'Mimimi' }
+      expect { sync_customers }.to_not raise_error
+    end
+  end
+
   describe 'attributes' do
     before do
       sync_customers
