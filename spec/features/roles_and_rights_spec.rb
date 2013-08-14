@@ -25,8 +25,7 @@ describe 'Roles and Rights' do
 
     shared_examples :access_denied do
       it 'denies access' do
-        visit path
-        page.status_code.should == 403
+        expect { visit path }.to raise_error(CanCan::AccessDenied)
       end
     end
 
