@@ -2,10 +2,11 @@
 #
 # Table name: customers
 #
-#  id         :integer          primary key
-#  name       :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id           :integer          primary key
+#  name         :string(255)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  abbreviation :string(255)
 #
 
 class Customer < ActiveRecord::Base
@@ -13,11 +14,11 @@ class Customer < ActiveRecord::Base
 
   self.primary_key = :id
 
-  attr_accessible :id, :name
+  attr_accessible :id, :name, :abbreviation
 
   validates_presence_of :id
 
   def display_name
-    "#{id}: #{name}"
+    "#{id}: #{name} (#{abbreviation})"
   end
 end
