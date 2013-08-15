@@ -1,5 +1,6 @@
 require 'simplecov'
 require 'simplecov-rcov'
+require 'factory_girl_rails'
 
 class SimpleCov::Formatter::MergedFormatter
   def format(result)
