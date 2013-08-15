@@ -1,4 +1,14 @@
 
+1.5.14
+======
+Date:        2013-08-15
+Released by: Raffael Schmid
+Diff:        https://git.nine.ch/uberzeit/compare/1.5.13...1.5.14
+
+  * Feature #6801 "Überstunden-Saldo" erklären (Steven Schmid)
+  * Bug #7112 Customer Login Name anzeigen (Raffael Schmid)
+
+
 1.5.13
 ======
 Date:        2013-08-14
