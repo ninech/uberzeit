@@ -24,4 +24,12 @@ describe Customer do
     its(:abbreviation) { should be_nil }
     its(:display_name) { should eq("#{subject.id}: Yolo Inc.")}
   end
+
+  context 'when the abbreviation is the same as the name' do
+    before do
+      subject.abbreviation = subject.name
+    end
+    its(:abbreviation) { should eq('Yolo Inc.') }
+    its(:display_name) { should eq("#{subject.id}: Yolo Inc.") }
+  end
 end
