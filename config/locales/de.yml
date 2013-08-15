@@ -215,7 +215,7 @@ de:
           work_days_html: '%{work_days} Arbeitstage'
         panels:
           uberstunden:
-            info1_html: 'Dein aktuelles Überstunden-Saldo beträgt'
+            info1_html: 'Dein aktuelles <span class="has-tip" data-tooltip="Deine Überstunden seit Beginn des Jahres bis und mit gestern.">Überstunden-Saldo</span> beträgt'
             info2_html: 'Das sind'
           understunden:
             info1_html: 'Die Aufholjagd beginnt! Nur noch'

@@ -202,11 +202,16 @@
     }
 
     &.callout {
-      p {
+      p, .has-tip {
         color: #DEDEDE;
 
         &.crazy {
           color: #FFFFFF;
+        }
+
+        .has-tip:hover, .has-tip:focus {
+          color: #FFFFFF;
+          border-color: #FFFFFF;
         }
       }
     }

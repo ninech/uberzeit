@@ -95,7 +95,7 @@ group :development, :test do
   gem 'brakeman'
   gem 'simplecov', :require => false
   gem 'simplecov-rcov', :require => false
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', require: false
   gem 'faker'
   gem 'capybara'
   gem 'i18n-missing_translations'
