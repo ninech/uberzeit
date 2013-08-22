@@ -1,5 +1,4 @@
 class Summaries::OverviewController < ApplicationController
-  include
   load_and_authorize_resource :user
 
   def index
