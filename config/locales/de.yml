@@ -436,11 +436,11 @@ de:
   grape:
     errors:
       messages:
-        coerce: '%{attribute} ist ungültig'
-        presence: '%{attribute} fehlt'
-        regexp: '%{attribute} ist ungültig'
-        invalid: '%{attribute} ist ungültig'
-
+        coerce: 'ist ungültig'
+        presence: 'fehlt'
+        regexp: 'ist ungültig'
+        invalid: 'ist ungültig'
+        time_type_for_timer: 'ist nicht gültig für Präsenzzeit'
   bonus_calculator:
     nine_on_duty:
       name: 'Normale Piketteinsätze'

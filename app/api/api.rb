@@ -33,15 +33,11 @@ class API < Grape::API
   #
   # Exceptions
   #
-  # collect_validation_errors true
-
-  rescue_from Grape::Exceptions::Validations do |e|
-    # convert the errors per attribute into the rails format
-    errors_per_param = Hash[e.errors.collect { |error| [error.param, error.message] }]
-    Rack::Response.new({
-      'status' => 422,
+  rescue_from Grape::Exceptions::ValidationErrors do |e|
+   Rack::Response.new({
+      'status' => e.status,
       'message' => e.message,
-      'errors' => errors_per_param
+      'errors' => e.errors
     }.to_json, 422)
   end
 
