@@ -36,8 +36,11 @@ ActiveRecord::Schema.define(:version => 20130814152055) do
     t.integer  "project_id"
     t.integer  "redmine_ticket_id"
     t.integer  "otrs_ticket_id",    :limit => 8
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
+    t.datetime "deleted_at"
+    t.boolean  "billable",                       :default => false, :null => false
+    t.boolean  "locked",                         :default => false, :null => false
   end
 
   add_index "activities", ["activity_type_id"], :name => "index_activities_on_activity_type_id"

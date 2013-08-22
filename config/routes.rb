@@ -85,7 +85,8 @@ Uberzeit::Application.routes.draw do
   match '/logout', to: 'sessions#destroy', as: 'logout'
 
   # API
-  mount API => '/api'
+  mount API::User => '/api'
+  mount API::App => '/api/app'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
