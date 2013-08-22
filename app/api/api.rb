@@ -63,6 +63,8 @@ class API < Grape::API
   mount API::Resources::Timer
   mount API::Resources::Customers
   mount API::Resources::TimeTypes
+  mount API::Resources::Absences
+  mount API::Resources::TeamAbsences
 
   #
   # Ping? Pong!
