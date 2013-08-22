@@ -39,8 +39,6 @@ class Absence < ActiveRecord::Base
 
   before_validation :build_recurring_schedule, unless: :recurring_schedule
 
-
-
   def self.nonrecurring_entries_in_range(range)
     date_range = range.to_date_range
     nonrecurring_entries.where('(start_date <= ? AND end_date >= ?)', date_range.max, date_range.min)
@@ -159,6 +157,14 @@ class Absence < ActiveRecord::Base
       date_range = start_date..(start_date+num_days)
       date_range.collect { |day| time_range_for_date(day) }
     end.flatten
+  end
+
+  def user
+    time_sheet.user
+  end
+
+  def user=(user)
+    time_sheet = user.current_time_sheet
   end
 
 end

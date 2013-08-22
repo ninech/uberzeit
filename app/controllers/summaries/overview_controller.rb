@@ -1,5 +1,5 @@
 class Summaries::OverviewController < ApplicationController
-
+  include
   load_and_authorize_resource :user
 
   def index
@@ -25,33 +25,16 @@ class Summaries::OverviewController < ApplicationController
 
   private
 
+  def find_absences
+    @find_absences ||= FindAbsences.new(current_user, range_of_absences)
+  end
+
   def get_personal_absences
-    Hash.new.tap do |personal_absences|
-      find_time_chunks(@user.current_time_sheet.absences, range_of_absences) do |date, chunk|
-        personal_absences[date] ||= []
-        personal_absences[date] << chunk
-      end
-    end
+    find_absences.personal_absences
   end
 
   def get_team_absences
-    Hash.new.tap do |team_absences|
-      time_sheets_from_team.each do |ts|
-        find_time_chunks(ts.absences, range_of_absences) do |date, chunk|
-          team_absences[date] ||= []
-          team_absences[date] << {user: ts.user, chunk: chunk}
-        end
-      end
-    end
-  end
-
-  def find_time_chunks(entries, range)
-    time_chunks_finder = FindTimeChunks.new(entries)
-    time_chunks_finder.in_range(range).each do |chunk|
-      chunk.range.to_date_range.each do |date|
-        yield(date, chunk)
-      end
-    end
+    find_absences.team_absences
   end
 
   def range_of_absences
@@ -72,9 +55,5 @@ class Summaries::OverviewController < ApplicationController
 
   def current_year
     Date.today.year
-  end
-
-  def time_sheets_from_team
-    @time_sheets_from_team ||= TimeSheet.joins(:user => :teams).where(memberships: {team_id: @user.teams}).uniq.where('users.id != ?', @user)
   end
 end

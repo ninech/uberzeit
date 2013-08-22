@@ -125,6 +125,14 @@ class TimeEntry < ActiveRecord::Base
     save
   end
 
+  def user
+    time_sheet.user
+  end
+
+  def user=(user)
+    time_sheet = user.current_time_sheet
+  end
+
   private
 
   def must_be_only_timer_on_date

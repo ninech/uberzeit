@@ -34,18 +34,14 @@
           <div class="absence-list">
           <% @team_absences.each_pair do |date, team_absences| %>
             <% team_absences.each do |team_absence| %>
-            <%
-              absence = team_absence[:chunk]
-              user = team_absence[:user]
-            %>
               <div class="row entry">
                 <div class="user">
-                  <%= given_name_with_one_lettered_last_name(user) %>
+                  <%= given_name_with_one_lettered_last_name(team_absence.user) %>
                 </div>
-                <div class="date"><%= l date, format: :medium %> <%=raw "<small>#{absence_period(absence)}</small>" %></div>
-                <div class="absence label event-bg<%= color_index_of_element(absence) %>">
-                  <%= icon_for_time_type(absence.time_type) %>
-                  <small><%= absence.time_type %></small>
+                <div class="date"><%= l date, format: :medium %> <%=raw "<small>#{absence_period(team_absence)}</small>" %></div>
+                <div class="absence label event-bg<%= color_index_of_element(team_absence) %>">
+                  <%= icon_for_time_type(team_absence.time_type) %>
+                  <small><%= team_absence.time_type %></small>
                 </div>
               </div>
             <% end %>
