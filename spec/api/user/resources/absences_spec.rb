@@ -68,7 +68,7 @@ describe API::User::Resources::Absences do
     its(['first_end_date']) { should eq('2013-07-20') }
   end
 
-  describe 'GET /api/absences/team/date/:date' do
+  describe 'GET /api/team_absences/date/:date' do
     let!(:team_member) { FactoryGirl.create(:user, with_sheet: true, teams: api_user.teams)}
 
     let!(:self_absence) { FactoryGirl.create(:absence, time_sheet: api_user.current_time_sheet, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
@@ -76,7 +76,7 @@ describe API::User::Resources::Absences do
     let!(:foreign_absence) { FactoryGirl.create(:absence, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
 
     before do
-      get '/api/absences/team/date/2013-07-20'
+      get '/api/team_absences/date/2013-07-20'
     end
 
     it 'lists all absences for the given date' do

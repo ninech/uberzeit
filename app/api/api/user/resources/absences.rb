@@ -28,24 +28,22 @@ class API::User::Resources::Absences < Grape::API
                                   .flatten
       present absences, with: API::Shared::Entities::Absence, embed: params[:embed]
     end
+  end
 
-    namespace :team do
-
-      desc 'Lists all the absences of your teams on a given date' do
-      end
-      params do
-        requires :date, type: Date
-        optional :embed, type: Array, includes: %w[user time_type]
-      end
-      get 'date/:date' do
-        team_time_sheets = team_time_sheets_by_user(current_user)
-        absences = FindDailyAbsences.new(team_time_sheets, params[:date])
-                                    .result
-                                    .values
-                                    .flatten
-        present absences, with: API::Shared::Entities::Absence, embed: params[:embed]
-      end
-
+  namespace :team_absences do
+    desc 'Lists all the absences of your teams on a given date' do
+    end
+    params do
+      requires :date, type: Date
+      optional :embed, type: Array, includes: %w[user time_type]
+    end
+    get 'date/:date' do
+      team_time_sheets = team_time_sheets_by_user(current_user)
+      absences = FindDailyAbsences.new(team_time_sheets, params[:date])
+                                  .result
+                                  .values
+                                  .flatten
+      present absences, with: API::Shared::Entities::Absence, embed: params[:embed]
     end
 
   end
