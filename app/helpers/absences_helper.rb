@@ -100,4 +100,11 @@ module AbsencesHelper
       end
     end
   end
+
+  def time_sheets_from_team(user)
+    TimeSheet.joins(:user => :teams)
+             .where(memberships: {team_id: user.teams})
+             .uniq
+             .where('users.id != ?', user)
+  end
 end

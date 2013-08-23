@@ -20,10 +20,10 @@ class API::User::Resources::Absences < Grape::API
       optional :embed, type: Array, includes: %w[user time_type]
     end
     get ':date' do
-      absences = FindAbsences.new(current_user, params[:date])
-                             .personal_absences
-                             .values
-                             .flatten
+      absences = FindDailyAbsences.new(current_user.time_sheets, params[:date])
+                                  .result
+                                  .values
+                                  .flatten
       present absences, with: API::User::Entities::Absence, embed: params[:embed]
     end
 
