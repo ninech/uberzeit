@@ -28,7 +28,7 @@ describe API::App::Resources::Absences do
       app_auth_get "/api/app/absences/team/#{team.id}/date/2013-09-27"
     end
 
-    it 'lists all absences for the given date' do
+    it 'lists all team absences for the given date' do
       json.should have(1).items
     end
 
