@@ -3,7 +3,18 @@ class API::App < Grape::API
 
   format :json
 
-  mount API::Shared::Resources::Customers
+  #
+  # Authentication
+  #
+  before do
+    ensure_authentication!
+  end
+
+  helpers do
+    def ensure_authentication!
+      error!('401 Unathorized', 401) unless request.env['SSL_CLIENT_VERIFY'] == 'SUCCESS'
+    end
+  end
 
   desc 'Ping? Pong!'
   get :ping do
