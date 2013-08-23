@@ -59,7 +59,7 @@ class Summaries::OverviewController < ApplicationController
   end
 
   def team_time_sheets
-    @team_time_sheets ||= time_sheets_from_team(current_user)
+    @team_time_sheets ||= team_time_sheets_by_user(current_user)
   end
 
 end

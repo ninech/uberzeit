@@ -1,5 +1,5 @@
 # This class can be represented either by a time chunk or an absence
-class API::User::Entities::Absence < Grape::Entity
+class API::Shared::Entities::Absence < Grape::Entity
   expose :id
 
   expose :start_date

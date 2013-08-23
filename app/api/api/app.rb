@@ -12,9 +12,14 @@ class API::App < Grape::API
 
   helpers do
     def ensure_authentication!
-      error!('401 Unathorized', 401) unless request.env['SSL_CLIENT_VERIFY'] == 'SUCCESS'
+      error!('401 Unathorized', 401) unless request.env['SSL_CLIENT_VERIFY'] == 'SUCCESS' or Rails.env.development?
     end
   end
+
+  #
+  # Resources
+  #
+  mount API::App::Resources::Absences
 
   desc 'Ping? Pong!'
   get :ping do

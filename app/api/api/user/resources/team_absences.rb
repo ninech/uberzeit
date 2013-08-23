@@ -14,12 +14,12 @@ class API::User::Resources::TeamAbsences < Grape::API
       optional :embed, type: Array, includes: %w[user time_type]
     end
     get ':date' do
-      team_time_sheets = time_sheets_from_team(current_user)
+      team_time_sheets = team_time_sheets_by_user(current_user)
       absences = FindDailyAbsences.new(team_time_sheets, params[:date])
                                   .result
                                   .values
                                   .flatten
-      present absences, with: API::User::Entities::Absence, embed: params[:embed]
+      present absences, with: API::Shared::Entities::Absence, embed: params[:embed]
     end
 
   end

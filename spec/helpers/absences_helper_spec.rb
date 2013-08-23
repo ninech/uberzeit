@@ -57,18 +57,18 @@ describe AbsencesHelper do
     end
   end
 
-  describe '#time_sheets_from_team' do
+  describe '#team_time_sheets_by_user' do
     let!(:team) { FactoryGirl.create(:team) }
     let!(:user) { FactoryGirl.create(:user, teams: [team]) }
     let!(:another_team) { FactoryGirl.create(:team) }
     let!(:another_user) { FactoryGirl.create(:user, teams: [another_team, team]) }
 
     it 'finds time sheets from members of the same teams' do
-      time_sheets_from_team(user).should include(*another_user.time_sheets)
+      team_time_sheets_by_user(user).should include(*another_user.time_sheets)
     end
 
     it 'will not return own time sheets' do
-      time_sheets_from_team(user).should_not include(*user.time_sheets)
+      team_time_sheets_by_user(user).should_not include(*user.time_sheets)
     end
   end
 end
