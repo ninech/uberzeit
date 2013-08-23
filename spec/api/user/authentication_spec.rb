@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'API Authentication' do
+describe 'Authentication for User API' do
   include RequestHelpers
 
   let(:user) { FactoryGirl.create(:user) }

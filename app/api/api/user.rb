@@ -44,7 +44,7 @@ class API::User < Grape::API
   mount API::User::Resources::Absences
   mount API::User::Resources::TeamAbsences
 
-  mount API::Shared::Resources::Customers
+  mount API::User::Resources::Customers
 
   #
   # Ping? Pong!

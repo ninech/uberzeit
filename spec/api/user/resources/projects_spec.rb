@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe API::Shared::Resources::Projects do
+describe API::User::Resources::Projects do
   include Warden::Test::Helpers
 
   let(:api_user) { FactoryGirl.create(:user) }
