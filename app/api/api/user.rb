@@ -42,7 +42,6 @@ class API::User < Grape::API
   mount API::User::Resources::Timer
   mount API::User::Resources::TimeTypes
   mount API::User::Resources::Absences
-  mount API::User::Resources::TeamAbsences
 
   mount API::User::Resources::Customers
 

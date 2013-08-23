@@ -11,7 +11,7 @@ describe API::App::Resources::Absences do
     let!(:absence) { FactoryGirl.create(:absence) }
 
     before do
-      auth_get "/api/app/absences/#{absence.id}"
+      app_auth_get "/api/app/absences/#{absence.id}"
     end
 
     subject { json }
@@ -25,7 +25,7 @@ describe API::App::Resources::Absences do
     before do
       absence.recurring_schedule.update_attributes(active: true, ends: 'date', ends_date: '2013-12-31', weekly_repeat_interval: 1)
 
-      auth_get "/api/app/absences/team/#{team.id}/date/2013-09-27"
+      app_auth_get "/api/app/absences/team/#{team.id}/date/2013-09-27"
     end
 
     it 'lists all absences for the given date' do

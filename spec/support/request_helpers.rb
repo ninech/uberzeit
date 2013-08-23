@@ -4,7 +4,7 @@ module RequestHelpers
     visit root_path
   end
 
-  def auth_get(url, params = {}, env = {})
+  def app_auth_get(url, params = {}, env = {})
     get url, params, env.merge({ 'SSL_CLIENT_VERIFY' => 'SUCCESS' })
   end
 end

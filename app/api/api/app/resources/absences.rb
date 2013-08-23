@@ -8,6 +8,9 @@ class API::App::Resources::Absences < Grape::API
 
   resources :absences do
     desc 'Retrieves an absence'
+    params do
+      requires :id, type: Integer
+    end
     get ':id', requirements: { id: /[0-9]*/ } do
       present Absence.find(params[:id]), with: API::Shared::Entities::Absence
     end

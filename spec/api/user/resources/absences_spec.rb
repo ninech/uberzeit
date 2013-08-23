@@ -44,13 +44,13 @@ describe API::User::Resources::Absences do
     its(['time_type']) { should_not be_present }
   end
 
-  describe 'GET /api/absences/:date' do
+  describe 'GET /api/absences/date/:date' do
     let!(:absence) { FactoryGirl.create(:absence, time_sheet: api_user.current_time_sheet, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
 
     before do
       absence.recurring_schedule.update_attributes(active: true, ends: 'date', ends_date: '2013-12-31', weekly_repeat_interval: 1)
 
-      get '/api/absences/2013-09-27'
+      get '/api/absences/date/2013-09-27'
     end
 
     it 'lists all absences for the given date' do
@@ -68,7 +68,7 @@ describe API::User::Resources::Absences do
     its(['first_end_date']) { should eq('2013-07-20') }
   end
 
-  describe 'GET /api/team_absences/:date' do
+  describe 'GET /api/absences/team/date/:date' do
     let!(:team_member) { FactoryGirl.create(:user, with_sheet: true, teams: api_user.teams)}
 
     let!(:self_absence) { FactoryGirl.create(:absence, time_sheet: api_user.current_time_sheet, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
@@ -76,7 +76,7 @@ describe API::User::Resources::Absences do
     let!(:foreign_absence) { FactoryGirl.create(:absence, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
 
     before do
-      get '/api/team_absences/2013-07-20'
+      get '/api/absences/team/date/2013-07-20'
     end
 
     it 'lists all absences for the given date' do
@@ -87,4 +87,5 @@ describe API::User::Resources::Absences do
 
     its(['id']) { should eq(team_absence.id) }
   end
+
 end
