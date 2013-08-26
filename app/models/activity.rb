@@ -27,7 +27,7 @@ class Activity < ActiveRecord::Base
   belongs_to :user, with_deleted: true
   belongs_to :customer, with_deleted: true
 
-  attr_accessible :customer_id, :date, :description, :duration, :otrs_ticket_id, :project_id, :redmine_ticket_id, :activity_type_id, :user_id, :billable, :locked
+  attr_accessible :customer_id, :date, :description, :duration, :otrs_ticket_id, :project_id, :redmine_ticket_id, :activity_type_id, :user_id, :billable, :billed, :locked
 
   validates_presence_of :user, :activity_type, :date, :duration, :customer_id
   validates_numericality_of :duration, greater_than: 0
@@ -42,5 +42,9 @@ class Activity < ActiveRecord::Base
 
   def locked?
     !!locked
+  end
+
+  def billed?
+    !!billed
   end
 end

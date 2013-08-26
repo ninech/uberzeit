@@ -9,7 +9,7 @@
     </p>
     <div class="content" data-section-content>
       <h1 class="left"><%= customer.name %></h1>
-      <%= render partial: 'summaries/shared/activities_form', locals: {customer: customer, activities_by_type: activities_by_type} %>
+      <%= render partial: 'form', locals: {customer: customer, activities_by_type: activities_by_type} %>
     </div>
   </section>
   <% end %>

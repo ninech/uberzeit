@@ -25,8 +25,7 @@ describe Summaries::Activity::BillabilityController do
 
       describe 'GET "index"' do
         it 'denies access' do
-          get :index
-          response.status.should == 403
+          expect { get :index }.to raise_error(CanCan::AccessDenied)
         end
       end
     end
@@ -38,8 +37,7 @@ describe Summaries::Activity::BillabilityController do
 
       describe 'GET "index"' do
         it 'grant access' do
-          get :index
-          response.status.should == 200
+          expect { get :index }.to_not raise_error(CanCan::AccessDenied)
         end
       end
     end
@@ -51,8 +49,7 @@ describe Summaries::Activity::BillabilityController do
 
       describe 'GET "index"' do
         it 'grant access' do
-          get :index
-          response.status.should == 200
+          expect { get :index }.to_not raise_error(CanCan::AccessDenied)
         end
       end
     end

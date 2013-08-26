@@ -199,7 +199,10 @@ describe ActivitiesController do
       it 'cannot alter a locked activity' do
         activity = FactoryGirl.create(:activity, user: user, description: 'Upgrading', locked: true)
         expect {
-          put :update, user_id: user.id, id: activity.id, activity: { description: 'Downgrading' }
+          begin
+            put :update, user_id: user.id, id: activity.id, activity: { description: 'Downgrading' }
+          rescue CanCan::AccessDenied
+          end
           activity.reload
         }.to_not change(activity, :description)
       end

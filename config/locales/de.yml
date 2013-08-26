@@ -297,9 +297,16 @@ de:
         index:
           title: Verrechenbarkeit
           unit: in Stunden:Minuten
-          changes_saved: Änderungen gespeichert
         table:
           is_billable: Verrechenbar?
+        form:
+            finish: Abschliessen
+      billing:
+        index:
+          title: Verrechnen
+          unit: in Stunden:Minuten
+        table:
+          is_billed: Verrechnet?
     shared:
       users_absence_table:
         total: Total
@@ -311,8 +318,6 @@ de:
         show: Anzeigen
         users: Mitarbeiter
         time_frame: Zeitraum
-      activities_form:
-          finish: Abschliessen
   time_entries:
     edit:
       edit_time: 'Zeit bearbeiten'

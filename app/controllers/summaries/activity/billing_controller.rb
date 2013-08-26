@@ -1,0 +1,26 @@
+class Summaries::Activity::BillingController < ApplicationController
+
+  before_filter :check_access
+
+  def index
+    @activities = ::Activity.accessible_by(current_ability)
+                            .where(billable: true, locked: true, billed: false)
+
+    # group activities so the result looks like this:
+    #  yolo_inc => { support => [a1, a2], maintenance => [a3] },
+    #  swag_ag => { support => [a4] }
+    @grouped_activities = {}
+    @activities.each do |a|
+      @grouped_activities[a.customer] ||= {}
+      @grouped_activities[a.customer][a.activity_type] ||= []
+      @grouped_activities[a.customer][a.activity_type] << a
+    end
+  end
+
+  private
+
+  def check_access
+    raise CanCan::AccessDenied unless current_user.admin?
+  end
+
+end

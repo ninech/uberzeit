@@ -34,7 +34,7 @@ $ ->
     duration_elements.each (index, duration_element) ->
       activity_id = $(duration_element).data('activity')
       effective_duration = $(duration_element).data('activity-duration')
-      billable = $("input[name=activity_billable_toggle][data-activity=#{activity_id}]").is(":checked")
+      billable = $("input[name=activity_toggle][data-activity=#{activity_id}]").is(":checked")
       sum += effective_duration if !filter_billable? || (filter_billable? && billable)
 
     $(sum_element).text window.formatDuration(sum)
@@ -45,10 +45,14 @@ $ ->
     $('[data-activity-sum-durations]').each (index, element) ->
       update_activity_sum element
 
-  $('input[name=activity_billable_toggle]').change ->
+  $('input[name=activity_toggle]').change ->
     ajax_indicator = $('<i class="icon-spinner icon-spin">')
     $(this).after(ajax_indicator)
-    update_activity $(this).data('action'), $(this).data('method'), { billable: $(this).is(':checked') }, =>
+
+    data = {}
+    data[$(this).data('attribute')] = $(this).is(':checked')
+
+    update_activity $(this).data('action'), $(this).data('method'), data, =>
       ajax_indicator.replaceWith ->
         $('<i class="icon-ok green-tick">').delay(ACTIVITY_FADE_TIME).fadeOut()
 
@@ -57,7 +61,7 @@ $ ->
   $('form[name=activity_billability]').submit ->
     # disable submit button
     $(this).find('input[type=submit]').hide()
-    activities = $(this).find('input[name="activity_billable_toggle"]')
+    activities = $(this).find('input[name="activity_toggle"]')
     activities.attr('disabled', 'disabled')
     activities.each (index, element) =>
       update_activity $(element).data('action'), $(element).data('method'), { locked: true }, =>
