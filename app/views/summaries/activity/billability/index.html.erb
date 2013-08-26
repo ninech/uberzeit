@@ -2,24 +2,7 @@
 
 <div class="content-summary row">
   <div class="small-12 columns">
-
-    <div class="section-container vertical-tabs" data-section="vertical-tabs">
-      <% @grouped_activities.each_pair do |customer, activities_by_type| %>
-      <section>
-        <p class="title" data-section-title>
-          <a href="#">
-            <span class="left customer-title"><%= customer %></span>
-            <span class="right customer-status"></span>
-          </a>
-        </p>
-        <div class="content" data-section-content>
-          <h1 class="left"><%= customer.name %></h1>
-          <%= render partial: 'activities_by_type', locals: {customer: customer, activities_by_type: activities_by_type} %>
-        </div>
-      </section>
-      <% end %>
-    </div>
-
+    <%= render partial: 'summaries/shared/activities_by_customer', locals: {activities_by_customer: @grouped_activities} %>
   </div>
 </div>
 
