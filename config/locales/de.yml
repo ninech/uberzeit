@@ -292,7 +292,14 @@ de:
           unit: in Tagen
           taken: 'Beansprucht im %{month} %{year}'
           remaining: 'Noch verfügbare Ferientage nach %{month} %{year}'
-
+    activity:
+      billability:
+        index:
+          title: Verrechenbarkeit
+          unit: in Stunden:Minuten
+          changes_saved: Änderungen gespeichert
+        table:
+          is_billable: Verrechenbar?
     shared:
       users_absence_table:
         total: Total
@@ -304,6 +311,8 @@ de:
         show: Anzeigen
         users: Mitarbeiter
         time_frame: Zeitraum
+      activities_form:
+          finish: Abschliessen
   time_entries:
     edit:
       edit_time: 'Zeit bearbeiten'

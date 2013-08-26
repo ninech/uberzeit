@@ -11,7 +11,8 @@ class Ability
 
       can :manage, TimeEntry, time_sheet: { user_id: user.id }
 
-      can :manage, Activity, user_id: user.id
+      can [:read, :create], Activity, user_id: user.id
+      can [:update, :destroy], Activity, user_id: user.id, locked: false
 
       can :read, Absence, time_sheet: { user_id: user.id }
       can :read, Adjustment, time_sheet: { user_id: user.id }
@@ -25,7 +26,9 @@ class Ability
         can :manage, TimeSheet, user_id: manageable_user_ids(user)
         can :manage, TimeEntry, time_sheet: { user_id: manageable_user_ids(user) }
         can :manage, Absence, time_sheet: { user_id: manageable_user_ids(user) }
-        can :manage, Activity, user_id: manageable_user_ids(user)
+
+        can [:read, :create], Activity, user_id: manageable_user_ids(user)
+        can [:update, :destroy, :lock], Activity, user_id: manageable_user_ids(user), locked: false
       end
 
       if user.admin?

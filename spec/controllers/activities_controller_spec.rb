@@ -3,7 +3,11 @@ require 'spec_helper'
 describe ActivitiesController do
   render_views
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:team) { FactoryGirl.create(:team) }
+
+  let(:user) { FactoryGirl.create(:user, teams: [team]) }
+  let(:team_leader) { FactoryGirl.create(:team_leader, teams: [team]) }
+  let(:admin) { FactoryGirl.create(:admin) }
 
   shared_examples 'correct duration handling' do
     it 'handles a float in hours' do
@@ -70,7 +74,7 @@ describe ActivitiesController do
       end
     end
 
-    describe 'POST "update"' do
+    describe 'PUT "update"' do
       let!(:activity) { FactoryGirl.create(:activity, user: user) }
       let(:customer) { FactoryGirl.create :customer }
       let(:activity_type) { FactoryGirl.create :activity_type }
@@ -95,12 +99,12 @@ describe ActivitiesController do
         end
 
         it 'redirects back' do
-          post :update, params
+          put :update, params
           response.should redirect_to(show_date_user_activities_path(user, date: date))
         end
 
         it 'changes the attributes' do
-          post :update, params
+          put :update, params
           activity.reload
           activity.customer_id.should == customer.id
           activity.activity_type_id.should == activity_type.id
@@ -111,9 +115,9 @@ describe ActivitiesController do
       end
     end
 
-    describe 'PUT "create"' do
-      let(:customer) { FactoryGirl.create :customer }
+    describe 'POST "create"' do
       let(:activity_type) { FactoryGirl.create :activity_type }
+      let(:customer) { FactoryGirl.create :customer }
       let(:date) { '1993-05-01' }
 
       context 'with valid parameters' do
@@ -134,13 +138,13 @@ describe ActivitiesController do
         end
 
         it 'redirects back' do
-          put :create, params
+          post :create, params
           response.should redirect_to(show_date_user_activities_path(user, date: date))
         end
 
         it 'creates an activity' do
           lambda do
-            put :create, params
+            post :create, params
           end.should change(Activity, :count).by(1)
         end
 
@@ -172,6 +176,69 @@ describe ActivitiesController do
           end.should raise_error(ActiveRecord::RecordNotFound)
         end
       end
+    end
+  end
+
+  describe 'attribute: locked' do
+    let(:activity_type) { FactoryGirl.create :activity_type }
+    let(:activity) { FactoryGirl.create(:activity, user: user) }
+
+    context 'as user' do
+      before do
+        test_sign_in user
+      end
+
+      it 'cannot update the attribute' do
+        activity = FactoryGirl.create(:activity, user: user)
+        expect {
+          put :update, user_id: user.id, id: activity.id, activity: { locked: true }
+          activity.reload
+        }.to_not change(activity, :locked)
+      end
+
+      it 'cannot alter a locked activity' do
+        activity = FactoryGirl.create(:activity, user: user, description: 'Upgrading', locked: true)
+        expect {
+          put :update, user_id: user.id, id: activity.id, activity: { description: 'Downgrading' }
+          activity.reload
+        }.to_not change(activity, :description)
+      end
+
+      it 'cannot create an activity with the attribute' do
+        post :create, user_id: user.id, activity: FactoryGirl.attributes_for(:activity, locked: true, activity_type_id: activity_type.id)
+        Activity.last.locked.should be_false
+      end
+    end
+
+    shared_examples :can_lock_activity do
+
+      it 'can update the attribute' do
+        expect {
+          put :update, user_id: user.id, id: activity.id, activity: { locked: true }
+          activity.reload
+        }.to change(activity, :locked).to(true)
+      end
+
+      it 'can create an activity with the attribute' do
+        post :create, user_id: user.id, activity: FactoryGirl.attributes_for(:activity, locked: true, activity_type_id: activity_type.id)
+        Activity.last.locked.should be_true
+      end
+    end
+
+    context 'as a teamleader' do
+      before do
+        test_sign_in team_leader
+      end
+
+      include_examples :can_lock_activity
+    end
+
+    context 'as a teamleader' do
+      before do
+        test_sign_in admin
+      end
+
+      include_examples :can_lock_activity
     end
   end
 
