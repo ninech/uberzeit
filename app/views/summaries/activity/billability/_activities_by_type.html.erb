@@ -4,7 +4,7 @@
       <table class="nice small-12 billability">
         <tbody>
         <% activities_by_type.each_pair do |type, activities| %>
-          <tr class="thead">
+          <tr>
             <th><%= type %></th>
             <th><span data-activity-sum-durations data-activity-sum-customer="<%= customer.id %>" data-activity-sum-type="<%= type.id %>"><%= format_duration(0) %></span></th>
             <th><%= t '.is_billable' %></th>

@@ -23,9 +23,12 @@ $ ->
     hide_zero = $(sum_element).data('activity-sum-hide-zero')
 
     duration_elements = $("[data-activity-duration]")
-    duration_elements = duration_elements.filter("[data-activity-type=#{type}]") if type?
-    duration_elements = duration_elements.filter("[data-activity-customer=#{customer}]") if customer?
-    duration_elements = duration_elements.filter("[data-activity=#{activity}]") if activity?
+    if type?
+      duration_elements = duration_elements.filter("[data-activity-type=#{type}]")
+    if customer?
+      duration_elements = duration_elements.filter("[data-activity-customer=#{customer}]")
+    if activity?
+      duration_elements = duration_elements.filter("[data-activity=#{activity}]")
 
     sum = 0
     duration_elements.each (index, duration_element) ->
@@ -43,7 +46,7 @@ $ ->
       update_activity_sum element
 
   $('input[name=activity_billable_toggle]').change ->
-    ajax_indicator = $('<i class="icon-spinner icon-spin ajax-ownage">')
+    ajax_indicator = $('<i class="icon-spinner icon-spin">')
     $(this).after(ajax_indicator)
     update_activity $(this).data('action'), $(this).data('method'), { billable: $(this).is(':checked') }, =>
       ajax_indicator.replaceWith ->
