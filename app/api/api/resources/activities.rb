@@ -9,7 +9,7 @@ class API::Resources::Activities < Grape::API
 
     desc 'Lists all activities'
     params do
-      optional :embed, type: Array, includes: %w[user]
+      optional :embed, type: Array, includes: %w[user project]
     end
     get do
       present @activities, with: API::Entities::Activity, embed: params[:embed]
@@ -18,7 +18,7 @@ class API::Resources::Activities < Grape::API
     desc 'Deletes an activity'
     params do
       requires :id, type: Integer, desc: 'Activity ID.'
-      optional :embed, type: Array, includes: %w[user]
+      optional :embed, type: Array, includes: %w[user project]
     end
     delete ':id' do
       present Activity.find(params[:id]).destroy, with: API::Entities::Activity, embed: params[:embed]
@@ -35,7 +35,7 @@ class API::Resources::Activities < Grape::API
       optional :redmine_ticket_id, type: Integer
       optional :otrs_ticket_id, type: Integer
 
-      optional :embed, type: Array, includes: %w[user]
+      optional :embed, type: Array, includes: %w[user project]
     end
     post do
 

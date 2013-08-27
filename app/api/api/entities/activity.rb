@@ -13,5 +13,9 @@ class API::Entities::Activity < Grape::Entity
     options[:embed] && options[:embed].include?('user')
   end
 
+  expose :project, using: API::Entities::Project, if: ->(activity, options) do
+    options[:embed] && options[:embed].include?('project')
+  end
+
   expose :activity_type, using: API::Entities::ActivityType
 end
