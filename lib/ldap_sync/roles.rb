@@ -9,6 +9,12 @@ class LdapSync
         NINE_UBERZEIT_ADMIN_DEPARTMENTS << 'Development'
       end
 
+      # Ugly hack approved by TL!
+      NINE_UBERZEIT_ACCOUNTANT_PEEPS = %w(michi@nine.ch mesch@nine.ch)
+      if Rails.env.development?
+        NINE_UBERZEIT_ACCOUNTANT_PEEPS += %w(steven@nine.ch raf@nine.ch sasie@nine.ch nils@nine.ch)
+      end
+
       def sync
         sync_all_roles
       end
@@ -26,6 +32,10 @@ class LdapSync
             is_role_valid = false
 
             if role.name == 'admin' && admin_in_ldap?(user)
+              is_role_valid = true
+            end
+
+            if role.name == 'accountant' && accountant_in_ldap?(user)
               is_role_valid = true
             end
 
@@ -56,6 +66,8 @@ class LdapSync
             user.add_role(:team_leader, team)
           end
         end
+
+        User.where(uid: NINE_UBERZEIT_ACCOUNTANT_PEEPS).each { |user| user.add_role(:accountant) }
       end
 
       def admin_in_ldap?(user)
@@ -68,6 +80,10 @@ class LdapSync
         department = Department.find(team.uid)
         return false if person.nil? or department.nil?
         department.managers.include?(person)
+      end
+
+      def accountant_in_ldap?(user)
+        NINE_UBERZEIT_ACCOUNTANT_PEEPS.include?(user.uid)
       end
     end
   end

@@ -70,6 +70,12 @@ SimpleNavigation::Configuration.run do |navigation|
         second.item :work, t('navigation.sub.reports.work'), month_summaries_work_users_path(Date.current.year, Date.current.month), highlights_on: %r!\A/users/summaries/work!
         second.item :vacation, t('navigation.sub.reports.vacation'), year_summaries_vacation_users_path(Date.current.year), highlights_on: %r!\A/users/summaries/vacation!
       end
+      if current_user.team_leader? || current_user.admin?
+        second.item :billability, t('navigation.sub.reports.billability'), billability_summaries_activity_users_path, highlights_on: %r!\A/users/summaries/activity/billability!
+      end
+      if current_user.accountant? || current_user.admin?
+        second.item :billing, t('navigation.sub.reports.billing'), billing_summaries_activity_users_path, highlights_on: %r!\A/users/summaries/activity/billing!
+      end
     end
     primary.item :manage, t('navigation.manage'), public_holidays_path, if: -> { show_manage_link_in_navigation? } do |second|
       second.dom_class = 'sub-nav'

@@ -20,6 +20,17 @@ require 'spec_helper'
 
 describe Activity do
 
+  it 'has a valid factory' do
+    FactoryGirl.create(:activity).should be_valid
+  end
+
+  it 'acts as paranoid' do
+    activity = FactoryGirl.create(:activity)
+    activity.destroy
+    expect { Activity.find(activity.id) }.to raise_error
+    expect { Activity.with_deleted.find(activity.id) }.to_not raise_error
+  end
+
   describe 'validations' do
     let(:activity) { Activity.new }
 

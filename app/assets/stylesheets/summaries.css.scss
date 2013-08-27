@@ -20,7 +20,7 @@
     }
 
     tr {
-      td:first-child {
+      td:first-child, th:first-child {
         text-align: left;
       }
     }
@@ -256,6 +256,23 @@
     //   -webkit-animation: planecrash 2s 1;
     // }
   }
+
+  table.billability, table.billing {
+    th, td {
+    }
+    th:first-child, td:first-child {
+      width: 25em;
+    }
+    td.billable, td.billed {
+      text-align: left;
+      width: 5em;
+
+      > div {
+        padding-left: 2.5em;
+      }
+    }
+  }
+
 }
 
 // Table emulation for summary tooltips

@@ -115,7 +115,6 @@ group :development do
   gem 'capistrano', '~> 2.13.0'
   gem 'capistrano-maintenance'
   gem 'version_bumper'
-  gem 'meta_request'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'sextant'

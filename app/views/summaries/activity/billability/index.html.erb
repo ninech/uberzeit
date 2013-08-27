@@ -1,0 +1,8 @@
+<%= render partial: 'summaries/shared/header', locals: {base_url: "/users/summaries/billability", title: t('.title'), unit: t('.unit'), show_form: false} %>
+
+<div class="content-summary row">
+  <div class="small-12 columns">
+    <%= render partial: 'summaries/shared/activities_by_customer', locals: {activities_by_customer: @grouped_activities} %>
+  </div>
+</div>
+
