@@ -204,6 +204,8 @@ de:
         work: Arbeitszeit Mitarbeiter
         absences: Absenzen Mitarbeiter
         vacation: Feriensaldo
+        billability: Verrechenbarkeit
+        billing: Verrechnung
   summaries:
     formats:
       date: '%e. %a.'
@@ -303,7 +305,7 @@ de:
             finish: Abschliessen
       billing:
         index:
-          title: Verrechnen
+          title: Verrechnung
           unit: in Stunden:Minuten
         table:
           is_billed: Verrechnet?

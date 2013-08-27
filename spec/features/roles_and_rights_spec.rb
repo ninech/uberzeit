@@ -281,6 +281,15 @@ describe 'Roles and Rights' do
         end
       end
 
+      context 'as accountant' do
+        let(:accountant) { FactoryGirl.create(:accountant) }
+        let(:current_user) { accountant }
+
+        describe 'summary menu' do
+          include_examples :menu_list, '.sub-nav > dd', ['Verrechnung'], []
+        end
+      end
+
       context 'as team leader' do
         let(:current_user) { team_leader }
 
@@ -289,7 +298,7 @@ describe 'Roles and Rights' do
         end
 
         describe 'summary menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo'], []
+          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo', 'Verrechenbarkeit'], []
         end
       end
 
@@ -301,7 +310,7 @@ describe 'Roles and Rights' do
         end
 
         describe 'summary menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo'], []
+          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo', 'Verrechenbarkeit', 'Verrechnung'], []
         end
       end
     end
