@@ -57,4 +57,18 @@ describe AbsencesHelper do
     end
   end
 
+  describe '#team_time_sheets_by_user' do
+    let!(:team) { FactoryGirl.create(:team) }
+    let!(:user) { FactoryGirl.create(:user, teams: [team]) }
+    let!(:another_team) { FactoryGirl.create(:team) }
+    let!(:another_user) { FactoryGirl.create(:user, teams: [another_team, team]) }
+
+    it 'finds time sheets from members of the same teams' do
+      team_time_sheets_by_user(user).should include(*another_user.time_sheets)
+    end
+
+    it 'will not return own time sheets' do
+      team_time_sheets_by_user(user).should_not include(*user.time_sheets)
+    end
+  end
 end

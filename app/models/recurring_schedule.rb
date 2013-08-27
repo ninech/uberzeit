@@ -22,7 +22,7 @@ class RecurringSchedule < ActiveRecord::Base
 
   has_many :exception_dates
 
-  attr_accessible   :active, :ends, :ends_counter, :ends_date, :enterable, :weekly_repeat_interval
+  attr_accessible :active, :ends, :ends_counter, :ends_date, :enterable, :weekly_repeat_interval
 
   ENDING_CONDITIONS = %w(counter date)
 

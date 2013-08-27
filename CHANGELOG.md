@@ -1,4 +1,13 @@
 
+1.5.15
+======
+Date:        2013-08-27
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/1.5.14...1.5.15
+
+  * Feature #7309 Widget: Heutige Abwesenheiten (Team-Status) (Steven Schmid)
+
+
 1.5.14
 ======
 Date:        2013-08-15

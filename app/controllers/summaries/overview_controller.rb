@@ -1,4 +1,5 @@
 class Summaries::OverviewController < ApplicationController
+  include AbsencesHelper
 
   load_and_authorize_resource :user
 
@@ -16,8 +17,8 @@ class Summaries::OverviewController < ApplicationController
     @month_total_work = accomplished_work_till_today
     @month_percent_done = 100 * @month_total_work / planned_work_whole_month
 
-    @personal_absences = get_personal_absences
-    @team_absences = Hash[get_team_absences.sort_by { |date, _| date }]
+    @personal_absences = find_personal_absences
+    @team_absences = Hash[find_team_absences.sort_by { |date, _| date }]
 
     @vacation_redeemed = time_sheet.vacation(current_year)
     @vacation_remaining = time_sheet.remaining_vacation(current_year)
@@ -25,33 +26,12 @@ class Summaries::OverviewController < ApplicationController
 
   private
 
-  def get_personal_absences
-    Hash.new.tap do |personal_absences|
-      find_time_chunks(@user.current_time_sheet.absences, range_of_absences) do |date, chunk|
-        personal_absences[date] ||= []
-        personal_absences[date] << chunk
-      end
-    end
+  def find_personal_absences
+    FindDailyAbsences.new(personal_time_sheets, range_of_absences).result
   end
 
-  def get_team_absences
-    Hash.new.tap do |team_absences|
-      time_sheets_from_team.each do |ts|
-        find_time_chunks(ts.absences, range_of_absences) do |date, chunk|
-          team_absences[date] ||= []
-          team_absences[date] << {user: ts.user, chunk: chunk}
-        end
-      end
-    end
-  end
-
-  def find_time_chunks(entries, range)
-    time_chunks_finder = FindTimeChunks.new(entries)
-    time_chunks_finder.in_range(range).each do |chunk|
-      chunk.range.to_date_range.each do |date|
-        yield(date, chunk)
-      end
-    end
+  def find_team_absences
+    FindDailyAbsences.new(team_time_sheets, range_of_absences).result
   end
 
   def range_of_absences
@@ -74,7 +54,12 @@ class Summaries::OverviewController < ApplicationController
     Date.today.year
   end
 
-  def time_sheets_from_team
-    @time_sheets_from_team ||= TimeSheet.joins(:user => :teams).where(memberships: {team_id: @user.teams}).uniq.where('users.id != ?', @user)
+  def personal_time_sheets
+    @personal_time_sheets ||= current_user.time_sheets
   end
+
+  def team_time_sheets
+    @team_time_sheets ||= team_time_sheets_by_user(current_user)
+  end
+
 end

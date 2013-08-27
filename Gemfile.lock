@@ -15,18 +15,8 @@ GIT
       multi_json (>= 1.3.2)
 
 GIT
-  remote: git://github.com/jonleighton/poltergeist.git
-  revision: c3c5106118b12a3180ecfa1b0628d98544b5adfd
-  branch: master
-  specs:
-    poltergeist (1.3.0)
-      capybara (~> 2.1.0)
-      multi_json (~> 1.0)
-      websocket-driver (>= 0.2.0)
-
-GIT
-  remote: git://github.com/ninech/grape.git
-  revision: b7b51e6043991d676c9a7f3eac4764094ef6d971
+  remote: git://github.com/intridea/grape.git
+  revision: 77d7262122e23d26290870086a5aa9193761a48a
   specs:
     grape (0.5.1)
       activesupport
@@ -38,6 +28,16 @@ GIT
       rack-accept
       rack-mount
       virtus
+
+GIT
+  remote: git://github.com/jonleighton/poltergeist.git
+  revision: c3c5106118b12a3180ecfa1b0628d98544b5adfd
+  branch: master
+  specs:
+    poltergeist (1.3.0)
+      capybara (~> 2.1.0)
+      multi_json (~> 1.0)
+      websocket-driver (>= 0.2.0)
 
 GIT
   remote: git@git.nine.ch:gems/uberlog
@@ -248,8 +248,8 @@ GEM
     method_source (0.8.2)
     mime-types (1.23)
     mini_portile (0.5.0)
-    multi_json (1.7.7)
-    multi_xml (0.5.4)
+    multi_json (1.7.9)
+    multi_xml (0.5.5)
     multipart-post (1.2.0)
     mysql2 (0.3.11)
     net-ldap (0.2.2)
