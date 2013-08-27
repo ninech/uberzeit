@@ -1,4 +1,14 @@
 
+1.5.16
+======
+Date:        2013-08-27
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/1.5.15...1.5.16
+
+  * Feature #7381 Auswertung "Verrechnet" (Steven Schmid)
+  * Feature #7149 Report Verrechenbarkeit (Steven Schmid)
+
+
 1.5.15
 ======
 Date:        2013-08-27
