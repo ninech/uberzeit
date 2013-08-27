@@ -1,6 +1,6 @@
 class Summaries::Activity::BillabilityController < ApplicationController
 
-  before_filter :check_access
+  authorize_resource class: false
 
   def index
     @activities = ::Activity.accessible_by(current_ability)
@@ -15,12 +15,6 @@ class Summaries::Activity::BillabilityController < ApplicationController
       @grouped_activities[a.customer][a.activity_type] ||= []
       @grouped_activities[a.customer][a.activity_type] << a
     end
-  end
-
-  private
-
-  def check_access
-    raise CanCan::AccessDenied unless current_user.admin? or current_user.team_leader?
   end
 
 end

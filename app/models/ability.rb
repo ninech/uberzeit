@@ -29,6 +29,14 @@ class Ability
 
         can [:read, :create], Activity, user_id: manageable_user_ids(user)
         can [:update, :destroy, :lock], Activity, user_id: manageable_user_ids(user), locked: false
+
+        can :manage, :billability
+        can :manage, :vacation # summary
+        can :manage, :work # summary
+      end
+
+      if user.accountant?
+        can :manage, :billing
       end
 
       if user.admin?

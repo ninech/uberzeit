@@ -6,6 +6,7 @@ describe Summaries::Activity::BillingController do
   let(:user) { FactoryGirl.create(:user) }
   let(:team_leader) { FactoryGirl.create(:team_leader) }
   let(:admin) { FactoryGirl.create(:admin) }
+  let(:accountant) { FactoryGirl.create(:accountant) }
 
   describe 'access' do
     context 'for non-signed in users' do
@@ -46,6 +47,18 @@ describe Summaries::Activity::BillingController do
 
       describe 'GET "index"' do
         it 'grant access' do
+          expect { get :index }.to_not raise_error(CanCan::AccessDenied)
+        end
+      end
+    end
+
+    context 'for signed-in accountants' do
+      before do
+        test_sign_in accountant
+      end
+
+      describe 'GET "index"' do
+        it 'grants access' do
           expect { get :index }.to_not raise_error(CanCan::AccessDenied)
         end
       end

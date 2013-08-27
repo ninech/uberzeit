@@ -36,7 +36,7 @@ describe Summaries::Activity::BillabilityController do
       end
 
       describe 'GET "index"' do
-        it 'grant access' do
+        it 'grants access' do
           expect { get :index }.to_not raise_error(CanCan::AccessDenied)
         end
       end
@@ -48,7 +48,7 @@ describe Summaries::Activity::BillabilityController do
       end
 
       describe 'GET "index"' do
-        it 'grant access' do
+        it 'grants access' do
           expect { get :index }.to_not raise_error(CanCan::AccessDenied)
         end
       end

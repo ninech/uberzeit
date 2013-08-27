@@ -18,6 +18,10 @@ FactoryGirl.define do
       after(:create) { |user| user.add_role(:admin) }
     end
 
+    factory :accountant do
+      after(:create) { |user| user.add_role(:accountant) }
+    end
+
     factory :team_leader do
       after(:create) { |user| user.teams.each { |team| user.add_role(:team_leader, team) } }
     end

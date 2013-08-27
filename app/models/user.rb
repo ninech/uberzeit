@@ -93,6 +93,10 @@ class User < ActiveRecord::Base
     has_role?(:admin)
   end
 
+  def accountant?
+    has_role?(:accountant)
+  end
+
   def ability
     @ability ||= Ability.new(self)
   end
