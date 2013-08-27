@@ -1,0 +1,7 @@
+<div class="row">
+  <div class="small-12 columns">
+    <%= form_tag '#', name: 'activity_billing' do %>
+      <%= render partial: 'table', locals: {customer: customer, activities_by_type: activities_by_type} %>
+    <% end %>
+  </div>
+</div>

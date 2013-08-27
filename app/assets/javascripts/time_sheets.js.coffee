@@ -41,45 +41,50 @@ $(document).on 'keyup change', '#time_entry_end_time, #time_entry_start_time', -
 
   $(".time-difference").html(value)
 
+# global functions
+window.formatDuration = (duration_in_seconds) ->
+  duration = moment.duration(duration_in_seconds, 'seconds')
+  hours = Math.floor(duration.asHours())
+  minutes = duration.minutes()
+  prefix = ""
+
+  if hours < 0
+    hours = hours * -1
+    prefix = "−"
+
+  if minutes < 0
+    minutes = minutes * -1
+    prefix = "−"
+
+  if hours < 10
+    hours = "0#{hours}"
+
+  if minutes < 10
+    minutes = "0#{minutes}"
+
+  "#{prefix}#{hours}:#{minutes}"
+
+window.timeDiff = (start_time, end_time, start_date, end_date, countdown = true) ->
+  if typeof start_date == 'undefined'
+    start_date = moment().format('YYYY-MM-DD')
+
+  if typeof end_date == 'undefined'
+    end_date = moment().format('YYYY-MM-DD')
+
+  start = moment("#{start_date} #{start_time}")
+  end   = moment("#{end_date} #{end_time}")
+
+  if start >= end && countdown == false
+    end.add('days', 1)
+
+  delta = end.diff(start, 'seconds')
+
+  formatDuration delta
+
 $ ->
   # Do not put event listeners inside here (they will add up through turbolinks)
 
-  # global functions
-  window.timeDiff = (start_time, end_time, start_date, end_date, countdown = true) ->
-    if typeof start_date == 'undefined'
-      start_date = moment().format('YYYY-MM-DD')
-
-    if typeof end_date == 'undefined'
-      end_date = moment().format('YYYY-MM-DD')
-
-
-    start = moment("#{start_date} #{start_time}")
-    end   = moment("#{end_date} #{end_time}")
-
-    if start >= end && countdown == false
-      end.add('days', 1)
-
-    diffHours = Math.floor(moment.duration(end.diff(start)).asHours())
-    diffMinutes = moment.duration(end.diff(start)).minutes()
-    prefix = ""
-
-    if diffHours < 0
-      diffHours = diffHours * -1
-      prefix = "−"
-
-    if diffMinutes < 0
-      diffMinutes = diffMinutes * -1
-      prefix = "−"
-
-    if diffHours < 10
-      diffHours = "0#{diffHours}"
-
-    if diffMinutes < 10
-      diffMinutes = "0#{diffMinutes}"
-
-    "#{prefix}#{diffHours}:#{diffMinutes}"
-
-  window.updateTimes = ->
+  updateTimes = ->
     if $('.ajax.summary_for_date').length
       $.getJSON $('.ajax.summary_for_date').attr('href'), (data) ->
         # title bar

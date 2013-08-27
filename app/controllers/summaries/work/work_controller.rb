@@ -4,7 +4,7 @@ class Summaries::Work::WorkController < ApplicationController
   before_filter :set_teams
   before_filter :set_year
 
-  before_filter :check_access
+  authorize_resource class: false
 
   def year
     @year = params[:year].to_i
@@ -18,10 +18,6 @@ class Summaries::Work::WorkController < ApplicationController
   end
 
   private
-
-  def check_access
-    raise CanCan::AccessDenied unless current_user.admin? or current_user.team_leader?
-  end
 
   def set_team
     # this workaround where first thingy can be removed when this app runs on rails 4

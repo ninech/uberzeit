@@ -312,4 +312,74 @@ describe Ability do
       it { should_not be_able_to(:destroy, activity_type) }
     end
   end
+
+  describe 'Activity' do
+
+    let(:activity) { FactoryGirl.create(:activity, user: user) }
+
+    context 'as a user with the administration role' do
+      let(:ability) { Ability.new(admin) }
+
+      it { should be_able_to(:read, activity) }
+      it { should be_able_to(:update, activity) }
+      it { should be_able_to(:destroy, activity) }
+    end
+
+    context 'as another team leader' do
+      let(:another_team_leader) { FactoryGirl.create(:team_leader) }
+
+      let(:ability) { Ability.new(another_team_leader) }
+
+      it { should_not be_able_to(:read, activity) }
+      it { should_not be_able_to(:update, activity) }
+      it { should_not be_able_to(:destroy, activity) }
+    end
+
+    context 'as the team leader' do
+      let(:ability) { Ability.new(team_leader) }
+
+      context 'activity unlocked' do
+        it { should be_able_to(:read, activity) }
+        it { should be_able_to(:update, activity) }
+        it { should be_able_to(:destroy, activity) }
+      end
+
+      context 'activity locked' do
+        let(:activity) { FactoryGirl.create(:activity, user: user, locked: true) }
+
+        it { should be_able_to(:read, activity) }
+        it { should_not be_able_to(:update, activity) }
+        it { should_not be_able_to(:destroy, activity) }
+      end
+    end
+
+    context 'as the owner' do
+      let(:ability) { Ability.new(user) }
+
+      it { should be_able_to(:create, Activity) }
+
+      context 'activity unlocked' do
+        it { should be_able_to(:read, activity) }
+        it { should be_able_to(:update, activity) }
+        it { should be_able_to(:destroy, activity) }
+      end
+
+      context 'activity locked' do
+        let(:activity) { FactoryGirl.create(:activity, user: user, locked: true) }
+
+        it { should be_able_to(:read, activity) }
+        it { should_not be_able_to(:update, activity) }
+        it { should_not be_able_to(:destroy, activity) }
+      end
+    end
+
+    context 'as another user' do
+      let(:ability) { Ability.new(FactoryGirl.create(:user)) }
+
+      it { should_not be_able_to(:read, activity) }
+      it { should_not be_able_to(:update, activity) }
+      it { should_not be_able_to(:destroy, activity) }
+    end
+  end
+
 end

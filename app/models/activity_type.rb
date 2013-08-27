@@ -19,4 +19,8 @@ class ActivityType < ActiveRecord::Base
   validates :name, presence: true
 
   default_scope order(:name)
+
+  def to_s
+    name
+  end
 end
