@@ -1,4 +1,6 @@
 class Summaries::OverviewController < ApplicationController
+  include AbsencesHelper
+
   load_and_authorize_resource :user
 
   def index
@@ -15,8 +17,8 @@ class Summaries::OverviewController < ApplicationController
     @month_total_work = accomplished_work_till_today
     @month_percent_done = 100 * @month_total_work / planned_work_whole_month
 
-    @personal_absences = get_personal_absences
-    @team_absences = Hash[get_team_absences.sort_by { |date, _| date }]
+    @personal_absences = find_personal_absences
+    @team_absences = Hash[find_team_absences.sort_by { |date, _| date }]
 
     @vacation_redeemed = time_sheet.vacation(current_year)
     @vacation_remaining = time_sheet.remaining_vacation(current_year)
@@ -24,16 +26,12 @@ class Summaries::OverviewController < ApplicationController
 
   private
 
-  def find_absences
-    @find_absences ||= FindAbsences.new(current_user, range_of_absences)
+  def find_personal_absences
+    FindDailyAbsences.new(personal_time_sheets, range_of_absences).result
   end
 
-  def get_personal_absences
-    find_absences.personal_absences
-  end
-
-  def get_team_absences
-    find_absences.team_absences
+  def find_team_absences
+    FindDailyAbsences.new(team_time_sheets, range_of_absences).result
   end
 
   def range_of_absences
@@ -55,4 +53,13 @@ class Summaries::OverviewController < ApplicationController
   def current_year
     Date.today.year
   end
+
+  def personal_time_sheets
+    @personal_time_sheets ||= current_user.time_sheets
+  end
+
+  def team_time_sheets
+    @team_time_sheets ||= team_time_sheets_by_user(current_user)
+  end
+
 end
