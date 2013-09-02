@@ -207,6 +207,7 @@ de:
         vacation: Feriensaldo
         billability: Verrechenbarkeit
         billing: Verrechnung
+        comparison: Vergleich
   summaries:
     formats:
       date: '%e. %a.'
@@ -310,6 +311,12 @@ de:
           unit: in Stunden:Minuten
         table:
           is_billed: Verrechnet?
+      comparison:
+        index:
+          title: Vergleich Präsenzzeit/Aktivitätszeit
+          chart:
+            time_entries: Präsenzzeit
+            activities: Aktivitätszeit
     shared:
       users_absence_table:
         total: Total

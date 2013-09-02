@@ -80,6 +80,7 @@ SimpleNavigation::Configuration.run do |navigation|
       if ability.can? :manage, :billing
         second.item :billing, t('navigation.sub.reports.billing'), billing_summaries_activity_users_path, highlights_on: %r!\A/users/summaries/activity/billing!
       end
+      second.item :comparison, t('navigation.sub.reports.comparison'), user_summaries_activity_comparison_path(current_user, Date.current.year, Date.current.month), highlights_on: %r!\A/users/\d*/summaries/activity/comparison!
     end
     primary.item :manage, t('navigation.manage'), projects_path, if: -> { show_manage_link_in_navigation? } do |second|
       second.dom_class = 'sub-nav'
