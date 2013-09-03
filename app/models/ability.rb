@@ -33,6 +33,8 @@ class Ability
         can :manage, :billability
         can :manage, :vacation # summary
         can :manage, :work # summary
+
+        can :manage, Project
       end
 
       if user.accountant?

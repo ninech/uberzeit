@@ -25,7 +25,7 @@ module ApplicationHelper
   end
 
   def show_manage_link_in_navigation?
-    can?(:manage, TimeType) || can?(:manage, Employment) || can?(:manage, PublicHoliday)
+    can?(:manage, TimeType) || can?(:manage, Employment) || can?(:manage, PublicHoliday) || can?(:manage, Project)
   end
 
   def color_for_duration(duration)
