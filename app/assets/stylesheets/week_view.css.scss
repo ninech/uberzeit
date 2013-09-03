@@ -142,6 +142,11 @@
           font-weight: 300;
           font-size: 0.8em;
           margin-left: 10px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          max-width: 200px;
+          display: inline-block;
         }
       }
     }
