@@ -52,7 +52,7 @@ class API::User::Resources::Activities < Grape::API
         redmine_ticket_id: params[:redmine_ticket_id],
         otrs_ticket_id: params[:otrs_ticket_id],
         user_id: current_user.id,
-        billable: params[:billable]
+        billable: !!params[:billable]
       )
       present activity, with: API::User::Entities::Activity, embed: params[:embed]
     end
