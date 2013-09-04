@@ -27,9 +27,11 @@
                   <% end %>
                 </div>
                 <div class="right">
-                  <a href='#' class="edit-entry remote-reveal" data-reveal-id="activity-modal" data-reveal-url="<%= edit_user_activity_path(@user, activity) %>">
-                    <%= icon(:edit) %>
-                  </a>
+                  <% unless activity.locked? %>
+                    <a href='#' class="edit-entry remote-reveal" data-reveal-id="activity-modal" data-reveal-url="<%= edit_user_activity_path(@user, activity) %>">
+                      <%= icon(:edit) %>
+                    </a>
+                  <% end %>
                   <%= format_duration(activity.duration) %>
                 </div>
               </li>
