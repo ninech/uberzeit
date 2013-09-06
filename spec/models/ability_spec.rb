@@ -24,7 +24,7 @@ describe Ability do
     context 'as another user' do
       let(:ability) { Ability.new(FactoryGirl.create(:user)) }
 
-      it { should be_able_to(:read, user) }
+      it { should_not be_able_to(:read, user) }
       it { should_not be_able_to(:update, user) }
       it { should_not be_able_to(:create, User) }
       it { should_not be_able_to(:destroy, user) }
