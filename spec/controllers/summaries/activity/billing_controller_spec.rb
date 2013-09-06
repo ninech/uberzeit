@@ -74,8 +74,8 @@ describe Summaries::Activity::BillingController do
 
     let!(:upgrade_hard_disk) { FactoryGirl.create(:activity, user: user, duration: 2.hours, activity_type: support, customer: swag_ag, billable: false) }
     let!(:reboot_server) { FactoryGirl.create(:activity, user: user, duration: 5.minutes, activity_type: maintenance, customer: swag_ag, billable: true) }
-    let!(:swap_ram_module) { FactoryGirl.create(:activity, user: user, duration: 30.minutes, activity_type: support, customer: yolo_inc, billable: true, locked: true) }
-    let!(:exchange_power_supply) { FactoryGirl.create(:activity, user: user, duration: 15.minutes, activity_type: support, customer: yolo_inc, billable: true, locked: true, billed: true) }
+    let!(:swap_ram_module) { FactoryGirl.create(:activity, user: user, duration: 30.minutes, activity_type: support, customer: yolo_inc, billable: true, reviewed: true) }
+    let!(:exchange_power_supply) { FactoryGirl.create(:activity, user: user, duration: 15.minutes, activity_type: support, customer: yolo_inc, billable: true, reviewed: true, billed: true) }
 
     describe 'index' do
       context 'as admin' do
@@ -83,7 +83,7 @@ describe Summaries::Activity::BillingController do
           test_sign_in admin
         end
 
-        it 'loads all yet unbilled activities (billable & locked)' do
+        it 'loads all yet unbilled activities (billable & reviewed)' do
           get :index
           assigns(:activities).should eq [swap_ram_module]
         end

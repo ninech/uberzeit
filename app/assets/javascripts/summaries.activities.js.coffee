@@ -64,7 +64,7 @@ $ ->
     activities = $(this).find('input[name="activity_toggle"]')
     activities.attr('disabled', 'disabled')
     activities.each (index, element) =>
-      update_activity $(element).data('action'), $(element).data('method'), { locked: true }, =>
+      update_activity $(element).data('action'), $(element).data('method'), { reviewed: true }, =>
         $(element).closest('tr').fadeTo(ACTIVITY_FADE_TIME, ACTIVITY_FADE_TO_OPACITY)
 
     section = $(this).closest('section')
