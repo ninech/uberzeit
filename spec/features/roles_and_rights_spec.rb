@@ -286,7 +286,7 @@ describe 'Roles and Rights' do
         let(:current_user) { accountant }
 
         describe 'summary menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Verrechnung'], []
+          include_examples :menu_list, '.sub-nav > dd', ['Verrechenbarkeit', 'Verrechnung'], []
         end
       end
 

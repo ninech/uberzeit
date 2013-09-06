@@ -179,7 +179,7 @@ describe ActivitiesController do
     end
   end
 
-  describe 'attribute: locked' do
+  describe 'attribute: reviewed' do
     let(:activity_type) { FactoryGirl.create :activity_type }
     let(:activity) { FactoryGirl.create(:activity, user: user) }
 
@@ -191,13 +191,13 @@ describe ActivitiesController do
       it 'cannot update the attribute' do
         activity = FactoryGirl.create(:activity, user: user)
         expect {
-          put :update, user_id: user.id, id: activity.id, activity: { locked: true }
+          put :update, user_id: user.id, id: activity.id, activity: { reviewed: true }
           activity.reload
-        }.to_not change(activity, :locked)
+        }.to_not change(activity, :reviewed)
       end
 
-      it 'cannot alter a locked activity' do
-        activity = FactoryGirl.create(:activity, user: user, description: 'Upgrading', locked: true)
+      it 'cannot alter a reviewed activity' do
+        activity = FactoryGirl.create(:activity, user: user, description: 'Upgrading', reviewed: true)
         expect {
           begin
             put :update, user_id: user.id, id: activity.id, activity: { description: 'Downgrading' }
@@ -208,23 +208,22 @@ describe ActivitiesController do
       end
 
       it 'cannot create an activity with the attribute' do
-        post :create, user_id: user.id, activity: FactoryGirl.attributes_for(:activity, locked: true, activity_type_id: activity_type.id)
-        Activity.last.locked.should be_false
+        post :create, user_id: user.id, activity: FactoryGirl.attributes_for(:activity, reviewed: true, activity_type_id: activity_type.id)
+        Activity.last.reviewed.should be_false
       end
     end
 
-    shared_examples :can_lock_activity do
-
+    shared_examples :can_review_activity do
       it 'can update the attribute' do
         expect {
-          put :update, user_id: user.id, id: activity.id, activity: { locked: true }
+          put :update, user_id: user.id, id: activity.id, activity: { reviewed: true }
           activity.reload
-        }.to change(activity, :locked).to(true)
+        }.to change(activity, :reviewed).to(true)
       end
 
       it 'can create an activity with the attribute' do
-        post :create, user_id: user.id, activity: FactoryGirl.attributes_for(:activity, locked: true, activity_type_id: activity_type.id)
-        Activity.last.locked.should be_true
+        post :create, user_id: user.id, activity: FactoryGirl.attributes_for(:activity, reviewed: true, activity_type_id: activity_type.id)
+        Activity.last.reviewed.should be_true
       end
     end
 
@@ -233,7 +232,7 @@ describe ActivitiesController do
         test_sign_in team_leader
       end
 
-      include_examples :can_lock_activity
+      include_examples :can_review_activity
     end
 
     context 'as a teamleader' do
@@ -241,7 +240,7 @@ describe ActivitiesController do
         test_sign_in admin
       end
 
-      include_examples :can_lock_activity
+      include_examples :can_review_activity
     end
   end
 

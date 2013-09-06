@@ -53,6 +53,8 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>.
     #
 
+    ability = Ability.new(current_user)
+
     primary.item :timesheet, t('navigation.time_tracking'), time_sheet_path(current_user.current_time_sheet), highlights_on: %r!\A/(time_sheets/\d+|users/\d+/activities)(/date/[\w-]+)?\z! do |second|
       second.dom_class = 'sub-nav'
       second.item :timesheet, t('navigation.timesheet'), show_date_time_sheet_path(current_user.current_time_sheet, date: @day || Time.now), highlights_on: %r!\A/time_sheets/\d+(/date/[\w-]+)?\z!
@@ -66,14 +68,16 @@ SimpleNavigation::Configuration.run do |navigation|
       second.item :my_work, t('navigation.sub.reports.my_work'), user_summaries_work_month_path(current_user, Date.current.year, Date.current.month), highlights_on: %r!\A/users/\d*/summaries/work!
       second.item :my_absence, t('navigation.sub.reports.my_absence'), user_summaries_absence_year_path(current_user, Date.current.year), highlights_on: %r!\A/users/\d*/summaries/absence!
       second.item :absences, t('navigation.sub.reports.absences'), calendar_summaries_absence_users_path(Date.current.year, Date.current.month), highlights_on: %r!\A/users/summaries/absence!
-      if current_user.team_leader? || current_user.admin?
+      if ability.can? :manage, :work
         second.item :work, t('navigation.sub.reports.work'), month_summaries_work_users_path(Date.current.year, Date.current.month), highlights_on: %r!\A/users/summaries/work!
+      end
+      if ability.can? :manage, :vacation
         second.item :vacation, t('navigation.sub.reports.vacation'), year_summaries_vacation_users_path(Date.current.year), highlights_on: %r!\A/users/summaries/vacation!
       end
-      if current_user.team_leader? || current_user.admin?
+      if ability.can? :manage, :billability
         second.item :billability, t('navigation.sub.reports.billability'), billability_summaries_activity_users_path, highlights_on: %r!\A/users/summaries/activity/billability!
       end
-      if current_user.accountant? || current_user.admin?
+      if ability.can? :manage, :billing
         second.item :billing, t('navigation.sub.reports.billing'), billing_summaries_activity_users_path, highlights_on: %r!\A/users/summaries/activity/billing!
       end
     end

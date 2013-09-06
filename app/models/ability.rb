@@ -3,23 +3,23 @@ class Ability
 
   def initialize(user)
     if user
+      can :read, Project
+      can :read, ActivityType
+      can :read, TimeType
+
       can [:read, :update], User, id: user.id
       can :read, Employment, user_id: user.id
 
-      can :read, TimeType
       can :manage, TimeSheet, user_id: user.id
-
       can :manage, TimeEntry, time_sheet: { user_id: user.id }
-
-      can [:read, :create], Activity, user_id: user.id
-      can [:update, :destroy], Activity, user_id: user.id, locked: false
-
       can :read, Absence, time_sheet: { user_id: user.id }
       can :read, Adjustment, time_sheet: { user_id: user.id }
-      can :read, Project
-      can :read, ActivityType
+
+      can [:read, :create, :update, :destroy], Activity, user_id: user.id
+      cannot [:update, :destroy], Activity, user_id: user.id, reviewed: true
 
       if user.team_leader?
+
         can :read, Team, id: manageable_team_ids(user)
         can :read, User, id: manageable_user_ids(user)
 
@@ -27,18 +27,23 @@ class Ability
         can :manage, TimeEntry, time_sheet: { user_id: manageable_user_ids(user) }
         can :manage, Absence, time_sheet: { user_id: manageable_user_ids(user) }
 
-        can [:read, :create], Activity, user_id: manageable_user_ids(user)
-        can [:update, :destroy, :lock], Activity, user_id: manageable_user_ids(user), locked: false
+        can [:read, :create, :update, :destroy, :review], Activity, user_id: manageable_user_ids(user)
+        cannot [:update, :destroy], Activity, user_id: manageable_user_ids(user), reviewed: true
+
+        can :manage, :vacation
+        can :manage, :work
 
         can :manage, :billability
-        can :manage, :vacation # summary
-        can :manage, :work # summary
 
         can :manage, Project
       end
 
       if user.accountant?
+        can :manage, :billability
         can :manage, :billing
+
+        can :read, User
+        can [:read, :update, :review], Activity
       end
 
       if user.admin?
