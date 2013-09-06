@@ -1,5 +1,13 @@
 
-7487-activity-lock
+1.5.18
+======
+Date:        2013-09-06
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/1.5.17...1.5.18
+
+
+
+1.5.17
 ==================
 Date:        2013-09-06
 Released by: Steven Schmid
