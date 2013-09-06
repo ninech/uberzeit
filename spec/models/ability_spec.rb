@@ -24,7 +24,7 @@ describe Ability do
     context 'as another user' do
       let(:ability) { Ability.new(FactoryGirl.create(:user)) }
 
-      it { should_not be_able_to(:read, user) }
+      it { should be_able_to(:read, user) }
       it { should_not be_able_to(:update, user) }
       it { should_not be_able_to(:create, User) }
       it { should_not be_able_to(:destroy, user) }
@@ -338,14 +338,14 @@ describe Ability do
     context 'as the team leader' do
       let(:ability) { Ability.new(team_leader) }
 
-      context 'activity unlocked' do
+      context 'activity unreviewed' do
         it { should be_able_to(:read, activity) }
         it { should be_able_to(:update, activity) }
         it { should be_able_to(:destroy, activity) }
       end
 
-      context 'activity locked' do
-        let(:activity) { FactoryGirl.create(:activity, user: user, locked: true) }
+      context 'activity reviewed' do
+        let(:activity) { FactoryGirl.create(:activity, user: user, reviewed: true) }
 
         it { should be_able_to(:read, activity) }
         it { should_not be_able_to(:update, activity) }
@@ -358,14 +358,14 @@ describe Ability do
 
       it { should be_able_to(:create, Activity) }
 
-      context 'activity unlocked' do
+      context 'activity unreviewed' do
         it { should be_able_to(:read, activity) }
         it { should be_able_to(:update, activity) }
         it { should be_able_to(:destroy, activity) }
       end
 
-      context 'activity locked' do
-        let(:activity) { FactoryGirl.create(:activity, user: user, locked: true) }
+      context 'activity reviewed' do
+        let(:activity) { FactoryGirl.create(:activity, user: user, reviewed: true) }
 
         it { should be_able_to(:read, activity) }
         it { should_not be_able_to(:update, activity) }
@@ -378,6 +378,14 @@ describe Ability do
 
       it { should_not be_able_to(:read, activity) }
       it { should_not be_able_to(:update, activity) }
+      it { should_not be_able_to(:destroy, activity) }
+    end
+
+    context 'as accountant' do
+      let(:ability) { Ability.new(FactoryGirl.create(:accountant)) }
+
+      it { should be_able_to(:read, activity) }
+      it { should be_able_to(:update, activity) }
       it { should_not be_able_to(:destroy, activity) }
     end
   end

@@ -4,7 +4,7 @@ class Summaries::Activity::BillabilityController < ApplicationController
 
   def index
     @activities = ::Activity.accessible_by(current_ability)
-                            .where(locked: false)
+                            .where(reviewed: false)
 
     # group activities so the result looks like this:
     #  yolo_inc => { support => [a1, a2], maintenance => [a3] },

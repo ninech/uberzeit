@@ -5,7 +5,8 @@ class ActivitiesController < ApplicationController
 
   respond_to :html, :json, :js
 
-  before_filter :remove_locked_attribute, only: [:update, :create], unless: :can_lock_an_activity?
+  # TODO: switch to strong parameters
+  before_filter :remove_reviewed_attribute, only: [:update, :create], unless: :can_review_an_activity?
 
   load_and_authorize_resource :user
   load_and_authorize_resource :activity, through: :user
@@ -84,11 +85,11 @@ class ActivitiesController < ApplicationController
     @activity_types = ActivityType.all
   end
 
-  def remove_locked_attribute
-    params[:activity].delete(:locked)
+  def remove_reviewed_attribute
+    params[:activity].delete(:reviewed)
   end
 
-  def can_lock_an_activity?
-    can? :lock, @activity || Activity
+  def can_review_an_activity?
+    can? :review, @activity || Activity
   end
 end
