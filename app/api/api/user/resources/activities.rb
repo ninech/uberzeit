@@ -36,6 +36,7 @@ class API::User::Resources::Activities < Grape::API
       optional :project_id, type: Integer
       optional :redmine_ticket_id, type: Integer
       optional :otrs_ticket_id, type: Integer
+      optional :billable, type: Boolean, desc: 'Mark as billable'
 
       optional :embed, type: Array, includes: %w[user project]
     end
@@ -50,7 +51,8 @@ class API::User::Resources::Activities < Grape::API
         project_id: params[:project_id],
         redmine_ticket_id: params[:redmine_ticket_id],
         otrs_ticket_id: params[:otrs_ticket_id],
-        user_id: current_user.id
+        user_id: current_user.id,
+        billable: !!params[:billable]
       )
       present activity, with: API::User::Entities::Activity, embed: params[:embed]
     end

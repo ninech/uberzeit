@@ -19,6 +19,7 @@ class Ability
       cannot [:update, :destroy], Activity, user_id: user.id, reviewed: true
 
       if user.team_leader?
+
         can :read, Team, id: manageable_team_ids(user)
         can :read, User, id: manageable_user_ids(user)
 
@@ -33,6 +34,8 @@ class Ability
         can :manage, :work
 
         can :manage, :billability
+
+        can :manage, Project
       end
 
       if user.accountant?

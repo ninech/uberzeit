@@ -18,6 +18,13 @@
   </div>
 </div>
 
+
+<div class="row">
+  <div class="small-12 columns">
+    <%= f.check_box :billable %>
+  </div>
+</div>
+
 <div class="row">
   <div class="small-4 columns">
     <%= f.text_field :duration, value: display_in_hours(@activity.duration) %>

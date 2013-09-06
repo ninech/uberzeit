@@ -294,7 +294,7 @@ describe 'Roles and Rights' do
         let(:current_user) { team_leader }
 
         describe 'main menu' do
-          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte'], ['Verwalten']
+          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte', 'Verwalten'], []
         end
 
         describe 'summary menu' do
