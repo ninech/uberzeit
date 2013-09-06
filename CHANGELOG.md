@@ -1,4 +1,13 @@
 
+7487-activity-lock
+==================
+Date:        2013-09-06
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/1.5.16...7487-activity-lock
+
+  * Bug #7487 Activity-Lock fehlerhaft (Steven Schmid)
+
+
 1.5.16
 ======
 Date:        2013-08-27
