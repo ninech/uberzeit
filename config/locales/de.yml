@@ -18,6 +18,7 @@ de:
         redmine_ticket_id: 'Redmine #'
         otrs_ticket_id: 'OTRS #'
         customer_id: 'Kunde'
+        billable: 'Verrechenbar'
       time_entry:
         start_time: Von
         end_time: Bis
