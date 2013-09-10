@@ -1,0 +1,11 @@
+<%= render(partial: 'shared/user_select', locals: { link_generator: :user_summaries_activity_comparison_path, selected_user: @user }) %>
+
+<%= render partial: 'summaries/shared/header', locals: {base_url: "/users/#{@user.id}/summaries/activity/comparison/:year", title: t('.title'), unit: ''} %>
+
+<div class="content-summary row">
+  <div class="small-12 columns">
+    <div id="chart" data-time-entries="<%= @data_points[:time_entries].to_json %>" data-activities="<%= @data_points[:activities].to_json %>">
+      <svg style="height:400px"> </svg>
+    </div>
+  </div>
+</div>

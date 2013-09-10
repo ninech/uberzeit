@@ -56,6 +56,9 @@ Uberzeit::Application.routes.draw do
         get '/:year', to: 'my_absence#year', as: :year
         get '/:year/:month', to: 'my_absence#month', as: :month
       end
+      namespace :activity do
+        get '/comparison/:year/:month', to: 'comparison#index', as: :comparison
+      end
     end
 
     collection do
