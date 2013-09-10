@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.popover
 //= require foundation
 //= require foundation/foundation
 //= require foundation/foundation.reveal
@@ -21,4 +22,6 @@
 //= require i18n/translations
 //= require d3.v3
 //= require nv.d3
+//= require moment
+//= require typeahead
 //= require_tree .
