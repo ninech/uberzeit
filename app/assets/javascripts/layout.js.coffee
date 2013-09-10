@@ -27,6 +27,16 @@ $(document).on 'click', '.time-now', ->
 
 # ===> Document Ready
 $ ->
+  # Sortable Tables
+  $('table.sortable').stupidtable
+    "hhmm": (a, b) ->
+      aArray = a.split(':')
+      bArray = b.split(':')
+      aMin = (+aArray[0] * 60) + (+aArray[1])
+      bMin = (+bArray[0] * 60) + (+bArray[1])
+      return aMin - bMin
+
+
   $(document)
     .foundation('reveal', { closeOnBackgroundClick: false, closeOnEsc: false })
     .foundation('section')

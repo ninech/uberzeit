@@ -16,6 +16,7 @@
 //= require foundation/foundation
 //= require foundation/foundation.reveal
 //= require pickadate
+//= require stupidtable
 //= require i18n
 //= require i18n/translations
 //= require d3.v3
