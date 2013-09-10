@@ -208,6 +208,7 @@ de:
         billability: Verrechenbarkeit
         billing: Verrechnung
         comparison: Vergleich
+        activity_filter: Aktivitäten
   summaries:
     formats:
       date: '%e. %a.'
@@ -317,6 +318,15 @@ de:
           chart:
             time_entries: Präsenzzeit
             activities: Aktivitätszeit
+      filter:
+        index:
+          title: Aktivitäten
+          project: Projekt
+          customer: Kunde
+          activity_type: Aktivität
+          duration: Aufwand
+          billable: Verrechenbar
+          not_billable: Nicht verrechenbar
     shared:
       users_absence_table:
         total: Total
@@ -328,6 +338,10 @@ de:
         show: Anzeigen
         users: Mitarbeiter
         time_frame: Zeitraum
+        group_by: Gruppieren nach
+        project: Projekt
+        customer: Kunde
+        activity_type: Aktivität
   time_entries:
     edit:
       edit_time: 'Zeit bearbeiten'

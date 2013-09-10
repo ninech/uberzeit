@@ -19,6 +19,13 @@
           </div>
           <% end %>
 
+          <% unless @allowed_group_by.blank? %>
+          <div class="row">
+            <div class="small-4 columns"><%= t '.group_by' %></div>
+            <div class="small-8 columns end"><%= select_tag :group_by, options_for_select(@allowed_group_by.map { |group| [t(".#{group}"), group]}, @group_by) %></div>
+          </div>
+          <% end %>
+
           <div class="row">
             <div class="small-3 columns"><%= t '.time_frame' %></div>
             <div class="small-4 columns"><% unless @month.nil? %><%= select_month(@month) %><% end %></div>

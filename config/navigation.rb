@@ -81,6 +81,9 @@ SimpleNavigation::Configuration.run do |navigation|
         second.item :billing, t('navigation.sub.reports.billing'), billing_summaries_activity_users_path, highlights_on: %r!\A/users/summaries/activity/billing!
       end
       second.item :comparison, t('navigation.sub.reports.comparison'), user_summaries_activity_comparison_path(current_user, Date.current.year, Date.current.month), highlights_on: %r!\A/users/\d*/summaries/activity/comparison!
+      if current_user.team_leader? || current_user.admin?
+        second.item :activity_filter, t('navigation.sub.reports.activity_filter'), filter_summaries_activity_users_path(Date.current.year, Date.current.month, 'customer'), highlights_on: %r!\A/users/summaries/activity/filter!
+      end
     end
     primary.item :manage, t('navigation.manage'), projects_path, if: -> { show_manage_link_in_navigation? } do |second|
       second.dom_class = 'sub-nav'

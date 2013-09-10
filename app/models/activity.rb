@@ -47,4 +47,48 @@ class Activity < ActiveRecord::Base
   def billed?
     !!billed
   end
+
+  def self.sum_by_activity_type_and_year_and_month(year, month)
+    summarize self.unscoped
+                  .joins(:activity_type)
+                  .select('activity_types.name, activities.billable, sum(activities.duration) as duration')
+                  .where(reviewed: true)
+                  .group('activity_types.name, billable')
+                  .order('activity_types.name')
+  end
+
+  def self.sum_by_customer_and_year_and_month(year, month)
+    summarize self.unscoped
+                  .joins(:customer)
+                  .select('customers.name, activities.billable, sum(activities.duration) as duration')
+                  .where(reviewed: true)
+                  .group('customers.name, billable')
+                  .order ('customers.name')
+  end
+
+  def self.sum_by_project_and_year_and_month(year, month)
+    summarize self.unscoped
+                  .joins(:project)
+                  .joins(:customer)
+                  .select('projects.name, activities.billable, sum(activities.duration) as duration')
+                  .where(reviewed: true)
+                  .group('customers.name, projects.name, billable')
+                  .order ('projects.name')
+  end
+
+
+  private
+  def self.summarize(records)
+    sums = {}
+    records.each do |record|
+      billable_type = record.billable? ? :billable : :not_billable
+      [billable_type, :duration].each do |group|
+        sums[record[:name]] ||= {}
+        sums[record[:name]][group] ||= 0
+        sums[record[:name]][group] += record.duration
+      end
+    end
+    sums
+  end
+
 end
