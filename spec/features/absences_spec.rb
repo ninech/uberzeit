@@ -7,7 +7,7 @@ describe 'having fun with absences' do
   let(:user) { FactoryGirl.create(:admin) }
   let(:time_sheet) { user.current_time_sheet }
 
-  before { pending "these tests fail way to often..." }
+  before { pending 'these tests fail way too often...' }
 
   before do
     Timecop.travel('2013-04-22 12:00:00 +0200')
