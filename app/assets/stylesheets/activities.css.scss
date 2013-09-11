@@ -37,6 +37,10 @@
 
   .reveal-modal.activity {
     top: 10px !important;
+
+    #activity_description {
+      height: 70px;
+    }
   }
 
   a.delete-activity-link {
