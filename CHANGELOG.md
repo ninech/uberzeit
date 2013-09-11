@@ -1,4 +1,17 @@
 
+1.6.0
+=====
+Date:        2013-09-11
+Released by: Nils Caspar
+Diff:        https://git.nine.ch/uberzeit/compare/1.5.19...1.6.0
+
+  * Feature #7528 Kundensuche über Loginname ermöglichen (Nils Caspar)
+  * Feature #7370 Auswertung "Gegenüberstellung Präsenzzeit und Aktivitätszeit" (Nils Caspar)
+  * Feature #7373 Auswertung "Filter" (Samuel Sieg)
+  * Bug #7479 Edit-Overlay leer wenn Benutzer zu schnell (Nils Caspar)
+  * Bug #7552 Kapute Darstellung in Firefox/Iceweasel (Steven Schmid)
+
+
 1.5.19
 ======
 Date:        2013-09-06
