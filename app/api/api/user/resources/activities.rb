@@ -76,5 +76,18 @@ class API::User::Resources::Activities < Grape::API
         present @activities.by_otrs_ticket(params[:otrs_ticket_id]), with: API::User::Entities::Activity, embed: params[:embed]
       end
     end
+
+    # This is NOT THE PROPER SOLUTION
+    # We have yet to define how we implement pagination in the future in our APIs
+    # see redmine #7606
+    namespace :latest do
+      desc 'Retrieves the latest updated/created activity by the current user'
+      get do
+        present @activities.unscoped
+                           .where(user_id: current_user.id)
+                           .order('updated_at DESC')
+                           .first, with: API::User::Entities::Activity, embed: params[:embed]
+      end
+    end
   end
 end
