@@ -34,7 +34,9 @@ class Ability
         can :manage, :work
 
         can :manage, :billability
-
+        can :manage, :filter
+        can :manage, :vacation # summary
+        can :manage, :work # summary
         can :manage, Project
       end
 

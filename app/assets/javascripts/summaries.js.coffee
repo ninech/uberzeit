@@ -2,6 +2,7 @@ $ ->
   $('#summary_header_submit').click ->
     summary_type = $('#summary_type').val()
     team_id = $('#team').val()
+    group_by = $('#group_by').val()
     year = $('#date_year').val()
     month = $('#date_month').val()
     append_to_url = $('#append_to_url').val()
@@ -12,6 +13,8 @@ $ ->
       url = url + '/:month'.replace(':month', month)
     if team_id
       url = url + '/team/:team_id'.replace(':team_id', team_id)
+    if group_by
+      url = url + '/:group_by'.replace(':group_by', group_by)
 
     url = url + append_to_url
 

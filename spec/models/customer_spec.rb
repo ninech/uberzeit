@@ -15,7 +15,7 @@ describe Customer do
   subject { FactoryGirl.create(:customer) }
 
   its(:abbreviation) { should eq('yolo') }
-  its(:display_name) { should eq("#{subject.id}: Yolo Inc. (yolo)") }
+  its(:display_name) { should eq("#{subject.id}: Yolo Inc. - yolo") }
 
   context 'without abbreviation' do
     before do

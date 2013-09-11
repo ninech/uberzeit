@@ -143,6 +143,8 @@
           font-size: 0.8em;
           margin-left: 10px;
           overflow: hidden;
+          // https://bugzilla.mozilla.org/show_bug.cgi?id=491549
+          vertical-align: middle;
           white-space: nowrap;
           text-overflow: ellipsis;
           max-width: 200px;
