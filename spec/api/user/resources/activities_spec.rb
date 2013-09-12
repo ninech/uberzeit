@@ -147,4 +147,21 @@ describe API::User::Resources::Activities do
       subject { json.first }
     end
   end
+
+  describe 'GET /api/activities/latest' do
+    let!(:older_activity) { FactoryGirl.create(:activity, user: api_user) }
+    let!(:newer_activity) { FactoryGirl.create(:activity, user: api_user) }
+
+    before do
+      get '/api/activities/latest'
+    end
+
+    it 'returns a list of activities with the given user id' do
+      json['id'].should eq(newer_activity.id)
+    end
+
+    it_behaves_like 'an activity' do
+      subject { json }
+    end
+  end
 end
