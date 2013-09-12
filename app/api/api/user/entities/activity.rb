@@ -9,6 +9,9 @@ class API::User::Entities::Activity < Grape::Entity
   expose :otrs_ticket_id
   expose :user_id
 
+  expose :updated_at
+  expose :created_at
+
   expose :user, using: API::User::Entities::User, if: ->(activity, options) do
     options[:embed] && options[:embed].include?('user')
   end

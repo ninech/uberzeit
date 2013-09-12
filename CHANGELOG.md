@@ -1,4 +1,13 @@
 
+1.6.1
+=====
+Date:        2013-09-12
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/1.6.0...1.6.1
+
+  * Feature #7555 Textarea-Grösse (Samuel Sieg)
+
+
 1.6.0
 =====
 Date:        2013-09-11
