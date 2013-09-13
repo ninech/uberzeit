@@ -14,6 +14,10 @@ class CustomerSync
     @remote_customer_ids ||= @remote_customers.collect { |remote_customer| remote_customer.id }
   end
 
+  def remote_customer_logins
+    @remote_customer_logins ||= CustomerPlugin::CustomerLogin.all
+  end
+
   def sync_all_customers
     remote_customers.each { |remote_customer| sync_customer(remote_customer) }
     remove_deleted_customers
@@ -34,11 +38,16 @@ class CustomerSync
 
   def sync_customer_attributes(local_customer, remote_customer)
     local_customer.name = "#{remote_customer.firstname} #{remote_customer.companyname}".strip
-    begin
-      local_customer.abbreviation = CustomerPlugin::CustomerLogin.find(remote_customer.id).login
-    rescue => error
-      Rails.logger.error "Error #{error.inspect} when syncing Customer ##{remote_customer.id} #{local_customer.name}"
-    end
+    local_customer.abbreviation = find_customers_abbreviation(remote_customer)
     local_customer.save!
+  end
+
+  def find_customers_abbreviation(customer)
+    remote_customer_login = find_remote_customer_login(customer)
+    remote_customer_login ? remote_customer_login.login : nil
+  end
+
+  def find_remote_customer_login(customer)
+    remote_customer_logins.find { |remote_customer_login| remote_customer_login.id == customer.id }
   end
 end
