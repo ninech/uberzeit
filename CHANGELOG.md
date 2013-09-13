@@ -1,4 +1,13 @@
 
+1.6.2
+=====
+Date:        2013-09-13
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/1.6.1...1.6.2
+
+  * Bug #7633 Sync Customer läuft Amok (Steven Schmid)
+
+
 1.6.1
 =====
 Date:        2013-09-12
