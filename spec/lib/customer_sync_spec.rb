@@ -11,6 +11,7 @@ describe CustomerSync do
   let(:customer_login3) { OpenStruct.new id: 3, login: 'nicas' }
 
   let(:customers) { [customer1, customer2, customer3] }
+  let(:customer_logins) { [customer_login1, customer_login2, customer_login3] }
 
   def sync_customers
     CustomerSync.new.sync
@@ -18,9 +19,7 @@ describe CustomerSync do
 
   before do
     CustomerPlugin::Customer.stub(:all) { customers }
-    CustomerPlugin::CustomerLogin.stub(:find).with(1).and_return(customer_login1)
-    CustomerPlugin::CustomerLogin.stub(:find).with(2).and_return(customer_login2)
-    CustomerPlugin::CustomerLogin.stub(:find).with(3).and_return(customer_login3)
+    CustomerPlugin::CustomerLogin.stub(:all) { customer_logins }
   end
 
   it 'creates a local customer for every remote customer' do
@@ -38,17 +37,6 @@ describe CustomerSync do
     customers.delete(customer2)
     expect { sync_customers }.to change(Customer, :count).from(3).to(2)
     expect { Customer.find(customer2.id) }.to raise_error(ActiveRecord::RecordNotFound)
-  end
-
-  context 'customer does not have a login' do
-    let(:customer4) { OpenStruct.new id: 4, companyname: 'No', firstname: 'Login'}
-    before do
-      customers.concat [customer4]
-    end
-    it 'does not raise an error' do
-      CustomerPlugin::CustomerLogin.should_receive(:find).with(4) { raise Faraday::Error::ResourceNotFound, 'Mimimi' }
-      expect { sync_customers }.to_not raise_error
-    end
   end
 
   describe 'attributes' do
