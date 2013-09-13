@@ -1,4 +1,12 @@
 
+1.6.3
+=====
+Date:        2013-09-13
+Released by: Samuel Sieg
+Diff:        https://git.nine.ch/uberzeit/compare/1.6.2...1.6.3
+
+
+
 1.6.2
 =====
 Date:        2013-09-13
