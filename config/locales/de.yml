@@ -7,6 +7,8 @@ de:
       absence: Absenz
       adjustment: Anpassung
       activity: 'Aktivität'
+      project: Projekt
+      activity_type: 'Aktivitätstyp'
     attributes:
       activity:
         customer: 'Kunde'
