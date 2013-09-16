@@ -8,7 +8,16 @@
     </tr>
     <% activities.each do |activity| %>
     <tr class="summary-row" >
-      <td><%= activity.date %> - <%= activity.user %> - <%= activity.description %></td>
+      <td>
+        <% if can? :read, activity.user %>
+          <%= link_to show_date_user_activities_path(activity.user, date: activity.date) do %>
+            <%= activity.date %> - <%= activity.user %>
+          <% end %>
+        <% else %>
+          <%= activity.date %> - <%= activity.user %>
+        <% end %>
+        - <%= activity.description %>
+      </td>
       <td><span data-activity-duration="<%= activity.duration %>" data-activity-type="<%= type.id %>" data-activity-customer="<%= customer.id %>" data-activity="<%= activity.id %>"><%= format_duration(activity.duration) %></span></td>
       <td class="billed">
         <div>
