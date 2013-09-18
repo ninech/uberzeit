@@ -7,7 +7,7 @@ class CustomerSync
   private
 
   def remote_customers
-    @remote_customers ||= CustomerPlugin::Customer.all
+    @remote_customers ||= CustomerPlugin::Customer.all.to_a
   end
 
   def remote_customer_ids
@@ -15,7 +15,7 @@ class CustomerSync
   end
 
   def remote_customer_logins
-    @remote_customer_logins ||= CustomerPlugin::CustomerLogin.all
+    @remote_customer_logins ||= CustomerPlugin::CustomerLogin.all.to_a
   end
 
   def sync_all_customers
