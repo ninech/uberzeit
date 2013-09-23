@@ -58,30 +58,14 @@ class TimeSheet
     vacation = CalculateTotalRedeemableVacation.new(user, year)
     vacation.total_redeemable_for_year
   end
-end
 
-#class TimeSheet < ActiveRecord::Base
-#  acts_as_paranoid
-#
-#  belongs_to :@user
-#
-#  has_many :time_entries
-#  has_many :absences
-#  has_many :adjustments
-#
-#  validates_presence_of :user
-#
-#
-#  def work(date_or_range)
-#    CalculateWorkingTime.new(self, date_or_range).total
-#  end
-#
-#
-#  def duration_of_timers(date_or_range)
-#    range = date_or_range.to_range.to_date_range
-#    timers_in_range = time_entries.timers_only.select { |timer| range.intersects_with_duration?(timer.range) }
-#    timers_in_range.inject(0) { |sum,timer| sum + timer.duration(range) }
-#  end
-#
-#
-#end
+  def duration_of_timers(date_or_range)
+    range = date_or_range.to_range.to_date_range
+    timers_in_range = @user.time_entries.timers_only.select { |timer| range.intersects_with_duration?(timer.range) }
+    timers_in_range.inject(0) { |sum,timer| sum + timer.duration(range) }
+  end
+
+  def work(date_or_range)
+    CalculateWorkingTime.new(self, date_or_range).total
+  end
+end

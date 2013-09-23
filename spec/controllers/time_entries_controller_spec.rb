@@ -21,6 +21,22 @@ describe TimeEntriesController do
       test_sign_in user
     end
 
+    describe 'GET "index"' do
+
+      before do
+        get :index, user_id: user.id, date: Date.today
+      end
+
+      subject { response }
+
+      it 'assigns @time_entries' do
+        assigns(:time_entries).should eq([])
+      end
+
+      it { should render_template(:index) }
+      it { assigns(:weekdays).should be_instance_of(Array)}
+    end
+
     describe 'GET "new"' do
       it 'sets the start date if provided' do
         Timecop.freeze('2013-07-22')
@@ -120,11 +136,33 @@ describe TimeEntriesController do
       end
     end
 
-    # describe 'PUT "exception_date"' do
-    #   it 'adds the date as an exception' do
-    #     recurring_schedule = time_entry.create_recurring_schedule(ends: 'date', ends_date: time_entry.starts.to_date + 1.year, weekly_repeat_interval: 1)
-    #     expect { put :exception_date, id: time_entry, user_id: time_entry.user, date: Date.today }.to change(recurring_schedule.exception_dates,:count).by(1)
-    #   end
-    # end
+    describe 'GET "summary_for_date"' do
+      it 'assigns the correct instance variables' do
+        get :summary_for_date, user_id: user.id, date: Date.today, format: :javascript
+        assigns(:total).should_not be_nil
+        assigns(:timer_duration_for_day).should_not be_nil
+        assigns(:timer_duration_since_start).should_not be_nil
+        assigns(:bonus).should_not be_nil
+        assigns(:week_total).should_not be_nil
+      end
+
+      it 'limits the timer duration to the range of the requested day' do
+        FactoryGirl.create(:time_entry, user: user, starts: '2013-07-20 18:00:00 +0200', ends: nil)
+
+        Timecop.freeze('2013-07-21 12:00:00 +0200'.to_time)
+        get :summary_for_date, user_id: user.id, date: '2013-07-20'.to_date, format: :javascript
+        assigns(:timer_duration_for_day).should eq(6.hours)
+        assigns(:timer_duration_since_start).should eq(18.hours)
+      end
+
+      it 'adds the timer duration to the total' do
+        FactoryGirl.create(:time_entry, user: user, starts: '2013-07-21 09:00:00 +0200', ends: '2013-07-21 11:00:00 +0200')
+        FactoryGirl.create(:time_entry, user: user, starts: '2013-07-21 11:00:00 +0200', ends: nil)
+
+        Timecop.freeze('2013-07-21 12:00:00 +0200')
+        get :summary_for_date, user_id: user.id, date: '2013-07-21', format: :javascript
+        assigns(:total).should eq(3.hours)
+      end
+    end
   end
 end
