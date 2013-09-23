@@ -23,9 +23,8 @@ class API::App::Resources::Absences < Grape::API
         optional :embed, type: Array, includes: %w[user time_type]
       end
       get ':team_id/date/:date'do
-        team = Team.find(params[:team_id])
-        time_sheets = team_time_sheets_by_teams(team)
-        absences = FindDailyAbsences.new(time_sheets, params[:date])
+        users = Team.find(params[:team_id]).members
+        absences = FindDailyAbsences.new(users, params[:date])
                                     .result
                                     .values
                                     .flatten

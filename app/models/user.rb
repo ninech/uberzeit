@@ -29,7 +29,9 @@ class User < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
 
-  has_many :time_sheets
+  has_many :absences
+  has_many :adjustments
+  has_many :time_entries
   has_many :activities
   has_many :employments
 
