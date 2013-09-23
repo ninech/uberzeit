@@ -63,35 +63,6 @@ module SummariesHelper
     absences.find { |absence| absence.whole_day? }
   end
 
-  def render_absences(absences, text = nil)
-    return '' if absences.nil?
-    absences.collect { |absence| render_absence(absence, text) }.join
-  end
-
-  def render_absence(absence, text = nil)
-    time_type = absence.time_type
-
-    content_tag :div, class: "event-bg#{suffix_for_daypart(absence)}#{color_index_of_time_type(time_type)}" do # overlay div event bg
-      css_class = if absence.first_half_day?
-                    'top-left'
-                  elsif absence.second_half_day?
-                    'bottom-right'
-                  else
-                    ''
-                  end
-
-      content_tag :div, class: css_class do # table div icon
-        if text
-          content_tag :div, text # cell div
-        else
-          content_tag :div do # cell div
-            icon_for_time_type(time_type)
-          end
-        end
-      end
-    end
-  end
-
   def awesome_hours_and_minutes(duration)
     hours = awesome_tag("%i" % duration.to_hours)
     minutes = awesome_tag("%i" % (duration % 1.hour).to_minutes)

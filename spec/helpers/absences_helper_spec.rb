@@ -24,7 +24,6 @@ describe AbsencesHelper do
         m.stub(:active?).and_return(false)
       end
     end
-    let(:time_sheet) { FactoryGirl.create(:time_sheet) }
     let(:absence) do
        mock.tap do |m|
         m.stub(:id).and_return(42)
@@ -45,14 +44,13 @@ describe AbsencesHelper do
     end
 
     it 'renders a calendar cell without a date' do
-      assign(:time_sheet, time_sheet)
+      assign(:user, user)
       helper.render_calendar_cell(date).first.to_s.should eq("1")
     end
 
     it 'renders a calendar cell with a date' do
       @time_types = TimeType.absence
       @absences[date] = [time_chunk]
-      @time_sheet = stub_model(TimeSheet)
       helper.render_calendar_cell(date).to_s.should =~ /event-bg#{TEST_TIME_TYPES.key(:vacation)}/
     end
   end

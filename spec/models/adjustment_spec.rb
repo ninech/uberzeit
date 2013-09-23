@@ -40,7 +40,7 @@ describe Adjustment do
 
   describe 'validations' do
     it 'requires a time sheet' do
-      FactoryGirl.build(:adjustment, time_sheet: nil).should_not be_valid
+      FactoryGirl.build(:adjustment, user: nil).should_not be_valid
     end
 
     it 'requires a time type' do

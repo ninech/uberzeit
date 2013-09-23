@@ -1,6 +1,6 @@
 class TimeEntriesController < ApplicationController
-  load_and_authorize_resource :time_sheet
-  load_and_authorize_resource :time_entry, through: :time_sheet
+  load_and_authorize_resource :user
+  load_and_authorize_resource :time_entry, through: :user
 
   respond_to :html, :json, :js
 
@@ -52,7 +52,7 @@ class TimeEntriesController < ApplicationController
   end
 
   def default_return_location
-    time_sheet_path(@time_sheet)
+    user_time_entries_path(@user)
   end
 
   def load_time_types

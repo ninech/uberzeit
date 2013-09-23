@@ -1,4 +1,4 @@
-#class TimeSheetsController < ApplicationController
+class TimeSheetsController < ApplicationController
 #
 #  include WeekViewHelper
 #
@@ -48,4 +48,4 @@
 #    @week_total = @time_sheet.total(week) + @time_sheet.duration_of_timers(week)
 #  end
 #
-#end
+end

@@ -134,7 +134,11 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def other_timers_on_same_date
-    user.time_entries.timers_only.on(start_date) - [self]
+    if user
+      user.time_entries.timers_only.on(start_date) - [self]
+    else
+      []
+    end
   end
 
   def round_times

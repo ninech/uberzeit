@@ -48,8 +48,7 @@ class User < ActiveRecord::Base
     employments.create! if employments.empty?
   end
 
-  def ensure_timesheet_and_employment_exist
-    create_time_sheet_if_needed
+  def ensure_employment_exists
     create_employment_if_needed
     self
   end

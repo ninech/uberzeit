@@ -20,7 +20,7 @@ class Summarize::Summarizer::Absences
   end
 
   def sum_of_absence(absence)
-    chunks = @user.find_chunks(@range, absence)
+    chunks = @user.time_sheet.find_chunks(@range, absence)
     chunks.ignore_exclusion_flag = true # include all time types, even those with the calculation exclusion flag set (e.g. compensation)
 
     if absence.is_vacation?

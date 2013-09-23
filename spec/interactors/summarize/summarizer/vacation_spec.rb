@@ -6,8 +6,8 @@ describe Summarize::Summarizer::Vacation do
   let(:range) { '2013-04-01'.to_date..'2013-04-30'.to_date }
 
   it 'summarizes a users\' absences by the given range' do
-    FactoryGirl.create(:absence, start_date: '2013-01-07', end_date: '2013-01-07', time_type: :vacation, time_sheet: user.current_time_sheet)
-    FactoryGirl.create(:absence, start_date: '2013-04-24', end_date: '2013-04-25', time_type: :vacation, time_sheet: user.current_time_sheet)
+    FactoryGirl.create(:absence, start_date: '2013-01-07', end_date: '2013-01-07', time_type: :vacation, user: user)
+    FactoryGirl.create(:absence, start_date: '2013-04-24', end_date: '2013-04-25', time_type: :vacation, user: user)
 
     summarizer = Summarize::Summarizer::Vacation.new(user, range)
     summarizer.summary[:redeemed].should eq(2.work_days)

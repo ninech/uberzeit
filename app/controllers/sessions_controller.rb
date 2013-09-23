@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     if user.nil?
       render text: 'The requested user could not be found.', status: 404
     else
-      user.ensure_timesheet_and_employment_exist
+      user.ensure_employment_exists
       sign_in(user)
       redirect_to user_time_entries_path(user)
     end

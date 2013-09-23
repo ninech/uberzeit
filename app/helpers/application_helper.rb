@@ -88,11 +88,11 @@ module ApplicationHelper
   end
 
   def user_path_time_sheet(user)
-    time_sheet_path(user.current_time_sheet)
+    user_time_entries_path(user)
   end
 
   def user_path_absences(user)
-    time_sheet_absences_path(user.current_time_sheet)
+    user_absences_path(user)
   end
 
   def user_path_my_work_summary(user)
