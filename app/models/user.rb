@@ -103,6 +103,10 @@ class User < ActiveRecord::Base
     @ability ||= Ability.new(self)
   end
 
+  def timer
+    time_entries.timers_only.first
+  end
+
   private
 
   def set_default_time_zone

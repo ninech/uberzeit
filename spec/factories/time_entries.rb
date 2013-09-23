@@ -5,7 +5,7 @@ FactoryGirl.define do
       time_type :work
     end
 
-    time_sheet
+    user
     start_date { Date.current }
     start_time { '8:00' }
     end_date { Date.current }
