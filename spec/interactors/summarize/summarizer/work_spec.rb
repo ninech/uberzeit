@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Summarize::Summarizer::Work do
 
-  let(:user) { FactoryGirl.create(:user, with_sheet: true) }
+  let(:user) { FactoryGirl.create(:user) }
   let(:time_sheet) { user.current_time_sheet }
   let(:range) { '2013-01-01'.to_date..'2013-12-31'.to_date }
   let(:summarizer) { Summarize::Summarizer::Work.new(user, range) }

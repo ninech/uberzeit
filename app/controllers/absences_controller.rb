@@ -1,6 +1,6 @@
 class AbsencesController < ApplicationController
-  load_and_authorize_resource :time_sheet
-  load_and_authorize_resource :absence, through: :time_sheet
+  load_and_authorize_resource :user
+  load_and_authorize_resource :absence, through: :user
 
   respond_to :html, :json, :js
 
@@ -10,8 +10,9 @@ class AbsencesController < ApplicationController
     year = params[:year] || Time.current.year
     @year = year.to_i
 
+
     @absences = {}
-    time_chunks_finder = FindTimeChunks.new(@time_sheet.absences)
+    time_chunks_finder = FindTimeChunks.new(@user.absences)
     time_chunks_finder.in_year(@year).each do |chunk|
       chunk.range.to_date_range.each do |day|
         @absences[day] ||= []
@@ -60,7 +61,7 @@ class AbsencesController < ApplicationController
 
   private
   def default_return_location
-    year_time_sheet_absences_path(@time_sheet, @absence.start_date.year) if @absence.start_date
+    year_user_absences_path(@user, @absence.start_date.year) if @absence.start_date
   end
 
   def load_time_types

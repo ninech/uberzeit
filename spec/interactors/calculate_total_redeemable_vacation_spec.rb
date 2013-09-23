@@ -4,7 +4,7 @@ require 'spec_helper'
 describe CalculateTotalRedeemableVacation do
 
   describe '#total_redeemable_for_year' do
-    let(:user) { FactoryGirl.create(:user, with_sheet: true) }
+    let(:user) { FactoryGirl.create(:user) }
     let(:time_sheet) { user.current_time_sheet }
     let(:year) { 2013 }
     let(:vacation) { CalculateTotalRedeemableVacation.new(user, year) }

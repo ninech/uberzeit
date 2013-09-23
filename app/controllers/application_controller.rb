@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   include ApplicationHelper
 
-  around_filter :set_time_zone
+#  around_filter :set_time_zone
   before_filter :ensure_logged_in
 
   layout proc { |controller| controller.request.xhr? ? nil : 'application' }

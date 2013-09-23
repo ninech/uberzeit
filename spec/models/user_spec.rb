@@ -31,7 +31,7 @@ describe User do
   end
 
   it 'ensures that at least one time sheet exists' do
-    user = FactoryGirl.create(:user, with_sheet: false)
+    user = FactoryGirl.create(:user)
     2.times { user.ensure_timesheet_and_employment_exist }
     user.time_sheets.count.should eq(1)
   end

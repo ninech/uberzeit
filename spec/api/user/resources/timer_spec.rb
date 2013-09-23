@@ -3,7 +3,7 @@ require 'spec_helper'
 describe API::User::Resources::Timer do
   include Warden::Test::Helpers
 
-  let(:api_user) { FactoryGirl.create(:user, with_sheet: true) }
+  let(:api_user) { FactoryGirl.create(:user) }
   let(:json) { JSON.parse(response.body) }
 
   before do

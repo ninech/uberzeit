@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Summarize::Summarizer::Vacation do
 
-  let(:user) { FactoryGirl.create(:user, with_sheet: true) }
+  let(:user) { FactoryGirl.create(:user) }
   let(:range) { '2013-04-01'.to_date..'2013-04-30'.to_date }
 
   it 'summarizes a users\' absences by the given range' do

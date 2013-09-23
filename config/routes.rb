@@ -4,15 +4,15 @@ Uberzeit::Application.routes.draw do
 
   root :to => 'sessions#new'
 
-  resources :time_sheets, only: [:show] do
+  resources :users, only: [:show] do
 
     resources :recurring_entries, except: [:show, :index]
 
     member do
-      get '/date/:date', to: 'time_sheets#show', as: :show_date
-      put '/date/:date/stop-timer', to: 'time_sheets#stop_timer'
+      get '/date/:date', to: 'time_entries#index', as: :show_date
+      put '/date/:date/stop-timer', to: 'time_entries#stop_timer'
 
-      get '/date/:date/summary', to: 'time_sheets#summary_for_date'
+      get '/date/:date/summary', to: 'time_entries#summary_for_date'
     end
 
     resources :absences do

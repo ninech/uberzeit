@@ -11,7 +11,7 @@ describe API::User::Resources::Absences do
   end
 
   describe 'GET /api/absences' do
-    let!(:team_member) { FactoryGirl.create(:user, with_sheet: true, teams: api_user.teams)}
+    let!(:team_member) { FactoryGirl.create(:user, teams: api_user.teams)}
     let!(:own_vacation) { FactoryGirl.create(:absence, user: api_user, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
     let!(:team_vacation) { FactoryGirl.create(:absence, user: team_member, start_date: '2014-01-01', end_date: '2014-01-01', time_type: :vacation) }
 
@@ -69,7 +69,7 @@ describe API::User::Resources::Absences do
   end
 
   describe 'GET /api/team_absences/date/:date' do
-    let!(:team_member) { FactoryGirl.create(:user, with_sheet: true, teams: api_user.teams)}
+    let!(:team_member) { FactoryGirl.create(:user, teams: api_user.teams)}
 
     let!(:self_absence) { FactoryGirl.create(:absence, user: api_user, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
     let!(:team_absence) { FactoryGirl.create(:absence, user: team_member, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }

@@ -4,7 +4,7 @@ describe CalculatePlannedWorkingTime do
 
   let(:calculator) { CalculatePlannedWorkingTime.new(date_or_range, user) }
   let(:calculator_enforce_fulltime) { CalculatePlannedWorkingTime.new(date_or_range, user, fulltime: true) }
-  let(:user) { FactoryGirl.create(:user, with_employment: false, with_sheet: false) }
+  let(:user) { FactoryGirl.create(:user, with_employment: false) }
 
   describe 'with a date' do
     let(:date_or_range) { '2013-03-06'.to_date }
