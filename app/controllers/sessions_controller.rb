@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     else
       user.ensure_timesheet_and_employment_exist
       sign_in(user)
-      redirect_to time_sheet_path(user.time_sheets.last)
+      redirect_to user_time_entries_path(user)
     end
   end
 
