@@ -6,7 +6,6 @@ class Summaries::Activity::ComparisonController < ApplicationController
 
   def index
     @range = UberZeit.month_as_range(@year, @month)
-    @time_sheet = @user.current_time_sheet
     load_data_points_in_range
   end
 
@@ -26,7 +25,7 @@ class Summaries::Activity::ComparisonController < ApplicationController
       if date > Date.today
         break
       end
-      @data_points[:time_entries] << [(date.to_time.to_f * 1000.0).to_i, @time_sheet.total(date, TimeType.work).to_hours]
+      @data_points[:time_entries] << [(date.to_time.to_f * 1000.0).to_i, @user.total(date, TimeType.work).to_hours]
       @data_points[:activities] << [(date.to_time.to_f * 1000.0).to_i, (@user.activities.where(date: date).sum(:duration)/3600.0)]
     end
   end

@@ -106,6 +106,11 @@ class User < ActiveRecord::Base
     find_chunks = FindTimeChunks.new(entries)
     find_chunks.in_range(date_or_range)
   end
+
+  def total(date_or_range, time_types = TimeType.scoped)
+    chunks = find_chunks(date_or_range, time_types)
+    chunks.total
+  end
   private
 
   def set_default_time_zone
