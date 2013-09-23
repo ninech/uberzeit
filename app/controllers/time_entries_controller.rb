@@ -27,6 +27,8 @@ class TimeEntriesController < ApplicationController
       @timer_range = @timer.range.intersect(@day.to_range)
     end
     @timers_other_days = @user.time_entries.timers_not_in_range(@day.to_range)
+
+    respond_with(@time_entries)
   end
 
   def new
@@ -62,6 +64,11 @@ class TimeEntriesController < ApplicationController
 
     @timer_duration_for_day = timer_on_day ? timer_on_day.duration(@day) : 0
     @timer_duration_since_start = timer_on_day ? timer_on_day.duration : 0
+  end
+
+  def stop_timer
+    timer_on_day.stop if timer_on_day
+    render json: {}
   end
 
   private

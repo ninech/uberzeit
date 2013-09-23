@@ -164,5 +164,13 @@ describe TimeEntriesController do
         assigns(:total).should eq(3.hours)
       end
     end
+
+    describe 'PUT "stop_timer"' do
+      let!(:timer) { FactoryGirl.create(:timer, user: user) }
+
+      it 'stops the running timer of this day' do
+        expect { put :stop_timer, user_id: user.id, date: timer.starts }.to change { user.time_entries.timers_only.count }
+      end
+    end
   end
 end
