@@ -82,7 +82,7 @@ class CalculateTotalRedeemableVacation
   end
 
   def adjustments
-    Adjustment.vacation.joins(:time_sheet).where(:time_sheets => { user_id: @user })
+    Adjustment.vacation.joins(:user)
   end
 
   def adjustments_in_year

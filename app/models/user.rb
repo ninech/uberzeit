@@ -98,18 +98,8 @@ class User < ActiveRecord::Base
     time_entries.timers_only.first
   end
 
-  # Old TimeSheet stuff
-  # returns time chunks (which are limited to the given date or range)
-  def find_chunks(date_or_range, time_types = TimeType.scoped)
-    entries = [time_entries.where(time_type_id: time_types), absences.where(time_type_id: time_types)]
-
-    find_chunks = FindTimeChunks.new(entries)
-    find_chunks.in_range(date_or_range)
-  end
-
-  def total(date_or_range, time_types = TimeType.scoped)
-    chunks = find_chunks(date_or_range, time_types)
-    chunks.total
+  def time_sheet
+    @time_sheet ||= TimeSheet.new(self)
   end
   private
 

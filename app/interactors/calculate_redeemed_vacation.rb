@@ -7,9 +7,7 @@ class CalculateRedeemedVacation
   end
 
   def total(round_result_to_half_work_days = true)
-    total = @user.time_sheets.inject(0.0) do |sum, time_sheet|
-      sum + redeemed_vacation_for_time_sheet(time_sheet)
-    end
+    total = redeemed_vacation_for_time_sheet @user.time_sheet
 
     if round_result_to_half_work_days
       round_to_half_work_days(total)

@@ -2,7 +2,7 @@ class CalculateOvertime
 
   def initialize(time_sheet, date_or_range)
     @time_sheet = time_sheet
-    @user = time_sheet.user
+    @user = @time_sheet.user
     @date_or_range = date_or_range
   end
 
@@ -31,7 +31,7 @@ class CalculateOvertime
   end
 
   def total_adjustments
-    @total_adjustments ||= @time_sheet.adjustments.exclude_vacation.in(@date_or_range).total_duration
+    @total_adjustments ||= @user.adjustments.exclude_vacation.in(@date_or_range).total_duration
   end
 end
 
