@@ -44,10 +44,6 @@ class User < ActiveRecord::Base
     Team.with_role(:team_leader, self).collect(&:members).flatten.uniq
   end
 
-  def create_time_sheet_if_needed
-    time_sheets.create! if time_sheets.empty?
-  end
-
   def create_employment_if_needed
     employments.create! if employments.empty?
   end
@@ -61,11 +57,6 @@ class User < ActiveRecord::Base
   def workload_on(date)
     employment = self.employments.on(date)
     employment ? employment.workload : 0
-  end
-
-  def current_time_sheet
-    ensure_timesheet_and_employment_exist
-    time_sheets.first
   end
 
   def current_employment
@@ -107,6 +98,14 @@ class User < ActiveRecord::Base
     time_entries.timers_only.first
   end
 
+  # Old TimeSheet stuff
+  # returns time chunks (which are limited to the given date or range)
+  def find_chunks(date_or_range, time_types = TimeType.scoped)
+    entries = [time_entries.where(time_type_id: time_types), absences.where(time_type_id: time_types)]
+
+    find_chunks = FindTimeChunks.new(entries)
+    find_chunks.in_range(date_or_range)
+  end
   private
 
   def set_default_time_zone

@@ -20,13 +20,6 @@
 #
 #  validates_presence_of :user
 #
-#  # returns time chunks (which are limited to the given date or range)
-#  def find_chunks(date_or_range, time_types = TimeType.scoped)
-#    entries = [time_entries.where(time_type_id: time_types), absences.where(time_type_id: time_types)]
-#
-#    find_chunks = FindTimeChunks.new(entries)
-#    find_chunks.in_range(date_or_range)
-#  end
 #
 #  def work(date_or_range)
 #    CalculateWorkingTime.new(self, date_or_range).total

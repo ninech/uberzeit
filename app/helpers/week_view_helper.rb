@@ -19,7 +19,7 @@ module WeekViewHelper
     @public_holidays = {}
 
     @weekdays.each do |weekday|
-      absences =  @time_sheet.find_chunks(weekday, TimeType.absence)
+      absences =  @user.find_chunks(weekday, TimeType.absence)
       unless absences.empty?
         @absences[weekday] = absences.chunks
       end
