@@ -20,7 +20,7 @@ describe API::App::Resources::Absences do
   end
 
   describe 'GET /api/absences/team/:team_id/date/:date' do
-    let!(:absence) { FactoryGirl.create(:absence, time_sheet: user.current_time_sheet, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
+    let!(:absence) { FactoryGirl.create(:absence, user: user, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
 
     before do
       absence.recurring_schedule.update_attributes(active: true, ends: 'date', ends_date: '2013-12-31', weekly_repeat_interval: 1)

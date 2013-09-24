@@ -2,12 +2,12 @@
 #
 # Table name: time_entries
 #
-#  id            :integer          not null, primary key
-#  time_sheet_id :integer
-#  time_type_id  :integer
-#  starts        :datetime
-#  ends          :datetime
-#  deleted_at    :datetime
+#  id           :integer          not null, primary key
+#  time_type_id :integer
+#  starts       :datetime
+#  ends         :datetime
+#  deleted_at   :datetime
+#  user_id      :integer
 #
 
 class TimeEntry < ActiveRecord::Base
@@ -16,13 +16,13 @@ class TimeEntry < ActiveRecord::Base
 
   default_scope order(:starts)
 
-  belongs_to :time_sheet
+  belongs_to :user
   belongs_to :time_type, with_deleted: true
 
-  attr_accessible :time_sheet_id, :time_type_id, :type
+  attr_accessible :user_id, :time_type_id, :type
   attr_accessible :start_time, :start_date, :end_date, :end_time
 
-  validates_presence_of :time_sheet, :time_type
+  validates_presence_of :user, :time_type
   validates_presence_of :starts, :start_time, :start_date
   validates_presence_of :ends, unless: :timer?
   validates_datetime :starts
@@ -125,14 +125,6 @@ class TimeEntry < ActiveRecord::Base
     save
   end
 
-  def user
-    time_sheet.user
-  end
-
-  def user=(user)
-    time_sheet = user.current_time_sheet
-  end
-
   private
 
   def must_be_only_timer_on_date
@@ -142,8 +134,11 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def other_timers_on_same_date
-    return [] if time_sheet.nil?
-    time_sheet.time_entries.timers_only.on(start_date) - [self]
+    if user
+      user.time_entries.timers_only.on(start_date) - [self]
+    else
+      []
+    end
   end
 
   def round_times

@@ -5,7 +5,6 @@ describe 'messing around with time entries' do
   include RequestHelpers
 
   let(:user) { FactoryGirl.create(:user) }
-  let(:time_sheet) { user.current_time_sheet }
 
   before do
     Timecop.travel('2013-04-22 12:00:00 +0200')
@@ -14,7 +13,7 @@ describe 'messing around with time entries' do
 
   describe 'timers' do
     it 'starts a timer', js: true do
-      visit time_sheet_path(time_sheet)
+      visit user_time_entries_path(user)
       click_on 'Zeit jetzt eintragen'
       click_on 'Timer starten'
       page.should have_content('12:00')
@@ -22,13 +21,13 @@ describe 'messing around with time entries' do
     end
 
     it 'stops a timer', js: true do
-      visit time_sheet_path(time_sheet)
+      visit user_time_entries_path(user)
       click_on 'Zeit hinzufügen'
       click_on 'Timer starten'
       page.should have_content('12:00')
       page.should have_content('Stop')
       Timecop.travel('2013-04-22 15:30:00 +0200')
-      visit time_sheet_path(time_sheet)
+      visit user_time_entries_path(user)
       click_on 'Stop'
       page.should have_content(/12:00 . 15:30/)
       page.should_not have_content('Stop')
@@ -37,7 +36,7 @@ describe 'messing around with time entries' do
 
   describe 'time entries' do
     it 'creates a time entry', js: true do
-      visit time_sheet_path(time_sheet)
+      visit user_time_entries_path(user)
       click_on 'Zeit jetzt eintragen'
       fill_in 'Von', with: '10'
       fill_in 'Bis', with:  '1130'
@@ -52,7 +51,7 @@ describe 'messing around with time entries' do
     end
 
     it 'creates a time entry on another date', js: true do
-      visit time_sheet_path(time_sheet)
+      visit user_time_entries_path(user)
       click_on 'Zeit jetzt eintragen'
       fill_in 'Von', with: '17:00'
       fill_in 'Bis', with: '22:00'
@@ -64,8 +63,8 @@ describe 'messing around with time entries' do
     end
 
     it 'updates an existing time entry', js: true do
-      FactoryGirl.create(:time_entry, starts: '2013-04-22 17:00:00 +0200', ends: '2013-04-22 18:00 +0200', time_sheet: time_sheet)
-      visit time_sheet_path(time_sheet)
+      FactoryGirl.create(:time_entry, starts: '2013-04-22 17:00:00 +0200', ends: '2013-04-22 18:00 +0200', user: user)
+      visit user_time_entries_path(user)
       page.should have_content('Total 01:00')
       find('li', text: /17:00 . 18:00/).hover
       find('.icon-edit').click
@@ -79,8 +78,8 @@ describe 'messing around with time entries' do
     end
 
     it 'deletes a time entry', js: true do
-      FactoryGirl.create(:time_entry, starts: '2013-04-22 17:00:00 +0200', ends: '2013-04-22 18:00 +0200', time_sheet: time_sheet)
-      visit time_sheet_path(time_sheet)
+      FactoryGirl.create(:time_entry, starts: '2013-04-22 17:00:00 +0200', ends: '2013-04-22 18:00 +0200', user: user)
+      visit user_time_entries_path(user)
       find('li', text: /17:00 . 18:00/).hover
       find('.icon-edit').click
       click_link 'Löschen'

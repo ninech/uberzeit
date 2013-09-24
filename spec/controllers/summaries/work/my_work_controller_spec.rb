@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Summaries::Work::MyWorkController do
   render_views
 
-  let(:user) { FactoryGirl.create(:user, with_sheet: true) }
+  let(:user) { FactoryGirl.create(:user) }
   let(:year) { 2013 }
   let(:month) { 3 }
 

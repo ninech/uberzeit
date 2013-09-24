@@ -26,7 +26,7 @@ class Summaries::Absence::AbsenceController < ApplicationController
     @users.each do |user|
       @absences[user] ||= {}
 
-      find_time_chunks = FindTimeChunks.new(user.current_time_sheet.absences)
+      find_time_chunks = FindTimeChunks.new(user.absences)
       find_time_chunks.in_range(@range).each do |chunk|
         chunk.range.to_date_range.each do |day|
           @absences[user][day] ||= []

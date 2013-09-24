@@ -11,9 +11,9 @@ describe API::User::Resources::Absences do
   end
 
   describe 'GET /api/absences' do
-    let!(:team_member) { FactoryGirl.create(:user, with_sheet: true, teams: api_user.teams)}
-    let!(:own_vacation) { FactoryGirl.create(:absence, time_sheet: api_user.current_time_sheet, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
-    let!(:team_vacation) { FactoryGirl.create(:absence, time_sheet: team_member.current_time_sheet, start_date: '2014-01-01', end_date: '2014-01-01', time_type: :vacation) }
+    let!(:team_member) { FactoryGirl.create(:user, teams: api_user.teams)}
+    let!(:own_vacation) { FactoryGirl.create(:absence, user: api_user, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
+    let!(:team_vacation) { FactoryGirl.create(:absence, user: team_member, start_date: '2014-01-01', end_date: '2014-01-01', time_type: :vacation) }
 
     before do
       get '/api/absences'
@@ -45,7 +45,7 @@ describe API::User::Resources::Absences do
   end
 
   describe 'GET /api/absences/date/:date' do
-    let!(:absence) { FactoryGirl.create(:absence, time_sheet: api_user.current_time_sheet, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
+    let!(:absence) { FactoryGirl.create(:absence, user: api_user, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
 
     before do
       absence.recurring_schedule.update_attributes(active: true, ends: 'date', ends_date: '2013-12-31', weekly_repeat_interval: 1)
@@ -69,10 +69,10 @@ describe API::User::Resources::Absences do
   end
 
   describe 'GET /api/team_absences/date/:date' do
-    let!(:team_member) { FactoryGirl.create(:user, with_sheet: true, teams: api_user.teams)}
+    let!(:team_member) { FactoryGirl.create(:user, teams: api_user.teams)}
 
-    let!(:self_absence) { FactoryGirl.create(:absence, time_sheet: api_user.current_time_sheet, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
-    let!(:team_absence) { FactoryGirl.create(:absence, time_sheet: team_member.current_time_sheet, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
+    let!(:self_absence) { FactoryGirl.create(:absence, user: api_user, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
+    let!(:team_absence) { FactoryGirl.create(:absence, user: team_member, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
     let!(:foreign_absence) { FactoryGirl.create(:absence, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
 
     before do

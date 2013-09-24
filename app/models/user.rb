@@ -29,7 +29,9 @@ class User < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
 
-  has_many :time_sheets
+  has_many :absences
+  has_many :adjustments
+  has_many :time_entries
   has_many :activities
   has_many :employments
 
@@ -42,16 +44,11 @@ class User < ActiveRecord::Base
     Team.with_role(:team_leader, self).collect(&:members).flatten.uniq
   end
 
-  def create_time_sheet_if_needed
-    time_sheets.create! if time_sheets.empty?
-  end
-
   def create_employment_if_needed
     employments.create! if employments.empty?
   end
 
-  def ensure_timesheet_and_employment_exist
-    create_time_sheet_if_needed
+  def ensure_employment_exists
     create_employment_if_needed
     self
   end
@@ -59,11 +56,6 @@ class User < ActiveRecord::Base
   def workload_on(date)
     employment = self.employments.on(date)
     employment ? employment.workload : 0
-  end
-
-  def current_time_sheet
-    ensure_timesheet_and_employment_exist
-    time_sheets.first
   end
 
   def current_employment
@@ -101,6 +93,13 @@ class User < ActiveRecord::Base
     @ability ||= Ability.new(self)
   end
 
+  def timer
+    time_entries.timers_only.first
+  end
+
+  def time_sheet
+    @time_sheet ||= TimeSheet.new(self)
+  end
   private
 
   def set_default_time_zone

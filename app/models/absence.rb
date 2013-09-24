@@ -3,19 +3,19 @@
 # Table name: absences
 #
 #  id              :integer          not null, primary key
-#  time_sheet_id   :integer
 #  time_type_id    :integer
 #  start_date      :date
 #  end_date        :date
 #  first_half_day  :boolean          default(FALSE)
 #  second_half_day :boolean          default(FALSE)
 #  deleted_at      :datetime
+#  user_id         :integer
 #
 
 class Absence < ActiveRecord::Base
   acts_as_paranoid
 
-  belongs_to :time_sheet
+  belongs_to :user
   belongs_to :time_type, with_deleted: true
   has_one :recurring_schedule, as: :enterable, dependent: :destroy
 
@@ -26,10 +26,10 @@ class Absence < ActiveRecord::Base
 
   attr_accessible :start_date, :end_date, :first_half_day, :second_half_day, :daypart
   attr_accessible :recurring_schedule, :recurring_schedule_attributes
-  attr_accessible :time_sheet_id, :time_type_id, :type
+  attr_accessible :user_id, :time_type_id, :type
 
   validates_presence_of :start_date, :end_date
-  validates_presence_of :time_sheet, :time_type
+  validates_presence_of :user, :time_type
   after_initialize :set_default_dates
 
   validates_datetime :start_date
@@ -157,14 +157,6 @@ class Absence < ActiveRecord::Base
       date_range = start_date..(start_date+num_days)
       date_range.collect { |day| time_range_for_date(day) }
     end.flatten
-  end
-
-  def user
-    time_sheet.user
-  end
-
-  def user=(user)
-    time_sheet = user.current_time_sheet
   end
 
 end

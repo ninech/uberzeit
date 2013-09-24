@@ -63,48 +63,9 @@ describe Ability do
     end
   end
 
-  describe 'TimeSheet' do
-
-    let(:time_sheet) { FactoryGirl.create(:time_sheet, user: user) }
-
-    context 'as a user with the administration role' do
-      let(:ability) { Ability.new(admin) }
-
-      it { should be_able_to(:read, time_sheet) }
-      it { should be_able_to(:update, time_sheet) }
-      it { should be_able_to(:create, TimeSheet) }
-      it { should be_able_to(:destroy, time_sheet) }
-    end
-
-    context 'as a team leader' do
-      let(:ability) { Ability.new(team_leader) }
-
-      it { should be_able_to(:read, time_sheet) }
-      it { should be_able_to(:update, time_sheet) }
-      it { should be_able_to(:destroy, time_sheet) }
-    end
-
-    context 'as the owner' do
-      let(:ability) { Ability.new(user) }
-
-      it { should be_able_to(:read, time_sheet) }
-      it { should be_able_to(:update, time_sheet) }
-      it { should be_able_to(:create, TimeSheet) }
-      it { should be_able_to(:destroy, time_sheet) }
-    end
-
-    context 'as another user' do
-      let(:ability) { Ability.new(FactoryGirl.create(:user)) }
-
-      it { should_not be_able_to(:read, time_sheet) }
-      it { should_not be_able_to(:update, time_sheet) }
-      it { should_not be_able_to(:destroy, time_sheet) }
-    end
-  end
-
   describe 'TimeEntry' do
 
-    let(:time_entry) { FactoryGirl.create(:time_entry, time_sheet: user.time_sheets.first) }
+    let(:time_entry) { FactoryGirl.create(:time_entry, user: user) }
 
     context 'as a user with the administration role' do
       let(:ability) { Ability.new(admin) }
@@ -144,7 +105,7 @@ describe Ability do
 
   describe 'Absence' do
 
-    let(:absence) { FactoryGirl.create(:absence, time_sheet: user.time_sheets.first) }
+    let(:absence) { FactoryGirl.create(:absence, user: user) }
 
     context 'as a user with the administration role' do
       let(:ability) { Ability.new(admin) }
@@ -185,7 +146,7 @@ describe Ability do
 
   describe 'Adjustment' do
 
-    let(:adjustment) { FactoryGirl.create(:adjustment, time_sheet: user.time_sheets.first) }
+    let(:adjustment) { FactoryGirl.create(:adjustment, user: user) }
 
     context 'as a user with the administration role' do
       let(:ability) { Ability.new(admin) }

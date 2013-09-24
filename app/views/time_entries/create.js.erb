@@ -2,6 +2,6 @@
   $('.ajax-content').html('<%= escape_javascript(render(template: 'time_entries/new')) %>');
   initControls();
 <% else %>
-  window.location.href = '<%= show_date_time_sheet_path(@time_sheet, date: @time_entry.start_date) %>';
+  window.location.href = '<%= show_date_user_time_entries_path(@user, date: @time_entry.start_date) %>';
 <% end %>
 

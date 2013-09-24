@@ -36,7 +36,7 @@ module AbsencesHelper
       options.merge! :'data-tooltip' => tooltip
     end
     if can? :manage, Absence
-      options.merge! :'data-reveal-id' => 'absence-modal', :'data-reveal-url' => new_time_sheet_absence_path(@time_sheet, date: day)
+      options.merge! :'data-reveal-id' => 'absence-modal', :'data-reveal-url' => new_user_absence_path(@user, date: day)
     end
 
     [content, options]
@@ -54,7 +54,7 @@ module AbsencesHelper
 
   def tooltip_content_for_absence(day)
     absences = @absences[day.to_date]
-    render(partial: 'shared/absences_tooltip', locals: { absences: absences, day: day, time_sheet: @time_sheet }).to_s
+    render(partial: 'shared/absences_tooltip', locals: { absences: absences, day: day, user: @user }).to_s
   end
 
   def tooltip_content_for_public_holiday(day)
@@ -101,13 +101,43 @@ module AbsencesHelper
     end
   end
 
-  def team_time_sheets_by_user(user)
-    team_time_sheets_by_teams(user.teams).where('users.id != ?', user)
+  def other_team_members(user)
+    team_members_by_teams(user.teams).where('users.id != ?', user)
   end
 
-  def team_time_sheets_by_teams(teams)
-    TimeSheet.joins(:user => :teams)
-             .where(memberships: {team_id: teams})
-             .uniq
+  def team_members_by_teams(teams)
+    User.joins(:teams)
+        .where(memberships: {team_id: teams})
+        .uniq
   end
+
+  def render_absences(absences, text = nil)
+    return '' if absences.nil?
+    absences.collect { |absence| render_absence(absence, text) }.join
+  end
+
+  def render_absence(absence, text = nil)
+    time_type = absence.time_type
+
+    content_tag :div, class: "event-bg#{suffix_for_daypart(absence)}#{color_index_of_time_type(time_type)}" do # overlay div event bg
+      css_class = if absence.first_half_day?
+                    'top-left'
+                  elsif absence.second_half_day?
+                    'bottom-right'
+                  else
+                    ''
+                  end
+
+      content_tag :div, class: css_class do # table div icon
+        if text
+          content_tag :div, text # cell div
+        else
+          content_tag :div do # cell div
+            icon_for_time_type(time_type)
+          end
+        end
+      end
+    end
+  end
+
 end

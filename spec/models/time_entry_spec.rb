@@ -2,12 +2,12 @@
 #
 # Table name: time_entries
 #
-#  id            :integer          not null, primary key
-#  time_sheet_id :integer
-#  time_type_id  :integer
-#  starts        :datetime
-#  ends          :datetime
-#  deleted_at    :datetime
+#  id           :integer          not null, primary key
+#  time_type_id :integer
+#  starts       :datetime
+#  ends         :datetime
+#  deleted_at   :datetime
+#  user_id      :integer
 #
 
 require 'spec_helper'
@@ -136,7 +136,7 @@ describe TimeEntry do
 
     it 'validates that only one timer runs on given date' do
       expect {
-        FactoryGirl.create(:timer, start_date: '2013-04-12', start_time: '08:00', time_sheet: subject.time_sheet)
+        FactoryGirl.create(:timer, start_date: '2013-04-12', start_time: '08:00', user: subject.user)
       }.to change(subject, :valid?).to(false)
     end
   end

@@ -2,15 +2,15 @@
 #
 # Table name: adjustments
 #
-#  id            :integer          not null, primary key
-#  time_sheet_id :integer
-#  time_type_id  :integer
-#  date          :date
-#  duration      :integer
-#  label         :string(255)
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  deleted_at    :datetime
+#  id           :integer          not null, primary key
+#  time_type_id :integer
+#  date         :date
+#  duration     :integer
+#  label        :string(255)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  deleted_at   :datetime
+#  user_id      :integer
 #
 
 require 'spec_helper'
@@ -40,7 +40,7 @@ describe Adjustment do
 
   describe 'validations' do
     it 'requires a time sheet' do
-      FactoryGirl.build(:adjustment, time_sheet: nil).should_not be_valid
+      FactoryGirl.build(:adjustment, user: nil).should_not be_valid
     end
 
     it 'requires a time type' do

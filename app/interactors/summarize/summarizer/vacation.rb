@@ -6,7 +6,7 @@ class Summarize::Summarizer::Vacation
   def initialize(user, range)
     @user = user
     @range = range
-    @time_sheet = user.current_time_sheet # ToDo: For all time sheets of the current user
+    @time_sheet = user.time_sheet
 
     calculate
   end

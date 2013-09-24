@@ -13,6 +13,10 @@
 3. Login with your email address (`shortname`@nine.ch)
 4. Party!
 
+5. If you are annoyed by the JS-Integration tests, disable the js tests:
+
+        rspec spec -t ~js
+
 
 ## API
 

@@ -13,22 +13,19 @@ require 'spec_helper'
 
 describe TimeSheet do
 
-  let(:time_sheet) { FactoryGirl.create(:time_sheet) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:time_sheet) { user.time_sheet }
 
   def work(start_time, end_time)
-    FactoryGirl.create(:time_entry, starts: start_time.to_time, ends: end_time.to_time, time_type: :work, time_sheet: time_sheet)
+    FactoryGirl.create(:time_entry, starts: start_time.to_time, ends: end_time.to_time, time_type: :work, user: user)
   end
 
   def vacation(start_date, end_date, daypart = :whole_day)
-    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :vacation, time_sheet: time_sheet, daypart: daypart)
+    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :vacation, user: user, daypart: daypart)
   end
 
   def paid_absence(start_date, end_date, daypart = :whole_day)
-    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :paid_absence, time_sheet: time_sheet, daypart: daypart)
-  end
-
-  it 'has a valid factory' do
-    time_sheet.should be_valid
+    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :paid_absence, user: user, daypart: daypart)
   end
 
   context 'time-sheet with a complex weekly schedule (time entries)' do
@@ -72,12 +69,6 @@ describe TimeSheet do
 
       # tue-wed next week free
       vacation '2013-02-12', '2013-02-13'
-    end
-
-    it 'acts as paranoid' do
-      time_sheet.destroy
-      expect { TimeSheet.find(time_sheet.id) }.to raise_error
-      expect { TimeSheet.with_deleted.find(time_sheet.id) }.to_not raise_error
     end
 
     context 'user with full-time workload' do
@@ -124,11 +115,9 @@ describe TimeSheet do
     context 'user with part-time workload' do
       # TODO comment why we expect what
       before do
-        employment = time_sheet.user.employments.first
+        employment = user.employments.first
         employment.workload = 50
         employment.save
-
-        time_sheet.reload
       end
 
       it 'calculates the weekly overtime duration' do

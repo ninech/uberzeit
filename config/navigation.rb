@@ -55,12 +55,12 @@ SimpleNavigation::Configuration.run do |navigation|
 
     ability = Ability.new(current_user)
 
-    primary.item :timesheet, t('navigation.time_tracking'), time_sheet_path(current_user.current_time_sheet), highlights_on: %r!\A/(time_sheets/\d+|users/\d+/activities)(/date/[\w-]+)?\z! do |second|
+    primary.item :timesheet, t('navigation.time_tracking'), user_time_entries_path(current_user), highlights_on: %r!\A/(users/\d+/(activities|time_entries))(/date/[\w-]+)?\z! do |second|
       second.dom_class = 'sub-nav'
-      second.item :timesheet, t('navigation.timesheet'), show_date_time_sheet_path(current_user.current_time_sheet, date: @day || Time.now), highlights_on: %r!\A/time_sheets/\d+(/date/[\w-]+)?\z!
+      second.item :timesheet, t('navigation.timesheet'), show_date_user_time_entries_path(current_user, date: @day || Time.now), highlights_on: %r!\A/users/\d+/time_entries(/date/[\w-]+)?\z!
       second.item :activities, t('navigation.activities'), show_date_user_activities_path(current_user, date: @day || Time.now), highlights_on: %r!\A/users/\d+/activities(/date/[\w-]+)?\z!
     end
-    primary.item :absences, t('navigation.absences'), time_sheet_absences_path(current_user.current_time_sheet), highlights_on: %r!\A/time_sheets/\d+/absences!
+    primary.item :absences, t('navigation.absences'), user_absences_path(current_user), highlights_on: %r!\A/users/\d+/absences!
 
     primary.item :reports, t('navigation.reports'), user_summaries_overview_path(current_user), highlights_on: %r!\A/users(/\d*)*/summaries! do |second|
       second.dom_class = 'sub-nav'

@@ -11,7 +11,7 @@ class ActivitiesController < ApplicationController
   load_and_authorize_resource :user
   load_and_authorize_resource :activity, through: :user
 
-  before_filter :load_day, :load_time_sheet, :prepare_week_view, only: :index
+  before_filter :load_day, :prepare_week_view, only: :index
   before_filter :prepare_form, only: [:edit, :update, :new, :create]
   before_filter :parse_duration_to_seconds, only: [:update, :create]
   before_filter :extract_customer_id, only: [:update, :create]
@@ -60,10 +60,6 @@ class ActivitiesController < ApplicationController
                  end
       params[:activity][:duration] = duration
     end
-  end
-
-  def load_time_sheet
-    @time_sheet = @user.current_time_sheet
   end
 
   def extract_customer_id

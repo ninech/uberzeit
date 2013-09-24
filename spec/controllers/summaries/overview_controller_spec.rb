@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Summaries::OverviewController do
 
-  let(:user) { FactoryGirl.create(:user, with_sheet: true) }
+  let(:user) { FactoryGirl.create(:user) }
 
   context 'for non-signed in users' do
     it 'redirects to login' do

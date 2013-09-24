@@ -3,6 +3,6 @@
     <h2><%= t('.add_entry') %>
   </div>
 </div>
-<%= form_for [@time_sheet, @time_entry], remote: true, :html => {:'data-type' => 'script'} do |f| %>
+<%= form_for [@user, @time_entry], remote: true, :html => {:'data-type' => 'script'} do |f| %>
   <%= render partial: 'form', locals: {f: f} %>
 <% end %>

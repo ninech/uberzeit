@@ -24,7 +24,6 @@ describe AbsencesHelper do
         m.stub(:active?).and_return(false)
       end
     end
-    let(:time_sheet) { FactoryGirl.create(:time_sheet) }
     let(:absence) do
        mock.tap do |m|
         m.stub(:id).and_return(42)
@@ -45,30 +44,31 @@ describe AbsencesHelper do
     end
 
     it 'renders a calendar cell without a date' do
-      assign(:time_sheet, time_sheet)
+      assign(:user, FactoryGirl.build(:user))
       helper.render_calendar_cell(date).first.to_s.should eq("1")
     end
 
     it 'renders a calendar cell with a date' do
       @time_types = TimeType.absence
       @absences[date] = [time_chunk]
-      @time_sheet = stub_model(TimeSheet)
+      helper.should_receive(:color_index_of_time_type).with(instance_of(TimeType)).and_return('color_index')
+      helper.should_receive(:icon_for_time_type).with(instance_of(TimeType)).and_return('icon')
       helper.render_calendar_cell(date).to_s.should =~ /event-bg#{TEST_TIME_TYPES.key(:vacation)}/
     end
   end
 
-  describe '#team_time_sheets_by_user' do
+  describe '#other_team_members' do
     let!(:team) { FactoryGirl.create(:team) }
     let!(:user) { FactoryGirl.create(:user, teams: [team]) }
     let!(:another_team) { FactoryGirl.create(:team) }
     let!(:another_user) { FactoryGirl.create(:user, teams: [another_team, team]) }
 
-    it 'finds time sheets from members of the same teams' do
-      team_time_sheets_by_user(user).should include(*another_user.time_sheets)
+    it 'finds other members of the same teams' do
+      other_team_members(user).should eq([another_user])
     end
 
-    it 'will not return own time sheets' do
-      team_time_sheets_by_user(user).should_not include(*user.time_sheets)
+    it 'will not return own user' do
+      other_team_members(user).should_not include(user)
     end
   end
 end

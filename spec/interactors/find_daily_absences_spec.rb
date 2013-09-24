@@ -6,17 +6,23 @@ describe FindDailyAbsences do
 
   let(:range) { from..to }
 
-  let(:time_sheet1) { FactoryGirl.create(:time_sheet) }
-  let(:time_sheet2) { FactoryGirl.create(:time_sheet) }
+  let(:user1) { FactoryGirl.create(:user) }
+  let(:user2) { FactoryGirl.create(:user) }
 
-  let!(:absence1) { FactoryGirl.create(:absence, time_sheet: time_sheet1, start_date: '2013-07-16', end_date: '2013-07-20') }
-  let!(:absence2) { FactoryGirl.create(:absence, time_sheet: time_sheet2, start_date: '2013-07-20', end_date: '2013-07-22') }
+  let!(:absence1) { FactoryGirl.create(:absence, user: user1, start_date: '2013-07-16', end_date: '2013-07-20') }
+  let!(:absence2) { FactoryGirl.create(:absence, user: user2, start_date: '2013-07-20', end_date: '2013-07-22') }
 
-  let(:find_absences) { FindDailyAbsences.new([time_sheet1, time_sheet2], range) }
+  let(:find_absences) { FindDailyAbsences.new([user1, user2], range) }
 
   it 'finds absences in the given range' do
-      find_absences.result[from].should have(2).chunks
-      find_absences.result[from].collect(&:id).should =~ [absence1.id, absence2.id]
+    find_absences.result[from].should have(2).chunks
+    find_absences.result[from].collect(&:id).should =~ [absence1.id, absence2.id]
+  end
+
+  it 'can handle one user' do
+    find_absences = FindDailyAbsences.new(user1, range)
+    find_absences.result[from].should have(1).chunks
+    find_absences.result[from].collect(&:id).should =~ [absence1.id]
   end
 
 end

@@ -101,9 +101,8 @@ class TimeChunkCollection
   end
 
   def date_chunk_to_planned_working_time(date, chunk)
-    user = chunk.time_sheet.user
     # date chunks (from absences) are calculated independent of the workload, cf. redmine #5596
-    duration = CalculatePlannedWorkingTime.new(date.to_range, user, fulltime: true).total
+    duration = CalculatePlannedWorkingTime.new(date.to_range, chunk.user, fulltime: true).total
     round(duration)
   end
 

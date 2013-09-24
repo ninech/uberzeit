@@ -29,8 +29,8 @@ describe 'Roles and Rights' do
       end
     end
 
-    describe 'timesheet' do
-      let(:path) { time_sheet_path(user.current_time_sheet) }
+    describe 'time entries' do
+      let(:path) { user_time_entries_path(user) }
 
       context 'as owner' do
         let(:current_user) { user }
@@ -78,7 +78,7 @@ describe 'Roles and Rights' do
     end
 
     describe 'absences' do
-      let(:path) { time_sheet_absences_path(user.current_time_sheet) }
+      let(:path) { user_absences_path(user) }
 
       context 'as owner' do
         let(:current_user) { user }
@@ -121,12 +121,12 @@ describe 'Roles and Rights' do
         end
 
         describe 'my work summary' do
-          let(:path) { user_summaries_work_year_path(user.current_time_sheet, year) }
+          let(:path) { user_summaries_work_year_path(user, year) }
           include_examples :my_summary_access
         end
 
         describe 'my absence summary' do
-          let(:path) { user_summaries_absence_year_path(user.current_time_sheet, year) }
+          let(:path) { user_summaries_absence_year_path(user, year) }
           include_examples :my_summary_access
         end
       end
@@ -252,7 +252,7 @@ describe 'Roles and Rights' do
 
     describe 'menu items' do
       before do
-        visit user_summaries_work_year_path(current_user.current_time_sheet, year)
+        visit user_summaries_work_year_path(current_user, year)
       end
 
       shared_examples :menu_list do |selector, included, excluded|
@@ -317,10 +317,10 @@ describe 'Roles and Rights' do
 
     describe 'absence overview' do
       before do
-        visit time_sheet_absences_path(current_user.current_time_sheet)
+        visit user_absences_path(current_user)
       end
 
-      let(:add_absence_selector) { "*[data-reveal-url^='#{new_time_sheet_absence_path(current_user.current_time_sheet)}']" }
+      let(:add_absence_selector) { "*[data-reveal-url^='#{new_user_absence_path(current_user)}']" }
 
       context 'as user' do
         let(:current_user) { user }
@@ -340,7 +340,7 @@ describe 'Roles and Rights' do
 
     describe 'select box to select another user' do
       before do
-        visit time_sheet_path(current_user.current_time_sheet)
+        visit user_time_entries_path(current_user)
       end
 
       context 'as user' do

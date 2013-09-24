@@ -2,15 +2,15 @@
 #
 # Table name: adjustments
 #
-#  id            :integer          not null, primary key
-#  time_sheet_id :integer
-#  time_type_id  :integer
-#  date          :date
-#  duration      :integer
-#  label         :string(255)
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  deleted_at    :datetime
+#  id           :integer          not null, primary key
+#  time_type_id :integer
+#  date         :date
+#  duration     :integer
+#  label        :string(255)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  deleted_at   :datetime
+#  user_id      :integer
 #
 
 class Adjustment < ActiveRecord::Base
@@ -23,29 +23,17 @@ class Adjustment < ActiveRecord::Base
   scope :exclude_vacation, joins: :time_type, conditions: ['is_vacation = ?', false]
   scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
 
-  belongs_to :time_sheet
+  belongs_to :user
   belongs_to :time_type
 
-  attr_accessible :date, :duration, :label, :time_sheet_id, :time_type_id, :user_id, :duration_in_work_days, :duration_in_hours
+  attr_accessible :date, :duration, :label, :user_id, :time_type_id, :user_id, :duration_in_work_days, :duration_in_hours
 
-  validates_presence_of       :time_sheet, :time_type, :date, :duration
+  validates_presence_of       :user, :time_type, :date, :duration
   validates_numericality_of   :duration
   validates_date              :date
 
   def self.total_duration
     sum(:duration)
-  end
-
-  def user_id=(user_id)
-    self.time_sheet = User.find(user_id).current_time_sheet
-  end
-
-  def user_id
-    time_sheet && time_sheet.user && time_sheet.user.id
-  end
-
-  def user
-    time_sheet && time_sheet.user
   end
 
   def duration_in_work_days

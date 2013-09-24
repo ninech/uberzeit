@@ -30,16 +30,10 @@ describe User do
     expect { User.with_deleted.find(user.id) }.to_not raise_error
   end
 
-  it 'ensures that at least one time sheet exists' do
-    user = FactoryGirl.create(:user, with_sheet: false)
-    2.times { user.ensure_timesheet_and_employment_exist }
-    user.time_sheets.count.should eq(1)
-  end
-
   it 'ensures that at least one employment exists' do
     user = FactoryGirl.create(:user, with_employment: false)
-    2.times { user.ensure_timesheet_and_employment_exist }
-    user.time_sheets.count.should eq(1)
+    2.times { user.ensure_employment_exists }
+    user.employments.count.should eq(1)
   end
 
   describe '#create_with_omniauth' do
@@ -63,9 +57,9 @@ describe User do
     end
   end
 
-  describe '#current_time_sheet' do
-    it 'returns the current active timesheet' do
-      user.current_time_sheet.should eq(user.time_sheets.first)
+  describe '#time_sheet' do
+    it 'returns an instance of TimeSheet' do
+      user.time_sheet.should be_instance_of(TimeSheet)
     end
   end
 

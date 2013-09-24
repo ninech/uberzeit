@@ -6,7 +6,7 @@ class Summarize::Summarizer::Work
   def initialize(user, range)
     @user = user
     @range = range
-    @time_sheet = user.current_time_sheet # ToDo: For all time sheets of the current user
+    @time_sheet = user.time_sheet
 
     calculate
   end
@@ -50,11 +50,11 @@ class Summarize::Summarizer::Work
   end
 
   def adjustments
-    @time_sheet.adjustments.exclude_vacation.in(@range).total_duration
+    @user.adjustments.exclude_vacation.in(@range).total_duration
   end
 
   def adjustments_by_type
-    @time_sheet.adjustments.exclude_vacation.in(@range).each_with_object({}) { |adjustment, hash| hash[adjustment] = adjustment.duration }
+    @user.adjustments.exclude_vacation.in(@range).each_with_object({}) { |adjustment, hash| hash[adjustment] = adjustment.duration }
   end
 
   def total_of_time_sheet(time_types)

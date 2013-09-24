@@ -357,6 +357,25 @@ de:
       date: Datum
       save: Speichern
       now: jetzt
+    index:
+      overtime: Überzeit
+      add_time_now: Zeit jetzt eintragen
+      no_entries_yet_message: Noch keine Einträge vorhanden
+      timer_running_warning:
+        one: 'An dem folgenden Tag ist noch ein Timer aktiv:'
+        other: "An den folgenden Tagen sind noch Timer aktiv:"
+      tooltip:
+        starts: 'Beginnt am'
+        ends: 'Endet am'
+      time_bonus: Nachtzuschlag
+      time_bonuses: Nachtzuschläge
+      timer: Timer
+      info-timer-exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
+      total: 'Total'
+    top_buttons:
+      add_time: Zeit hinzufügen
+    add_time_modal:
+      add_time: Zeit hinzufügen
   timers:
     edit:
       edit_time: 'Zeit bearbeiten'
@@ -413,26 +432,6 @@ de:
       title: 'Aktivitätstyp editieren'
     form:
       back: 'Zurück'
-  time_sheets:
-    top_buttons:
-      add_time: Zeit hinzufügen
-    add_time_modal:
-      add_time: Zeit hinzufügen
-    show:
-      overtime: Überzeit
-      add_time_now: Zeit jetzt eintragen
-      no_entries_yet_message: Noch keine Einträge vorhanden
-      timer_running_warning:
-        one: 'An dem folgenden Tag ist noch ein Timer aktiv:'
-        other: "An den folgenden Tagen sind noch Timer aktiv:"
-      tooltip:
-        starts: 'Beginnt am'
-        ends: 'Endet am'
-      time_bonus: Nachtzuschlag
-      time_bonuses: Nachtzuschläge
-      timer: Timer
-      info-timer-exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
-      total: 'Total'
   activities:
     top_buttons:
       add_activity: Aktivität hinzufügen

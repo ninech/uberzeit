@@ -4,7 +4,7 @@ class API::User::Resources::Timer < Grape::API
   resource :timer do
     desc 'Gets the current timer.'
     get do
-      timer = current_user.current_time_sheet.timer
+      timer = current_user.timer
       raise ActiveRecord::RecordNotFound if timer.nil?
       present timer, with: API::User::Entities::Timer
     end
@@ -21,7 +21,7 @@ class API::User::Resources::Timer < Grape::API
       time_type_id = params[:time_type_id]
 
       timer = TimeEntry.create!(
-        time_sheet_id: current_user.current_time_sheet.id,
+        user_id: current_user.id,
         time_type_id: time_type_id,
         start_date: start_date,
         start_time: start_time,
@@ -37,7 +37,7 @@ class API::User::Resources::Timer < Grape::API
       optional :end, type: String, regexp: /\A((\d{1,2}:\d{1,2})|true|now)\z/,  desc: 'A end time in the format HH:MM or true. \'now\' will default to current time.'
     end
     put do
-      timer = current_user.current_time_sheet.timer
+      timer = current_user.timer
       raise ActiveRecord::RecordNotFound if timer.nil?
 
       if params[:start].present?
@@ -65,7 +65,7 @@ class API::User::Resources::Timer < Grape::API
 
     desc 'Deletes the current active timer.'
     delete do
-      timer = current_user.current_time_sheet.timer
+      timer = current_user.timer
       timer.destroy
       present timer, with: API::User::Entities::Timer
     end

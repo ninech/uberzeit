@@ -22,8 +22,6 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
 require 'capybara/rails'
-require 'capybara/poltergeist'
-require 'phantomjs'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -69,11 +67,6 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
 
-    # Register poltergeist
-    Capybara.register_driver :poltergeist do |app|
-      Capybara::Poltergeist::Driver.new(app, phantomjs: Phantomjs.path, inspector: true, js_errors: true)
-    end
-    Capybara.javascript_driver = :poltergeist
     Capybara.default_wait_time = 10
 
     # Set up time types

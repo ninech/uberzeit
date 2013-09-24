@@ -5,9 +5,6 @@ describe 'having fun with absences' do
   include RequestHelpers
 
   let(:user) { FactoryGirl.create(:admin) }
-  let(:time_sheet) { user.current_time_sheet }
-
-  before { pending 'these tests fail way too often...' }
 
   before do
     Timecop.travel('2013-04-22 12:00:00 +0200')
@@ -15,7 +12,7 @@ describe 'having fun with absences' do
   end
 
   it 'adds an absence', js: true do
-    visit time_sheet_absences_path(time_sheet)
+    visit user_absences_path(user)
     click_on 'Absenz hinzufügen'
     select 'test_vacation', from: 'absence_time_type_id'
     select 'Vormittags', from: 'absence_daypart'
@@ -26,17 +23,14 @@ describe 'having fun with absences' do
   end
 
   it 'updates an absence', js: true do
-    absence = FactoryGirl.create(:absence, start_date: '2013-01-08', end_date: '2013-01-08', time_type: :vacation, time_sheet: time_sheet)
+    absence = FactoryGirl.create(:absence, start_date: '2013-01-08', end_date: '2013-01-08', time_type: :vacation, user: user)
     absence.recurring_schedule.update_attribute(:ends_date, '2013-01-08') # explicitly set recurring end date so date picker preselects correct month
 
-    visit time_sheet_absences_path(time_sheet)
+    visit user_absences_path(user)
 
     find('.event-container').click
     click_on 'Bearbeiten'
 
-    # popover stays open when the modal opens
-    # trigger a click event to close it
-    page.driver.click(0, 0)
     find('#absence_recurring_schedule_attributes_active').click
     fill_in 'absence[recurring_schedule_attributes][weekly_repeat_interval]', with: 2
 
@@ -52,9 +46,9 @@ describe 'having fun with absences' do
   end
 
   it 'deletes an absence', js: true do
-    FactoryGirl.create(:absence, start_date: '2013-04-08', end_date: '2013-04-08', time_type: :vacation, time_sheet: time_sheet)
+    FactoryGirl.create(:absence, start_date: '2013-04-08', end_date: '2013-04-08', time_type: :vacation, user: user)
 
-    visit time_sheet_absences_path(time_sheet)
+    visit user_absences_path(user)
     find('.event-container').click
     click_on 'Bearbeiten'
     find('form').find('a', text: 'Löschen').click

@@ -11,20 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130906072526) do
+ActiveRecord::Schema.define(:version => 20130923090352) do
 
   create_table "absences", :force => true do |t|
-    t.integer  "time_sheet_id"
     t.integer  "time_type_id"
     t.date     "start_date"
     t.date     "end_date"
     t.boolean  "first_half_day",  :default => false
     t.boolean  "second_half_day", :default => false
     t.datetime "deleted_at"
+    t.integer  "user_id"
   end
 
-  add_index "absences", ["time_sheet_id"], :name => "index_date_entries_on_time_sheet_id"
   add_index "absences", ["time_type_id"], :name => "index_date_entries_on_time_type_id"
+  add_index "absences", ["user_id"], :name => "index_absences_on_user_id"
 
   create_table "activities", :force => true do |t|
     t.integer  "activity_type_id"
@@ -59,18 +59,18 @@ ActiveRecord::Schema.define(:version => 20130906072526) do
   end
 
   create_table "adjustments", :force => true do |t|
-    t.integer  "time_sheet_id"
     t.integer  "time_type_id"
     t.date     "date"
     t.integer  "duration"
     t.string   "label"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.datetime "deleted_at"
+    t.integer  "user_id"
   end
 
-  add_index "adjustments", ["time_sheet_id"], :name => "index_adjustments_on_time_sheet_id"
   add_index "adjustments", ["time_type_id"], :name => "index_adjustments_on_time_type_id"
+  add_index "adjustments", ["user_id"], :name => "index_adjustments_on_user_id"
 
   create_table "customers", :id => false, :force => true do |t|
     t.integer  "id"
@@ -167,24 +167,15 @@ ActiveRecord::Schema.define(:version => 20130906072526) do
   end
 
   create_table "time_entries", :force => true do |t|
-    t.integer  "time_sheet_id"
     t.integer  "time_type_id"
     t.datetime "starts"
     t.datetime "ends"
     t.datetime "deleted_at"
-  end
-
-  add_index "time_entries", ["time_sheet_id"], :name => "index_time_entries_on_time_sheet_id"
-  add_index "time_entries", ["time_type_id"], :name => "index_time_entries_on_time_type_id"
-
-  create_table "time_sheets", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.datetime "deleted_at"
   end
 
-  add_index "time_sheets", ["user_id"], :name => "index_time_sheets_on_user_id"
+  add_index "time_entries", ["time_type_id"], :name => "index_time_entries_on_time_type_id"
+  add_index "time_entries", ["user_id"], :name => "index_time_entries_on_user_id"
 
   create_table "time_types", :force => true do |t|
     t.string   "name"
