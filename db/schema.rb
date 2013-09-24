@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130923090352) do
+ActiveRecord::Schema.define(:version => 20130924132206) do
 
   create_table "absences", :force => true do |t|
     t.integer  "time_type_id"
@@ -176,6 +176,23 @@ ActiveRecord::Schema.define(:version => 20130923090352) do
 
   add_index "time_entries", ["time_type_id"], :name => "index_time_entries_on_time_type_id"
   add_index "time_entries", ["user_id"], :name => "index_time_entries_on_user_id"
+
+  create_table "time_spans", :force => true do |t|
+    t.date     "date"
+    t.integer  "duration"
+    t.integer  "duration_days"
+    t.integer  "duration_bonus"
+    t.integer  "user_id"
+    t.integer  "time_type_id"
+    t.integer  "time_spanable_id"
+    t.string   "time_spanable_type"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "time_spans", ["time_spanable_id"], :name => "index_time_spans_on_time_spanable_id"
+  add_index "time_spans", ["time_type_id"], :name => "index_time_spans_on_time_type_id"
+  add_index "time_spans", ["user_id"], :name => "index_time_spans_on_user_id"
 
   create_table "time_types", :force => true do |t|
     t.string   "name"
