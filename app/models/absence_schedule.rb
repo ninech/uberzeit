@@ -1,11 +1,10 @@
 # == Schema Information
 #
-# Table name: recurring_schedules
+# Table name: absence_schedules
 #
 #  id                     :integer          not null, primary key
 #  active                 :boolean          default(FALSE)
-#  enterable_id           :integer
-#  enterable_type         :string(255)
+#  absence_id             :integer
 #  ends                   :string(255)
 #  ends_counter           :integer
 #  ends_date              :date
@@ -15,12 +14,12 @@
 #  deleted_at             :datetime
 #
 
-class RecurringSchedule < ActiveRecord::Base
+class AbsenceSchedule < ActiveRecord::Base
   acts_as_paranoid
 
-  belongs_to :enterable, polymorphic: true
+  belongs_to :absence
 
-  attr_accessible :active, :ends, :ends_counter, :ends_date, :enterable, :weekly_repeat_interval
+  attr_accessible :active, :ends, :ends_counter, :ends_date, :absence, :weekly_repeat_interval
 
   ENDING_CONDITIONS = %w(counter date)
 
@@ -31,16 +30,12 @@ class RecurringSchedule < ActiveRecord::Base
 
   validates_presence_of :weekly_repeat_interval, if: :active?
 
-  validates_date :ends_date, on_or_after: lambda { |rs| rs.entry.end_date }, if: lambda { active? && ends_on_date? }
+  validates_date :ends_date, on_or_after: lambda { |rs| rs.absence.end_date }, if: lambda { active? && ends_on_date? }
 
-  validates_uniqueness_of :enterable_id, scope: :enterable_type
+  validates_uniqueness_of :absence_id
 
   def active?
     !!active
-  end
-
-  def entry
-    enterable
   end
 
   def ends_on_date?
@@ -52,7 +47,7 @@ class RecurringSchedule < ActiveRecord::Base
   end
 
   def recurring_start_date
-    entry.start_date
+    absence.start_date
   end
 
   def recurring_end_date
@@ -60,7 +55,7 @@ class RecurringSchedule < ActiveRecord::Base
       recurring_start_date + interval.to_days * (ends_counter - 1)
     elsif ends_on_date?
       # make sure the recurring schedule end date is at least the end date of the associated entry
-      entry.end_date >= ends_date ? entry.end_date : ends_date
+      absence.end_date >= ends_date ? absence.end_date : ends_date
     else
       raise "No valid end condition for recurring schedule"
     end
@@ -83,7 +78,7 @@ class RecurringSchedule < ActiveRecord::Base
     date_max = [recurring_date_range.max, find_in_date_range.max].min
     each_occurrence_between(date_min, date_max) do |date|
       start_date = date
-      end_date = start_date + entry.num_days
+      end_date = start_date + absence.num_days
       next unless (start_date..end_date).intersects_with_duration?(find_in_date_range)
 
       occurrences << start_date

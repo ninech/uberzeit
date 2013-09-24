@@ -23,7 +23,7 @@ describe API::App::Resources::Absences do
     let!(:absence) { FactoryGirl.create(:absence, user: user, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
 
     before do
-      absence.recurring_schedule.update_attributes(active: true, ends: 'date', ends_date: '2013-12-31', weekly_repeat_interval: 1)
+      absence.schedule.update_attributes(active: true, ends: 'date', ends_date: '2013-12-31', weekly_repeat_interval: 1)
 
       app_auth_get "/api/app/absences/team/#{team.id}/date/2013-09-27"
     end

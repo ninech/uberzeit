@@ -17,7 +17,7 @@ class Absence < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :time_type, with_deleted: true
-  has_one :recurring_schedule, as: :enterable, dependent: :destroy
+  has_one :schedule, class_name: :AbsenceSchedule, dependent: :destroy
 
   default_scope order(:start_date)
   scope :work, joins: :time_type, conditions: ['is_work = ?', true]
@@ -25,7 +25,7 @@ class Absence < ActiveRecord::Base
   scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
 
   attr_accessible :start_date, :end_date, :first_half_day, :second_half_day, :daypart
-  attr_accessible :recurring_schedule, :recurring_schedule_attributes
+  attr_accessible :schedule, :schedule_attributes
   attr_accessible :user_id, :time_type_id, :type
 
   validates_presence_of :start_date, :end_date
@@ -35,9 +35,9 @@ class Absence < ActiveRecord::Base
   validates_datetime :start_date
   validates_datetime :end_date, on_or_after: :start_date
 
-  accepts_nested_attributes_for :recurring_schedule
+  accepts_nested_attributes_for :schedule
 
-  before_validation :build_recurring_schedule, unless: :recurring_schedule
+  before_validation :build_schedule, unless: :schedule
 
   def self.nonrecurring_entries_in_range(range)
     date_range = range.to_date_range
@@ -46,16 +46,16 @@ class Absence < ActiveRecord::Base
 
   def self.recurring_entries
     # inner join
-    scoped.joins(:recurring_schedule).where(recurring_schedules: {active: true})
+    scoped.joins(:schedule).where(absence_schedules: {active: true})
   end
 
   def self.nonrecurring_entries
     # left outer join
-    scoped.includes(:recurring_schedule).where(recurring_schedules: {active: false})
+    scoped.includes(:schedule).where(absence_schedules: {active: false})
   end
 
   def self.recurring_entries_in_range(range)
-    recurring_entries.collect { |entry| entry if entry.recurring_schedule.occurring?(range) }.compact
+    recurring_entries.collect { |absence| absence if absence.schedule.occurring?(range) }.compact
   end
 
   def self.entries_in_range(range)
@@ -71,12 +71,12 @@ class Absence < ActiveRecord::Base
   end
 
   def recurring?
-    recurring_schedule && recurring_schedule.active?
+    schedule && schedule.active?
   end
 
   def occurrences(date_or_range)
     if recurring?
-      recurring_schedule.occurrences(date_or_range)
+      schedule.occurrences(date_or_range)
     else
       [starts]
     end

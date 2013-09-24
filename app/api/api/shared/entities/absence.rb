@@ -38,7 +38,7 @@ class API::Shared::Entities::Absence < Grape::Entity
       start_date: obj.starts.to_date,
       end_date: obj.ends.to_date,
       is_recurring: obj.recurring?,
-      weekly_repeat_interval: obj.recurring_schedule.weekly_repeat_interval,
+      weekly_repeat_interval: obj.schedule.weekly_repeat_interval,
       first_start_date: obj.respond_to?(:parent) ? obj.parent.start_date : obj.start_date,
       first_end_date: obj.respond_to?(:parent) ? obj.parent.end_date : obj.end_date,
       time_type: obj.time_type,

@@ -10,7 +10,7 @@
   <% if absence_period(absence) %>
     <p class='period'><%= absence_period(absence) %></p>
   <% end %>
-  <% if absence.recurring_schedule.active? %>
+  <% if absence.schedule.active? %>
     <p class='recurring'><%= absence_recurring(absence) %></p>
   <% end %>
   <% if edit %>
