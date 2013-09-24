@@ -177,15 +177,6 @@ ActiveRecord::Schema.define(:version => 20130923090352) do
   add_index "time_entries", ["time_type_id"], :name => "index_time_entries_on_time_type_id"
   add_index "time_entries", ["user_id"], :name => "index_time_entries_on_user_id"
 
-  create_table "time_sheets", :force => true do |t|
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.datetime "deleted_at"
-  end
-
-  add_index "time_sheets", ["user_id"], :name => "index_time_sheets_on_user_id"
-
   create_table "time_types", :force => true do |t|
     t.string   "name"
     t.boolean  "is_work",                  :default => false

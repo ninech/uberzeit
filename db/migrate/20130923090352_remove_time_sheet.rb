@@ -26,6 +26,8 @@ class RemoveTimeSheet < ActiveRecord::Migration
       end
     end
 
+    drop_table :time_sheets
+
   end
 
   def down
