@@ -114,6 +114,13 @@ describe TimeEntriesController do
           assigns(:time_entry).end_date.should eq('2013-02-03'.to_date)
           assigns(:time_entry).duration.should eq(2.hours)
         end
+
+        it 'creates the entry for the selected user' do
+          user.add_role :admin
+          user2 = FactoryGirl.create(:user)
+          post :create, user_id: user2.id, time_entry: FactoryGirl.attributes_for(:time_entry, time_type_id: time_type)
+          assigns(:time_entry).user_id.should eq(user2.id)
+        end
       end
 
       context 'with invalid attributes' do

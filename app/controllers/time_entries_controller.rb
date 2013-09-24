@@ -42,6 +42,7 @@ class TimeEntriesController < ApplicationController
 
   def create
     adjust_timer_day_boundary
+    @time_entry.user_id = params[:user_id] if params[:user_id]
     @time_entry.save
     respond_with @time_entry, location: default_return_location
   end
