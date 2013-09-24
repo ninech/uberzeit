@@ -7,7 +7,7 @@ class TimeSheet
 
   # returns time chunks (which are limited to the given date or range)
   def find_chunks(date_or_range, time_types = TimeType.scoped)
-    entries = [@user.time_entries.where(time_type_id: time_types), @user.absences.where(time_type_id: time_types)]
+    entries = [user.time_entries.where(time_type_id: time_types), user.absences.where(time_type_id: time_types)]
 
     find_chunks = FindTimeChunks.new(entries)
     find_chunks.in_range(date_or_range)
@@ -28,13 +28,13 @@ class TimeSheet
   end
 
   def planned_work(date_or_range)
-    calculator = CalculatePlannedWorkingTime.new(date_or_range, @user)
+    calculator = CalculatePlannedWorkingTime.new(date_or_range, user)
     calculator.total
   end
 
   def vacation(year)
     range = UberZeit.year_as_range(year)
-    redeemed = CalculateRedeemedVacation.new(@user, range)
+    redeemed = CalculateRedeemedVacation.new(user, range)
     redeemed.total
   end
 
@@ -49,7 +49,7 @@ class TimeSheet
 
   def duration_of_timers(date_or_range)
     range = date_or_range.to_range.to_date_range
-    timers_in_range = @user.time_entries.timers_only.select { |timer| range.intersects_with_duration?(timer.range) }
+    timers_in_range = user.time_entries.timers_only.select { |timer| range.intersects_with_duration?(timer.range) }
     timers_in_range.inject(0) { |sum,timer| sum + timer.duration(range) }
   end
 
