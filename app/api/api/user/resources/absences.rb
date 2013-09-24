@@ -21,7 +21,7 @@ class API::User::Resources::Absences < Grape::API
       optional :embed, type: Array, includes: %w[user time_type]
     end
     get 'date/:date', requirements: { date: /(\d{4})\D?(0[1-9]|1[0-2])\D?([12]\d|0[1-9]|3[01])/ } do
-      absences = FindDailyAbsences.new([current_user], params[:date])
+      absences = FindDailyAbsences.new(current_user, params[:date])
                                   .result
                                   .values
                                   .flatten

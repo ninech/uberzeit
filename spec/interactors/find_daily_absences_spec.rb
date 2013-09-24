@@ -15,8 +15,14 @@ describe FindDailyAbsences do
   let(:find_absences) { FindDailyAbsences.new([user1, user2], range) }
 
   it 'finds absences in the given range' do
-      find_absences.result[from].should have(2).chunks
-      find_absences.result[from].collect(&:id).should =~ [absence1.id, absence2.id]
+    find_absences.result[from].should have(2).chunks
+    find_absences.result[from].collect(&:id).should =~ [absence1.id, absence2.id]
+  end
+
+  it 'can handle one user' do
+    find_absences = FindDailyAbsences.new(user1, range)
+    find_absences.result[from].should have(1).chunks
+    find_absences.result[from].collect(&:id).should =~ [absence1.id]
   end
 
 end

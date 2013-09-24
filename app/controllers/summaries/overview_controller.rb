@@ -25,7 +25,7 @@ class Summaries::OverviewController < ApplicationController
   private
 
   def find_personal_absences
-    FindDailyAbsences.new([current_user], range_of_absences).result
+    FindDailyAbsences.new(current_user, range_of_absences).result
   end
 
   def find_team_absences

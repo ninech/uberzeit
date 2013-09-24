@@ -1,8 +1,8 @@
 class FindDailyAbsences
-  attr_reader :time_sheets, :range
+  attr_reader :users, :range
 
-  def initialize(time_sheets, date_or_range)
-    @time_sheets = time_sheets
+  def initialize(users, date_or_range)
+    @users = [users].flatten
     @range = date_or_range.to_range.to_date_range
   end
 
@@ -13,12 +13,12 @@ class FindDailyAbsences
   private
 
   def find_absences
-    absences_to_chunks_per_day(time_sheets)
+    absences_to_chunks_per_day(users)
   end
 
-  def absences_to_chunks_per_day(time_sheets)
+  def absences_to_chunks_per_day(users)
     chunks = {}
-    time_sheets.each do |ts|
+    users.each do |ts|
       daily_time_chunks_for(ts.absences) do |date, chunk|
         chunks[date] ||= []
         chunks[date] << chunk
