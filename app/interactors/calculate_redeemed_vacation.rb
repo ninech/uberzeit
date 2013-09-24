@@ -7,7 +7,7 @@ class CalculateRedeemedVacation
   end
 
   def total(round_result_to_half_work_days = true)
-    total = redeemed_vacation_for_time_sheet @user.time_sheet
+    total = redeemed_vacation_for_time_sheet(@user.time_sheet)
 
     if round_result_to_half_work_days
       round_to_half_work_days(total)
