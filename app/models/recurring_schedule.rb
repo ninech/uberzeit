@@ -20,8 +20,6 @@ class RecurringSchedule < ActiveRecord::Base
 
   belongs_to :enterable, polymorphic: true
 
-  has_many :exception_dates
-
   attr_accessible :active, :ends, :ends_counter, :ends_date, :enterable, :weekly_repeat_interval
 
   ENDING_CONDITIONS = %w(counter date)
@@ -76,21 +74,14 @@ class RecurringSchedule < ActiveRecord::Base
     weekly_repeat_interval.weeks
   end
 
-  def has_exception_date_in_range?(exceptions, range)
-    range.to_date_range.any? { |date| not exceptions[date.to_s].nil? }
-  end
-
   def occurrences(date_or_range)
     find_in_date_range = date_or_range.to_range.to_date_range
-    exceptions = exceptions_in_range_by_date(recurring_date_range)
 
     occurrences = []
 
     date_min = recurring_date_range.min
     date_max = [recurring_date_range.max, find_in_date_range.max].min
     each_occurrence_between(date_min, date_max) do |date|
-      next if has_exception_date_in_range?(exceptions, date...date+interval)
-
       start_date = date
       end_date = start_date + entry.num_days
       next unless (start_date..end_date).intersects_with_duration?(find_in_date_range)
@@ -106,11 +97,6 @@ class RecurringSchedule < ActiveRecord::Base
   end
 
   private
-  def exceptions_in_range_by_date(range)
-    key_value_array = exception_dates.in(range).map {|exception| [exception.date.to_s, exception]}
-    Hash[key_value_array]
-  end
-
   def each_occurrence_between(date, date_end, &block)
     begin
       yield(date)
