@@ -7,7 +7,7 @@ class TimeSpan < ActiveRecord::Base
   attr_accessible :date, :duration, :duration_bonus, :duration_days
 
   def duration=(value)
-    self.duration_days = value.to_f / 60 / 60 / 24
+    self.duration_days = value.to_days
     super
   end
 
