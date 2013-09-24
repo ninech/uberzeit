@@ -2,12 +2,12 @@
 #
 # Table name: time_entries
 #
-#  id            :integer          not null, primary key
-#  time_sheet_id :integer
-#  time_type_id  :integer
-#  starts        :datetime
-#  ends          :datetime
-#  deleted_at    :datetime
+#  id           :integer          not null, primary key
+#  time_type_id :integer
+#  starts       :datetime
+#  ends         :datetime
+#  deleted_at   :datetime
+#  user_id      :integer
 #
 
 require 'spec_helper'

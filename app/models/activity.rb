@@ -14,6 +14,10 @@
 #  otrs_ticket_id    :integer
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  deleted_at        :datetime
+#  billable          :boolean          default(FALSE), not null
+#  reviewed          :boolean          default(FALSE), not null
+#  billed            :boolean          default(FALSE), not null
 #
 
 class Activity < ActiveRecord::Base

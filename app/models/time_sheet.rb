@@ -1,15 +1,3 @@
-## == Schema Information
-##
-## Table name: time_sheets
-##
-##  id         :integer          not null, primary key
-##  user_id    :integer
-##  created_at :datetime         not null
-##  updated_at :datetime         not null
-##  deleted_at :datetime
-##
-#
-
 class TimeSheet
   attr_reader :user
 
