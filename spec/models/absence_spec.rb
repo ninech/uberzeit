@@ -48,10 +48,10 @@ describe Absence do
     entry = FactoryGirl.create(:absence, start_date: '2013-01-03', end_date: '2013-01-04')
     entry.whole_day?.should be_true
 
-    entry = FactoryGirl.create(:absence, start_date: '2013-01-03', end_date: '2013-01-04', first_half_day: true)
+    entry = FactoryGirl.create(:absence, start_date: '2013-01-03', end_date: '2013-01-04', first_half_day: false)
     entry.whole_day?.should be_false
 
-    entry = FactoryGirl.create(:absence, start_date: '2013-01-03', end_date: '2013-01-04', second_half_day: true)
+    entry = FactoryGirl.create(:absence, start_date: '2013-01-03', end_date: '2013-01-04', second_half_day: false)
     entry.whole_day?.should be_false
 
     entry = FactoryGirl.create(:absence, start_date: '2013-01-03', end_date: '2013-01-04', first_half_day: true, second_half_day: true)
@@ -80,6 +80,56 @@ describe Absence do
       absence.first_half_day?.should be_false
       absence.second_half_day?.should be_true
       absence.daypart.should eq(:second_half_day)
+    end
+  end
+
+  context 'denormalization' do
+    context 'single day' do
+      subject { FactoryGirl.build(:absence, start_date: '2013-01-01', end_date: '2013-01-01') }
+
+      it 'creates a TimeSpan if it does not exist yet' do
+        expect { subject.save! }.to change(TimeSpan, :count)
+      end
+
+      context 'changes' do
+        before do
+          subject.save!
+        end
+
+        it 'fills all the fields of TimeSpan' do
+          subject.time_spans.first.duration.should eq(subject.daily_work_duration)
+          subject.time_spans.first.date.should eq(subject.start_date)
+          subject.time_spans.first.user.should eq(subject.user)
+          subject.time_spans.first.time_type.should eq(subject.time_type)
+        end
+
+        it 'updates the TimeSpan' do
+          subject.time_spans.first.duration.should eq(1.work_days)
+          subject.first_half_day = false
+          subject.save!
+          subject.time_spans.first.duration.should eq(1.work_days * 0.5)
+        end
+
+        it 'removes the TimeSpan when it gets destroyed' do
+          expect { subject.destroy }.to change(TimeSpan, :count)
+        end
+
+        it 'creates a TimeSpan for only one date' do
+          subject.time_spans.count.should eq(1)
+        end
+      end
+    end
+
+    context 'multiple days' do
+      subject { FactoryGirl.create(:absence, start_date: '2013-01-01', end_date: '2013-01-03') }
+
+      it 'creates a TimeSpan for each date in the range' do
+        subject.time_spans.count.should eq(3)
+      end
+
+      it 'generates TimeSpans for each day of the range' do
+        subject.time_spans.collect(&:date).map(&:to_s).should eq(%w[2013-01-01 2013-01-02 2013-01-03])
+      end
     end
   end
 end

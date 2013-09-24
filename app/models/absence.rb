@@ -18,6 +18,7 @@ class Absence < ActiveRecord::Base
   belongs_to :user
   belongs_to :time_type, with_deleted: true
   has_one :recurring_schedule, as: :enterable, dependent: :destroy
+  has_many :time_spans, as: :time_spanable, dependent: :destroy
 
   default_scope order(:start_date)
   scope :work, joins: :time_type, conditions: ['is_work = ?', true]
@@ -38,6 +39,7 @@ class Absence < ActiveRecord::Base
   accepts_nested_attributes_for :recurring_schedule
 
   before_validation :build_recurring_schedule, unless: :recurring_schedule
+  after_save :update_or_create_time_span
 
   def self.nonrecurring_entries_in_range(range)
     date_range = range.to_date_range
@@ -64,6 +66,15 @@ class Absence < ActiveRecord::Base
 
   def duration
     range.duration
+  end
+
+  def daily_work_duration
+    duration = UberZeit::Config[:work_per_day]
+    if whole_day?
+      duration
+    else
+      duration * 0.5
+    end
   end
 
   def range
@@ -157,6 +168,18 @@ class Absence < ActiveRecord::Base
       date_range = start_date..(start_date+num_days)
       date_range.collect { |day| time_range_for_date(day) }
     end.flatten
+  end
+
+  def update_or_create_time_span
+    time_spans.destroy_all
+    (start_date..end_date).each do |date|
+      time_span = time_spans.build
+      time_span.duration = daily_work_duration
+      time_span.user = user
+      time_span.time_type = time_type
+      time_span.date = date
+      time_span.save!
+    end
   end
 
 end
