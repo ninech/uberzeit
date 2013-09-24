@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130924132206) do
+ActiveRecord::Schema.define(:version => 20130924152304) do
 
   create_table "absences", :force => true do |t|
     t.integer  "time_type_id"
     t.date     "start_date"
     t.date     "end_date"
-    t.boolean  "first_half_day",  :default => false
-    t.boolean  "second_half_day", :default => false
+    t.boolean  "first_half_day",  :default => true
+    t.boolean  "second_half_day", :default => true
     t.datetime "deleted_at"
     t.integer  "user_id"
   end
