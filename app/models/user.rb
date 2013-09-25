@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   has_many :time_entries
   has_many :activities
   has_many :employments
+  has_many :days
 
   validates_inclusion_of :time_zone, :in => ActiveSupport::TimeZone.zones_map { |m| m.name }, :message => "is not a valid Time Zone"
 
@@ -100,8 +101,27 @@ class User < ActiveRecord::Base
   def time_sheet
     @time_sheet ||= TimeSheet.new(self)
   end
-  private
 
+  def calculate_planned_working_time!(year)
+    range = Date.civil(year, 1, 1)..Date.civil(year, 12, 31)
+    days.in(range).destroy_all
+    employments_in_range = employments.between(range).to_a
+
+    range.each do |day|
+      temporary_working_time = if UberZeit.is_weekday_a_workday?(day) && employment_for_day = employments_in_range.find { |employment| employment.on_date?(day) }
+                                 employment_for_day.expected_daily_work_hours_in_seconds
+                               else
+                                 0
+                               end
+      days.create!(date: day, planned_working_time: temporary_working_time)
+    end
+
+    PublicHoliday.in(range).each do |public_holiday|
+      days.find_by_date(public_holiday.date).update_attribute(:planned_working_time, CalculatePlannedWorkingTime.new(public_holiday.date, self).total)
+    end
+  end
+
+  private
   def set_default_time_zone
     self.time_zone ||= Time.zone.name
   end
