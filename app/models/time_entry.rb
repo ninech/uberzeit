@@ -18,6 +18,7 @@ class TimeEntry < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :time_type, with_deleted: true
+  has_many :time_spans, as: :time_spanable, dependent: :destroy
 
   attr_accessible :user_id, :time_type_id, :type
   attr_accessible :start_time, :start_date, :end_date, :end_time
@@ -36,6 +37,8 @@ class TimeEntry < ActiveRecord::Base
   scope :except_timers, where('time_entries.ends IS NOT NULL')
 
   before_validation :round_times
+  after_save :update_or_create_time_span
+
 
   def self.entries_in_range(range)
     time_range = range.to_time_range
@@ -156,6 +159,20 @@ class TimeEntry < ActiveRecord::Base
 
   def date_and_time_to_datetime_format(date, time)
     "#{date} #{time}:00"
+  end
+
+  def update_or_create_time_span
+    time_spans.destroy_all
+    return if ends.nil?
+    (starts.to_date..ends.to_date).each do |date|
+      time_span = time_spans.build
+      time_span.duration = duration(date)
+      time_span.user = user
+      time_span.time_type = time_type
+      time_span.date = date
+      time_span.duration_bonus = UberZeit::BonusCalculators.use(time_type.bonus_calculator, self).result
+      time_span.save!
+    end
   end
 
 end
