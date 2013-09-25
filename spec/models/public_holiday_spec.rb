@@ -3,7 +3,7 @@
 # Table name: public_holidays
 #
 #  id              :integer          not null, primary key
-#  start_date      :date
+#  date      :date
 #  end_date        :date
 #  name            :string(255)
 #  first_half_day  :boolean          default(FALSE)
@@ -17,10 +17,10 @@ require 'spec_helper'
 
 describe PublicHoliday do
   before do
-    @public_holiday_1 = FactoryGirl.create(:public_holiday, start_date: '2013-12-25', end_date: '2013-12-26')
-    @public_holiday_2 = FactoryGirl.create(:public_holiday, start_date: '2013-03-29', end_date: '2013-03-29', first_half_day: true)
-    @public_holiday_3 = FactoryGirl.create(:public_holiday, start_date: '2013-04-01', end_date: '2013-04-01', second_half_day: true)
-    @public_holiday_4 = FactoryGirl.create(:public_holiday, start_date: '2013-04-15', end_date: '2013-04-15', first_half_day: true, second_half_day: true)
+    @public_holiday_1 = FactoryGirl.create(:public_holiday, date: '2013-12-25')
+    @public_holiday_2 = FactoryGirl.create(:public_holiday, date: '2013-03-29', first_half_day: true)
+    @public_holiday_3 = FactoryGirl.create(:public_holiday, date: '2013-04-01', second_half_day: true)
+    @public_holiday_4 = FactoryGirl.create(:public_holiday, date: '2013-04-15', first_half_day: true, second_half_day: true)
   end
 
   it 'has a valid factory' do
@@ -37,7 +37,6 @@ describe PublicHoliday do
     it '::half_day_on?' do
       PublicHoliday.half_day_on?('2013-07-20').should be_false
       PublicHoliday.half_day_on?('2013-12-25').should be_false
-      PublicHoliday.half_day_on?('2013-12-26').should be_false
       PublicHoliday.half_day_on?('2013-03-29').should be_true
       PublicHoliday.half_day_on?('2013-04-01').should be_true
       PublicHoliday.half_day_on?('2013-04-15').should be_false
@@ -46,7 +45,6 @@ describe PublicHoliday do
     it '::whole_day_on?' do
       PublicHoliday.whole_day_on?('2013-07-20').should be_false
       PublicHoliday.whole_day_on?('2013-12-25').should be_true
-      PublicHoliday.whole_day_on?('2013-12-26').should be_true
       PublicHoliday.whole_day_on?('2013-03-29').should be_false
       PublicHoliday.whole_day_on?('2013-04-01').should be_false
       PublicHoliday.whole_day_on?('2013-04-15').should be_true

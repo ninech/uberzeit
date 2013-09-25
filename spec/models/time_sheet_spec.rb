@@ -150,7 +150,7 @@ describe TimeSheet do
       work '2013-03-21 12:30:00 GMT+1', '2013-03-21 17:00:00 GMT+1'
       # and friday is a public holiday, what a lovely week!
       # (public holidays are not counted as work days)
-      FactoryGirl.create(:public_holiday, start_date: '2013-03-22', end_date: '2013-03-22')
+      FactoryGirl.create(:public_holiday, date: '2013-03-22')
     end
 
     it 'calculates the work time' do
@@ -163,7 +163,7 @@ describe TimeSheet do
   end
 
   it 'will not mark vacation days as redeemed if they overlap with public holidays' do
-    FactoryGirl.create(:public_holiday, start_date: '2013-08-01', end_date: '2013-08-01', name: '"Proud to be a swiss"-day')
+    FactoryGirl.create(:public_holiday, date: '2013-08-01', name: '"Proud to be a swiss"-day')
     vacation '2013-07-29', '2013-08-11'
     time_sheet.vacation(2013).should eq(9.work_days)
   end

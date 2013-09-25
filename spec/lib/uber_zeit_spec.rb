@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe UberZeit do
   before do
-    FactoryGirl.create(:public_holiday, start_date: '2013-03-19', end_date: '2013-03-19', second_half_day: true) # tuesday
-    FactoryGirl.create(:public_holiday, start_date: '2013-03-20', end_date: '2013-03-20') # wednesday
+    FactoryGirl.create(:public_holiday, date: '2013-03-19', second_half_day: true) # tuesday
+    FactoryGirl.create(:public_holiday, date: '2013-03-20') # wednesday
   end
 
   it '::is_weekday_a_workday?' do

@@ -16,17 +16,17 @@
 class PublicHoliday < ActiveRecord::Base
   acts_as_paranoid
 
-  default_scope order(:start_date)
+  default_scope order(:date)
 
-  attr_accessible :end_date, :first_half_day, :name, :second_half_day, :start_date, :daypart
+  attr_accessible :first_half_day, :name, :second_half_day, :date, :daypart
 
-  validates_presence_of :name, :start_date, :end_date
+  validates_presence_of :name, :date
 
-  validates_datetime :start_date
-  validates_datetime :end_date, on_or_after: :start_date
+  validates_datetime :date
 
-  scope :on, lambda { |date| date = date.to_date; { conditions: ['(start_date <= ? AND end_date >= ?)', date, date] } }
-  scope :in, lambda { |range| date_range = range.to_range.to_date_range; { conditions: ['(start_date <= ? AND end_date >= ?)', date_range.max, date_range.min] } }
+  scope :on, lambda { |date| date = date.to_date; { conditions: ['(date <= ? AND date >= ?)', date, date] } }
+  scope :in, lambda { |range| date_range = range.to_range.to_date_range; { conditions: ['(date <= ? AND date >= ?)', date_range.max, date_range.min] } }
+
 
   def self.in_year(year)
     scoped.in(UberZeit.year_as_range(year))
@@ -82,8 +82,8 @@ class PublicHoliday < ActiveRecord::Base
     end
   end
 
-  def on_date?(date)
-    start_date <= date && date <= end_date
+  def on_date?(check_date)
+    date == check_date
   end
 
   private
