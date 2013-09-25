@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130923090352) do
+ActiveRecord::Schema.define(:version => 20130924133509) do
+
+  create_table "absence_schedules", :force => true do |t|
+    t.boolean  "active",                 :default => false
+    t.integer  "absence_id"
+    t.string   "ends"
+    t.integer  "ends_counter"
+    t.date     "ends_date"
+    t.integer  "weekly_repeat_interval"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.datetime "deleted_at"
+  end
+
+  add_index "absence_schedules", ["absence_id"], :name => "index_absence_schedules_on_absence_id"
 
   create_table "absences", :force => true do |t|
     t.integer  "time_type_id"
@@ -94,15 +108,6 @@ ActiveRecord::Schema.define(:version => 20130923090352) do
 
   add_index "employments", ["user_id"], :name => "index_employments_on_user_id"
 
-  create_table "exception_dates", :force => true do |t|
-    t.integer  "recurring_schedule_id"
-    t.date     "date"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
-  end
-
-  add_index "exception_dates", ["recurring_schedule_id"], :name => "index_exception_dates_on_recurring_schedule_id"
-
   create_table "memberships", :force => true do |t|
     t.integer  "team_id"
     t.integer  "user_id"
@@ -131,19 +136,6 @@ ActiveRecord::Schema.define(:version => 20130923090352) do
     t.boolean  "second_half_day", :default => false
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
-    t.datetime "deleted_at"
-  end
-
-  create_table "recurring_schedules", :force => true do |t|
-    t.boolean  "active",                 :default => false
-    t.integer  "enterable_id"
-    t.string   "enterable_type"
-    t.string   "ends"
-    t.integer  "ends_counter"
-    t.date     "ends_date"
-    t.integer  "weekly_repeat_interval"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
     t.datetime "deleted_at"
   end
 

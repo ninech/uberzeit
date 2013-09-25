@@ -17,10 +17,6 @@ Uberzeit::Application.routes.draw do
     end
 
     resources :time_entries, except: [:show] do
-      member do
-        put 'exception_date/:date', action: 'exception_date', as: :exception_date
-      end
-
       collection do
         get '/date/:date', to: 'time_entries#index', as: :show_date
         put '/date/:date/stop-timer', to: 'time_entries#stop_timer'

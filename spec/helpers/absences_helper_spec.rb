@@ -19,7 +19,7 @@ describe AbsencesHelper do
     end
 
     let(:date) { Date.civil(2013, 1, 1) }
-    let(:recurring_schedule) do
+    let(:schedule) do
       mock.tap do |m|
         m.stub(:active?).and_return(false)
       end
@@ -34,7 +34,7 @@ describe AbsencesHelper do
         m.stub(:second_half_day?).and_return(false)
         m.stub(:whole_day?).and_return(true)
         m.stub(:time_type).and_return(TEST_TIME_TYPES[:vacation])
-        m.stub(:recurring_schedule).and_return(recurring_schedule)
+        m.stub(:schedule).and_return(schedule)
         m.stub(:recurring?).and_return(false)
        end
      end

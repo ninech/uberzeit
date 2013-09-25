@@ -43,7 +43,7 @@ describe AbsencesController do
 
       it 'ensures the absence has an empty recurring schedule' do
         get :new, user_id: user.id
-        assigns(:absence).recurring_schedule.should_not be_persisted
+        assigns(:absence).schedule.should_not be_persisted
       end
 
       context 'html' do
@@ -82,9 +82,9 @@ describe AbsencesController do
       end
 
       it 'ensures the absence has a recurring schedule' do
-        absence.recurring_schedule.destroy
+        absence.schedule.destroy
         get :edit, user_id: user.id, id: absence.id
-        assigns(:absence).recurring_schedule.should_not be_persisted
+        assigns(:absence).schedule.should_not be_persisted
       end
 
       context 'html' do
