@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130925132153) do
+ActiveRecord::Schema.define(:version => 20130925141228) do
 
   create_table "absences", :force => true do |t|
     t.integer  "time_type_id"
@@ -135,8 +135,7 @@ ActiveRecord::Schema.define(:version => 20130925132153) do
   add_index "projects", ["customer_id"], :name => "index_projects_on_customer_id"
 
   create_table "public_holidays", :force => true do |t|
-    t.date     "start_date"
-    t.date     "end_date"
+    t.date     "date"
     t.string   "name"
     t.boolean  "first_half_day",  :default => false
     t.boolean  "second_half_day", :default => false
