@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130923090352) do
+ActiveRecord::Schema.define(:version => 20130925132153) do
 
   create_table "absences", :force => true do |t|
     t.integer  "time_type_id"
@@ -81,6 +81,17 @@ ActiveRecord::Schema.define(:version => 20130923090352) do
   end
 
   add_index "customers", ["id"], :name => "index_customers_on_id", :unique => true
+
+  create_table "days", :force => true do |t|
+    t.integer  "user_id"
+    t.date     "date"
+    t.integer  "planned_working_time"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  add_index "days", ["date"], :name => "index_days_on_date"
+  add_index "days", ["user_id"], :name => "index_days_on_user_id"
 
   create_table "employments", :force => true do |t|
     t.integer  "user_id"
