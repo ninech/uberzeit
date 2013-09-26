@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130924133509) do
+ActiveRecord::Schema.define(:version => 20130926142856) do
 
   create_table "absence_schedules", :force => true do |t|
     t.boolean  "active",                 :default => false
@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(:version => 20130924133509) do
     t.integer  "time_type_id"
     t.date     "start_date"
     t.date     "end_date"
-    t.boolean  "first_half_day",  :default => false
-    t.boolean  "second_half_day", :default => false
+    t.boolean  "first_half_day",  :default => true
+    t.boolean  "second_half_day", :default => true
     t.datetime "deleted_at"
     t.integer  "user_id"
   end
@@ -96,6 +96,17 @@ ActiveRecord::Schema.define(:version => 20130924133509) do
 
   add_index "customers", ["id"], :name => "index_customers_on_id", :unique => true
 
+  create_table "days", :force => true do |t|
+    t.integer  "user_id"
+    t.date     "date"
+    t.integer  "planned_working_time"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  add_index "days", ["date"], :name => "index_days_on_date"
+  add_index "days", ["user_id"], :name => "index_days_on_user_id"
+
   create_table "employments", :force => true do |t|
     t.integer  "user_id"
     t.date     "start_date"
@@ -129,8 +140,7 @@ ActiveRecord::Schema.define(:version => 20130924133509) do
   add_index "projects", ["customer_id"], :name => "index_projects_on_customer_id"
 
   create_table "public_holidays", :force => true do |t|
-    t.date     "start_date"
-    t.date     "end_date"
+    t.date     "date"
     t.string   "name"
     t.boolean  "first_half_day",  :default => false
     t.boolean  "second_half_day", :default => false
@@ -168,6 +178,23 @@ ActiveRecord::Schema.define(:version => 20130924133509) do
 
   add_index "time_entries", ["time_type_id"], :name => "index_time_entries_on_time_type_id"
   add_index "time_entries", ["user_id"], :name => "index_time_entries_on_user_id"
+
+  create_table "time_spans", :force => true do |t|
+    t.date     "date"
+    t.integer  "duration"
+    t.float    "duration_in_work_days"
+    t.integer  "duration_bonus"
+    t.integer  "user_id"
+    t.integer  "time_type_id"
+    t.integer  "time_spanable_id"
+    t.string   "time_spanable_type"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+  end
+
+  add_index "time_spans", ["time_spanable_id"], :name => "index_time_spans_on_time_spanable_id"
+  add_index "time_spans", ["time_type_id"], :name => "index_time_spans_on_time_type_id"
+  add_index "time_spans", ["user_id"], :name => "index_time_spans_on_user_id"
 
   create_table "time_types", :force => true do |t|
     t.string   "name"

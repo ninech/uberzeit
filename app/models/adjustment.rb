@@ -25,12 +25,17 @@ class Adjustment < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :time_type
+  has_one :time_span,
+    as: :time_spanable,
+    dependent: :destroy
 
   attr_accessible :date, :duration, :label, :user_id, :time_type_id, :user_id, :duration_in_work_days, :duration_in_hours
 
   validates_presence_of       :user, :time_type, :date, :duration
   validates_numericality_of   :duration
   validates_date              :date
+
+  after_save :update_or_create_time_span
 
   def self.total_duration
     sum(:duration)
@@ -58,6 +63,15 @@ class Adjustment < ActiveRecord::Base
 
   def to_s
     label
+  end
+
+  def update_or_create_time_span
+    build_time_span unless time_span
+    time_span.duration = duration
+    time_span.user = user
+    time_span.time_type = time_type
+    time_span.date = date
+    time_span.save!
   end
 
 end

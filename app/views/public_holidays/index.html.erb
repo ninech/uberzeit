@@ -10,7 +10,7 @@
     <table class="nice small-12 edit destroy">
       <thead>
         <tr>
-          <th><%= PublicHoliday.human_attribute_name :start_date %></th>
+          <th><%= PublicHoliday.human_attribute_name :date %></th>
           <th><%= PublicHoliday.human_attribute_name :name %></th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
@@ -20,10 +20,7 @@
         <% @public_holidays.each do |public_holiday| %>
           <tr>
             <td>
-              <%= l(public_holiday.start_date, format: :long) %>
-              <% unless public_holiday.end_date.blank? || public_holiday.start_date == public_holiday.end_date %>
-                - <%= public_holiday.end_date %>
-              <% end %>
+              <%= l(public_holiday.date, format: :long) %>
             </td>
             <td><%= public_holiday.name %></td>
             <td>

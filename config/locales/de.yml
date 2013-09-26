@@ -51,7 +51,7 @@ de:
         end_date: Ende
       public_holiday:
         name: Name
-        start_date: Datum
+        date: Datum
         daypart: Dauer
     errors:
       models:
