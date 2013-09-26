@@ -26,7 +26,6 @@ class Adjustment < ActiveRecord::Base
   belongs_to :user
   belongs_to :time_type
   has_one :time_span,
-    conditions: proc { {date: self.date }},
     as: :time_spanable,
     dependent: :destroy
 
