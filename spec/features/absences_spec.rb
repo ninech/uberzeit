@@ -24,18 +24,18 @@ describe 'having fun with absences' do
 
   it 'updates an absence', js: true do
     absence = FactoryGirl.create(:absence, start_date: '2013-01-08', end_date: '2013-01-08', time_type: :vacation, user: user)
-    absence.recurring_schedule.update_attribute(:ends_date, '2013-01-08') # explicitly set recurring end date so date picker preselects correct month
+    absence.schedule.update_attribute(:ends_date, '2013-01-08') # explicitly set recurring end date so date picker preselects correct month
 
     visit user_absences_path(user)
 
     find('.event-container').click
     click_on 'Bearbeiten'
 
-    find('#absence_recurring_schedule_attributes_active').click
-    fill_in 'absence[recurring_schedule_attributes][weekly_repeat_interval]', with: 2
+    find('#absence_schedule_attributes_active').click
+    fill_in 'absence[schedule_attributes][weekly_repeat_interval]', with: 2
 
 
-    find('#absence_recurring_schedule_attributes_ends_date').click
+    find('#absence_schedule_attributes_ends_date').click
     find('.picker.picker--focused.picker--opened').find('div.picker__day', text: '27').click
 
     click_on 'Absenz aktualisieren'
