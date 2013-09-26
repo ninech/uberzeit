@@ -92,11 +92,11 @@ module AbsencesHelper
   end
 
   def absence_recurring(absence)
-    if absence.recurring_schedule.active?
-      if absence.recurring_schedule.ends_on_date?
-        t('.recurring_interval_until_date', { interval: absence.recurring_schedule.weekly_repeat_interval, ends: l(absence.recurring_schedule.ends_date) })
+    if absence.schedule.active?
+      if absence.schedule.ends_on_date?
+        t('.recurring_interval_until_date', { interval: absence.schedule.weekly_repeat_interval, ends: l(absence.schedule.ends_date) })
       else
-        t('.recurring_interval_endless', { interval: absence.recurring_schedule.weekly_repeat_interval })
+        t('.recurring_interval_endless', { interval: absence.schedule.weekly_repeat_interval })
       end
     end
   end

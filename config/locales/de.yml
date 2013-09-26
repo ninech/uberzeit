@@ -67,7 +67,7 @@ de:
           attributes:
             end_date:
               on_or_after: muss an oder nach dem Startdatum liegen
-        recurring_schedule:
+        absence_schedule:
           attributes:
             ends_date:
               invalid_date: ist ein ungültiges Datum
@@ -160,7 +160,7 @@ de:
   absences:
     top_buttons:
       add_absence: Absenz hinzufügen
-    recurring_schedule_sub_form:
+    schedule_sub_form:
       recurring_active: Wiederholen...
       repeat_every: Wiederhole jede
       weeks_until: Woche bis

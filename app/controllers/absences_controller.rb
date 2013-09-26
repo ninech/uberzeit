@@ -29,7 +29,7 @@ class AbsencesController < ApplicationController
   end
 
   def new
-    @absence.build_recurring_schedule
+    @absence.build_schedule
     if params[:date]
       @absence.start_date = params[:date].to_date
       @absence.end_date = @absence.start_date
@@ -43,7 +43,7 @@ class AbsencesController < ApplicationController
   end
 
   def edit
-    @absence.build_recurring_schedule unless @absence.recurring_schedule
+    @absence.build_schedule unless @absence.schedule
     respond_with(@absence)
   end
 
