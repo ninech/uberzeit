@@ -102,27 +102,12 @@ class User < ActiveRecord::Base
     @time_sheet ||= TimeSheet.new(self)
   end
 
-  def calculate_planned_working_time!(year)
-    range = Date.civil(year, 1, 1)..Date.civil(year, 12, 31)
-    days.in(range).destroy_all
-    employments_in_range = employments.between(range).to_a
-
-    range.each do |day|
-      temporary_working_time = if UberZeit.is_weekday_a_workday?(day) && employment_for_day = employments_in_range.find { |employment| employment.on_date?(day) }
-                                 employment_for_day.expected_daily_work_hours_in_seconds
-                               else
-                                 0
-                               end
-      days.create!(date: day, planned_working_time: temporary_working_time)
-    end
-
-    PublicHoliday.in(range).each do |public_holiday|
-      calculate_planned_working_time_for_date!(public_holiday.date)
-    end
+  def generate_planned_working_time_for_year!(year)
+    GeneratePlannedWorkingTimesForUserAndYear.new(self, year).run
   end
 
-  def calculate_planned_working_time_for_date!(date)
-    days.find_by_date(date).update_attribute(:planned_working_time, CalculatePlannedWorkingTime.new(date, self).total)
+  def generate_planned_working_time_for_date!(date)
+    GeneratePlannedWorkingTimeForUserAndDate.new(self, date).run
   end
 
   private

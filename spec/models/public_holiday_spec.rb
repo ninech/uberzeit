@@ -17,9 +17,9 @@ require 'spec_helper'
 
 describe PublicHoliday do
   before do
-    #@public_holiday_1 = FactoryGirl.create(:public_holiday, date: '2013-12-25')
-    #@public_holiday_2 = FactoryGirl.create(:public_holiday, date: '2013-03-29', first_half_day: true)
-    #@public_holiday_3 = FactoryGirl.create(:public_holiday, date: '2013-04-01', second_half_day: true)
+    @public_holiday_1 = FactoryGirl.create(:public_holiday, date: '2013-12-25')
+    @public_holiday_2 = FactoryGirl.create(:public_holiday, date: '2013-03-29', first_half_day: true)
+    @public_holiday_3 = FactoryGirl.create(:public_holiday, date: '2013-04-01', second_half_day: true)
     @public_holiday_4 = FactoryGirl.create(:public_holiday, date: '2013-04-15', first_half_day: true, second_half_day: true)
   end
 
@@ -81,7 +81,7 @@ describe PublicHoliday do
 
   it 'recalculates all the Days upon a changes' do
     users = FactoryGirl.create_list(:user, 2)
-    users.each { |user| user.calculate_planned_working_time!(2013) }
+    users.each { |user| user.generate_planned_working_time_for_year!(2013) }
     @public_holiday_4.first_half_day = false
     expect { @public_holiday_4.save! }.to change { Day.where(date: @public_holiday_4.date).map(&:planned_working_time) }
   end
