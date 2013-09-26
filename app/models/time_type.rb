@@ -31,7 +31,11 @@ class TimeType < ActiveRecord::Base
   validates_inclusion_of :exclude_from_calculation, in: [true, false]
   validates_inclusion_of :bonus_calculator, in: UberZeit::BonusCalculators.available_calculators.keys, allow_blank: true
 
+  has_many :time_entries
+
   validates_uniqueness_of_without_deleted :name
+
+  after_save :update_time_spans, if: :bonus_calculator_changed?
 
   def self.vacation
     # there can be only one vacation time type
@@ -74,6 +78,12 @@ class TimeType < ActiveRecord::Base
       :daywise
     when timewise
       :timewise
+    end
+  end
+
+  def update_time_spans
+    time_entries.reload.each do |time_entry|
+      time_entry.update_or_create_time_span
     end
   end
 
