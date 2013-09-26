@@ -97,17 +97,17 @@ describe Absence do
         end
 
         it 'fills all the fields of TimeSpan' do
-          subject.time_spans.first.duration.should eq(subject.daily_work_duration)
+          subject.time_spans.first.duration_in_work_days.should eq(1)
           subject.time_spans.first.date.should eq(subject.start_date)
           subject.time_spans.first.user.should eq(subject.user)
           subject.time_spans.first.time_type.should eq(subject.time_type)
         end
 
         it 'updates the TimeSpan' do
-          subject.time_spans.first.duration.should eq(1.work_days)
+          subject.time_spans.first.duration_in_work_days.should eq(1)
           subject.first_half_day = false
           subject.save!
-          subject.time_spans.first.duration.should eq(1.work_days * 0.5)
+          subject.time_spans.first.duration_in_work_days.should eq(0.5)
         end
 
         it 'removes the TimeSpan when it gets destroyed' do

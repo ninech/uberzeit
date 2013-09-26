@@ -174,7 +174,7 @@ class Absence < ActiveRecord::Base
     time_spans.destroy_all
     (start_date..end_date).each do |date|
       time_span = time_spans.build
-      time_span.duration = daily_work_duration
+      time_span.duration_in_work_days = whole_day? ? 1 : 0.5
       time_span.user = user
       time_span.time_type = time_type
       time_span.date = date
