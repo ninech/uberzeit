@@ -27,6 +27,7 @@ class PublicHoliday < ActiveRecord::Base
   scope :on, lambda { |date| date = date.to_date; { conditions: ['(date <= ? AND date >= ?)', date, date] } }
   scope :in, lambda { |range| date_range = range.to_range.to_date_range; { conditions: ['(date <= ? AND date >= ?)', date_range.max, date_range.min] } }
 
+  after_save :update_days
 
   def self.in_year(year)
     scoped.in(UberZeit.year_as_range(year))
@@ -84,6 +85,12 @@ class PublicHoliday < ActiveRecord::Base
 
   def on_date?(check_date)
     date == check_date
+  end
+
+  def update_days
+    Day.where(date: date).each do |day|
+      day.user.calculate_planned_working_time_for_date!(day.date)
+    end
   end
 
   private

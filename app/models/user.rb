@@ -117,8 +117,12 @@ class User < ActiveRecord::Base
     end
 
     PublicHoliday.in(range).each do |public_holiday|
-      days.find_by_date(public_holiday.date).update_attribute(:planned_working_time, CalculatePlannedWorkingTime.new(public_holiday.date, self).total)
+      calculate_planned_working_time_for_date!(public_holiday.date)
     end
+  end
+
+  def calculate_planned_working_time_for_date!(date)
+    days.find_by_date(date).update_attribute(:planned_working_time, CalculatePlannedWorkingTime.new(date, self).total)
   end
 
   private
