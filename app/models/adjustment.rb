@@ -70,6 +70,7 @@ class Adjustment < ActiveRecord::Base
     time_span.duration = duration
     time_span.user = user
     time_span.time_type = time_type
+    time_span.date = date
     time_span.save!
   end
 
