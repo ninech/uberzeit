@@ -202,12 +202,11 @@ describe TimeEntry do
       end
 
       it 'calculates the bonus' do
+        subject.save!
         UberZeit::BonusCalculators.register :nine_on_duty, UberZeit::BonusCalculators::NineOnDuty
         subject.time_type.bonus_calculator = 'nine_on_duty'
         subject.time_type.save!
-        subject.touch
-        subject.save!
-        subject.time_spans.collect(&:duration_bonus).inject(&:+).should > 0
+        subject.time_spans.reload.collect(&:duration_bonus).inject(&:+).should > 0
       end
     end
   end

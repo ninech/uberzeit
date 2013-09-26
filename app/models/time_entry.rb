@@ -128,6 +128,20 @@ class TimeEntry < ActiveRecord::Base
     save
   end
 
+  def update_or_create_time_span
+    time_spans.destroy_all
+    return if ends.nil?
+    (starts.to_date..ends.to_date).each do |date|
+      time_span = time_spans.build
+      time_span.duration = duration(date)
+      time_span.user = user
+      time_span.time_type = time_type
+      time_span.date = date
+      time_span.duration_bonus = UberZeit::BonusCalculators.use(time_type.bonus_calculator, self).result
+      time_span.save!
+    end
+  end
+
   private
 
   def must_be_only_timer_on_date
@@ -159,20 +173,6 @@ class TimeEntry < ActiveRecord::Base
 
   def date_and_time_to_datetime_format(date, time)
     "#{date} #{time}:00"
-  end
-
-  def update_or_create_time_span
-    time_spans.destroy_all
-    return if ends.nil?
-    (starts.to_date..ends.to_date).each do |date|
-      time_span = time_spans.build
-      time_span.duration = duration(date)
-      time_span.user = user
-      time_span.time_type = time_type
-      time_span.date = date
-      time_span.duration_bonus = UberZeit::BonusCalculators.use(time_type.bonus_calculator, self).result
-      time_span.save!
-    end
   end
 
 end
