@@ -102,15 +102,6 @@ class User < ActiveRecord::Base
     @time_sheet ||= TimeSheet.new(self)
   end
 
-  def generate_planned_working_time_for_year!(year)
-    year_as_range = Date.civil(year, 1, 1)..Date.civil(year, 12, 31)
-    GeneratePlannedWorkingTimeForUserAndDates.new(self, year_as_range).run
-  end
-
-  def generate_planned_working_time_for_date!(date)
-    GeneratePlannedWorkingTimeForUserAndDates.new(self, date).run
-  end
-
   private
   def set_default_time_zone
     self.time_zone ||= Time.zone.name

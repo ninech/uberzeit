@@ -81,7 +81,7 @@ describe PublicHoliday do
 
   it 'recalculates all the Days upon a changes' do
     users = FactoryGirl.create_list(:user, 2)
-    users.each { |user| user.generate_planned_working_time_for_year!(2013) }
+    users.each { |user| Day.create_or_regenerate_days_for_user_and_year!(user, 2013) }
     @public_holiday_4.first_half_day = false
     expect { @public_holiday_4.save! }.to change { Day.where(date: @public_holiday_4.date).map(&:planned_working_time) }
   end

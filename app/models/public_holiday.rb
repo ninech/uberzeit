@@ -89,7 +89,7 @@ class PublicHoliday < ActiveRecord::Base
 
   def update_days
     Day.where(date: date).each do |day|
-      day.user.generate_planned_working_time_for_date!(day.date)
+      day.regenerate!
     end
   end
 

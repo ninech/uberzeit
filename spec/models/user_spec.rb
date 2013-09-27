@@ -69,23 +69,4 @@ describe User do
     end
   end
 
-  describe '#generate_planned_working_time_for_year!' do
-    let(:year) { 2013 }
-    let(:date) { Date.civil(year, 1, 1)..Date.civil(year, 12, 31) }
-    it 'uses GeneratePlannedWorkingTimesForUserAndYear to generate all the entries' do
-      calculator = mock.tap { |m| m.should_receive(:run) }
-      GeneratePlannedWorkingTimeForUserAndDates.should_receive(:new).with(user, date).and_return(calculator)
-      user.generate_planned_working_time_for_year!(year)
-    end
-  end
-
-  describe '#generate_planned_working_time_for_date!' do
-    let(:date) { Date.civil(2013, 12, 24) }
-    it 'uses GeneratePlannedWorkingTimeForUserAndDate to generate all the entries' do
-      calculator = mock.tap { |m| m.should_receive(:run) }
-      GeneratePlannedWorkingTimeForUserAndDates.should_receive(:new).with(user, date).and_return(calculator)
-      user.generate_planned_working_time_for_date!(date)
-    end
-  end
-
 end
