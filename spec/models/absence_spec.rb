@@ -130,6 +130,14 @@ describe Absence do
       it 'generates TimeSpans for each day of the range' do
         subject.time_spans.collect(&:date).map(&:to_s).should eq(%w[2013-01-01 2013-01-02 2013-01-03])
       end
+
+      it 'uses the planned work time to set the duration' do
+        subject.start_date = '2013-09-27'
+        subject.end_date = '2013-09-30'
+        subject.save!
+        subject.time_spans.collect(&:duration_in_work_days).sum.should eq(2)
+      end
+
     end
   end
 end

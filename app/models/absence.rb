@@ -173,8 +173,9 @@ class Absence < ActiveRecord::Base
   def update_or_create_time_span
     time_spans.destroy_all
     (start_date..end_date).each do |date|
+      duration_in_work_days = CalculatePlannedWorkingTime.new(date.to_range, user, fulltime: true).total.to_work_days
       time_span = time_spans.build
-      time_span.duration_in_work_days = whole_day? ? 1 : 0.5
+      time_span.duration_in_work_days = duration_in_work_days
       time_span.user = user
       time_span.time_type = time_type
       time_span.date = date
