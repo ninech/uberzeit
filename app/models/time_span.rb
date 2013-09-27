@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: time_spans
+#
+#  id                    :integer          not null, primary key
+#  date                  :date
+#  duration              :integer
+#  duration_in_work_days :float
+#  duration_bonus        :integer
+#  user_id               :integer
+#  time_type_id          :integer
+#  time_spanable_id      :integer
+#  time_spanable_type    :string(255)
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#
+
 class TimeSpan < ActiveRecord::Base
 
   belongs_to :user

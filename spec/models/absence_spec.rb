@@ -6,8 +6,8 @@
 #  time_type_id    :integer
 #  start_date      :date
 #  end_date        :date
-#  first_half_day  :boolean          default(FALSE)
-#  second_half_day :boolean          default(FALSE)
+#  first_half_day  :boolean          default(TRUE)
+#  second_half_day :boolean          default(TRUE)
 #  deleted_at      :datetime
 #  user_id         :integer
 #

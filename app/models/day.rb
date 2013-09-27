@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: days
+#
+#  id                   :integer          not null, primary key
+#  user_id              :integer
+#  date                 :date
+#  planned_working_time :integer
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#
+
 class Day < ActiveRecord::Base
   belongs_to :user
   attr_accessible :date, :planned_working_time

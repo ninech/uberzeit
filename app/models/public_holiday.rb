@@ -3,8 +3,7 @@
 # Table name: public_holidays
 #
 #  id              :integer          not null, primary key
-#  start_date      :date
-#  end_date        :date
+#  date            :date
 #  name            :string(255)
 #  first_half_day  :boolean          default(FALSE)
 #  second_half_day :boolean          default(FALSE)
