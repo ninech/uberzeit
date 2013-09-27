@@ -83,11 +83,5 @@ describe Employment do
       user.employments.on('2013-02-12'.to_date).workload.should eq(40)
     end
 
-    describe '#expected_daily_work_hours_in_seconds' do
-      it 'returns the expected daily work hours' do
-        user.employments.on('2012-11-11'.to_date).expected_daily_work_hours_in_seconds.should eq(8.5.hours)
-        user.employments.on('2013-01-11'.to_date).expected_daily_work_hours_in_seconds.should eq(4.25.hours)
-      end
-    end
   end
 end

@@ -66,10 +66,6 @@ class Employment < ActiveRecord::Base
     (start_date..end_date)
   end
 
-  def expected_daily_work_hours_in_seconds
-    UberZeit::Config[:work_per_day] / 100 * workload
-  end
-
   private
 
   def other_employments
