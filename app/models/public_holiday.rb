@@ -88,7 +88,7 @@ class PublicHoliday < ActiveRecord::Base
   end
 
   def update_days
-    Day.where(date: date).each do |day|
+    Day.where(date: [date, date_was]).each do |day|
       day.regenerate!
     end
   end
