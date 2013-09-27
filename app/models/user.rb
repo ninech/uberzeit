@@ -103,11 +103,12 @@ class User < ActiveRecord::Base
   end
 
   def generate_planned_working_time_for_year!(year)
-    GeneratePlannedWorkingTimesForUserAndYear.new(self, year).run
+    year_as_range = Date.civil(year, 1, 1)..Date.civil(year, 12, 31)
+    GeneratePlannedWorkingTimeForUserAndDates.new(self, year_as_range).run
   end
 
   def generate_planned_working_time_for_date!(date)
-    GeneratePlannedWorkingTimeForUserAndDate.new(self, date).run
+    GeneratePlannedWorkingTimeForUserAndDates.new(self, date).run
   end
 
   private
