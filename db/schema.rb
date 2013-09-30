@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130926142856) do
+ActiveRecord::Schema.define(:version => 20130930075515) do
 
   create_table "absence_schedules", :force => true do |t|
     t.boolean  "active",                 :default => false
