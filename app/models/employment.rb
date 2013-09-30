@@ -101,7 +101,7 @@ class Employment < ActiveRecord::Base
   end
 
   def check_if_last
-    errors.add(:base, :cannot_delete_single_employment) if user.employments.length <= 1
+    errors.add(:base, :cannot_delete_single_employment) if user && user.employments.length <= 1
     errors.blank?
   end
 end
