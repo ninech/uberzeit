@@ -68,6 +68,7 @@ class Adjustment < ActiveRecord::Base
   def update_or_create_time_span
     build_time_span unless time_span
     time_span.duration = duration
+    time_span.credited_duration = duration
     time_span.user = user
     time_span.time_type = time_type
     time_span.date = date

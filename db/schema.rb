@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130926142856) do
+ActiveRecord::Schema.define(:version => 20131001094549) do
 
   create_table "absence_schedules", :force => true do |t|
     t.boolean  "active",                 :default => false
@@ -188,8 +188,10 @@ ActiveRecord::Schema.define(:version => 20130926142856) do
     t.integer  "time_type_id"
     t.integer  "time_spanable_id"
     t.string   "time_spanable_type"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.integer  "credited_duration"
+    t.float    "credited_duration_in_work_days"
   end
 
   add_index "time_spans", ["time_spanable_id"], :name => "index_time_spans_on_time_spanable_id"

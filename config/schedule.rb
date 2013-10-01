@@ -7,3 +7,7 @@ end
 every 15.minutes do
   rake 'uberzeit:sync:customers'
 end
+
+every 1.day do
+  rake 'uberzeit:generate:planned_working_time'
+end

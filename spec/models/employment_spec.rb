@@ -82,5 +82,47 @@ describe Employment do
       user.employments.on('2013-02-11'.to_date).workload.should eq(80)
       user.employments.on('2013-02-12'.to_date).workload.should eq(40)
     end
+
+  end
+
+  context 'denormalization' do
+
+    let(:employment) { FactoryGirl.create(:employment, start_date: '2013-09-23', end_date: '2013-09-29', user: user) }
+
+    subject { employment }
+
+    before do
+      Day.create_or_regenerate_days_for_user_and_year!(user, 2013)
+    end
+
+    it 'recalculates all the Days upon a changes' do
+      subject.workload = 80
+      expect { subject.save! }.to change { Day.sum(:planned_working_time) }.from(5.work_days).to(4.work_days)
+    end
+
+    it 'recalculates also the old date when the date has been changed' do
+      subject.start_date = '2013-09-24'
+      expect { subject.save! }.to change { Day.sum(:planned_working_time) }.from(5.work_days).to(4.work_days)
+    end
+
+    it 'recalculates also the old date when the date has been changed' do
+      subject.end_date = '2013-09-30'
+      expect { subject.save! }.to change { Day.sum(:planned_working_time) }.from(5.work_days).to(6.work_days)
+    end
+
+    context 'open end employment' do
+      let(:employment) { FactoryGirl.create(:employment, start_date: '2013-09-23', end_date: nil, user: user) }
+
+      it 'recalculates also the old date when the date has been changed' do
+        subject.start_date = '2013-09-24'
+        expect { subject.save! }.to change { Day.sum(:planned_working_time) }.from(72.work_days).to(71.work_days)
+      end
+
+      it 'recalculates also the old date when the date has been changed' do
+        subject.end_date = '2013-09-30'
+        expect { subject.save! }.to change { Day.sum(:planned_working_time) }.from(72.work_days).to(6.work_days)
+      end
+    end
+
   end
 end

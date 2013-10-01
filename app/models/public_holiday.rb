@@ -3,8 +3,7 @@
 # Table name: public_holidays
 #
 #  id              :integer          not null, primary key
-#  start_date      :date
-#  end_date        :date
+#  date            :date
 #  name            :string(255)
 #  first_half_day  :boolean          default(FALSE)
 #  second_half_day :boolean          default(FALSE)
@@ -27,6 +26,7 @@ class PublicHoliday < ActiveRecord::Base
   scope :on, lambda { |date| date = date.to_date; { conditions: ['(date <= ? AND date >= ?)', date, date] } }
   scope :in, lambda { |range| date_range = range.to_range.to_date_range; { conditions: ['(date <= ? AND date >= ?)', date_range.max, date_range.min] } }
 
+  after_save :update_days
 
   def self.in_year(year)
     scoped.in(UberZeit.year_as_range(year))
@@ -84,6 +84,11 @@ class PublicHoliday < ActiveRecord::Base
 
   def on_date?(check_date)
     date == check_date
+  end
+
+  def update_days
+    changed_dates = [date, date_was].compact
+    Day.where(date: changed_dates).each(&:regenerate!)
   end
 
   private

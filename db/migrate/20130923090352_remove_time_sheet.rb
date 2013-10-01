@@ -16,7 +16,7 @@ class RemoveTimeSheet < ActiveRecord::Migration
 
     models.each do |model|
       model.all.each do |entry|
-        entry.update_attribute :user, TimeSheet.find(entry.time_sheet_id).user
+        entry.update_column :user_id, TimeSheet.find(entry.time_sheet_id).user_id
       end
     end
 

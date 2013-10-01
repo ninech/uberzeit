@@ -27,11 +27,10 @@ class Employment < ActiveRecord::Base
   validates_datetime :end_date, on_or_after: :start_date, unless: :open_ended?
 
   before_destroy :check_if_last
-
   before_validation :ensure_no_other_entry_is_open_ended, if: :open_ended?
   before_validation :ensure_no_overlaps, unless: :open_ended?
-
   before_validation :set_default_values, unless: :persisted?
+  after_save :update_days
 
   default_scope order(:start_date)
 
@@ -66,6 +65,23 @@ class Employment < ActiveRecord::Base
     (start_date..end_date)
   end
 
+  def update_days
+    earliest_start_date = [start_date, start_date_was].compact.min
+
+    # if there was an end_date before the change
+    # and there is an end_date after the change
+    # the employment is not open ended and we can regenerate
+    # just the days until the later end_date(_was)
+    if end_date && end_date_was
+      latest_end_date = [ end_date, end_date_was].max
+    end
+
+    days = Day.where('date >= ?', earliest_start_date)
+    days = days.where('date <= ?', latest_end_date) if latest_end_date
+
+    days.each(&:regenerate!)
+  end
+
   private
 
   def other_employments
@@ -85,7 +101,7 @@ class Employment < ActiveRecord::Base
   end
 
   def check_if_last
-    errors.add(:base, :cannot_delete_single_employment) if user.employments.length <= 1
+    errors.add(:base, :cannot_delete_single_employment) if user && user.employments.length <= 1
     errors.blank?
   end
 end

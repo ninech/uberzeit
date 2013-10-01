@@ -48,8 +48,12 @@ describe TimeType do
   end
 
   it 'updates the time spans if the bonus changes' do
-    time_type = TEST_TIME_TYPES[:work]
-    time_entry = FactoryGirl.create(:time_entry, time_type_id: time_type.id, start_time: '00:45:00', end_time: '01:30:00')
+    time_type = FactoryGirl.create(:time_type_work)
+    time_entry = FactoryGirl.create(:time_entry, start_time: '00:45:00', end_time: '01:30:00')
+
+    # TODO: remove fugly solution because of strange factory
+    time_entry.time_type = time_type
+    time_entry.save!
 
     UberZeit::BonusCalculators.register :nine_on_duty, UberZeit::BonusCalculators::NineOnDuty
     time_type.bonus_calculator = 'nine_on_duty'

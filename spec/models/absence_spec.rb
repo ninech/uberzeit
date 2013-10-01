@@ -6,8 +6,8 @@
 #  time_type_id    :integer
 #  start_date      :date
 #  end_date        :date
-#  first_half_day  :boolean          default(FALSE)
-#  second_half_day :boolean          default(FALSE)
+#  first_half_day  :boolean          default(TRUE)
+#  second_half_day :boolean          default(TRUE)
 #  deleted_at      :datetime
 #  user_id         :integer
 #
@@ -110,6 +110,13 @@ describe Absence do
           subject.time_spans.first.duration_in_work_days.should eq(0.5)
         end
 
+        it 'recalculates the credited_duration' do
+          subject.time_spans.first.credited_duration_in_work_days.should eq(1)
+          subject.first_half_day = false
+          subject.save!
+          subject.time_spans.first.credited_duration_in_work_days.should eq(0.5)
+        end
+
         it 'removes the TimeSpan when it gets destroyed' do
           expect { subject.destroy }.to change(TimeSpan, :count)
         end
@@ -130,6 +137,15 @@ describe Absence do
       it 'generates TimeSpans for each day of the range' do
         subject.time_spans.collect(&:date).map(&:to_s).should eq(%w[2013-01-01 2013-01-02 2013-01-03])
       end
+
+      it 'uses the planned work time to set the duration' do
+        subject.start_date = '2013-09-27'
+        subject.end_date = '2013-09-30'
+        subject.save!
+        subject.time_spans.collect(&:duration_in_work_days).sum.should eq(4)
+        subject.time_spans.collect(&:credited_duration_in_work_days).sum.should eq(2)
+      end
+
     end
   end
 end

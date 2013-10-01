@@ -32,6 +32,12 @@ describe AbsencesController do
         get :index, user_id: user.id, year: 2012
         assigns(:absences).length.should eq(0)
       end
+
+      it 'assigns @public_holidays' do
+        rafs_birthday = FactoryGirl.create(:public_holiday, date: '2013-04-22', name: 'Its my birthday, men!')
+        get :index, user_id: user.id
+        assigns(:public_holidays).should eq({'2013-04-22'.to_date => rafs_birthday})
+      end
     end
 
     describe 'GET "new"' do

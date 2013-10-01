@@ -29,11 +29,13 @@ class User < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
 
-  has_many :absences
-  has_many :adjustments
-  has_many :time_entries
-  has_many :activities
-  has_many :employments
+  has_many :absences, dependent: :destroy
+  has_many :adjustments, dependent: :destroy
+  has_many :time_entries, dependent: :destroy
+  has_many :activities, dependent: :destroy
+  has_many :employments, dependent: :destroy
+  has_many :days, dependent: :destroy
+  has_many :time_spans, dependent: :destroy
 
   validates_inclusion_of :time_zone, :in => ActiveSupport::TimeZone.zones_map { |m| m.name }, :message => "is not a valid Time Zone"
 
@@ -100,8 +102,8 @@ class User < ActiveRecord::Base
   def time_sheet
     @time_sheet ||= TimeSheet.new(self)
   end
-  private
 
+  private
   def set_default_time_zone
     self.time_zone ||= Time.zone.name
   end

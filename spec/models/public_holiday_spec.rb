@@ -3,8 +3,7 @@
 # Table name: public_holidays
 #
 #  id              :integer          not null, primary key
-#  date      :date
-#  end_date        :date
+#  date            :date
 #  name            :string(255)
 #  first_half_day  :boolean          default(FALSE)
 #  second_half_day :boolean          default(FALSE)
@@ -77,5 +76,19 @@ describe PublicHoliday do
     @public_holiday_2.second_half_day?.should be_false
     @public_holiday_3.second_half_day?.should be_true
     @public_holiday_4.second_half_day?.should be_false
+  end
+
+  it 'recalculates all the Days upon a changes' do
+    users = FactoryGirl.create_list(:user, 2)
+    users.each { |user| Day.create_or_regenerate_days_for_user_and_year!(user, 2013) }
+    @public_holiday_4.first_half_day = false
+    expect { @public_holiday_4.save! }.to change { Day.where(date: @public_holiday_4.date).map(&:planned_working_time) }
+  end
+
+  it 'recalculates also the old date when the date has been changed' do
+    user = FactoryGirl.create(:user)
+    Day.create_or_regenerate_days_for_user_and_year!(user, 2013)
+    @public_holiday_4.date += 1.day
+    expect { @public_holiday_4.save! }.to_not change { Day.all.map(&:planned_working_time).sum }
   end
 end

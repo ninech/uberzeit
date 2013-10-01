@@ -75,4 +75,16 @@ describe CalculatePlannedWorkingTime do
       calculator.total.should eq(76.5.hours)
     end
   end
+
+  describe '#total_per_date' do
+    let(:date_or_range) { '2013-03-03'.to_date..'2013-03-04'.to_date }
+
+    it 'returns the calculated planned work time per day' do
+      FactoryGirl.create(:employment, workload: 100, user: user)
+      calculator.total_per_date.should eq({
+        Date.civil(2013, 3, 3) => 0,
+        Date.civil(2013, 3, 4) => 1.work_days,
+      })
+    end
+  end
 end

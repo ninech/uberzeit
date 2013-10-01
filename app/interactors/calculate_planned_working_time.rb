@@ -7,7 +7,11 @@ class CalculatePlannedWorkingTime
   end
 
   def total
-    planned_working_time
+    planned_working_time_each_day.values.sum
+  end
+
+  def total_per_date
+    planned_working_time_each_day
   end
 
   private
@@ -17,10 +21,12 @@ class CalculatePlannedWorkingTime
   end
 
   def workload_on_date
+    return work_coefficient_on_date if @user.nil?
+
     employment_on_date = @employments.find { |employment| employment.on_date?(@date) }
     return 0 if employment_on_date.nil?
-    return 1 if !!@opts[:fulltime] # overwrite to fulltime workload
-    employment_on_date.workload / 100.0
+    return work_coefficient_on_date if !!@opts[:fulltime] # overwrite to fulltime workload
+    work_coefficient_on_date * employment_on_date.workload / 100.0
   end
 
   def preload_employments
@@ -31,19 +37,17 @@ class CalculatePlannedWorkingTime
     @public_holidays = PublicHoliday.in(@range).to_a
   end
 
-  def planned_working_time
+  def planned_working_time_each_day
     preload_public_holidays
     preload_employments unless @user.nil?
 
-    @range.inject(0.0) do |sum, date|
+    result = {}
+    @range.each do |date|
       @date = date
-      workload_factor = if @user.nil?
-                          1
-                        else
-                          workload_on_date
-                        end
-      sum + work_coefficient_on_date * workload_factor * UberZeit::Config[:work_per_day]
+      result[date] = workload_on_date * UberZeit::Config[:work_per_day]
     end
+
+    result
   end
 
   def work_coefficient_on_date
