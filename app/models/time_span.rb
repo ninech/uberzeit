@@ -23,7 +23,9 @@ class TimeSpan < ActiveRecord::Base
 
   attr_accessible :date, :duration, :duration_bonus, :duration_days
 
-  validates_presence_of :date, :duration, :duration_in_work_days,
+  validates_presence_of :date,
+                        :duration, :duration_in_work_days,
+                        :credited_duration, :credited_duration_in_work_days,
                         :user_id, :time_type_id, :time_spanable_id, :time_spanable_type
 
   def duration=(value)
@@ -33,6 +35,16 @@ class TimeSpan < ActiveRecord::Base
 
   def duration_in_work_days=(value)
     write_attribute :duration, value.work_days
+    super
+  end
+
+  def credited_duration=(value)
+    write_attribute :credited_duration_in_work_days, value.to_work_days
+    super
+  end
+
+  def credited_duration_in_work_days=(value)
+    write_attribute :credited_duration, value.work_days
     super
   end
 

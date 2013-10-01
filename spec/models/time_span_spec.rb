@@ -36,9 +36,30 @@ describe TimeSpan do
       expect { subject.duration_in_work_days = 1 }.to change { subject.duration }
     end
 
-    it 'calculates duration_in_work_days correctly' do
+    it 'calculates duration correctly' do
       subject.duration_in_work_days = 1
       subject.duration.should eq(8.5.hours)
+    end
+  end
+
+  describe '#credited_duration=' do
+    it 'calculates credited_duration_in_work_days' do
+      expect { subject.credited_duration = 1.5.work_days }.to change { subject.credited_duration_in_work_days }
+    end
+
+    it 'calculates credited_duration_in_work_days correctly' do
+      subject.credited_duration = 4.25.hours
+      subject.credited_duration_in_work_days.should eq(0.5)
+    end
+  end
+  describe '#credited_duration_in_work_days=' do
+    it 'calculates credited_duration' do
+      expect { subject.credited_duration_in_work_days = 1 }.to change { subject.credited_duration }
+    end
+
+    it 'calculates credited_duration correctly' do
+      subject.credited_duration_in_work_days = 1
+      subject.credited_duration.should eq(8.5.hours)
     end
   end
 

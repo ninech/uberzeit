@@ -110,6 +110,13 @@ describe Absence do
           subject.time_spans.first.duration_in_work_days.should eq(0.5)
         end
 
+        it 'recalculates the credited_duration' do
+          subject.time_spans.first.credited_duration_in_work_days.should eq(1)
+          subject.first_half_day = false
+          subject.save!
+          subject.time_spans.first.credited_duration_in_work_days.should eq(0.5)
+        end
+
         it 'removes the TimeSpan when it gets destroyed' do
           expect { subject.destroy }.to change(TimeSpan, :count)
         end
@@ -135,7 +142,8 @@ describe Absence do
         subject.start_date = '2013-09-27'
         subject.end_date = '2013-09-30'
         subject.save!
-        subject.time_spans.collect(&:duration_in_work_days).sum.should eq(2)
+        subject.time_spans.collect(&:duration_in_work_days).sum.should eq(4)
+        subject.time_spans.collect(&:credited_duration_in_work_days).sum.should eq(2)
       end
 
     end
