@@ -1,4 +1,4 @@
-class GeneratePlannedWorkingTimeCron
+class GeneratePlannedWorkingTimeTask
   def run
     years.each do |year|
       users.each do |user|
