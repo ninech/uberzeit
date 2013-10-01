@@ -21,12 +21,12 @@ class CalculatePlannedWorkingTime
   end
 
   def workload_on_date
-    return 1 if @user.nil?
+    return work_coefficient_on_date if @user.nil?
 
     employment_on_date = @employments.find { |employment| employment.on_date?(@date) }
     return 0 if employment_on_date.nil?
-    return 1 if !!@opts[:fulltime] # overwrite to fulltime workload
-    employment_on_date.workload / 100.0
+    return work_coefficient_on_date if !!@opts[:fulltime] # overwrite to fulltime workload
+    work_coefficient_on_date * employment_on_date.workload / 100.0
   end
 
   def preload_employments
@@ -44,7 +44,7 @@ class CalculatePlannedWorkingTime
     result = {}
     @range.each do |date|
       @date = date
-      result[date] = work_coefficient_on_date * workload_on_date * UberZeit::Config[:work_per_day]
+      result[date] = workload_on_date * UberZeit::Config[:work_per_day]
     end
 
     result
