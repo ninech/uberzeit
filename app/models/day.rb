@@ -14,6 +14,8 @@ class Day < ActiveRecord::Base
   belongs_to :user
   attr_accessible :date, :planned_working_time
 
+  validates_presence_of :user, :planned_working_time, :date
+
   scope :in, lambda { |range| date_range = range.to_range.to_date_range; { conditions: ['(date <= ? AND date >= ?)', date_range.max, date_range.min] } }
 
   def self.create_or_regenerate_days_for_user_and_year!(user, year)
