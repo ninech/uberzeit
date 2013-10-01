@@ -7,15 +7,18 @@ class GeneratePlannedWorkingTimeForUserAndDates
 
   def run
     remove_existing_entries
-
-    total_per_date.each do |date, planned_working_time|
-      @user.days.create!(date: date, planned_working_time: planned_working_time)
-    end
+    create_all_the_days
   end
 
   private
   def remove_existing_entries
     @user.days.in(@date_range).destroy_all
+  end
+
+  def create_all_the_days
+    total_per_date.each do |date, planned_working_time|
+      @user.days.create!(date: date, planned_working_time: planned_working_time)
+    end
   end
 
   def total_per_date
