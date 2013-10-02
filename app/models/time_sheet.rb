@@ -28,8 +28,7 @@ class TimeSheet
   end
 
   def planned_work(date_or_range)
-    calculator = CalculatePlannedWorkingTime.new(date_or_range, user)
-    calculator.total
+    FetchPlannedWorkingTime.new(user, date_or_range.to_range.to_date_range).total
   end
 
   def vacation(year)

@@ -18,9 +18,13 @@ class Day < ActiveRecord::Base
 
   scope :in, lambda { |range| date_range = range.to_range.to_date_range; { conditions: ['(date <= ? AND date >= ?)', date_range.max, date_range.min] } }
 
+  def self.create_or_regenerate_days_for_user_and_range!(user, range)
+    GeneratePlannedWorkingTimeForUserAndDates.new(user, range).run
+  end
+
   def self.create_or_regenerate_days_for_user_and_year!(user, year)
     year_as_range = Date.civil(year, 1, 1)..Date.civil(year, 12, 31)
-    GeneratePlannedWorkingTimeForUserAndDates.new(user, year_as_range).run
+    self.create_or_regenerate_days_for_user_and_range!(user, year_as_range)
   end
 
   def regenerate!
