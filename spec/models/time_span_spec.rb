@@ -63,4 +63,44 @@ describe TimeSpan do
     end
   end
 
+  describe 'scopes' do
+
+    let(:user) { FactoryGirl.create(:user) }
+    let(:user_id) { user.id }
+    let(:time_type_id) { TEST_TIME_TYPES[:vacation].id }
+    let(:range) { '2013-01-01'.to_date..'2013-12-31'.to_date }
+
+    subject do
+      TimeSpan
+        .date_between(range)
+        .eligible_for_summarizing_absences
+        .duration_in_work_day_sum_per_user_and_time_type
+    end
+
+    it 'sums up each absence time type' do
+      FactoryGirl.create(:absence, start_date: '2013-04-24', end_date: '2013-04-25', time_type: :vacation, user: user)
+
+      subject.should eq([user_id, time_type_id] => 2)
+    end
+
+    describe 'with adjustments' do
+      context 'adjustment is not for vacation' do
+        let!(:adjustment) { FactoryGirl.create(:adjustment, user: user, time_type: TEST_TIME_TYPES[:paid_absence], duration: 3.5.work_days, date: range.min) }
+        let(:time_type_id) { TEST_TIME_TYPES[:paid_absence].id }
+
+        it 'adds adjustments to the total' do
+          subject.should eq([user_id, time_type_id] => 3.5)
+        end
+      end
+
+      context 'adjustment is for vacation' do
+        let!(:adjustment) { FactoryGirl.create(:adjustment, user: user, time_type: TEST_TIME_TYPES[:vacation], duration: 1.work_days, date: range.min) }
+        let(:time_type_id) { TEST_TIME_TYPES[:paid_absence].id }
+
+        it 'does not adjustments to the total' do
+          subject.should eq({})
+        end
+      end
+    end
+  end
 end

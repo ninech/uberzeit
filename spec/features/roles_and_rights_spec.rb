@@ -124,11 +124,6 @@ describe 'Roles and Rights' do
           let(:path) { user_summaries_work_year_path(user, year) }
           include_examples :my_summary_access
         end
-
-        describe 'my absence summary' do
-          let(:path) { user_summaries_absence_year_path(user, year) }
-          include_examples :my_summary_access
-        end
       end
 
       describe 'overall summary' do
@@ -277,7 +272,7 @@ describe 'Roles and Rights' do
         end
 
         describe 'summary menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter'], ['Arbeitszeit Mitarbeiter', 'Feriensaldo']
+          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Absenzen Mitarbeiter'], ['Arbeitszeit Mitarbeiter', 'Feriensaldo']
         end
       end
 
@@ -298,7 +293,7 @@ describe 'Roles and Rights' do
         end
 
         describe 'summary menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo', 'Verrechenbarkeit'], []
+          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo', 'Verrechenbarkeit'], []
         end
       end
 
@@ -310,7 +305,7 @@ describe 'Roles and Rights' do
         end
 
         describe 'summary menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo', 'Verrechenbarkeit', 'Verrechnung'], []
+          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo', 'Verrechenbarkeit', 'Verrechnung'], []
         end
       end
     end
