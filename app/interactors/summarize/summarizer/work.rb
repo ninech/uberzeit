@@ -22,7 +22,7 @@ class Summarize::Summarizer::Work
   end
 
   def planned_work
-    CalculatePlannedWorkingTime.new(@range, @user).total
+    @time_sheet.planned_work(@range)
   end
 
   def effective_worked

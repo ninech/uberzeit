@@ -3,13 +3,31 @@ require 'spec_helper'
 describe Summaries::Work::WorkController do
   render_views
 
-  let!(:team) { FactoryGirl.create(:team, users_count: 3, leaders_count: 1) }
-  let!(:another_team) { FactoryGirl.create(:team, users_count: 2, leaders_count: 1) }
+  before(:all) do
+    @team = FactoryGirl.create(:team, users_count: 1, leaders_count: 1)
+    @another_team = FactoryGirl.create(:team, users_count: 1, leaders_count: 1)
+    @admin = FactoryGirl.create(:admin, teams: [@team])
+    @year = 2013
 
-  let(:user) { FactoryGirl.create(:user, teams: [team]) }
-  let(:team_leader) { FactoryGirl.create(:team_leader, teams: [team]) }
-  let(:admin) { FactoryGirl.create(:admin, teams: [team]) }
-  let(:year) { 2013 }
+    [@team, @another_team].map(&:members).flatten.each do |user|
+      Day.create_or_regenerate_days_for_user_and_year!(user, @year)
+    end
+  end
+
+  after(:all) do
+    Team.delete_all
+    Membership.delete_all
+    User.delete_all
+    Day.delete_all
+  end
+
+  let(:team) { @team }
+  let(:another_team) { @another_team }
+
+  let(:user) { team.members.first }
+  let(:team_leader) { team.leaders.first }
+  let(:admin) { @admin }
+  let(:year) { @year }
   let(:month) { 3 }
 
   context 'for non-signed in users' do
