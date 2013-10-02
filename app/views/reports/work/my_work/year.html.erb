@@ -1,0 +1,40 @@
+<%= render(partial: 'shared/user_select', locals: { link_generator: :user_path_work_summary, selected_user: @user }) %>
+
+<%= render partial: 'reports/shared/header', locals: {base_url: "/reports/work/users/#{@user.id}/:year", title: t('.title'), unit: t('.unit')} %>
+
+<div class="content-summary row">
+  <div class="small-12 columns">
+    <table class="nice small-12">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th><%= t 'reports.work.columns.effective_worked' %></th>
+          <th><%= t 'reports.work.columns.absent' %></th>
+          <th><%= t 'reports.work.columns.time_bonuses' %></th>
+          <th><%= t 'reports.work.columns.adjustments' %></th>
+          <th><%= t 'reports.work.columns.target' %></th>
+          <th><%= t 'reports.work.columns.overtime' %></th>
+          <th><%= t 'reports.work.columns.running_overtime' %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @table.entries.each_pair do |range, entry| %>
+        <% user, summary = entry.first %>
+        <tr>
+          <td><%= link_to label_for_month(range.min), action: :month, month: range.min.month %></td>
+          <% tooltip_effective_worked = time_per_time_type_to_tooltip_table(summary[:effective_worked_by_type]) %>
+          <td><span <% unless tooltip_effective_worked.blank? %>class="has-tip" data-tooltip="<%=tooltip_effective_worked%>"<% end %>><%= format_hours(summary[:effective_worked]) %></span></td>
+          <% tooltip_absent = time_per_time_type_to_tooltip_table(summary[:absent_by_type]) %>
+          <td><span <% unless tooltip_absent.blank? %>class="has-tip" data-tooltip="<%=tooltip_absent%>"<% end %>><%= format_hours(summary[:absent]) %></span></td>
+          <td><%= format_hours(summary[:time_bonus]) %></td>
+          <% tooltip_adjustments = time_per_adjustment_to_tooltip_table(summary[:adjustments_by_type]) %>
+          <td><span <% unless tooltip_adjustments.blank? %>class="has-tip" data-tooltip="<%=tooltip_adjustments%>"<% end %>><%= format_hours(summary[:adjustments]) %></span></td>
+          <td><%= format_hours(summary[:planned_work]) %></td>
+          <td><%= format_hours(summary[:overtime]) %></td>
+          <td><%= format_hours(summary[:running_overtime]) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

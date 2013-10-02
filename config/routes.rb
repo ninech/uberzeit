@@ -4,10 +4,16 @@ Uberzeit::Application.routes.draw do
 
   root :to => 'sessions#new'
 
-  resources :users, only: [:show] do
 
+  # session stuff
+  resource :session, only: [:new, :create, :destroy]
+  match '/auth/:provider/callback', to: 'sessions#create'
+  match '/logout', to: 'sessions#destroy', as: 'logout'
+
+
+  # users scope
+  resources :users, except: [:destroy] do
     resources :recurring_entries, except: [:show, :index]
-
 
     resources :absences do
       collection do
@@ -24,123 +30,56 @@ Uberzeit::Application.routes.draw do
         get '/date/:date/summary', to: 'time_entries#summary_for_date'
       end
     end
+
+    resources :employments
+    resources :activities do
+      collection do
+        get '/date/:date', to: 'activities#index', as: :show_date
+      end
+    end
   end
 
+
+  # management
   resources :public_holidays, except: [:show]
   resources :time_types, except: [:show]
   resources :adjustments, except: [:show]
   resources :projects, except: [:show]
   resources :activity_types, except: [:show]
 
-  resources :users, except: [:destroy] do
 
-    resources :employments
+  # reporting
+  namespace :reports do
+    get '/overview/users/:user_id', to: 'overview#index', as: :overview_user
 
-    resources :activities do
-      collection do
-        get '/date/:date', to: 'activities#index', as: :show_date
-      end
+    namespace :work do
+      get '/users/:user_id/:year', to: 'my_work#year', as: :user_year
+      get '/users/:user_id/:year/:month', to: 'my_work#month', as: :user_month
+
+      get '/:year(/team/:team_id)', to: 'work#year', as: :year
+      get '/:year/:month(/team/:team_id)', to: 'work#month', as: :month
     end
 
-    namespace :summaries do
-      get '/overview', to: 'overview#index', as: :overview
-
-      namespace :work do
-        get '/:year', to: 'my_work#year', as: :year
-        get '/:year/:month', to: 'my_work#month', as: :month
-      end
+    namespace :absences do
+      get '/:year(/team/:team_id)', to: 'absence#year', as: :year, constraints: year_month_team_id_constraints
+      get '/:year/:month(/team/:team_id)', to: 'absence#month', as: :month, constraints: year_month_team_id_constraints
+      get '/:year/:month(/team/:team_id)/as/calendar', to: 'absence#calendar', as: :calendar, constraints: year_month_team_id_constraints
     end
 
-    collection do
-      namespace :summaries do
-        namespace :work do
-          get '/:year(/team/:team_id)', to: 'work#year', as: :year
-          get '/:year/:month(/team/:team_id)', to: 'work#month', as: :month
-        end
+    namespace :vacation do
+      get '/:year(/team/:team_id)', to: 'vacation#year', as: :year
+      get '/:year/:month(/team/:team_id)', to: 'vacation#month', as: :month
+    end
 
-        namespace :absence do
-          get '/:year(/team/:team_id)', to: 'absence#year', as: :year, constraints: year_month_team_id_constraints
-          get '/:year/:month(/team/:team_id)', to: 'absence#month', as: :month, constraints: year_month_team_id_constraints
-          get '/:year/:month(/team/:team_id)/as/calendar', to: 'absence#calendar', as: :calendar, constraints: year_month_team_id_constraints
-        end
-
-        namespace :vacation do
-          get '/:year(/team/:team_id)', to: 'vacation#year', as: :year
-          get '/:year/:month(/team/:team_id)', to: 'vacation#month', as: :month
-        end
-
-        namespace :activity do
-          get '/billability', to: 'billability#index', as: :billability
-          get '/billing', to: 'billing#index', as: :billing
-          get '/filter/:year/:month/:group_by', to: 'filter#index', as: :filter
-        end
-      end
+    namespace :activities do
+      get '/billability', to: 'billability#index', as: :billability
+      get '/billing', to: 'billing#index', as: :billing
+      get '/filter/:year/:month/:group_by', to: 'filter#index', as: :filter
     end
   end
 
-  resource :session, only: [:new, :create, :destroy]
-
-  match '/auth/:provider/callback', to: 'sessions#create'
-  match '/logout', to: 'sessions#destroy', as: 'logout'
 
   # API
   mount API::User => '/api'
   mount API::App => '/api/app'
-
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with 'root'
-  # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
-
-  # See how all your routes lay out with 'rake routes'
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
 end

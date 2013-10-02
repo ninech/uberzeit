@@ -211,7 +211,7 @@ de:
         billing: Verrechnung
         comparison: Vergleich
         activity_filter: Aktivitäten
-  summaries:
+  reports:
     formats:
       date: '%e. %a.'
       month: '%B'
@@ -265,7 +265,7 @@ de:
         month:
           title: Meine Arbeitszeit
           unit: in Stunden:Minuten
-    absence:
+    absences:
       my_absence:
         year:
           title: Meine Absenzen
@@ -299,7 +299,7 @@ de:
           unit: in Tagen
           taken: 'Beansprucht im %{month} %{year}'
           remaining: 'Noch verfügbare Ferientage nach %{month} %{year}'
-    activity:
+    activities:
       billability:
         index:
           title: Verrechenbarkeit

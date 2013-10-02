@@ -39,6 +39,8 @@ class Activity < ActiveRecord::Base
   scope :by_user, ->(user) { where(user_id: user)}
   scope :by_redmine_ticket, ->(redmine_ticket_id) { where(redmine_ticket_id: redmine_ticket_id) }
   scope :by_otrs_ticket, ->(otrs_ticket_id) { where(otrs_ticket_id: otrs_ticket_id) }
+  scope :date_between, ->(date_range) { where('date BETWEEN ? AND ?', date_range.min, date_range.max) }
+  scope :in_year_and_month, ->(year, month) { date_between UberZeit.month_as_range(year, month) }
 
   def billable?
     !!billable
@@ -54,6 +56,7 @@ class Activity < ActiveRecord::Base
 
   def self.sum_by_activity_type_and_year_and_month(year, month)
     summarize self.unscoped
+                  .in_year_and_month(year, month)
                   .joins(:activity_type)
                   .select('activity_types.name, activities.billable, sum(activities.duration) as duration')
                   .where(reviewed: true)
@@ -63,21 +66,23 @@ class Activity < ActiveRecord::Base
 
   def self.sum_by_customer_and_year_and_month(year, month)
     summarize self.unscoped
+                  .in_year_and_month(year, month)
                   .joins(:customer)
                   .select('customers.name, activities.billable, sum(activities.duration) as duration')
                   .where(reviewed: true)
                   .group('customers.name, billable')
-                  .order ('customers.name')
+                  .order('customers.name')
   end
 
   def self.sum_by_project_and_year_and_month(year, month)
     summarize self.unscoped
+                  .in_year_and_month(year, month)
                   .joins(:project)
                   .joins(:customer)
                   .select('projects.name, activities.billable, sum(activities.duration) as duration')
                   .where(reviewed: true)
                   .group('customers.name, projects.name, billable')
-                  .order ('projects.name')
+                  .order('projects.name')
   end
 
 

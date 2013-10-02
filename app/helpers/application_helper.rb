@@ -1,6 +1,6 @@
 module ApplicationHelper
   include SessionsHelper
-  include SummariesHelper
+  include ReportsHelper
   include TimeSheetsHelper
   include AbsencesHelper
 
@@ -96,15 +96,15 @@ module ApplicationHelper
   end
 
   def user_path_my_work_summary(user)
-    user_summaries_work_month_path(user, Date.current.year, Date.current.month)
+    reports_work_user_month_path(user, Date.current.year, Date.current.month)
   end
 
   def user_path_work_summary(user)
-    user_summaries_work_month_path(user, Date.current.year, Date.current.month)
+    reports_work_user_month_path(user, Date.current.year, Date.current.month)
   end
 
   def user_path_absence_summary(user)
-    user_summaries_absence_year_path(user, Date.current.year)
+    reports_absences_user_year_path(user, Date.current.year)
   end
 
   def selectable_users
