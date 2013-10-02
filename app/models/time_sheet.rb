@@ -14,8 +14,6 @@ class TimeSheet
   end
 
   def total(date_or_range, time_types = TimeType.scoped)
-    # chunks = find_chunks(date_or_range, time_types)
-    # chunks.total
     TimeSpan.date_between(date_or_range.to_range.to_date_range).where(time_type_id: time_types).sum(:duration)
   end
 
