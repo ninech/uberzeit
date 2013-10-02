@@ -101,9 +101,9 @@ describe 'Roles and Rights' do
       end
     end
 
-    describe 'summaries' do
-      describe 'my summary' do
-        shared_examples :my_summary_access do
+    describe 'reports' do
+      describe 'my reports' do
+        shared_examples :my_reports_access do
           context 'as user' do
             let(:current_user) { user }
             include_examples :access_granted
@@ -120,19 +120,19 @@ describe 'Roles and Rights' do
           end
         end
 
-        describe 'my work summary' do
-          let(:path) { user_summaries_work_year_path(user, year) }
-          include_examples :my_summary_access
+        describe 'my work report' do
+          let(:path) { reports_work_user_year_path(user, year) }
+          include_examples :my_reports_access
         end
 
-        describe 'my absence summary' do
-          let(:path) { user_summaries_absence_year_path(user, year) }
-          include_examples :my_summary_access
+        describe 'my absence report' do
+          let(:path) { reports_absences_user_year_path(user, year) }
+          include_examples :my_reports_access
         end
       end
 
-      describe 'overall summary' do
-        shared_examples :overall_summary_access do
+      describe 'overall reports' do
+        shared_examples :overall_reports_access do
           context 'as user' do
             let(:current_user) { user }
             include_examples :access_denied
@@ -149,30 +149,30 @@ describe 'Roles and Rights' do
           end
         end
 
-        describe 'work summary' do
+        describe 'work report' do
           describe 'monthly' do
-            let(:path) { month_summaries_work_users_path(year, month) }
-            include_examples :overall_summary_access
+            let(:path) { reports_work_month_path(year, month) }
+            include_examples :overall_reports_access
           end
           describe 'yearly' do
-            let(:path) { year_summaries_work_users_path(year, month) }
-            include_examples :overall_summary_access
+            let(:path) { reports_work_year_path(year) }
+            include_examples :overall_reports_access
           end
         end
 
-        describe 'vacation summary' do
+        describe 'vacation report' do
           describe 'monthly' do
-            let(:path) { month_summaries_vacation_users_path(year, month) }
-            include_examples :overall_summary_access
+            let(:path) { reports_vacation_month_path(year, month) }
+            include_examples :overall_reports_access
           end
           describe 'yearly' do
-            let(:path) { year_summaries_vacation_users_path(year, month) }
-            include_examples :overall_summary_access
+            let(:path) { reports_vacation_year_path(year) }
+            include_examples :overall_reports_access
           end
         end
 
-        describe 'absences summary' do
-          shared_examples :overall_absences_summary do
+        describe 'absences report' do
+          shared_examples :overall_absences_report do
             context 'as user' do
               let(:current_user) { user }
               include_examples :access_granted
@@ -190,18 +190,18 @@ describe 'Roles and Rights' do
           end
 
           describe 'monthly' do
-            let(:path) { month_summaries_vacation_users_path(year, month) }
-            include_examples :overall_summary_access
+            let(:path) { reports_absences_month_path(year, month) }
+            include_examples :overall_absences_report
           end
 
           describe 'yearly' do
-            let(:path) { year_summaries_vacation_users_path(year, month) }
-            include_examples :overall_summary_access
+            let(:path) { reports_absences_year_path(year) }
+            include_examples :overall_absences_report
           end
 
           describe 'calendar' do
-            let(:path) { year_summaries_vacation_users_path(year, month) }
-            include_examples :overall_summary_access
+            let(:path) { reports_absences_calendar_path(year, month) }
+            include_examples :overall_absences_report
           end
         end
       end
@@ -252,7 +252,7 @@ describe 'Roles and Rights' do
 
     describe 'menu items' do
       before do
-        visit user_summaries_work_year_path(current_user, year)
+        visit reports_work_user_year_path(current_user, year)
       end
 
       shared_examples :menu_list do |selector, included, excluded|
@@ -276,7 +276,7 @@ describe 'Roles and Rights' do
           include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte'], ['Verwalten']
         end
 
-        describe 'summary menu' do
+        describe 'report menu' do
           include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter'], ['Arbeitszeit Mitarbeiter', 'Feriensaldo']
         end
       end
@@ -285,7 +285,7 @@ describe 'Roles and Rights' do
         let(:accountant) { FactoryGirl.create(:accountant) }
         let(:current_user) { accountant }
 
-        describe 'summary menu' do
+        describe 'report menu' do
           include_examples :menu_list, '.sub-nav > dd', ['Verrechenbarkeit', 'Verrechnung'], []
         end
       end
@@ -297,7 +297,7 @@ describe 'Roles and Rights' do
           include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte', 'Verwalten'], []
         end
 
-        describe 'summary menu' do
+        describe 'report menu' do
           include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo', 'Verrechenbarkeit'], []
         end
       end
@@ -309,7 +309,7 @@ describe 'Roles and Rights' do
           include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte', 'Verwalten'], []
         end
 
-        describe 'summary menu' do
+        describe 'report menu' do
           include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo', 'Verrechenbarkeit', 'Verrechnung'], []
         end
       end

@@ -1,0 +1,24 @@
+<%= render partial: 'reports/shared/header', locals: {base_url: "/reports/vacation/:year", title: t('.title'), unit: t('.unit')} %>
+
+<div class="row">
+  <div class="small-12 columns">
+    <table class="nice small-12">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th><%= t '.taken', year: @year %></th>
+          <th><%= t '.remaining', year: @year %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @table.entries.each_pair do |user, summary| %>
+        <tr class="summary-row" >
+          <td><%= user %></td>
+          <td><%= format_work_days(summary[:redeemed]) %></td>
+          <td><%= format_work_days(summary[:remaining]) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

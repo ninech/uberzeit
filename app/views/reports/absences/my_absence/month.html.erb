@@ -1,0 +1,35 @@
+<%= render(partial: 'shared/user_select', locals: { link_generator: :user_path_absence_summary, selected_user: @user }) %>
+
+<%= render partial: 'reports/shared/header', locals: {base_url: "/users/#{@user.id}/reports/absence/:year", title: t('.title'), unit: t('.unit')} %>
+
+<div class="content-summary row">
+  <div class="small-12 columns">
+    <table class="nice small-12">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <% TimeType.absence.each do |time_type| %>
+          <th><%= time_type.name %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @table.entries.each_pair do |range, entry| %>
+        <% user, summary = entry.first %>
+        <tr>
+          <td><%= label_for_range(range) %></td>
+          <% TimeType.absence.each do |time_type| %>
+          <td><%= format_work_days(summary[time_type]) %></td>
+          <% end %>
+        </tr>
+        <% end %>
+        <tr class="total">
+          <td><%= t '.total' %></td>
+          <% TimeType.absence.each do |time_type| %>
+          <td><%= format_work_days(@table.total(time_type)) %></td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
