@@ -66,7 +66,6 @@ SimpleNavigation::Configuration.run do |navigation|
       second.dom_class = 'sub-nav'
       second.item :overview, t('navigation.sub.reports.overview'), user_summaries_overview_path(current_user), highlights_on: %r!\A/users/\d*/summaries/overview!
       second.item :my_work, t('navigation.sub.reports.my_work'), user_summaries_work_month_path(current_user, Date.current.year, Date.current.month), highlights_on: %r!\A/users/\d*/summaries/work!
-      second.item :my_absence, t('navigation.sub.reports.my_absence'), user_summaries_absence_year_path(current_user, Date.current.year), highlights_on: %r!\A/users/\d*/summaries/absence!
       second.item :absences, t('navigation.sub.reports.absences'), calendar_summaries_absence_users_path(Date.current.year, Date.current.month), highlights_on: %r!\A/users/summaries/absence!
       if ability.can? :manage, :work
         second.item :work, t('navigation.sub.reports.work'), month_summaries_work_users_path(Date.current.year, Date.current.month), highlights_on: %r!\A/users/summaries/work!

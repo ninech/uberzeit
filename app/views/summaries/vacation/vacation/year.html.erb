@@ -14,8 +14,8 @@
         <% @table.entries.each_pair do |user, summary| %>
         <tr class="summary-row" >
           <td><%= user %></td>
-          <td><%= format_work_days(summary[:redeemed]) %></td>
-          <td><%= format_work_days(summary[:remaining]) %></td>
+          <td><%= format_work_days(summary[:redeemed].to_work_days) %></td>
+          <td><%= format_work_days(summary[:remaining].to_work_days) %></td>
         </tr>
         <% end %>
       </tbody>

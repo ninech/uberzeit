@@ -19,14 +19,14 @@
         <tr>
           <td><%= label_for_range(range) %></td>
           <% TimeType.absence.each do |time_type| %>
-          <td><%= format_work_days(summary[time_type]) %></td>
+          <td><%= format_work_days(summary[time_type].to_work_days) %></td>
           <% end %>
         </tr>
         <% end %>
         <tr class="total">
           <td><%= t '.total' %></td>
           <% TimeType.absence.each do |time_type| %>
-          <td><%= format_work_days(@table.total(time_type)) %></td>
+          <td><%= format_work_days(@table.total(time_type).to_work_days) %></td>
           <% end %>
         </tr>
       </tbody>
