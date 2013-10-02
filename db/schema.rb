@@ -11,13 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131001094549) do
+ActiveRecord::Schema.define(:version => 20131002155620) do
 
   create_table "absence_schedules", :force => true do |t|
     t.boolean  "active",                 :default => false
     t.integer  "absence_id"
-    t.string   "ends"
-    t.integer  "ends_counter"
     t.date     "ends_date"
     t.integer  "weekly_repeat_interval"
     t.datetime "created_at",                                :null => false
@@ -35,6 +33,8 @@ ActiveRecord::Schema.define(:version => 20131001094549) do
     t.boolean  "second_half_day", :default => true
     t.datetime "deleted_at"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "absences", ["time_type_id"], :name => "index_date_entries_on_time_type_id"

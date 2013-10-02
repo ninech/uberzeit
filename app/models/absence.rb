@@ -36,7 +36,7 @@ class Absence < ActiveRecord::Base
   validates_datetime :start_date
   validates_datetime :end_date, on_or_after: :start_date
 
-  accepts_nested_attributes_for :schedule
+  accepts_nested_attributes_for :schedule, update_only: true
 
   after_save :update_or_create_time_span
   before_validation :build_schedule, unless: :schedule
@@ -85,12 +85,21 @@ class Absence < ActiveRecord::Base
     schedule && schedule.active?
   end
 
-  def occurrences(date_or_range)
+  def occurrences
     if recurring?
-      schedule.occurrences(date_or_range)
+      schedule.occurrences
     else
-      [starts]
+      [range]
     end
+  end
+
+  def occurrences_as_time_ranges(date_or_range) 
+    requested_date_range = date_or_range.to_range.to_date_range
+    # for date entries we have to generate a occurrence range for each day (half days are not continuous)
+    occurrences.collect do |occurrence_range|
+      next unless occurrence_range.intersects_with_duration?(requested_date_range)
+      occurrence_range.collect { |day| time_range_for_date(day) }
+    end.compact.flatten
   end
 
   def set_default_dates
@@ -162,29 +171,22 @@ class Absence < ActiveRecord::Base
     end_date - start_date
   end
 
-  def occurrences_as_time_ranges(date_or_range)
-    # for date entries we have to generate a occurrence range for each day (half days are not continuous)
-    occurrences(date_or_range).collect do |start_date|
-      date_range = start_date..(start_date+num_days)
-      date_range.collect { |day| time_range_for_date(day) }
-    end.flatten
-  end
-
   def update_or_create_time_span
     time_spans.destroy_all
-    (start_date..end_date).each do |date|
+    occurrences.each do |occurrence|
+      occurrence.each do |date|
+        duration_in_work_days = whole_day? ? 1 : 0.5
+        calculated_planned_working_time = CalculatePlannedWorkingTime.new(date.to_range, user, fulltime: true).total.to_work_days
+        credited_duration_in_work_days = duration_in_work_days * calculated_planned_working_time
 
-      duration_in_work_days = whole_day? ? 1 : 0.5
-      calculated_planned_working_time = CalculatePlannedWorkingTime.new(date.to_range, user, fulltime: true).total.to_work_days
-      credited_duration_in_work_days = duration_in_work_days * calculated_planned_working_time
-
-      time_span = time_spans.build
-      time_span.duration_in_work_days = duration_in_work_days
-      time_span.credited_duration_in_work_days = credited_duration_in_work_days
-      time_span.user = user
-      time_span.time_type = time_type
-      time_span.date = date
-      time_span.save!
+        time_span = time_spans.build
+        time_span.duration_in_work_days = duration_in_work_days
+        time_span.credited_duration_in_work_days = credited_duration_in_work_days
+        time_span.user = user
+        time_span.time_type = time_type
+        time_span.date = date
+        time_span.save!
+      end
     end
   end
 

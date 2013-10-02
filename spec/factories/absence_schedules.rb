@@ -3,9 +3,7 @@
 FactoryGirl.define do
   factory :absence_schedule do
     absence { FactoryGirl.build(:absence) }
-    ends 'counter'
-    ends_counter 100
-    ends_date Date.today
+    ends_date { Date.today }
     weekly_repeat_interval 1
     active false
 

@@ -16,10 +16,6 @@ describe TimeSheet do
   let(:user) { FactoryGirl.create(:user) }
   let(:time_sheet) { user.time_sheet }
 
-  before do
-    Day.create_or_regenerate_days_for_user_and_year!(user, Time.now.year)
-  end
-
   def work(start_time, end_time)
     FactoryGirl.create(:time_entry, starts: start_time.to_time, ends: end_time.to_time, time_type: :work, user: user)
   end
@@ -93,9 +89,6 @@ describe TimeSheet do
       it 'calculates the total duration (daily and weekly)' do
         time_sheet.total('2013-02-04'.to_date...'2013-02-11'.to_date, TimeType.work).should eq(33.5.hours)
         time_sheet.total('2013-02-04'.to_date...'2013-02-11'.to_date, TimeType.vacation).should eq(1.work_days)
-
-        # what about times and timezones?
-        time_sheet.total('2013-02-04 10:00:00 GMT+1'.to_time..'2013-02-10 22:00:00 GMT+1'.to_time, TimeType.work).should eq(30.5.hours)
       end
 
       it 'calculates the weekly overtime duration' do
@@ -142,7 +135,8 @@ describe TimeSheet do
     before do
       # recurring entry every monday paid absence for 4 weeks
       absence_entry = paid_absence('2013-03-04', '2013-03-04')
-      absence_entry.schedule.update_attributes(active: true, ends: 'counter', ends_counter: 4, weekly_repeat_interval: 1)
+      absence_entry.update_attributes(schedule_attributes: {active: true, ends_date: '2013-04-01', weekly_repeat_interval: 1})
+      absence_entry.save!
 
       # tuesday vacation
       vacation '2013-03-19', '2013-03-19'
