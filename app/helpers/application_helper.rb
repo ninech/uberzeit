@@ -96,11 +96,11 @@ module ApplicationHelper
   end
 
   def user_path_my_work_summary(user)
-    reports_work_month_path(user, Date.current.year, Date.current.month)
+    reports_work_user_month_path(user, Date.current.year, Date.current.month)
   end
 
   def user_path_work_summary(user)
-    reports_work_month_path(user, Date.current.year, Date.current.month)
+    reports_work_user_month_path(user, Date.current.year, Date.current.month)
   end
 
   def user_path_absence_summary(user)
