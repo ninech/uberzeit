@@ -67,6 +67,7 @@ describe Reports::Activities::FilterController do
     let!(:reboot_server) { FactoryGirl.create(:activity, user: user, duration: 5.minutes, activity_type: maintenance, customer: swag_ag, date: '2010-01-01', billable: true) }
     let!(:swap_ram_module) { FactoryGirl.create(:activity, user: user, duration: 30.minutes, activity_type: support, customer: yolo_inc, date: '2010-01-01', billable: true, reviewed: true) }
     let!(:exchange_power_supply) { FactoryGirl.create(:activity, user: user, duration: 15.minutes, activity_type: support, customer: yolo_inc, date: '2010-01-01', billable: true, reviewed: true, billed: true) }
+    let!(:other_year) { FactoryGirl.create(:activity, user: user, duration: 60.minutes, activity_type: support, customer: yolo_inc, date: '2011-01-01', billable: true, reviewed: true, billed: true) }
 
     describe 'index' do
       context 'as admin' do
