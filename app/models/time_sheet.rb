@@ -14,22 +14,24 @@ class TimeSheet
   end
 
   def total(date_or_range, time_types = TimeType.scoped)
-    chunks = find_chunks(date_or_range, time_types)
-    chunks.total
+    # chunks = find_chunks(date_or_range, time_types)
+    # chunks.total
+    TimeSpan.date_between(date_or_range.to_range.to_date_range).where(time_type_id: time_types).sum(:duration)
   end
 
   def overtime(date_or_range)
-    CalculateOvertime.new(self, date_or_range).total
+     total(date_or_range, TimeType.work) +
+     bonus(date_or_range, TimeType.work) +
+     total(date_or_range, TimeType.absence) -
+     planned_work(date_or_range)
   end
 
   def bonus(date_or_range, time_types = TimeType.scoped)
-    chunks = find_chunks(date_or_range, time_types)
-    chunks.bonus
+    TimeSpan.date_between(date_or_range).where(time_type_id: time_types).sum(:duration_bonus)
   end
 
   def planned_work(date_or_range)
-    calculator = CalculatePlannedWorkingTime.new(date_or_range, user)
-    calculator.total
+    Day.in(date_or_range).sum(:planned_working_time)
   end
 
   def vacation(year)

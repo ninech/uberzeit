@@ -28,6 +28,10 @@ class TimeSpan < ActiveRecord::Base
                         :credited_duration, :credited_duration_in_work_days,
                         :user_id, :time_type_id, :time_spanable_id, :time_spanable_type
 
+  scope :in_year,           ->(year) { date_between UberZeit.year_as_range(year) }
+  scope :in_year_and_month, ->(year, month) { date_between UberZeit.month_as_range(year, month) }
+  scope :date_between,      ->(date_range) { where('date BETWEEN ? AND ?', date_range.min, date_range.max) }
+
   def duration=(value)
     write_attribute :duration_in_work_days, value.to_work_days
     super

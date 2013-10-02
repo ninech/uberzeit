@@ -16,6 +16,10 @@ describe TimeSheet do
   let(:user) { FactoryGirl.create(:user) }
   let(:time_sheet) { user.time_sheet }
 
+  before do
+    Day.create_or_regenerate_days_for_user_and_year!(user, Time.now.year)
+  end
+
   def work(start_time, end_time)
     FactoryGirl.create(:time_entry, starts: start_time.to_time, ends: end_time.to_time, time_type: :work, user: user)
   end
