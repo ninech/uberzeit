@@ -19,14 +19,14 @@
         <tr>
           <td><%= label_for_month(range.min) %></td>
           <% TimeType.absence.each do |time_type| %>
-          <td><%= format_work_days(summary[time_type]) %></td>
+          <td><%= format_work_days(summary[time_type].to_work_days) %></td>
           <% end %>
         </tr>
         <% end %>
         <tr>
           <td><%= t '.total' %></td>
           <% TimeType.absence.each do |time_type| %>
-          <td><%= format_work_days(@table.total(time_type)) %></td>
+          <td><%= format_work_days(@table.total(time_type).to_work_days) %></td>
           <% end %>
         </tr>
         <tr class="total">
@@ -34,7 +34,7 @@
           <% TimeType.absence.each do |time_type| %>
           <td>
             <% unless @remaining[time_type].blank? %>
-              <%= format_work_days(@remaining[time_type]) %>
+              <%= format_work_days(@remaining[time_type].to_work_days) %>
             <% end %>
           </td>
           <% end %>

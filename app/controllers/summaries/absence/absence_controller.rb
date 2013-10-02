@@ -5,12 +5,28 @@ class Summaries::Absence::AbsenceController < ApplicationController
   before_filter :set_year
 
   def year
-    @table = Summarize::Table.new(Summarize::Summarizer::Absences, @team || User.all, UberZeit.year_as_range(@year))
+    @selected_teams = @team.nil? ? Team.scoped : [@team]
+
+    time_spans_with_scopes = TimeSpan
+      .in_year(@year)
+      .for_team(@selected_teams)
+      .eligible_for_summarizing_absences
+
+    @result = time_spans_with_scopes.duration_in_work_day_sum_per_user_and_time_type
+    @total = time_spans_with_scopes.duration_in_work_day_sum_per_time_type
   end
 
   def month
+    @selected_teams = @team.nil? ? Team.scoped : [@team]
     @month = params[:month].to_i
-    @table = Summarize::Table.new(Summarize::Summarizer::Absences, @team || User.all, UberZeit.month_as_range(@year, @month))
+
+    time_spans_with_scopes = TimeSpan
+      .in_year_and_month(@year, @month)
+      .for_team(@selected_teams)
+      .eligible_for_summarizing_absences
+
+    @result = time_spans_with_scopes.duration_in_work_day_sum_per_user_and_time_type
+    @total = time_spans_with_scopes.duration_in_work_day_sum_per_time_type
   end
 
   def calendar
@@ -43,7 +59,7 @@ class Summaries::Absence::AbsenceController < ApplicationController
   end
 
   def set_teams
-    @teams = Team.all
+    @teams = Team.scoped
   end
 
   def set_year

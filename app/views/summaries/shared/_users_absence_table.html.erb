@@ -10,21 +10,23 @@
         </tr>
       </thead>
       <tbody>
-        <% @table.entries.each_pair do |user, summary| %>
+        <% User.in_teams(@selected_teams).each do |user| %>
         <tr>
           <td><%= user %></td>
           <% TimeType.absence.each do |time_type| %>
-          <td><%= format_work_days(summary[time_type]) %></td>
+            <td><%= format_work_days(
+              @result.fetch([user.id, time_type.id], 0)
+            ) %></td>
           <% end %>
         </tr>
         <% end %>
         <tr class="total">
           <td><%= t '.total' %></td>
           <% TimeType.absence.each do |time_type| %>
-          <td><%= format_work_days(@table.total(time_type)) %></td>
+          <td><%= format_work_days(@total.fetch(time_type.id, 0)) %></td>
           <% end %>
         </tr>
       </tbody>
     </table>
   </div>
-
+</div>

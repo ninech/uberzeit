@@ -1,7 +1,7 @@
 module SummariesHelper
 
   def format_work_days(duration)
-    text = number_with_precision(duration.to_work_days, precision: 1, strip_insignificant_zeros: true)
+    text = number_with_precision(duration, precision: 1, strip_insignificant_zeros: true)
     content_tag(:span, text, style: "color: #{color_for_duration(duration)}")
   end
 
@@ -34,7 +34,7 @@ module SummariesHelper
   end
 
   def format_duration_by_time_type(duration, time_type)
-    time_type.is_absence? ? "#{format_work_days(duration)} d" : "#{format_hours(duration)}"
+    time_type.is_absence? ? "#{format_work_days(duration.to_work_days)} d" : "#{format_hours(duration)}"
   end
 
   def label_for_month(date)

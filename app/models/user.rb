@@ -41,6 +41,8 @@ class User < ActiveRecord::Base
 
   before_validation :set_default_time_zone
 
+  scope :in_teams, ->(teams) { where Membership.joins(:user).where(team_id: teams).exists }
+
   def subordinates
     # method chaining LIKE A BOSS
     Team.with_role(:team_leader, self).collect(&:members).flatten.uniq

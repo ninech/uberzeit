@@ -35,27 +35,6 @@ describe 'routing of the summaries' do
         )
       end
     end
-
-    describe 'absence' do
-      it 'routes /users/:id/summaries/absence/:year to my_absence#year' do
-        expect(get: '/users/1/summaries/absence/2013').to route_to(
-          controller: 'summaries/absence/my_absence',
-          action: 'year',
-          user_id: '1',
-          year: '2013',
-        )
-      end
-
-      it 'routes /users/:id/summaries/absence/:year/:month to my_absence#month' do
-        expect(get: '/users/1/summaries/absence/2013/8').to route_to(
-          controller: 'summaries/absence/my_absence',
-          action: 'month',
-          user_id: '1',
-          year: '2013',
-          month: '8',
-        )
-      end
-    end
   end
 
   context 'user list' do
