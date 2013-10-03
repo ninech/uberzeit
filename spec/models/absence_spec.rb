@@ -145,7 +145,14 @@ describe Absence do
         subject.time_spans.collect(&:duration_in_work_days).sum.should eq(4)
         subject.time_spans.collect(&:credited_duration_in_work_days).sum.should eq(2)
       end
+    end
 
+    context 'recurring' do
+      subject { FactoryGirl.create(:absence, start_date: '2013-10-02', end_date: '2013-10-02', schedule_attributes: {active: true, ends_date: '2013-10-09', weekly_repeat_interval: 1}) }
+
+      it 'calculates time span for each recurring date' do
+        subject.time_spans.collect(&:date).map(&:to_s).should eq(%w[2013-10-02 2013-10-09])
+      end
     end
   end
 end
