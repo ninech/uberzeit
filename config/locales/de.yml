@@ -126,7 +126,6 @@ de:
       first_half_day: Vormittags
       second_half_day: Nachmittags
       recurring_interval_until_date: "Wiederholung: Alle %{interval} Wochen bis zum %{ends}."
-      recurring_interval_endless: "Wiederholung: Alle %{interval} Wochen"
       add_absence: 'Absenz hinzufügen'
     public_holiday_tooltip:
       first_half_day: Vormittags
