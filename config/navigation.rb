@@ -62,25 +62,25 @@ SimpleNavigation::Configuration.run do |navigation|
     end
     primary.item :absences, t('navigation.absences'), user_absences_path(current_user), highlights_on: %r!\A/users/\d+/absences!
 
-    primary.item :reports, t('navigation.reports'), user_summaries_overview_path(current_user), highlights_on: %r!\A/users(/\d*)*/summaries! do |second|
+    primary.item :reports, t('navigation.reports'), reports_overview_user_path(current_user), highlights_on: %r!\A/reports! do |second|
       second.dom_class = 'sub-nav'
-      second.item :overview, t('navigation.sub.reports.overview'), user_summaries_overview_path(current_user), highlights_on: %r!\A/users/\d*/summaries/overview!
-      second.item :my_work, t('navigation.sub.reports.my_work'), user_summaries_work_month_path(current_user, Date.current.year, Date.current.month), highlights_on: %r!\A/users/\d*/summaries/work!
-      second.item :absences, t('navigation.sub.reports.absences'), calendar_summaries_absence_users_path(Date.current.year, Date.current.month), highlights_on: %r!\A/users/summaries/absence!
+      second.item :overview, t('navigation.sub.reports.overview'), reports_overview_user_path(current_user), highlights_on: %r!\A/reports/overview/users/\d*!
+      second.item :my_work, t('navigation.sub.reports.my_work'), reports_work_user_month_path(current_user, Date.current.year, Date.current.month), highlights_on: %r!\A/reports/work/users/\d*/!
+      second.item :absences, t('navigation.sub.reports.absences'), reports_absences_calendar_path(Date.current.year, Date.current.month), highlights_on: %r!\A/reports/absences/\d*/\d*!
       if ability.can? :manage, :work
-        second.item :work, t('navigation.sub.reports.work'), month_summaries_work_users_path(Date.current.year, Date.current.month), highlights_on: %r!\A/users/summaries/work!
+        second.item :work, t('navigation.sub.reports.work'), reports_work_month_path(Date.current.year, Date.current.month), highlights_on: %r!\A/reports/work/\d*/\d*!
       end
       if ability.can? :manage, :vacation
-        second.item :vacation, t('navigation.sub.reports.vacation'), year_summaries_vacation_users_path(Date.current.year), highlights_on: %r!\A/users/summaries/vacation!
+        second.item :vacation, t('navigation.sub.reports.vacation'), reports_vacation_year_path(Date.current.year), highlights_on: %r!\A/reports/vacation!
       end
       if ability.can? :manage, :billability
-        second.item :billability, t('navigation.sub.reports.billability'), billability_summaries_activity_users_path, highlights_on: %r!\A/users/summaries/activity/billability!
+        second.item :billability, t('navigation.sub.reports.billability'), reports_activities_billability_path, highlights_on: %r!\A/reports/activities/billability!
       end
       if ability.can? :manage, :billing
-        second.item :billing, t('navigation.sub.reports.billing'), billing_summaries_activity_users_path, highlights_on: %r!\A/users/summaries/activity/billing!
+        second.item :billing, t('navigation.sub.reports.billing'), reports_activities_billing_path, highlights_on: %r!\A/reports/activities/billing!
       end
       if current_user.team_leader? || current_user.admin?
-        second.item :activity_filter, t('navigation.sub.reports.activity_filter'), filter_summaries_activity_users_path(Date.current.year, Date.current.month, 'customer'), highlights_on: %r!\A/users/summaries/activity/filter!
+        second.item :activity_filter, t('navigation.sub.reports.activity_filter'), reports_activities_filter_path(Date.current.year, Date.current.month, 'customer'), highlights_on: %r!\A/reports/activities/filter!
       end
     end
     primary.item :manage, t('navigation.manage'), projects_path, if: -> { show_manage_link_in_navigation? } do |second|
