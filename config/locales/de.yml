@@ -193,6 +193,9 @@ de:
     activities: Aktivitäten
     reports: Berichte
     sub:
+      absences:
+        my_absences: Meine Absenzen
+        absences: Absenzen Mitarbeiter
       manage:
         public_holidays: Feiertage
         time_types: Zeittypen
@@ -203,9 +206,7 @@ de:
       reports:
         overview: Übersicht
         my_work: Meine Arbeitszeit
-        my_absence: Meine Absenzen
         work: Arbeitszeit Mitarbeiter
-        absences: Absenzen Mitarbeiter
         vacation: Feriensaldo
         billability: Verrechenbarkeit
         billing: Verrechnung

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe 'Roles and Rights' do
@@ -245,23 +247,23 @@ describe 'Roles and Rights' do
   describe 'interface' do
     subject { page }
 
-    describe 'menu items' do
-      before do
-        visit reports_work_user_year_path(current_user, year)
+    shared_examples :menu_list do |selector, included, excluded|
+      included.each do |included_item|
+        it "should include #{included_item}" do
+          subject.should have_selector(selector, text: included_item)
+        end
       end
 
-      shared_examples :menu_list do |selector, included, excluded|
-        included.each do |included_item|
-          it "should include #{included_item}" do
-            subject.should have_selector(selector, text: included_item)
-          end
+      excluded.each do |excluded_item|
+        it "should exclude #{excluded_item}" do
+          subject.should_not have_selector(selector, text: excluded_item)
         end
+      end
+    end
 
-        excluded.each do |excluded_item|
-          it "should exclude #{excluded_item}" do
-            subject.should_not have_selector(selector, text: excluded_item)
-          end
-        end
+    describe 'reports' do
+      before do
+        visit reports_work_user_year_path(current_user, year)
       end
 
       context 'as user' do
@@ -272,16 +274,7 @@ describe 'Roles and Rights' do
         end
 
         describe 'report menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Absenzen Mitarbeiter'], ['Arbeitszeit Mitarbeiter', 'Feriensaldo']
-        end
-      end
-
-      context 'as accountant' do
-        let(:accountant) { FactoryGirl.create(:accountant) }
-        let(:current_user) { accountant }
-
-        describe 'report menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Verrechenbarkeit', 'Verrechnung'], []
+          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit'], ['Arbeitszeit Mitarbeiter', 'Feriensaldo']
         end
       end
 
@@ -289,11 +282,11 @@ describe 'Roles and Rights' do
         let(:current_user) { team_leader }
 
         describe 'main menu' do
-          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte', 'Verwalten'], []
+          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Aktivitäten', 'Berichte', 'Verwalten'], []
         end
 
         describe 'report menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo', 'Verrechenbarkeit'], []
+          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Arbeitszeit Mitarbeiter'], []
         end
       end
 
@@ -301,11 +294,42 @@ describe 'Roles and Rights' do
         let(:current_user) { admin }
 
         describe 'main menu' do
-          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte', 'Verwalten'], []
+          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Aktivitäten', 'Berichte', 'Verwalten'], []
         end
 
         describe 'report menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo', 'Verrechenbarkeit', 'Verrechnung'], []
+          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Arbeitszeit Mitarbeiter', 'Feriensaldo'], []
+        end
+      end
+    end
+
+    describe 'activities' do
+      before do
+        visit reports_activities_billability_path
+      end
+
+      context 'as accountant' do
+        let(:accountant) { FactoryGirl.create(:accountant) }
+        let(:current_user) { accountant }
+
+        describe 'activities menu' do
+          include_examples :menu_list, '.sub-nav > dd', ['Verrechenbarkeit', 'Verrechnung'], []
+        end
+      end
+
+      context 'as team leader' do
+        let(:current_user) { team_leader }
+
+        describe 'activities menu' do
+          include_examples :menu_list, '.sub-nav > dd', ['Aktivitäten', 'Verrechenbarkeit'], []
+        end
+      end
+
+      context 'as admin' do
+        let(:current_user) { admin }
+
+        describe 'activities menu' do
+          include_examples :menu_list, '.sub-nav > dd', ['Aktivitäten', 'Verrechenbarkeit', 'Verrechnung'], []
         end
       end
     end

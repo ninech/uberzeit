@@ -2,6 +2,10 @@
   padding-top: 20px;
   margin-bottom: 20px;
 
+  .large-12.columns {
+    height: 64px;
+  }
+
   .logo {
     float: left;
     width: 122px;
@@ -10,14 +14,14 @@
 
   .navigation {
     float: left;
-    padding: 9px 0 0 50px;
+    padding: 9px 0 0 30px;
 
     ul {
       list-style-type: none;
 
       li {
         float: left;
-        padding: 0 20px;
+        padding: 0 16px;
 
         a {
 
