@@ -20,10 +20,14 @@ class AbsenceSchedule < ActiveRecord::Base
   attr_accessible :active, :ends_date, :absence, :weekly_repeat_interval
   validates_numericality_of :weekly_repeat_interval, greater_than: 0, if: :active?
   validates_presence_of :weekly_repeat_interval, if: :active?
-  validates_date :ends_date, on_or_after: lambda { |rs| rs.absence.end_date }, if: lambda { |rs| !rs.absence.nil? && active? }
+  validates_date :ends_date, on_or_after: lambda { |rs| rs.absence.end_date }, if: :has_absence_and_schedule_active?
 
   validates_uniqueness_of :absence_id
 
+  def has_absence_and_schedule_active?
+    !absence.nil? && active?
+  end
+  
   def active?
     !!active
   end
