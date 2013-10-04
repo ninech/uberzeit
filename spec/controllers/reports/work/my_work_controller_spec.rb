@@ -24,7 +24,7 @@ describe Reports::Work::MyWorkController do
       it 'assigns the correct instance variables' do
         get :year, user_id: user, year: year
         assigns(:year).should_not be_nil
-        assigns(:table).should_not be_nil
+        assigns(:buckets).should_not be_nil
       end
 
       it 'renders the :year template' do
