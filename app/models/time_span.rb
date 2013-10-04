@@ -46,12 +46,13 @@ class TimeSpan < ActiveRecord::Base
   scope :effective,         joins(:time_type).where('NOT (time_spanable_type = ? AND time_types.is_vacation = ?)', Adjustment.model_name, true)
   scope :absences,          joins(:time_type).where(time_types: {is_work: false})
   scope :work,              joins(:time_type).where(time_types: {exclude_from_calculation: false})
-  scope :effective_work,    joins(:time_type).where(time_types: {is_work: true})
+  scope :effective_work,    joins(:time_type).where(time_types: {is_work: true}).where(time_spanable_type: TimeEntry.model_name)
   scope :adjustments,       joins(:time_type).where(time_spanable_type: Adjustment.model_name)
 
   scope :eligible_for_summarizing_absences, absences.effective
-  scope :eligible_for_summarizing_work, work
-  scope :eligible_for_summarizing_effective_work, effective_work
+  scope :eligible_for_summarizing_work, work.effective
+  scope :eligible_for_summarizing_effective_work, effective_work.effective
+  scope :eligible_for_summarizing_adjustments, adjustments.effective
 
   def self.duration_in_work_day_sum_per_user_and_time_type
     group(:user_id).group(:time_type_id).sum(:duration_in_work_days)
@@ -69,6 +70,13 @@ class TimeSpan < ActiveRecord::Base
     group(:time_type_id).sum(:duration)
   end
 
+  def self.credited_duration_sum
+    sum(:credited_duration)
+  end
+
+  def self.credited_duration_sum_per_time_type
+    group(:time_type_id).sum(:credited_duration)
+  end
   def self.credited_duration_in_work_days_sum
     sum(:credited_duration_in_work_days)
   end
