@@ -181,6 +181,12 @@ describe TimeEntry do
           subject.ends = nil
           expect { subject.save! }.to change(TimeSpan, :count)
         end
+
+        it 'sets the credited duration to zero if the TimeType should be excluded from calculation' do
+          subject.time_type = TEST_TIME_TYPES[:compensation]
+          subject.save!
+          subject.time_spans.map(&:credited_duration).should eq([0])
+        end
       end
     end
 
@@ -205,7 +211,7 @@ describe TimeEntry do
         time_type = FactoryGirl.create(:time_type_work)
         subject.time_type = time_type
         subject.save!
-        
+
         UberZeit::BonusCalculators.register :nine_on_duty, UberZeit::BonusCalculators::NineOnDuty
         subject.time_type.bonus_calculator = 'nine_on_duty'
         subject.time_type.save!

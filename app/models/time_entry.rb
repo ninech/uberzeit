@@ -134,7 +134,7 @@ class TimeEntry < ActiveRecord::Base
     (starts.to_date..ends.to_date).each do |date|
       time_span = time_spans.build
       time_span.duration = duration(date)
-      time_span.credited_duration = time_span.duration
+      time_span.credited_duration = time_type.exclude_from_calculation? ? 0 : time_span.duration
       time_span.user = user
       time_span.time_type = time_type
       time_span.date = date
