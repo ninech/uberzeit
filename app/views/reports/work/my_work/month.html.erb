@@ -24,10 +24,10 @@
                 <%= link_to label_for_range(range), show_date_user_time_entries_path(user, range.min) %>
               </td>
               <td>
-                <%= render partial: 'reports/shared/tooltip', locals: {time_types: user.time_sheet.work_by_type(range), total: user.time_sheet.work_total(range) } %>
+                <%= render partial: 'reports/shared/tooltip', locals: {time_types: user.time_sheet.effective_work_by_type(range), total: user.time_sheet.effective_work_total(range) } %>
               </td>
               <td>
-                <%= render partial: 'reports/shared/tooltip', locals: {time_types: user.time_sheet.absences_by_type(range), total: user.time_sheet.absences_total(range), format_in_days: true } %>
+                <%= render partial: 'reports/shared/tooltip', locals: {time_types: user.time_sheet.absences_by_type(range), total: user.time_sheet.absences_total(range) } %>
               </td>
               <td>
                 <span><%= format_hours(user.time_sheet.bonus(range)) %></span>
