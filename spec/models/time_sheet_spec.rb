@@ -164,7 +164,7 @@ describe TimeSheet do
     end
 
     it 'calculates the absence' do
-      time_sheet.absences_total('2013-03-18'.to_date..'2013-03-24'.to_date).should eq(2.5)
+      time_sheet.absences_total('2013-03-18'.to_date..'2013-03-24'.to_date).should eq(2.5.work_days)
     end
   end
 
