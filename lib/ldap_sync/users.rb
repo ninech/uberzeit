@@ -22,7 +22,7 @@ class LdapSync
           user.destroy unless user.nil?
         else
           if user.nil?
-            user = User.create(uid: person.mail, time_zone: 'Bern')
+            user = User.create(uid: person.mail)
           end
 
           sync_user_attributes(user, person)
