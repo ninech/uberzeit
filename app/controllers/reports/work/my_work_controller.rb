@@ -6,15 +6,9 @@ class Reports::Work::MyWorkController < ApplicationController
     @year = params[:year].to_i
 
     @range = UberZeit.year_as_range(@year)
-    @table = Summarize::TableWithInterval.new(Summarize::Summarizer::Work, [@user], @range, 1.month)
+    @users = [@user]
 
-    # special case for year overview: calculate running overtime
-    running_overtime = 0
-    @table.entries.each_pair do |range, users_summary|
-      _, summary = users_summary.first
-      running_overtime += summary[:overtime]
-      summary[:running_overtime] = running_overtime
-    end
+    @buckets = UberZeit.range_to_buckets(@range, 1.month, @range.min)
   end
 
   def month
