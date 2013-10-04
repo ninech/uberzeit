@@ -60,6 +60,14 @@ class TimeSheet
     user.time_spans.date_between(date_or_range).eligible_for_summarizing_work.duration_sum_per_time_type
   end
 
+  def effective_work_total(date_or_range)
+    user.time_spans.date_between(date_or_range).eligible_for_summarizing_effective_work.duration_sum
+  end
+
+  def effective_work_by_type(date_or_range)
+    user.time_spans.date_between(date_or_range).eligible_for_summarizing_effective_work.duration_sum_per_time_type
+  end
+
   def absences_total(date_or_range)
     user.time_spans.date_between(date_or_range).eligible_for_summarizing_absences.credited_duration_in_work_days_sum
   end
