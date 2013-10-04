@@ -18,10 +18,7 @@ class TimeSheet
   end
 
   def overtime(date_or_range)
-     total(date_or_range, TimeType.work) +
-     bonus(date_or_range, TimeType.work) +
-     total(date_or_range, TimeType.absence) -
-     planned_working_time(date_or_range)
+    bonus(date_or_range) + work_total(date_or_range) - planned_working_time(date_or_range)
   end
 
   def bonus(date_or_range, time_types = TimeType.scoped)
