@@ -50,35 +50,35 @@ class TimeSheet
   end
 
   def work_total(date_or_range)
-    user.time_spans.date_between(date_or_range).eligible_for_summarizing_work.duration_sum
+    user.time_spans.date_between(date_or_range).eligible_for_summarizing_work.credited_duration_sum
   end
 
   def work_by_type(date_or_range)
-    user.time_spans.date_between(date_or_range).eligible_for_summarizing_work.duration_sum_per_time_type
+    user.time_spans.date_between(date_or_range).eligible_for_summarizing_work.credited_duration_sum_per_time_type
   end
 
   def effective_work_total(date_or_range)
-    user.time_spans.date_between(date_or_range).eligible_for_summarizing_effective_work.duration_sum
+    user.time_spans.date_between(date_or_range).eligible_for_summarizing_effective_work.credited_duration_sum
   end
 
   def effective_work_by_type(date_or_range)
-    user.time_spans.date_between(date_or_range).eligible_for_summarizing_effective_work.duration_sum_per_time_type
+    user.time_spans.date_between(date_or_range).eligible_for_summarizing_effective_work.credited_duration_sum_per_time_type
   end
 
   def absences_total(date_or_range)
-    user.time_spans.date_between(date_or_range).eligible_for_summarizing_absences.credited_duration_in_work_days_sum
+    user.time_spans.date_between(date_or_range).eligible_for_summarizing_absences.credited_duration_sum
   end
 
   def absences_by_type(date_or_range)
-    user.time_spans.date_between(date_or_range).eligible_for_summarizing_absences.credited_duration_in_work_days_sum_per_time_type
+    user.time_spans.date_between(date_or_range).eligible_for_summarizing_absences.credited_duration_sum_per_time_type
   end
 
   def adjustments_total(date_or_range)
-    user.time_spans.date_between(date_or_range).adjustments.duration_sum
+    user.time_spans.date_between(date_or_range).eligible_for_summarizing_adjustments.credited_duration_sum
   end
 
   def adjustments_by_type(date_or_range)
-    user.time_spans.date_between(date_or_range).adjustments.duration_sum_per_time_type
+    user.time_spans.date_between(date_or_range).eligible_for_summarizing_adjustments.credited_duration_sum_per_time_type
   end
 
   private
