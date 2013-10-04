@@ -21,14 +21,14 @@ class TimeSheet
      total(date_or_range, TimeType.work) +
      bonus(date_or_range, TimeType.work) +
      total(date_or_range, TimeType.absence) -
-     planned_work(date_or_range)
+     planned_working_time(date_or_range)
   end
 
   def bonus(date_or_range, time_types = TimeType.scoped)
     user.time_spans.date_between(date_range(date_or_range)).where(time_type_id: time_types).sum(:duration_bonus)
   end
 
-  def planned_work(date_or_range)
+  def planned_working_time(date_or_range)
     FetchPlannedWorkingTime.new(user, date_range(date_or_range)).total
   end
 
@@ -52,12 +52,31 @@ class TimeSheet
     timers_in_range.inject(0) { |sum,timer| sum + timer.duration(range) }
   end
 
-  def work(date_or_range)
-    CalculateWorkingTime.new(self, date_or_range).total
+  def work_total(date_or_range)
+    user.time_spans.date_between(date_or_range).eligible_for_summarizing_work.duration_sum
+  end
+
+  def work_by_type(date_or_range)
+    user.time_spans.date_between(date_or_range).eligible_for_summarizing_work.duration_sum_per_time_type
+  end
+
+  def absences_total(date_or_range)
+    user.time_spans.date_between(date_or_range).eligible_for_summarizing_absences.credited_duration_in_work_days_sum
+  end
+
+  def absences_by_type(date_or_range)
+    user.time_spans.date_between(date_or_range).eligible_for_summarizing_absences.credited_duration_in_work_days_sum_per_time_type
+  end
+
+  def adjustments_total(date_or_range)
+    user.time_spans.date_between(date_or_range).adjustments.duration_sum
+  end
+
+  def adjustments_by_type(date_or_range)
+    user.time_spans.date_between(date_or_range).adjustments.duration_sum_per_time_type
   end
 
   private
-
   def date_range(date_or_range)
     date_or_range.to_range.to_date_range
   end

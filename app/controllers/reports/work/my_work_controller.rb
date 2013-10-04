@@ -20,7 +20,17 @@ class Reports::Work::MyWorkController < ApplicationController
   def month
     @month = params[:month].to_i
     @range = UberZeit.month_as_range(@year, @month)
-    @table = Summarize::TableWithInterval.new(Summarize::Summarizer::Work, [@user], @range, 1.week, @range.min.monday)
+    @users = [@user]
+
+    cursor = @range.min.beginning_of_week
+    interval = 1.week
+    @buckets = []
+    while cursor <= @range.max
+      range_at_cursor = cursor...cursor + interval
+      @buckets.push range_at_cursor.intersect(@range)
+      cursor += interval
+    end
+
   end
 
   private

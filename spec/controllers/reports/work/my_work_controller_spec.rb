@@ -38,7 +38,18 @@ describe Reports::Work::MyWorkController do
         get :month, user_id: user, year: year, month: month
         assigns(:year).should_not be_nil
         assigns(:month).should_not be_nil
-        assigns(:table).should_not be_nil
+        assigns(:buckets).should_not be_nil
+      end
+
+      it 'generates the correct buckets' do
+        get :month, user_id: user, year: year, month: month
+        assigns(:buckets).should eq([
+          '2013-03-01'.to_date..'2013-03-03'.to_date,
+          '2013-03-04'.to_date..'2013-03-10'.to_date,
+          '2013-03-11'.to_date..'2013-03-17'.to_date,
+          '2013-03-18'.to_date..'2013-03-24'.to_date,
+          '2013-03-25'.to_date..'2013-03-31'.to_date
+        ])
       end
 
       it 'renders the :month template' do

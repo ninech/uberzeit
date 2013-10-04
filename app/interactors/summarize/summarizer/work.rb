@@ -22,7 +22,7 @@ class Summarize::Summarizer::Work
   end
 
   def planned_work
-    @time_sheet.planned_work(@range)
+    @time_sheet.planned_working_time(@range)
   end
 
   def effective_worked

@@ -1,5 +1,25 @@
 # uberZeit
 
+## Rules
+
+### Planned Working Time
+
+* Is calculated by summing up `Day`s.planned_working_time
+
+### Worktime
+
+* Is calculated by summing up `TimeSpan`s.duration
+* Only sum `TimeSpan`s which have a `TimeType` with the following settings:
+** `exclude_from_calculation: true`
+
+### Absence
+
+* Is calculated by summing up `TimeSpan`s.credited_duration
+* Exclude `TimeSpan`s which belong to an `Adjustment` and its `TimeType.is_vacation` is true
+* Exclude `TimeSpan`s which have a `TimeType` with the following settings:
+** `is_work: true`
+
+
 ## Development
 
 1. Sync users:

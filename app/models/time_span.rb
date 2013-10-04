@@ -32,33 +32,50 @@ class TimeSpan < ActiveRecord::Base
 
   scope :in_year,           ->(year) { date_between UberZeit.year_as_range(year) }
   scope :in_year_and_month, ->(year, month) { date_between UberZeit.month_as_range(year, month) }
-  scope :date_between,      ->(date_range) { where('date BETWEEN ? AND ?', date_range.min, date_range.max) }
+  scope :date_between,      ->(date_range) do
+    if date_range.respond_to?(:min)
+      where('date BETWEEN ? AND ?', date_range.min, date_range.max)
+    else
+      where('date = ?', date_range)
+    end
+  end
 
   scope :for_team,          ->(team) { where(user_id: User.in_teams(team)) }
+  scope :for_user,          ->(user) { where(user_id: user) }
 
   scope :effective,         joins(:time_type).where('NOT (time_spanable_type = ? AND time_types.is_vacation = ?)', Adjustment.model_name, true)
   scope :absences,          joins(:time_type).where(time_types: {is_work: false})
+  scope :work,              joins(:time_type).where(time_types: {exclude_from_calculation: false})
+  scope :adjustments,       joins(:time_type).where(time_spanable_type: Adjustment.model_name)
 
   scope :eligible_for_summarizing_absences, absences.effective
+  scope :eligible_for_summarizing_work, work
 
   def self.duration_in_work_day_sum_per_user_and_time_type
-    group('time_spans.user_id').group('time_spans.time_type_id').sum(:duration_in_work_days)
+    group(:user_id).group(:time_type_id).sum(:duration_in_work_days)
   end
 
   def self.duration_in_work_day_sum_per_time_type
-    group('time_spans.time_type_id').sum(:duration_in_work_days)
+    group(:time_type_id).sum(:duration_in_work_days)
   end
 
-  #  @total = TimeSpan
-  #    .joins(:time_type)
-  #    .joins(:user => :memberships)
-  #    .where(memberships: {team_id: @team})
-  #    .where(time_types: {is_work: false})
-  #    .where('NOT (time_spanable_type = ? AND time_types.is_vacation = ?)', Adjustment.model_name, true)
-  #    .where('date >= ?', "#{@year}-01-01")
-  #    .where('date <= ?', "#{@year}-12-31")
-  #    .group(:time_type_id)
-  #    .sum(:duration_in_work_days)
+  def self.duration_sum
+    sum(:duration)
+  end
+
+  def self.duration_sum_per_time_type
+    group(:time_type_id).sum(:duration)
+  end
+
+  def self.credited_duration_in_work_days_sum
+    sum(:credited_duration_in_work_days)
+  end
+
+  def self.credited_duration_in_work_days_sum_per_time_type
+    group(:time_type_id).sum(:credited_duration_in_work_days)
+  end
+
+
 
   def duration=(value)
     write_attribute :duration_in_work_days, value.to_work_days

@@ -2,11 +2,11 @@ module ReportsHelper
 
   def format_work_days(duration)
     text = number_with_precision(duration, precision: 1, strip_insignificant_zeros: true)
-    content_tag(:span, text, style: "color: #{color_for_duration(duration)}")
+    content_tag(:span, text + ' d', style: "color: #{color_for_duration(duration)}")
   end
 
   def format_hours(duration)
-    "<span style='color: #{color_for_duration(duration)}'>#{display_in_hours(duration)}</span>".html_safe
+    content_tag(:span, display_in_hours(duration), style: "color: #{color_for_duration(duration)}")
   end
 
   def hash_to_tooltip_table(hash)
@@ -34,7 +34,7 @@ module ReportsHelper
   end
 
   def format_duration_by_time_type(duration, time_type)
-    time_type.is_absence? ? "#{format_work_days(duration.to_work_days)} d" : "#{format_hours(duration)}"
+    time_type.is_absence? ? format_work_days(duration.to_work_days) : format_hours(duration)
   end
 
   def label_for_month(date)
