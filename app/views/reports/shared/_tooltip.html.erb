@@ -3,9 +3,9 @@
 <% if time_types.any? %>
   class="has-tip" data-tooltip='
   <div class="tbl-tooltip">
-    <% time_types.each do |time_type, summary| %>
+    <% time_types.each do |time_type_id, summary| %>
       <div class="tr">
-        <div class="td"><%= time_type %></div>
+        <div class="td"><%= TimeType.find(time_type_id) %></div>
         <div class="td"><%= if format_in_days then format_work_days(summary) else format_hours(summary) end %></div>
       </div>
     <% end %>
