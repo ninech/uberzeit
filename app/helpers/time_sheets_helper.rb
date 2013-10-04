@@ -52,7 +52,7 @@ module TimeSheetsHelper
   def running_timer_dates(timers)
     if timers
       links = timers.map do |timer|
-        link_to l(timer.starts, format: :weekday), show_date_time_sheet_path(@user.time_sheet, date: timer.start_date)
+        link_to l(timer.starts, format: :weekday), show_date_user_time_entries_path(@user, date: timer.start_date)
       end
       links.to_sentence.html_safe
     end
