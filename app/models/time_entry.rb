@@ -138,9 +138,13 @@ class TimeEntry < ActiveRecord::Base
       time_span.user = user
       time_span.time_type = time_type
       time_span.date = date
-      time_span.duration_bonus = UberZeit::BonusCalculators.use(time_type.bonus_calculator, self).result
+      time_span.duration_bonus = bonus
       time_span.save!
     end
+  end
+
+  def bonus
+    UberZeit::BonusCalculators.use(time_type.bonus_calculator, self).result
   end
 
   private
