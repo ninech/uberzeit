@@ -22,15 +22,7 @@ class Reports::Work::MyWorkController < ApplicationController
     @range = UberZeit.month_as_range(@year, @month)
     @users = [@user]
 
-    cursor = @range.min.beginning_of_week
-    interval = 1.week
-    @buckets = []
-    while cursor <= @range.max
-      range_at_cursor = cursor...cursor + interval
-      @buckets.push range_at_cursor.intersect(@range)
-      cursor += interval
-    end
-
+    @buckets = UberZeit.range_to_buckets(@range, 1.week, @range.min.beginning_of_week)
   end
 
   private
