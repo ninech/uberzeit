@@ -8,7 +8,6 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  deleted_at           :datetime
-#  time_zone            :string(255)
 #  given_name           :string(255)
 #  birthday             :date
 #  authentication_token :string(255)

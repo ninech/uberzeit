@@ -44,4 +44,15 @@ module UberZeit
       hours.hours + minutes.minutes
     end
   end
+
+  def self.range_to_buckets(range, interval, start_from)
+    cursor = start_from
+    buckets = []
+    while cursor <= range.max
+      range_at_cursor = cursor...cursor + interval
+      buckets.push range_at_cursor.intersect(range)
+      cursor += interval
+    end
+    buckets
+  end
 end

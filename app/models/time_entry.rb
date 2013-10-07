@@ -132,15 +132,12 @@ class TimeEntry < ActiveRecord::Base
     time_spans.destroy_all
     return if ends.nil?
     (starts.to_date..ends.to_date).each do |date|
-      time_span = time_spans.build
-      time_span.duration = duration(date)
-      time_span.credited_duration = time_span.duration
-      time_span.user = user
-      time_span.time_type = time_type
-      time_span.date = date
-      time_span.duration_bonus = UberZeit::BonusCalculators.use(time_type.bonus_calculator, self).result
-      time_span.save!
+      create_time_span_for_date(date)
     end
+  end
+
+  def bonus
+    UberZeit::BonusCalculators.use(time_type.bonus_calculator, self).result
   end
 
   private
@@ -174,6 +171,17 @@ class TimeEntry < ActiveRecord::Base
 
   def date_and_time_to_datetime_format(date, time)
     "#{date} #{time}:00"
+  end
+
+  def create_time_span_for_date(date)
+    time_span = time_spans.build
+    time_span.duration = duration(date)
+    time_span.credited_duration = time_type.exclude_from_calculation? ? 0 : time_span.duration
+    time_span.user = user
+    time_span.time_type = time_type
+    time_span.date = date
+    time_span.duration_bonus = bonus
+    time_span.save!
   end
 
 end

@@ -16,7 +16,6 @@ class API::User < Grape::API
   before do
     env['warden'].authenticate
     ensure_authentication! # authenticate all api requests
-    Time.zone = current_user.time_zone if current_user.time_zone
   end
 
   helpers do

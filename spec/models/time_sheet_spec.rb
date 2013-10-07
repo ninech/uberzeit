@@ -152,11 +152,19 @@ describe TimeSheet do
     end
 
     it 'calculates the work time' do
-      time_sheet.work('2013-03-18'.to_date...'2013-03-25'.to_date).should eq(34.hours)
+      time_sheet.working_time_total('2013-03-18'.to_date...'2013-03-25'.to_date).should eq(34.hours)
+    end
+
+    it 'calculates the effective work time' do
+      time_sheet.effective_working_time_total('2013-03-18'.to_date...'2013-03-25'.to_date).should eq(1.5.work_days)
     end
 
     it 'calculates the overtime' do
       time_sheet.overtime('2013-03-18'.to_date...'2013-03-25'.to_date).should eq(0)
+    end
+
+    it 'calculates the absence' do
+      time_sheet.absences_total('2013-03-18'.to_date..'2013-03-24'.to_date).should eq(2.5.work_days)
     end
   end
 
@@ -164,5 +172,15 @@ describe TimeSheet do
     FactoryGirl.create(:public_holiday, date: '2013-08-01', name: '"Proud to be a swiss"-day')
     vacation '2013-07-29', '2013-08-11'
     time_sheet.vacation(2013).should eq(9.work_days)
+  end
+
+  describe '#adjustments' do
+    before do
+      FactoryGirl.create(:adjustment, date: '2013-08-01', duration: 3.hours, time_type_id: TEST_TIME_TYPES[:work].id, user: time_sheet.user)
+    end
+
+    it 'calculates it correctly' do
+      time_sheet.adjustments_total('2013-07-31'.to_date..'2013-08-10'.to_date).should eq(3.hours)
+    end
   end
 end
