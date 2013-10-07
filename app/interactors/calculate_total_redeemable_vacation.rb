@@ -86,7 +86,7 @@ class CalculateTotalRedeemableVacation
   end
 
   def adjustments_in_year
-    adjustments.in(year_as_range)
+    adjustments.with_date_in_year(@year)
   end
 end
 

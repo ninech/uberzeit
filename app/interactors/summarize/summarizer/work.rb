@@ -50,11 +50,11 @@ class Summarize::Summarizer::Work
   end
 
   def adjustments
-    @user.adjustments.exclude_vacation.in(@range).total_duration
+    @user.adjustments.exclude_vacation.with_date(@range).total_duration
   end
 
   def adjustments_by_type
-    @user.adjustments.exclude_vacation.in(@range).each_with_object({}) { |adjustment, hash| hash[adjustment] = adjustment.duration }
+    @user.adjustments.exclude_vacation.with_date(@range).each_with_object({}) { |adjustment, hash| hash[adjustment] = adjustment.duration }
   end
 
   def total_of_time_sheet(time_types)

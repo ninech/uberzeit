@@ -35,7 +35,7 @@ class Reports::Absences::AbsenceController < ApplicationController
     @range = UberZeit.month_as_range(@year, @month)
     @days = @range.to_a
 
-    @public_holidays = Hash[@days.collect { |day| [day, PublicHoliday.on(day)] }]
+    @public_holidays = Hash[@days.collect { |day| [day, PublicHoliday.with_date(day)] }]
     @work_days = Hash[@days.collect { |day| [day, UberZeit.is_weekday_a_workday?(day)] }]
 
     @absences = {}
