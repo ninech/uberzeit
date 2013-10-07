@@ -152,11 +152,11 @@ describe TimeSheet do
     end
 
     it 'calculates the work time' do
-      time_sheet.work_total('2013-03-18'.to_date...'2013-03-25'.to_date).should eq(34.hours)
+      time_sheet.working_time_total('2013-03-18'.to_date...'2013-03-25'.to_date).should eq(34.hours)
     end
 
     it 'calculates the effective work time' do
-      time_sheet.effective_work_total('2013-03-18'.to_date...'2013-03-25'.to_date).should eq(1.5.work_days)
+      time_sheet.effective_working_time_total('2013-03-18'.to_date...'2013-03-25'.to_date).should eq(1.5.work_days)
     end
 
     it 'calculates the overtime' do

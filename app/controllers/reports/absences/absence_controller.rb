@@ -10,7 +10,7 @@ class Reports::Absences::AbsenceController < ApplicationController
     time_spans_with_scopes = TimeSpan
       .in_year(@year)
       .for_team(@selected_teams)
-      .absences.istzeit
+      .absences
 
     @result = time_spans_with_scopes.duration_in_work_day_sum_per_user_and_time_type
     @total = time_spans_with_scopes.duration_in_work_day_sum_per_time_type
@@ -23,7 +23,7 @@ class Reports::Absences::AbsenceController < ApplicationController
     time_spans_with_scopes = TimeSpan
       .in_year_and_month(@year, @month)
       .for_team(@selected_teams)
-      .absences.istzeit
+      .absences
 
     @result = time_spans_with_scopes.duration_in_work_day_sum_per_user_and_time_type
     @total = time_spans_with_scopes.duration_in_work_day_sum_per_time_type

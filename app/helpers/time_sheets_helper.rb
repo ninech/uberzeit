@@ -42,7 +42,7 @@ module TimeSheetsHelper
   end
 
   def worktime_for_range(date_or_range)
-    @user.time_sheet.work_total(date_or_range)
+    @user.time_sheet.working_time_total(date_or_range)
   end
 
   def overtime_for_range(date_or_range)

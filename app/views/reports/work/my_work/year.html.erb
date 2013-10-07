@@ -24,7 +24,7 @@
                 <%= link_to label_for_month(range.min), reports_work_user_month_path(user, range.min.year, range.min.month) %>
               </td>
               <td>
-                <%= render partial: 'reports/shared/tooltip', locals: {time_types: user.time_sheet.effective_work_by_type(range), total: user.time_sheet.effective_work_total(range) } %>
+                <%= render partial: 'reports/shared/tooltip', locals: {time_types: user.time_sheet.effective_working_time_by_type(range), total: user.time_sheet.effective_working_time_total(range) } %>
               </td>
               <td>
                 <%= render partial: 'reports/shared/tooltip', locals: {time_types: user.time_sheet.absences_by_type(range), total: user.time_sheet.absences_total(range) } %>

@@ -43,11 +43,22 @@ class TimeSpan < ActiveRecord::Base
   scope :for_team,          ->(team) { where(user_id: User.in_teams(team)) }
   scope :for_user,          ->(user) { where(user_id: user) }
 
-  scope :istzeit,           joins(:time_type).where('NOT (time_spanable_type = ? AND time_types.is_vacation = ?)', Adjustment.model_name, true)
-  scope :absences,          joins(:time_type).where(time_types: {is_work: false})
-  scope :work,              joins(:time_type).where(time_types: {exclude_from_calculation: false})
-  scope :effective_work,    joins(:time_type).where(time_types: {is_work: true}).where(time_spanable_type: TimeEntry.model_name)
-  scope :adjustments,       joins(:time_type).where(time_spanable_type: Adjustment.model_name)
+  scope :exclude_vacation_adjustments,      joins(:time_type)
+                                              .where('NOT (time_spanable_type = ? AND time_types.is_vacation = ?)', Adjustment.model_name, true)
+
+  scope :absences,                 where(time_spanable_type: %w[Absence Adjustment])
+                                     .exclude_vacation_adjustments
+
+  scope :working_time,             joins(:time_type)
+                                     .where(time_types: {exclude_from_calculation: false})
+
+  scope :effective_working_time,    where(time_spanable_type: TimeEntry.model_name)
+                                     .joins(:time_type)
+                                     .where(time_types: {is_work: true})
+
+  scope :adjustments,               joins(:time_type)
+                                      .where(time_spanable_type: Adjustment.model_name)
+                                      .exclude_vacation_adjustments
 
   def self.duration_in_work_day_sum_per_user_and_time_type
     group(:user_id).group(:time_type_id).sum(:duration_in_work_days)

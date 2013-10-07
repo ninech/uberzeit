@@ -18,7 +18,7 @@ class TimeSheet
   end
 
   def overtime(date_or_range)
-    bonus(date_or_range) + work_total(date_or_range) - planned_working_time(date_or_range)
+    bonus(date_or_range) + working_time_total(date_or_range) - planned_working_time(date_or_range)
   end
 
   def bonus(date_or_range, time_types = TimeType.scoped)
@@ -49,36 +49,36 @@ class TimeSheet
     timers_in_range.inject(0) { |sum,timer| sum + timer.duration(range) }
   end
 
-  def work_total(date_or_range)
-    user.time_spans.date_between(date_or_range).work.istzeit.credited_duration_sum
+  def working_time_total(date_or_range)
+    user.time_spans.date_between(date_or_range).working_time.credited_duration_sum
   end
 
-  def work_by_type(date_or_range)
-    user.time_spans.date_between(date_or_range).work.istzeit.credited_duration_sum_per_time_type
+  def working_time_by_type(date_or_range)
+    user.time_spans.date_between(date_or_range).working_time.credited_duration_sum_per_time_type
   end
 
-  def effective_work_total(date_or_range)
-    user.time_spans.date_between(date_or_range).effective_work.istzeit.credited_duration_sum
+  def effective_working_time_total(date_or_range)
+    user.time_spans.date_between(date_or_range).effective_working_time.credited_duration_sum
   end
 
-  def effective_work_by_type(date_or_range)
-    user.time_spans.date_between(date_or_range).effective_work.istzeit.credited_duration_sum_per_time_type
+  def effective_working_time_by_type(date_or_range)
+    user.time_spans.date_between(date_or_range).effective_working_time.credited_duration_sum_per_time_type
   end
 
   def absences_total(date_or_range)
-    user.time_spans.date_between(date_or_range).absences.istzeit.credited_duration_sum
+    user.time_spans.date_between(date_or_range).absences.credited_duration_sum
   end
 
   def absences_by_type(date_or_range)
-    user.time_spans.date_between(date_or_range).absences.istzeit.credited_duration_sum_per_time_type
+    user.time_spans.date_between(date_or_range).absences.credited_duration_sum_per_time_type
   end
 
   def adjustments_total(date_or_range)
-    user.time_spans.date_between(date_or_range).adjustments.istzeit.credited_duration_sum
+    user.time_spans.date_between(date_or_range).adjustments.credited_duration_sum
   end
 
   def adjustments_by_type(date_or_range)
-    user.time_spans.date_between(date_or_range).adjustments.istzeit.credited_duration_sum_per_time_type
+    user.time_spans.date_between(date_or_range).adjustments.credited_duration_sum_per_time_type
   end
 
   private

@@ -10,6 +10,7 @@
 
 This is the real time which a user has spent working.
 
+* Only sum `TimeSpans` of `TimeEntry`
 * Sum up all `TimeSpan`s which belong to a `TimeType` which has `is_work` = `true`
 
 ### Worktime
@@ -18,6 +19,7 @@ This is the time which will be compared to the planned working time to
 determine the overtime.
 
 * Is calculated by summing up `TimeSpan`s.credited_duration
+* Exclude `TimeSpans` which belongs to a `TimeType` with `exclude_from_calculation` = `true`
 
 ### Absence
 
