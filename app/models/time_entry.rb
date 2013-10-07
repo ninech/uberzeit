@@ -10,7 +10,10 @@
 #  user_id      :integer
 #
 
+require_relative 'concerns/dated'
+
 class TimeEntry < ActiveRecord::Base
+  include Dated
 
   acts_as_paranoid
 
@@ -30,8 +33,8 @@ class TimeEntry < ActiveRecord::Base
   validates_datetime :ends, after: :starts, unless: :timer?
   validate :must_be_only_timer_on_date, if: :timer?
 
-  scope :on, lambda { |date| range = date.to_range.to_time_range; { conditions: ['(starts >= ? AND starts <= ?)', range.min, range.max] } }
-  scope :others, lambda { |date| range = date.to_range.to_time_range; { conditions: ['(starts < ? OR starts > ?)', range.min, range.max] } }
+  scope_date :starts
+  scope_date :ends
 
   scope :timers_only, where(ends: nil)
   scope :except_timers, where('time_entries.ends IS NOT NULL')
@@ -150,7 +153,7 @@ class TimeEntry < ActiveRecord::Base
 
   def other_timers_on_same_date
     if user
-      user.time_entries.timers_only.on(start_date) - [self]
+      user.time_entries.timers_only.with_starts(start_date.to_range.to_time_range) - [self]
     else
       []
     end
