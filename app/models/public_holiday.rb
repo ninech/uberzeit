@@ -12,7 +12,11 @@
 #  deleted_at      :datetime
 #
 
+require_relative 'concerns/dated'
+
 class PublicHoliday < ActiveRecord::Base
+  include Dated
+
   acts_as_paranoid
 
   default_scope order(:date)
@@ -23,14 +27,9 @@ class PublicHoliday < ActiveRecord::Base
 
   validates_datetime :date
 
-  scope :on, lambda { |date| date = date.to_date; { conditions: ['(date <= ? AND date >= ?)', date, date] } }
-  scope :in, lambda { |range| date_range = range.to_range.to_date_range; { conditions: ['(date <= ? AND date >= ?)', date_range.max, date_range.min] } }
+  scope_date :date
 
   after_save :update_days
-
-  def self.in_year(year)
-    scoped.in(UberZeit.year_as_range(year))
-  end
 
   def self.half_day_on?(date)
     flag_on_date(date, :half_day?)
@@ -93,10 +92,8 @@ class PublicHoliday < ActiveRecord::Base
 
   private
   def self.flag_on_date(date, flag_sym)
-    public_holidays_on_date = on(date)
-
     flag = false
-    public_holidays_on_date.each do |public_holiday|
+    with_date(date).each do |public_holiday|
       flag ||= public_holiday.send(flag_sym)
     end
     flag

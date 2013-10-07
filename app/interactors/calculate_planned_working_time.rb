@@ -34,7 +34,7 @@ class CalculatePlannedWorkingTime
   end
 
   def preload_public_holidays
-    @public_holidays = PublicHoliday.in(@range).to_a
+    @public_holidays = PublicHoliday.with_date(@range).to_a
   end
 
   def planned_working_time_each_day
