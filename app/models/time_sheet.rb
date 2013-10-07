@@ -14,7 +14,7 @@ class TimeSheet
   end
 
   def total(date_or_range, time_types = TimeType.scoped)
-    user.time_spans.date_between(date_range(date_or_range)).where(time_type_id: time_types).sum(:duration)
+    user.time_spans.with_date_between(date_range(date_or_range)).where(time_type_id: time_types).sum(:duration)
   end
 
   def overtime(date_or_range)
@@ -22,7 +22,7 @@ class TimeSheet
   end
 
   def bonus(date_or_range, time_types = TimeType.scoped)
-    user.time_spans.date_between(date_range(date_or_range)).where(time_type_id: time_types).sum(:duration_bonus)
+    user.time_spans.with_date_between(date_range(date_or_range)).where(time_type_id: time_types).sum(:duration_bonus)
   end
 
   def planned_working_time(date_or_range)
@@ -31,7 +31,7 @@ class TimeSheet
 
   def vacation(year)
     range = UberZeit.year_as_range(year)
-    user.time_spans.date_between(range).joins(:time_type).where(time_types: {is_vacation: true}).sum(:credited_duration)
+    user.time_spans.with_date_between(range).joins(:time_type).where(time_types: {is_vacation: true}).sum(:credited_duration)
   end
 
   def remaining_vacation(year)
