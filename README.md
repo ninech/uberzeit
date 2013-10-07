@@ -30,8 +30,8 @@ determine the overtime.
 #### Total days which a user can redeem
 
 * `UberZeit.config[:vacation_per_year]` adjusted by
-** the workload of the `User`s `Employment` during the year
-** `TimeSpan`s which belong to an `Adjustment` and its `TimeType.is_vacation` is `true`
+  * the workload of the `User`s `Employment` during the year
+  * `TimeSpan`s which belong to an `Adjustment` and its `TimeType.is_vacation` is `true`
 
 #### Redeemed Vacation days
 
