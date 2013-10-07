@@ -50,35 +50,35 @@ class TimeSheet
   end
 
   def working_time_total(date_or_range)
-    user.time_spans.date_between(date_or_range).working_time.credited_duration_sum
+    user.time_spans.with_date(date_or_range).working_time.credited_duration_sum
   end
 
   def working_time_by_type(date_or_range)
-    user.time_spans.date_between(date_or_range).working_time.credited_duration_sum_per_time_type
+    user.time_spans.with_date(date_or_range).working_time.credited_duration_sum_per_time_type
   end
 
   def effective_working_time_total(date_or_range)
-    user.time_spans.date_between(date_or_range).effective_working_time.credited_duration_sum
+    user.time_spans.with_date(date_or_range).effective_working_time.credited_duration_sum
   end
 
   def effective_working_time_by_type(date_or_range)
-    user.time_spans.date_between(date_or_range).effective_working_time.credited_duration_sum_per_time_type
+    user.time_spans.with_date(date_or_range).effective_working_time.credited_duration_sum_per_time_type
   end
 
   def absences_total(date_or_range)
-    user.time_spans.date_between(date_or_range).absences.credited_duration_sum
+    user.time_spans.with_date(date_or_range).absences.credited_duration_sum
   end
 
   def absences_by_type(date_or_range)
-    user.time_spans.date_between(date_or_range).absences.credited_duration_sum_per_time_type
+    user.time_spans.with_date(date_or_range).absences.credited_duration_sum_per_time_type
   end
 
   def adjustments_total(date_or_range)
-    user.time_spans.date_between(date_or_range).adjustments.credited_duration_sum
+    user.time_spans.with_date(date_or_range).adjustments.credited_duration_sum
   end
 
   def adjustments_by_type(date_or_range)
-    user.time_spans.date_between(date_or_range).adjustments.credited_duration_sum_per_time_type
+    user.time_spans.with_date(date_or_range).adjustments.credited_duration_sum_per_time_type
   end
 
   private
