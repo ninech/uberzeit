@@ -77,6 +77,7 @@ class TimeSpan < ActiveRecord::Base
   def self.credited_duration_sum_per_time_type
     group(:time_type_id).sum(:credited_duration)
   end
+
   def self.credited_duration_in_work_days_sum
     sum(:credited_duration_in_work_days)
   end
@@ -84,7 +85,6 @@ class TimeSpan < ActiveRecord::Base
   def self.credited_duration_in_work_days_sum_per_time_type
     group(:time_type_id).sum(:credited_duration_in_work_days)
   end
-
 
 
   def duration=(value)
