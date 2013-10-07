@@ -2,19 +2,22 @@ class Reports::Work::WorkController < ApplicationController
 
   before_filter :set_team
   before_filter :set_teams
-  before_filter :set_year
 
   authorize_resource class: false
 
   def year
     @year = params[:year].to_i
-    @table = Summarize::Table.new(Summarize::Summarizer::Work, users, UberZeit.year_as_range(@year))
+
+    @range = UberZeit.year_as_range(@year)
+    @users = users
   end
 
   def month
-    @year = params[:year].to_i
     @month = params[:month].to_i
-    @table = Summarize::Table.new(Summarize::Summarizer::Work, users, UberZeit.month_as_range(@year, @month))
+    @year = params[:year].to_i
+
+    @range = UberZeit.month_as_range(@year, @month)
+    @users = users
   end
 
   private
@@ -38,7 +41,7 @@ class Reports::Work::WorkController < ApplicationController
     if @team
       @team.members
     else
-      User.joins(:teams).where(teams: {id: @teams.pluck(:id)})
+      User.in_teams(@teams)
     end
   end
 end
