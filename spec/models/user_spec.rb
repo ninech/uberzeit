@@ -75,6 +75,7 @@ describe User do
     end
 
     it 'returns all the users which belong to the specified teams' do
+      user = FactoryGirl.create(:user)
       user2 = FactoryGirl.create(:user)
       User.in_teams(Team.all).count.should eq([user, user2].count)
     end
