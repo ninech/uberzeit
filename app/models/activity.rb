@@ -38,6 +38,7 @@ class Activity < ActiveRecord::Base
 
   validates_presence_of :user, :activity_type, :date, :duration, :customer_id
   validates_numericality_of :duration, greater_than: 0
+  validate :customer_must_exist
 
   scope :by_user, ->(user) { where(user_id: user)}
   scope :by_redmine_ticket, ->(redmine_ticket_id) { where(redmine_ticket_id: redmine_ticket_id) }
@@ -101,6 +102,10 @@ class Activity < ActiveRecord::Base
       end
     end
     sums
+  end
+
+  def customer_must_exist
+    errors.add(:customer_id, :customer_does_not_exist) unless customer_id.blank? || Customer.exists?(customer_id)
   end
 
 end

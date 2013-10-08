@@ -55,6 +55,10 @@ de:
         daypart: Dauer
     errors:
       models:
+        activity:
+          attributes:
+            customer_id:
+              customer_does_not_exist: 'existiert nicht'
         time_entry:
           attributes:
             starts:
