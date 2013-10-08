@@ -7,7 +7,7 @@ class Reports::Vacation::VacationController < ApplicationController
   authorize_resource class: false
 
   def year
-    @table = Summarize::Table.new(Summarize::Summarizer::Vacation, users, UberZeit.year_as_range(@year))
+    @users = users
   end
 
   def month
@@ -34,7 +34,7 @@ class Reports::Vacation::VacationController < ApplicationController
     if @team
       @team.members
     else
-      User.joins(:teams).where(teams: {id: @teams.pluck(:id)})
+      User.in_teams(@teams)
     end
   end
 end

@@ -18,7 +18,7 @@ class Reports::OverviewController < ApplicationController
     @personal_absences = find_personal_absences
     @team_absences = Hash[find_team_absences.sort_by { |date, _| date }]
 
-    @vacation_redeemed = @user.time_sheet.vacation(current_year)
+    @vacation_redeemed = @user.time_sheet.redeemed_vacation(current_year)
     @vacation_remaining = @user.time_sheet.remaining_vacation(current_year)
   end
 

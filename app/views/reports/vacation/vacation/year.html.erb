@@ -11,11 +11,11 @@
         </tr>
       </thead>
       <tbody>
-        <% @table.entries.each_pair do |user, summary| %>
-        <tr class="summary-row" >
+        <% @users.each do |user| %>
+        <tr class="summary-row">
           <td><%= user %></td>
-          <td><%= format_work_days(summary[:redeemed].to_work_days) %></td>
-          <td><%= format_work_days(summary[:remaining].to_work_days) %></td>
+          <td><%= format_work_days(user.time_sheet.redeemed_vacation(UberZeit.year_as_range(@year))) %></td>
+          <td><%= format_work_days(user.time_sheet.remaining_vacation(@year)) %></td>
         </tr>
         <% end %>
       </tbody>

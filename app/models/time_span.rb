@@ -60,6 +60,14 @@ class TimeSpan < ActiveRecord::Base
                                       .where(time_spanable_type: Adjustment.model_name)
                                       .exclude_vacation_adjustments
 
+  scope :vacation_adjustments, joins(:time_type)
+                                 .where(time_types: {is_vacation: true})
+                                 .where(time_spanable_type: Adjustment.model_name)
+
+  scope :vacation, joins(:time_type)
+                     .where(time_types: {is_vacation: true})
+                     .exclude_vacation_adjustments
+
   def self.duration_in_work_day_sum_per_user_and_time_type
     group(:user_id).group(:time_type_id).sum(:duration_in_work_days)
   end
