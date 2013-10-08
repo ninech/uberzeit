@@ -194,8 +194,8 @@ de:
     reports: Berichte
     sub:
       absences:
-        my_absences: Meine Absenzen
-        absences: Absenzen Mitarbeiter
+        my_absences: Persönlich
+        absences: Mitarbeiter
       manage:
         public_holidays: Feiertage
         time_types: Zeittypen
@@ -211,7 +211,7 @@ de:
         billability: Verrechenbarkeit
         billing: Verrechnung
         comparison: Vergleich
-        activity_filter: Aktivitäten
+        activity_filter: Übersicht
   reports:
     formats:
       date: '%e. %a.'
