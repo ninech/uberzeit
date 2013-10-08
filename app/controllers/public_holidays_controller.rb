@@ -7,7 +7,7 @@ class PublicHolidaysController < ApplicationController
     @year = (params[:year] || session[:year] || Time.current.year).to_i
     session[:year] = @year
 
-    @public_holidays = @public_holidays.with_date(@year)
+    @public_holidays = @public_holidays.with_date_in_year(@year)
   end
 
   def new
