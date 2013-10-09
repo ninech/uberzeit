@@ -29,18 +29,22 @@ class TimeSheet
     FetchPlannedWorkingTime.new(user, date_range(date_or_range)).total
   end
 
-  def vacation(year)
-    range = UberZeit.year_as_range(year)
-    user.time_spans.with_date(range).joins(:time_type).where(time_types: {is_vacation: true}).sum(:credited_duration)
+  def redeemed_vacation(range)
+    user.time_spans.with_date(range).vacation.credited_duration_in_work_days_sum
   end
 
   def remaining_vacation(year)
-    total_reedemable_vacation(year) - vacation(year)
+    total_redeemable_vacation(year) - redeemed_vacation(UberZeit.year_as_range(year))
   end
 
-  def total_reedemable_vacation(year)
+  def remaining_vacation_per(date)
+    first_day_of_year = "#{date.year}-01-01".to_date
+    total_redeemable_vacation(date.year) - redeemed_vacation(first_day_of_year..date)
+  end
+
+  def total_redeemable_vacation(year)
     vacation = CalculateTotalRedeemableVacation.new(user, year)
-    vacation.total_redeemable_for_year
+    vacation.total_redeemable_for_year.to_work_days
   end
 
   def duration_of_timers(date_or_range)

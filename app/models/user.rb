@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   has_many :days, dependent: :destroy
   has_many :time_spans, dependent: :destroy
 
-  scope :in_teams, ->(teams) { where Membership.joins(:user).where(team_id: teams).exists }
+  scope :in_teams, ->(teams) { where Membership.where(team_id: teams).where('user_id = users.id').exists }
 
   def subordinates
     # method chaining LIKE A BOSS

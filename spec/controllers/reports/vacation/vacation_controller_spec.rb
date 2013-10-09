@@ -67,12 +67,12 @@ describe Reports::Vacation::VacationController do
       context 'rights and roles' do
         it 'returns rows for all users' do
           get :year, year: year
-          assigns(:table).entries.count.should eq(team.members.count + another_team.members.count)
+          assigns(:users).count.should eq(team.members.count + another_team.members.count)
         end
 
         it 'returns rows for a specified team' do
           get :year, year: year, team_id: team.id
-          assigns(:table).entries.count.should eq(team.members.count)
+          assigns(:users).count.should eq(team.members.count)
         end
       end
     end
@@ -81,12 +81,12 @@ describe Reports::Vacation::VacationController do
       context 'rights and roles' do
         it 'returns rows for all users' do
           get :year, year: year, month: month
-          assigns(:table).entries.count.should eq(team.members.count + another_team.members.count)
+          assigns(:users).count.should eq(team.members.count + another_team.members.count)
         end
 
         it 'returns rows for a specified team' do
           get :year, year: year, month: month, team_id: team.id
-          assigns(:table).entries.count.should eq(team.members.count)
+          assigns(:users).count.should eq(team.members.count)
         end
       end
     end
@@ -103,17 +103,22 @@ describe Reports::Vacation::VacationController do
       context 'rights and roles' do
         it 'returns rows for users of his teams' do
           get :year, year: year
-          assigns(:table).entries.count.should eq(team.members.count)
+          assigns(:users).count.should eq(team.members.count)
+        end
+
+        it 'sets teams to his team only' do
+          get :year, year: year
+          assigns(:teams).should eq([team])
         end
 
         it 'returns rows for a managed team' do
           get :year, year: year, team_id: team.id
-          assigns(:table).entries.count.should eq(team.members.count)
+          assigns(:users).count.should eq(team.members.count)
         end
 
         it 'returns not the rows for a non-managed team' do
           get :year, year: year, team_id: another_team.id
-          assigns(:table).entries.any?{ |user, entry| another_team.members.include?(user) }.should be_false
+          assigns(:users).any?{ |user, entry| another_team.members.include?(user) }.should be_false
         end
 
       end
@@ -123,12 +128,12 @@ describe Reports::Vacation::VacationController do
       context 'rights and roles' do
         it 'returns rows for all users' do
           get :year, year: year, month: month
-          assigns(:table).entries.count.should eq(team.members.count)
+          assigns(:users).count.should eq(team.members.count)
         end
 
         it 'returns rows for a specified team' do
           get :year, year: year, month: month, team_id: team.id
-          assigns(:table).entries.count.should eq(team.members.count)
+          assigns(:users).count.should eq(team.members.count)
         end
       end
     end

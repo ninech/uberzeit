@@ -22,7 +22,7 @@ class CalculateTotalRedeemableVacation
   end
 
   def total_from_adjustments
-    adjustments_in_year.total_duration
+    adjustments_in_year.credited_duration_sum
   end
 
   def first_day_of_year
@@ -50,7 +50,7 @@ class CalculateTotalRedeemableVacation
   end
 
   def planned_working_time_for_employment_in_year(employment)
-    CalculatePlannedWorkingTime.new(employment_range_in_year(employment), @user).total
+    FetchPlannedWorkingTime.new(@user, employment_range_in_year(employment)).total.to_f
   end
 
   def employment_range_in_year(employment)
@@ -81,12 +81,8 @@ class CalculateTotalRedeemableVacation
     0.5*UberZeit::Config[:work_per_day]
   end
 
-  def adjustments
-    Adjustment.vacation.joins(:user)
-  end
-
   def adjustments_in_year
-    adjustments.with_date_in_year(@year)
+    @user.time_spans.with_date(year_as_range).vacation_adjustments
   end
 end
 

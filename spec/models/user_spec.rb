@@ -68,4 +68,17 @@ describe User do
     end
   end
 
+  describe '.in_teams' do
+    it 'returns all the users which belong to the specified team' do
+      user2 = FactoryGirl.create(:user)
+      User.in_teams(user.teams).should eq([user])
+    end
+
+    it 'returns all the users which belong to the specified teams' do
+      user = FactoryGirl.create(:user)
+      user2 = FactoryGirl.create(:user)
+      User.in_teams(Team.all).count.should eq([user, user2].count)
+    end
+  end
+
 end

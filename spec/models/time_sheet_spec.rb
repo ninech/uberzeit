@@ -100,11 +100,11 @@ describe TimeSheet do
       end
 
       it 'calculates the number of redeemed vacation days for the year' do
-        time_sheet.vacation(2013).should eq(3.0.work_days)
+        time_sheet.redeemed_vacation(UberZeit.year_as_range(2013)).should eq(3.0)
       end
 
       it 'calculates the number of remaining vacation days for the year' do
-        time_sheet.remaining_vacation(2013).should eq(22.0.work_days)
+        time_sheet.remaining_vacation(2013).should eq(22.0)
       end
 
     end
@@ -122,11 +122,11 @@ describe TimeSheet do
       end
 
       it 'calculates the number of redeemed vacation days for the year' do
-        time_sheet.vacation(2013).should eq(3.0.work_days)
+        time_sheet.redeemed_vacation(UberZeit.year_as_range(2013)).should eq(3.0)
       end
 
       it 'calculates the number of remaining vacation days for the year' do
-        time_sheet.remaining_vacation(2013).should eq(9.5.work_days)
+        time_sheet.remaining_vacation(2013).should eq(9.5)
       end
     end
   end
@@ -171,7 +171,13 @@ describe TimeSheet do
   it 'will not mark vacation days as redeemed if they overlap with public holidays' do
     FactoryGirl.create(:public_holiday, date: '2013-08-01', name: '"Proud to be a swiss"-day')
     vacation '2013-07-29', '2013-08-11'
-    time_sheet.vacation(2013).should eq(9.work_days)
+    time_sheet.redeemed_vacation(UberZeit.year_as_range(2013)).should eq(9)
+  end
+
+  it 'calculates the unused vacation days per a date' do
+    vacation '2013-07-01', '2013-07-07'
+    vacation '2013-12-20', '2013-12-26'
+    time_sheet.remaining_vacation_per('2013-10-10'.to_date).should eq(20)
   end
 
   describe '#adjustments' do
