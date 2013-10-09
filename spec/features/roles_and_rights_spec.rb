@@ -321,7 +321,7 @@ describe 'Roles and Rights' do
         let(:current_user) { team_leader }
 
         describe 'activities menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Aktivitäten', 'Verrechenbarkeit'], []
+          include_examples :menu_list, '.sub-nav > dd', ['Übersicht', 'Verrechenbarkeit'], []
         end
       end
 
@@ -329,7 +329,7 @@ describe 'Roles and Rights' do
         let(:current_user) { admin }
 
         describe 'activities menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Aktivitäten', 'Verrechenbarkeit', 'Verrechnung'], []
+          include_examples :menu_list, '.sub-nav > dd', ['Übersicht', 'Verrechenbarkeit', 'Verrechnung'], []
         end
       end
     end
