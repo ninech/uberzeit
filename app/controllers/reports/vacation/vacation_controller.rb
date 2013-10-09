@@ -13,7 +13,7 @@ class Reports::Vacation::VacationController < ApplicationController
   def month
     @month = params[:month].to_i
     @month_as_date = Date.new(@year, @month)
-    @table = Summarize::Table.new(Summarize::Summarizer::Vacation, users, UberZeit.month_as_range(@year, @month))
+    @users = users
   end
 
   private
