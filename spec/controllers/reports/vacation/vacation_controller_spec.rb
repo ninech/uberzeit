@@ -4,9 +4,11 @@ describe Reports::Vacation::VacationController do
   render_views
 
   before(:all) do
-    @team = FactoryGirl.create(:team, users_count: 1, leaders_count: 1)
+    @team = FactoryGirl.create(:team)
     @another_team = FactoryGirl.create(:team, users_count: 1, leaders_count: 1)
+    @team_leader = FactoryGirl.create(:team_leader, teams: [@team])
     @admin = FactoryGirl.create(:admin, teams: [@team])
+    @user = FactoryGirl.create(:user, teams: [@team])
     @year = 2013
 
     [@team, @another_team].map(&:members).flatten.each do |user|
@@ -24,8 +26,8 @@ describe Reports::Vacation::VacationController do
   let(:team) { @team }
   let(:another_team) { @another_team }
 
-  let(:user) { team.members.first }
-  let(:team_leader) { team.leaders.first }
+  let(:team_leader) { @team_leader }
+  let(:user) { @user }
   let(:admin) { @admin }
   let(:year) { @year }
   let(:month) { 3 }
