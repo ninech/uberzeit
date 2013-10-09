@@ -82,7 +82,7 @@ class CalculateTotalRedeemableVacation
   end
 
   def adjustments_in_year
-    @user.time_spans.date_between(year_as_range).vacation_adjustments
+    @user.time_spans.with_date(year_as_range).vacation_adjustments
   end
 end
 

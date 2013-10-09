@@ -17,7 +17,10 @@
 #  credited_duration_in_work_days :float
 #
 
+require_relative 'concerns/dated'
+
 class TimeSpan < ActiveRecord::Base
+  include Dated
 
   belongs_to :user
   belongs_to :time_type
@@ -30,15 +33,7 @@ class TimeSpan < ActiveRecord::Base
                         :credited_duration, :credited_duration_in_work_days,
                         :user_id, :time_type_id, :time_spanable_id, :time_spanable_type
 
-  scope :in_year,           ->(year) { date_between UberZeit.year_as_range(year) }
-  scope :in_year_and_month, ->(year, month) { date_between UberZeit.month_as_range(year, month) }
-  scope :date_between,      ->(date_range) do
-    if date_range.respond_to?(:min)
-      where('date BETWEEN ? AND ?', date_range.min, date_range.max)
-    else
-      where('date = ?', date_range)
-    end
-  end
+  scope_date :date
 
   scope :for_team,          ->(team) { where(user_id: User.in_teams(team)) }
   scope :for_user,          ->(user) { where(user_id: user) }

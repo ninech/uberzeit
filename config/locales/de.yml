@@ -55,6 +55,10 @@ de:
         daypart: Dauer
     errors:
       models:
+        activity:
+          attributes:
+            customer_id:
+              customer_does_not_exist: 'existiert nicht'
         time_entry:
           attributes:
             starts:
@@ -74,7 +78,7 @@ de:
               on_or_after: ist ungültig
         public_holiday:
           attributes:
-            start_date:
+            date:
               invalid_datetime: ist ein ungültiges Datum
         employment:
           error_outside_1_and_100_percent: muss innerhalb 1 und 100 Prozent liegen

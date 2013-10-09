@@ -13,12 +13,16 @@
 #  user_id      :integer
 #
 
+require_relative 'concerns/dated'
+
 class Adjustment < ActiveRecord::Base
+  include Dated
+
   acts_as_paranoid
 
   default_scope order(:date)
 
-  scope :in, lambda { |range| date_range = range.to_range.to_date_range; { conditions: ['(date >= ? AND date <= ?)', date_range.min, date_range.max] } }
+  scope_date :date
 
   scope :exclude_vacation, joins: :time_type, conditions: ['is_vacation = ?', false]
   scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
