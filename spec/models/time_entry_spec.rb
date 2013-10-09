@@ -202,7 +202,10 @@ describe TimeEntry do
       end
 
       it 'calculates the bonus' do
+        time_type = FactoryGirl.create(:time_type_work)
+        subject.time_type = time_type
         subject.save!
+        
         UberZeit::BonusCalculators.register :nine_on_duty, UberZeit::BonusCalculators::NineOnDuty
         subject.time_type.bonus_calculator = 'nine_on_duty'
         subject.time_type.save!
