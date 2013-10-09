@@ -74,8 +74,8 @@ describe TimeSpan do
 
     subject do
       TimeSpan
-        .date_between(range)
-        .eligible_for_summarizing_absences
+        .with_date(range)
+        .absences
         .duration_in_work_day_sum_per_user_and_time_type
     end
 

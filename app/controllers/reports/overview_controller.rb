@@ -7,10 +7,10 @@ class Reports::OverviewController < ApplicationController
     @uberzeit = @user.time_sheet.overtime(range_of_year_till_yesterday)
 
     overtime_till_today = @user.time_sheet.overtime(range_of_current_month_till_today)
-    planned_work_till_today = @user.time_sheet.planned_work(range_of_current_month_till_today)
+    planned_work_till_today = @user.time_sheet.planned_working_time(range_of_current_month_till_today)
     accomplished_work_till_today = overtime_till_today + planned_work_till_today
 
-    planned_work_whole_month = @user.time_sheet.planned_work(range_of_current_month)
+    planned_work_whole_month = @user.time_sheet.planned_working_time(range_of_current_month)
 
     @month_total_work = accomplished_work_till_today
     @month_percent_done = 100 * @month_total_work / planned_work_whole_month
@@ -18,7 +18,7 @@ class Reports::OverviewController < ApplicationController
     @personal_absences = find_personal_absences
     @team_absences = Hash[find_team_absences.sort_by { |date, _| date }]
 
-    @vacation_redeemed = @user.time_sheet.vacation(current_year)
+    @vacation_redeemed = @user.time_sheet.redeemed_vacation(current_year)
     @vacation_remaining = @user.time_sheet.remaining_vacation(current_year)
   end
 

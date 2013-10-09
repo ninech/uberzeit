@@ -13,7 +13,7 @@ module WeekViewHelper
     @previous_week_day = (@week.min - 1).at_beginning_of_week
     @next_week_day = @week.max + 1
 
-    @public_holiday = PublicHoliday.on(@day).first
+    @public_holiday = PublicHoliday.with_date(@day).first
 
     @absences = {}
     @public_holidays = {}
@@ -24,7 +24,7 @@ module WeekViewHelper
         @absences[weekday] = absences.chunks
       end
 
-      public_holiday = PublicHoliday.on(weekday).first
+      public_holiday = PublicHoliday.with_date(weekday).first
       if public_holiday
         @public_holidays[weekday] = public_holiday
       end

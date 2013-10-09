@@ -39,8 +39,9 @@ describe 'messing around with time entries' do
       visit user_time_entries_path(user)
       click_on 'Zeit jetzt eintragen'
       fill_in 'Von', with: '10'
-      fill_in 'Bis', with:  '1130'
+      fill_in 'Bis', with: '1130'
       select 'test_work', from: 'time_entry_time_type_id'
+      sleep 2
       find_field('Von').value.should eq('10:00')
       find_field('Bis').value.should eq('11:30')
       page.should have_content('01:30')

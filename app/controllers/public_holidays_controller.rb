@@ -7,8 +7,7 @@ class PublicHolidaysController < ApplicationController
     @year = (params[:year] || session[:year] || Time.current.year).to_i
     session[:year] = @year
 
-    year_range = UberZeit.year_as_range(@year)
-    @public_holidays = @public_holidays.in(year_range)
+    @public_holidays = @public_holidays.with_date_in_year(@year)
   end
 
   def new

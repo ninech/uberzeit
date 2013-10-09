@@ -93,7 +93,7 @@ class Absence < ActiveRecord::Base
     end
   end
 
-  def occurrences_as_time_ranges(date_or_range) 
+  def occurrences_as_time_ranges(date_or_range)
     requested_date_range = date_or_range.to_range.to_date_range
     # for date entries we have to generate a occurrence range for each day (half days are not continuous)
     occurrences.collect do |occurrence_range|
@@ -175,19 +175,27 @@ class Absence < ActiveRecord::Base
     time_spans.destroy_all
     occurrences.each do |occurrence|
       occurrence.each do |date|
-        duration_in_work_days = whole_day? ? 1 : 0.5
-        calculated_planned_working_time = CalculatePlannedWorkingTime.new(date.to_range, user, fulltime: true).total.to_work_days
-        credited_duration_in_work_days = duration_in_work_days * calculated_planned_working_time
-
-        time_span = time_spans.build
-        time_span.duration_in_work_days = duration_in_work_days
-        time_span.credited_duration_in_work_days = credited_duration_in_work_days
-        time_span.user = user
-        time_span.time_type = time_type
-        time_span.date = date
-        time_span.save!
+        create_time_span_for_date(date)
       end
     end
+  end
+
+  def create_time_span_for_date(date)
+    duration_in_work_days = whole_day? ? 1 : 0.5
+    credited_duration_in_work_days = unless time_type.exclude_from_calculation?
+                                       calculated_planned_working_time = CalculatePlannedWorkingTime.new(date.to_range, user, fulltime: true).total.to_work_days
+                                       duration_in_work_days * calculated_planned_working_time
+                                     else
+                                       0
+                                     end
+
+    time_span = time_spans.build
+    time_span.duration_in_work_days = duration_in_work_days
+    time_span.credited_duration_in_work_days = credited_duration_in_work_days
+    time_span.user = user
+    time_span.time_type = time_type
+    time_span.date = date
+    time_span.save!
   end
 
 end

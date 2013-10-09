@@ -10,7 +10,10 @@
 #  user_id      :integer
 #
 
+require_relative 'concerns/dated'
+
 class TimeEntry < ActiveRecord::Base
+  include Dated
 
   acts_as_paranoid
 
@@ -30,8 +33,8 @@ class TimeEntry < ActiveRecord::Base
   validates_datetime :ends, after: :starts, unless: :timer?
   validate :must_be_only_timer_on_date, if: :timer?
 
-  scope :on, lambda { |date| range = date.to_range.to_time_range; { conditions: ['(starts >= ? AND starts <= ?)', range.min, range.max] } }
-  scope :others, lambda { |date| range = date.to_range.to_time_range; { conditions: ['(starts < ? OR starts > ?)', range.min, range.max] } }
+  scope_date :starts
+  scope_date :ends
 
   scope :timers_only, where(ends: nil)
   scope :except_timers, where('time_entries.ends IS NOT NULL')
@@ -132,15 +135,12 @@ class TimeEntry < ActiveRecord::Base
     time_spans.destroy_all
     return if ends.nil?
     (starts.to_date..ends.to_date).each do |date|
-      time_span = time_spans.build
-      time_span.duration = duration(date)
-      time_span.credited_duration = time_span.duration
-      time_span.user = user
-      time_span.time_type = time_type
-      time_span.date = date
-      time_span.duration_bonus = UberZeit::BonusCalculators.use(time_type.bonus_calculator, self).result
-      time_span.save!
+      create_time_span_for_date(date)
     end
+  end
+
+  def bonus
+    UberZeit::BonusCalculators.use(time_type.bonus_calculator, self).result
   end
 
   private
@@ -153,7 +153,7 @@ class TimeEntry < ActiveRecord::Base
 
   def other_timers_on_same_date
     if user
-      user.time_entries.timers_only.on(start_date) - [self]
+      user.time_entries.timers_only.with_starts(start_date.to_range.to_time_range) - [self]
     else
       []
     end
@@ -174,6 +174,17 @@ class TimeEntry < ActiveRecord::Base
 
   def date_and_time_to_datetime_format(date, time)
     "#{date} #{time}:00"
+  end
+
+  def create_time_span_for_date(date)
+    time_span = time_spans.build
+    time_span.duration = duration(date)
+    time_span.credited_duration = time_type.exclude_from_calculation? ? 0 : time_span.duration
+    time_span.user = user
+    time_span.time_type = time_type
+    time_span.date = date
+    time_span.duration_bonus = bonus
+    time_span.save!
   end
 
 end

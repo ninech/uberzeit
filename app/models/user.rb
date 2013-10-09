@@ -8,7 +8,6 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  deleted_at           :datetime
-#  time_zone            :string(255)
 #  given_name           :string(255)
 #  birthday             :date
 #  authentication_token :string(255)
@@ -22,9 +21,7 @@ class User < ActiveRecord::Base
 
   default_scope order('users.name')
 
-  attr_accessible :uid, :name, :time_zone, :birthday, :given_name
-
-  before_save :set_default_time_zone
+  attr_accessible :uid, :name, :birthday, :given_name
 
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
@@ -37,11 +34,7 @@ class User < ActiveRecord::Base
   has_many :days, dependent: :destroy
   has_many :time_spans, dependent: :destroy
 
-  validates_inclusion_of :time_zone, :in => ActiveSupport::TimeZone.zones_map { |m| m.name }, :message => "is not a valid Time Zone"
-
-  before_validation :set_default_time_zone
-
-  scope :in_teams, ->(teams) { where Membership.joins(:user).where(team_id: teams).exists }
+  scope :in_teams, ->(teams) { where Membership.where(team_id: teams).where('user_id = users.id').exists }
 
   def subordinates
     # method chaining LIKE A BOSS
@@ -103,10 +96,5 @@ class User < ActiveRecord::Base
 
   def time_sheet
     @time_sheet ||= TimeSheet.new(self)
-  end
-
-  private
-  def set_default_time_zone
-    self.time_zone ||= Time.zone.name
   end
 end

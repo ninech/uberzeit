@@ -8,9 +8,9 @@ class Reports::Absences::AbsenceController < ApplicationController
     @selected_teams = @team.nil? ? Team.scoped : [@team]
 
     time_spans_with_scopes = TimeSpan
-      .in_year(@year)
+      .with_date_in_year(@year)
       .for_team(@selected_teams)
-      .eligible_for_summarizing_absences
+      .absences
 
     @result = time_spans_with_scopes.duration_in_work_day_sum_per_user_and_time_type
     @total = time_spans_with_scopes.duration_in_work_day_sum_per_time_type
@@ -21,9 +21,9 @@ class Reports::Absences::AbsenceController < ApplicationController
     @month = params[:month].to_i
 
     time_spans_with_scopes = TimeSpan
-      .in_year_and_month(@year, @month)
+      .with_date_in_year_and_month(@year, @month)
       .for_team(@selected_teams)
-      .eligible_for_summarizing_absences
+      .absences
 
     @result = time_spans_with_scopes.duration_in_work_day_sum_per_user_and_time_type
     @total = time_spans_with_scopes.duration_in_work_day_sum_per_time_type
@@ -35,7 +35,7 @@ class Reports::Absences::AbsenceController < ApplicationController
     @range = UberZeit.month_as_range(@year, @month)
     @days = @range.to_a
 
-    @public_holidays = Hash[@days.collect { |day| [day, PublicHoliday.on(day)] }]
+    @public_holidays = Hash[@days.collect { |day| [day, PublicHoliday.with_date(day)] }]
     @work_days = Hash[@days.collect { |day| [day, UberZeit.is_weekday_a_workday?(day)] }]
 
     @absences = {}

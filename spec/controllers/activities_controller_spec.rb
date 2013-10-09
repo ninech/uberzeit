@@ -182,6 +182,7 @@ describe ActivitiesController do
   describe 'attribute: reviewed' do
     let(:activity_type) { FactoryGirl.create :activity_type }
     let(:activity) { FactoryGirl.create(:activity, user: user) }
+    let(:customer) { FactoryGirl.create(:customer) }
 
     context 'as user' do
       before do
@@ -208,7 +209,7 @@ describe ActivitiesController do
       end
 
       it 'cannot create an activity with the attribute' do
-        post :create, user_id: user.id, activity: FactoryGirl.attributes_for(:activity, reviewed: true, activity_type_id: activity_type.id)
+        post :create, user_id: user.id, activity: FactoryGirl.attributes_for(:activity, reviewed: true, activity_type_id: activity_type.id).merge(customer_id: customer.id)
         Activity.last.reviewed.should be_false
       end
     end
@@ -222,7 +223,7 @@ describe ActivitiesController do
       end
 
       it 'can create an activity with the attribute' do
-        post :create, user_id: user.id, activity: FactoryGirl.attributes_for(:activity, reviewed: true, activity_type_id: activity_type.id)
+        post :create, user_id: user.id, activity: FactoryGirl.attributes_for(:activity, reviewed: true, activity_type_id: activity_type.id).merge(customer_id: customer.id)
         Activity.last.reviewed.should be_true
       end
     end

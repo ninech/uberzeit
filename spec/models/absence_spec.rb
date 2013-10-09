@@ -124,6 +124,12 @@ describe Absence do
         it 'creates a TimeSpan for only one date' do
           subject.time_spans.count.should eq(1)
         end
+
+        it 'sets the credited duration to zero if the TimeType should be excluded from calculation' do
+          subject.time_type = TEST_TIME_TYPES[:compensation]
+          subject.save!
+          subject.time_spans.map(&:credited_duration).should eq([0])
+        end
       end
     end
 

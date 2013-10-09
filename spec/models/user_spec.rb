@@ -8,7 +8,6 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  deleted_at           :datetime
-#  time_zone            :string(255)
 #  given_name           :string(255)
 #  birthday             :date
 #  authentication_token :string(255)
@@ -66,6 +65,19 @@ describe User do
   describe '#current_employment' do
     it 'returns the current active employment' do
       user.current_employment.should eq(user.employments.first)
+    end
+  end
+
+  describe '.in_teams' do
+    it 'returns all the users which belong to the specified team' do
+      user2 = FactoryGirl.create(:user)
+      User.in_teams(user.teams).should eq([user])
+    end
+
+    it 'returns all the users which belong to the specified teams' do
+      user = FactoryGirl.create(:user)
+      user2 = FactoryGirl.create(:user)
+      User.in_teams(Team.all).count.should eq([user, user2].count)
     end
   end
 
