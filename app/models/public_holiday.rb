@@ -23,9 +23,9 @@ class PublicHoliday < ActiveRecord::Base
 
   attr_accessible :first_half_day, :name, :second_half_day, :date, :daypart
 
-  validates_presence_of :name, :date
+  validates_presence_of :name
 
-  validates_datetime :date, allow_blank: true
+  validates_datetime :date
 
   scope_date :date
 
