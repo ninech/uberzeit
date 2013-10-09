@@ -174,6 +174,12 @@ describe TimeSheet do
     time_sheet.redeemed_vacation(UberZeit.year_as_range(2013)).should eq(9)
   end
 
+  it 'calculates the unused vacation days per a date' do
+    vacation '2013-07-01', '2013-07-07'
+    vacation '2013-12-20', '2013-12-26'
+    time_sheet.remaining_vacation_per('2013-10-10'.to_date).should eq(20)
+  end
+
   describe '#adjustments' do
     before do
       FactoryGirl.create(:adjustment, date: '2013-08-01', duration: 3.hours, time_type_id: TEST_TIME_TYPES[:work].id, user: time_sheet.user)
