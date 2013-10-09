@@ -25,7 +25,7 @@ class PublicHoliday < ActiveRecord::Base
 
   validates_presence_of :name, :date
 
-  validates_datetime :date
+  validates_datetime :date, allow_blank: true
 
   scope_date :date
 
