@@ -112,8 +112,7 @@ describe Reports::Activities::BillabilityController do
           end
 
           it 'does not raise an error' do
-            get :index
-            p activity_without_customer
+            expect { get :index }.to_not raise_error
           end
         end
       end
