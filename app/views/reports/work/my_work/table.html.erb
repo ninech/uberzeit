@@ -1,6 +1,10 @@
 <%= render(partial: 'shared/user_select', locals: { link_generator: :user_path_work_summary, selected_user: @user }) %>
-
+<%= render partial: 'reports/shared/time_frame_selector' %>
 <%= render partial: 'reports/shared/header', locals: {base_url: "/reports/work/users/#{@user.id}/:year", title: t('.title'), unit: t('.unit')} %>
+
+<% content_for :label do %>
+
+<% end %>
 
 <div class="content-summary row">
   <div class="small-12 columns">
@@ -21,7 +25,11 @@
           <% @buckets.each do |range| %>
             <tr>
               <td>
-                <%= link_to label_for_range(range), show_date_user_time_entries_path(user, range.min) %>
+                <% if (range.max-range.min) <= 7 %>
+                  <%= link_to label_for_range(range), show_date_user_time_entries_path(user, range.min) %>
+                <% else %>
+                  <%= link_to label_for_month(range.min), reports_work_user_month_path(user, range.min.year, range.min.month) %>
+                <% end %>
               </td>
               <td>
                 <%= render partial: 'reports/shared/tooltip', locals: {time_types: user.time_sheet.effective_working_time_by_type(range), total: user.time_sheet.effective_working_time_total(range) } %>

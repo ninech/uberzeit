@@ -14,6 +14,8 @@ class Reports::Absences::AbsenceController < ApplicationController
 
     @result = time_spans_with_scopes.duration_in_work_day_sum_per_user_and_time_type
     @total = time_spans_with_scopes.duration_in_work_day_sum_per_time_type
+
+    render :table
   end
 
   def month
@@ -27,6 +29,8 @@ class Reports::Absences::AbsenceController < ApplicationController
 
     @result = time_spans_with_scopes.duration_in_work_day_sum_per_user_and_time_type
     @total = time_spans_with_scopes.duration_in_work_day_sum_per_time_type
+
+    render :table
   end
 
   def calendar
