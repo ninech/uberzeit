@@ -72,9 +72,9 @@
       <div class="large-6 columns">
         <div class="panel sensational">
           <p><%= t('.panels.vacation.info1_html') %><p>
-          <p class="crazy yo"><%= t('.panels.vacation.emphasis1_html', redeemed: awesome_tag("%g" % @vacation_redeemed.to_work_days)) %></p>
+          <p class="crazy yo"><%= t('.panels.vacation.emphasis1_html', redeemed: awesome_tag("%g" % @vacation_redeemed)) %></p>
           <p><%= t('.panels.vacation.info2_html') %></p>
-          <p class="crazy lo"><%= t('.panels.vacation.emphasis2_html', remaining: awesome_tag("%g" % @vacation_remaining.to_work_days)) %></p>
+          <p class="crazy lo"><%= t('.panels.vacation.emphasis2_html', remaining: awesome_tag("%g" % @vacation_remaining)) %></p>
           <i class="icon-plane icon-background"></i>
         </div>
       </div>
