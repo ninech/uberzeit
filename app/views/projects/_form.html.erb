@@ -6,7 +6,7 @@
 </div>
 <div class="row">
   <div class="small-4 columns">
-    <%= f.text_field :customer_id, value: (f.object.customer.display_name if f.object.customer) %>
+    <%= f.text_field :customer_id, value: (f.object.customer.display_name if f.object.customer), class: 'typeahead-customer' %>
   </div>
 </div>
 <div class="row">

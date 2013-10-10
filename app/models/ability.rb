@@ -33,6 +33,7 @@ class Ability
 
         can :manage, :billability
         can :manage, :filter
+        can :manage, :detailed
         can :manage, :vacation # summary
         can :manage, :work # summary
         can :manage, Project
@@ -41,6 +42,7 @@ class Ability
       if user.accountant?
         can :manage, :billability
         can :manage, :billing
+        can :manage, :detailed
 
         can :read, User
         can [:read, :update, :review], Activity

@@ -26,6 +26,13 @@
           </div>
           <% end %>
 
+          <% unless @customer.blank? %>
+          <div class="row">
+            <div class="small-3 columns customer"><%= t '.customer' %></div>
+            <div class="small-9 columns end"><%= text_field_tag :customer, @customer.display_name, class: 'typeahead-customer' %></div>
+          </div>
+          <% end %>
+
           <div class="row">
             <div class="small-3 columns"><%= t '.time_frame' %></div>
             <div class="small-4 columns"><% unless @month.nil? %><%= select_month(@month) %><% end %></div>

@@ -1,5 +1,6 @@
 $ ->
   $('#summary_header_submit').click ->
+    customer = $('#customer').val()
     summary_type = $('#summary_type').val()
     team_id = $('#team').val()
     group_by = $('#group_by').val()
@@ -15,6 +16,8 @@ $ ->
       url = url + '/team/:team_id'.replace(':team_id', team_id)
     if group_by
       url = url + '/:group_by'.replace(':group_by', group_by)
+    if customer
+      url = url + '/:customer_id'.replace(':customer_id', customer.match(/\d+/)?[0])
 
     url = url + append_to_url
 

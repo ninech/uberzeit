@@ -1,4 +1,5 @@
 module ReportsHelper
+  include ActivitiesHelper
 
   def format_work_days(duration)
     text = number_with_precision(duration, precision: 1, strip_insignificant_zeros: true)

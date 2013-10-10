@@ -53,11 +53,13 @@ $ ->
     })
 
   window.initTypeAhead = () ->
-    $('#activity-modal #activity_customer_id').typeahead
+    $('.typeahead-customer').typeahead
       name: 'customers'
       prefetch: '/api/customers.json'
       valueKey: 'display_name'
       limit: 10
+
+  initTypeAhead()
 
 
   # Pickadate
