@@ -67,8 +67,6 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
 
-    Capybara.default_wait_time = 10
-
     # Set up time types
     TEST_TIME_TYPES = {}
     %w{work vacation compensation paid_absence onduty}.each do |time_type|
