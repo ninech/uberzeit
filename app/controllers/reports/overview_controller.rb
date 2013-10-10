@@ -18,7 +18,7 @@ class Reports::OverviewController < ApplicationController
     @personal_absences = find_personal_absences
     @team_absences = Hash[find_team_absences.sort_by { |date, _| date }]
 
-    @vacation_redeemed = @user.time_sheet.redeemed_vacation(current_year)
+    @vacation_redeemed = @user.time_sheet.redeemed_vacation(range_of_year)
     @vacation_remaining = @user.time_sheet.remaining_vacation(current_year)
   end
 
@@ -46,6 +46,10 @@ class Reports::OverviewController < ApplicationController
 
   def range_of_year_till_yesterday
     @range_of_year_till_yesterday ||= Date.today.at_beginning_of_year..Date.yesterday
+  end
+
+  def range_of_year
+    @range_of_year ||= Date.today.at_beginning_of_year..Date.today.at_end_of_year
   end
 
   def current_year
