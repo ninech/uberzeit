@@ -29,7 +29,7 @@ describe Reports::Work::MyWorkController do
 
       it 'renders the :year template' do
         get :year, user_id: user, year: year
-        response.should render_template :year
+        response.should render_template :table
       end
     end
 
@@ -54,7 +54,7 @@ describe Reports::Work::MyWorkController do
 
       it 'renders the :month template' do
         get :month, user_id: user, year: year, month: month
-        response.should render_template :month
+        response.should render_template :table
       end
     end
 

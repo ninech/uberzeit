@@ -30,7 +30,7 @@ describe Reports::Absences::AbsenceController do
 
       it 'renders the :year template' do
         get :year, year: year
-        response.should render_template :year
+        response.should render_template :table
       end
     end
 
@@ -45,7 +45,7 @@ describe Reports::Absences::AbsenceController do
 
       it 'renders the :month template' do
         get :month, year: year, month: month
-        response.should render_template :month
+        response.should render_template :table
       end
     end
 
