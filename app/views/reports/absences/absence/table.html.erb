@@ -1,6 +1,6 @@
 <%= render partial: 'reports/shared/time_frame_selector' %>
 <%= render partial: 'reports/shared/team_selector' %>
-<%= render partial: 'reports/shared/header', locals: {base_url: "/reports/absences/:year", title: t('.title'), unit: t('.unit')} %>
+<%= render partial: 'reports/shared/header', locals: {base_url: "/reports/absences/:year", title: t('.title') } %>
 
 <div class="content-summary row">
   <div class="small-12 columns">
@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <% User.in_teams(@selected_teams).each do |user| %>
+        <% @users.each do |user| %>
         <tr>
           <td><%= user %></td>
           <% TimeType.absence.each do |time_type| %>

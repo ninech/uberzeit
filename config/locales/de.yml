@@ -262,17 +262,10 @@ de:
         table:
           title: Meine Arbeitszeit
     absences:
-      my_absence:
-        year:
-          title: Meine Absenzen
-          total: Total
-          remaining: Verbleibend
-        month:
-          title: Meine Absenzen
-          total: Total
       absence:
         table:
           title: Absenzen Mitarbeiter
+          total: Total
         calendar:
           month_in_year: '%B %Y'
           title: Absenzen Mitarbeiter
