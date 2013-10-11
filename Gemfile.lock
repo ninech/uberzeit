@@ -123,6 +123,7 @@ GEM
     builder (3.0.4)
     calendar_helper (0.2.6)
       open4
+    callsite (0.0.11)
     cancan (1.6.9)
     capistrano (2.13.5)
       highline
@@ -234,6 +235,10 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    meta_request (0.2.7)
+      callsite
+      rack-contrib
+      railties
     method_source (0.8.2)
     mime-types (1.25)
     mini_portile (0.5.1)
@@ -279,6 +284,8 @@ GEM
       rack (>= 0.4)
     rack-cache (1.2)
       rack (>= 0.4)
+    rack-contrib (1.1.0)
+      rack (>= 0.9.1)
     rack-cors (0.2.8)
       rack
     rack-mount (0.8.3)
@@ -438,6 +445,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   launchy
+  meta_request
   mynine-customer_plugin!
   mynine-plugin_helpers!
   mysql2
