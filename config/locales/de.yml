@@ -7,6 +7,8 @@ de:
       absence: Absenz
       adjustment: Anpassung
       activity: 'Aktivität'
+      project: Projekt
+      activity_type: 'Aktivitätstyp'
     attributes:
       activity:
         customer: 'Kunde'
@@ -49,10 +51,14 @@ de:
         end_date: Ende
       public_holiday:
         name: Name
-        start_date: Datum
+        date: Datum
         daypart: Dauer
     errors:
       models:
+        activity:
+          attributes:
+            customer_id:
+              customer_does_not_exist: 'existiert nicht'
         time_entry:
           attributes:
             starts:
@@ -65,14 +71,14 @@ de:
           attributes:
             end_date:
               on_or_after: muss an oder nach dem Startdatum liegen
-        recurring_schedule:
+        absence_schedule:
           attributes:
             ends_date:
               invalid_date: ist ein ungültiges Datum
               on_or_after: ist ungültig
         public_holiday:
           attributes:
-            start_date:
+            date:
               invalid_datetime: ist ein ungültiges Datum
         employment:
           error_outside_1_and_100_percent: muss innerhalb 1 und 100 Prozent liegen
@@ -124,7 +130,6 @@ de:
       first_half_day: Vormittags
       second_half_day: Nachmittags
       recurring_interval_until_date: "Wiederholung: Alle %{interval} Wochen bis zum %{ends}."
-      recurring_interval_endless: "Wiederholung: Alle %{interval} Wochen"
       add_absence: 'Absenz hinzufügen'
     public_holiday_tooltip:
       first_half_day: Vormittags
@@ -158,7 +163,7 @@ de:
   absences:
     top_buttons:
       add_absence: Absenz hinzufügen
-    recurring_schedule_sub_form:
+    schedule_sub_form:
       recurring_active: Wiederholen...
       repeat_every: Wiederhole jede
       weeks_until: Woche bis
@@ -191,6 +196,9 @@ de:
     activities: Aktivitäten
     reports: Berichte
     sub:
+      absences:
+        my_absences: Persönlich
+        absences: Mitarbeiter
       manage:
         public_holidays: Feiertage
         time_types: Zeittypen
@@ -201,15 +209,14 @@ de:
       reports:
         overview: Übersicht
         my_work: Meine Arbeitszeit
-        my_absence: Meine Absenzen
         work: Arbeitszeit Mitarbeiter
-        absences: Absenzen Mitarbeiter
         vacation: Feriensaldo
         billability: Verrechenbarkeit
         billing: Verrechnung
         comparison: Vergleich
-        activity_filter: Aktivitäten
-  summaries:
+        activity_filter: Übersicht
+        activity_detailed: Detailliert
+  reports:
     formats:
       date: '%e. %a.'
       month: '%B'
@@ -250,58 +257,33 @@ de:
         overtime: Überzeit
         adjustments: Anpassungen
       work:
-        year:
+        table:
           title: Arbeitszeit Mitarbeiter
-          unit: in Stunden:Minuten
-        month:
-          title: Arbeitszeit Mitarbeiter
-          unit: in Stunden:Minuten
       my_work:
-        year:
+        table:
           title: Meine Arbeitszeit
-          unit: in Stunden:Minuten
-        month:
-          title: Meine Arbeitszeit
-          unit: in Stunden:Minuten
-    absence:
-      my_absence:
-        year:
-          title: Meine Absenzen
-          unit: in Tagen
-          total: Total
-          remaining: Verbleibend
-        month:
-          title: Meine Absenzen
-          unit: in Tagen
-          total: Total
+    absences:
       absence:
-        year:
+        table:
           title: Absenzen Mitarbeiter
-          unit: in Tagen
-        month:
-          title: Absenzen Mitarbeiter
-          unit: in Tagen
+          total: Total
         calendar:
           month_in_year: '%B %Y'
           title: Absenzen Mitarbeiter
-          unit: ''
     vacation:
       vacation:
         year:
           title: Feriensaldo
-          unit: in Tagen
           taken: 'Beanspruchte Ferientage im Jahr %{year}'
           remaining: 'Noch verfügbare Ferientage in %{year}'
         month:
           title: Feriensaldo
-          unit: in Tagen
           taken: 'Beansprucht im %{month} %{year}'
           remaining: 'Noch verfügbare Ferientage nach %{month} %{year}'
-    activity:
+    activities:
       billability:
         index:
           title: Verrechenbarkeit
-          unit: in Stunden:Minuten
         table:
           is_billable: Verrechenbar?
         form:
@@ -309,7 +291,6 @@ de:
       billing:
         index:
           title: Verrechnung
-          unit: in Stunden:Minuten
         table:
           is_billed: Verrechnet?
       comparison:
@@ -327,21 +308,36 @@ de:
           duration: Aufwand
           billable: Verrechenbar
           not_billable: Nicht verrechenbar
+      detailed:
+        index:
+          title: Aktivitäten detailliert
+          billable: Verrechenbar
+          not_billable: Nicht verrechenbar
+          is_billed: Verrechnet
+          project: 'Projekt: %{project}'
+          redmine: 'Redmine: %{ticket_url}'
+          otrs: 'OTRS: %{ticket_url}'
+          no_activities: Keine Aktivitäten gefunden.
     shared:
       users_absence_table:
         total: Total
       header:
-        month: Monat
-        year: Jahr
-        calendar: Kalender
-        everyone: Alle
         show: Anzeigen
+      team_selector:
         users: Mitarbeiter
+        everyone: Alle
+      time_frame_selector:
         time_frame: Zeitraum
+      group_by_selector:
         group_by: Gruppieren nach
         project: Projekt
-        customer: Kunde
         activity_type: Aktivität
+      customer_selector:
+        customer: Kunde
+      buttons:
+        year: Jahr
+        month: Monat
+        calendar: Kalender
   time_entries:
     edit:
       edit_time: 'Zeit bearbeiten'
@@ -355,6 +351,25 @@ de:
       date: Datum
       save: Speichern
       now: jetzt
+    index:
+      overtime: Überzeit
+      add_time_now: Zeit jetzt eintragen
+      no_entries_yet_message: Noch keine Einträge vorhanden
+      timer_running_warning:
+        one: 'An dem folgenden Tag ist noch ein Timer aktiv:'
+        other: "An den folgenden Tagen sind noch Timer aktiv:"
+      tooltip:
+        starts: 'Beginnt am'
+        ends: 'Endet am'
+      time_bonus: Nachtzuschlag
+      time_bonuses: Nachtzuschläge
+      timer: Timer
+      info-timer-exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
+      total: 'Total'
+    top_buttons:
+      add_time: Zeit hinzufügen
+    add_time_modal:
+      add_time: Zeit hinzufügen
   timers:
     edit:
       edit_time: 'Zeit bearbeiten'
@@ -411,26 +426,6 @@ de:
       title: 'Aktivitätstyp editieren'
     form:
       back: 'Zurück'
-  time_sheets:
-    top_buttons:
-      add_time: Zeit hinzufügen
-    add_time_modal:
-      add_time: Zeit hinzufügen
-    show:
-      overtime: Überzeit
-      add_time_now: Zeit jetzt eintragen
-      no_entries_yet_message: Noch keine Einträge vorhanden
-      timer_running_warning:
-        one: 'An dem folgenden Tag ist noch ein Timer aktiv:'
-        other: "An den folgenden Tagen sind noch Timer aktiv:"
-      tooltip:
-        starts: 'Beginnt am'
-        ends: 'Endet am'
-      time_bonus: Nachtzuschlag
-      time_bonuses: Nachtzuschläge
-      timer: Timer
-      info-timer-exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
-      total: 'Total'
   activities:
     top_buttons:
       add_activity: Aktivität hinzufügen

@@ -8,7 +8,6 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  deleted_at           :datetime
-#  time_zone            :string(255)
 #  given_name           :string(255)
 #  birthday             :date
 #  authentication_token :string(255)
@@ -22,36 +21,31 @@ class User < ActiveRecord::Base
 
   default_scope order('users.name')
 
-  attr_accessible :uid, :name, :time_zone, :birthday, :given_name
-
-  before_save :set_default_time_zone
+  attr_accessible :uid, :name, :birthday, :given_name
 
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
 
-  has_many :time_sheets
-  has_many :activities
-  has_many :employments
+  has_many :absences, dependent: :destroy
+  has_many :adjustments, dependent: :destroy
+  has_many :time_entries, dependent: :destroy
+  has_many :activities, dependent: :destroy
+  has_many :employments, dependent: :destroy
+  has_many :days, dependent: :destroy
+  has_many :time_spans, dependent: :destroy
 
-  validates_inclusion_of :time_zone, :in => ActiveSupport::TimeZone.zones_map { |m| m.name }, :message => "is not a valid Time Zone"
-
-  before_validation :set_default_time_zone
+  scope :in_teams, ->(teams) { where Membership.where(team_id: teams).where('user_id = users.id').exists }
 
   def subordinates
     # method chaining LIKE A BOSS
     Team.with_role(:team_leader, self).collect(&:members).flatten.uniq
   end
 
-  def create_time_sheet_if_needed
-    time_sheets.create! if time_sheets.empty?
-  end
-
   def create_employment_if_needed
     employments.create! if employments.empty?
   end
 
-  def ensure_timesheet_and_employment_exist
-    create_time_sheet_if_needed
+  def ensure_employment_exists
     create_employment_if_needed
     self
   end
@@ -59,11 +53,6 @@ class User < ActiveRecord::Base
   def workload_on(date)
     employment = self.employments.on(date)
     employment ? employment.workload : 0
-  end
-
-  def current_time_sheet
-    ensure_timesheet_and_employment_exist
-    time_sheets.first
   end
 
   def current_employment
@@ -101,9 +90,11 @@ class User < ActiveRecord::Base
     @ability ||= Ability.new(self)
   end
 
-  private
+  def timer
+    time_entries.timers_only.first
+  end
 
-  def set_default_time_zone
-    self.time_zone ||= Time.zone.name
+  def time_sheet
+    @time_sheet ||= TimeSheet.new(self)
   end
 end

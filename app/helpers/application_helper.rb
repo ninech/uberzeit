@@ -1,6 +1,6 @@
 module ApplicationHelper
   include SessionsHelper
-  include SummariesHelper
+  include ReportsHelper
   include TimeSheetsHelper
   include AbsencesHelper
 
@@ -26,6 +26,10 @@ module ApplicationHelper
 
   def show_manage_link_in_navigation?
     can?(:manage, TimeType) || can?(:manage, Employment) || can?(:manage, PublicHoliday) || can?(:manage, Project)
+  end
+
+  def show_activities_link_in_navigation?
+    can?(:manage, :billability) || can?(:manage, :billing) || can?(:manage, :filter)
   end
 
   def color_for_duration(duration)
@@ -88,23 +92,23 @@ module ApplicationHelper
   end
 
   def user_path_time_sheet(user)
-    time_sheet_path(user.current_time_sheet)
+    user_time_entries_path(user)
   end
 
   def user_path_absences(user)
-    time_sheet_absences_path(user.current_time_sheet)
+    user_absences_path(user)
   end
 
   def user_path_my_work_summary(user)
-    user_summaries_work_month_path(user, Date.current.year, Date.current.month)
+    reports_work_user_month_path(user, Date.current.year, Date.current.month)
   end
 
   def user_path_work_summary(user)
-    user_summaries_work_month_path(user, Date.current.year, Date.current.month)
+    reports_work_user_month_path(user, Date.current.year, Date.current.month)
   end
 
   def user_path_absence_summary(user)
-    user_summaries_absence_year_path(user, Date.current.year)
+    reports_absences_user_year_path(user, Date.current.year)
   end
 
   def selectable_users

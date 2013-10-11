@@ -3,21 +3,22 @@
 # Table name: absences
 #
 #  id              :integer          not null, primary key
-#  time_sheet_id   :integer
 #  time_type_id    :integer
 #  start_date      :date
 #  end_date        :date
-#  first_half_day  :boolean          default(FALSE)
-#  second_half_day :boolean          default(FALSE)
+#  first_half_day  :boolean          default(TRUE)
+#  second_half_day :boolean          default(TRUE)
 #  deleted_at      :datetime
+#  user_id         :integer
 #
 
 class Absence < ActiveRecord::Base
   acts_as_paranoid
 
-  belongs_to :time_sheet
+  belongs_to :user
   belongs_to :time_type, with_deleted: true
-  has_one :recurring_schedule, as: :enterable, dependent: :destroy
+  has_many :time_spans, as: :time_spanable, dependent: :destroy
+  has_one :schedule, class_name: :AbsenceSchedule, dependent: :destroy
 
   default_scope order(:start_date)
   scope :work, joins: :time_type, conditions: ['is_work = ?', true]
@@ -25,19 +26,20 @@ class Absence < ActiveRecord::Base
   scope :vacation, joins: :time_type, conditions: ['is_vacation = ?', true]
 
   attr_accessible :start_date, :end_date, :first_half_day, :second_half_day, :daypart
-  attr_accessible :recurring_schedule, :recurring_schedule_attributes
-  attr_accessible :time_sheet_id, :time_type_id, :type
+  attr_accessible :schedule, :schedule_attributes
+  attr_accessible :user_id, :time_type_id, :type
 
   validates_presence_of :start_date, :end_date
-  validates_presence_of :time_sheet, :time_type
+  validates_presence_of :user, :time_type
   after_initialize :set_default_dates
 
   validates_datetime :start_date
   validates_datetime :end_date, on_or_after: :start_date
 
-  accepts_nested_attributes_for :recurring_schedule
+  accepts_nested_attributes_for :schedule, update_only: true
 
-  before_validation :build_recurring_schedule, unless: :recurring_schedule
+  after_save :update_or_create_time_span
+  before_validation :build_schedule, unless: :schedule
 
   def self.nonrecurring_entries_in_range(range)
     date_range = range.to_date_range
@@ -46,16 +48,16 @@ class Absence < ActiveRecord::Base
 
   def self.recurring_entries
     # inner join
-    scoped.joins(:recurring_schedule).where(recurring_schedules: {active: true})
+    scoped.joins(:schedule).where(absence_schedules: {active: true})
   end
 
   def self.nonrecurring_entries
     # left outer join
-    scoped.includes(:recurring_schedule).where(recurring_schedules: {active: false})
+    scoped.includes(:schedule).where(absence_schedules: {active: false})
   end
 
   def self.recurring_entries_in_range(range)
-    recurring_entries.collect { |entry| entry if entry.recurring_schedule.occurring?(range) }.compact
+    recurring_entries.collect { |absence| absence if absence.schedule.occurring?(range) }.compact
   end
 
   def self.entries_in_range(range)
@@ -66,20 +68,38 @@ class Absence < ActiveRecord::Base
     range.duration
   end
 
+  def daily_work_duration
+    duration = UberZeit::Config[:work_per_day]
+    if whole_day?
+      duration
+    else
+      duration * 0.5
+    end
+  end
+
   def range
     (starts..ends)
   end
 
   def recurring?
-    recurring_schedule && recurring_schedule.active?
+    schedule && schedule.active?
   end
 
-  def occurrences(date_or_range)
+  def occurrences
     if recurring?
-      recurring_schedule.occurrences(date_or_range)
+      schedule.occurrences
     else
-      [starts]
+      [range]
     end
+  end
+
+  def occurrences_as_time_ranges(date_or_range)
+    requested_date_range = date_or_range.to_range.to_date_range
+    # for date entries we have to generate a occurrence range for each day (half days are not continuous)
+    occurrences.collect do |occurrence_range|
+      next unless occurrence_range.intersects_with_duration?(requested_date_range)
+      occurrence_range.collect { |day| time_range_for_date(day) }
+    end.compact.flatten
   end
 
   def set_default_dates
@@ -151,20 +171,31 @@ class Absence < ActiveRecord::Base
     end_date - start_date
   end
 
-  def occurrences_as_time_ranges(date_or_range)
-    # for date entries we have to generate a occurrence range for each day (half days are not continuous)
-    occurrences(date_or_range).collect do |start_date|
-      date_range = start_date..(start_date+num_days)
-      date_range.collect { |day| time_range_for_date(day) }
-    end.flatten
+  def update_or_create_time_span
+    time_spans.destroy_all
+    occurrences.each do |occurrence|
+      occurrence.each do |date|
+        create_time_span_for_date(date)
+      end
+    end
   end
 
-  def user
-    time_sheet.user
-  end
+  def create_time_span_for_date(date)
+    duration_in_work_days = whole_day? ? 1 : 0.5
+    credited_duration_in_work_days = unless time_type.exclude_from_calculation?
+                                       calculated_planned_working_time = CalculatePlannedWorkingTime.new(date.to_range, user, fulltime: true).total.to_work_days
+                                       duration_in_work_days * calculated_planned_working_time
+                                     else
+                                       0
+                                     end
 
-  def user=(user)
-    time_sheet = user.current_time_sheet
+    time_span = time_spans.build
+    time_span.duration_in_work_days = duration_in_work_days
+    time_span.credited_duration_in_work_days = credited_duration_in_work_days
+    time_span.user = user
+    time_span.time_type = time_type
+    time_span.date = date
+    time_span.save!
   end
 
 end

@@ -10,10 +10,9 @@ class Ability
       can [:read, :update], User, id: user.id
       can :read, Employment, user_id: user.id
 
-      can :manage, TimeSheet, user_id: user.id
-      can :manage, TimeEntry, time_sheet: { user_id: user.id }
-      can :read, Absence, time_sheet: { user_id: user.id }
-      can :read, Adjustment, time_sheet: { user_id: user.id }
+      can :manage, TimeEntry, user_id: user.id
+      can :read, Absence, user_id: user.id
+      can :read, Adjustment, user_id: user.id
 
       can [:read, :create, :update, :destroy], Activity, user_id: user.id
       cannot [:update, :destroy], Activity, user_id: user.id, reviewed: true
@@ -23,9 +22,8 @@ class Ability
         can :read, Team, id: manageable_team_ids(user)
         can :read, User, id: manageable_user_ids(user)
 
-        can :manage, TimeSheet, user_id: manageable_user_ids(user)
-        can :manage, TimeEntry, time_sheet: { user_id: manageable_user_ids(user) }
-        can :manage, Absence, time_sheet: { user_id: manageable_user_ids(user) }
+        can :manage, TimeEntry, user_id: manageable_user_ids(user)
+        can :manage, Absence, user_id: manageable_user_ids(user)
 
         can [:read, :create, :update, :destroy, :review], Activity, user_id: manageable_user_ids(user)
         cannot [:update, :destroy], Activity, user_id: manageable_user_ids(user), reviewed: true
@@ -35,6 +33,7 @@ class Ability
 
         can :manage, :billability
         can :manage, :filter
+        can :manage, :detailed
         can :manage, :vacation # summary
         can :manage, :work # summary
         can :manage, Project
@@ -43,6 +42,7 @@ class Ability
       if user.accountant?
         can :manage, :billability
         can :manage, :billing
+        can :manage, :detailed
 
         can :read, User
         can [:read, :update, :review], Activity

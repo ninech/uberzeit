@@ -1,0 +1,27 @@
+<%= render partial: 'reports/shared/time_frame_selector' %>
+<%= render partial: 'reports/shared/team_selector' %>
+
+<%= render partial: 'reports/shared/header', locals: {base_url: "/reports/vacation/:year", title: t('.title') } %>
+
+<div class="row">
+  <div class="small-12 columns">
+    <table class="nice small-12">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th><%= t '.taken', year: @year %></th>
+          <th><%= t '.remaining', year: @year %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+        <tr class="summary-row">
+          <td><%= user %></td>
+          <td><%= format_work_days(user.time_sheet.redeemed_vacation(UberZeit.year_as_range(@year))) %></td>
+          <td><%= format_work_days(user.time_sheet.remaining_vacation(@year)) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 <li class="summary">
   <div class="right">
-    <%= t '.total' %> <span class="time total active"><%= formatted_worktime_for_day(@day) %></span>
+    <%= t '.total' %> <span class="time total active"><%= format_duration(@weekday_sums[@day]) %></span>
   </div>
 </li>

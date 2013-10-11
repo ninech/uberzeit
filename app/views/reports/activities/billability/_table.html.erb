@@ -1,0 +1,41 @@
+<table class="nice small-12 billability">
+  <tbody>
+  <% activities_by_type.each_pair do |type, activities| %>
+    <tr>
+      <th><%= type %></th>
+      <th><span data-activity-sum-durations data-activity-sum-customer="<%= customer.id %>" data-activity-sum-type="<%= type.id %>"><%= format_duration(0) %></span></th>
+      <th><%= t '.is_billable' %></th>
+      <th><span data-activity-sum-durations data-activity-sum-customer="<%= customer.id %>" data-activity-sum-type="<%= type.id %>" data-activity-sum-only-billable><%= format_duration(0) %></th>
+    </tr>
+    <% activities.each do |activity| %>
+    <tr class="summary-row" >
+      <td>
+        <% if can? :read, activity.user %>
+          <%= link_to show_date_user_activities_path(activity.user, date: activity.date) do %>
+            <%= activity.date %> - <%= activity.user %>
+          <% end %>
+        <% else %>
+          <%= activity.date %> - <%= activity.user %>
+        <% end %>
+        - <%= activity.description %>
+      </td>
+      <td><span data-activity-duration="<%= activity.duration %>" data-activity-type="<%= type.id %>" data-activity-customer="<%= customer.id %>" data-activity="<%= activity.id %>"><%= format_duration(activity.duration) %></span></td>
+      <td class="billable">
+        <div>
+          <%= check_box_tag "activity_toggle", '1', activity.billable?, { id: nil, data: { attribute: :billable, action: polymorphic_path([activity.user, activity]), method: :put, activity: activity.id } } %>
+        </div>
+      </td>
+      <td><span data-activity-sum-durations data-activity-sum-activity="<%= activity.id %>" data-activity-sum-only-billable data-activity-sum-hide-zero></td>
+    </tr>
+    <% end %>
+  <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>Total</td>
+      <td><span data-activity-sum-durations data-activity-sum-customer="<%= customer.id %>"><%= format_duration(0) %></span></td>
+      <td>&nbsp;</td>
+      <td><span data-activity-sum-durations data-activity-sum-customer="<%= customer.id %>" data-activity-sum-only-billable><%= format_duration(0) %></span></td>
+    </tr>
+  </tfoot>
+</table>

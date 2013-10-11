@@ -1,0 +1,36 @@
+<%= render partial: 'reports/shared/time_frame_selector' %>
+<%= render partial: 'reports/shared/team_selector' %>
+<%= render partial: 'reports/shared/header', locals: {base_url: "/reports/absences/:year", title: t('.title') } %>
+
+<div class="content-summary row">
+  <div class="small-12 columns">
+    <table class="nice small-12">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <% TimeType.absence.each do |time_type| %>
+          <th><%= time_type.name %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+        <tr>
+          <td><%= user %></td>
+          <% TimeType.absence.each do |time_type| %>
+            <td><%= format_work_days(
+              @result.fetch([user.id, time_type.id], 0)
+            ) %></td>
+          <% end %>
+        </tr>
+        <% end %>
+        <tr class="total">
+          <td><%= t '.total' %></td>
+          <% TimeType.absence.each do |time_type| %>
+          <td><%= format_work_days(@total.fetch(time_type.id, 0)) %></td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

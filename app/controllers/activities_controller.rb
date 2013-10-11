@@ -1,6 +1,6 @@
 class ActivitiesController < ApplicationController
 
-  include WeekViewHelper
+  include Concerns::WeekView
   include ActivitiesHelper
 
   respond_to :html, :json, :js
@@ -11,7 +11,7 @@ class ActivitiesController < ApplicationController
   load_and_authorize_resource :user
   load_and_authorize_resource :activity, through: :user
 
-  before_filter :load_day, :load_time_sheet, :prepare_week_view, only: :index
+  before_filter :load_day, :prepare_week_view, :prepare_weekday_sums, only: :index
   before_filter :prepare_form, only: [:edit, :update, :new, :create]
   before_filter :parse_duration_to_seconds, only: [:update, :create]
   before_filter :extract_customer_id, only: [:update, :create]
@@ -27,8 +27,7 @@ class ActivitiesController < ApplicationController
 
   def index
     @activities = @activities.where(date: @day)
-    week = @day.at_beginning_of_week..@day.at_end_of_week
-    @week_total = @user.activities.where(date: week).sum(:duration)
+    @week_total = @user.activities.where(date: @week).sum(:duration)
   end
 
   def destroy
@@ -62,8 +61,11 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  def load_time_sheet
-    @time_sheet = @user.current_time_sheet
+  def prepare_weekday_sums
+    @weekday_sums = {}
+    @weekdays.each do |weekday|
+      @weekday_sums[weekday] = @user.activities.where(date: weekday).sum(:duration)
+    end
   end
 
   def extract_customer_id

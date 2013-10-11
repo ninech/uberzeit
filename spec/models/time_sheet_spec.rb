@@ -13,22 +13,19 @@ require 'spec_helper'
 
 describe TimeSheet do
 
-  let(:time_sheet) { FactoryGirl.create(:time_sheet) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:time_sheet) { user.time_sheet }
 
   def work(start_time, end_time)
-    FactoryGirl.create(:time_entry, starts: start_time.to_time, ends: end_time.to_time, time_type: :work, time_sheet: time_sheet)
+    FactoryGirl.create(:time_entry, starts: start_time.to_time, ends: end_time.to_time, time_type: :work, user: user)
   end
 
   def vacation(start_date, end_date, daypart = :whole_day)
-    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :vacation, time_sheet: time_sheet, daypart: daypart)
+    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :vacation, user: user, daypart: daypart)
   end
 
   def paid_absence(start_date, end_date, daypart = :whole_day)
-    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :paid_absence, time_sheet: time_sheet, daypart: daypart)
-  end
-
-  it 'has a valid factory' do
-    time_sheet.should be_valid
+    FactoryGirl.create(:absence, start_date: start_date.to_date, end_date: end_date.to_date, time_type: :paid_absence, user: user, daypart: daypart)
   end
 
   context 'time-sheet with a complex weekly schedule (time entries)' do
@@ -74,12 +71,6 @@ describe TimeSheet do
       vacation '2013-02-12', '2013-02-13'
     end
 
-    it 'acts as paranoid' do
-      time_sheet.destroy
-      expect { TimeSheet.find(time_sheet.id) }.to raise_error
-      expect { TimeSheet.with_deleted.find(time_sheet.id) }.to_not raise_error
-    end
-
     context 'user with full-time workload' do
       it 'delivers single entries which are cut to the specified date or range (chunks)' do
         time_sheet.find_chunks('2013-02-04'.to_date...'2013-02-11'.to_date, TimeType.work).length.should eq(8)
@@ -98,9 +89,6 @@ describe TimeSheet do
       it 'calculates the total duration (daily and weekly)' do
         time_sheet.total('2013-02-04'.to_date...'2013-02-11'.to_date, TimeType.work).should eq(33.5.hours)
         time_sheet.total('2013-02-04'.to_date...'2013-02-11'.to_date, TimeType.vacation).should eq(1.work_days)
-
-        # what about times and timezones?
-        time_sheet.total('2013-02-04 10:00:00 GMT+1'.to_time..'2013-02-10 22:00:00 GMT+1'.to_time, TimeType.work).should eq(30.5.hours)
       end
 
       it 'calculates the weekly overtime duration' do
@@ -112,11 +100,11 @@ describe TimeSheet do
       end
 
       it 'calculates the number of redeemed vacation days for the year' do
-        time_sheet.vacation(2013).should eq(3.0.work_days)
+        time_sheet.redeemed_vacation(UberZeit.year_as_range(2013)).should eq(3.0)
       end
 
       it 'calculates the number of remaining vacation days for the year' do
-        time_sheet.remaining_vacation(2013).should eq(22.0.work_days)
+        time_sheet.remaining_vacation(2013).should eq(22.0)
       end
 
     end
@@ -124,11 +112,9 @@ describe TimeSheet do
     context 'user with part-time workload' do
       # TODO comment why we expect what
       before do
-        employment = time_sheet.user.employments.first
+        employment = user.employments.first
         employment.workload = 50
         employment.save
-
-        time_sheet.reload
       end
 
       it 'calculates the weekly overtime duration' do
@@ -136,11 +122,11 @@ describe TimeSheet do
       end
 
       it 'calculates the number of redeemed vacation days for the year' do
-        time_sheet.vacation(2013).should eq(3.0.work_days)
+        time_sheet.redeemed_vacation(UberZeit.year_as_range(2013)).should eq(3.0)
       end
 
       it 'calculates the number of remaining vacation days for the year' do
-        time_sheet.remaining_vacation(2013).should eq(9.5.work_days)
+        time_sheet.remaining_vacation(2013).should eq(9.5)
       end
     end
   end
@@ -149,7 +135,8 @@ describe TimeSheet do
     before do
       # recurring entry every monday paid absence for 4 weeks
       absence_entry = paid_absence('2013-03-04', '2013-03-04')
-      absence_entry.recurring_schedule.update_attributes(active: true, ends: 'counter', ends_counter: 4, weekly_repeat_interval: 1)
+      absence_entry.update_attributes(schedule_attributes: {active: true, ends_date: '2013-04-01', weekly_repeat_interval: 1})
+      absence_entry.save!
 
       # tuesday vacation
       vacation '2013-03-19', '2013-03-19'
@@ -161,21 +148,45 @@ describe TimeSheet do
       work '2013-03-21 12:30:00 GMT+1', '2013-03-21 17:00:00 GMT+1'
       # and friday is a public holiday, what a lovely week!
       # (public holidays are not counted as work days)
-      FactoryGirl.create(:public_holiday, start_date: '2013-03-22', end_date: '2013-03-22')
+      FactoryGirl.create(:public_holiday, date: '2013-03-22')
     end
 
     it 'calculates the work time' do
-      time_sheet.work('2013-03-18'.to_date...'2013-03-25'.to_date).should eq(34.hours)
+      time_sheet.working_time_total('2013-03-18'.to_date...'2013-03-25'.to_date).should eq(34.hours)
+    end
+
+    it 'calculates the effective work time' do
+      time_sheet.effective_working_time_total('2013-03-18'.to_date...'2013-03-25'.to_date).should eq(1.5.work_days)
     end
 
     it 'calculates the overtime' do
       time_sheet.overtime('2013-03-18'.to_date...'2013-03-25'.to_date).should eq(0)
     end
+
+    it 'calculates the absence' do
+      time_sheet.absences_total('2013-03-18'.to_date..'2013-03-24'.to_date).should eq(2.5.work_days)
+    end
   end
 
   it 'will not mark vacation days as redeemed if they overlap with public holidays' do
-    FactoryGirl.create(:public_holiday, start_date: '2013-08-01', end_date: '2013-08-01', name: '"Proud to be a swiss"-day')
+    FactoryGirl.create(:public_holiday, date: '2013-08-01', name: '"Proud to be a swiss"-day')
     vacation '2013-07-29', '2013-08-11'
-    time_sheet.vacation(2013).should eq(9.work_days)
+    time_sheet.redeemed_vacation(UberZeit.year_as_range(2013)).should eq(9)
+  end
+
+  it 'calculates the unused vacation days per a date' do
+    vacation '2013-07-01', '2013-07-07'
+    vacation '2013-12-20', '2013-12-26'
+    time_sheet.remaining_vacation_per('2013-10-10'.to_date).should eq(20)
+  end
+
+  describe '#adjustments' do
+    before do
+      FactoryGirl.create(:adjustment, date: '2013-08-01', duration: 3.hours, time_type_id: TEST_TIME_TYPES[:work].id, user: time_sheet.user)
+    end
+
+    it 'calculates it correctly' do
+      time_sheet.adjustments_total('2013-07-31'.to_date..'2013-08-10'.to_date).should eq(3.hours)
+    end
   end
 end

@@ -7,8 +7,7 @@ class PublicHolidaysController < ApplicationController
     @year = (params[:year] || session[:year] || Time.current.year).to_i
     session[:year] = @year
 
-    year_range = UberZeit.year_as_range(@year)
-    @public_holidays = @public_holidays.where('start_date <= ? AND end_date >= ?', year_range.max, year_range.min)
+    @public_holidays = @public_holidays.with_date_in_year(@year)
   end
 
   def new
@@ -19,7 +18,6 @@ class PublicHolidaysController < ApplicationController
 
   def create
     @public_holiday = PublicHoliday.new(params[:public_holiday])
-    @public_holiday.end_date = @public_holiday.start_date
     if @public_holiday.save
       redirect_to public_holidays_path, flash: {success: t('model_successfully_created', model: PublicHoliday.model_name.human)}
     else
@@ -29,7 +27,6 @@ class PublicHolidaysController < ApplicationController
 
   def update
     @public_holiday = PublicHoliday.find(params[:id])
-    params[:public_holiday][:end_date] = params[:public_holiday][:start_date]
     if @public_holiday.update_attributes(params[:public_holiday])
       redirect_to public_holidays_path, flash: {success: t('model_successfully_updated', model: PublicHoliday.model_name.human)}
     else

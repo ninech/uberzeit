@@ -14,6 +14,10 @@
 #  otrs_ticket_id    :integer
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  deleted_at        :datetime
+#  billable          :boolean          default(FALSE), not null
+#  reviewed          :boolean          default(FALSE), not null
+#  billed            :boolean          default(FALSE), not null
 #
 
 require 'spec_helper'
@@ -32,7 +36,7 @@ describe Activity do
   end
 
   describe 'validations' do
-    let(:activity) { Activity.new }
+    let(:activity) { FactoryGirl.create(:activity) }
 
     it 'it does not accept a duration of zero' do
       activity.duration = 0
@@ -42,6 +46,12 @@ describe Activity do
 
     it 'requires a customer associated' do
       activity.customer_id = nil
+      activity.should_not be_valid
+      activity.should have(1).errors_on(:customer_id)
+    end
+
+    it 'requires an existing customer associated' do
+      activity.customer_id = 999999999
       activity.should_not be_valid
       activity.should have(1).errors_on(:customer_id)
     end

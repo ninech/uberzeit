@@ -2,40 +2,46 @@
 #
 # Table name: time_entries
 #
-#  id            :integer          not null, primary key
-#  time_sheet_id :integer
-#  time_type_id  :integer
-#  starts        :datetime
-#  ends          :datetime
-#  deleted_at    :datetime
+#  id           :integer          not null, primary key
+#  time_type_id :integer
+#  starts       :datetime
+#  ends         :datetime
+#  deleted_at   :datetime
+#  user_id      :integer
 #
 
+require_relative 'concerns/dated'
+
 class TimeEntry < ActiveRecord::Base
+  include Dated
 
   acts_as_paranoid
 
   default_scope order(:starts)
 
-  belongs_to :time_sheet
+  belongs_to :user
   belongs_to :time_type, with_deleted: true
+  has_many :time_spans, as: :time_spanable, dependent: :destroy
 
-  attr_accessible :time_sheet_id, :time_type_id, :type
+  attr_accessible :user_id, :time_type_id, :type
   attr_accessible :start_time, :start_date, :end_date, :end_time
 
-  validates_presence_of :time_sheet, :time_type
+  validates_presence_of :user, :time_type
   validates_presence_of :starts, :start_time, :start_date
   validates_presence_of :ends, unless: :timer?
   validates_datetime :starts
   validates_datetime :ends, after: :starts, unless: :timer?
   validate :must_be_only_timer_on_date, if: :timer?
 
-  scope :on, lambda { |date| range = date.to_range.to_time_range; { conditions: ['(starts >= ? AND starts <= ?)', range.min, range.max] } }
-  scope :others, lambda { |date| range = date.to_range.to_time_range; { conditions: ['(starts < ? OR starts > ?)', range.min, range.max] } }
+  scope_date :starts
+  scope_date :ends
 
   scope :timers_only, where(ends: nil)
   scope :except_timers, where('time_entries.ends IS NOT NULL')
 
   before_validation :round_times
+  after_save :update_or_create_time_span
+
 
   def self.entries_in_range(range)
     time_range = range.to_time_range
@@ -125,12 +131,16 @@ class TimeEntry < ActiveRecord::Base
     save
   end
 
-  def user
-    time_sheet.user
+  def update_or_create_time_span
+    time_spans.destroy_all
+    return if ends.nil?
+    (starts.to_date..ends.to_date).each do |date|
+      create_time_span_for_date(date)
+    end
   end
 
-  def user=(user)
-    time_sheet = user.current_time_sheet
+  def bonus
+    UberZeit::BonusCalculators.use(time_type.bonus_calculator, self).result
   end
 
   private
@@ -142,8 +152,11 @@ class TimeEntry < ActiveRecord::Base
   end
 
   def other_timers_on_same_date
-    return [] if time_sheet.nil?
-    time_sheet.time_entries.timers_only.on(start_date) - [self]
+    if user
+      user.time_entries.timers_only.with_starts(start_date.to_range.to_time_range) - [self]
+    else
+      []
+    end
   end
 
   def round_times
@@ -161,6 +174,17 @@ class TimeEntry < ActiveRecord::Base
 
   def date_and_time_to_datetime_format(date, time)
     "#{date} #{time}:00"
+  end
+
+  def create_time_span_for_date(date)
+    time_span = time_spans.build
+    time_span.duration = duration(date)
+    time_span.credited_duration = time_type.exclude_from_calculation? ? 0 : time_span.duration
+    time_span.user = user
+    time_span.time_type = time_type
+    time_span.date = date
+    time_span.duration_bonus = bonus
+    time_span.save!
   end
 
 end

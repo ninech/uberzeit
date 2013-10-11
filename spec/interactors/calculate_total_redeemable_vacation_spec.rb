@@ -4,8 +4,7 @@ require 'spec_helper'
 describe CalculateTotalRedeemableVacation do
 
   describe '#total_redeemable_for_year' do
-    let(:user) { FactoryGirl.create(:user, with_sheet: true) }
-    let(:time_sheet) { user.current_time_sheet }
+    let(:user) { FactoryGirl.create(:user) }
     let(:year) { 2013 }
     let(:vacation) { CalculateTotalRedeemableVacation.new(user, year) }
 
@@ -69,7 +68,7 @@ describe CalculateTotalRedeemableVacation do
 
     context 'adjustments' do
       it 'includes adjustments for vacation' do
-        adjustment = FactoryGirl.create(:adjustment, time_sheet: time_sheet, time_type: TEST_TIME_TYPES[:vacation], duration: 5.work_days, date: '2013-07-20')
+        adjustment = FactoryGirl.create(:adjustment, user: user, time_type: TEST_TIME_TYPES[:vacation], duration: 5.work_days, date: '2013-07-20')
         vacation.total_redeemable_for_year.should eq(30.work_days)
       end
     end

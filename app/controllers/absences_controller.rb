@@ -1,6 +1,6 @@
 class AbsencesController < ApplicationController
-  load_and_authorize_resource :time_sheet
-  load_and_authorize_resource :absence, through: :time_sheet
+  load_and_authorize_resource :user
+  load_and_authorize_resource :absence, through: :user
 
   respond_to :html, :json, :js
 
@@ -11,7 +11,7 @@ class AbsencesController < ApplicationController
     @year = year.to_i
 
     @absences = {}
-    time_chunks_finder = FindTimeChunks.new(@time_sheet.absences)
+    time_chunks_finder = FindTimeChunks.new(@user.absences)
     time_chunks_finder.in_year(@year).each do |chunk|
       chunk.range.to_date_range.each do |day|
         @absences[day] ||= []
@@ -20,15 +20,15 @@ class AbsencesController < ApplicationController
     end
 
     @public_holidays = {}
-    PublicHoliday.in_year(@year).each do |public_holiday|
-      @public_holidays[public_holiday.start_date] = public_holiday
+    PublicHoliday.with_date_in_year(@year).each do |public_holiday|
+      @public_holidays[public_holiday.date] = public_holiday
     end
 
     respond_with(@absences)
   end
 
   def new
-    @absence.build_recurring_schedule
+    @absence.build_schedule
     if params[:date]
       @absence.start_date = params[:date].to_date
       @absence.end_date = @absence.start_date
@@ -42,7 +42,7 @@ class AbsencesController < ApplicationController
   end
 
   def edit
-    @absence.build_recurring_schedule unless @absence.recurring_schedule
+    @absence.build_schedule unless @absence.schedule
     respond_with(@absence)
   end
 
@@ -60,7 +60,7 @@ class AbsencesController < ApplicationController
 
   private
   def default_return_location
-    year_time_sheet_absences_path(@time_sheet, @absence.start_date.year) if @absence.start_date
+    year_user_absences_path(@user, @absence.start_date.year) if @absence.start_date
   end
 
   def load_time_types

@@ -3,11 +3,12 @@ require 'spec_helper'
 describe API::User::Resources::Activities do
   include Warden::Test::Helpers
 
+  let(:customer) { FactoryGirl.create(:customer) }
   let(:api_user) { FactoryGirl.create(:user) }
   let(:json) { JSON.parse(response.body) }
   let(:activity_type) { FactoryGirl.create(:activity_type) }
   let(:required_attributes) do
-    { activity_type_id: activity_type.id, date: '2013-07-20', duration: 7200, customer_id: 1 }
+    { activity_type_id: activity_type.id, date: '2013-07-20', duration: 7200, customer_id: customer.id }
   end
 
   shared_examples 'an activity' do
@@ -110,7 +111,6 @@ describe API::User::Resources::Activities do
     context 'with optional attributes' do
       before do
         post '/api/activities', required_attributes.merge(redmine_ticket_id: 42,
-                                                               customer_id: 22,
                                                                project_id: 1,
                                                                otrs_ticket_id: 137)
       end
@@ -118,7 +118,6 @@ describe API::User::Resources::Activities do
       subject { json }
 
       its(['redmine_ticket_id']) { should eq(42) }
-      its(['customer_id']) { should eq(22) }
       its(['project_id']) { should eq(1) }
       its(['otrs_ticket_id']) { should eq(137) }
     end

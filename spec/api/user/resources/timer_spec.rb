@@ -3,7 +3,7 @@ require 'spec_helper'
 describe API::User::Resources::Timer do
   include Warden::Test::Helpers
 
-  let(:api_user) { FactoryGirl.create(:user, with_sheet: true) }
+  let(:api_user) { FactoryGirl.create(:user) }
   let(:json) { JSON.parse(response.body) }
 
   before do
@@ -68,7 +68,7 @@ describe API::User::Resources::Timer do
 
   describe 'PUT /api/timer' do
     context 'with an active timer' do
-      let!(:timer) { FactoryGirl.create(:timer, time_sheet: api_user.current_time_sheet, start_date: '2013-07-20', start_time: '08:00') }
+      let!(:timer) { FactoryGirl.create(:timer, user: api_user, start_date: '2013-07-20', start_time: '08:00') }
 
       before do
         Timecop.freeze('2013-07-20T13:00:00+0200')
@@ -118,7 +118,7 @@ describe API::User::Resources::Timer do
 
   describe 'GET /api/timer' do
     context 'with an active timer' do
-      let!(:timer) { FactoryGirl.create(:timer, time_sheet: api_user.current_time_sheet, start_date: '2013-07-20', start_time: '08:00') }
+      let!(:timer) { FactoryGirl.create(:timer, user: api_user, start_date: '2013-07-20', start_time: '08:00') }
 
       describe 'retrieval' do
         before do

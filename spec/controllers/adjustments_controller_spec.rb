@@ -4,7 +4,6 @@ describe AdjustmentsController do
   render_views
 
   let(:adjustment) { FactoryGirl.create(:adjustment) }
-  let(:time_sheet) { FactoryGirl.create(:time_sheet) }
   let(:time_type) { TEST_TIME_TYPES[:work] }
   let(:admin) { FactoryGirl.create(:admin) }
 
@@ -90,22 +89,22 @@ describe AdjustmentsController do
       describe 'POST "create"' do
         context 'with valid attributes' do
           it 'creates a new adjustment' do
-            expect { post :create, adjustment: FactoryGirl.attributes_for(:adjustment, time_sheet_id: time_sheet, time_type_id: time_type ) }.to change(Adjustment,:count).by(1)
+            expect { post :create, adjustment: FactoryGirl.attributes_for(:adjustment, user_id: admin, time_type_id: time_type ) }.to change(Adjustment,:count).by(1)
           end
 
           it 'redirects to the overview' do
-            post :create, adjustment: FactoryGirl.attributes_for(:adjustment, time_sheet_id: time_sheet, time_type_id: time_type)
+            post :create, adjustment: FactoryGirl.attributes_for(:adjustment, user_id: admin, time_type_id: time_type)
             response.should redirect_to adjustments_path
           end
         end
 
         context 'with invalid attributes' do
           it 'does not save the new adjustment' do
-            expect { post :create, adjustment: FactoryGirl.attributes_for(:invalid_adjustment, time_sheet_id: time_sheet, time_type_id: time_type) }.to_not change(Adjustment,:count)
+            expect { post :create, adjustment: FactoryGirl.attributes_for(:invalid_adjustment, user_id: admin, time_type_id: time_type) }.to_not change(Adjustment,:count)
           end
 
           it 're-renders the :new template' do
-            post :create, adjustment: FactoryGirl.attributes_for(:invalid_adjustment, time_sheet_id: time_sheet, time_type_id: time_type)
+            post :create, adjustment: FactoryGirl.attributes_for(:invalid_adjustment, user_id: admin, time_type_id: time_type)
             response.should render_template :new
           end
         end

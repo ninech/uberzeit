@@ -1,0 +1,131 @@
+<%= render(partial: 'shared/user_select', locals: { link_generator: :user_path_time_sheet, selected_user: @user }) %>
+
+<div class="row">
+  <div class="large-12 columns">
+    <% unless @timers_other_days.empty? %>
+      <div data-alert class="alert-box">
+        <i class='icon-time'></i>
+        <%= t '.timer_running_warning', count: @timers_other_days.length %>
+        <%= running_timer_dates(@timers_other_days) %>.
+      </div>
+    <% end %>
+
+    <%= link_to '', {action: :summary_for_date, date: @day}, remote: true, class: 'hide ajax summary_for_date' %>
+
+    <div class="timesheet week-view">
+      <%= render(partial: 'shared/week_view/head') %>
+      <%= render(partial: 'shared/week_view/weekdays') %>
+
+      <div class="entries">
+        <% if @time_chunks.length > 0 || @timer || @public_holidays[@day] || @absences[@day] %>
+        <ul>
+          <!-- PUBLIC HOLIDAYS -->
+          <% if @public_holiday %>
+            <li>
+              <i class="icon-flag public-holiday-color"></i><%= @public_holiday.name %>
+              <div class="right">
+                <small><%= part_of_day(@public_holiday) %></small>
+              </div>
+            </li>
+          <% end %>
+          <!-- ABSENCES -->
+          <% if @absences[@day] %>
+            <% @absences[@day].each do |time_chunk| %>
+            <li>
+              <%= icon_for_time_type(time_chunk.time_type) %><%= time_chunk.time_type %>
+              <div class="right">
+                <small><%= part_of_day(time_chunk) %></small>
+              </div>
+            </li>
+            <% end %>
+          <% end %>
+          <!-- WORK -->
+          <% @time_chunks.each do |time_chunk| %>
+            <li>
+              <% if time_chunk.start_date != @day %>
+                <span class="has-tip" data-tooltip="<%= t('.tooltip.starts') %> <%= l time_chunk.parent.starts, format: :long %>">
+                  <%= l time_chunk.starts %>
+                </span>
+              <% else %>
+                <%= l time_chunk.starts %>
+              <% end %>
+              –
+              <% if time_chunk.end_date != @day %>
+                <span class="has-tip" data-tooltip="<%= t('.tooltip.ends') %> <%= l time_chunk.parent.ends, format: :long %>">
+                  <%= l time_chunk.ends %>
+                </span>
+              <% else %>
+                <%= l time_chunk.ends %>
+              <% end %>
+              <small>
+                <%= time_chunk.time_type %>
+                <% unless standard_calculation?(time_chunk.time_type) %>
+                  <% if time_chunk.time_bonus != 0 %>
+                    <small> (<%= time_type_bonus_percentage(time_chunk.time_type) %> <%= t '.time_bonus' %>: <%= format_duration(time_chunk.time_bonus) %>) </small>
+                  <% end %>
+                <% end %>
+              </small>
+              <div class="right">
+                <a href='#' class="edit-entry edit-time-entry-link remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= edit_user_time_entry_path(@user, time_chunk.parent) %>">
+                  <%= icon(:edit) %>
+                </a>
+                <%= format_duration(time_chunk.duration) %>
+              </div>
+            </li>
+          <% end %>
+          <% if @timer %>
+          <li>
+            <% if @timer.start_date != @day %>
+              <span class="has-tip" data-tooltip="<%= t('.tooltip.starts') %> <%= l @timer.starts, format: :long %>">
+                <%= l @timer_range.min %>
+              </span>
+            <% else %>
+              <%= l @timer_range.min %>
+            <% end %>
+            –
+            <% if @day != @timer.start_date %>
+              <span class="has-tip" data-tooltip="<%= t('.tooltip.ends') %> <%= l Time.current, format: :long %>">
+                <%= l @timer_range.max %>
+              </span>
+            <% end %>
+
+            <small><%= @timer.time_type %></small>
+            <div class="right">
+              <a href='#' class="edit-time-entry-link remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= edit_user_time_entry_path(@user, @timer) %>">
+                <%= icon(:edit) %>
+              </a>
+              <a href="<%= url_for(action: :stop_timer, date: @day) %>" data-method="put" data-remote="true" class="stop-timer">
+                Stop
+              </a>
+              <small><span class="timer-overall-label hidden has-tip" data-tooltip="<%= t '.info-timer-exceeds-day' %>"><%= t '.timer' %> <span class="timer-overall" data-timer-id="<%=@timer.id%>"></span></span></small>
+              <span class="timer-current" data-timer-id="<%=@timer.id%>"></span>
+            </div>
+          </li>
+        <% end %>
+          <%= render(partial: 'shared/week_view/summary') %>
+        </ul>
+        <% else %>
+          <div class="no-entries-message">
+            <p>
+              <%= t '.no_entries_yet_message' %>
+              <br>
+              <a href="#" class="remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= new_user_time_entry_path(@user, date: @day) %>"><%= t '.add_time_now' %></a>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <%= render 'shared/nice_modal' %>
+  </div>
+</div>
+<%
+absence_time_types = time_types_in_absences(@absences)
+if @public_holidays.any? || absence_time_types.any?
+%>
+  <div class="row">
+    <div class="small-12 columns">
+      <%= render 'shared/event_legend', show_public_holiday: @public_holidays.any?, time_types: absence_time_types  %>
+    </div>
+  </div>
+<% end %>
+

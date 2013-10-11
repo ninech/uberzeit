@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe 'Roles and Rights' do
@@ -29,8 +31,8 @@ describe 'Roles and Rights' do
       end
     end
 
-    describe 'timesheet' do
-      let(:path) { time_sheet_path(user.current_time_sheet) }
+    describe 'time entries' do
+      let(:path) { user_time_entries_path(user) }
 
       context 'as owner' do
         let(:current_user) { user }
@@ -78,7 +80,7 @@ describe 'Roles and Rights' do
     end
 
     describe 'absences' do
-      let(:path) { time_sheet_absences_path(user.current_time_sheet) }
+      let(:path) { user_absences_path(user) }
 
       context 'as owner' do
         let(:current_user) { user }
@@ -101,9 +103,9 @@ describe 'Roles and Rights' do
       end
     end
 
-    describe 'summaries' do
-      describe 'my summary' do
-        shared_examples :my_summary_access do
+    describe 'reports' do
+      describe 'my reports' do
+        shared_examples :my_reports_access do
           context 'as user' do
             let(:current_user) { user }
             include_examples :access_granted
@@ -120,19 +122,14 @@ describe 'Roles and Rights' do
           end
         end
 
-        describe 'my work summary' do
-          let(:path) { user_summaries_work_year_path(user.current_time_sheet, year) }
-          include_examples :my_summary_access
-        end
-
-        describe 'my absence summary' do
-          let(:path) { user_summaries_absence_year_path(user.current_time_sheet, year) }
-          include_examples :my_summary_access
+        describe 'my work report' do
+          let(:path) { reports_work_user_year_path(user, year) }
+          include_examples :my_reports_access
         end
       end
 
-      describe 'overall summary' do
-        shared_examples :overall_summary_access do
+      describe 'overall reports' do
+        shared_examples :overall_reports_access do
           context 'as user' do
             let(:current_user) { user }
             include_examples :access_denied
@@ -149,30 +146,30 @@ describe 'Roles and Rights' do
           end
         end
 
-        describe 'work summary' do
+        describe 'work report' do
           describe 'monthly' do
-            let(:path) { month_summaries_work_users_path(year, month) }
-            include_examples :overall_summary_access
+            let(:path) { reports_work_month_path(year, month) }
+            include_examples :overall_reports_access
           end
           describe 'yearly' do
-            let(:path) { year_summaries_work_users_path(year, month) }
-            include_examples :overall_summary_access
+            let(:path) { reports_work_year_path(year) }
+            include_examples :overall_reports_access
           end
         end
 
-        describe 'vacation summary' do
+        describe 'vacation report' do
           describe 'monthly' do
-            let(:path) { month_summaries_vacation_users_path(year, month) }
-            include_examples :overall_summary_access
+            let(:path) { reports_vacation_month_path(year, month) }
+            include_examples :overall_reports_access
           end
           describe 'yearly' do
-            let(:path) { year_summaries_vacation_users_path(year, month) }
-            include_examples :overall_summary_access
+            let(:path) { reports_vacation_year_path(year) }
+            include_examples :overall_reports_access
           end
         end
 
-        describe 'absences summary' do
-          shared_examples :overall_absences_summary do
+        describe 'absences report' do
+          shared_examples :overall_absences_report do
             context 'as user' do
               let(:current_user) { user }
               include_examples :access_granted
@@ -190,18 +187,18 @@ describe 'Roles and Rights' do
           end
 
           describe 'monthly' do
-            let(:path) { month_summaries_vacation_users_path(year, month) }
-            include_examples :overall_summary_access
+            let(:path) { reports_absences_month_path(year, month) }
+            include_examples :overall_absences_report
           end
 
           describe 'yearly' do
-            let(:path) { year_summaries_vacation_users_path(year, month) }
-            include_examples :overall_summary_access
+            let(:path) { reports_absences_year_path(year) }
+            include_examples :overall_absences_report
           end
 
           describe 'calendar' do
-            let(:path) { year_summaries_vacation_users_path(year, month) }
-            include_examples :overall_summary_access
+            let(:path) { reports_absences_calendar_path(year, month) }
+            include_examples :overall_absences_report
           end
         end
       end
@@ -250,23 +247,23 @@ describe 'Roles and Rights' do
   describe 'interface' do
     subject { page }
 
-    describe 'menu items' do
-      before do
-        visit user_summaries_work_year_path(current_user.current_time_sheet, year)
+    shared_examples :menu_list do |selector, included, excluded|
+      included.each do |included_item|
+        it "should include #{included_item}" do
+          subject.should have_selector(selector, text: included_item)
+        end
       end
 
-      shared_examples :menu_list do |selector, included, excluded|
-        included.each do |included_item|
-          it "should include #{included_item}" do
-            subject.should have_selector(selector, text: included_item)
-          end
+      excluded.each do |excluded_item|
+        it "should exclude #{excluded_item}" do
+          subject.should_not have_selector(selector, text: excluded_item)
         end
+      end
+    end
 
-        excluded.each do |excluded_item|
-          it "should exclude #{excluded_item}" do
-            subject.should_not have_selector(selector, text: excluded_item)
-          end
-        end
+    describe 'reports' do
+      before do
+        visit reports_work_user_year_path(current_user, year)
       end
 
       context 'as user' do
@@ -276,17 +273,8 @@ describe 'Roles and Rights' do
           include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte'], ['Verwalten']
         end
 
-        describe 'summary menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter'], ['Arbeitszeit Mitarbeiter', 'Feriensaldo']
-        end
-      end
-
-      context 'as accountant' do
-        let(:accountant) { FactoryGirl.create(:accountant) }
-        let(:current_user) { accountant }
-
-        describe 'summary menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Verrechenbarkeit', 'Verrechnung'], []
+        describe 'report menu' do
+          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit'], ['Arbeitszeit Mitarbeiter', 'Feriensaldo']
         end
       end
 
@@ -294,11 +282,11 @@ describe 'Roles and Rights' do
         let(:current_user) { team_leader }
 
         describe 'main menu' do
-          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte', 'Verwalten'], []
+          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Aktivitäten', 'Berichte', 'Verwalten'], []
         end
 
-        describe 'summary menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo', 'Verrechenbarkeit'], []
+        describe 'report menu' do
+          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Arbeitszeit Mitarbeiter'], []
         end
       end
 
@@ -306,21 +294,52 @@ describe 'Roles and Rights' do
         let(:current_user) { admin }
 
         describe 'main menu' do
-          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte', 'Verwalten'], []
+          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Aktivitäten', 'Berichte', 'Verwalten'], []
         end
 
-        describe 'summary menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Meine Absenzen', 'Absenzen Mitarbeiter', 'Arbeitszeit Mitarbeiter', 'Feriensaldo', 'Verrechenbarkeit', 'Verrechnung'], []
+        describe 'report menu' do
+          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Arbeitszeit Mitarbeiter', 'Feriensaldo'], []
+        end
+      end
+    end
+
+    describe 'activities' do
+      before do
+        visit reports_activities_billability_path
+      end
+
+      context 'as accountant' do
+        let(:accountant) { FactoryGirl.create(:accountant) }
+        let(:current_user) { accountant }
+
+        describe 'activities menu' do
+          include_examples :menu_list, '.sub-nav > dd', ['Verrechenbarkeit', 'Verrechnung'], []
+        end
+      end
+
+      context 'as team leader' do
+        let(:current_user) { team_leader }
+
+        describe 'activities menu' do
+          include_examples :menu_list, '.sub-nav > dd', ['Übersicht', 'Verrechenbarkeit'], []
+        end
+      end
+
+      context 'as admin' do
+        let(:current_user) { admin }
+
+        describe 'activities menu' do
+          include_examples :menu_list, '.sub-nav > dd', ['Übersicht', 'Verrechenbarkeit', 'Verrechnung'], []
         end
       end
     end
 
     describe 'absence overview' do
       before do
-        visit time_sheet_absences_path(current_user.current_time_sheet)
+        visit user_absences_path(current_user)
       end
 
-      let(:add_absence_selector) { "*[data-reveal-url^='#{new_time_sheet_absence_path(current_user.current_time_sheet)}']" }
+      let(:add_absence_selector) { "*[data-reveal-url^='#{new_user_absence_path(current_user)}']" }
 
       context 'as user' do
         let(:current_user) { user }
@@ -340,7 +359,7 @@ describe 'Roles and Rights' do
 
     describe 'select box to select another user' do
       before do
-        visit time_sheet_path(current_user.current_time_sheet)
+        visit user_time_entries_path(current_user)
       end
 
       context 'as user' do

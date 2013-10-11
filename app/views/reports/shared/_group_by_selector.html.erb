@@ -1,0 +1,6 @@
+<% content_for :group_by_selector do %>
+  <div class="row">
+    <div class="small-4 columns"><%= t '.group_by' %></div>
+    <div class="small-8 columns end"><%= select_tag :group_by, options_for_select(@allowed_group_by.map { |group| [t(".#{group}"), group]}, @group_by) %></div>
+  </div>
+<% end %>

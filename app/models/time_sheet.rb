@@ -1,79 +1,92 @@
-# == Schema Information
-#
-# Table name: time_sheets
-#
-#  id         :integer          not null, primary key
-#  user_id    :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  deleted_at :datetime
-#
+class TimeSheet
+  attr_reader :user
 
-class TimeSheet < ActiveRecord::Base
-  acts_as_paranoid
-
-  belongs_to :user
-
-  has_many :time_entries
-  has_many :absences
-  has_many :adjustments
-
-  validates_presence_of :user
+  def initialize(user)
+    @user = user
+  end
 
   # returns time chunks (which are limited to the given date or range)
   def find_chunks(date_or_range, time_types = TimeType.scoped)
-    entries = [time_entries.where(time_type_id: time_types), absences.where(time_type_id: time_types)]
+    entries = [user.time_entries.where(time_type_id: time_types), user.absences.where(time_type_id: time_types)]
 
     find_chunks = FindTimeChunks.new(entries)
     find_chunks.in_range(date_or_range)
   end
 
-  def work(date_or_range)
-    CalculateWorkingTime.new(self, date_or_range).total
-  end
-
   def total(date_or_range, time_types = TimeType.scoped)
-    chunks = find_chunks(date_or_range, time_types)
-    chunks.total
-  end
-
-  def bonus(date_or_range, time_types = TimeType.scoped)
-    chunks = find_chunks(date_or_range, time_types)
-    chunks.bonus
-  end
-
-  def planned_work(date_or_range)
-    calculator = CalculatePlannedWorkingTime.new(date_or_range, user)
-    calculator.total
+    user.time_spans.with_date(date_range(date_or_range)).where(time_type_id: time_types).sum(:duration)
   end
 
   def overtime(date_or_range)
-    CalculateOvertime.new(self, date_or_range).total
+    bonus(date_or_range) + working_time_total(date_or_range) - planned_working_time(date_or_range)
   end
 
-  def vacation(year)
-    range = UberZeit.year_as_range(year)
-    redeemed = CalculateRedeemedVacation.new(user, range)
-    redeemed.total
+  def bonus(date_or_range, time_types = TimeType.scoped)
+    user.time_spans.with_date(date_range(date_or_range)).where(time_type_id: time_types).sum(:duration_bonus)
   end
 
-  def total_reedemable_vacation(year)
-    vacation = CalculateTotalRedeemableVacation.new(user, year)
-    vacation.total_redeemable_for_year
+  def planned_working_time(date_or_range)
+    FetchPlannedWorkingTime.new(user, date_range(date_or_range)).total
+  end
+
+  def redeemed_vacation(range)
+    user.time_spans.with_date(range).vacation.credited_duration_in_work_days_sum
   end
 
   def remaining_vacation(year)
-    total_reedemable_vacation(year) - vacation(year)
+    total_redeemable_vacation(year) - redeemed_vacation(UberZeit.year_as_range(year))
+  end
+
+  def remaining_vacation_per(date)
+    first_day_of_year = "#{date.year}-01-01".to_date
+    total_redeemable_vacation(date.year) - redeemed_vacation(first_day_of_year..date)
+  end
+
+  def total_redeemable_vacation(year)
+    vacation = CalculateTotalRedeemableVacation.new(user, year)
+    vacation.total_redeemable_for_year.to_work_days
   end
 
   def duration_of_timers(date_or_range)
     range = date_or_range.to_range.to_date_range
-    timers_in_range = time_entries.timers_only.select { |timer| range.intersects_with_duration?(timer.range) }
+    timers_in_range = user.time_entries.timers_only.select { |timer| range.intersects_with_duration?(timer.range) }
     timers_in_range.inject(0) { |sum,timer| sum + timer.duration(range) }
   end
 
-  def timer
-    time_entries.timers_only.first
+  def working_time_total(date_or_range)
+    user.time_spans.with_date(date_or_range).working_time.credited_duration_sum
   end
 
+  def working_time_by_type(date_or_range)
+    user.time_spans.with_date(date_or_range).working_time.credited_duration_sum_per_time_type
+  end
+
+  def effective_working_time_total(date_or_range)
+    user.time_spans.with_date(date_or_range).effective_working_time.credited_duration_sum
+  end
+
+  def effective_working_time_by_type(date_or_range)
+    user.time_spans.with_date(date_or_range).effective_working_time.credited_duration_sum_per_time_type
+  end
+
+  def absences_total(date_or_range)
+    user.time_spans.with_date(date_or_range).absences_with_adjustments.credited_duration_sum
+  end
+
+  def absences_by_type(date_or_range)
+    user.time_spans.with_date(date_or_range).absences_with_adjustments.credited_duration_sum_per_time_type
+  end
+
+  def adjustments_total(date_or_range)
+    user.time_spans.with_date(date_or_range).adjustments.credited_duration_sum
+  end
+
+  def adjustments_by_type(date_or_range)
+    user.time_spans.with_date(date_or_range).adjustments.credited_duration_sum_per_time_type
+  end
+
+  private
+  def date_range(date_or_range)
+    date_or_range.to_range.to_date_range
+  end
 end

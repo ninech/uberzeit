@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.14'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -101,14 +101,13 @@ group :development, :test do
   gem 'i18n-missing_translations'
   gem 'capistrano_database_yml'
   gem 'timecop'
-  gem 'phantomjs'
-  gem 'poltergeist', git: 'git://github.com/jonleighton/poltergeist.git', branch: 'master'
   gem 'database_cleaner'
   gem 'launchy'
   gem 'fivemat'
   gem 'annotate'
   gem 'parallel_tests'
   gem 'guard-spring'
+  gem 'selenium-webdriver'
 end
 
 group :development do
@@ -118,4 +117,5 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'sextant'
+  gem 'meta_request'
 end

@@ -3,8 +3,7 @@
 # Table name: public_holidays
 #
 #  id              :integer          not null, primary key
-#  start_date      :date
-#  end_date        :date
+#  date            :date
 #  name            :string(255)
 #  first_half_day  :boolean          default(FALSE)
 #  second_half_day :boolean          default(FALSE)
@@ -13,24 +12,24 @@
 #  deleted_at      :datetime
 #
 
+require_relative 'concerns/dated'
+
 class PublicHoliday < ActiveRecord::Base
+  include Dated
+
   acts_as_paranoid
 
-  default_scope order(:start_date)
+  default_scope order(:date)
 
-  attr_accessible :end_date, :first_half_day, :name, :second_half_day, :start_date, :daypart
+  attr_accessible :first_half_day, :name, :second_half_day, :date, :daypart
 
-  validates_presence_of :name, :start_date, :end_date
+  validates_presence_of :name
 
-  validates_datetime :start_date
-  validates_datetime :end_date, on_or_after: :start_date
+  validates_datetime :date
 
-  scope :on, lambda { |date| date = date.to_date; { conditions: ['(start_date <= ? AND end_date >= ?)', date, date] } }
-  scope :in, lambda { |range| date_range = range.to_range.to_date_range; { conditions: ['(start_date <= ? AND end_date >= ?)', date_range.max, date_range.min] } }
+  scope_date :date
 
-  def self.in_year(year)
-    scoped.in(UberZeit.year_as_range(year))
-  end
+  after_save :update_days
 
   def self.half_day_on?(date)
     flag_on_date(date, :half_day?)
@@ -82,16 +81,19 @@ class PublicHoliday < ActiveRecord::Base
     end
   end
 
-  def on_date?(date)
-    start_date <= date && date <= end_date
+  def on_date?(check_date)
+    date == check_date
+  end
+
+  def update_days
+    changed_dates = [date, date_was].compact
+    Day.where(date: changed_dates).each(&:regenerate!)
   end
 
   private
   def self.flag_on_date(date, flag_sym)
-    public_holidays_on_date = on(date)
-
     flag = false
-    public_holidays_on_date.each do |public_holiday|
+    with_date(date).each do |public_holiday|
       flag ||= public_holiday.send(flag_sym)
     end
     flag

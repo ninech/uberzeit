@@ -11,20 +11,34 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130906072526) do
+ActiveRecord::Schema.define(:version => 20131004143716) do
 
-  create_table "absences", :force => true do |t|
-    t.integer  "time_sheet_id"
-    t.integer  "time_type_id"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.boolean  "first_half_day",  :default => false
-    t.boolean  "second_half_day", :default => false
+  create_table "absence_schedules", :force => true do |t|
+    t.boolean  "active",                 :default => false
+    t.integer  "absence_id"
+    t.date     "ends_date"
+    t.integer  "weekly_repeat_interval"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.datetime "deleted_at"
   end
 
-  add_index "absences", ["time_sheet_id"], :name => "index_date_entries_on_time_sheet_id"
+  add_index "absence_schedules", ["absence_id"], :name => "index_absence_schedules_on_absence_id"
+
+  create_table "absences", :force => true do |t|
+    t.integer  "time_type_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "first_half_day",  :default => true
+    t.boolean  "second_half_day", :default => true
+    t.datetime "deleted_at"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   add_index "absences", ["time_type_id"], :name => "index_date_entries_on_time_type_id"
+  add_index "absences", ["user_id"], :name => "index_absences_on_user_id"
 
   create_table "activities", :force => true do |t|
     t.integer  "activity_type_id"
@@ -59,18 +73,18 @@ ActiveRecord::Schema.define(:version => 20130906072526) do
   end
 
   create_table "adjustments", :force => true do |t|
-    t.integer  "time_sheet_id"
     t.integer  "time_type_id"
     t.date     "date"
     t.integer  "duration"
     t.string   "label"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.datetime "deleted_at"
+    t.integer  "user_id"
   end
 
-  add_index "adjustments", ["time_sheet_id"], :name => "index_adjustments_on_time_sheet_id"
   add_index "adjustments", ["time_type_id"], :name => "index_adjustments_on_time_type_id"
+  add_index "adjustments", ["user_id"], :name => "index_adjustments_on_user_id"
 
   create_table "customers", :id => false, :force => true do |t|
     t.integer  "id"
@@ -81,6 +95,17 @@ ActiveRecord::Schema.define(:version => 20130906072526) do
   end
 
   add_index "customers", ["id"], :name => "index_customers_on_id", :unique => true
+
+  create_table "days", :force => true do |t|
+    t.integer  "user_id"
+    t.date     "date"
+    t.integer  "planned_working_time"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  add_index "days", ["date"], :name => "index_days_on_date"
+  add_index "days", ["user_id"], :name => "index_days_on_user_id"
 
   create_table "employments", :force => true do |t|
     t.integer  "user_id"
@@ -94,15 +119,6 @@ ActiveRecord::Schema.define(:version => 20130906072526) do
 
   add_index "employments", ["user_id"], :name => "index_employments_on_user_id"
 
-  create_table "exception_dates", :force => true do |t|
-    t.integer  "recurring_schedule_id"
-    t.date     "date"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
-  end
-
-  add_index "exception_dates", ["recurring_schedule_id"], :name => "index_exception_dates_on_recurring_schedule_id"
-
   create_table "memberships", :force => true do |t|
     t.integer  "team_id"
     t.integer  "user_id"
@@ -110,6 +126,7 @@ ActiveRecord::Schema.define(:version => 20130906072526) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "memberships", ["team_id", "user_id"], :name => "index_memberships_on_team_id_and_user_id_and_role", :unique => true
   add_index "memberships", ["team_id"], :name => "index_memberships_on_team_id"
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
@@ -124,26 +141,12 @@ ActiveRecord::Schema.define(:version => 20130906072526) do
   add_index "projects", ["customer_id"], :name => "index_projects_on_customer_id"
 
   create_table "public_holidays", :force => true do |t|
-    t.date     "start_date"
-    t.date     "end_date"
+    t.date     "date"
     t.string   "name"
     t.boolean  "first_half_day",  :default => false
     t.boolean  "second_half_day", :default => false
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
-    t.datetime "deleted_at"
-  end
-
-  create_table "recurring_schedules", :force => true do |t|
-    t.boolean  "active",                 :default => false
-    t.integer  "enterable_id"
-    t.string   "enterable_type"
-    t.string   "ends"
-    t.integer  "ends_counter"
-    t.date     "ends_date"
-    t.integer  "weekly_repeat_interval"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
     t.datetime "deleted_at"
   end
 
@@ -167,24 +170,34 @@ ActiveRecord::Schema.define(:version => 20130906072526) do
   end
 
   create_table "time_entries", :force => true do |t|
-    t.integer  "time_sheet_id"
     t.integer  "time_type_id"
     t.datetime "starts"
     t.datetime "ends"
     t.datetime "deleted_at"
-  end
-
-  add_index "time_entries", ["time_sheet_id"], :name => "index_time_entries_on_time_sheet_id"
-  add_index "time_entries", ["time_type_id"], :name => "index_time_entries_on_time_type_id"
-
-  create_table "time_sheets", :force => true do |t|
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.datetime "deleted_at"
   end
 
-  add_index "time_sheets", ["user_id"], :name => "index_time_sheets_on_user_id"
+  add_index "time_entries", ["time_type_id"], :name => "index_time_entries_on_time_type_id"
+  add_index "time_entries", ["user_id"], :name => "index_time_entries_on_user_id"
+
+  create_table "time_spans", :force => true do |t|
+    t.date     "date"
+    t.integer  "duration"
+    t.float    "duration_in_work_days"
+    t.integer  "duration_bonus"
+    t.integer  "user_id"
+    t.integer  "time_type_id"
+    t.integer  "time_spanable_id"
+    t.string   "time_spanable_type"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.integer  "credited_duration"
+    t.float    "credited_duration_in_work_days"
+  end
+
+  add_index "time_spans", ["time_spanable_id"], :name => "index_time_spans_on_time_spanable_id"
+  add_index "time_spans", ["time_type_id"], :name => "index_time_spans_on_time_type_id"
+  add_index "time_spans", ["user_id"], :name => "index_time_spans_on_user_id"
 
   create_table "time_types", :force => true do |t|
     t.string   "name"
@@ -205,7 +218,6 @@ ActiveRecord::Schema.define(:version => 20130906072526) do
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
     t.datetime "deleted_at"
-    t.string   "time_zone"
     t.string   "given_name"
     t.date     "birthday"
     t.string   "authentication_token"

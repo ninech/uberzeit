@@ -1,9 +1,4 @@
 module TimeSheetsHelper
-  def formatted_worktime_for_day(day)
-    worktime = worktime_for_range(day)
-    format_duration(worktime)
-  end
-
   def formatted_worktime_for_range(range)
     worktime = worktime_for_range(range)
     format_duration(worktime)
@@ -42,17 +37,17 @@ module TimeSheetsHelper
   end
 
   def worktime_for_range(date_or_range)
-    @time_sheet.work(date_or_range)
+    @user.time_sheet.working_time_total(date_or_range)
   end
 
   def overtime_for_range(date_or_range)
-    @time_sheet.overtime(date_or_range)
+    @user.time_sheet.overtime(date_or_range)
   end
 
   def running_timer_dates(timers)
     if timers
       links = timers.map do |timer|
-        link_to l(timer.starts, format: :weekday), show_date_time_sheet_path(@time_sheet, date: timer.start_date)
+        link_to l(timer.starts, format: :weekday), show_date_user_time_entries_path(@user, date: timer.start_date)
       end
       links.to_sentence.html_safe
     end

@@ -16,7 +16,7 @@ module Uberzeit
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += %W(#{config.root}/lib #{config.root}/app/models #{config.root}/app/interactors #{config.root}/app/api #{config.root}/app/navigation_renderers)
+    config.autoload_paths += %W(#{config.root}/lib #{config.root}/app/models #{config.root}/app/models/concerns #{config.root}/app/interactors #{config.root}/app/api #{config.root}/app/navigation_renderers)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -29,7 +29,7 @@ module Uberzeit
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
 
     # This is the default time zone which is set for each user at creation
-    # config.time_zone = 'Bern'
+    config.time_zone = 'Bern'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     #config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]

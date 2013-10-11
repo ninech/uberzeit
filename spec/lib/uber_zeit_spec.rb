@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe UberZeit do
   before do
-    FactoryGirl.create(:public_holiday, start_date: '2013-03-19', end_date: '2013-03-19', second_half_day: true) # tuesday
-    FactoryGirl.create(:public_holiday, start_date: '2013-03-20', end_date: '2013-03-20') # wednesday
+    FactoryGirl.create(:public_holiday, date: '2013-03-19', second_half_day: true) # tuesday
+    FactoryGirl.create(:public_holiday, date: '2013-03-20') # wednesday
   end
 
   it '::is_weekday_a_workday?' do
@@ -47,5 +47,40 @@ describe UberZeit do
   it '::hhmm_in_duration' do
     UberZeit.hhmm_in_duration('04:30').should eq(4.5.hours)
     UberZeit.hhmm_in_duration('-00:15').should eq(-0.25.hours)
+  end
+
+
+  describe '::range_to_buckets' do
+
+    it 'splits a given month range into weekly buckets' do
+      range = UberZeit.month_as_range(2013, 3)
+      interval = 1.week
+      UberZeit.range_to_buckets(range, interval, range.min.beginning_of_week).should eq([
+        '2013-03-01'.to_date..'2013-03-03'.to_date,
+        '2013-03-04'.to_date..'2013-03-10'.to_date,
+        '2013-03-11'.to_date..'2013-03-17'.to_date,
+        '2013-03-18'.to_date..'2013-03-24'.to_date,
+        '2013-03-25'.to_date..'2013-03-31'.to_date
+      ])
+    end
+
+    it 'splits a given year range into monthly buckets' do
+      range = UberZeit.year_as_range(2013)
+      interval = 1.month
+      UberZeit.range_to_buckets(range, interval, range.min).should eq([
+        '2013-01-01'.to_date..'2013-01-31'.to_date,
+        '2013-02-01'.to_date..'2013-02-28'.to_date,
+        '2013-03-01'.to_date..'2013-03-31'.to_date,
+        '2013-04-01'.to_date..'2013-04-30'.to_date,
+        '2013-05-01'.to_date..'2013-05-31'.to_date,
+        '2013-06-01'.to_date..'2013-06-30'.to_date,
+        '2013-07-01'.to_date..'2013-07-31'.to_date,
+        '2013-08-01'.to_date..'2013-08-31'.to_date,
+        '2013-09-01'.to_date..'2013-09-30'.to_date,
+        '2013-10-01'.to_date..'2013-10-31'.to_date,
+        '2013-11-01'.to_date..'2013-11-30'.to_date,
+        '2013-12-01'.to_date..'2013-12-31'.to_date,
+      ])
+    end
   end
 end

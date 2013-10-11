@@ -1,0 +1,38 @@
+<table class="nice small-12 billing">
+  <tbody>
+  <% activities_by_type.each_pair do |type, activities| %>
+    <tr>
+      <th><%= type %></th>
+      <th><span data-activity-sum-durations data-activity-sum-customer="<%= customer.id %>" data-activity-sum-type="<%= type.id %>"><%= format_duration(0) %></span></th>
+      <th><%= t '.is_billed' %></th>
+    </tr>
+    <% activities.each do |activity| %>
+    <tr class="summary-row" >
+      <td>
+        <% if can? :read, activity.user %>
+          <%= link_to show_date_user_activities_path(activity.user, date: activity.date) do %>
+            <%= activity.date %> - <%= activity.user %>
+          <% end %>
+        <% else %>
+          <%= activity.date %> - <%= activity.user %>
+        <% end %>
+        - <%= activity.description %>
+      </td>
+      <td><span data-activity-duration="<%= activity.duration %>" data-activity-type="<%= type.id %>" data-activity-customer="<%= customer.id %>" data-activity="<%= activity.id %>"><%= format_duration(activity.duration) %></span></td>
+      <td class="billed">
+        <div>
+          <%= check_box_tag "activity_toggle", '1', activity.billed?, { id: nil, data: { attribute: :billed, action: polymorphic_path([activity.user, activity]), method: :put, activity: activity.id } } %>
+        </div>
+      </td>
+    </tr>
+    <% end %>
+  <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>Total</td>
+      <td><span data-activity-sum-durations data-activity-sum-customer="<%= customer.id %>"><%= format_duration(0) %></span></td>
+      <td>&nbsp;</td>
+    </tr>
+  </tfoot>
+</table>

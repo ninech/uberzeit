@@ -2,5 +2,5 @@
   $('.ajax-content').html('<%= escape_javascript(render(template: 'absences/edit')) %>');
   initControls();
 <% else %>
-  window.location = '<%= time_sheet_absences_path(@time_sheet) %>';
+  window.location = '<%= user_absences_path(@user) %>';
 <% end %>

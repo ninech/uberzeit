@@ -1,0 +1,47 @@
+<%= render partial: 'reports/shared/time_frame_selector' %>
+<%= render partial: 'reports/shared/team_selector' %>
+
+<%= render partial: 'reports/shared/header', locals: { base_url: '/reports/work/:year', title: t('.title') } %>
+
+<div class="content-summary row">
+  <div class="small-12 columns">
+    <table class="nice small-12">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th><%= t 'reports.work.columns.effective_worked' %></th>
+          <th><%= t 'reports.work.columns.absent' %></th>
+          <th><%= t 'reports.work.columns.time_bonuses' %></th>
+          <th><%= t 'reports.work.columns.adjustments' %></th>
+          <th><%= t 'reports.work.columns.target' %></th>
+          <th><%= t 'reports.work.columns.overtime' %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user %></td>
+            <td>
+              <%= render partial: 'reports/shared/tooltip', locals: {time_types: user.time_sheet.effective_working_time_by_type(@range), total: user.time_sheet.effective_working_time_total(@range) } %>
+            </td>
+            <td>
+              <%= render partial: 'reports/shared/tooltip', locals: {time_types: user.time_sheet.absences_by_type(@range), total: user.time_sheet.absences_total(@range) } %>
+            </td>
+            <td>
+              <span><%= format_hours(user.time_sheet.bonus(@range)) %></span>
+            </td>
+            <td>
+              <%= render partial: 'reports/shared/tooltip', locals: {time_types: user.time_sheet.adjustments_by_type(@range), total: user.time_sheet.adjustments_total(@range) } %>
+            </td>
+            <td>
+              <span><%= format_hours(user.time_sheet.planned_working_time(@range)) %></span>
+            </td>
+            <td>
+              <span><%= format_hours(user.time_sheet.overtime(@range)) %></span>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
