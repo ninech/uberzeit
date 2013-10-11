@@ -1,4 +1,24 @@
 
+2.0.0
+=====
+Date:        2013-10-11
+Released by: Raffael Schmid
+Diff:        https://git.nine.ch/uberzeit/compare/1.6.4...2.0.0
+
+  * Feature #7554 Verlinkung in die Aktivitätserfassung des Mitarbeiters (Nils Caspar)
+  * Bug #7640 Projekt erstellen Button falsch beschriftet (Nils Caspar)
+  * Feature #7691 TimeSheet entfernen (Raffael Schmid)
+  * Feature #7694 Denormalization Teil I (Raffael Schmid)
+  * Feature #7695 Denormalization Teil II (Raffael Schmid)
+  * Feature #7801 Bonus abgeschnitten (Samuel Sieg, Raffael Schmid)
+  * Feature #7497 URLs überarbeiten (Samuel Sieg)
+  * Feature #7496 Navigationsstruktur verbessern (Samuel Sieg)
+  * Bug #7762 Man kann Aktivitäten ohne Kunden erfassen (Nils Caspar)
+  * Bug #7951 [production][summaries/activity/billability#index] NoMethodError: undefined method `name' for nil:NilClass (Nils Caspar)
+  * Bug #7814 Feiertag bearbeiten funktioniert nicht (Nils Caspar, Raffael Schmid)
+  * Feature #7754 Anzeige verrechnete Aktivitäten (Samuel Sieg)
+
+
 1.6.4
 =====
 Date:        2013-09-18
