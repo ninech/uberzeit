@@ -10,7 +10,6 @@ class AbsencesController < ApplicationController
     year = params[:year] || Time.current.year
     @year = year.to_i
 
-
     @absences = {}
     time_chunks_finder = FindTimeChunks.new(@user.absences)
     time_chunks_finder.in_year(@year).each do |chunk|

@@ -32,6 +32,12 @@ describe Reports::Vacation::VacationController do
   let(:year) { @year }
   let(:month) { 3 }
 
+  before(:each) do
+    @ability = Object.new
+    @ability.extend(CanCan::Ability)
+    controller.stub(:current_ability) { @ability }
+  end
+
   context 'for non-signed in users' do
     it 'redirects to login' do
       get :year, year: year
@@ -40,106 +46,28 @@ describe Reports::Vacation::VacationController do
   end
 
   context 'for signed-in users' do
-
     before do
       test_sign_in user
     end
 
-    describe 'GET "year"' do
-      it 'denies access' do
+    context 'user has rights to view this report' do
+      before do
+        @ability.can :manage, :vacation
+      end
+
+      it 'allows to view this report when user has rights' do
+        expect { get :year, year: year }.to_not raise_error(CanCan::AccessDenied)
+      end
+    end
+
+    context 'user has no rights to view this report' do
+      before do
+        @ability.cannot :manage, :vacation
+      end
+
+      it 'denies to view this report when user has rights' do
         expect { get :year, year: year }.to raise_error(CanCan::AccessDenied)
       end
     end
-
-    describe 'GET "month"' do
-      it 'denies access' do
-        expect { get :year, year: year, month: month }.to raise_error(CanCan::AccessDenied)
-      end
-    end
-
   end
-
-  context 'for signed-in admins' do
-
-    before do
-      test_sign_in admin
-    end
-
-    describe 'GET "year"' do
-      context 'rights and roles' do
-        it 'returns rows for all users' do
-          get :year, year: year
-          assigns(:users).count.should eq(team.members.count + another_team.members.count)
-        end
-
-        it 'returns rows for a specified team' do
-          get :year, year: year, team_id: team.id
-          assigns(:users).count.should eq(team.members.count)
-        end
-      end
-    end
-
-    describe 'GET "month"' do
-      context 'rights and roles' do
-        it 'returns rows for all users' do
-          get :year, year: year, month: month
-          assigns(:users).count.should eq(team.members.count + another_team.members.count)
-        end
-
-        it 'returns rows for a specified team' do
-          get :year, year: year, month: month, team_id: team.id
-          assigns(:users).count.should eq(team.members.count)
-        end
-      end
-    end
-
-  end
-
-  context 'for signed-in team leaders' do
-
-    before do
-      test_sign_in team_leader
-    end
-
-    describe 'GET "year"' do
-      context 'rights and roles' do
-        it 'returns rows for users of his teams' do
-          get :year, year: year
-          assigns(:users).count.should eq(team.members.count)
-        end
-
-        it 'sets teams to his team only' do
-          get :year, year: year
-          assigns(:teams).should eq([team])
-        end
-
-        it 'returns rows for a managed team' do
-          get :year, year: year, team_id: team.id
-          assigns(:users).count.should eq(team.members.count)
-        end
-
-        it 'returns not the rows for a non-managed team' do
-          get :year, year: year, team_id: another_team.id
-          assigns(:users).any?{ |user, entry| another_team.members.include?(user) }.should be_false
-        end
-
-      end
-    end
-
-    describe 'GET "month"' do
-      context 'rights and roles' do
-        it 'returns rows for all users' do
-          get :year, year: year, month: month
-          assigns(:users).count.should eq(team.members.count)
-        end
-
-        it 'returns rows for a specified team' do
-          get :year, year: year, month: month, team_id: team.id
-          assigns(:users).count.should eq(team.members.count)
-        end
-      end
-    end
-
-  end
-
 end
