@@ -2,79 +2,83 @@
 <div class="content-summary row">
   <div class="small-12 columns">
     <h2><%= @customer.display_name %></h2>
-    <table class="small-12 detailed-activities">
-      <tbody>
-      <% @grouped_activities.each_pair do |type, activities| %>
-        <tr class="header-row">
-          <th><%= type %></th>
-          <th><%= t '.billable' %></th>
-          <th><%= t '.is_billed' %></th>
-          <th><%= t '.not_billable' %></th>
-        </tr>
-        <% activities.each do |activity| %>
-        <tr class="summary-row" >
-          <td>
-            <% if can? :read, activity.user %>
-              <%= link_to show_date_user_activities_path(activity.user, date: activity.date) do %>
+    <% unless @activities.empty? %>
+      <table class="small-12 detailed-activities">
+        <tbody>
+        <% @grouped_activities.each_pair do |type, activities| %>
+          <tr class="header-row">
+            <th><%= type %></th>
+            <th><%= t '.billable' %></th>
+            <th><%= t '.is_billed' %></th>
+            <th><%= t '.not_billable' %></th>
+          </tr>
+          <% activities.each do |activity| %>
+          <tr class="summary-row" >
+            <td>
+              <% if can? :read, activity.user %>
+                <%= link_to show_date_user_activities_path(activity.user, date: activity.date) do %>
+                  <%= activity.date %> - <%= activity.user %>
+                <% end %>
+              <% else %>
                 <%= activity.date %> - <%= activity.user %>
               <% end %>
+              <% if activity.project %>
+              - <small><%= t('.project', project: activity.project.name) %></small>
+              <% end %>
+              <small><%= activity_source_information(activity) %></small>
+              <br>
+              <small><%= activity.description %></small>
+            </td>
+            <td>
+              <% if activity.billable? %>
+                <%= format_duration(activity.duration) %>
+              <% end %>
+            </td>
+            <td class="billed">
+              <% if activity.billed? %>
+                <span class="icon-ok"></span>
+              <% end %>
+            </td>
+            <td>
+              <% unless activity.billable? %>
+                <%= format_duration(activity.duration) %>
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
+          <tr class="subtotal-row">
+            <td>Subtotal</td>
+            <td><%= format_duration(@subtotals[type][:billable]) %></td>
+            <% if @subtotals[type][:billable] > 0 %>
+              <td>
+                <%= format_duration(@subtotals[type][:billed]) %> <small>(<%= number_to_percentage(@subtotals[type][:billed].to_f / @subtotals[type][:billable].to_f * 100) %>)</small>
+              </td>
             <% else %>
-              <%= activity.date %> - <%= activity.user %>
+              <td></td>
             <% end %>
-            <% if activity.project %>
-            - <small><%= t('.project', project: activity.project.name) %></small>
-            <% end %>
-            <small><%= activity_source_information(activity) %></small>
-            <br>
-            <small><%= activity.description %></small>
-          </td>
-          <td>
-            <% if activity.billable? %>
-              <%= format_duration(activity.duration) %>
-            <% end %>
-          </td>
-          <td class="billed">
-            <% if activity.billed? %>
-              <span class="icon-ok"></span>
-            <% end %>
-          </td>
-          <td>
-            <% unless activity.billable? %>
-              <%= format_duration(activity.duration) %>
-            <% end %>
-          </td>
-        </tr>
+            <td><%= format_duration(@subtotals[type][:not_billable]) %></td>
+          </tr>
+
+
         <% end %>
-        <tr class="subtotal-row">
-          <td>Subtotal</td>
-          <td><%= format_duration(@subtotals[type][:billable]) %></td>
-          <% if @subtotals[type][:billable] > 0 %>
-            <td>
-              <%= format_duration(@subtotals[type][:billed]) %> <small>(<%= number_to_percentage(@subtotals[type][:billed].to_f / @subtotals[type][:billable].to_f * 100) %>)</small>
-            </td>
-          <% else %>
-            <td></td>
-          <% end %>
-          <td><%= format_duration(@subtotals[type][:not_billable]) %></td>
-        </tr>
-
-
-      <% end %>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td>Total</td>
-          <td><%= format_duration(@totals[:billable]) %></td>
-          <% if @totals[:billable] > 0 %>
-            <td>
-              <%= format_duration(@totals[:billed]) %> <small>(<%= number_to_percentage(@totals[:billed].to_f / @totals[:billable].to_f * 100) %>)</small>
-            </td>
-          <% else %>
-            <td></td>
-          <% end %>
-          <td><%= format_duration(@totals[:not_billable]) %></td>
-        </tr>
-      </tfoot>
-    </table>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>Total</td>
+            <td><%= format_duration(@totals[:billable]) %></td>
+            <% if @totals[:billable] > 0 %>
+              <td>
+                <%= format_duration(@totals[:billed]) %> <small>(<%= number_to_percentage(@billed_vs_billable_percentage) %>)</small>
+              </td>
+            <% else %>
+              <td></td>
+            <% end %>
+            <td><%= format_duration(@totals[:not_billable]) %></td>
+          </tr>
+        </tfoot>
+      </table>
+    <% else %>
+      <%= t '.no_activities' %>
+    <% end %>
   </div>
 </div>

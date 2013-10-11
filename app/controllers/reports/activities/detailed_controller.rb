@@ -30,6 +30,8 @@ class Reports::Activities::DetailedController < ApplicationController
       @totals[:not_billable] += a.duration unless a.billable?
       @totals[:billed]       += a.duration if a.billed
     end
+
+    @billed_vs_billable_percentage = @totals[:billed].to_f / @totals[:billable].to_f * 100
   end
 
   private

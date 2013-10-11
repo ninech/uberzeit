@@ -343,6 +343,7 @@ de:
           project: 'Projekt: %{project}'
           redmine: 'Redmine: %{ticket_url}'
           otrs: 'OTRS: %{ticket_url}'
+          no_activities: Keine Aktivitäten gefunden.
     shared:
       users_absence_table:
         total: Total
