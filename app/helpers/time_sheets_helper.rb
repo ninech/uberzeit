@@ -1,9 +1,4 @@
 module TimeSheetsHelper
-  def formatted_worktime_for_day(day)
-    worktime = worktime_for_range(day)
-    format_duration(worktime)
-  end
-
   def formatted_worktime_for_range(range)
     worktime = worktime_for_range(range)
     format_duration(worktime)

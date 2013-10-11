@@ -1,6 +1,6 @@
 class TimeEntriesController < ApplicationController
 
-  include WeekViewHelper
+  include Concerns::WeekView
 
   load_and_authorize_resource :user
   load_and_authorize_resource :time_entry, through: :user
@@ -10,6 +10,7 @@ class TimeEntriesController < ApplicationController
   before_filter :load_day
   before_filter :load_week_total
   before_filter :load_time_types
+  before_filter :prepare_week_view, :prepare_weekday_sums, only: :index
   before_filter :set_end_date, only: [:create, :update]
 
   def index
@@ -100,6 +101,13 @@ class TimeEntriesController < ApplicationController
   def load_week_total
     week = @day.at_beginning_of_week..@day.at_end_of_week
     @week_total = @user.time_sheet.total(week) + @user.time_sheet.duration_of_timers(week)
+  end
+
+  def prepare_weekday_sums
+    @weekday_sums = {}
+    @weekdays.each do |weekday|
+      @weekday_sums[weekday] = worktime_for_range(weekday)
+    end
   end
 
 end
