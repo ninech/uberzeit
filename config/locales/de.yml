@@ -332,6 +332,7 @@ de:
         group_by: Gruppieren nach
         project: Projekt
         activity_type: Aktivität
+        customer: Kunde
       customer_selector:
         customer: Kunde
       buttons:
