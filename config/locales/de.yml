@@ -257,58 +257,33 @@ de:
         overtime: Überzeit
         adjustments: Anpassungen
       work:
-        year:
+        table:
           title: Arbeitszeit Mitarbeiter
-          unit: in Stunden:Minuten
-        month:
-          title: Arbeitszeit Mitarbeiter
-          unit: in Stunden:Minuten
       my_work:
-        year:
+        table:
           title: Meine Arbeitszeit
-          unit: in Stunden:Minuten
-        month:
-          title: Meine Arbeitszeit
-          unit: in Stunden:Minuten
     absences:
-      my_absence:
-        year:
-          title: Meine Absenzen
-          unit: in Tagen
-          total: Total
-          remaining: Verbleibend
-        month:
-          title: Meine Absenzen
-          unit: in Tagen
-          total: Total
       absence:
-        year:
+        table:
           title: Absenzen Mitarbeiter
-          unit: in Tagen
-        month:
-          title: Absenzen Mitarbeiter
-          unit: in Tagen
+          total: Total
         calendar:
           month_in_year: '%B %Y'
           title: Absenzen Mitarbeiter
-          unit: ''
     vacation:
       vacation:
         year:
           title: Feriensaldo
-          unit: in Tagen
           taken: 'Beanspruchte Ferientage im Jahr %{year}'
           remaining: 'Noch verfügbare Ferientage in %{year}'
         month:
           title: Feriensaldo
-          unit: in Tagen
           taken: 'Beansprucht im %{month} %{year}'
           remaining: 'Noch verfügbare Ferientage nach %{month} %{year}'
     activities:
       billability:
         index:
           title: Verrechenbarkeit
-          unit: in Stunden:Minuten
         table:
           is_billable: Verrechenbar?
         form:
@@ -316,7 +291,6 @@ de:
       billing:
         index:
           title: Verrechnung
-          unit: in Stunden:Minuten
         table:
           is_billed: Verrechnet?
       comparison:
@@ -348,17 +322,22 @@ de:
       users_absence_table:
         total: Total
       header:
-        month: Monat
-        year: Jahr
-        calendar: Kalender
-        everyone: Alle
         show: Anzeigen
+      team_selector:
         users: Mitarbeiter
+        everyone: Alle
+      time_frame_selector:
         time_frame: Zeitraum
+      group_by_selector:
         group_by: Gruppieren nach
         project: Projekt
-        customer: Kunde
         activity_type: Aktivität
+      customer_selector:
+        customer: Kunde
+      buttons:
+        year: Jahr
+        month: Monat
+        calendar: Kalender
   time_entries:
     edit:
       edit_time: 'Zeit bearbeiten'

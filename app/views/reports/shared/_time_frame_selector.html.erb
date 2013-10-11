@@ -1,0 +1,7 @@
+<% content_for :time_frame_selector do %>
+  <div class="row">
+    <div class="small-3 columns"><%= t '.time_frame' %></div>
+    <div class="small-4 columns"><% unless @month.nil? %><%= select_month(@month) %><% end %></div>
+    <div class="small-5 columns end"><%= select_year(@year, start_year: Date.current.year-1, end_year: Date.current.year+1) %></div>
+  </div>
+<% end %>

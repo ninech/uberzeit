@@ -41,15 +41,17 @@ class TimeSpan < ActiveRecord::Base
   scope :exclude_vacation_adjustments,      joins(:time_type)
                                               .where('NOT (time_spanable_type = ? AND time_types.is_vacation = ?)', Adjustment.model_name, true)
 
-  scope :absences,                 where(time_spanable_type: %w[Absence Adjustment])
-                                     .exclude_vacation_adjustments
+  scope :absences_with_adjustments, where(time_spanable_type: %w[Absence Adjustment])
+                                      .exclude_vacation_adjustments
 
-  scope :working_time,             joins(:time_type)
-                                     .where(time_types: {exclude_from_calculation: false})
+  scope :absences,                  where(time_spanable_type: Absence.model_name)
+
+  scope :working_time,              joins(:time_type)
+                                      .where(time_types: {exclude_from_calculation: false})
 
   scope :effective_working_time,    where(time_spanable_type: TimeEntry.model_name)
-                                     .joins(:time_type)
-                                     .where(time_types: {is_work: true})
+                                      .joins(:time_type)
+                                      .where(time_types: {is_work: true})
 
   scope :adjustments,               joins(:time_type)
                                       .where(time_spanable_type: Adjustment.model_name)
