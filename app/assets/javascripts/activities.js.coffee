@@ -19,7 +19,6 @@ do ($ = jQuery) ->
         else
           project_select_row.hide()
 
-
   $(document).on 'typeahead:selected', '#activity_customer_id', customerChanged
   $(document).bind 'modal:activity-modal:form-loaded', (event) =>
     initTypeAhead()

@@ -1,5 +1,5 @@
 <%
-  selectors_to_render = [:team_selector, :group_by_selector, :time_frame_selector].select { |selector| content_for?(selector) }
+  selectors_to_render = [:team_selector, :group_by_selector, :customer_selector, :time_frame_selector].select { |selector| content_for?(selector) }
   append_to_url = '' if local_assigns[:append_to_url].nil?
 %>
 
@@ -13,7 +13,7 @@
         <% selectors_to_render.each do |selector| %>
           <%= yield selector %>
         <% end %>
-        
+
         <div class="row">
           <div class="small-12 columns">
             <% if selectors_to_render.any? %>

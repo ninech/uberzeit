@@ -1,0 +1,6 @@
+<% content_for :customer_selector do %>
+  <div class="row">
+    <div class="small-3 columns customer"><%= t '.customer' %></div>
+    <div class="small-9 columns end"><%= text_field_tag :customer, @customer.display_name, class: 'typeahead-customer' %></div>
+  </div>
+<% end %>

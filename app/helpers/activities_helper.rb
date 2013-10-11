@@ -1,8 +1,4 @@
 module ActivitiesHelper
-  def formatted_worktime_for_day(day)
-    format_duration @user.activities.where(date: day).sum(:duration)
-  end
-
   def activity_source_information(activity)
     [:otrs, :redmine].each do |source|
       ticket_id = activity.send("#{source}_ticket_id")

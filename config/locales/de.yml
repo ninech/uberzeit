@@ -215,6 +215,7 @@ de:
         billing: Verrechnung
         comparison: Vergleich
         activity_filter: Übersicht
+        activity_detailed: Detailliert
   reports:
     formats:
       date: '%e. %a.'
@@ -307,6 +308,16 @@ de:
           duration: Aufwand
           billable: Verrechenbar
           not_billable: Nicht verrechenbar
+      detailed:
+        index:
+          title: Aktivitäten detailliert
+          billable: Verrechenbar
+          not_billable: Nicht verrechenbar
+          is_billed: Verrechnet
+          project: 'Projekt: %{project}'
+          redmine: 'Redmine: %{ticket_url}'
+          otrs: 'OTRS: %{ticket_url}'
+          no_activities: Keine Aktivitäten gefunden.
     shared:
       users_absence_table:
         total: Total
@@ -320,8 +331,9 @@ de:
       group_by_selector:
         group_by: Gruppieren nach
         project: Projekt
-        customer: Kunde
         activity_type: Aktivität
+      customer_selector:
+        customer: Kunde
       buttons:
         year: Jahr
         month: Monat
