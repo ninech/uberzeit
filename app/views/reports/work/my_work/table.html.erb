@@ -25,7 +25,7 @@
           <% @buckets.each do |range| %>
             <tr>
               <td>
-                <% if (range.max-range.min) <= 7 %>
+                <% if @month %>
                   <%= link_to label_for_range(range), show_date_user_time_entries_path(user, range.min) %>
                 <% else %>
                   <%= link_to label_for_month(range.min), reports_work_user_month_path(user, range.min.year, range.min.month) %>
