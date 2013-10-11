@@ -63,7 +63,7 @@ class Reports::Absences::AbsenceController < ApplicationController
   end
 
   def set_teams
-    @teams = Team.scoped
+    @accessible_teams = Team.scoped
   end
 
   def set_year

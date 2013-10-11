@@ -6,10 +6,12 @@ class Reports::BaseController < ApplicationController
   def set_info
     @month = requested_month
     @year = requested_year
-    @users = requested_users || accessible_users
-    @teams = accessible_teams
+    if requested_year && requested_month
+      @month_as_date = Date.new(requested_year, requested_month)
+    end
+    @users = requested_users
     @team = requested_team
-    @month_as_date = Date.new(requested_year, requested_month) if requested_year and requested_month
+    @accessible_teams = accessible_teams
   end
 
   def accessible_teams
@@ -45,6 +47,8 @@ class Reports::BaseController < ApplicationController
       [requested_user]
     when requested_team
       requested_team.members
+    else
+      accessible_users
     end
   end
 end

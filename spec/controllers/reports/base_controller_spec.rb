@@ -53,10 +53,10 @@ describe Reports::BaseController do
     end
   end
 
-  describe '@teams' do
+  describe '@accessible_teams' do
     it 'sets the accessible teams' do
       get :index
-      assigns(:teams).should =~ (user.teams + another_user_in_another_team.teams)
+      assigns(:accessible_teams).should =~ (user.teams + another_user_in_another_team.teams)
     end
   end
 
