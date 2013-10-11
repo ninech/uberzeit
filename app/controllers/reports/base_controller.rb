@@ -1,5 +1,6 @@
 class Reports::BaseController < ApplicationController
   before_filter :set_info
+
   private
 
   def set_info
