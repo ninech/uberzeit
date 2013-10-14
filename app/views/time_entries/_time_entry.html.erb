@@ -25,7 +25,7 @@
 
 <small>
   <%= time_span.time_type %>
-  <% if not standard_calculation?(time_span.time_type) && time_span.duration_bonus != 0 %>
+  <% if !standard_calculation?(time_span.time_type) && time_span.duration_bonus != 0 %>
     <small> (<%= time_type_bonus_percentage(time_span.time_type) %> <%= t '.duration_bonus' %>: <%= format_duration(time_span.duration_bonus) %>) </small>
   <% end %>
 </small>

@@ -39,10 +39,6 @@ describe AbsencesHelper do
        end
      end
 
-    let(:time_chunk) do
-      TimeChunk.new(range: '2013-01-01'.to_date...'2013-02-02'.to_date, parent: absence)
-    end
-
     it 'renders a calendar cell without a date' do
       assign(:user, FactoryGirl.build(:user))
       helper.render_calendar_cell(date).first.to_s.should eq("1")
@@ -50,7 +46,7 @@ describe AbsencesHelper do
 
     it 'renders a calendar cell with a date' do
       @time_types = TimeType.absence
-      @absences[date] = [time_chunk]
+      @absences[date] = [absence]
       helper.should_receive(:color_index_of_time_type).with(instance_of(TimeType)).and_return('color_index')
       helper.should_receive(:icon_for_time_type).with(instance_of(TimeType)).and_return('icon')
       helper.render_calendar_cell(date).to_s.should =~ /event-bg#{TEST_TIME_TYPES.key(:vacation)}/
