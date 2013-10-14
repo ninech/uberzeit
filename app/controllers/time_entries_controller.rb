@@ -15,7 +15,10 @@ class TimeEntriesController < ApplicationController
 
   def index
     prepare_week_view
-    @time_chunks = @user.time_sheet.find_chunks(@day, TimeType.work)
+    @time_spans_of_time_entries = @user.time_spans.effective_working_time.with_date(@day)
+    @time_spans_of_absences = @user.time_spans.absences.with_date(@day)
+    @current_public_holiday = @public_holidays[@day]
+
     # stuff for add form in modal
     @time_entry = TimeEntry.new
     if params[:date]
