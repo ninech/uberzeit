@@ -63,7 +63,7 @@ module AbsencesHelper
   end
 
   def absence_period(absence)
-    if absence.half_day_specific?
+    unless absence.whole_day?
       case
       when absence.first_half_day?
         t('first_half_day')
@@ -75,13 +75,11 @@ module AbsencesHelper
     end
   end
 
-  def absence_date_range(absence)
-    absence_object = absence.parent
-
-    range = if absence_object.recurring?
-              (absence.starts..absence.ends).to_date_range
+  def absence_date_range(absence, occurrence_date)
+    range = if absence.recurring?
+              absence.occurrences.find { |occurrence| occurrence.intersects_with_duration?(occurrence_date.to_range) }
             else
-              absence_object.range
+              absence.range
             end
 
     if range.min == range.max

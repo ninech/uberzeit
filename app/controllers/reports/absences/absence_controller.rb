@@ -26,6 +26,12 @@ class Reports::Absences::AbsenceController < Reports::BaseController
 
     @public_holidays = Hash[@range.collect { |day| [day, PublicHoliday.with_date(day)] }]
     @work_days = Hash[@range.collect { |day| [day, UberZeit.is_weekday_a_workday?(day)] }]
-    @absences = TimeSpan.absences.with_date(@range).where(user_id: @users).group_by { |ts| [ts.user_id, ts.date] }
+    time_spans = TimeSpan.absences.with_date(@range).where(user_id: @users)
+    @absences = {}
+    time_spans.each do |ts|
+      key = [ts.user_id, ts.date]
+      @absences[key] ||= []
+      @absences[key].push(ts.time_spanable)
+    end
   end
 end
