@@ -173,6 +173,7 @@ class Absence < ActiveRecord::Base
 
   def update_or_create_time_span
     time_spans.destroy_all
+    schedule.reload
     occurrences.each do |occurrence|
       occurrence.each do |date|
         create_time_span_for_date(date)

@@ -159,6 +159,12 @@ describe Absence do
       it 'calculates time span for each recurring date' do
         subject.time_spans.collect(&:date).map(&:to_s).should eq(%w[2013-10-02 2013-10-09])
       end
+
+      it 'reloads the schedule upon update' do
+        subject.start_date = '2013-10-01'
+        subject.save
+        subject.time_spans.collect(&:date).map(&:to_s).should eq(%w[2013-10-01 2013-10-02 2013-10-08 2013-10-09])
+      end
     end
   end
 end
