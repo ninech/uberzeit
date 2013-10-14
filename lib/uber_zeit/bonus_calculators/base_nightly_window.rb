@@ -24,8 +24,8 @@ module UberZeit::BonusCalculators::BaseNightlyWindow
   end
 
   module InstanceMethods
-    def initialize(time_chunk)
-      @time_chunk = time_chunk
+    def initialize(time_entry)
+      @time_entry = time_entry
     end
 
     def result
@@ -34,21 +34,21 @@ module UberZeit::BonusCalculators::BaseNightlyWindow
 
     private
     def morning_window_bonus
-      bonus_for_window(morning_window(@time_chunk.starts))
+      bonus_for_window(morning_window(@time_entry.starts))
     end
 
     def evening_window_bonus
-      bonus_for_window(evening_window(@time_chunk.starts))
+      bonus_for_window(evening_window(@time_entry.starts))
     end
 
     def midnight_spanning_window_bonus
-      return 0 if @time_chunk.starts.day == @time_chunk.ends.day
-      bonus_for_window(morning_window(@time_chunk.starts + 1.day))
+      return 0 if @time_entry.starts.day == @time_entry.ends.day
+      bonus_for_window(morning_window(@time_entry.starts + 1.day))
     end
 
     def bonus_for_window(window)
-      return 0 unless time_chunk_intersects_window?(window)
-      window_and_time_chunk_intersection(window).duration * self.class.factor
+      return 0 unless time_entry_intersects_window?(window)
+      window_and_time_entry_intersection(window).duration * self.class.factor
     end
 
     def morning_window(date)
@@ -63,12 +63,12 @@ module UberZeit::BonusCalculators::BaseNightlyWindow
       evening_starts..evening_ends
     end
 
-    def window_and_time_chunk_intersection(window)
-      window.intersect(@time_chunk.range)
+    def window_and_time_entry_intersection(window)
+      window.intersect(@time_entry.range)
     end
 
-    def time_chunk_intersects_window?(window)
-      !!window_and_time_chunk_intersection(window)
+    def time_entry_intersects_window?(window)
+      !!window_and_time_entry_intersection(window)
     end
   end
 
