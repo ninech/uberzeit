@@ -5,14 +5,6 @@ class TimeSheet
     @user = user
   end
 
-  # returns time chunks (which are limited to the given date or range)
-  def find_chunks(date_or_range, time_types = TimeType.scoped)
-    entries = [user.time_entries.where(time_type_id: time_types), user.absences.where(time_type_id: time_types)]
-
-    find_chunks = FindTimeChunks.new(entries)
-    find_chunks.in_range(date_or_range)
-  end
-
   def total(date_or_range, time_types = TimeType.scoped)
     user.time_spans.with_date(date_range(date_or_range)).where(time_type_id: time_types).sum(:duration)
   end
