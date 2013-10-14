@@ -70,5 +70,9 @@ describe AbsencesHelper do
     it 'will not return own user' do
       other_team_members(user).should_not include(user)
     end
+
+    it 'will return an array' do
+      other_team_members(user).should be_kind_of(Array)
+    end
   end
 end

@@ -1,38 +1,25 @@
 class FindDailyAbsences
   attr_reader :users, :range
 
-  def initialize(users, date_or_range)
-    @users = [users].flatten
-    @range = date_or_range.to_range.to_date_range
+  def initialize(users, range)
+    @users = users
+    @range = range
   end
 
   def result
-    @result ||= find_absences
+    @result ||= Absence.joins(:time_spans).where(time_spans: {id: find_time_spans}).uniq
+  end
+
+  def result_grouped_by_date
+    @result_grouped_by_date ||= begin
+      grouped_time_spans = find_time_spans.group_by { |ts| ts.date }
+      Hash[grouped_time_spans.collect{ |date, time_spans| [date, Absence.joins(:time_spans).where(time_spans: {id: time_spans})] }]
+    end
   end
 
   private
 
-  def find_absences
-    absences_to_chunks_per_day(users)
-  end
-
-  def absences_to_chunks_per_day(users)
-    chunks = {}
-    users.each do |ts|
-      daily_time_chunks_for(ts.absences) do |date, chunk|
-        chunks[date] ||= []
-        chunks[date] << chunk
-      end
-    end
-    chunks
-  end
-
-  def daily_time_chunks_for(entries)
-    time_chunks_finder = FindTimeChunks.new(entries)
-    time_chunks_finder.in_range(range).each do |chunk|
-      chunk.range.to_date_range.each do |date|
-        yield(date, chunk)
-      end
-    end
+  def find_time_spans
+    TimeSpan.absences.for_user(users).with_date(range)
   end
 end

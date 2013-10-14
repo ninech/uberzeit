@@ -23,7 +23,7 @@
         <td><%= user %></td>
         <% @range.each do |day| %>
           <%
-            absences = @absences.fetch([user.id, day], [])
+            absences = @absences_by_user_and_date.fetch([user.id, day], [])
           %>
           <td class="event
           <% if day.today? %>today<% end %>
