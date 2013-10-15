@@ -1,4 +1,14 @@
 
+develop
+=======
+Date:        2013-10-15
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.0...refs/heads/develop
+
+  * Task #8053 Validation damit Absenzen sich nicht überschneiden dürfen (Nils Caspar)
+  * Feature #7340 Übersicht Bericht soll Mitarbeiter Dropdown erhalten (Nils Caspar)
+
+
 2.0.0
 =====
 Date:        2013-10-11
