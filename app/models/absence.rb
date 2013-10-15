@@ -200,10 +200,14 @@ class Absence < ActiveRecord::Base
     time_span.save!
   end
 
+  def build_schedule(*args)
+    super(*args).tap do |schedule|
+      schedule.absence = self
+    end
+  end
+
   private
   def must_not_overlap_with_other_absences
-    # schedule.absence is nil for new absences... that's why we need this fugly hack
-    schedule.absence = self if new_record?
     overlapping_time_spans = user.time_spans.absences.where(date: occurrences)
     conflicting_dates = overlapping_time_spans.collect do |time_span|
       absence = time_span.time_spanable
@@ -214,7 +218,6 @@ class Absence < ActiveRecord::Base
     if conflicting_dates.any?
       errors.add(:start_date, :absences_overlap, dates: conflicting_dates.to_sentence)
     end
-    schedule.absence = nil if new_record?
   end
 end
 
