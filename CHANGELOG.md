@@ -1,4 +1,23 @@
 
+2.0.2
+=====
+Date:        2013-10-15
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.1...2.0.2
+
+  * Bug #8137 [staging][reports/activities/billing#index] NoMethodError: undefined method `name' for nil:NilClass (Nils Caspar)
+
+
+develop
+=======
+Date:        2013-10-15
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.0...refs/heads/develop
+
+  * Task #8053 Validation damit Absenzen sich nicht überschneiden dürfen (Nils Caspar)
+  * Feature #7340 Übersicht Bericht soll Mitarbeiter Dropdown erhalten (Nils Caspar)
+
+
 2.0.0
 =====
 Date:        2013-10-11
