@@ -169,12 +169,14 @@ describe Absence do
   end
 
   describe 'overlapping validation' do
+    let(:user) { FactoryGirl.create :user }
+
     context 'with simple absences' do
-      subject { FactoryGirl.build(:absence, start_date: '2013-01-01', end_date: '2013-01-01') }
+      subject { FactoryGirl.build(:absence, user: user, start_date: '2013-01-01', end_date: '2013-01-01') }
 
       context 'when not overlapping' do
         context 'with same user but different date' do
-          let!(:other_absence) { FactoryGirl.create(:absence, start_date: '2013-01-02', end_date: '2013-01-02') }
+          let!(:other_absence) { FactoryGirl.create(:absence, user: user, start_date: '2013-01-02', end_date: '2013-01-02') }
 
           it { should be_valid }
         end
@@ -196,15 +198,14 @@ describe Absence do
       end
 
       context 'when overlapping' do
-        subject { FactoryGirl.build(:absence, start_date: '2013-01-01', end_date: '2013-01-01') }
-        let!(:other_absence) { subject.dup.tap { |absence| absence.save! } }
+        subject { FactoryGirl.build(:absence, user: user, start_date: '2013-01-01', end_date: '2013-01-01') }
+        let!(:other_absence) { FactoryGirl.create(:absence, user: user, start_date: '2013-01-01', end_date: '2013-01-01') }
 
         it { should_not be_valid }
       end
     end
 
     context 'frist / second half day' do
-      let(:user) { FactoryGirl.create :user }
       subject { FactoryGirl.build(:absence, user: user, start_date: '2013-01-01', end_date: '2013-01-01', first_half_day: true, second_half_day: false) }
 
       context 'when not overlapping' do
@@ -214,7 +215,7 @@ describe Absence do
       end
 
       context 'when overlapping' do
-        let!(:other_absence) { subject.dup.tap { |absence| absence.save! } }
+        let!(:other_absence) { FactoryGirl.create(:absence, user: user, start_date: '2013-01-01', end_date: '2013-01-01', first_half_day: true, second_half_day: true) }
 
         it { should_not be_valid }
       end
