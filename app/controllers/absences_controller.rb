@@ -12,7 +12,7 @@ class AbsencesController < ApplicationController
 
     @absences = {}
 
-    time_spans = TimeSpan.absences.with_date_in_year(@year)
+    time_spans = @user.time_spans.absences.with_date_in_year(@year)
     time_spans.each do |time_span|
       date = time_span.date
       @absences[date] ||= []
