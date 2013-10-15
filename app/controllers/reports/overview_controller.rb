@@ -13,7 +13,11 @@ class Reports::OverviewController < ApplicationController
     planned_work_whole_month = @user.time_sheet.planned_working_time(range_of_current_month)
 
     @month_total_work = accomplished_work_till_today
-    @month_percent_done = 100 * @month_total_work / planned_work_whole_month
+    if planned_work_whole_month == 0
+      @month_percent_done = 100
+    else
+      @month_percent_done = 100 * @month_total_work / planned_work_whole_month
+    end
 
     @personal_absences = find_personal_absences
     @team_absences = Hash[find_team_absences.sort_by { |date, _| date }]

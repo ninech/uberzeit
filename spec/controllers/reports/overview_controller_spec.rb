@@ -33,6 +33,18 @@ describe Reports::OverviewController do
         get :index, user_id: user
         response.should render_template :index
       end
+
+      context 'with no planned work' do
+        before(:each) do
+          TimeSheet.any_instance.stub(:planned_working_time).and_return(0)
+        end
+
+        it 'does not raise an error' do
+          expect do
+            get :index, user_id: user
+          end.not_to raise_error
+        end
+      end
     end
 
   end
