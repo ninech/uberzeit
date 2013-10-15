@@ -22,6 +22,11 @@ class Reports::Absences::AbsenceController < Reports::BaseController
   end
 
   def calendar
+    # special rights for this view
+    @team = Team.find(params[:team_id]) if params[:team_id].present?
+    @users = @team ? @team.members : User.all
+    @teams = Team.all
+
     @range = UberZeit.month_as_range(@year, @month)
 
     @public_holidays = Hash[@range.collect { |day| [day, PublicHoliday.with_date(day)] }]
