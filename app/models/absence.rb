@@ -200,6 +200,16 @@ class Absence < ActiveRecord::Base
     time_span.save!
   end
 
+  # VIEWERS DISCRETION ADVISED
+  #
+  # The following code is a neat hack: Rails set
+  # `schedule.absence` AFTER the creation of the Absence. For
+  # unpersisted absences, schedule.absence is therefore `nil`.
+  # Since the validation` must_not_overlap_with_other_absences`
+  # uses `occurrences` which depends on schedule.absence being
+  # set, we do this manually when building the absence. The code
+  # is covered by our specs and believed to have no unpleasant
+  # side effects.
   def build_schedule(*args)
     super(*args).tap do |schedule|
       schedule.absence = self
