@@ -69,6 +69,8 @@ de:
               timer_exists_on_date_already: An diesem Datum läuft schon ein Timer.
         absence:
           attributes:
+            start_date:
+              absences_overlap: 'überschneidet sich mit Absenzen am %{dates}'
             end_date:
               on_or_after: muss an oder nach dem Startdatum liegen
         absence_schedule:
