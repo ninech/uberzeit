@@ -11,6 +11,7 @@ class Reports::Activities::BillingController < ApplicationController
     #  swag_ag => { support => [a4] }
     @grouped_activities = {}
     @activities.each do |a|
+      next if a.customer.nil?
       @grouped_activities[a.customer] ||= {}
       @grouped_activities[a.customer][a.activity_type] ||= []
       @grouped_activities[a.customer][a.activity_type] << a
