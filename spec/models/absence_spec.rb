@@ -205,7 +205,7 @@ describe Absence do
       end
     end
 
-    context 'frist / second half day' do
+    context 'first / second half day' do
       subject { FactoryGirl.build(:absence, user: user, start_date: '2013-01-01', end_date: '2013-01-01', first_half_day: true, second_half_day: false) }
 
       context 'when not overlapping' do
