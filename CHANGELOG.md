@@ -1,4 +1,13 @@
 
+2.0.2
+=====
+Date:        2013-10-15
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.1...2.0.2
+
+  * Bug #8137 [staging][reports/activities/billing#index] NoMethodError: undefined method `name' for nil:NilClass (Nils Caspar)
+
+
 develop
 =======
 Date:        2013-10-15
