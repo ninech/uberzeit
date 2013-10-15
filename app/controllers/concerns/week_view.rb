@@ -18,15 +18,10 @@ module Concerns
 
       @public_holiday = PublicHoliday.with_date(@day).first
 
-      @absences = {}
+      @absences = FindDailyAbsences.new(@user, @week).result_grouped_by_date
       @public_holidays = {}
 
       @weekdays.each do |weekday|
-        absences =  @user.time_sheet.find_chunks(weekday, TimeType.absence)
-        unless absences.empty?
-          @absences[weekday] = absences.chunks
-        end
-
         public_holiday = PublicHoliday.with_date(weekday).first
         if public_holiday
           @public_holidays[weekday] = public_holiday

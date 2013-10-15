@@ -1,6 +1,6 @@
 class Reports::Absences::AbsenceController < Reports::BaseController
   def year
-    time_spans_with_scopes = TimeSpan.where(user_id: @users)
+    time_spans_with_scopes = TimeSpan.for_user(@users)
       .with_date_in_year(@year)
       .absences_with_adjustments
 
@@ -11,7 +11,7 @@ class Reports::Absences::AbsenceController < Reports::BaseController
   end
 
   def month
-    time_spans_with_scopes = TimeSpan.where(user_id: @users)
+    time_spans_with_scopes = TimeSpan.for_user(@users)
       .with_date_in_year_and_month(@year, @month)
       .absences_with_adjustments
 
@@ -26,12 +26,23 @@ class Reports::Absences::AbsenceController < Reports::BaseController
 
     @public_holidays = Hash[@range.collect { |day| [day, PublicHoliday.with_date(day)] }]
     @work_days = Hash[@range.collect { |day| [day, UberZeit.is_weekday_a_workday?(day)] }]
-    time_spans = TimeSpan.absences.with_date(@range).where(user_id: @users)
-    @absences = {}
-    time_spans.each do |ts|
-      key = [ts.user_id, ts.date]
-      @absences[key] ||= []
-      @absences[key].push(ts.time_spanable)
+
+    @absences_by_user_and_date = find_absences_by_user_and_date
+  end
+
+  private
+
+  def find_absences_by_user_and_date
+    absences_by_date = FindDailyAbsences.new(@users, @range).result_grouped_by_date
+
+    absences_by_user_and_date = {}
+    absences_by_date.each_pair do |date, absences|
+      absences.each do |absence|
+        key = [absence.user_id, date]
+        absences_by_user_and_date[key] ||= []
+        absences_by_user_and_date[key].push(absence)
+      end
     end
+    absences_by_user_and_date
   end
 end

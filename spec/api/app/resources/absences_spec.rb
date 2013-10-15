@@ -20,11 +20,10 @@ describe API::App::Resources::Absences do
   end
 
   describe 'GET /api/absences/team/:team_id/date/:date' do
-    let!(:absence) { FactoryGirl.create(:absence, user: user, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation) }
+    let!(:absence) { FactoryGirl.create(:absence, user: user, start_date: '2013-07-19', end_date: '2013-07-20', time_type: :vacation, schedule_attributes: {active: true, ends_date: '2013-12-31', weekly_repeat_interval: 1}) }
+    let!(:another_absence) { FactoryGirl.create(:absence, start_date: '2013-09-27') }
 
     before do
-      absence.schedule.update_attributes(active: true, ends_date: '2013-12-31', weekly_repeat_interval: 1)
-
       app_auth_get "/api/app/absences/team/#{team.id}/date/2013-09-27"
     end
 
@@ -33,11 +32,7 @@ describe API::App::Resources::Absences do
     end
 
     subject { json.first }
-
-    its(['start_date']) { should eq('2013-09-27') }
-    its(['end_date']) { should eq('2013-09-28') }
-
-    its(['is_recurring']) { should be_true }
+    its(['id']) { should eq(absence.id) }
   end
 
 end

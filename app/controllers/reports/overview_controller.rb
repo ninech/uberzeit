@@ -19,8 +19,8 @@ class Reports::OverviewController < ApplicationController
       @month_percent_done = 100 * @month_total_work / planned_work_whole_month
     end
 
-    @personal_absences = find_personal_absences
-    @team_absences = Hash[find_team_absences.sort_by { |date, _| date }]
+    @personal_absences = personal_absences_by_date
+    @team_absences = team_absences_by_date
 
     @vacation_redeemed = @user.time_sheet.redeemed_vacation(range_of_year)
     @vacation_remaining = @user.time_sheet.remaining_vacation(current_year)
@@ -28,12 +28,12 @@ class Reports::OverviewController < ApplicationController
 
   private
 
-  def find_personal_absences
-    FindDailyAbsences.new(current_user, range_of_absences).result
+  def personal_absences_by_date
+    FindDailyAbsences.new(current_user, range_of_absences).result_grouped_by_date
   end
 
-  def find_team_absences
-    FindDailyAbsences.new(other_team_members(current_user), range_of_absences).result
+  def team_absences_by_date
+    FindDailyAbsences.new(other_team_members(current_user), range_of_absences).result_grouped_by_date
   end
 
   def range_of_absences

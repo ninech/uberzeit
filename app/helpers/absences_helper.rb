@@ -96,13 +96,14 @@ module AbsencesHelper
   end
 
   def other_team_members(user)
-    team_members_by_teams(user.teams).where('users.id != ?', user)
+    team_members_by_teams(user.teams) - [user]
   end
 
   def team_members_by_teams(teams)
     User.joins(:teams)
         .where(memberships: {team_id: teams})
         .uniq
+        .to_a
   end
 
   def render_absences(absences, text = nil)

@@ -361,14 +361,16 @@ de:
       timer_running_warning:
         one: 'An dem folgenden Tag ist noch ein Timer aktiv:'
         other: "An den folgenden Tagen sind noch Timer aktiv:"
+      total: 'Total'
+      time_bonuses: Nachtzuschläge
+    time_entry:
+      duration_bonus: Nachtzuschlag
       tooltip:
         starts: 'Beginnt am'
         ends: 'Endet am'
-      time_bonus: Nachtzuschlag
-      time_bonuses: Nachtzuschläge
+    timer: 
       timer: Timer
-      info-timer-exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
-      total: 'Total'
+      exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
     top_buttons:
       add_time: Zeit hinzufügen
     add_time_modal:

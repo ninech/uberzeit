@@ -72,20 +72,6 @@ describe TimeSheet do
     end
 
     context 'user with full-time workload' do
-      it 'delivers single entries which are cut to the specified date or range (chunks)' do
-        time_sheet.find_chunks('2013-02-04'.to_date...'2013-02-11'.to_date, TimeType.work).length.should eq(8)
-
-        # we work edthrough the night on 02-07 so we expect two chunks for 02-08
-        time_sheet.find_chunks('2013-02-08'.to_date, TimeType.work).length.should eq(2)
-
-        # check sunday for borderline
-        time_sheet.find_chunks('2013-02-10'.to_date, TimeType.work).length.should eq(1)
-
-        # what about times and timezones?
-        time_sheet.find_chunks('2013-02-04 00:00:00 GMT+1'.to_time..'2013-02-04 09:00:00 GMT+1'.to_time).should be_empty
-        time_sheet.find_chunks('2013-02-04 00:00:00 GMT+1'.to_time..'2013-02-04 09:05:00 GMT+1'.to_time).should_not be_empty
-      end
-
       it 'calculates the total duration (daily and weekly)' do
         time_sheet.total('2013-02-04'.to_date...'2013-02-11'.to_date, TimeType.work).should eq(33.5.hours)
         time_sheet.total('2013-02-04'.to_date...'2013-02-11'.to_date, TimeType.vacation).should eq(1.work_days)
