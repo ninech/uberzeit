@@ -22,9 +22,9 @@ describe AbsencesController do
         get :index, user_id: user.id
         assigns(:absences).length.should eq(2)
         assigns(:absences)['2013-01-01'.to_date].length.should eq(1)
-        assigns(:absences)['2013-01-01'.to_date].first.should be_instance_of(TimeChunk)
+        assigns(:absences)['2013-01-01'.to_date].first.should be_instance_of(Absence)
         assigns(:absences)['2013-01-02'.to_date].length.should eq(1)
-        assigns(:absences)['2013-01-02'.to_date].first.should be_instance_of(TimeChunk)
+        assigns(:absences)['2013-01-02'.to_date].first.should be_instance_of(Absence)
       end
 
       it 'handles a year parameter' do

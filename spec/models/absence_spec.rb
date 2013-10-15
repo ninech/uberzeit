@@ -159,6 +159,77 @@ describe Absence do
       it 'calculates time span for each recurring date' do
         subject.time_spans.collect(&:date).map(&:to_s).should eq(%w[2013-10-02 2013-10-09])
       end
+
+      it 'reloads the schedule upon update' do
+        subject.start_date = '2013-10-01'
+        subject.save
+        subject.time_spans.collect(&:date).map(&:to_s).should eq(%w[2013-10-01 2013-10-02 2013-10-08 2013-10-09])
+      end
+    end
+  end
+
+  describe 'overlapping validation' do
+    let(:user) { FactoryGirl.create :user }
+
+    context 'with simple absences' do
+      subject { FactoryGirl.build(:absence, user: user, start_date: '2013-01-01', end_date: '2013-01-01') }
+
+      context 'when not overlapping' do
+        context 'with same user but different date' do
+          let!(:other_absence) { FactoryGirl.create(:absence, user: user, start_date: '2013-01-02', end_date: '2013-01-02') }
+
+          it { should be_valid }
+        end
+
+        context 'with different user but same date' do
+          let!(:other_absence) { FactoryGirl.create(:absence, start_date: '2013-01-01', end_date: '2013-01-01') }
+
+          it { should be_valid }
+        end
+
+        context 'when changing the absence' do
+          before(:each) do
+            subject.end_date = '2013-01-02'
+            subject.save!
+          end
+
+          it { should be_valid }
+        end
+      end
+
+      context 'when overlapping' do
+        subject { FactoryGirl.build(:absence, user: user, start_date: '2013-01-01', end_date: '2013-01-01') }
+        let!(:other_absence) { FactoryGirl.create(:absence, user: user, start_date: '2013-01-01', end_date: '2013-01-01') }
+
+        it { should_not be_valid }
+      end
+    end
+
+    context 'first / second half day' do
+      subject { FactoryGirl.build(:absence, user: user, start_date: '2013-01-01', end_date: '2013-01-01', first_half_day: true, second_half_day: false) }
+
+      context 'when not overlapping' do
+        let!(:other_absence) { FactoryGirl.create(:absence, user: user, start_date: '2013-01-01', end_date: '2013-01-01', first_half_day: false, second_half_day: true) }
+
+        it { should be_valid }
+      end
+
+      context 'when overlapping' do
+        let!(:other_absence) { FactoryGirl.create(:absence, user: user, start_date: '2013-01-01', end_date: '2013-01-01', first_half_day: true, second_half_day: true) }
+
+        it { should_not be_valid }
+      end
+    end
+
+    context 'with scheduled absences' do
+      let(:user) { FactoryGirl.create :user }
+      subject { FactoryGirl.build(:absence, user: user, start_date: '2013-10-07', end_date: '2013-10-08', schedule_attributes: {active: true, ends_date: '2013-11-03', weekly_repeat_interval: 1}) }
+
+      context 'when overlapping' do
+        let!(:other_absence) { FactoryGirl.create(:absence, user: user, start_date: '2013-10-15', end_date: '2013-10-15', schedule_attributes: {active: true, ends_date: '2013-11-03', weekly_repeat_interval: 1}) }
+
+        it { should_not be_valid }
+      end
     end
   end
 end

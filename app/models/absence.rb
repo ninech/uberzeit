@@ -35,6 +35,7 @@ class Absence < ActiveRecord::Base
 
   validates_datetime :start_date
   validates_datetime :end_date, on_or_after: :start_date
+  validate :must_not_overlap_with_other_absences
 
   accepts_nested_attributes_for :schedule, update_only: true
 
@@ -173,6 +174,7 @@ class Absence < ActiveRecord::Base
 
   def update_or_create_time_span
     time_spans.destroy_all
+    schedule.reload
     occurrences.each do |occurrence|
       occurrence.each do |date|
         create_time_span_for_date(date)
@@ -198,5 +200,38 @@ class Absence < ActiveRecord::Base
     time_span.save!
   end
 
+  # VIEWERS DISCRETION ADVISED
+  #
+  # The following code is a neat hack: Rails set
+  # `schedule.absence` AFTER the creation of the Absence. For
+  # unpersisted absences, schedule.absence is therefore `nil`.
+  # Since the validation` must_not_overlap_with_other_absences`
+  # uses `occurrences` which depends on `schedule.absence` being
+  # set, we do this manually when building the absence. The code
+  # is covered by our specs and believed to have no unpleasant
+  # side effects.
+  def build_schedule(*args)
+    super(*args).tap do |schedule|
+      schedule.absence = self
+    end
+  end
+
+  private
+  def must_not_overlap_with_other_absences
+    conflicting_dates = find_conflicting_dates
+    if conflicting_dates.any?
+      errors.add(:start_date, :absences_overlap, dates: conflicting_dates.to_sentence)
+    end
+  end
+
+  def find_conflicting_dates
+    overlapping_time_spans = user.time_spans.absences.where(date: occurrences)
+    overlapping_time_spans.collect do |time_span|
+      absence = time_span.time_spanable
+      next if absence == self
+      next if absence.first_half_day != first_half_day && absence.second_half_day != second_half_day
+      time_span.date
+    end.compact.uniq
+  end
 end
 

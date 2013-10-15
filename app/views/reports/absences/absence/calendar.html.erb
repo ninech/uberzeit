@@ -23,14 +23,14 @@
         <td><%= user %></td>
         <% @range.each do |day| %>
           <%
-            absences = @absences.fetch([user.id, day], [])
+            absences = @absences_by_user_and_date.fetch([user.id, day], [])
           %>
           <td class="event
           <% if day.today? %>today<% end %>
           <% unless @public_holidays[day].empty? %>public-holiday<% end %>
           <% unless @work_days[day] %>non-work-day<% end %>
           <% unless absences.empty? %>has-tip<% end %>"
-          <% unless absences.empty? %>data-tooltip="<%=render(partial: 'shared/absences_tooltip', locals: { absences: absences, edit: false}).to_s%>" <% end %>>
+          <% unless absences.empty? %>data-tooltip="<%=render(partial: 'shared/absences_tooltip', locals: { absences: absences, day: day, edit: false }).to_s%>" <% end %>>
             <% unless absences.blank? %>
               <div class="event-container">
                 <%= render_absences(absences).html_safe %>

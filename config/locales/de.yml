@@ -69,6 +69,8 @@ de:
               timer_exists_on_date_already: An diesem Datum läuft schon ein Timer.
         absence:
           attributes:
+            start_date:
+              absences_overlap: 'überschneidet sich mit Absenzen am %{dates}'
             end_date:
               on_or_after: muss an oder nach dem Startdatum liegen
         absence_schedule:
@@ -332,6 +334,7 @@ de:
         group_by: Gruppieren nach
         project: Projekt
         activity_type: Aktivität
+        customer: Kunde
       customer_selector:
         customer: Kunde
       buttons:
@@ -358,14 +361,16 @@ de:
       timer_running_warning:
         one: 'An dem folgenden Tag ist noch ein Timer aktiv:'
         other: "An den folgenden Tagen sind noch Timer aktiv:"
+      total: 'Total'
+      time_bonuses: Nachtzuschläge
+    time_entry:
+      duration_bonus: Nachtzuschlag
       tooltip:
         starts: 'Beginnt am'
         ends: 'Endet am'
-      time_bonus: Nachtzuschlag
-      time_bonuses: Nachtzuschläge
+    timer: 
       timer: Timer
-      info-timer-exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
-      total: 'Total'
+      exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
     top_buttons:
       add_time: Zeit hinzufügen
     add_time_modal:

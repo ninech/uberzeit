@@ -27,7 +27,7 @@ class AbsenceSchedule < ActiveRecord::Base
   def has_absence_and_schedule_active?
     !absence.nil? && active?
   end
-  
+
   def active?
     !!active
   end

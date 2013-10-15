@@ -12,7 +12,7 @@
                 <%= l weekday, format: :short %>
               </span>
               <% if @absences && @absences[weekday] %>
-                <%= @absences[weekday].map{ |chunk| icon_for_time_type(chunk.time_type) }.join.html_safe %>
+                <%= @absences[weekday].map{ |absence| icon_for_time_type(absence.time_type) }.join.html_safe %>
               <% end %>
               <% if @public_holidays[weekday] %>
                 <i class="icon-flag public-holiday-color" title="<%= @public_holidays[weekday].name %>"></i>

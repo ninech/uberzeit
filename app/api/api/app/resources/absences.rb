@@ -24,10 +24,7 @@ class API::App::Resources::Absences < Grape::API
       end
       get ':team_id/date/:date'do
         users = Team.find(params[:team_id]).members
-        absences = FindDailyAbsences.new(users, params[:date])
-                                    .result
-                                    .values
-                                    .flatten
+        absences = FindDailyAbsences.new(users, params[:date]).result
         present absences, with: API::Shared::Entities::Absence, embed: params[:embed]
       end
     end

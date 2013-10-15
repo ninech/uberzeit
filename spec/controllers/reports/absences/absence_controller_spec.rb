@@ -54,7 +54,7 @@ describe Reports::Absences::AbsenceController do
         get :calendar, year: year, month: month
         assigns(:year).should_not be_nil
         assigns(:month).should_not be_nil
-        assigns(:absences).should_not be_nil
+        assigns(:absences_by_user_and_date).should_not be_nil
       end
 
       it 'renders the :calendar template' do
