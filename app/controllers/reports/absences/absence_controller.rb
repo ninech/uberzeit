@@ -1,4 +1,6 @@
-class Reports::Absences::AbsenceController < Reports::BaseController
+class Reports::Absences::AbsenceController < ApplicationController
+  before_filter :set_info
+
   def year
     time_spans_with_scopes = TimeSpan.for_user(@users)
       .with_date_in_year(@year)
@@ -22,11 +24,6 @@ class Reports::Absences::AbsenceController < Reports::BaseController
   end
 
   def calendar
-    # special rights for this view
-    @team = Team.find(params[:team_id]) if params[:team_id].present?
-    @users = @team ? @team.members : User.all
-    @teams = Team.all
-
     @range = UberZeit.month_as_range(@year, @month)
 
     @public_holidays = Hash[@range.collect { |day| [day, PublicHoliday.with_date(day)] }]
@@ -36,6 +33,14 @@ class Reports::Absences::AbsenceController < Reports::BaseController
   end
 
   private
+
+  def set_info
+    @team = Team.find(params[:team_id]) if params[:team_id].present?
+    @users = @team ? @team.members : User.all
+    @teams = Team.all
+    @year = params[:year].to_i
+    @month = params[:month].to_i
+  end
 
   def find_absences_by_user_and_date
     absences_by_date = FindDailyAbsences.new(@users, @range).result_grouped_by_date

@@ -392,6 +392,7 @@ de:
       new_public_holiday: Neuer Feiertag
       confirm_delete: Wirklich löschen?
     form:
+      date: Datum
       back: Zurück
     new:
       title: Feiertag hinzufügen
@@ -405,6 +406,7 @@ de:
       unit_work_days: Arbeitstage
       unit_hours: Stunden
     form:
+      date: Datum
       back: Zurück
     new:
       title: Anpassung hinzufügen

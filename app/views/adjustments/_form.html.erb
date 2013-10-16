@@ -16,7 +16,7 @@
 </div>
 <div class="row">
   <div class="small-4 columns">
-    <%= f.text_field :date, value: (l(f.object.date, format: :long) if f.object.date), class: 'date' %>
+    <%= datefield(f, :date, t('.date'), f.object.date, :date) %>
   </div>
 </div>
 <div class="row work-days">

@@ -64,7 +64,7 @@ class TimeEntriesController < ApplicationController
   end
 
   def summary_for_date
-    @total = @user.time_sheet.total(@day) + @user.time_sheet.duration_of_timers(@day)
+    @total = @user.time_sheet.working_time_without_adjustments_total(@day) + @user.time_sheet.duration_of_timers(@day)
     @bonus = @user.time_sheet.bonus(@day)
 
     @timer_duration_for_day = timer_on_day ? timer_on_day.duration(@day) : 0
@@ -103,7 +103,7 @@ class TimeEntriesController < ApplicationController
 
   def load_week_total
     week = @day.at_beginning_of_week..@day.at_end_of_week
-    @week_total = @user.time_sheet.total(week) + @user.time_sheet.duration_of_timers(week)
+    @week_total = @user.time_sheet.working_time_without_adjustments_total(week) + @user.time_sheet.duration_of_timers(week)
   end
 
   def prepare_weekday_sums
