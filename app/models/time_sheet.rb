@@ -63,11 +63,11 @@ class TimeSheet
   end
 
   def absences_total(date_or_range)
-    user.time_spans.with_date(date_or_range).absences_with_adjustments.credited_duration_sum
+    user.time_spans.with_date(date_or_range).absences.credited_duration_sum
   end
 
   def absences_by_type(date_or_range)
-    user.time_spans.with_date(date_or_range).absences_with_adjustments.credited_duration_sum_per_time_type
+    user.time_spans.with_date(date_or_range).absences.credited_duration_sum_per_time_type
   end
 
   def adjustments_total(date_or_range)
