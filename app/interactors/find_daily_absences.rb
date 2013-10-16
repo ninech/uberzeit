@@ -12,7 +12,7 @@ class FindDailyAbsences
 
   def result_grouped_by_date
     @result_grouped_by_date ||= begin
-      grouped_time_spans = find_time_spans.group_by { |ts| ts.date }
+      grouped_time_spans = find_time_spans.order(:date).group_by { |ts| ts.date }
       Hash[grouped_time_spans.collect{ |date, time_spans| [date, Absence.joins(:time_spans).where(time_spans: {id: time_spans})] }]
     end
   end

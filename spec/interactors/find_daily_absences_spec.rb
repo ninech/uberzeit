@@ -29,6 +29,19 @@ describe FindDailyAbsences do
       subject[from].should =~ [absence1, absence2]
     end
 
+    describe 'sorting' do
+      before do
+        FactoryGirl.create(:absence, user: user1, start_date: '2013-01-01', end_date: '2013-01-01')
+        FactoryGirl.create(:absence, user: user1, start_date: '2013-12-31', end_date: '2013-12-31') # later created
+      end
+
+      let(:find_absences) { FindDailyAbsences.new([user1, user2], '2013-01-01'.to_date..'2013-12-31'.to_date) }
+
+      it 'is a sorted hash' do
+        subject.keys.should eq subject.keys.sort
+      end
+    end
+
     context 'with one user' do
       let(:find_absences) { FindDailyAbsences.new(user1, range) }
 
