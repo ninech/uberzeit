@@ -6,7 +6,7 @@
 </div>
 <div class="row">
   <div class="small-4 columns">
-    <%= f.text_field :date, value: (l(@public_holiday.date, format: :long) if @public_holiday.date), class: 'date start' %>
+    <%= datefield(f, :date, t('.date'), @public_holiday.date, :date) %>
   </div>
 </div>
 
