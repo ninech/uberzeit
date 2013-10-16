@@ -25,7 +25,7 @@ class Reports::Activities::ComparisonController < ApplicationController
       if date > Date.today
         break
       end
-      @data_points[:time_entries] << [(date.to_time.to_f * 1000.0).to_i, @user.time_sheet.total(date, TimeType.work).to_hours]
+      @data_points[:time_entries] << [(date.to_time.to_f * 1000.0).to_i, @user.time_sheet.effective_working_time_total(date).to_hours]
       @data_points[:activities] << [(date.to_time.to_f * 1000.0).to_i, (@user.activities.where(date: date).sum(:duration)/3600.0)]
     end
   end
