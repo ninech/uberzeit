@@ -1,4 +1,13 @@
 
+2.0.7
+========================
+Date:        2013-10-17
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.6...2.0.7
+
+  * Bug #8040 [production][activities#edit] CanCan::AccessDenied: You are not authorized to access this page. (Steven Schmid)
+
+
 2.0.6
 =====
 Date:        2013-10-17
