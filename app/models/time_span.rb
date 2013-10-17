@@ -100,6 +100,10 @@ class TimeSpan < ActiveRecord::Base
     group(:time_type_id).sum(:credited_duration_in_work_days)
   end
 
+  def self.credited_duration_in_work_day_sum_per_user_and_time_type
+    group(:user_id).group(:time_type_id).sum(:credited_duration_in_work_days)
+  end
+
   def duration=(value)
     write_attribute :duration_in_work_days, value.to_work_days
     super

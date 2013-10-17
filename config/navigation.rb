@@ -63,7 +63,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :absences, t('navigation.absences'), user_absences_path(current_user), highlights_on: %r!\A/(users/\d+/absences|reports/absences/\d*/\d*)! do |second|
       second.dom_class = 'sub-nav'
       second.item :my_absences, t('navigation.sub.absences.my_absences'), user_absences_path(current_user), highlights_on: %r!\A/users/\d+/absences!
-      second.item :absences_others, t('navigation.sub.absences.absences'), reports_absences_calendar_path(Date.current.year, Date.current.month), highlights_on: %r!\A/reports/absences/\d*/\d*!
+      second.item :absences_others, t('navigation.sub.absences.absences'), reports_absences_calendar_path(Date.current.year, Date.current.month), highlights_on: %r!\A/reports/absences!
     end
 
     primary.item :activities, t('navigation.activities'), reports_activities_filter_path(Date.current.year, Date.current.month, 'customer'), highlights_on: %r!\A/reports/activities!, if: -> { show_activities_link_in_navigation? } do |second|
