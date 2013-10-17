@@ -26,7 +26,7 @@ class Reports::Absences::AbsenceController < ApplicationController
   def calendar
     @range = UberZeit.month_as_range(@year, @month)
 
-    @public_holidays = Hash[@range.collect { |day| [day, PublicHoliday.with_date(day)] }]
+    @public_holidays = PublicHoliday.with_date(@range).group_by { |public_holiday| public_holiday.date }
     @work_days = Hash[@range.collect { |day| [day, UberZeit.is_weekday_a_workday?(day)] }]
 
     @absences_by_user_and_date = find_absences_by_user_and_date
@@ -38,8 +38,8 @@ class Reports::Absences::AbsenceController < ApplicationController
     @team = Team.find(params[:team_id]) if params[:team_id].present?
     @users = @team ? @team.members : User.all
     @teams = Team.all
-    @year = params[:year].to_i
-    @month = params[:month].to_i
+    @year = params[:year].to_i if params[:year].present?
+    @month = params[:month].to_i if params[:month].present?
   end
 
   def find_absences_by_user_and_date

@@ -11,8 +11,8 @@
           <% current_day_class = (day.today? ? 'today' : '') %>
           <th class="
             <% if day.today? %>today<% end %>
-            <% unless @public_holidays[day].empty? %>public-holiday has-tip<% end %>
-            "<% unless @public_holidays[day].empty? %> data-tooltip="<%=render(partial: 'shared/public_holiday_tooltip', locals: { public_holiday: @public_holidays[day].first }).to_s%>"<% end %>>
+            <% if @public_holidays[day] %>public-holiday has-tip<% end %>
+            "<% if @public_holidays[day] %> data-tooltip="<%=render(partial: 'shared/public_holiday_tooltip', locals: { public_holiday: @public_holidays[day].first }).to_s%>"<% end %>>
             <%= day.strftime('%d') %>
           </th>
         <% end %>
@@ -27,7 +27,7 @@
           %>
           <td class="event
           <% if day.today? %>today<% end %>
-          <% unless @public_holidays[day].empty? %>public-holiday<% end %>
+          <% if @public_holidays[day] %>public-holiday<% end %>
           <% unless @work_days[day] %>non-work-day<% end %>
           <% unless absences.empty? %>has-tip<% end %>"
           <% unless absences.empty? %>data-tooltip="<%=render(partial: 'shared/absences_tooltip', locals: { absences: absences, day: day, edit: false }).to_s%>" <% end %>>

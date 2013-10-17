@@ -7,17 +7,24 @@ class FindDailyAbsences
   end
 
   def result
-    @result ||= Absence.joins(:time_spans).where(time_spans: {id: find_time_spans}).uniq
+    @result ||= absences_by_time_spans(find_time_spans).uniq
   end
 
   def result_grouped_by_date
     @result_grouped_by_date ||= begin
       grouped_time_spans = find_time_spans.order(:date).group_by { |ts| ts.date }
-      Hash[grouped_time_spans.collect{ |date, time_spans| [date, Absence.joins(:time_spans).where(time_spans: {id: time_spans})] }]
+      Hash[grouped_time_spans.collect{ |date, time_spans| [date, absences_by_time_spans(time_spans)] }]
     end
   end
 
   private
+
+  def absences_by_time_spans(time_spans)
+    Absence.joins(:time_spans)
+           .where(time_spans: {id: time_spans})
+           .includes(:time_type)
+           .includes(:schedule => :absence) # eager loading TO THE MAX!
+  end
 
   def find_time_spans
     TimeSpan.absences.for_user(users).with_date(range)

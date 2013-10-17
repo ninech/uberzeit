@@ -1,6 +1,7 @@
 <%= render partial: 'reports/shared/time_frame_selector' %>
 <%= render partial: 'reports/shared/team_selector' %>
-<%= render partial: 'reports/shared/header', locals: {base_url: "/reports/absences/:year", title: t('.title') } %>
+
+<%= render partial: 'reports/shared/header', locals: { base_url: "/reports/absences/:year", title: t('.title') } %>
 
 <div class="content-summary row">
   <div class="small-12 columns">
