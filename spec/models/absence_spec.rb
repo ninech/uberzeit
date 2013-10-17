@@ -125,10 +125,31 @@ describe Absence do
           subject.time_spans.count.should eq(1)
         end
 
-        it 'sets the credited duration to zero if the TimeType should be excluded from calculation' do
-          subject.time_type = TEST_TIME_TYPES[:compensation]
-          subject.save!
-          subject.time_spans.map(&:credited_duration).should eq([0])
+        context 'when TimeType should be excluded from calculation' do
+          before do
+            subject.time_type = TEST_TIME_TYPES[:compensation]
+            subject.save!
+          end
+
+          it 'sets the credited duration to zero' do
+            subject.time_spans.map(&:credited_duration_in_work_days).should eq([0])
+          end
+
+          it 'sets the duration to the planned working time on that day' do
+            subject.time_spans.map(&:duration_in_work_days).should eq([1])
+          end
+
+          context 'on a non work day (e.g. weekend)' do
+            before do
+              subject.start_date = '2013-01-06' # sunday
+              subject.end_date = '2013-01-06'
+              subject.save!
+            end
+
+            it 'sets the duration to zero' do
+              subject.time_spans.map(&:duration_in_work_days).should eq([0])
+            end
+          end
         end
       end
     end
@@ -148,7 +169,7 @@ describe Absence do
         subject.start_date = '2013-09-27'
         subject.end_date = '2013-09-30'
         subject.save!
-        subject.time_spans.collect(&:duration_in_work_days).sum.should eq(4)
+        subject.time_spans.collect(&:duration_in_work_days).sum.should eq(2)
         subject.time_spans.collect(&:credited_duration_in_work_days).sum.should eq(2)
       end
     end
