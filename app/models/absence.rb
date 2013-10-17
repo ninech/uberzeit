@@ -183,12 +183,13 @@ class Absence < ActiveRecord::Base
   end
 
   def create_time_span_for_date(date)
-    duration_in_work_days = whole_day? ? 1 : 0.5
-    credited_duration_in_work_days = unless time_type.exclude_from_calculation?
-                                       calculated_planned_working_time = CalculatePlannedWorkingTime.new(date.to_range, user, fulltime: true).total.to_work_days
-                                       duration_in_work_days * calculated_planned_working_time
-                                     else
+    calculated_planned_working_time = CalculatePlannedWorkingTime.new(date.to_range, user, fulltime: true).total
+    duration_in_work_days = (whole_day? ? 1 : 0.5) * calculated_planned_working_time.to_work_days
+
+    credited_duration_in_work_days = if time_type.exclude_from_calculation?
                                        0
+                                     else
+                                       duration_in_work_days
                                      end
 
     time_span = time_spans.build
