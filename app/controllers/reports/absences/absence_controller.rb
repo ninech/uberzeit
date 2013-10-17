@@ -6,8 +6,8 @@ class Reports::Absences::AbsenceController < ApplicationController
       .with_date_in_year(@year)
       .absences_with_adjustments
 
-    @result = time_spans_with_scopes.duration_in_work_day_sum_per_user_and_time_type
-    @total = time_spans_with_scopes.duration_in_work_day_sum_per_time_type
+    @result = time_spans_with_scopes.credited_duration_in_work_day_sum_per_user_and_time_type
+    @total = time_spans_with_scopes.credited_duration_in_work_days_sum_per_time_type
 
     render :table
   end
@@ -17,8 +17,8 @@ class Reports::Absences::AbsenceController < ApplicationController
       .with_date_in_year_and_month(@year, @month)
       .absences_with_adjustments
 
-    @result = time_spans_with_scopes.duration_in_work_day_sum_per_user_and_time_type
-    @total = time_spans_with_scopes.duration_in_work_day_sum_per_time_type
+    @result = time_spans_with_scopes.credited_duration_in_work_day_sum_per_user_and_time_type
+    @total = time_spans_with_scopes.credited_duration_in_work_days_sum_per_time_type
 
     render :table
   end
