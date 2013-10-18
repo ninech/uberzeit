@@ -1,0 +1,62 @@
+// global
+a[href]:after {
+  content: '';
+}
+
+.button, .footer {
+  display: none;
+}
+
+.has-tip {
+  border-bottom: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  font-weight: bold;
+}
+
+// layout
+.header {
+  &.container {
+    margin-bottom: 0;
+  }
+}
+
+.navigation ul li a {
+  font-size: 80%;
+
+  &.active {
+    border-color: black !important;
+  }
+}
+
+.sub-nav dd:first-child {
+  a {
+    padding-left: 0;
+  }
+}
+
+// pages
+.timesheet {
+  .edit-time-entry-link,
+  .stop-timer,
+  .head .right,
+  .no-entries-message a
+  {
+    display: none;
+  }
+}
+
+.content-time_entries {
+  select[name="user"] {
+    font-size: 120%;
+  }
+}
