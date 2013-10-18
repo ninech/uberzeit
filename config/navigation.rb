@@ -66,7 +66,13 @@ SimpleNavigation::Configuration.run do |navigation|
       second.item :absences_others, t('navigation.sub.absences.absences'), reports_absences_calendar_path(Date.current.year, Date.current.month), highlights_on: %r!\A/reports/absences!
     end
 
-    primary.item :activities, t('navigation.activities'), reports_activities_filter_path(Date.current.year, Date.current.month, 'customer'), highlights_on: %r!\A/reports/activities!, if: -> { show_activities_link_in_navigation? } do |second|
+    default_activity_url = if ability.can? :manage, :filter
+                             reports_activities_filter_path(Date.current.year, Date.current.month, 'customer')
+                           else
+                             reports_activities_billability_path
+                            end
+
+    primary.item :activities, t('navigation.activities'), default_activity_url, highlights_on: %r!\A/reports/activities!, if: -> { show_activities_link_in_navigation? } do |second|
       second.dom_class = 'sub-nav'
       if ability.can? :manage, :filter
         second.item :activity_filter, t('navigation.sub.reports.activity_filter'), reports_activities_filter_path(Date.current.year, Date.current.month, 'customer'), highlights_on: %r!\A/reports/activities/filter!
