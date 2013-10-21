@@ -15,24 +15,19 @@ class TimeEntriesController < ApplicationController
 
   def index
     prepare_week_view
-    @time_spans_of_time_entries = @user.time_spans.effective_working_time.with_date(@day)
+    @time_spans_of_time_entries = @user.time_spans
+                                       .effective_working_time
+                                       .with_date(@day)
+                                       .sort_by { |time_span| time_span.time_spanable.starts }
+
     @time_spans_of_absences = @user.time_spans.absences.with_date(@day)
     @current_public_holiday = @public_holidays[@day]
-
-    # stuff for add form in modal
-    @time_entry = TimeEntry.new
-    if params[:date]
-      @time_entry.start_date = params[:date]
-    end
-    @time_types = TimeType.work
 
     @timer = timer_on_day
     if @timer
       @timer_range = @timer.range.intersect(@day.to_range)
     end
     @timers_other_days = @user.time_entries.timers_not_in_range(@day.to_range)
-
-    respond_with(@time_entries)
   end
 
   def new
