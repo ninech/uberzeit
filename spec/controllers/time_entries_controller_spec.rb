@@ -22,15 +22,18 @@ describe TimeEntriesController do
     end
 
     describe 'GET "index"' do
+      let(:date) { '2013-01-01'.to_date }
+      let!(:time_entry_late) { FactoryGirl.create(:time_entry, start_date: date, end_date: date, user: user, start_time: '15:00', end_time: '16:00') }
+      let!(:time_entry_early) { FactoryGirl.create(:time_entry, start_date: date, end_date: date, user: user, start_time: '10:00', end_time: '12:00') }
 
       before do
-        get :index, user_id: user.id, date: Date.today
+        get :index, user_id: user.id, date: date
       end
 
       subject { response }
 
-      it 'assigns @time_entries' do
-        assigns(:time_entries).should eq([])
+      it 'assigns sorted @time_spans_of_time_entries' do
+        assigns(:time_spans_of_time_entries).should eq (time_entry_early.time_spans + time_entry_late.time_spans)
       end
 
       it { should render_template(:index) }
