@@ -10,6 +10,8 @@
 #  second_half_day :boolean          default(TRUE)
 #  deleted_at      :datetime
 #  user_id         :integer
+#  created_at      :datetime
+#  updated_at      :datetime
 #
 
 class Absence < ActiveRecord::Base

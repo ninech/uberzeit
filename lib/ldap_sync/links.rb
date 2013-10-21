@@ -18,7 +18,7 @@ class LdapSync
       def drop_deleted_links
         Team.all.each do |team|
           # delete_if does not work on ActiveRecord::Collections
-          members_to_remove =  team.members.select { |member| not member_in_ldap?(team.uid, member.uid) }
+          members_to_remove =  team.members.select { |member| not member_in_ldap?(team.uid, member.email) }
           team.members.delete(members_to_remove)
         end
       end

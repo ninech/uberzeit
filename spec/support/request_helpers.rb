@@ -1,6 +1,6 @@
 module RequestHelpers
   def login(user)
-    user.update_attribute(:uid, 'user1')
+    user.update_attribute(:email, 'user1@example.com')
     visit root_path
   end
 

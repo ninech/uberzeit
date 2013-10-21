@@ -4,7 +4,7 @@
 #
 #  id                   :integer          not null, primary key
 #  name                 :string(255)
-#  uid                  :string(255)
+#  email                :string(255)
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  deleted_at           :datetime
@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 
   default_scope order('users.name')
 
-  attr_accessible :uid, :name, :birthday, :given_name
+  attr_accessible :email, :name, :birthday, :given_name
 
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
 
   def self.create_with_omniauth(auth)
     create! do |user|
-      user.uid = auth['uid']
+      user.email = auth['uid']
       user.name = auth['info']['name'] if auth['info']
     end
   end

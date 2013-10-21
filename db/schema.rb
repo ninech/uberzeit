@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131004143716) do
+ActiveRecord::Schema.define(:version => 20131021140705) do
 
   create_table "absence_schedules", :force => true do |t|
     t.boolean  "active",                 :default => false
@@ -213,7 +213,7 @@ ActiveRecord::Schema.define(:version => 20131004143716) do
 
   create_table "users", :force => true do |t|
     t.string   "name"
-    t.string   "uid"
+    t.string   "email"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
     t.datetime "deleted_at"
