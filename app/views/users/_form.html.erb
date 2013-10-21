@@ -1,17 +1,26 @@
 <%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation" class="alert alert-error">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit class: 'btn btn-primary' %>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.text_field :given_name %>
   </div>
+</div>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.text_field :name %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.text_field :birthday %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-3 columns">
+    <%= f.submit class: 'button'%>
+  </div>
+  <div class="small-2 columns end">
+    <%= link_to t('.back'), user_path(@user), class: "secondary button" %>
+  </div>
+</div>
 <% end %>

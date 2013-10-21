@@ -2,16 +2,20 @@
   <div class="small-12 columns">
     <h1><%= t('.list_of_users') %></h1>
 
-    <table class="nice small-12">
+    <table class="nice small-12 edit destroy">
       <thead>
         <tr>
           <th><%= t '.user' %></th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
         </tr>
       </thead>
       <tbody>
         <% @users.each do |user| %>
         <tr>
           <td><strong><%= link_to user, user_path(user) %></strong></td>
+          <td><%= link_to icon('edit'), edit_user_path(user) %></td>
+          <td>&nbsp;</td>
         </tr>
         <% end %>
       </tbody>
