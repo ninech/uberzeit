@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(params[:user])
-      redirect_to edit_user_path(@user), :notice => 'Settings were successfully updated.'
+      redirect_to users_path, flash: {success: t('model_successfully_updated', model: User.model_name.human)}
     else
       render :edit
     end
