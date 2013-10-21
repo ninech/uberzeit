@@ -1,5 +1,15 @@
 
-8181-sort-time-entries
+2.0.10
+======
+Date:        2013-10-21
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.9...2.0.10
+
+  * Feature #8011 Projekt bei Report "Billability" anzeigen (Samuel Sieg)
+  * Feature #6489 Druckansicht uberZeit (Samuel Sieg)
+
+
+2.0.9
 ======================
 Date:        2013-10-21
 Released by: Steven Schmid

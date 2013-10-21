@@ -245,8 +245,11 @@
   }
 
   table.billability, table.billing {
-    th, td {
+    td small {
+      font-size: 80%;
+      display: block;
     }
+
     th:first-child, td:first-child {
       width: 25em;
     }
