@@ -1,6 +1,11 @@
 <%= form_for(@user) do |f| %>
 <div class="row">
   <div class="small-4 columns">
+    <%= f.text_field :email %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-4 columns">
     <%= f.text_field :given_name %>
   </div>
 </div>

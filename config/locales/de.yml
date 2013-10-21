@@ -55,6 +55,7 @@ de:
         date: Datum
         daypart: Dauer
       user:
+        email: 'E-Mail'
         given_name: Vorname
         name: Nachname
         birthday: Geburtsdatum
