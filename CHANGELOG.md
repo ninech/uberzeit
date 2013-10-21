@@ -1,4 +1,13 @@
 
+8181-sort-time-entries
+======================
+Date:        2013-10-21
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.8...8181-sort-time-entries
+
+  * Bug #8181 Time Entries nicht sortiert (Steven Schmid)
+
+
 2.0.8
 =====
 Date:        2013-10-18
