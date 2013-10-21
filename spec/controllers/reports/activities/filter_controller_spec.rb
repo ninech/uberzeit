@@ -8,6 +8,7 @@ describe Reports::Activities::FilterController do
   let(:user) { FactoryGirl.create(:user, teams: [team]) }
   let(:team_leader) { FactoryGirl.create(:team_leader, teams: [team]) }
   let(:admin) { FactoryGirl.create(:admin) }
+  let(:accountant) { FactoryGirl.create(:accountant) }
 
   describe 'access' do
     context 'for non-signed in users' do
@@ -32,6 +33,18 @@ describe Reports::Activities::FilterController do
     context 'for signed-in teamleaders' do
       before do
         test_sign_in team_leader
+      end
+
+      describe 'GET "index"' do
+        it 'grants access' do
+          expect { get :index, month: 1, year: 2010, group_by: 'activity_type' }.to_not raise_error(CanCan::AccessDenied)
+        end
+      end
+    end
+
+    context 'for signed-in accountants' do
+      before do
+        test_sign_in accountant
       end
 
       describe 'GET "index"' do
