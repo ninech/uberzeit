@@ -38,7 +38,7 @@ describe User do
   describe '#create_with_omniauth' do
     context 'without extra attributes' do
 
-      let(:omniauth_hash) { {'uid' => 'user-one'} }
+      let(:omniauth_hash) { {'uid' => 'user-one@example.com'} }
 
       it 'can be created' do
         User.create_with_omniauth(omniauth_hash).should be_persisted
@@ -46,7 +46,7 @@ describe User do
     end
     context 'with extra attributes' do
 
-      let(:omniauth_hash) { {'uid' => 'user-one', 'info' => {'name' => 'Super User'}} }
+      let(:omniauth_hash) { {'uid' => 'user-one@example.com', 'info' => {'name' => 'Super User'}} }
 
       subject { User.create_with_omniauth(omniauth_hash) }
 
@@ -78,6 +78,26 @@ describe User do
       user = FactoryGirl.create(:user)
       user2 = FactoryGirl.create(:user)
       User.in_teams(Team.all).count.should eq([user, user2].count)
+    end
+  end
+
+  describe 'validation' do
+    let(:user) { FactoryGirl.create(:user) }
+
+    it 'allows valid users' do
+      user.should be_valid
+    end
+
+    it 'ensures the email address is unique' do
+      other_user = FactoryGirl.build :user
+      other_user.email = user.email
+      other_user.should_not be_valid
+    end
+
+    it 'ensures the email address is valid' do
+      other_user = FactoryGirl.build :user
+      other_user.email = 'gooby@shemail'
+      other_user.should_not be_valid
     end
   end
 

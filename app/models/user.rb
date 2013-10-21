@@ -34,6 +34,9 @@ class User < ActiveRecord::Base
   has_many :days, dependent: :destroy
   has_many :time_spans, dependent: :destroy
 
+  validates_uniqueness_of :email
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/ }
+
   scope :in_teams, ->(teams) { where Membership.where(team_id: teams).where('user_id = users.id').exists }
 
   def subordinates
