@@ -3,12 +3,19 @@ require 'spec_helper'
 describe UsersController do
   render_views
 
-  let!(:user) { FactoryGirl.create(:user) }
+  let!(:user) { FactoryGirl.create(:admin) }
 
   context 'for non-signed in users' do
     describe 'GET "edit"' do
       it 'redirects to login' do
         get :edit, id: user
+        response.should redirect_to(new_session_path)
+      end
+    end
+
+    describe 'GET "new"' do
+      it 'redirects to login' do
+        get :new
         response.should redirect_to(new_session_path)
       end
     end
@@ -42,6 +49,18 @@ describe UsersController do
       it 'renders the :edit template' do
         get :edit, id: user.id
         response.should render_template :edit
+      end
+    end
+
+    describe 'GET "new"' do
+      it 'assigns the to-be edited user to @user' do
+        get :new
+        assigns(:user).id.should be_nil
+      end
+
+      it 'renders the :new template' do
+        get :new
+        response.should render_template :new
       end
     end
 

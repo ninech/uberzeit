@@ -6,6 +6,9 @@ class UsersController < ApplicationController
     authorize! :manage, User
   end
 
+  def new
+  end
+
   def show
     redirect_to user_employments_path(@user), flash: flash
   end

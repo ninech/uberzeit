@@ -200,6 +200,8 @@ de:
       confirm_delete: Löschen?
     edit:
       edit_user: '"%{user}" bearbeiten'
+    new:
+      new_user: 'Neuen Benutzer erstellen'
   navigation:
     manage: Verwalten
     absences: Absenzen
