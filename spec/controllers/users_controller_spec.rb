@@ -66,7 +66,7 @@ describe UsersController do
 
     describe 'PUT "update"' do
       context 'with valid attributes' do
-        it 'changes public_holiday\'s attributes' do
+        it 'changes user\'s attributes' do
           expect {
             put :update, id: user.id, user: { given_name: 'Dolan', name: 'Duck', email: 'doland@example.com' }
             user.reload
@@ -82,7 +82,7 @@ describe UsersController do
       context 'with invalid attributes' do
         render_views
 
-        it 'does not change public_holiday\'s attributes' do
+        it 'does not change user\'s attributes' do
           expect {
             put :update, id: user.id, user: { email: 'doland@example' }
             user.reload
