@@ -2,7 +2,7 @@ class GeneratePlannedWorkingTimeTask
   def run
     years.each do |year|
       users.each do |user|
-        Rails.logger.info ":generate:planned_working_time Calculating year #{year} for user #{user.uid}"
+        Rails.logger.info ":generate:planned_working_time Calculating year #{year} for user #{user}"
         Day.create_or_regenerate_days_for_user_and_year!(user, year)
       end
     end
