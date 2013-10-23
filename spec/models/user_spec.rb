@@ -35,27 +35,6 @@ describe User do
     user.employments.count.should eq(1)
   end
 
-  describe '#create_with_omniauth' do
-    context 'without extra attributes' do
-
-      let(:omniauth_hash) { {'uid' => 'user-one@example.com'} }
-
-      it 'can be created' do
-        User.create_with_omniauth(omniauth_hash).should be_persisted
-      end
-    end
-    context 'with extra attributes' do
-
-      let(:omniauth_hash) { {'uid' => 'user-one@example.com', 'info' => {'name' => 'Super User'}} }
-
-      subject { User.create_with_omniauth(omniauth_hash) }
-
-      it { should be_persisted }
-      its(:name) { should eq('Super User') }
-
-    end
-  end
-
   describe '#time_sheet' do
     it 'returns an instance of TimeSheet' do
       user.time_sheet.should be_instance_of(TimeSheet)

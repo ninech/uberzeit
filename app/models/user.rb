@@ -62,13 +62,6 @@ class User < ActiveRecord::Base
     employments.first
   end
 
-  def self.create_with_omniauth(auth)
-    create! do |user|
-      user.email = auth['uid']
-      user.name = auth['info']['name'] if auth['info']
-    end
-  end
-
   def to_s
     display_name
   end
