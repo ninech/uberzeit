@@ -189,8 +189,7 @@ de:
       edit_absence: Absenz bearbeiten
   users:
     index:
-      list_of_users: Liste der Benutzer
-      user: Benutzer
+      new_user: 'Neuer Benutzer'
     form:
       back: Zurück
     show:

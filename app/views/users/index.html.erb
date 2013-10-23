@@ -1,15 +1,11 @@
 <div class="row">
   <div class="small-12 columns">
-    <h1><%= t('.list_of_users') %></h1>
+    <h1>
+      <%= User.model_name.human %>
+      <%= link_to icon('plus') + ' ' + t('.new_user'), new_user_path, class: 'button right' %>
+    </h1>
 
     <table class="nice small-12 edit destroy">
-      <thead>
-        <tr>
-          <th><%= t '.user' %></th>
-          <th>&nbsp;</th>
-          <th>&nbsp;</th>
-        </tr>
-      </thead>
       <tbody>
         <% @users.each do |user| %>
         <tr>
