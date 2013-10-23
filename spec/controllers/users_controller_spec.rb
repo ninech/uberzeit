@@ -8,7 +8,7 @@ describe UsersController do
   context 'for non-signed in users' do
     describe 'GET "edit"' do
       it 'redirects to login' do
-        get :edit, id: user
+        get :edit, id: user.id
         response.should redirect_to(new_session_path)
       end
     end
@@ -23,14 +23,27 @@ describe UsersController do
     describe 'PUT "update"' do
       context 'with valid attributes' do
         it 'redirects to login' do
-          put :update, id: user, name: 'Babo'
+          put :update, id: user.id, name: 'Babo'
           response.should redirect_to(new_session_path)
         end
 
         it 'does not change any attributes' do
-          put :update, id: user, name: 'Babo'
+          put :update, id: user.id, name: 'Babo'
           user.name.should_not == 'Babo'
         end
+      end
+    end
+
+    describe 'DELETE "destroy"' do
+      it 'redirects to login' do
+        delete :destroy, id: user.id
+        response.should redirect_to(new_session_path)
+      end
+
+      it 'does not delete the user' do
+        expect do
+          delete :destroy, id: user.id
+        end.to_not change(User, :count)
       end
     end
   end
@@ -93,6 +106,19 @@ describe UsersController do
           put :update, id: user.id, user: { email: 'doland@example' }
           response.should render_template :edit
         end
+      end
+    end
+
+    describe 'DELETE "destroy"' do
+      it 'does delete a user' do
+        expect do
+          delete :destroy, id: user.id
+        end.to change(User, :count).by(-1)
+      end
+
+      it 'does delete the user' do
+        delete :destroy, id: user.id
+        User.where(id: user.id).count.should == 0
       end
     end
 

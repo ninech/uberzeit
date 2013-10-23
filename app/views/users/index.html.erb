@@ -9,9 +9,15 @@
       <tbody>
         <% @users.each do |user| %>
         <tr>
-          <td><strong><%= link_to user, user_path(user) %></strong></td>
-          <td><%= link_to icon('edit'), edit_user_path(user) %></td>
-          <td>&nbsp;</td>
+          <td>
+            <strong><%= link_to user, user_path(user) %></strong>
+          </td>
+          <td>
+            <%= link_to icon('edit'), edit_user_path(user) %>
+          </td>
+          <td>
+            <%= link_to icon('trash'), user, method: :delete, confirm: t('.confirm_delete') %>
+          </td>
         </tr>
         <% end %>
       </tbody>

@@ -190,13 +190,9 @@ de:
   users:
     index:
       new_user: 'Neuer Benutzer'
+      confirm_delete: Wirklich löschen?
     form:
       back: Zurück
-    show:
-      employments: Anstellungsverhältnisse
-      add_employment: Neues Anstellungsverhältnis
-      open-ended: unbefristet
-      confirm_delete: Löschen?
     edit:
       edit_user: '"%{user}" bearbeiten'
     new:

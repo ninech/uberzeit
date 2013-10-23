@@ -23,4 +23,9 @@ class UsersController < ApplicationController
       render :edit
     end
   end
+
+  def destroy
+    @user.destroy
+    redirect_to users_path, flash: {success: t('model_successfully_deleted', model: User.model_name.human)}
+  end
 end
