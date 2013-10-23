@@ -12,7 +12,7 @@ Uberzeit::Application.routes.draw do
 
 
   # users scope
-  resources :users, except: [:destroy] do
+  resources :users, except: [:show] do
     resources :recurring_entries, except: [:show, :index]
 
     resources :absences do
