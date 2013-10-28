@@ -37,6 +37,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/ }
 
+  validates_presence_of :given_name, :name
+
   scope :in_teams, ->(teams) { where Membership.where(team_id: teams).where('user_id = users.id').exists }
 
   def subordinates

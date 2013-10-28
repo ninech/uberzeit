@@ -78,6 +78,16 @@ describe User do
       other_user.email = 'gooby@shemail'
       other_user.should_not be_valid
     end
+
+    it 'requires a non-empty given_name' do
+      user.given_name = ''
+      user.should_not be_valid
+    end
+
+    it 'requires a non-empty name' do
+      user.name = ''
+      user.should_not be_valid
+    end
   end
 
 end

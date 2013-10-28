@@ -1,7 +1,8 @@
 FactoryGirl.define do
   factory :user do |f|
     sequence(:email) { |n| "user#{n}@example.com" }
-    sequence(:name) { |n| "user#{n}" }
+    sequence(:given_name) { |n| "given_name#{n}" }
+    sequence(:name) { |n| "name#{n}" }
 
     teams { FactoryGirl.create_list(:team, 1) }
 

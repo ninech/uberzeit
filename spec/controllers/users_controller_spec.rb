@@ -4,6 +4,7 @@ describe UsersController do
   render_views
 
   let!(:user) { FactoryGirl.create(:admin) }
+  let(:valid_user_attributes) { { given_name: 'Dolan', name: 'Duck', email: 'doland@example.com' } }
 
   context 'for non-signed in users' do
     describe 'GET "edit"' do
@@ -23,13 +24,13 @@ describe UsersController do
     describe 'POST "create"' do
       context 'with valid attributes' do
         it 'redirects to login' do
-          post :create, user: { email: 'hans@babomail.example.com' }
+          post :create, user: valid_user_attributes
           response.should redirect_to(new_session_path)
         end
 
         it 'does not change any attributes' do
           expect do
-            post :create, user: { email: 'hans@babomail.example.com' }
+            post :create, user: valid_user_attributes
           end.not_to change(User, :count)
         end
       end
@@ -96,13 +97,13 @@ describe UsersController do
       context 'with valid attributes' do
         it 'changes user\'s attributes' do
           expect {
-            put :update, id: user.id, user: { given_name: 'Dolan', name: 'Duck', email: 'doland@example.com' }
+            put :update, id: user.id, user: valid_user_attributes
             user.reload
           }.to change(user, :name).to('Duck')
         end
 
         it 'redirects to the overview' do
-          put :update, id: user.id
+          put :update, id: user.id, user: valid_user_attributes
           response.should redirect_to users_path
         end
       end
@@ -126,12 +127,12 @@ describe UsersController do
       context 'with valid attributes' do
         it 'creates a user' do
           expect {
-            post :create, user: { email: 'doland@example.com' }
+            post :create, user: valid_user_attributes
           }.to change(User, :count)
         end
 
         it 'redirects to the overview' do
-          post :create, user: { email: 'doland@example.com' }
+          post :create, user: valid_user_attributes
           response.should redirect_to users_path
         end
       end
