@@ -20,6 +20,21 @@ describe UsersController do
       end
     end
 
+    describe 'POST "create"' do
+      context 'with valid attributes' do
+        it 'redirects to login' do
+          post :create, user: { email: 'hans@babomail.example.com' }
+          response.should redirect_to(new_session_path)
+        end
+
+        it 'does not change any attributes' do
+          expect do
+            post :create, user: { email: 'hans@babomail.example.com' }
+          end.not_to change(User, :count)
+        end
+      end
+    end
+
     describe 'PUT "update"' do
       context 'with valid attributes' do
         it 'redirects to login' do
@@ -93,8 +108,6 @@ describe UsersController do
       end
 
       context 'with invalid attributes' do
-        render_views
-
         it 'does not change user\'s attributes' do
           expect {
             put :update, id: user.id, user: { email: 'doland@example' }
@@ -105,6 +118,34 @@ describe UsersController do
         it 're-renders the :edit template' do
           put :update, id: user.id, user: { email: 'doland@example' }
           response.should render_template :edit
+        end
+      end
+    end
+
+    describe 'POST "create"' do
+      context 'with valid attributes' do
+        it 'creates a user' do
+          expect {
+            post :create, user: { email: 'doland@example.com' }
+          }.to change(User, :count)
+        end
+
+        it 'redirects to the overview' do
+          post :create, user: { email: 'doland@example.com' }
+          response.should redirect_to users_path
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'does not create a user' do
+          expect {
+            post :create, user: { email: 'doland@example' }
+          }.not_to change(User, :count)
+        end
+
+        it 're-renders the :edit template' do
+          post :create, user: { email: 'doland@example' }
+          response.should render_template :new
         end
       end
     end

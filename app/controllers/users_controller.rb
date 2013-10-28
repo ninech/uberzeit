@@ -16,6 +16,15 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def create
+    @user = User.new(params[:user])
+    if @user.save
+      redirect_to users_path, flash: {success: t('model_successfully_created', model: User.model_name.human)}
+    else
+      render :new
+    end
+  end
+
   def update
     if @user.update_attributes(params[:user])
       redirect_to users_path, flash: {success: t('model_successfully_updated', model: User.model_name.human)}
