@@ -76,10 +76,13 @@ class Employment < ActiveRecord::Base
       latest_end_date = [ end_date, end_date_was].max
     end
 
-    days = Day.where('date >= ?', earliest_start_date)
+    days = user.days.where('date >= ?', earliest_start_date)
     days = days.where('date <= ?', latest_end_date) if latest_end_date
 
-    days.each(&:regenerate!)
+    if days.any?
+      range = days.minimum(:date)..days.maximum(:date)
+      Day.create_or_regenerate_days_for_user_and_range!(user, range)
+    end
   end
 
   private

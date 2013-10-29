@@ -4,7 +4,7 @@
 #
 #  id                   :integer          not null, primary key
 #  name                 :string(255)
-#  uid                  :string(255)
+#  email                :string(255)
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  deleted_at           :datetime
@@ -35,27 +35,6 @@ describe User do
     user.employments.count.should eq(1)
   end
 
-  describe '#create_with_omniauth' do
-    context 'without extra attributes' do
-
-      let(:omniauth_hash) { {'uid' => 'user-one'} }
-
-      it 'can be created' do
-        User.create_with_omniauth(omniauth_hash).should be_persisted
-      end
-    end
-    context 'with extra attributes' do
-
-      let(:omniauth_hash) { {'uid' => 'user-one', 'info' => {'name' => 'Super User'}} }
-
-      subject { User.create_with_omniauth(omniauth_hash) }
-
-      it { should be_persisted }
-      its(:name) { should eq('Super User') }
-
-    end
-  end
-
   describe '#time_sheet' do
     it 'returns an instance of TimeSheet' do
       user.time_sheet.should be_instance_of(TimeSheet)
@@ -78,6 +57,36 @@ describe User do
       user = FactoryGirl.create(:user)
       user2 = FactoryGirl.create(:user)
       User.in_teams(Team.all).count.should eq([user, user2].count)
+    end
+  end
+
+  describe 'validation' do
+    let(:user) { FactoryGirl.create(:user) }
+
+    it 'allows valid users' do
+      user.should be_valid
+    end
+
+    it 'ensures the email address is unique' do
+      other_user = FactoryGirl.build :user
+      other_user.email = user.email
+      other_user.should_not be_valid
+    end
+
+    it 'ensures the email address is valid' do
+      other_user = FactoryGirl.build :user
+      other_user.email = 'gooby@shemail'
+      other_user.should_not be_valid
+    end
+
+    it 'requires a non-empty given_name' do
+      user.given_name = ''
+      user.should_not be_valid
+    end
+
+    it 'requires a non-empty name' do
+      user.name = ''
+      user.should_not be_valid
     end
   end
 

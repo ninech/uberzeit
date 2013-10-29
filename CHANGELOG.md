@@ -1,4 +1,13 @@
 
+2.0.11
+======
+Date:        2013-10-29
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.10...2.0.11
+
+  * Task #8304 [production][employments#create] ActiveRecord::StatementInvalid: PG::Error: ERROR:  deadlock detectedDETAIL:  Process 11584 waits... (Steven Schmid)
+
+
 2.0.10
 ======
 Date:        2013-10-21

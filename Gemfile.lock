@@ -49,9 +49,9 @@ GIT
 
 GIT
   remote: git@git.nine.ch:mynine/plugin_helpers.git
-  revision: 39ad70ee3181fb51c2cc7b96a07942dc3ab3bb2c
+  revision: a37d17a18a675351b7c8d3bf3356614de6e09a67
   specs:
-    mynine-plugin_helpers (1.1.3)
+    mynine-plugin_helpers (1.1.4)
       faraday (~> 0.8)
 
 GIT
@@ -204,7 +204,7 @@ GEM
     haml (4.0.1)
       tilt
     hashie (1.2.0)
-    her (0.6.7)
+    her (0.6.8)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
       faraday (~> 0.8)
@@ -229,7 +229,7 @@ GEM
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
-    logstash-event (1.1.5)
+    logstash-event (1.2.02)
     lumberjack (1.0.4)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -241,7 +241,7 @@ GEM
     method_source (0.8.2)
     mime-types (1.25)
     mini_portile (0.5.1)
-    multi_json (1.8.1)
+    multi_json (1.8.2)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
     mysql2 (0.3.11)
