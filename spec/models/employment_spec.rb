@@ -97,17 +97,17 @@ describe Employment do
 
     it 'recalculates all the Days upon a changes' do
       subject.workload = 80
-      expect { subject.save! }.to change { Day.sum(:planned_working_time) }.from(5.work_days).to(4.work_days)
+      expect { subject.save! }.to change { user.days.sum(:planned_working_time) }.from(5.work_days).to(4.work_days)
     end
 
     it 'recalculates also the old date when the date has been changed' do
       subject.start_date = '2013-09-24'
-      expect { subject.save! }.to change { Day.sum(:planned_working_time) }.from(5.work_days).to(4.work_days)
+      expect { subject.save! }.to change { user.days.sum(:planned_working_time) }.from(5.work_days).to(4.work_days)
     end
 
     it 'recalculates also the old date when the date has been changed' do
       subject.end_date = '2013-09-30'
-      expect { subject.save! }.to change { Day.sum(:planned_working_time) }.from(5.work_days).to(6.work_days)
+      expect { subject.save! }.to change { user.days.sum(:planned_working_time) }.from(5.work_days).to(6.work_days)
     end
 
     context 'open end employment' do
@@ -115,13 +115,20 @@ describe Employment do
 
       it 'recalculates also the old date when the date has been changed' do
         subject.start_date = '2013-09-24'
-        expect { subject.save! }.to change { Day.sum(:planned_working_time) }.from(72.work_days).to(71.work_days)
+        expect { subject.save! }.to change { user.days.sum(:planned_working_time) }.from(72.work_days).to(71.work_days)
       end
 
       it 'recalculates also the old date when the date has been changed' do
         subject.end_date = '2013-09-30'
-        expect { subject.save! }.to change { Day.sum(:planned_working_time) }.from(72.work_days).to(6.work_days)
+        expect { subject.save! }.to change { user.days.sum(:planned_working_time) }.from(72.work_days).to(6.work_days)
       end
+    end
+
+    it 'won\'t affect employments of another user' do
+      another_user = FactoryGirl.create(:user, with_employment: false)
+      employment_of_another_user = FactoryGirl.create(:employment, start_date: employment.start_date, end_date: employment.end_date, user: another_user)
+      Day.create_or_regenerate_days_for_user_and_year!(another_user, 2013)
+      expect { subject.save! }.to_not change { another_user.days.last.id }
     end
 
   end
