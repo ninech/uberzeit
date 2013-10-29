@@ -4,7 +4,7 @@
 #
 #  id                   :integer          not null, primary key
 #  name                 :string(255)
-#  uid                  :string(255)
+#  email                :string(255)
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  deleted_at           :datetime
@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 
   default_scope order('users.name')
 
-  attr_accessible :uid, :name, :birthday, :given_name
+  attr_accessible :email, :name, :birthday, :given_name
 
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
@@ -33,6 +33,11 @@ class User < ActiveRecord::Base
   has_many :employments, dependent: :destroy
   has_many :days, dependent: :destroy
   has_many :time_spans, dependent: :destroy
+
+  validates_uniqueness_of :email
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/ }
+
+  validates_presence_of :given_name, :name
 
   scope :in_teams, ->(teams) { where Membership.where(team_id: teams).where('user_id = users.id').exists }
 
@@ -57,13 +62,6 @@ class User < ActiveRecord::Base
 
   def current_employment
     employments.first
-  end
-
-  def self.create_with_omniauth(auth)
-    create! do |user|
-      user.uid = auth['uid']
-      user.name = auth['info']['name'] if auth['info']
-    end
   end
 
   def to_s

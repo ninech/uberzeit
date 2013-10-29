@@ -9,6 +9,7 @@ de:
       activity: 'Aktivität'
       project: Projekt
       activity_type: 'Aktivitätstyp'
+      user: Benutzer
     attributes:
       activity:
         customer: 'Kunde'
@@ -53,6 +54,11 @@ de:
         name: Name
         date: Datum
         daypart: Dauer
+      user:
+        email: 'E-Mail'
+        given_name: Vorname
+        name: Nachname
+        birthday: Geburtsdatum
     errors:
       models:
         activity:
@@ -183,13 +189,14 @@ de:
       edit_absence: Absenz bearbeiten
   users:
     index:
-      list_of_users: Liste der Benutzer
-      user: Benutzer
-    show:
-      employments: Anstellungsverhältnisse
-      add_employment: Neues Anstellungsverhältnis
-      open-ended: unbefristet
-      confirm_delete: Löschen?
+      new_user: 'Neuer Benutzer'
+      confirm_delete: Wirklich löschen?
+    form:
+      back: Zurück
+    edit:
+      edit_user: '"%{user}" bearbeiten'
+    new:
+      new_user: 'Neuen Benutzer erstellen'
   navigation:
     manage: Verwalten
     absences: Absenzen
@@ -368,7 +375,7 @@ de:
       tooltip:
         starts: 'Beginnt am'
         ends: 'Endet am'
-    timer: 
+    timer:
       timer: Timer
       exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
     top_buttons:

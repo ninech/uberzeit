@@ -16,13 +16,13 @@ class LdapSync
       end
 
       def sync_user(person)
-        user = User.find_by_uid(person.mail)
+        user = User.find_by_email(person.mail)
 
         if person.cancelled?
           user.destroy unless user.nil?
         else
           if user.nil?
-            user = User.create(uid: person.mail)
+            user = User.create(email: person.mail)
           end
 
           sync_user_attributes(user, person)
@@ -31,7 +31,7 @@ class LdapSync
 
       def remove_deleted_persons
         User.all.each do |user|
-          person = Person.find_by_mail(user.uid)
+          person = Person.find_by_mail(user.email)
           user.destroy if person.nil?
         end
       end

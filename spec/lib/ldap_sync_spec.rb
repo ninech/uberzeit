@@ -102,11 +102,11 @@ describe LdapSync do
   end
 
   it 'deletes "cancelled" persons' do
-    User.find_by_uid(person.mail).should_not be_nil
+    User.find_by_email(person.mail).should_not be_nil
     person.stub(:cancelled?).and_return(true)
     LdapSync.all
-    User.find_by_uid(person.mail).should be_nil
-    User.with_deleted.find_by_uid(person.mail).should_not be_nil
+    User.find_by_email(person.mail).should be_nil
+    User.with_deleted.find_by_email(person.mail).should_not be_nil
   end
 
   it 'delegates the user to admin when in admin department' do
