@@ -83,7 +83,7 @@ class LdapSync
       end
 
       def accountant_in_ldap?(user)
-        NINE_UBERZEIT_ACCOUNTANT_PEEPS.include?(user.uid)
+        NINE_UBERZEIT_ACCOUNTANT_PEEPS.include?(user.email)
       end
     end
   end

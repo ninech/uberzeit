@@ -120,4 +120,10 @@ describe LdapSync do
     LdapSync.all
     user.has_role?(:admin).should be_false
   end
+
+  it 'revokes accountants rights when user is not in the elected circle' do
+    accountant = FactoryGirl.create(:accountant, email: 'babo@nine.ch', teams: [Team.last])
+    LdapSync.all
+    user.has_role?(:admin).should be_false
+  end
 end
