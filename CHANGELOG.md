@@ -1,4 +1,14 @@
 
+2.0.12
+======
+Date:        2013-10-31
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.11...2.0.12
+
+  * Bug #8182 TimeEntry editieren CSS falsch (Nils Caspar)
+  * Bug #8329 [production][rake#uberzeit:sync:ldap] NoMethodError: undefined method `uid' for #<User:0x00000004fce640> (Steven Schmid)
+
+
 2.0.11
 ======
 Date:        2013-10-29
