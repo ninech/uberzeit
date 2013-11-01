@@ -1,4 +1,13 @@
 
+2.0.13
+======
+Date:        2013-11-01
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.12...2.0.13
+
+  * Task #8348 Daily Cron für geplante Arbeitszeit deaktivieren (Steven Schmid)
+
+
 2.0.12
 ======
 Date:        2013-10-31
