@@ -40,6 +40,7 @@ GIT
 GIT
   remote: git@git.nine.ch:mynine/customer_plugin.git
   revision: 18485ff7fb2608b269b703f48d3f95e209f3aade
+  branch: master
   specs:
     mynine-customer_plugin (1.1.3)
       bcrypt-ruby (~> 3.0.1)
@@ -49,7 +50,8 @@ GIT
 
 GIT
   remote: git@git.nine.ch:mynine/plugin_helpers.git
-  revision: 39ad70ee3181fb51c2cc7b96a07942dc3ab3bb2c
+  revision: a37d17a18a675351b7c8d3bf3356614de6e09a67
+  branch: master
   specs:
     mynine-plugin_helpers (1.1.4)
       faraday (~> 0.8)

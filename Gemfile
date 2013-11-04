@@ -80,11 +80,13 @@ gem 'warden'
 # Customers
 gem 'mynine-plugin_helpers',
     require: 'plugin_helpers',
-    git: 'git@git.nine.ch:mynine/plugin_helpers.git'
+    git: 'git@git.nine.ch:mynine/plugin_helpers.git',
+    branch: 'master'
 
 gem 'mynine-customer_plugin',
     require: 'customer_plugin',
-    git: 'git@git.nine.ch:mynine/customer_plugin.git'
+    git: 'git@git.nine.ch:mynine/customer_plugin.git',
+    branch: 'master'
 
 group :development, :test do
   gem 'sqlite3'
