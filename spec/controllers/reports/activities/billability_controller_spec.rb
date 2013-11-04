@@ -117,6 +117,31 @@ describe Reports::Activities::BillabilityController do
         end
       end
     end
+  end
 
+  describe 'date limit' do
+    before do
+      Timecop.freeze('2013-11-04'.to_date)
+      test_sign_in admin
+    end
+
+    let!(:activity_last_sunday) { FactoryGirl.create(:activity, date: '2013-11-03') }
+    let!(:activity_this_monday) { FactoryGirl.create(:activity, date: '2013-11-04') }
+
+    context 'without a specified date' do
+      it 'lists the activites to (and including) last sunday' do
+        get :index
+        assigns(:date).should eq('2013-11-03'.to_date)
+        assigns(:activities).should =~ [activity_last_sunday]
+      end
+    end
+
+    context 'with a specified date' do
+      it 'lists the activites to (and including) the specified date' do
+        get :index, date: '2013-11-04'
+        assigns(:date).should eq('2013-11-04'.to_date)
+        assigns(:activities).should =~ [activity_last_sunday, activity_this_monday]
+      end
+    end
   end
 end
