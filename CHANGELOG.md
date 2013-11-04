@@ -1,4 +1,13 @@
 
+2.0.17
+======
+Date:        2013-11-04
+Released by: Nils Caspar
+Diff:        https://git.nine.ch/uberzeit/compare/2.0.16...2.0.17
+
+  * Bug #8366 CVE-2013-YOLO: Gelockte Aktivitäten können via API gelöscht werden (Nils Caspar)
+
+
 2.0.16
 ======
 Date:        2013-11-04
