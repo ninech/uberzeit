@@ -1,4 +1,13 @@
 
+2.0.14
+======
+Date:        2013-11-04
+Released by: Raffael Schmid
+Diff:        https://git.nine.ch/uberzeit/compare/2.0.13...2.0.14
+
+  * Bug #8254 Kategorie-Auswahl nicht sticky (Raffael Schmid)
+
+
 2.0.13
 ======
 Date:        2013-11-01
