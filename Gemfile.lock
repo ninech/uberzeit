@@ -49,7 +49,7 @@ GIT
 
 GIT
   remote: git@git.nine.ch:mynine/plugin_helpers.git
-  revision: a37d17a18a675351b7c8d3bf3356614de6e09a67
+  revision: 39ad70ee3181fb51c2cc7b96a07942dc3ab3bb2c
   specs:
     mynine-plugin_helpers (1.1.4)
       faraday (~> 0.8)
