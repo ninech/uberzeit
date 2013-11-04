@@ -1,5 +1,5 @@
 <%
-  selectors_to_render = [:team_selector, :group_by_selector, :customer_selector, :time_frame_selector].select { |selector| content_for?(selector) }
+  selectors_to_render = [:team_selector, :group_by_selector, :customer_selector, :time_frame_selector, :datepicker].select { |selector| content_for?(selector) }
   append_to_url = '' if local_assigns[:append_to_url].nil?
 %>
 

@@ -342,6 +342,8 @@ de:
         project: Projekt
         activity_type: Aktivität
         customer: Kunde
+      datepicker:
+        by_date: Bis
       customer_selector:
         customer: Kunde
       buttons:

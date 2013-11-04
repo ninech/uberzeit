@@ -21,7 +21,7 @@
           - <%= activity.description %>
         <% end %>
         <% unless activity.project.blank? %>
-          <small><i>Projekt: <%= activity.project.name %></i></small>
+          <small><i><%= Project.model_name.human %>: <%= activity.project.name %></i></small>
         <% end %>
       </td>
       <td><span data-activity-duration="<%= activity.duration %>" data-activity-type="<%= type.id %>" data-activity-customer="<%= customer.id %>" data-activity="<%= activity.id %>"><%= format_duration(activity.duration) %></span></td>
