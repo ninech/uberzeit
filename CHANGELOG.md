@@ -1,4 +1,13 @@
 
+2.0.15
+======
+Date:        2013-11-04
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.14...2.0.15
+
+  * Feature #8035 Abschluss zeitlich eingrenzen (Steven Schmid)
+
+
 2.0.14
 ======
 Date:        2013-11-04
