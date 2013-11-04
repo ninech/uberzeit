@@ -20,6 +20,8 @@ class ActivitiesController < ApplicationController
     if params[:date]
       @activity.date = params[:date]
     end
+    last_activity = @user.activities.order(:created_at).last
+    @activity.activity_type ||= last_activity.activity_type if last_activity
   end
 
   def edit
