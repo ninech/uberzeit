@@ -23,7 +23,12 @@ class API::User::Resources::Activities < Grape::API
       optional :embed, type: Array, includes: %w[user project]
     end
     delete ':id' do
-      present Activity.find(params[:id]).destroy, with: API::User::Entities::Activity, embed: params[:embed]
+      activity = Activity.find params[:id]
+      if current_ability.can?(:destroy, activity) && activity.destroy
+        present activity, with: API::User::Entities::Activity, embed: params[:embed]
+      else
+        raise CanCan::AccessDenied
+      end
     end
 
     desc 'Creates an activity.'

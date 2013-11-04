@@ -23,6 +23,10 @@ class API::User < Grape::API
       env['warden'].user
     end
 
+    def current_ability
+      Ability.new current_user
+    end
+
     def ensure_authentication!
       error!('401 Unauthorized', 401) unless current_user
     end
