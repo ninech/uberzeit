@@ -9,6 +9,7 @@ de:
       activity: 'Aktivität'
       project: Projekt
       activity_type: 'Aktivitätstyp'
+      user: Benutzer
     attributes:
       activity:
         customer: 'Kunde'
@@ -53,6 +54,11 @@ de:
         name: Name
         date: Datum
         daypart: Dauer
+      user:
+        email: 'E-Mail'
+        given_name: Vorname
+        name: Nachname
+        birthday: Geburtsdatum
     errors:
       models:
         activity:
@@ -69,6 +75,8 @@ de:
               timer_exists_on_date_already: An diesem Datum läuft schon ein Timer.
         absence:
           attributes:
+            start_date:
+              absences_overlap: 'überschneidet sich mit Absenzen am %{dates}'
             end_date:
               on_or_after: muss an oder nach dem Startdatum liegen
         absence_schedule:
@@ -181,13 +189,14 @@ de:
       edit_absence: Absenz bearbeiten
   users:
     index:
-      list_of_users: Liste der Benutzer
-      user: Benutzer
-    show:
-      employments: Anstellungsverhältnisse
-      add_employment: Neues Anstellungsverhältnis
-      open-ended: unbefristet
-      confirm_delete: Löschen?
+      new_user: 'Neuer Benutzer'
+      confirm_delete: Wirklich löschen?
+    form:
+      back: Zurück
+    edit:
+      edit_user: '"%{user}" bearbeiten'
+    new:
+      new_user: 'Neuen Benutzer erstellen'
   navigation:
     manage: Verwalten
     absences: Absenzen
@@ -332,6 +341,7 @@ de:
         group_by: Gruppieren nach
         project: Projekt
         activity_type: Aktivität
+        customer: Kunde
       customer_selector:
         customer: Kunde
       buttons:
@@ -358,14 +368,16 @@ de:
       timer_running_warning:
         one: 'An dem folgenden Tag ist noch ein Timer aktiv:'
         other: "An den folgenden Tagen sind noch Timer aktiv:"
+      total: 'Total'
+      time_bonuses: Nachtzuschläge
+    time_entry:
+      duration_bonus: Nachtzuschlag
       tooltip:
         starts: 'Beginnt am'
         ends: 'Endet am'
-      time_bonus: Nachtzuschlag
-      time_bonuses: Nachtzuschläge
+    timer:
       timer: Timer
-      info-timer-exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
-      total: 'Total'
+      exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
     top_buttons:
       add_time: Zeit hinzufügen
     add_time_modal:
@@ -387,6 +399,7 @@ de:
       new_public_holiday: Neuer Feiertag
       confirm_delete: Wirklich löschen?
     form:
+      date: Datum
       back: Zurück
     new:
       title: Feiertag hinzufügen
@@ -400,6 +413,7 @@ de:
       unit_work_days: Arbeitstage
       unit_hours: Stunden
     form:
+      date: Datum
       back: Zurück
     new:
       title: Anpassung hinzufügen

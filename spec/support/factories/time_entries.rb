@@ -7,9 +7,9 @@ FactoryGirl.define do
 
     user
     start_date { Date.current }
-    start_time { '8:00' }
+    start_time { (Time.now - 7200).utc.strftime('%H:%m') }
     end_date { Date.current }
-    end_time   { '12:00' }
+    end_time   { (Time.now + 7200).utc.strftime('%H:%m') }
 
     after(:build) do |entry, evaluator|
       entry.time_type = TEST_TIME_TYPES[evaluator.time_type]

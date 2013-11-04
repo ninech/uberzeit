@@ -67,23 +67,23 @@ class LdapSync
           end
         end
 
-        User.where(uid: NINE_UBERZEIT_ACCOUNTANT_PEEPS).each { |user| user.add_role(:accountant) }
+        User.where(email: NINE_UBERZEIT_ACCOUNTANT_PEEPS).each { |user| user.add_role(:accountant) }
       end
 
       def admin_in_ldap?(user)
-        person = Person.find_by_mail(user.uid)
+        person = Person.find_by_mail(user.email)
         person.departments.any? { |department| NINE_UBERZEIT_ADMIN_DEPARTMENTS.include?(department.cn) }
       end
 
       def team_leader_in_ldap?(user, team)
-        person = Person.find_by_mail(user.uid)
+        person = Person.find_by_mail(user.email)
         department = Department.find(team.uid)
         return false if person.nil? or department.nil?
         department.managers.include?(person)
       end
 
       def accountant_in_ldap?(user)
-        NINE_UBERZEIT_ACCOUNTANT_PEEPS.include?(user.uid)
+        NINE_UBERZEIT_ACCOUNTANT_PEEPS.include?(user.email)
       end
     end
   end

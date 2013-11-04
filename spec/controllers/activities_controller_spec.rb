@@ -53,6 +53,18 @@ describe ActivitiesController do
         get :new, user_id: user.id
         response.should render_template :new
       end
+
+      it 'preselects the last activity type' do
+        last_activity = FactoryGirl.create(:activity, user: user)
+        get :new, user_id: user.id
+        assigns(:activity).activity_type.should eq(last_activity.activity_type)
+      end
+
+      it 'handles the case when a user does not have an activity' do
+        get :new, user_id: user.id
+        assigns(:activity).activity_type.should be_nil
+      end
+
     end
 
     describe 'GET "edit"' do

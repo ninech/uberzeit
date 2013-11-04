@@ -1,6 +1,6 @@
 <% content_for :team_selector do %>
   <div class="row">
     <div class="small-3 columns"><%= t '.users' %></div>
-    <div class="small-9 columns end"><%= select_tag :team, options_for_select(@accessible_teams.collect { |team| [team.name, team.id] }.prepend([t('.everyone'), nil]), @team.nil? ? nil : @team.id) %></div>
+    <div class="small-9 columns end"><%= select_tag :team, options_for_select(@teams.collect { |team| [team.name, team.id] }.prepend([t('.everyone'), nil]), @team.nil? ? nil : @team.id) %></div>
   </div>
 <% end %>

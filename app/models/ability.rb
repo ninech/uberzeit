@@ -43,6 +43,7 @@ class Ability
         can :manage, :billability
         can :manage, :billing
         can :manage, :detailed
+        can :manage, :filter
 
         can :read, User
         can [:read, :update, :review], Activity

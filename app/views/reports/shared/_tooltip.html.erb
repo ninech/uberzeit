@@ -1,9 +1,12 @@
 <% format_in_days ||= false %>
 <span
-<% if time_types.any? %>
+<%
+  show_time_types = time_types.reject { |_, summary| summary == 0 }
+%>
+<% if show_time_types.any? %>
   class="has-tip" data-tooltip='
   <div class="tbl-tooltip">
-    <% time_types.each do |time_type_id, summary| %>
+    <% show_time_types.each do |time_type_id, summary| %>
       <div class="tr">
         <div class="td"><%= TimeType.find(time_type_id) %></div>
         <div class="td"><%= if format_in_days then format_work_days(summary) else format_hours(summary) end %></div>

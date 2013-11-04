@@ -15,21 +15,19 @@ class TimeEntriesController < ApplicationController
 
   def index
     prepare_week_view
-    @time_chunks = @user.time_sheet.find_chunks(@day, TimeType.work)
-    # stuff for add form in modal
-    @time_entry = TimeEntry.new
-    if params[:date]
-      @time_entry.start_date = params[:date]
-    end
-    @time_types = TimeType.work
+    @time_spans_of_time_entries = @user.time_spans
+                                       .effective_working_time
+                                       .with_date(@day)
+                                       .sort_by { |time_span| time_span.time_spanable.starts }
+
+    @time_spans_of_absences = @user.time_spans.absences.with_date(@day)
+    @current_public_holiday = @public_holidays[@day]
 
     @timer = timer_on_day
     if @timer
       @timer_range = @timer.range.intersect(@day.to_range)
     end
     @timers_other_days = @user.time_entries.timers_not_in_range(@day.to_range)
-
-    respond_with(@time_entries)
   end
 
   def new
@@ -61,7 +59,7 @@ class TimeEntriesController < ApplicationController
   end
 
   def summary_for_date
-    @total = @user.time_sheet.total(@day) + @user.time_sheet.duration_of_timers(@day)
+    @total = @user.time_sheet.working_time_without_adjustments_total(@day) + @user.time_sheet.duration_of_timers(@day)
     @bonus = @user.time_sheet.bonus(@day)
 
     @timer_duration_for_day = timer_on_day ? timer_on_day.duration(@day) : 0
@@ -100,7 +98,7 @@ class TimeEntriesController < ApplicationController
 
   def load_week_total
     week = @day.at_beginning_of_week..@day.at_end_of_week
-    @week_total = @user.time_sheet.total(week) + @user.time_sheet.duration_of_timers(week)
+    @week_total = @user.time_sheet.working_time_without_adjustments_total(week) + @user.time_sheet.duration_of_timers(week)
   end
 
   def prepare_weekday_sums

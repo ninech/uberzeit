@@ -54,12 +54,33 @@ describe Reports::Absences::AbsenceController do
         get :calendar, year: year, month: month
         assigns(:year).should_not be_nil
         assigns(:month).should_not be_nil
-        assigns(:absences).should_not be_nil
+        assigns(:absences_by_user_and_date).should_not be_nil
       end
 
       it 'renders the :calendar template' do
         get :calendar, year: year, month: month
         response.should render_template :calendar
+      end
+
+      describe 'special rights' do
+        let!(:another_team) { FactoryGirl.create(:team) }
+        let!(:another_user) { FactoryGirl.create(:user, teams: [another_team]) }
+
+        it 'shows all users for all users' do
+          get :calendar, year: year, month: month
+          assigns(:users).should =~ [user, another_user]
+        end
+
+        it 'shows all teams for all users' do
+          get :calendar, year: year, month: month
+          assigns(:teams).should =~ user.teams + another_user.teams
+        end
+
+        it 'shows the requested team' do
+          get :calendar, year: year, month: month, team_id: another_team.id
+          assigns(:team).should eq(another_team)
+          assigns(:users).should =~ [another_user]
+        end
       end
     end
 

@@ -11,7 +11,7 @@ class Reports::BaseController < ApplicationController
     end
     @users = requested_users
     @team = requested_team
-    @accessible_teams = accessible_teams
+    @teams = accessible_teams
   end
 
   def accessible_teams

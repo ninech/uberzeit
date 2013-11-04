@@ -1,4 +1,128 @@
 
+2.0.14
+======
+Date:        2013-11-04
+Released by: Raffael Schmid
+Diff:        https://git.nine.ch/uberzeit/compare/2.0.13...2.0.14
+
+  * Bug #8254 Kategorie-Auswahl nicht sticky (Raffael Schmid)
+
+
+2.0.13
+======
+Date:        2013-11-01
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.12...2.0.13
+
+  * Task #8348 Daily Cron für geplante Arbeitszeit deaktivieren (Steven Schmid)
+
+
+2.0.12
+======
+Date:        2013-10-31
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.11...2.0.12
+
+  * Bug #8182 TimeEntry editieren CSS falsch (Nils Caspar)
+  * Bug #8329 [production][rake#uberzeit:sync:ldap] NoMethodError: undefined method `uid' for #<User:0x00000004fce640> (Steven Schmid)
+
+
+2.0.11
+======
+Date:        2013-10-29
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.10...2.0.11
+
+  * Task #8304 [production][employments#create] ActiveRecord::StatementInvalid: PG::Error: ERROR:  deadlock detectedDETAIL:  Process 11584 waits... (Steven Schmid)
+
+
+2.0.10
+======
+Date:        2013-10-21
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.9...2.0.10
+
+  * Feature #8011 Projekt bei Report "Billability" anzeigen (Samuel Sieg)
+  * Feature #6489 Druckansicht uberZeit (Samuel Sieg)
+
+
+2.0.9
+======================
+Date:        2013-10-21
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.8...8181-sort-time-entries
+
+  * Bug #8181 Time Entries nicht sortiert (Steven Schmid)
+
+
+2.0.8
+=====
+Date:        2013-10-18
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.7...2.0.8
+
+
+
+2.0.7
+========================
+Date:        2013-10-17
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.6...2.0.7
+
+  * Bug #8040 [production][activities#edit] CanCan::AccessDenied: You are not authorized to access this page. (Steven Schmid)
+
+
+2.0.6
+=====
+Date:        2013-10-17
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.5...2.0.6
+
+
+
+2.0.5
+=====
+Date:        2013-10-17
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.4...2.0.5
+
+
+
+2.0.4
+=====
+Date:        2013-10-16
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.3...2.0.4
+
+
+
+2.0.3
+=====
+Date:        2013-10-16
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.2...2.0.3
+
+
+
+2.0.2
+=====
+Date:        2013-10-15
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.1...2.0.2
+
+  * Bug #8137 [staging][reports/activities/billing#index] NoMethodError: undefined method `name' for nil:NilClass (Nils Caspar)
+
+
+develop
+=======
+Date:        2013-10-15
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.0...refs/heads/develop
+
+  * Task #8053 Validation damit Absenzen sich nicht überschneiden dürfen (Nils Caspar)
+  * Feature #7340 Übersicht Bericht soll Mitarbeiter Dropdown erhalten (Nils Caspar)
+
+
 2.0.0
 =====
 Date:        2013-10-11

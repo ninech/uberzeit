@@ -6,6 +6,9 @@ class UsersController < ApplicationController
     authorize! :manage, User
   end
 
+  def new
+  end
+
   def show
     redirect_to user_employments_path(@user), flash: flash
   end
@@ -13,11 +16,25 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def create
+    @user = User.new(params[:user])
+    if @user.save
+      redirect_to users_path, flash: {success: t('model_successfully_created', model: User.model_name.human)}
+    else
+      render :new
+    end
+  end
+
   def update
     if @user.update_attributes(params[:user])
-      redirect_to edit_user_path(@user), :notice => 'Settings were successfully updated.'
+      redirect_to users_path, flash: {success: t('model_successfully_updated', model: User.model_name.human)}
     else
       render :edit
     end
+  end
+
+  def destroy
+    @user.destroy
+    redirect_to users_path, flash: {success: t('model_successfully_deleted', model: User.model_name.human)}
   end
 end

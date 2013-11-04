@@ -87,6 +87,25 @@ describe Reports::Activities::BillingController do
           get :index
           assigns(:activities).should eq [swap_ram_module]
         end
+
+        context 'with activities without customers' do
+          render_views
+
+          let!(:taeja_inc) { FactoryGirl.create(:customer, name: 'TaeJa Inc.', abbreviation: 'taeja') }
+          let!(:activity_without_customer) { FactoryGirl.create(:activity, user: user, duration: 2.hours, activity_type: support, customer: taeja_inc, billable: true, reviewed: true) }
+
+          before(:each) do
+            taeja_inc.delete
+            activity_without_customer.reload
+          end
+
+          it 'does not raise an error' do
+            expect do
+              get :index
+            end.to_not raise_error
+          end
+        end
+
       end
     end
   end

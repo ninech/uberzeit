@@ -9,9 +9,9 @@ describe UberZeit::BonusCalculators::NineOnDuty do
   end
 
   describe 'an instance' do
-    let(:pikett_bonus) { UberZeit::BonusCalculators::NineOnDuty.new(time_chunk) }
-    let(:time_chunk) do
-      TimeChunk.new starts: starts, ends: ends
+    let(:pikett_bonus) { UberZeit::BonusCalculators::NineOnDuty.new(time_entry) }
+    let(:time_entry) do
+      FactoryGirl.build(:time_entry, starts: starts, ends: ends)
     end
 
     subject { pikett_bonus }

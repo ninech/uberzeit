@@ -5,28 +5,17 @@ class TimeSheet
     @user = user
   end
 
-  # returns time chunks (which are limited to the given date or range)
-  def find_chunks(date_or_range, time_types = TimeType.scoped)
-    entries = [user.time_entries.where(time_type_id: time_types), user.absences.where(time_type_id: time_types)]
-
-    find_chunks = FindTimeChunks.new(entries)
-    find_chunks.in_range(date_or_range)
-  end
-
-  def total(date_or_range, time_types = TimeType.scoped)
-    user.time_spans.with_date(date_range(date_or_range)).where(time_type_id: time_types).sum(:duration)
-  end
-
   def overtime(date_or_range)
     bonus(date_or_range) + working_time_total(date_or_range) - planned_working_time(date_or_range)
   end
 
   def bonus(date_or_range, time_types = TimeType.scoped)
-    user.time_spans.with_date(date_range(date_or_range)).where(time_type_id: time_types).sum(:duration_bonus)
+    user.time_spans.with_date(date_or_range).where(time_type_id: time_types).sum(:duration_bonus)
   end
 
   def planned_working_time(date_or_range)
-    FetchPlannedWorkingTime.new(user, date_range(date_or_range)).total
+    range = date_or_range.to_range.to_date_range
+    FetchPlannedWorkingTime.new(user, range).total
   end
 
   def redeemed_vacation(range)
@@ -57,6 +46,10 @@ class TimeSheet
     user.time_spans.with_date(date_or_range).working_time.credited_duration_sum
   end
 
+  def working_time_without_adjustments_total(date_or_range)
+    user.time_spans.with_date(date_or_range).working_time.exclude_adjustments.credited_duration_sum
+  end
+
   def working_time_by_type(date_or_range)
     user.time_spans.with_date(date_or_range).working_time.credited_duration_sum_per_time_type
   end
@@ -70,11 +63,11 @@ class TimeSheet
   end
 
   def absences_total(date_or_range)
-    user.time_spans.with_date(date_or_range).absences_with_adjustments.credited_duration_sum
+    user.time_spans.with_date(date_or_range).absences.credited_duration_sum
   end
 
   def absences_by_type(date_or_range)
-    user.time_spans.with_date(date_or_range).absences_with_adjustments.credited_duration_sum_per_time_type
+    user.time_spans.with_date(date_or_range).absences.credited_duration_sum_per_time_type
   end
 
   def adjustments_total(date_or_range)
@@ -85,8 +78,5 @@ class TimeSheet
     user.time_spans.with_date(date_or_range).adjustments.credited_duration_sum_per_time_type
   end
 
-  private
-  def date_range(date_or_range)
-    date_or_range.to_range.to_date_range
-  end
+
 end

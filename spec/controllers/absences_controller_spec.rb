@@ -17,14 +17,18 @@ describe AbsencesController do
         assigns(:time_types).should eq(TimeType.absence)
       end
 
-      it 'assigns @absences' do
-        absence = FactoryGirl.create(:absence, start_date: '2013-01-01'.to_date, end_date: '2013-01-02', user: user)
-        get :index, user_id: user.id
-        assigns(:absences).length.should eq(2)
-        assigns(:absences)['2013-01-01'.to_date].length.should eq(1)
-        assigns(:absences)['2013-01-01'.to_date].first.should be_instance_of(TimeChunk)
-        assigns(:absences)['2013-01-02'.to_date].length.should eq(1)
-        assigns(:absences)['2013-01-02'.to_date].first.should be_instance_of(TimeChunk)
+      describe '@absences' do
+        let!(:absence_of_another_user) { FactoryGirl.create(:absence, start_date: '2013-04-01', end_date: '2013-04-01') }
+        let!(:absence) { FactoryGirl.create(:absence, start_date: '2013-01-01', end_date: '2013-01-02', user: user) }
+
+        it 'assigns the absences of the current user' do
+          get :index, user_id: user.id
+          assigns(:absences).keys.length.should eq(2)
+          assigns(:absences)['2013-01-01'.to_date].length.should eq(1)
+          assigns(:absences)['2013-01-01'.to_date].first.should be_instance_of(Absence)
+          assigns(:absences)['2013-01-02'.to_date].length.should eq(1)
+          assigns(:absences)['2013-01-02'.to_date].first.should be_instance_of(Absence)
+        end
       end
 
       it 'handles a year parameter' do

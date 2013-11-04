@@ -63,7 +63,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :absences, t('navigation.absences'), user_absences_path(current_user), highlights_on: %r!\A/(users/\d+/absences|reports/absences/\d*/\d*)! do |second|
       second.dom_class = 'sub-nav'
       second.item :my_absences, t('navigation.sub.absences.my_absences'), user_absences_path(current_user), highlights_on: %r!\A/users/\d+/absences!
-      second.item :absences_others, t('navigation.sub.absences.absences'), reports_absences_calendar_path(Date.current.year, Date.current.month), highlights_on: %r!\A/reports/absences/\d*/\d*!
+      second.item :absences_others, t('navigation.sub.absences.absences'), reports_absences_calendar_path(Date.current.year, Date.current.month), highlights_on: %r!\A/reports/absences!
     end
 
     primary.item :activities, t('navigation.activities'), reports_activities_filter_path(Date.current.year, Date.current.month, 'customer'), highlights_on: %r!\A/reports/activities!, if: -> { show_activities_link_in_navigation? } do |second|
@@ -96,7 +96,7 @@ SimpleNavigation::Configuration.run do |navigation|
       second.dom_class = 'sub-nav'
       second.item :projects, t('navigation.sub.manage.projects'), projects_path, highlights_on: %r!\A#{projects_path}!
       if current_user.admin?
-        second.item :users, t('navigation.sub.manage.users'), users_path
+        second.item :users, t('navigation.sub.manage.users'), users_path, highlights_on: %r!\A#{users_path}(?:/(?:[0-9](?:/(?:edit|employments)?)?)?)?\z!
         second.item :adjustments, t('navigation.sub.manage.adjustments'), adjustments_path, highlights_on: %r!\A#{adjustments_path}!
         second.item :public_holidays, t('navigation.sub.manage.public_holidays'), public_holidays_path, highlights_on: %r!\A#{public_holidays_path}!
         second.item :time_types, t('navigation.sub.manage.time_types'), time_types_path, highlights_on: %r!\A#{time_types_path}!

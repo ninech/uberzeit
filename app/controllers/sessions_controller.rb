@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
   def create
     auth = request.env['omniauth.auth']
-    user = User.find_by_uid(auth['uid'])
+    user = User.find_by_email(auth['uid'])
     if user.nil?
       render text: 'The requested user could not be found.', status: 404
     else

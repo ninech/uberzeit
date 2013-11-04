@@ -11,12 +11,12 @@ class AbsencesController < ApplicationController
     @year = year.to_i
 
     @absences = {}
-    time_chunks_finder = FindTimeChunks.new(@user.absences)
-    time_chunks_finder.in_year(@year).each do |chunk|
-      chunk.range.to_date_range.each do |day|
-        @absences[day] ||= []
-        @absences[day] << chunk
-      end
+
+    time_spans = @user.time_spans.absences.with_date_in_year(@year)
+    time_spans.each do |time_span|
+      date = time_span.date
+      @absences[date] ||= []
+      @absences[date] << time_span.time_spanable
     end
 
     @public_holidays = {}

@@ -102,11 +102,11 @@ describe LdapSync do
   end
 
   it 'deletes "cancelled" persons' do
-    User.find_by_uid(person.mail).should_not be_nil
+    User.find_by_email(person.mail).should_not be_nil
     person.stub(:cancelled?).and_return(true)
     LdapSync.all
-    User.find_by_uid(person.mail).should be_nil
-    User.with_deleted.find_by_uid(person.mail).should_not be_nil
+    User.find_by_email(person.mail).should be_nil
+    User.with_deleted.find_by_email(person.mail).should_not be_nil
   end
 
   it 'delegates the user to admin when in admin department' do
@@ -117,6 +117,12 @@ describe LdapSync do
     user.has_role?(:admin).should be_true
     administration.managers.delete(person)
     administration.people.delete(person)
+    LdapSync.all
+    user.has_role?(:admin).should be_false
+  end
+
+  it 'revokes accountants rights when user is not in the elected circle' do
+    accountant = FactoryGirl.create(:accountant, email: 'babo@nine.ch', teams: [Team.last])
     LdapSync.all
     user.has_role?(:admin).should be_false
   end
