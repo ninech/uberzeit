@@ -23,6 +23,12 @@ module API::Shared::ExceptionHandling
         'status' => 404
       }.to_json, 404)
     end
+
+    rescue_from CanCan::AccessDenied do |e|
+      Rack::Response.new({
+        'status' => 403
+      }.to_json, 403)
+    end
   end
 
 end

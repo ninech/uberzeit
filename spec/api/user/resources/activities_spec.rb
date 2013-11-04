@@ -81,6 +81,21 @@ describe API::User::Resources::Activities do
           delete "/api/activities/#{activity.id}"
         }.to change(Activity, :count).by(-1)
       end
+
+      context 'with a reviewed activity' do
+        let!(:activity) { FactoryGirl.create(:activity, user: api_user, reviewed: true) }
+
+        it 'does not delete the activity' do
+          expect {
+            delete "/api/activities/#{activity.id}"
+          }.not_to change(Activity, :count)
+        end
+
+        it 'indicates status 403' do
+          delete "/api/activities/#{activity.id}"
+          response.status.should eq(403)
+        end
+      end
     end
   end
 
