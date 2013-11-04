@@ -1,0 +1,6 @@
+<% content_for :datepicker do %>
+  <div class="row">
+    <div class="small-4 columns"><%= t '.by_date' %></div>
+    <div class="small-8 columns end"><%= text_field_tag :date, @date, 'data-value' => l(@date, format: :iso), class: 'date' %></div>
+  </div>
+<% end %>
