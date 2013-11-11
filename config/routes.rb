@@ -37,8 +37,9 @@ Uberzeit::Application.routes.draw do
         get '/date/:date', to: 'activities#index', as: :show_date
       end
     end
-  end
 
+    resources :roles
+  end
 
   # management
   resources :public_holidays, except: [:show]

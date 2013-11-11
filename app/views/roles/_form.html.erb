@@ -1,0 +1,23 @@
+<%= form_for(@user_role) do |f| %>
+  <div class="row">
+    <div class="small-4 columns">
+      <%= f.select(:role, @roles.collect { |role| [t("roles.names.#{role}"), role] }.sort) %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-4 columns">
+      <%= f.select(:resource, {Team.model_name.human.pluralize => @teams.collect { |team| [team.name, team.id] }}, include_blank: true) %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-3 columns">
+      <%= f.submit class: 'button'%>
+    </div>
+    <div class="small-2 columns end">
+      <%= link_to t('.back'), user_roles_path(@user), class: "secondary button" %>
+    </div>
+  </div>
+<% end %>
+

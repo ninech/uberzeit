@@ -209,6 +209,7 @@ de:
         my_absences: Persönlich
         absences: Mitarbeiter
       manage:
+        roles: Rollen
         public_holidays: Feiertage
         time_types: Zeittypen
         users: Benutzer
@@ -474,6 +475,15 @@ de:
       add_employment: Neues Anstellungsverhältnis
       open_ended: unbefristet
       confirm_delete: Löschen?
+
+  roles:
+    names:
+      admin: 'Administrator'
+      team_leader: 'Teamleiter'
+      accountant: 'Michi'
+    index:
+      title: 'Rollen'
+      new_role: 'Neue Rolle'
 
   not_logged_in: 'Sie sind nicht eingeloggt.'
 

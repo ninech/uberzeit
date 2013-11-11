@@ -38,16 +38,10 @@ h1, h2, h3 {
 }
 
 table {
-  &.edit {
-    td:nth-last-child(2) {
-      width: 10px;
-    }
-  }
-
-  &.destroy {
-    td:last-child {
-      width: 10px;
-    }
+  td.action,
+  &.edit td:nth-last-child(2),
+  &.destroy td:last-child {
+    width: 10px;
   }
 }
 

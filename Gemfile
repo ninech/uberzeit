@@ -19,7 +19,7 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
   gem 'zurb-foundation', '~> 4.2.0'
-  gem 'font-awesome-rails'
+  gem 'font-awesome-rails', '~> 3.2'
 end
 
 gem 'jquery-rails'
