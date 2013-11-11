@@ -1,4 +1,13 @@
 
+2.0.18
+======
+Date:        2013-11-11
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.0.17...2.0.18
+
+  * Bug #8034 (Aktivitäten) OTRS und Redmine darstellen (Steven Schmid)
+
+
 2.0.17
 ======
 Date:        2013-11-04
