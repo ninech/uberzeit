@@ -484,6 +484,10 @@ de:
     index:
       title: 'Rollen'
       new_role: 'Neue Rolle'
+    new:
+      new_role: 'Rolle anlegen'
+    form:
+      back: 'Zurück'
 
   not_logged_in: 'Sie sind nicht eingeloggt.'
 
