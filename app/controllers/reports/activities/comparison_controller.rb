@@ -3,7 +3,6 @@ class Reports::Activities::ComparisonController < Reports::BaseController
   load_and_authorize_resource :user
 
   def show
-    #@range = UberZeit.month_as_range(@year, @month).last(10)
     @range = (Date.today - 10)..(Date.today)
     load_data_points_in_range
     render :table
