@@ -22,6 +22,8 @@ class Team < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, :source => :user
 
+  validates_presence_of :name
+
   def has_member?(user)
     members.include?(user)
   end
@@ -32,5 +34,9 @@ class Team < ActiveRecord::Base
 
   def each
     members.each { |user| yield(user) }
+  end
+
+  def to_s
+    name
   end
 end

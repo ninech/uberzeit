@@ -79,6 +79,7 @@ Uberzeit::Application.routes.draw do
     end
   end
 
+  resources :teams, except: :show
 
   # API
   mount API::User => '/api'
