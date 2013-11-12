@@ -1,4 +1,11 @@
 de:
+  activemodel:
+    models:
+      user_role: Benutzerrolle
+    attributes:
+      user_role:
+        role: Rolle
+        resource: Ressource
   activerecord:
     models:
       employment: Anstellungsverhältnis
@@ -10,6 +17,7 @@ de:
       project: Projekt
       activity_type: 'Aktivitätstyp'
       user: Benutzer
+      role: Rolle
     attributes:
       activity:
         customer: 'Kunde'
@@ -59,6 +67,8 @@ de:
         given_name: Vorname
         name: Nachname
         birthday: Geburtsdatum
+      role:
+        resource: Ressource
     errors:
       models:
         activity:
