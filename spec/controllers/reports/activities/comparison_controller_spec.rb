@@ -9,21 +9,14 @@ describe Reports::Activities::ComparisonController do
   let(:team_leader) { FactoryGirl.create(:team_leader, teams: [team]) }
   let(:admin) { FactoryGirl.create(:admin) }
 
-  before do
-    pending "Disabled"
-  end
-
-  def get_index(user_id = nil, year = nil, month = nil)
-    user_id ||= user.id
-    year ||= Date.current.year
-    month ||= Date.current.month
-    get :index, user_id: user_id, year: year, month: month
+  def get_show(user_id = user.id)
+    get :show, user_id: user_id
   end
 
   describe 'access' do
     context 'for non-signed in users' do
       it 'redirects to login' do
-        get_index user.id
+        get_show user.id
         response.should redirect_to(new_session_path)
       end
     end
@@ -33,16 +26,16 @@ describe Reports::Activities::ComparisonController do
         test_sign_in user
       end
 
-      describe 'GET "index"' do
+      describe 'GET "show"' do
         context 'with own user' do
           it 'grants access' do
-            expect { get_index user.id }.to_not raise_error(CanCan::AccessDenied)
+            expect { get_show user.id }.to_not raise_error(CanCan::AccessDenied)
           end
         end
 
         context 'with other user' do
           it 'denies access' do
-            expect { get_index team_leader.id }.to raise_error(CanCan::AccessDenied)
+            expect { get_show team_leader.id }.to raise_error(CanCan::AccessDenied)
           end
         end
       end
@@ -53,9 +46,9 @@ describe Reports::Activities::ComparisonController do
         test_sign_in team_leader
       end
 
-      describe 'GET "index"' do
+      describe 'GET "show"' do
         it 'grants access' do
-          expect { get_index user.id }.to_not raise_error(CanCan::AccessDenied)
+          expect { get_show user.id }.to_not raise_error(CanCan::AccessDenied)
         end
       end
     end
@@ -65,30 +58,28 @@ describe Reports::Activities::ComparisonController do
         test_sign_in admin
       end
 
-      describe 'GET "index"' do
+      describe 'GET "show"' do
         it 'grants access' do
-          expect { get_index user.id }.to_not raise_error(CanCan::AccessDenied)
+          expect { get_show user.id }.to_not raise_error(CanCan::AccessDenied)
         end
       end
     end
   end
 
-  describe 'GET "index"' do
+  describe 'GET "show"' do
     before do
       test_sign_in user
-      get_index
+      get_show
     end
 
     it 'assigns the correct instance variables' do
-      assigns(:year).should_not be_nil
-      assigns(:month).should_not be_nil
       assigns(:range).should_not be_nil
       assigns(:data_points).should_not be_nil
     end
 
-    it 'renders the :index template' do
-      get_index
-      response.should render_template :index
+    it 'renders the :table template' do
+      get_show
+      response.should render_template :table
     end
   end
 end

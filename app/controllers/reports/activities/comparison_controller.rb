@@ -1,24 +1,15 @@
-class Reports::Activities::ComparisonController < ApplicationController
+class Reports::Activities::ComparisonController < Reports::BaseController
 
   load_and_authorize_resource :user
 
-  before_filter :set_year, :set_month
-
-  def index
-    @range = UberZeit.month_as_range(@year, @month)
+  def show
+    #@range = UberZeit.month_as_range(@year, @month).last(10)
+    @range = (Date.today - 10)..(Date.today)
     load_data_points_in_range
+    render :table
   end
 
   private
-
-  def set_year
-    @year = params[:year].to_i
-  end
-
-  def set_month
-    @month = params[:month].to_i
-  end
-
   def load_data_points_in_range
     @data_points = { time_entries: [], activities: [] }
     @range.each do |date|

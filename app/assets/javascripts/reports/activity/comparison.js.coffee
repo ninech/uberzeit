@@ -4,25 +4,28 @@ do ($ = jQuery) ->
     if chartContainer.length
       data = [
         {
-          key: I18n.t('reports.activities.comparison.index.chart.time_entries'),
-          color: '#009AD7',
+          key: I18n.t('reports.activities.comparison.table.chart.time_entries')
+          color: '#009AD7'
           values: chartContainer.data('time-entries')
         },
         {
-          key: I18n.t('reports.activities.comparison.index.chart.activities'),
-          color: '#66717E',
+          key: I18n.t('reports.activities.comparison.table.chart.activities')
+          color: '#66717E'
           values: chartContainer.data('activities')
         }
       ]
       nv.addGraph ->
-        chart = nv.models.lineChart().x((d) ->
+        chart = nv.models.multiBarChart().x((d) ->
           d[0]
         ).y((d) ->
           d[1]
         ).forceY([0, 8.5])
 
         chart.xAxis.tickFormat (d) ->
-          d3.time.format("%Y-%m-%d") new Date(d)
+          d3.time.format("%a, %d") new Date(d)
+
+        chart.reduceXTicks false
+        chart.showControls false
 
         chart.margin({right: 40})
 

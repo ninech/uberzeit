@@ -222,7 +222,7 @@ de:
         vacation: Feriensaldo
         billability: Verrechenbarkeit
         billing: Verrechnung
-        comparison: Vergleich
+        comparison: Präsenz / Aktivität
         activity_filter: Übersicht
         activity_detailed: Detailliert
   reports:
@@ -303,7 +303,7 @@ de:
         table:
           is_billed: Verrechnet?
       comparison:
-        index:
+        table:
           title: Vergleich Präsenzzeit/Aktivitätszeit
           chart:
             time_entries: Präsenzzeit

@@ -66,7 +66,7 @@ SimpleNavigation::Configuration.run do |navigation|
       second.item :absences_others, t('navigation.sub.absences.absences'), reports_absences_calendar_path(Date.current.year, Date.current.month), highlights_on: %r!\A/reports/absences!
     end
 
-    primary.item :activities, t('navigation.activities'), reports_activities_filter_path(Date.current.year, Date.current.month, 'customer'), highlights_on: %r!\A/reports/activities!, if: -> { show_activities_link_in_navigation? } do |second|
+    primary.item :activities, t('navigation.activities'), reports_activities_filter_path(Date.current.year, Date.current.month, 'customer'), highlights_on: %r{\A/reports/activities((?!(/comparison)))}, if: -> { show_activities_link_in_navigation? } do |second|
       second.dom_class = 'sub-nav'
       if ability.can? :manage, :filter
         second.item :activity_filter, t('navigation.sub.reports.activity_filter'), reports_activities_filter_path(Date.current.year, Date.current.month, 'customer'), highlights_on: %r!\A/reports/activities/filter!
@@ -84,6 +84,7 @@ SimpleNavigation::Configuration.run do |navigation|
       second.dom_class = 'sub-nav'
       second.item :overview, t('navigation.sub.reports.overview'), reports_overview_user_path(current_user), highlights_on: %r!\A/reports/overview/users/\d*!
       second.item :my_work, t('navigation.sub.reports.my_work'), reports_work_user_month_path(current_user, Date.current.year, Date.current.month), highlights_on: %r!\A/reports/work/users/\d*/!
+      second.item :comparison, t('navigation.sub.reports.comparison'), reports_activities_comparison_path(current_user), highlights_on: %r!\A/reports/activities/comparison!
       if ability.can? :manage, :work
         second.item :work, t('navigation.sub.reports.work'), reports_work_month_path(Date.current.year, Date.current.month), highlights_on: %r!\A/reports/work/\d*/\d*!
       end
