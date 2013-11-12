@@ -4,7 +4,8 @@ describe UsersController do
   render_views
 
   let!(:user) { FactoryGirl.create(:admin) }
-  let(:valid_user_attributes) { { given_name: 'Dolan', name: 'Duck', email: 'doland@example.com' } }
+  let(:team) { FactoryGirl.create(:team) }
+  let(:valid_user_attributes) { { given_name: 'Dolan', name: 'Duck', email: 'doland@example.com', team_ids: [team.id] } }
 
   context 'for non-signed in users' do
     describe 'GET "edit"' do
@@ -100,6 +101,13 @@ describe UsersController do
             put :update, id: user.id, user: valid_user_attributes
             user.reload
           }.to change(user, :name).to('Duck')
+        end
+
+        it 'changes user\'s team association' do
+          expect {
+            put :update, id: user.id, user: valid_user_attributes
+            user.reload
+          }.to change(user, :teams).to([team])
         end
 
         it 'redirects to the overview' do
