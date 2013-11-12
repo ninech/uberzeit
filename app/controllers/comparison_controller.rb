@@ -1,11 +1,11 @@
-class Reports::Activities::ComparisonController < Reports::BaseController
+class ComparisonController < ApplicationController
 
   load_and_authorize_resource :user
 
   def show
-    @range = (Date.today - 10)..(Date.today)
+    @date = Date.parse(params[:date] || Date.current)
+    @range = (@date.beginning_of_week)..(@date.end_of_week)
     load_data_points_in_range
-    render :table
   end
 
   private

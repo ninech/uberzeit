@@ -26,5 +26,5 @@
 # (which results in a js file with >= 750 KB)
 translations:
   - file: "app/assets/javascripts/i18n/translations.js"
-    only: ["*.time_entries.*", "*.reports.activities.comparison.table.chart.*"]
+    only: ["*.time_entries.*", "*.comparison.show.chart.*"]
 

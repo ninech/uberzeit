@@ -302,12 +302,6 @@ de:
           title: Verrechnung
         table:
           is_billed: Verrechnet?
-      comparison:
-        table:
-          title: Vergleich Präsenzzeit/Aktivitätszeit
-          chart:
-            time_entries: Präsenzzeit
-            activities: Aktivitätszeit
       filter:
         index:
           title: Aktivitäten
@@ -384,6 +378,12 @@ de:
       add_time: Zeit hinzufügen
     add_time_modal:
       add_time: Zeit hinzufügen
+  comparison:
+    show:
+      title: "Kalenderwoche %{week}"
+      chart:
+        time_entries: Präsenzzeit
+        activities: Aktivitätszeit
   timers:
     edit:
       edit_time: 'Zeit bearbeiten'

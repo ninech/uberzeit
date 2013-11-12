@@ -57,8 +57,9 @@ SimpleNavigation::Configuration.run do |navigation|
 
     primary.item :timesheet, t('navigation.time_tracking'), user_time_entries_path(current_user), highlights_on: %r!\A/(users/\d+/(activities|time_entries))(/date/[\w-]+)?\z! do |second|
       second.dom_class = 'sub-nav'
-      second.item :timesheet, t('navigation.timesheet'), show_date_user_time_entries_path(current_user, date: @day || Time.now), highlights_on: %r!\A/users/\d+/time_entries(/date/[\w-]+)?\z!
-      second.item :my_activities, t('navigation.activities'), show_date_user_activities_path(current_user, date: @day || Time.now), highlights_on: %r!\A/users/\d+/activities(/date/[\w-]+)?\z!
+      second.item :timesheet, t('navigation.timesheet'), show_date_user_time_entries_path(current_user, date: @day || Date.current), highlights_on: %r!\A/users/\d+/time_entries(/date/[\w-]+)?\z!
+      second.item :my_activities, t('navigation.activities'), show_date_user_activities_path(current_user, date: @day || Date.current), highlights_on: %r!\A/users/\d+/activities(/date/[\w-]+)?\z!
+      second.item :comparison, t('navigation.sub.reports.comparison'), user_comparison_path(current_user, Date.current.cweek), highlights_on: %r!\A/users/\d+/comparison!
     end
     primary.item :absences, t('navigation.absences'), user_absences_path(current_user), highlights_on: %r!\A/(users/\d+/absences|reports/absences/\d*/\d*)! do |second|
       second.dom_class = 'sub-nav'
@@ -84,7 +85,6 @@ SimpleNavigation::Configuration.run do |navigation|
       second.dom_class = 'sub-nav'
       second.item :overview, t('navigation.sub.reports.overview'), reports_overview_user_path(current_user), highlights_on: %r!\A/reports/overview/users/\d*!
       second.item :my_work, t('navigation.sub.reports.my_work'), reports_work_user_month_path(current_user, Date.current.year, Date.current.month), highlights_on: %r!\A/reports/work/users/\d*/!
-      second.item :comparison, t('navigation.sub.reports.comparison'), reports_activities_comparison_path(current_user), highlights_on: %r!\A/reports/activities/comparison!
       if ability.can? :manage, :work
         second.item :work, t('navigation.sub.reports.work'), reports_work_month_path(Date.current.year, Date.current.month), highlights_on: %r!\A/reports/work/\d*/\d*!
       end

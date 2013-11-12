@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 
-describe Reports::Activities::ComparisonController do
+describe ComparisonController do
 
   let(:team) { FactoryGirl.create(:team) }
 
@@ -10,7 +10,7 @@ describe Reports::Activities::ComparisonController do
   let(:admin) { FactoryGirl.create(:admin) }
 
   def get_show(user_id = user.id)
-    get :show, user_id: user_id
+    get :show, user_id: user_id, date: Date.current
   end
 
   describe 'access' do
@@ -79,7 +79,7 @@ describe Reports::Activities::ComparisonController do
 
     it 'renders the :table template' do
       get_show
-      response.should render_template :table
+      response.should render_template :show
     end
   end
 end

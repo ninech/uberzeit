@@ -4,12 +4,12 @@ do ($ = jQuery) ->
     if chartContainer.length
       data = [
         {
-          key: I18n.t('reports.activities.comparison.table.chart.time_entries')
+          key: I18n.t('comparison.show.chart.time_entries')
           color: '#009AD7'
           values: chartContainer.data('time-entries')
         },
         {
-          key: I18n.t('reports.activities.comparison.table.chart.activities')
+          key: I18n.t('comparison.show.chart.activities')
           color: '#66717E'
           values: chartContainer.data('activities')
         }

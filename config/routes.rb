@@ -22,6 +22,8 @@ Uberzeit::Application.routes.draw do
       end
     end
 
+    get '/comparison/date/:date', to: 'comparison#show', as: :comparison
+
     resources :time_entries, except: [:show] do
       collection do
         get '/date/:date', to: 'time_entries#index', as: :show_date
@@ -76,7 +78,6 @@ Uberzeit::Application.routes.draw do
       get '/billing', to: 'billing#index', as: :billing
       get '/filter/:year/:month/:group_by', to: 'filter#index', as: :filter
       get '/detailed/:year/:month/(:customer_id)', to: 'detailed#index', as: :detailed
-      get '/comparison/:user_id', to: 'comparison#show', as: :comparison
     end
   end
 
