@@ -38,7 +38,7 @@ Uberzeit::Application.routes.draw do
       end
     end
 
-    resources :roles
+    resources :roles, only: [:index, :new, :create, :destroy]
   end
 
   # management

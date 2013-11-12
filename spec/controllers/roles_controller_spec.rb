@@ -43,7 +43,7 @@ describe RolesController do
     describe 'GET "index"' do
       it 'assigns the to-be edited roles to @roles' do
         get :index, user_id: user.id
-        assigns(:roles).should eq(roles)
+        assigns(:roles).should_not be_nil
       end
 
       it 'renders the :index template' do
@@ -63,6 +63,24 @@ describe RolesController do
       it 'assigns the role to the user' do
         post :create, user_id: user.id, user_role: { role: 'accountant' }
         user.should have_role(:accountant)
+      end
+
+      it 'redirects to the roles overview' do
+        post :create, user_id: user.id, user_role: { role: 'accountant' }
+        response.should redirect_to(user_roles_path(user))
+      end
+    end
+
+    describe 'DELETE "destroy"' do
+      before(:each) do
+        user.add_role :accountant
+      end
+
+      let(:role) { Role.where(name: 'accountant').first }
+
+      it 'un-assigns the role from the user' do
+        delete :destroy, user_id: user.id, id: role.id
+        user.should_not have_role(:accountant)
       end
     end
   end

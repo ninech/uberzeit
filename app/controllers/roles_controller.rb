@@ -1,8 +1,10 @@
 class RolesController < ApplicationController
   load_and_authorize_resource :user
 
+  before_filter :ensure_authorized
+
   def index
-    @roles = @user.roles
+    @roles = @user.roles.order(:name)
   end
 
   def new
@@ -19,6 +21,17 @@ class RolesController < ApplicationController
     else
       render :new
     end
+  end
+
+  def destroy
+    role = Role.find(params[:id])
+    @user.remove_role(role.name, role.resource)
+    redirect_to user_roles_path(@user)
+  end
+
+  private
+  def ensure_authorized
+    authorize! :manage, Role
   end
 end
 

@@ -494,6 +494,7 @@ de:
     index:
       title: 'Benutzerrollen'
       new_role: 'Neue Benutzerrolle'
+      confirm_delete: 'Wirklich löschen?'
     new:
       new_role: 'Benutzerrolle anlegen'
     form:
