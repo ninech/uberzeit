@@ -53,14 +53,16 @@ describe RolesController do
     end
 
     describe 'GET "new"' do
-      it 'assigns the available roles to @roles' do
-        get :new, user_id: user.id
-        assigns(:roles).should eq(Role::AVAILABLE_ROLES)
-      end
-
       it 'renders the :new template' do
         get :new, user_id: user.id
         response.should render_template :new
+      end
+    end
+
+    describe 'POST "create"' do
+      it 'assigns the role to the user' do
+        post :create, user_id: user.id, user_role: { role: 'accountant' }
+        user.should have_role(:accountant)
       end
     end
   end
