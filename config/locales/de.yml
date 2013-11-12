@@ -492,10 +492,10 @@ de:
       team_leader: 'Teamleiter'
       accountant: 'Michi'
     index:
-      title: 'Rollen'
-      new_role: 'Neue Rolle'
+      title: 'Benutzerrollen'
+      new_role: 'Neue Benutzerrolle'
     new:
-      new_role: 'Rolle anlegen'
+      new_role: 'Benutzerrolle anlegen'
     form:
       back: 'Zurück'
 
