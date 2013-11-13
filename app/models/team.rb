@@ -33,4 +33,8 @@ class Team < ActiveRecord::Base
   def each
     members.each { |user| yield(user) }
   end
+
+  def to_s
+    name
+  end
 end

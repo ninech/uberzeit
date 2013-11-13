@@ -10,12 +10,18 @@
         <% @users.each do |user| %>
         <tr>
           <td>
-            <strong><%= link_to user, user_path(user) %></strong>
+            <strong><%= user %></strong>
           </td>
-          <td>
+          <td class="action">
+            <%= link_to icon('group'), user_roles_path(user) %>
+          </td>
+          <td class="action">
+            <%= link_to icon('file-text'), user_employments_path(user) %>
+          </td>
+          <td class="action">
             <%= link_to icon('edit'), edit_user_path(user) %>
           </td>
-          <td>
+          <td class="action">
             <%= link_to icon('trash'), user, method: :delete, confirm: t('.confirm_delete') %>
           </td>
         </tr>

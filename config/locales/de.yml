@@ -1,4 +1,11 @@
 de:
+  activemodel:
+    models:
+      user_role: Benutzerrolle
+    attributes:
+      user_role:
+        role: Rolle
+        resource: Ressource
   activerecord:
     models:
       employment: Anstellungsverhältnis
@@ -10,6 +17,7 @@ de:
       project: Projekt
       activity_type: 'Aktivitätstyp'
       user: Benutzer
+      role: Rolle
     attributes:
       activity:
         customer: 'Kunde'
@@ -59,6 +67,8 @@ de:
         given_name: Vorname
         name: Nachname
         birthday: Geburtsdatum
+      role:
+        resource: Ressource
     errors:
       models:
         activity:
@@ -209,6 +219,7 @@ de:
         my_absences: Persönlich
         absences: Mitarbeiter
       manage:
+        roles: Rollen
         public_holidays: Feiertage
         time_types: Zeittypen
         users: Benutzer
@@ -474,6 +485,20 @@ de:
       add_employment: Neues Anstellungsverhältnis
       open_ended: unbefristet
       confirm_delete: Löschen?
+
+  roles:
+    names:
+      admin: 'Administrator'
+      team_leader: 'Teamleiter'
+      accountant: 'Michi'
+    index:
+      title: 'Benutzerrollen'
+      new_role: 'Neue Benutzerrolle'
+      confirm_delete: 'Wirklich löschen?'
+    new:
+      new_role: 'Benutzerrolle anlegen'
+    form:
+      back: 'Zurück'
 
   not_logged_in: 'Sie sind nicht eingeloggt.'
 

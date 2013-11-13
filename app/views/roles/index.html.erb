@@ -1,0 +1,38 @@
+<div class="content-time-types row">
+  <div class="large-12 columns">
+    <h1>
+      <%= t '.title' %>
+      <%= link_to icon('plus') + ' ' + t('.new_role'), new_user_role_path, class: 'button right' %>
+    </h1>
+
+    <table class="nice small-12 destroy">
+      <thead>
+        <tr>
+          <th><%= Role.model_name.human %></th>
+          <th><%= Role.human_attribute_name :resource %></th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @roles.each do |role| %>
+        <tr>
+          <td>
+            <strong><%= t "roles.names.#{role}" %></strong>
+          </td>
+          <td>
+            <% if role.resource %>
+              <%= role.resource.class.model_name.human %>: <%= link_to role.resource %>
+            <% else %>
+              –
+            <% end %>
+          </td>
+          <td>
+            <%= link_to icon('trash'), user_role_path(@user, role), method: :delete, confirm: t('.confirm_delete') %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
