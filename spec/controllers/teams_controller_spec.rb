@@ -3,7 +3,7 @@ require 'spec_helper'
 describe TeamsController do
   render_views
 
-  let!(:user) { FactoryGirl.create(:admin) }
+  let!(:admin) { FactoryGirl.create(:admin) }
   let(:valid_team_attributes) { { name: 'Pro Gamers' } }
   let!(:team) { FactoryGirl.create :team }
 
@@ -65,9 +65,9 @@ describe TeamsController do
     end
   end
 
-  context 'for signed-in users' do
+  context 'for signed-in admins' do
     before do
-      test_sign_in user
+      test_sign_in admin
     end
 
     describe 'GET "edit"' do
