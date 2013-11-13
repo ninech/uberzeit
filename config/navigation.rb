@@ -59,7 +59,7 @@ SimpleNavigation::Configuration.run do |navigation|
       second.dom_class = 'sub-nav'
       second.item :timesheet, t('navigation.timesheet'), show_date_user_time_entries_path(current_user, date: @day || Date.current), highlights_on: %r!\A/users/\d+/time_entries(/date/[\w-]+)?\z!
       second.item :my_activities, t('navigation.activities'), show_date_user_activities_path(current_user, date: @day || Date.current), highlights_on: %r!\A/users/\d+/activities(/date/[\w-]+)?\z!
-      second.item :comparison, t('navigation.sub.reports.comparison'), user_comparison_path(current_user, Date.current.cweek), highlights_on: %r!\A/users/\d+/comparison!
+      second.item :comparison, t('navigation.sub.reports.comparison'), user_comparison_path(current_user, date: @day || Date.current), highlights_on: %r!\A/users/\d+/comparison!
     end
     primary.item :absences, t('navigation.absences'), user_absences_path(current_user), highlights_on: %r!\A/(users/\d+/absences|reports/absences/\d*/\d*)! do |second|
       second.dom_class = 'sub-nav'
