@@ -22,6 +22,8 @@ class Team < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, :source => :user
 
+  validates_presence_of :name
+
   def has_member?(user)
     members.include?(user)
   end

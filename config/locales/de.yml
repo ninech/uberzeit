@@ -17,6 +17,7 @@ de:
       project: Projekt
       activity_type: 'Aktivitätstyp'
       user: Benutzer
+      team: Team
       role: Rolle
     attributes:
       activity:
@@ -67,6 +68,8 @@ de:
         given_name: Vorname
         name: Nachname
         birthday: Geburtsdatum
+      team:
+        name: Name
       role:
         resource: Ressource
     errors:
@@ -207,6 +210,16 @@ de:
       edit_user: '"%{user}" bearbeiten'
     new:
       new_user: 'Neuen Benutzer erstellen'
+  teams:
+    index:
+      new_team: 'Neues Team'
+      confirm_delete: 'Wirklich löschen?'
+    new:
+      new_team: 'Neues Team erstellen'
+    form:
+      back: 'Zurück'
+    edit:
+      edit_team: '"%{team}" bearbeiten'
   navigation:
     manage: Verwalten
     absences: Absenzen
@@ -223,6 +236,7 @@ de:
         public_holidays: Feiertage
         time_types: Zeittypen
         users: Benutzer
+        teams: Teams
         adjustments: Anpassungen
         projects: 'Projekte'
         activity_types: 'Aktivitätstypen'
