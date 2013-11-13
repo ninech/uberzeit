@@ -8,12 +8,15 @@
       <div class="head">
         <%= l @range.min, format: :long %> - <%= l @range.max, format: :long %>
         <div class="right">
-          <span>
+
             <a href="<%= url_for(date: @date - 1.week) %>" class="previous"><span class="icon-caret-left"></span></a>
+
             <% if @date + 1.week <= Date.today %>
               <a href="<%= url_for(date: @date + 1.week) %>" class="next"><span class="icon-caret-right"></span></a>
+            <% else %>
+              <span class="next"><span class="icon-caret-right"></span></span>
             <% end %>
-          </span>
+
         </div>
       </div>
     </div>
