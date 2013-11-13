@@ -1,7 +1,7 @@
 class RolesController < ApplicationController
   load_and_authorize_resource :user
 
-  before_filter :ensure_authorized
+  before_filter :ensure_authorized_for_role_management
 
   def index
     @roles = @user.roles.order(:name)
@@ -30,7 +30,7 @@ class RolesController < ApplicationController
   end
 
   private
-  def ensure_authorized
+  def ensure_authorized_for_role_management
     authorize! :manage, Role
   end
 end
