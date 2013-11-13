@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 
   default_scope order('users.name')
 
-  attr_accessible :email, :name, :birthday, :given_name
+  attr_accessible :email, :name, :birthday, :given_name, :team_ids
 
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships

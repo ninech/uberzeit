@@ -1,4 +1,11 @@
 de:
+  activemodel:
+    models:
+      user_role: Benutzerrolle
+    attributes:
+      user_role:
+        role: Rolle
+        resource: Ressource
   activerecord:
     models:
       employment: Anstellungsverhältnis
@@ -10,6 +17,8 @@ de:
       project: Projekt
       activity_type: 'Aktivitätstyp'
       user: Benutzer
+      team: Team
+      role: Rolle
     attributes:
       activity:
         customer: 'Kunde'
@@ -59,6 +68,10 @@ de:
         given_name: Vorname
         name: Nachname
         birthday: Geburtsdatum
+      team:
+        name: Name
+      role:
+        resource: Ressource
     errors:
       models:
         activity:
@@ -197,6 +210,16 @@ de:
       edit_user: '"%{user}" bearbeiten'
     new:
       new_user: 'Neuen Benutzer erstellen'
+  teams:
+    index:
+      new_team: 'Neues Team'
+      confirm_delete: 'Wirklich löschen?'
+    new:
+      new_team: 'Neues Team erstellen'
+    form:
+      back: 'Zurück'
+    edit:
+      edit_team: '"%{team}" bearbeiten'
   navigation:
     manage: Verwalten
     absences: Absenzen
@@ -209,9 +232,11 @@ de:
         my_absences: Persönlich
         absences: Mitarbeiter
       manage:
+        roles: Rollen
         public_holidays: Feiertage
         time_types: Zeittypen
         users: Benutzer
+        teams: Teams
         adjustments: Anpassungen
         projects: 'Projekte'
         activity_types: 'Aktivitätstypen'
@@ -222,7 +247,7 @@ de:
         vacation: Feriensaldo
         billability: Verrechenbarkeit
         billing: Verrechnung
-        comparison: Vergleich
+        comparison: Präsenz / Aktivität
         activity_filter: Übersicht
         activity_detailed: Detailliert
   reports:
@@ -302,12 +327,6 @@ de:
           title: Verrechnung
         table:
           is_billed: Verrechnet?
-      comparison:
-        index:
-          title: Vergleich Präsenzzeit/Aktivitätszeit
-          chart:
-            time_entries: Präsenzzeit
-            activities: Aktivitätszeit
       filter:
         index:
           title: Aktivitäten
@@ -384,6 +403,12 @@ de:
       add_time: Zeit hinzufügen
     add_time_modal:
       add_time: Zeit hinzufügen
+  comparison:
+    show:
+      title: "Kalenderwoche %{week}"
+      chart:
+        time_entries: Präsenzzeit
+        activities: Aktivitätszeit
   timers:
     edit:
       edit_time: 'Zeit bearbeiten'
@@ -474,6 +499,20 @@ de:
       add_employment: Neues Anstellungsverhältnis
       open_ended: unbefristet
       confirm_delete: Löschen?
+
+  roles:
+    names:
+      admin: 'Administrator'
+      team_leader: 'Teamleiter'
+      accountant: 'Michi'
+    index:
+      title: 'Benutzerrollen'
+      new_role: 'Neue Benutzerrolle'
+      confirm_delete: 'Wirklich löschen?'
+    new:
+      new_role: 'Benutzerrolle anlegen'
+    form:
+      back: 'Zurück'
 
   not_logged_in: 'Sie sind nicht eingeloggt.'
 
