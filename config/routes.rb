@@ -22,6 +22,8 @@ Uberzeit::Application.routes.draw do
       end
     end
 
+    get '/comparison/date/:date', to: 'comparison#show', as: :comparison
+
     resources :time_entries, except: [:show] do
       collection do
         get '/date/:date', to: 'time_entries#index', as: :show_date

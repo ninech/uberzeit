@@ -15,25 +15,32 @@
     @include background-image(linear-gradient(top center, #F5F5F5 0%, #E0E0E0 90%));
 
     .right {
-      margin-top: -8px;
 
-      span {
-        vertical-align: middle;
-      }
-      a {
+      height: 16px;
+
+      vertical-align: middle;
+      a, span {
         margin-left: 7px;
+        line-height: 16px;
+        height: 16px;
+        display: inline-block;
 
+        &.jump-date-starter {
+          font-size: 15px;
+          vertical-align: top;
+        }
         &.next, &.previous {
-          font-size: 1.5em;
+          font-size: 24px;
+          line-height: 16px;
           margin-left: 7px;
         }
         &.today {
-          //top: -3px;
           margin-bottom: 0;
         }
       }
       form {
         margin: 0px;
+        display: inline;
       }
     }
   }

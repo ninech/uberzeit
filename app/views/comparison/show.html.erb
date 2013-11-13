@@ -1,0 +1,33 @@
+<%= render(partial: 'shared/user_select', locals: { link_generator: :user_comparison_path, selected_user: @user }) %>
+
+<div class="row">
+  <div class="large-12 columns">
+    <h1><%= t('.title', week: @range.min.cweek) %></h1>
+
+    <div class="timesheet week-view">
+      <div class="head">
+        <%= l @range.min, format: :long %> - <%= l @range.max, format: :long %>
+        <div class="right">
+
+            <a href="<%= url_for(date: @date - 1.week) %>" class="previous"><span class="icon-caret-left"></span></a>
+
+            <% if @date + 1.week <= Date.today %>
+              <a href="<%= url_for(date: @date + 1.week) %>" class="next"><span class="icon-caret-right"></span></a>
+            <% else %>
+              <span class="next"><span class="icon-caret-right"></span></span>
+            <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="content-summary row">
+  <div class="small-12 columns">
+    <div id="chart" data-time-entries="<%= @data_points[:time_entries].to_json %>" data-activities="<%= @data_points[:activities].to_json %>">
+      <svg style="height:400px"> </svg>
+    </div>
+  </div>
+</div>
