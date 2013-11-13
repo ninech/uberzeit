@@ -103,7 +103,7 @@ describe UsersController do
           }.to change(user, :name).to('Duck')
         end
 
-        it 'changes user\'s team association' do
+        it "changes user's team association" do
           expect {
             put :update, id: user.id, user: valid_user_attributes
             user.reload
