@@ -17,6 +17,7 @@ class Role < ActiveRecord::Base
   scopify
 
   AVAILABLE_ROLES = [ :admin, :team_leader, :accountant ]
+  RESOURCABLE_ROLES = [ :team_leader ]
 
   def to_s
     name

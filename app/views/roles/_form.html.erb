@@ -1,7 +1,7 @@
 <%= form_for(@user_role) do |f| %>
   <div class="row">
     <div class="small-4 columns">
-      <%= f.select(:role, Role::AVAILABLE_ROLES.collect { |role| [t("roles.names.#{role}"), role] }.sort) %>
+      <%= f.select(:role, Role::AVAILABLE_ROLES.collect { |role| [t("roles.names.#{role}"), role] }.sort, {}, data: { resourcable_roles: Role::RESOURCABLE_ROLES }) %>
     </div>
   </div>
 
