@@ -4,30 +4,34 @@
   <div class="large-12 columns">
     <h1><%= t('.title', week: @range.min.cweek) %></h1>
 
-    <div class="timesheet week-view">
-      <div class="head">
-        <%= l @range.min, format: :long %> - <%= l @range.max, format: :long %>
-        <div class="right">
+    <div class="timesheet week-view row">
+      <div class="large-12 columns head">
+        <div class="large-8 columns left">
+          <%= l @range.min, format: :long %> - <%= l @range.max, format: :long %>
+        </div>
+        <div class="large-4 columns right">
 
-            <a href="<%= url_for(date: @date - 1.week) %>" class="previous"><span class="icon-caret-left"></span></a>
-
+          <div class="table-cell">
             <% if @date + 1.week <= Date.today %>
-              <a href="<%= url_for(date: @date + 1.week) %>" class="next"><span class="icon-caret-right"></span></a>
+              <a href="<%= url_for(date: @date + 1.week) %>" class="next"><i class="icon-caret-right"></i></a>
             <% else %>
-              <span class="next"><span class="icon-caret-right"></span></span>
+              <span class="next"><i class="icon-caret-right"></i></span>
             <% end %>
+          </div>
+          <div class="table-cell">
+            <a href="<%= url_for(date: @date - 1.week) %>" class="previous"><i class="icon-caret-left"></i></a>
+          </div>
 
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-
-<div class="content-summary row">
-  <div class="small-12 columns">
-    <div id="chart" data-time-entries="<%= @data_points[:time_entries].to_json %>" data-activities="<%= @data_points[:activities].to_json %>">
-      <svg style="height:400px"> </svg>
+    <div class="row">
+      <div class="large-12 columns">
+        <div id="chart" data-time-entries="<%= @data_points[:time_entries].to_json %>" data-activities="<%= @data_points[:activities].to_json %>">
+          <svg style="height:400px"> </svg>
+        </div>
+      </div>
     </div>
   </div>
 </div>

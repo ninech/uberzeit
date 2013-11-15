@@ -8,31 +8,48 @@
     font-weight: 600;
     background-color: #EBEBEB;
     color: #474747;
-    padding: 15px 10px;
+    padding: 0px 15px 0px 10px;
     border-bottom: 1px solid #ADADAD;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
     // box-shadow: inset 0 -7px 6px -9px #000;
     @include background-image(linear-gradient(top center, #F5F5F5 0%, #E0E0E0 90%));
 
-    .right {
-
-      height: 16px;
-
+    div {
       vertical-align: middle;
+      &.table-cell {
+        display: table-cell;
+        float: right;
+        margin-right: 20px;
+
+        &:first-child {
+          margin-right: 0px;
+        }
+      }
+    }
+    .left {
+      line-height: 43px;
+    }
+    .right {
+      line-height: 43px;
+      margin-right: 0px;
+      padding-right: 0px;
+
       a, span {
-        margin-left: 7px;
-        line-height: 16px;
-        height: 16px;
         display: inline-block;
 
+        i {
+          vertical-align: middle;
+        }
         &.jump-date-starter {
-          font-size: 15px;
-          vertical-align: top;
+          /* Because the calendar icon has an empty pixel line on top !@#$(&&$@!,
+             we have to move it a bit... */
+          position: relative;
+          top: -2px;
         }
         &.next, &.previous {
           font-size: 24px;
-          line-height: 16px;
-          margin-left: 7px;
+          line-height: 24px;
+          margin-right: 5px;
         }
         &.today {
           margin-bottom: 0;
