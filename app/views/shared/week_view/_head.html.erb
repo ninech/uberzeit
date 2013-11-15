@@ -1,18 +1,26 @@
-<div class="head">
-  <%= l @weekdays.first, :format => :long %> – <%= l @weekdays.last, :format => :long %> (<%= t('.week_number') %> <%= @weekdays.first.cweek %>)
+<div class="large-12 columns head">
+  <div class="large-8 columns left">
+    <%= l @weekdays.first, :format => :long %> – <%= l @weekdays.last, :format => :long %> (<%= t('.week_number') %> <%= @weekdays.first.cweek %>)
+  </div>
 
-  <div class="right">
-    <span>
+  <div class="large-4 columns right">
+    <div class="table-cell">
+      <a href="<%= url_for(date: @next_week_day.to_formatted_s(:iso)) %>" class="next"><i class="icon-caret-right"></i></a>
+    </div>
+    <div class="table-cell">
+      <a href="<%= url_for(date: @previous_week_day.to_formatted_s(:iso)) %>" class="previous"><i class="icon-caret-left"></i></a>
+    </div>
+    <div class="table-cell">
+      <a href="#" class="jump-date-starter"><i class="icon-calendar"></i></a>
+    </div>
+    <div class="table-cell">
       <form>
         <input type="text" class="jump-date hidden" data-jump-url="<%= url_for(date: '') %>" data-current-day="<%= @day.to_formatted_s(:iso) %>">
       </form>
       <% unless @day.today? %>
         <a href="<%= url_for(date: nil) %>" class="small secondary today button"><%= t '.today' %></a>
       <% end %>
-      <a href="#" class="jump-date-starter"><i class="icon-calendar"></i></a>
-      <a href="<%= url_for(date: @previous_week_day.to_formatted_s(:iso)) %>" class="previous"><span class="icon-caret-left"></span></a>
-      <a href="<%= url_for(date: @next_week_day.to_formatted_s(:iso)) %>" class="next"><span class="icon-caret-right"></span></a>
-    </span>
+    </div>
   </div>
 
 </div>
