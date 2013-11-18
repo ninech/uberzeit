@@ -9,7 +9,7 @@
         <%= l range.min %>
       </span>
     <% end %>
-    –
+    &ndash;
     <% if @day != timer.start_date %>
       <span class="has-tip duration" data-tooltip="<%= t('.tooltip.ends') %> <%= l Time.current, format: :long %>">
         <%= l range.max %>
@@ -18,14 +18,11 @@
       <span class="now"><%= t('.now') %></span>
     <% end %>
   </div>
-  <div class="large-7 columns">
+  <div class="large-6 columns">
     <%= timer.time_type %>
   </div>
-  <div class="large-2 columns">
+  <div class="large-4 columns">
     <div class="right">
-      <a href='#' class="edit remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= edit_user_time_entry_path(@user, timer) %>">
-        <%= icon(:edit) %>
-      </a>
       <a href="<%= url_for(action: :stop_timer, date: @day) %>" data-method="put" data-remote="true" class="stop-timer">
         Stop
       </a>
@@ -35,10 +32,9 @@
           <span class="timer-overall duration" data-timer-id="<%= timer.id %>"></span>
         </span>
       </small>
-    </div>
-  </div>
-  <div class="large-1 columns">
-    <div class="right">
+      <a href='#' class="edit remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= edit_user_time_entry_path(@user, timer) %>">
+        <%= icon(:edit) %>
+      </a>
       <span class="timer-current duration" data-timer-id="<%= timer.id %>"></span>
     </div>
   </div>

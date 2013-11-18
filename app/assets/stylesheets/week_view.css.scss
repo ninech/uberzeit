@@ -138,12 +138,12 @@
       }
 
       .edit { 
-        display: none;
+        visibility: hidden;
       }
 
       &:hover {
         .edit {
-          display: inline;
+          visibility: visible;
         }
       }
 
@@ -160,6 +160,7 @@
         background-position: left center;
         background-size: 1em;
         padding-left: 1.2em;
+        margin-right: 1em;
 
         &.disabled {
           opacity: 0.5;
@@ -185,7 +186,7 @@
 
 .touch .week-view .entries {
   .edit {
-    display: inline;
+    visibility: visible;
   }
 }
 
