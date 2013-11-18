@@ -1,36 +1,23 @@
 .content-activities {
   .week-view .entries {
-    ul {
-      li {
-        padding: 15px;
+    .metadata {
+      > * {
+        margin-left: 10px;
+        font-size: 0.7em;
 
-        small {
-          margin-left: 0;
-          margin-right: 10px;
-          font-size: 0.7em;
+        &:first-child {
+          margin-left: 0px;
         }
+      }
+    }
 
-        .activity {
-          span.has-tip {
-            font-size: 0.8em;
-            color: #d3d3d3;
-            border-bottom: none;
-          }
-        }
+    .activity {
+      font-weight: 600;
 
-        .metadata {
-          margin-top: -0.5em
-        }
-
-        .right {
-          margin-top: -2.1em;
-        }
-
-        &.summary {
-          .right {
-            margin-top: 0;
-          }
-        }
+      span.has-tip {
+        font-size: 0.8em;
+        color: #d3d3d3;
+        border-bottom: none;
       }
     }
   }

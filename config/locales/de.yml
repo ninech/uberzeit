@@ -399,6 +399,7 @@ de:
     timer:
       timer: Timer
       exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
+      now: jetzt
     top_buttons:
       add_time: Zeit hinzufügen
     add_time_modal:

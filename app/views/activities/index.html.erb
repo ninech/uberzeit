@@ -2,56 +2,58 @@
 
 <div class="row">
   <div class="large-12 columns">
-
-    <div class="activities week-view">
-      <%= render(partial: 'shared/week_view/head') %>
-      <%= render(partial: 'shared/week_view/weekdays') %>
-
-      <div class="entries">
-
+    <div class="row activities week-view">
+      <div class="large-12 columns">
+        <%= render(partial: 'shared/week_view/head') %>
+        <%= render(partial: 'shared/week_view/weekdays') %>
         <% unless @activities.blank? %>
-          <ul>
-            <% @activities.each do |activity| %>
-              <li>
-                <div class="activity">
-                  <%= activity.activity_type.name %>
+          <div class="row">
+            <div class="large-12 columns entries">
+              <% @activities.each do |activity| %>
+                <div class="row">
+                  <div class="large-10 columns">
+                    <div class="activity">
+                      <%= activity.activity_type.name %>
+                    </div>
+                    <div class="metadata">
+                      <span><%= t('.customer', customer_url: customer_link(activity.customer_id)).html_safe %></span>
+                      <% if activity.project %>
+                        <span><%= t('.project', project: activity.project.name) %></span>
+                      <% end %>
+                      <span><%= activity_source_information(activity) %></span>
+                      <% unless activity.description.blank? %>
+                        <span><%= activity.description %></span>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="large-2 columns">
+                    <div class="right">
+                      <%= activity.reviewed? ? icon('lock') : '' %>
+                      <% if can? :update, activity %>
+                        <a href='#' class="edit remote-reveal" data-reveal-id="activity-modal" data-reveal-url="<%= edit_user_activity_path(@user, activity) %>">
+                          <%= icon(:edit) %>
+                        </a>
+                      <% end %>
+                      <%= format_duration(activity.duration) %>
+                    </div>
+                  </div>
                 </div>
-                <div class="metadata">
-                  <small><%= t('.customer', customer_url: customer_link(activity.customer_id)).html_safe %></small>
-                  <% if activity.project %>
-                    <small><%= t('.project', project: activity.project.name) %></small>
-                  <% end %>
-                  <small><%= activity_source_information(activity) %></small>
-                  <% unless activity.description.blank? %>
-                    <small><%= activity.description %></small>
-                  <% end %>
-                </div>
-                <div class="right">
-                  <%= activity.reviewed? ? icon('lock') : '' %>
-                  <% if can? :update, activity %>
-                    <a href='#' class="edit-entry remote-reveal" data-reveal-id="activity-modal" data-reveal-url="<%= edit_user_activity_path(@user, activity) %>">
-                      <%= icon(:edit) %>
-                    </a>
-                  <% end %>
-                  <%= format_duration(activity.duration) %>
-                </div>
-              </li>
-            <% end %>
-            <%= render(partial: 'shared/week_view/summary') %>
-          </ul>
+              <% end %>
+              <%= render(partial: 'shared/week_view/summary') %>
+            </div>
+          </div>
         <% else %>
-          <div class="no-entries-message">
-            <p>
-              <%= t '.no_entries_yet_message' %>
-              <br>
-              <a href="#" class="remote-reveal" data-reveal-id="activity-modal" data-reveal-url="<%= new_user_activity_path(@user, date: @day) %>"><%= t '.add_activity_now' %></a>
-            </p>
+          <div class="row">
+            <div class="large-12 columns no-entries-message">
+              <p><%= t '.no_entries_yet_message' %></p>
+              <p><a href="#" class="remote-reveal" data-reveal-id="activity-modal" data-reveal-url="<%= new_user_activity_path(@user, date: @day) %>"><%= t '.add_activity_now' %></a></p>
+            </div>
           </div>
         <% end %>
       </div>
-    </div>
-    <div id="activity-modal" class="small reveal-modal activity">
-      <a class="close-reveal-modal">&#215;</a>
+      <div id="activity-modal" class="small reveal-modal activity">
+        <a class="close-reveal-modal">&#215;</a>
+      </div>
     </div>
   </div>
 </div>

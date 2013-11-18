@@ -1,6 +1,9 @@
-<%= icon_for_time_type(time_span.time_type) %>
-<%= time_span.time_type %>
-<div class="right">
-  <small><%= part_of_day(absence) %></small>
+<div class="row">
+  <div class="large-12 columns">
+    <%= icon_for_time_type(time_span.time_type) %>
+    <%= time_span.time_type %>
+    <div class="right">
+      <%= part_of_day(absence) %>
+    </div>
+  </div>
 </div>
-

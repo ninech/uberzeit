@@ -11,39 +11,41 @@
     <% end %>
 
     <%= link_to '', {action: :summary_for_date, date: @day}, remote: true, class: 'hide ajax summary_for_date' %>
+     
+    <div class="row timesheet week-view">
+      <div class="large-12 columns">
+        <%= render(partial: 'shared/week_view/head') %>
+        <%= render(partial: 'shared/week_view/weekdays') %>
 
-    <div class="timesheet week-view">
-      <%= render(partial: 'shared/week_view/head') %>
-      <%= render(partial: 'shared/week_view/weekdays') %>
-
-      <div class="entries">
         <% if @current_public_holiday || @time_spans_of_absences.any? || @time_spans_of_time_entries.any? || @timer %>
-          <ul>
-            <% if @current_public_holiday %>
-              <li><%= render(partial: 'public_holiday', locals: {public_holiday: @current_public_holiday}) %></li>
-            <% end %>
-            <% @time_spans_of_absences.each do |time_span| %>
-              <li><%= render(partial: 'absence', locals: {time_span: time_span, absence: time_span.time_spanable}) %></li>
-            <% end %>
-            <% @time_spans_of_time_entries.each do |time_span| %>
-              <li><%= render(partial: 'time_entry', locals: {time_span: time_span, time_entry: time_span.time_spanable}) %></li>
-            <% end %>
-            <% if @timer %>
-              <li><%= render(partial: 'timer', locals: {timer: @timer, range: @timer_range}) %></li>
-            <% end %>
-            <%= render(partial: 'shared/week_view/summary') %>
-          </ul>
+          <div class="row">
+            <div class="large-12 columns entries">
+              <% if @current_public_holiday %>
+                <%= render(partial: 'public_holiday', locals: {public_holiday: @current_public_holiday}) %>
+              <% end %>
+              <% @time_spans_of_absences.each do |time_span| %>
+                <%= render(partial: 'absence', locals: {time_span: time_span, absence: time_span.time_spanable}) %>
+              <% end %>
+              <% @time_spans_of_time_entries.each do |time_span| %>
+                <%= render(partial: 'time_entry', locals: {time_span: time_span, time_entry: time_span.time_spanable}) %>
+              <% end %>
+              <% if @timer %>
+                <%= render(partial: 'timer', locals: {timer: @timer, range: @timer_range}) %>
+              <% end %>
+              <%= render(partial: 'shared/week_view/summary') %>
+            </div>
+          </div>
         <% else %>
-          <div class="no-entries-message">
-            <p>
-              <%= t '.no_entries_yet_message' %>
-              <br>
-              <a href="#" class="remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= new_user_time_entry_path(@user, date: @day) %>"><%= t '.add_time_now' %></a>
-            </p>
+          <div class="row">
+            <div class="large-12 columns no-entries-message">
+              <p><%= t '.no_entries_yet_message' %></p>
+              <p><a href="#" class="remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= new_user_time_entry_path(@user, date: @day) %>"><%= t '.add_time_now' %></a></p>
+            </div>
           </div>
         <% end %>
       </div>
     </div>
+
     <%= render 'shared/nice_modal' %>
   </div>
 </div>
