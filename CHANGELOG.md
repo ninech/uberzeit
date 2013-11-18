@@ -1,4 +1,13 @@
 
+2.1.2
+=====
+Date:        2013-11-18
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.1.1...2.1.2
+
+  * Bug #8552 Anzeigefehler erster Zeiteintrag (Steven Schmid)
+
+
 2.1.0
 =====
 Date:        2013-11-13
