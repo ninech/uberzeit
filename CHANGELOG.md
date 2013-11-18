@@ -1,4 +1,12 @@
 
+2.1.3
+=====
+Date:        2013-11-18
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/uberzeit.git/compare/2.1.2...2.1.3
+
+
+
 2.1.2
 =====
 Date:        2013-11-18
