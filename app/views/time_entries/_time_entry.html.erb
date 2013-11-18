@@ -15,25 +15,36 @@
     end_time = l(time_entry.ends)
   end
 %>
-<span <% unless tooltip_for_start_time.blank? %>class="has-tip" data-tooltip="<%= tooltip_for_start_time %>"<% end %>>
-  <%= start_time %>
-</span>
-- 
-<span <% unless tooltip_for_end_time.blank? %>class="has-tip" data-tooltip="<%= tooltip_for_end_time %>"<% end %>>
-  <%= end_time %>
-</span>
-
-<small>
-  <%= time_span.time_type %>
-  <% if !standard_calculation?(time_span.time_type) && time_span.duration_bonus != 0 %>
-    <small> (<%= time_type_bonus_percentage(time_span.time_type) %> <%= t '.duration_bonus' %>: <%= format_duration(time_span.duration_bonus) %>) </small>
-  <% end %>
-</small>
-
-<div class="right">
-  <a href='#' class="edit-entry edit-time-entry-link remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= edit_user_time_entry_path(@user, time_entry) %>">
-    <%= icon(:edit) %>
-  </a>
-  <%= format_duration(time_span.duration) %>
+<div class="row">
+  <div class="large-2 columns">
+    <% unless tooltip_for_start_time.blank? %>
+      <span class="has-tip duration" data-tooltip="<%= tooltip_for_start_time %>">
+    <% else %>
+      <span class="duration">
+    <% end %>
+      <%= start_time %>
+    </span>
+    - 
+    <% unless tooltip_for_end_time.blank? %>
+      <span class="has-tip duration" data-tooltip="<%= tooltip_for_end_time %>">
+    <% else %>
+      <span class="duration">   
+    <% end %>
+      <%= end_time %>
+    </span>
+  </div>
+  <div class="large-7 columns">
+    <%= time_span.time_type %>
+    <% if !standard_calculation?(time_span.time_type) && time_span.duration_bonus != 0 %>
+      <br><span class="details"><%= time_type_bonus_percentage(time_span.time_type) %> <%= t '.duration_bonus' %>: <%= format_duration(time_span.duration_bonus) %></span>
+    <% end %>
+  </div>
+  <div class="large-2 columns">
+    <div class="right">
+      <a href='#' class="edit remote-reveal" data-reveal-id="time-modal" data-reveal-url="<%= edit_user_time_entry_path(@user, time_entry) %>">
+        <%= icon(:edit) %>
+      </a>
+      <%= format_duration(time_span.duration) %>
+    </div>
+  </div>
 </div>
-

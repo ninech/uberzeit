@@ -10,7 +10,7 @@ module TimeSheetsHelper
   end
 
   def format_duration(duration)
-    content_tag(:span, display_in_hours(duration), style: "color: #{color_for_duration(duration)}")
+    content_tag(:span, display_in_hours(duration), style: "color: #{color_for_duration(duration)}", class: "duration")
   end
 
   def part_of_day(absence)

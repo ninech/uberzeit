@@ -1,38 +1,39 @@
-<div class="weekdays">
-  <ul>
-    <% @weekdays.each do |weekday| %>
-      <li>
-        <a href="<%= url_for(date: weekday.to_formatted_s(:iso)) %>" class="<%= 'active' if weekday == @day %>">
-          <span class="day-description">
-            <span class="day">
+<div class="row weekdays">
+
+  <% @weekdays.each do |weekday| %>
+    <div class="eighth columns weekday <%= 'active' if weekday == @day %>">
+      <a href="<%= url_for(date: weekday.to_formatted_s(:iso)) %>">
+        <div class="day-description">
+          <div class="day">
+            <span>
               <span class="show-for-large-up">
                 <%= l weekday, format: :weekday %>
               </span>
               <span class="show-for-medium-down">
                 <%= l weekday, format: :short %>
               </span>
-              <% if @absences && @absences[weekday] %>
-                <%= @absences[weekday].map{ |absence| icon_for_time_type(absence.time_type) }.join.html_safe %>
-              <% end %>
-              <% if @public_holidays[weekday] %>
-                <i class="icon-flag public-holiday-color" title="<%= @public_holidays[weekday].name %>"></i>
-              <% end %>
             </span>
-            <% if @public_holidays[weekday] && @public_holidays[weekday].whole_day? %>
-              <span class="public-holiday"><%= @public_holidays[weekday].name %></span>
-            <% else %>
-              <span class="time total <%= 'active' if weekday == @day %>"><%= format_duration(@weekday_sums[weekday]) %></span>
+            <% if @absences && @absences[weekday] %>
+              <%= @absences[weekday].map{ |absence| icon_for_time_type(absence.time_type) }.join.html_safe %>
             <% end %>
-          </span>
-        </a>
-      </li>
-    <% end %>
-    <li class="weeksummary total">
-      <div>
-        <span class="total"><%= t '.total' %></span>
-        <br>
-        <span class="time week-total"><%= format_duration(@week_total) %></span>
-      </div>
-    </li>
-  </ul>
+            <% if @public_holidays[weekday] %>
+              <i class="icon-flag public-holiday-color" title="<%= @public_holidays[weekday].name %>"></i>
+            <% end %>
+          </div>
+          <% if @public_holidays[weekday] && @public_holidays[weekday].whole_day? %>
+            <div class="public-holiday"><%= @public_holidays[weekday].name %></div>
+          <% else %>
+            <div class="time total <%= 'active' if weekday == @day %>"><%= format_duration(@weekday_sums[weekday]) %></div>
+          <% end %>
+        </div>
+      </a>
+    </div>
+  <% end %>
+
+  <div class="eighth columns weeksummary total">
+    <div>
+      <div class="total"><%= t '.total' %></div>
+      <div class="time week-total"><%= format_duration(@week_total) %></div>
+    </div>
+  </div>
 </div>

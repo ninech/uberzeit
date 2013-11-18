@@ -1,17 +1,25 @@
 @import 'compass/css3/images';
 
 .week-view {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+
   border: 1px solid #CCCCCC;
-  // border-radius: 3px;
+
+  > div > .row { 
+    border-bottom: 1px solid #ADADAD;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
 
   .head {
     font-weight: 600;
     background-color: #EBEBEB;
     color: #474747;
     padding: 0px 15px 0px 10px;
-    border-bottom: 1px solid #ADADAD;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
-    // box-shadow: inset 0 -7px 6px -9px #000;
     @include background-image(linear-gradient(top center, #F5F5F5 0%, #E0E0E0 90%));
 
     div {
@@ -63,146 +71,124 @@
   }
 
   .weekdays {
-    ul {
-      width: 100%;
-      height: 45px;
-      li {
-        float: left;
-        width: 12.5%;
+    .weekday {
+      @include background-image(linear-gradient(top center, #F5F5F5 0%, #D6D6D6 90%));
+    }
+    .weeksummary {
+      background: #F5F5F5;
+    }
+    .weekday, .weeksummary {
+      height: 60px;
+      border-left: 1px solid #ADADAD;
+      padding: 0;
+    
+      > * {
+        display: block;
+        height: 100%;
+        padding: 8px 0;
+        text-align: center;
+        
+        // style it baby
+        color: black;
+        font-weight: 600;
+        font-size: 0.8em;
+        line-height: 22px;
 
-        > a, > div {
-          display: block;
-          padding: 10px;
-          height: 60px;
-          text-align: center;
-          float: none;
-          box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
-          // width: 14.2857%;
-          background-color: #CCCCCC;
-          border-bottom: 1px solid #ADADAD;
-          border-left: 1px solid #ADADAD;
-          color: black;
-          font-weight: 600;
-          font-size: 0.8em;
-          float: none;
-          @include background-image(linear-gradient(top center, #F5F5F5 0%, #D6D6D6 90%));
-
-          &.active {
-            box-shadow: inset 0 0 10px 1px #CCCCCC;
-            background-image: none;
-            background-color: #E0E0E0;
-          }
-
-          span.day {
-            // display: block;
-          }
-
-          span.time {
-            font-weight: 400;
-            font-size: 1.2em;
-            display: block;
-          }
-
-          span.public-holiday {
-            font-weight: 400;
-            font-style: italic;
-          }
-
-          span.day-description {
-            display: block;
-            max-height: 40px;
-            overflow: hidden;
-          }
-        }
-
-        &:first-child {
-          a {
-            border-left: none;
-          }
-        }
-
-        &.weeksummary div {
-          background: #F5F5F5;
+        .time {
+          font-size: 1.2em;
+          font-weight: normal;
         }
       }
+
+      &.active {
+        box-shadow: inset 0 0 10px 1px #CCCCCC;
+        background-image: none;
+        background-color: #E0E0E0;
+      }
+
+      &:first-child {
+        border-left: none;
+      }
+    }
+  }
+
+  .no-entries-message {
+    text-align: center;
+    padding: 100px 0 20px;
+    background-color: #F5F5F5;
+    height: 300px;
+
+    p {
+      font-weight: 600;
     }
   }
 
   .entries {
-    ul {
-      li {
-        padding: 20px;
-        border-bottom: 1px solid #CCCCCC;
-        font-weight: 600;
+    > div {
+      > div {
+        // otherwise the border will overlap
         font-size: 1.2em;
+      }
 
-        &:last-child {
-          margin-bottom: 30px;
-          border-bottom: none;
-          color: #A3A3A3;
-          // font-size: 1em;
+      padding: 20px;
+      border-bottom: 1px solid #CCCCCC;
+
+      &:last-child {
+        border: none;
+      }
+
+      .edit { 
+        display: none;
+      }
+
+      &:hover {
+        .edit {
+          display: inline;
         }
+      }
 
-        .stop-timer {
-          margin-right: 1em;
-          background-image: image-url('clock.gif');
-          background-repeat: no-repeat;
-          background-position: left center;
-          background-size: 1em;
-          padding-left: 1.2em;
-
-          &.disabled {
-            opacity: 0.5;
-          }
+      .details {
+        font-size: 0.6em;
+        .duration { 
+          font-weight: normal;
         }
+      }
 
-        &:hover {
-          a.edit-entry {
-            display: inline;
-          }
-        }
+      .stop-timer {
+        background-image: image-url('clock.gif');
+        background-repeat: no-repeat;
+        background-position: left center;
+        background-size: 1em;
+        padding-left: 1.2em;
 
-        small {
-          font-weight: 300;
-          font-size: 0.8em;
-          margin-left: 10px;
-          overflow: hidden;
-          // https://bugzilla.mozilla.org/show_bug.cgi?id=491549
-          vertical-align: middle;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          max-width: 300px;
-          display: inline-block;
+        &.disabled {
+          opacity: 0.5;
         }
       }
     }
 
-    a.edit-entry {
-      color: #D6D6D6;
-      display: none;
-
+    .duration {
+      font-weight: 600;
     }
 
-    .no-entries-message {
-      text-align: center;
-      padding: 100px 0 20px;
-      background-color: #F5F5F5;
-      margin-top: -5px;
-      height: 300px;
+    .now {
+      font-weight: normal;
+      font-size: 0.8em; 
+    } 
+  }
 
-      p {
-        font-weight: 600;
-      }
-    }
+  .summary {
+    font-weight: 600;
+    color: #A3A3A3;
   }
 }
 
 .touch .week-view .entries {
-  ul {
-    li {
-      a.edit-time-entry-link {
-        display: inline;
-      }
-    }
+  .edit {
+    display: inline;
   }
+}
+
+.eighth {
+  width: 12.5%;
 }
