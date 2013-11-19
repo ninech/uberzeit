@@ -11,14 +11,13 @@
 #
 
 class Project < ActiveRecord::Base
+  include CustomerAssignable
+
   acts_as_paranoid
 
-  belongs_to :customer, primary_key: :id
+  attr_accessible :name
 
-  attr_accessible :name, :customer, :customer_id
-
-  validates_presence_of :customer, :name
+  validates_presence_of :name
 
   default_scope order(:name)
-  scope :by_customer, ->(user) { where(customer_id: user)}
 end

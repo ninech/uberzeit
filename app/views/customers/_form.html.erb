@@ -1,0 +1,28 @@
+<%= form_for(@customer) do |f| %>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.text_field :number %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.text_field :abbreviation %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.text_field :name %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-3 columns">
+    <%= f.submit class: 'button'%>
+  </div>
+  <div class="small-2 columns end">
+    <%= link_to t('.back'), customers_path, class: "secondary button" %>
+  </div>
+</div>
+<% end %>

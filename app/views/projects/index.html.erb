@@ -6,7 +6,9 @@
     </h1>
 
     <% @projects.each do |customer, projects| %>
-      <h2><%= customer.name %></h2>
+      <h2>
+        <%= customer || '-' %>
+      </h2>
       <table class="nice small-12 edit destroy">
         <tbody>
           <% projects.each do |project| %>

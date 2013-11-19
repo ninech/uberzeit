@@ -13,16 +13,19 @@ class Customer < ActiveRecord::Base
   has_many :projects
   has_many :activities
 
-  self.primary_key = :id
+  default_scope { order(:number) }
 
-  attr_accessible :id, :name, :abbreviation
+  attr_accessible :number, :name, :abbreviation
 
-  validates_presence_of :id
+  validates_numericality_of :number
+  validates_uniqueness_of :number, if: :number?
+  validates_presence_of :name
 
   def display_name
-    display_name = "#{id}: #{name}"
-    display_name += " - #{abbreviation}" unless abbreviation.blank? || abbreviation == name
-    display_name
+    display_name_parts = [name]
+    display_name_parts.prepend "#{number}:" unless number.nil?
+    display_name_parts.append "- #{abbreviation}" unless abbreviation.blank? || abbreviation == name
+    display_name_parts.join ' '
   end
 
   def to_s

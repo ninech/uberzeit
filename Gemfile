@@ -64,6 +64,7 @@ gem 'simple-navigation'
 gem 'rack-cors'
 
 gem 'gaffe'
+gem 'kaminari'
 
 # Logging
 gem 'uberlog',

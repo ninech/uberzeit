@@ -15,14 +15,14 @@ describe Customer do
   subject { FactoryGirl.create(:customer) }
 
   its(:abbreviation) { should eq('yolo') }
-  its(:display_name) { should eq("#{subject.id}: Yolo Inc. - yolo") }
+  its(:display_name) { should eq("#{subject.number}: Yolo Inc. - yolo") }
 
   context 'without abbreviation' do
     before do
       subject.abbreviation = nil
     end
     its(:abbreviation) { should be_nil }
-    its(:display_name) { should eq("#{subject.id}: Yolo Inc.")}
+    its(:display_name) { should eq("#{subject.number}: Yolo Inc.")}
   end
 
   context 'when the abbreviation is the same as the name' do
@@ -30,6 +30,6 @@ describe Customer do
       subject.abbreviation = subject.name
     end
     its(:abbreviation) { should eq('Yolo Inc.') }
-    its(:display_name) { should eq("#{subject.id}: Yolo Inc.") }
+    its(:display_name) { should eq("#{subject.number}: Yolo Inc.") }
   end
 end

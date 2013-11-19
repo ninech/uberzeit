@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="small-12 columns">
+    <h1>
+      <%= Customer.model_name.human(count: @customers.count) %>
+      <%= link_to icon('plus') + ' ' + t('.new_customer'), new_customer_path, class: 'button right' %>
+    </h1>
+
+    <table class="nice small-12 edit destroy">
+      <tbody>
+        <% @customers.each do |customer| %>
+        <tr>
+          <td>
+            <strong><%= customer %></strong>
+          </td>
+          <td>
+            <%= link_to icon('edit'), edit_customer_path(customer) %>
+          </td>
+          <td>
+            <%= link_to icon('trash'), customer, method: :delete, confirm: t('.confirm_delete', customer: customer) %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @customers %>
+  </div>
+</div>
