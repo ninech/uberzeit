@@ -19,16 +19,34 @@ describe API::User::Resources::Customers do
     let!(:customer1) { FactoryGirl.create(:customer) }
     let!(:customer2) { FactoryGirl.create(:customer) }
 
-    before do
-      get '/api/customers'
+    context 'without search parameters' do
+      before do
+        get '/api/customers'
+      end
+
+      it 'returns a list of the customers' do
+        json.should have(2).customers
+      end
+
+      it_behaves_like 'a customer' do
+        subject { json.first }
+      end
     end
 
-    it 'returns a list of the customers' do
-      json.should have(2).customers
-    end
+    context 'with search parameters' do
+      context 'when searching for a customer by number' do
+        before do
+          get "/api/customers?number=#{customer1.number}"
+        end
 
-    it_behaves_like 'a customer' do
-      subject { json.first }
+        it 'returns a list of customers' do
+          json.should have(1).customers
+        end
+
+        it_behaves_like 'a customer' do
+          subject { json.first }
+        end
+      end
     end
   end
 
