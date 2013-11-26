@@ -99,6 +99,7 @@ SimpleNavigation::Configuration.run do |navigation|
       if current_user.admin?
         second.item :users, t('navigation.sub.manage.users'), users_path, highlights_on: %r!\A#{users_path}(?:/(?:[0-9](?:/(?:(?:edit|employments|roles)(?:/.*)?)?)?)?)?\z!
         second.item :teams, t('navigation.sub.manage.teams'), teams_path, highlights_on: %r!\A#{teams_path}!
+        second.item :customers, t('navigation.sub.manage.customers'), customers_path, highlights_on: %r!\A#{customers_path}!
         second.item :adjustments, t('navigation.sub.manage.adjustments'), adjustments_path, highlights_on: %r!\A#{adjustments_path}!
         second.item :public_holidays, t('navigation.sub.manage.public_holidays'), public_holidays_path, highlights_on: %r!\A#{public_holidays_path}!
         second.item :time_types, t('navigation.sub.manage.time_types'), time_types_path, highlights_on: %r!\A#{time_types_path}!

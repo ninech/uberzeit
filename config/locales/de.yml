@@ -19,6 +19,9 @@ de:
       user: Benutzer
       team: Team
       role: Rolle
+      customer:
+        one: Kunde
+        other: Kunden
     attributes:
       activity:
         customer: 'Kunde'
@@ -72,6 +75,12 @@ de:
         name: Name
       role:
         resource: Ressource
+      customer:
+        number: Kundennummer
+        abbreviation: 'Kürzel'
+        name: Name
+      project:
+        customer_number: 'Kunde'
     errors:
       models:
         activity:
@@ -237,6 +246,7 @@ de:
         time_types: Zeittypen
         users: Benutzer
         teams: Teams
+        customers: Kunden
         adjustments: Anpassungen
         projects: 'Projekte'
         activity_types: 'Aktivitätstypen'
@@ -501,6 +511,17 @@ de:
       open_ended: unbefristet
       confirm_delete: Löschen?
 
+  customers:
+    index:
+      new_customer: 'Neuer Kunde'
+      confirm_delete: 'Kunde "%{customer}" löschen?'
+    edit:
+      edit_customer: 'Kunde "%{customer}" bearbeiten'
+    form:
+      back: 'Zurück'
+    new:
+      new_customer: 'Kunde anlegen'
+
   roles:
     names:
       admin: 'Administrator'
@@ -538,3 +559,10 @@ de:
       name: 'Geplante Pikettarbeiten'
       description: 'Während der im nine.ch Pikett-Reglement spezifizierten Tageszeiten wird die geleistete Arbeitzeit zu 125% gutgeschrieben.'
 
+  views:
+    pagination:
+      first: '«'
+      last: '»'
+      previous: '‹'
+      next: '›'
+      truncate: '…'

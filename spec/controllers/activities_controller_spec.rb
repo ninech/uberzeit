@@ -95,7 +95,7 @@ describe ActivitiesController do
       context 'with valid parameters' do
         let(:params_activity) do
           {
-            customer_id: customer.id,
+            customer_number: customer.number,
             activity_type_id: activity_type.id,
             date: date,
             duration: '00:20'
@@ -118,7 +118,7 @@ describe ActivitiesController do
         it 'changes the attributes' do
           put :update, params
           activity.reload
-          activity.customer_id.should == customer.id
+          activity.customer_number.should == customer.number
           activity.activity_type_id.should == activity_type.id
           activity.duration.should == 1200
         end
@@ -135,7 +135,7 @@ describe ActivitiesController do
       context 'with valid parameters' do
         let(:params_activity) do
           {
-            customer_id: customer.id,
+            customer_number: customer.number,
             activity_type_id: activity_type.id,
             date: date,
             duration: '00:20'
@@ -221,7 +221,7 @@ describe ActivitiesController do
       end
 
       it 'cannot create an activity with the attribute' do
-        post :create, user_id: user.id, activity: FactoryGirl.attributes_for(:activity, reviewed: true, activity_type_id: activity_type.id).merge(customer_id: customer.id)
+        post :create, user_id: user.id, activity: FactoryGirl.attributes_for(:activity, reviewed: true, activity_type_id: activity_type.id).merge(customer_number: customer.number)
         Activity.last.reviewed.should be_false
       end
     end
@@ -235,7 +235,7 @@ describe ActivitiesController do
       end
 
       it 'can create an activity with the attribute' do
-        post :create, user_id: user.id, activity: FactoryGirl.attributes_for(:activity, reviewed: true, activity_type_id: activity_type.id).merge(customer_id: customer.id)
+        post :create, user_id: user.id, activity: FactoryGirl.attributes_for(:activity, reviewed: true, activity_type_id: activity_type.id).merge(customer_number: customer.number)
         Activity.last.reviewed.should be_true
       end
     end
