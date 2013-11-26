@@ -37,6 +37,7 @@ class LdapSync
       end
 
       def sync_user_attributes(user, person)
+        user.auth_source = 'ldap'
         user.name = person.sn
         user.given_name = person.givenname
         user.birthday = Date.parse(person.birthdate) unless person.birthdate.nil?

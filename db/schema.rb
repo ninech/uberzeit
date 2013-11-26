@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131118115555) do
+ActiveRecord::Schema.define(:version => 20131126145838) do
 
   create_table "absence_schedules", :force => true do |t|
     t.boolean  "active",                 :default => false
@@ -220,6 +220,8 @@ ActiveRecord::Schema.define(:version => 20131118115555) do
     t.string   "given_name"
     t.date     "birthday"
     t.string   "authentication_token"
+    t.string   "password_digest"
+    t.string   "auth_source"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

@@ -71,6 +71,8 @@ de:
         given_name: Vorname
         name: Nachname
         birthday: Geburtsdatum
+        password: Passwort
+        password_confirmation: 'Passwort (wiederholen)'
       team:
         name: Name
       role:
