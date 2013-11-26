@@ -123,7 +123,7 @@ describe 'Roles and Rights' do
         end
 
         describe 'my work report' do
-          let(:path) { reports_work_user_year_path(user, year) }
+          let(:path) { reports_my_work_path(user, year: year) }
           include_examples :my_reports_access
         end
       end
@@ -148,22 +148,22 @@ describe 'Roles and Rights' do
 
         describe 'work report' do
           describe 'monthly' do
-            let(:path) { reports_work_month_path(year, month) }
+            let(:path) { reports_work_path(year: year, month: month) }
             include_examples :overall_reports_access
           end
           describe 'yearly' do
-            let(:path) { reports_work_year_path(year) }
+            let(:path) { reports_work_path(year: year) }
             include_examples :overall_reports_access
           end
         end
 
         describe 'vacation report' do
           describe 'monthly' do
-            let(:path) { reports_vacation_month_path(year, month) }
+            let(:path) { reports_vacation_path(year: year, month: month) }
             include_examples :overall_reports_access
           end
           describe 'yearly' do
-            let(:path) { reports_vacation_year_path(year) }
+            let(:path) { reports_vacation_path(year: year) }
             include_examples :overall_reports_access
           end
         end
@@ -187,17 +187,17 @@ describe 'Roles and Rights' do
           end
 
           describe 'monthly' do
-            let(:path) { reports_absences_month_path(year, month) }
+            let(:path) { reports_absences_path(year: year, month: month) }
             include_examples :overall_absences_report
           end
 
           describe 'yearly' do
-            let(:path) { reports_absences_year_path(year) }
+            let(:path) { reports_absences_path(year: year) }
             include_examples :overall_absences_report
           end
 
           describe 'calendar' do
-            let(:path) { reports_absences_calendar_path(year, month) }
+            let(:path) { reports_absences_calendar_path(year: year, month: month) }
             include_examples :overall_absences_report
           end
         end
@@ -263,7 +263,7 @@ describe 'Roles and Rights' do
 
     describe 'reports' do
       before do
-        visit reports_work_user_year_path(current_user, year)
+        visit reports_my_work_path(current_user, year: year)
       end
 
       context 'as user' do
