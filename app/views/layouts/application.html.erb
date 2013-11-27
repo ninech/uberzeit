@@ -38,10 +38,12 @@
 </head>
 <body class="content-<%= controller.controller_name %>">
   <%= render 'layouts/header' %>
-  <div class="subnavigation container">
+  <div class="container">
     <div class="row">
       <div class="small-12 columns">
-        <%= render_navigation(level: 2, renderer: SubnavRenderer) %>
+        <% if has_top_buttons? %>
+          <%= render "#{controller.controller_name}/top_buttons" %>
+        <% end %>
       </div>
     </div>
   </div>

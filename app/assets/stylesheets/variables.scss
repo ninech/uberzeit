@@ -1200,7 +1200,7 @@ $table-margin-bottom: emCalc(20px);
 
 // Background color for the top bar
 
-// $topbar-bg: #111 !default;
+$topbar-bg: $primary-color;
 
 // Height and margin
 
@@ -1234,7 +1234,7 @@ $table-margin-bottom: emCalc(20px);
 // $topbar-link-font-size: emCalc(13px);
 // $topbar-link-hover-lightness: -30%; // Darken by 30%
 // $topbar-link-bg-hover: darken($topbar-bg, 3%);
-// $topbar-link-bg-active: darken($topbar-bg, 3%);
+$topbar-link-bg-active: darken($topbar-bg, 4%);
 
 // $topbar-dropdown-label-color: #555;
 // $topbar-dropdown-label-text-transform: uppercase;
@@ -1248,8 +1248,8 @@ $table-margin-bottom: emCalc(20px);
 // $topbar-menu-link-weight: bold;
 // $topbar-menu-link-color: #fff;
 // $topbar-menu-icon-color: #fff;
-// $topbar-menu-link-color-toggled: #888;
-// $topbar-menu-icon-color-toggled: #888;
+$topbar-menu-link-color-toggled: #ddd;
+$topbar-menu-icon-color-toggled: #ddd;
 
 // Transitions and breakpoint styles
 

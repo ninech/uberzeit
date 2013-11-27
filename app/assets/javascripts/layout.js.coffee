@@ -39,7 +39,7 @@ $ ->
 
   $(document)
     .foundation('reveal', { closeOnBackgroundClick: false, closeOnEsc: false })
-    .foundation('section')
+    .foundation()
 
   window.initControls = () ->
     initTimePicker()

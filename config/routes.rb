@@ -13,6 +13,8 @@ Uberzeit::Application.routes.draw do
 
   # users scope
   resources :users do
+    resource :password, only: [:edit, :update]
+
     resources :recurring_entries, except: [:show, :index]
 
     resources :absences do
