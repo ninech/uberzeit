@@ -513,7 +513,6 @@ de:
       add_employment: Neues Anstellungsverhältnis
       open_ended: unbefristet
       confirm_delete: Löschen?
-
   customers:
     index:
       new_customer: 'Neuer Kunde'
@@ -524,7 +523,6 @@ de:
       back: 'Zurück'
     new:
       new_customer: 'Kunde anlegen'
-
   roles:
     names:
       admin: 'Administrator'
@@ -538,6 +536,11 @@ de:
       new_role: 'Benutzerrolle anlegen'
     form:
       back: 'Zurück'
+  passwords:
+    edit:
+      edit_password: 'Passwort ändern'
+    form:
+      submit: 'Passwort ändern'
 
   not_logged_in: 'Sie sind nicht eingeloggt.'
 

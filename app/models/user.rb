@@ -42,8 +42,10 @@ class User < ActiveRecord::Base
   validates_presence_of :given_name, :name
 
   validates_presence_of :password, on: :create, if: -> { auth_source.blank? }
-  attr_reader :password
+  validates :password, length: { minimum: 6 }, unless: -> { password.nil? }
   validates_confirmation_of :password
+
+  attr_reader :password
   include ActiveModel::SecurePassword::InstanceMethodsOnActivation
 
   scope :in_teams, ->(teams) { where Membership.where(team_id: teams).where('user_id = users.id').exists }
