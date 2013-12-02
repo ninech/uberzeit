@@ -43,6 +43,9 @@ table {
   &.destroy td:last-child {
     width: 10px;
   }
+  td.action.disabled {
+    color: #aaa;
+  }
 }
 
 .alert-box {

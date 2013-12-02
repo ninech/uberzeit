@@ -11,9 +11,11 @@
         <%= current_user %>
       </a>
       <ul class="dropdown">
-        <li>
-          <%= link_to t('.change_password'), edit_user_password_path(current_user) %>
-        </li>
+        <% current_user.with_editable do %>
+          <li>
+            <%= link_to t('.change_password'), edit_user_password_path(current_user) %>
+          </li>
+        <% end %>
         <li>
           <%= link_to t('.logout'), logout_path %>
         </li>

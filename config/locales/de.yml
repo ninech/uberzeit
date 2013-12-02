@@ -130,6 +130,7 @@ de:
   model_successfully_created: "%{model} wurde erfolgreich erstellt."
   model_successfully_updated: "%{model} wurde erfolgreich aktualisiert."
   model_successfully_deleted: "%{model} wurde erfolgreich gelöscht."
+  model_not_editable: "%{model} kann nicht editiert werden."
   time:
     formats:
       default: '%H:%M'
