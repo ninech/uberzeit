@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
 
   rolify
   acts_as_paranoid
+  validates_as_paranoid
 
   default_scope order('users.name')
 
@@ -35,7 +36,7 @@ class User < ActiveRecord::Base
   has_many :days, dependent: :destroy
   has_many :time_spans, dependent: :destroy
 
-  validates_uniqueness_of :email
+  validates_uniqueness_of_without_deleted :email
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/ }
 
   validates_presence_of :given_name, :name
@@ -100,5 +101,13 @@ class User < ActiveRecord::Base
 
   def time_sheet
     @time_sheet ||= TimeSheet.new(self)
+  end
+
+  def editable?
+    auth_source.blank?
+  end
+
+  def with_editable(&block)
+    block.call if editable?
   end
 end
