@@ -46,11 +46,11 @@ table {
 }
 
 .alert-box {
-  background-color: #CEE5F2;
-  border-color: #AED3EA;
+  background-color: lighten($primary-color, 40%);
   margin-bottom: 0.5em;
   font-weight: 400;
-  color: #348fc9;
+  color: lighten($primary-color, 10%);
+  border: 0;
 
   a {
     font-weight: 700;
