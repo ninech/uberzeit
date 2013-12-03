@@ -32,25 +32,23 @@ class CustomerSync
 
   def remove_deleted_customers
     ::Customer.all.each do |local_customer|
-      local_customer.destroy unless remote_customer_ids.index(local_customer.id)
+      local_customer.destroy unless remote_customer_ids.index(local_customer.number)
     end
   end
 
   def sync_customer_attributes(local_customer, remote_customer)
-    # fugly hack to not break ubertrack
-    local_customer.id = remote_customer.id
-
+    local_customer.number = remote_customer.id
     local_customer.name = "#{remote_customer.firstname} #{remote_customer.companyname}".strip
     local_customer.abbreviation = find_customers_abbreviation(remote_customer)
     local_customer.save!
   end
 
-  def find_customers_abbreviation(customer)
-    remote_customer_login = find_remote_customer_login(customer)
+  def find_customers_abbreviation(remote_customer)
+    remote_customer_login = find_remote_customer_login(remote_customer)
     remote_customer_login ? remote_customer_login.login : nil
   end
 
-  def find_remote_customer_login(customer)
-    remote_customer_logins.find { |remote_customer_login| remote_customer_login.id == customer.id }
+  def find_remote_customer_login(remote_customer)
+    remote_customer_logins.find { |remote_customer_login| remote_customer_login.id == remote_customer.id }
   end
 end
