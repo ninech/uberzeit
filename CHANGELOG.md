@@ -1,4 +1,12 @@
 
+2.2.1
+=====
+Date:        2013-12-03
+Released by: Nils Caspar
+Diff:        https://git.nine.ch/uberzeit/compare/2.2.0...2.2.1
+
+
+
 2.2.0
 =====
 Date:        2013-12-03
