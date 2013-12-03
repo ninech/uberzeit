@@ -20,9 +20,10 @@ class AddCustomerNumber < ActiveRecord::Migration
       customer = Customer.where(source_id_name => item.customer_id).last
       if customer.nil?
         puts "Customer #{item.customer_id} not found!"
-        next
+        item.customer_id = nil
+      else
+        item.customer_id = customer.send(target_id_name)
       end
-      item.customer_id = customer.send(target_id_name)
       item.save!(validate: false)
     end
   end
