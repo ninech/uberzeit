@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Reports::Absences::AbsenceController do
+describe Reports::AbsenceController do
   render_views
 
   let(:user) { FactoryGirl.create(:user) }
@@ -9,7 +9,7 @@ describe Reports::Absences::AbsenceController do
 
   context 'for non-signed in users' do
     it 'redirects to login' do
-      get :year, year: year
+      get :show, year: year
       response.should redirect_to(new_session_path)
     end
   end
@@ -22,21 +22,21 @@ describe Reports::Absences::AbsenceController do
 
     describe 'GET "year"' do
       it 'assigns the correct instance variables' do
-        get :year, year: year
+        get :show, year: year
         assigns(:year).should_not be_nil
         assigns(:result).should_not be_nil
         assigns(:total).should_not be_nil
       end
 
       it 'renders the :year template' do
-        get :year, year: year
+        get :show, year: year
         response.should render_template :table
       end
     end
 
     describe 'GET "month"' do
       it 'assigns the correct instance variables' do
-        get :month, year: year, month: month
+        get :show, year: year, month: month
         assigns(:year).should_not be_nil
         assigns(:month).should_not be_nil
         assigns(:result).should_not be_nil
@@ -44,7 +44,7 @@ describe Reports::Absences::AbsenceController do
       end
 
       it 'renders the :month template' do
-        get :month, year: year, month: month
+        get :show, year: year, month: month
         response.should render_template :table
       end
     end

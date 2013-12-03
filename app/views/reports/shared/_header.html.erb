@@ -1,13 +1,12 @@
 <%
   selectors_to_render = [:team_selector, :group_by_selector, :customer_selector, :time_frame_selector, :datepicker].select { |selector| content_for?(selector) }
-  append_to_url = '' if local_assigns[:append_to_url].nil?
 %>
 
 <div class="row content-summary-header">
   <div class="small-12 columns">
     <h1><%= title %></h1>
 
-    <%= form_tag do %>
+    <%= form_tag '', method: :get do %>
     <div class="row">
       <div class="small-5 columns">
         <% selectors_to_render.each do |selector| %>
@@ -17,9 +16,7 @@
         <div class="row">
           <div class="small-12 columns">
             <% if selectors_to_render.any? %>
-              <%= hidden_field_tag :base_url, base_url %>
-              <%= hidden_field_tag :append_to_url, append_to_url %>
-              <%= button_tag t('.show'), id: 'summary_header_submit', type: 'button', class: 'tiny button' %>
+              <%= submit_tag t('.show'), id: 'summary_header_submit', class: 'tiny button', name: nil %>
             <% end %>
           </div>
         </div>

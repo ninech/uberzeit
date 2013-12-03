@@ -103,14 +103,6 @@ module ApplicationHelper
     reports_work_user_month_path(user, Date.current.year, Date.current.month)
   end
 
-  def user_path_work_summary(user)
-    reports_work_user_month_path(user, Date.current.year, Date.current.month)
-  end
-
-  def user_path_absence_summary(user)
-    reports_absences_user_year_path(user, Date.current.year)
-  end
-
   def selectable_users
     User.accessible_by(current_ability)
   end

@@ -300,30 +300,27 @@ de:
         target: Sollzeit
         overtime: Überzeit
         adjustments: Anpassungen
-      work:
-        table:
-          title: Arbeitszeit Mitarbeiter
-      my_work:
-        table:
-          title: Meine Arbeitszeit
-    absences:
-      absence:
-        table:
-          title: Absenzen Mitarbeiter
-          total: Total
-        calendar:
-          month_in_year: '%B %Y'
-          title: Absenzen Mitarbeiter
+      table:
+        title: Arbeitszeit Mitarbeiter
+    my_work:
+      table:
+        title: Meine Arbeitszeit
+    absence:
+      table:
+        title: Absenzen Mitarbeiter
+        total: Total
+      calendar:
+        month_in_year: '%B %Y'
+        title: Absenzen Mitarbeiter
     vacation:
-      vacation:
-        year:
-          title: Feriensaldo
-          taken: 'Beanspruchte Ferientage im Jahr %{year}'
-          remaining: 'Noch verfügbare Ferientage in %{year}'
-        month:
-          title: Feriensaldo
-          taken: 'Beansprucht im %{month} %{year}'
-          remaining: 'Noch verfügbare Ferientage nach %{month} %{year}'
+      year:
+        title: Feriensaldo
+        taken: 'Beanspruchte Ferientage im Jahr %{year}'
+        remaining: 'Noch verfügbare Ferientage in %{year}'
+      month:
+        title: Feriensaldo
+        taken: 'Beansprucht im %{month} %{year}'
+        remaining: 'Noch verfügbare Ferientage nach %{month} %{year}'
     activities:
       billability:
         index:
@@ -366,6 +363,7 @@ de:
         everyone: Alle
       time_frame_selector:
         time_frame: Zeitraum
+        all: 'Alle'
       group_by_selector:
         group_by: Gruppieren nach
         project: Projekt
@@ -376,8 +374,7 @@ de:
       customer_selector:
         customer: Kunde
       buttons:
-        year: Jahr
-        month: Monat
+        table: Tabelle
         calendar: Kalender
   time_entries:
     edit:
