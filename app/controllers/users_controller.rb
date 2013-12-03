@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   include UsersHelper
 
   load_and_authorize_resource
-  before_filter :ensure_user_editable, only: [:edit, :update, :destroy]
+  before_filter :ensure_assigned_user_editable, only: [:edit, :update, :destroy]
 
   def index
     authorize! :manage, User

@@ -41,8 +41,8 @@ class User < ActiveRecord::Base
 
   validates_presence_of :given_name, :name
 
-  validates_presence_of :password, on: :create, if: -> { auth_source.blank? }
-  validates :password, length: { minimum: 6 }, unless: -> { password.nil? }
+  validates_presence_of :password, on: :create, unless: :external?
+  validates :password, length: { minimum: 6 }, if: :password
   validates_confirmation_of :password
 
   attr_reader :password
@@ -105,11 +105,19 @@ class User < ActiveRecord::Base
     @time_sheet ||= TimeSheet.new(self)
   end
 
-  def editable?
-    auth_source.blank?
+  def external?
+    auth_source.present?
   end
 
-  def with_editable(&block)
+  def editable?
+    !external?
+  end
+
+  def when_editable(&block)
     block.call if editable?
+  end
+
+  def when_not_editable(&block)
+    block.call unless editable?
   end
 end
