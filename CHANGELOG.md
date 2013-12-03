@@ -1,4 +1,14 @@
 
+2.2.0
+=====
+Date:        2013-12-03
+Released by: Nils Caspar
+Diff:        https://git.nine.ch/uberzeit/compare/2.1.3...2.2.0
+
+  * Feature #8623 Passwortverwaltung (Nils Caspar)
+  * Bug #8167 Navigation iPhone (Nils Caspar)
+
+
 2.1.3
 =====
 Date:        2013-11-18
