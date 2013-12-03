@@ -25,7 +25,7 @@ class CustomerSync
   end
 
   def sync_customer(remote_customer)
-    local_customer = Customer.find_or_create_by_id(remote_customer.id)
+    local_customer = Customer.find_or_create_by_number(remote_customer.id)
 
     sync_customer_attributes(local_customer, remote_customer)
   end
@@ -37,6 +37,9 @@ class CustomerSync
   end
 
   def sync_customer_attributes(local_customer, remote_customer)
+    # fugly hack to not break ubertrack
+    local_customer.id = remote_customer.id
+
     local_customer.name = "#{remote_customer.firstname} #{remote_customer.companyname}".strip
     local_customer.abbreviation = find_customers_abbreviation(remote_customer)
     local_customer.save!

@@ -43,22 +43,21 @@ table {
   &.destroy td:last-child {
     width: 10px;
   }
+  td.action.disabled {
+    color: #aaa;
+  }
 }
 
 .alert-box {
-  background-color: #CEE5F2;
-  border-color: #AED3EA;
+  background-color: lighten($primary-color, 40%);
   margin-bottom: 0.5em;
   font-weight: 400;
-  color: #348fc9;
+  color: lighten($primary-color, 10%);
+  border: 0;
 
   a {
     font-weight: 700;
   }
-}
-
-.alert-box.alert {
-  background-color: #F4676A;
 }
 
 .hidden {
@@ -76,56 +75,10 @@ table {
   color: black;
 }
 
-.touch .header.container {
-  .top-buttons, .navigation {
-    margin-top: 1em;
-  }
-  .navigation {
-
-    width: 100%;
-    padding: 0;
-
-    ul {
-      width: 100%;
-      z-index: 100;
-    }
-
-    li {
-      width: 100%;
-      float: left;
-      padding: 0;
-
-      border: 1px solid $primary-color;
-      border-top: 0px;
-
-      a {
-        width: 100%;
-        height: 100%;
-        display: inline-block;
-        padding: 10px 15px;
-      }
-
-      &:first-child {
-        border-top: 1px solid $primary-color;
-        display: block;
-        cursor: pointer;
-      }
-
-      &.active a {
-        text-decoration: underline;
-        border: 0px;
-      }
-    }
-  }
-
-  .top-buttons {
-    width: 100%;
-    a {
-      @extend .expand;
-    }
-  }
-}
-
 .green-tick {
   color: #6cc644;
+}
+
+div.top-buttons {
+  text-align: right;
 }

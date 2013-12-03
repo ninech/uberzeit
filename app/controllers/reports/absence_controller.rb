@@ -1,21 +1,15 @@
-class Reports::Absences::AbsenceController < ApplicationController
+class Reports::AbsenceController < ApplicationController
   before_filter :set_info
 
-  def year
+  def show
     time_spans_with_scopes = TimeSpan.for_user(@users)
-      .with_date_in_year(@year)
       .absences_with_adjustments
 
-    @result = time_spans_with_scopes.duration_in_work_day_sum_per_user_and_time_type
-    @total = time_spans_with_scopes.duration_in_work_day_sum_per_time_type
-
-    render :table
-  end
-
-  def month
-    time_spans_with_scopes = TimeSpan.for_user(@users)
-      .with_date_in_year_and_month(@year, @month)
-      .absences_with_adjustments
+    time_spans_with_scopes = if @month
+                               time_spans_with_scopes.with_date_in_year_and_month(@year, @month)
+                             else
+                               time_spans_with_scopes.with_date_in_year(@year)
+                             end
 
     @result = time_spans_with_scopes.duration_in_work_day_sum_per_user_and_time_type
     @total = time_spans_with_scopes.duration_in_work_day_sum_per_time_type

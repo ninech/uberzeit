@@ -123,7 +123,7 @@ describe 'Roles and Rights' do
         end
 
         describe 'my work report' do
-          let(:path) { reports_work_user_year_path(user, year) }
+          let(:path) { reports_my_work_path(user, year: year) }
           include_examples :my_reports_access
         end
       end
@@ -148,22 +148,22 @@ describe 'Roles and Rights' do
 
         describe 'work report' do
           describe 'monthly' do
-            let(:path) { reports_work_month_path(year, month) }
+            let(:path) { reports_work_path(year: year, month: month) }
             include_examples :overall_reports_access
           end
           describe 'yearly' do
-            let(:path) { reports_work_year_path(year) }
+            let(:path) { reports_work_path(year: year) }
             include_examples :overall_reports_access
           end
         end
 
         describe 'vacation report' do
           describe 'monthly' do
-            let(:path) { reports_vacation_month_path(year, month) }
+            let(:path) { reports_vacation_path(year: year, month: month) }
             include_examples :overall_reports_access
           end
           describe 'yearly' do
-            let(:path) { reports_vacation_year_path(year) }
+            let(:path) { reports_vacation_path(year: year) }
             include_examples :overall_reports_access
           end
         end
@@ -187,17 +187,17 @@ describe 'Roles and Rights' do
           end
 
           describe 'monthly' do
-            let(:path) { reports_absences_month_path(year, month) }
+            let(:path) { reports_absences_path(year: year, month: month) }
             include_examples :overall_absences_report
           end
 
           describe 'yearly' do
-            let(:path) { reports_absences_year_path(year) }
+            let(:path) { reports_absences_path(year: year) }
             include_examples :overall_absences_report
           end
 
           describe 'calendar' do
-            let(:path) { reports_absences_calendar_path(year, month) }
+            let(:path) { reports_absences_calendar_path(year: year, month: month) }
             include_examples :overall_absences_report
           end
         end
@@ -263,18 +263,18 @@ describe 'Roles and Rights' do
 
     describe 'reports' do
       before do
-        visit reports_work_user_year_path(current_user, year)
+        visit reports_my_work_path(current_user, year: year)
       end
 
       context 'as user' do
         let(:current_user) { user }
 
         describe 'main menu' do
-          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte'], ['Verwalten']
+          include_examples :menu_list, 'section > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte'], ['Verwalten']
         end
 
         describe 'report menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit'], ['Arbeitszeit Mitarbeiter', 'Feriensaldo']
+          include_examples :menu_list, '.sub-nav > li', ['Meine Arbeitszeit'], ['Arbeitszeit Mitarbeiter', 'Feriensaldo']
         end
       end
 
@@ -282,11 +282,11 @@ describe 'Roles and Rights' do
         let(:current_user) { team_leader }
 
         describe 'main menu' do
-          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Aktivitäten', 'Berichte', 'Verwalten'], []
+          include_examples :menu_list, 'section > ul > li', ['Zeiterfassung', 'Absenzen', 'Aktivitäten', 'Berichte', 'Verwalten'], []
         end
 
         describe 'report menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Arbeitszeit Mitarbeiter'], []
+          include_examples :menu_list, '.sub-nav > li', ['Meine Arbeitszeit', 'Arbeitszeit Mitarbeiter'], []
         end
       end
 
@@ -294,11 +294,11 @@ describe 'Roles and Rights' do
         let(:current_user) { admin }
 
         describe 'main menu' do
-          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Aktivitäten', 'Berichte', 'Verwalten'], []
+          include_examples :menu_list, 'section > ul > li', ['Zeiterfassung', 'Absenzen', 'Aktivitäten', 'Berichte', 'Verwalten'], []
         end
 
         describe 'report menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Arbeitszeit Mitarbeiter', 'Feriensaldo'], []
+          include_examples :menu_list, '.sub-nav > li', ['Meine Arbeitszeit', 'Arbeitszeit Mitarbeiter', 'Feriensaldo'], []
         end
       end
     end
@@ -313,7 +313,7 @@ describe 'Roles and Rights' do
         let(:current_user) { accountant }
 
         describe 'activities menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Verrechenbarkeit', 'Verrechnung'], []
+          include_examples :menu_list, '.sub-nav > li', ['Verrechenbarkeit', 'Verrechnung'], []
         end
       end
 
@@ -321,7 +321,7 @@ describe 'Roles and Rights' do
         let(:current_user) { team_leader }
 
         describe 'activities menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Übersicht', 'Verrechenbarkeit'], []
+          include_examples :menu_list, '.sub-nav > li', ['Übersicht', 'Verrechenbarkeit'], []
         end
       end
 
@@ -329,7 +329,7 @@ describe 'Roles and Rights' do
         let(:current_user) { admin }
 
         describe 'activities menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Übersicht', 'Verrechenbarkeit', 'Verrechnung'], []
+          include_examples :menu_list, '.sub-nav > li', ['Übersicht', 'Verrechenbarkeit', 'Verrechnung'], []
         end
       end
     end

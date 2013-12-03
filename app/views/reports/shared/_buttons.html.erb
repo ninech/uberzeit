@@ -1,19 +1,11 @@
 <dl class="sub-nav view-buttons">
   <% if controller.respond_to?(:calendar) %>
-  <dd <%= 'class=active' if controller.action_name == 'calendar' %>>
-    <%= link_to t('.calendar'), url_for(action: :calendar, year: @year, month: @month || Date.current.month, team_id: @team) %>
-  </dd>
-  <% end %>
+    <dd <%= 'class=active' if controller.action_name == 'calendar' %>>
+      <%= link_to t('.calendar'), url_for(action: :calendar, year: @year, month: @month || Date.current.month, team_id: @team) %>
+    </dd>
 
-  <% if controller.respond_to?(:month) %>
-  <dd <%= 'class=active' if controller.action_name == 'month' %>>
-    <%= link_to t('.month'), url_for(action: :month, year: @year, month: @month || Date.current.month, team_id: @team) %>
-  </dd>
-  <% end %>
-
-  <% if controller.respond_to?(:year) %>
-  <dd <%= 'class=active' if controller.action_name == 'year' %>>
-    <%= link_to t('.year'), url_for(action: :year, year: @year, team_id: @team) %>
-  </dd>
+    <dd <%= 'class=active' unless controller.action_name == 'calendar' %>>
+      <%= link_to t('.table'), url_for(action: :show, year: @year, month: @month || Date.current.month, team_id: @team) %>
+    </dd>
   <% end %>
 </dl>

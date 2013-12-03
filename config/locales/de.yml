@@ -19,6 +19,9 @@ de:
       user: Benutzer
       team: Team
       role: Rolle
+      customer:
+        one: Kunde
+        other: Kunden
     attributes:
       activity:
         customer: 'Kunde'
@@ -68,10 +71,18 @@ de:
         given_name: Vorname
         name: Nachname
         birthday: Geburtsdatum
+        password: Passwort
+        password_confirmation: 'Passwort (wiederholen)'
       team:
         name: Name
       role:
         resource: Ressource
+      customer:
+        number: Kundennummer
+        abbreviation: 'Kürzel'
+        name: Name
+      project:
+        customer_number: 'Kunde'
     errors:
       models:
         activity:
@@ -119,6 +130,7 @@ de:
   model_successfully_created: "%{model} wurde erfolgreich erstellt."
   model_successfully_updated: "%{model} wurde erfolgreich aktualisiert."
   model_successfully_deleted: "%{model} wurde erfolgreich gelöscht."
+  model_not_editable: "%{model} kann nicht editiert werden."
   time:
     formats:
       default: '%H:%M'
@@ -237,6 +249,7 @@ de:
         time_types: Zeittypen
         users: Benutzer
         teams: Teams
+        customers: Kunden
         adjustments: Anpassungen
         projects: 'Projekte'
         activity_types: 'Aktivitätstypen'
@@ -290,30 +303,27 @@ de:
         target: Sollzeit
         overtime: Überzeit
         adjustments: Anpassungen
-      work:
-        table:
-          title: Arbeitszeit Mitarbeiter
-      my_work:
-        table:
-          title: Meine Arbeitszeit
-    absences:
-      absence:
-        table:
-          title: Absenzen Mitarbeiter
-          total: Total
-        calendar:
-          month_in_year: '%B %Y'
-          title: Absenzen Mitarbeiter
+      table:
+        title: Arbeitszeit Mitarbeiter
+    my_work:
+      table:
+        title: Meine Arbeitszeit
+    absence:
+      table:
+        title: Absenzen Mitarbeiter
+        total: Total
+      calendar:
+        month_in_year: '%B %Y'
+        title: Absenzen Mitarbeiter
     vacation:
-      vacation:
-        year:
-          title: Feriensaldo
-          taken: 'Beanspruchte Ferientage im Jahr %{year}'
-          remaining: 'Noch verfügbare Ferientage in %{year}'
-        month:
-          title: Feriensaldo
-          taken: 'Beansprucht im %{month} %{year}'
-          remaining: 'Noch verfügbare Ferientage nach %{month} %{year}'
+      year:
+        title: Feriensaldo
+        taken: 'Beanspruchte Ferientage im Jahr %{year}'
+        remaining: 'Noch verfügbare Ferientage in %{year}'
+      month:
+        title: Feriensaldo
+        taken: 'Beansprucht im %{month} %{year}'
+        remaining: 'Noch verfügbare Ferientage nach %{month} %{year}'
     activities:
       billability:
         index:
@@ -356,6 +366,7 @@ de:
         everyone: Alle
       time_frame_selector:
         time_frame: Zeitraum
+        all: 'Alle'
       group_by_selector:
         group_by: Gruppieren nach
         project: Projekt
@@ -366,8 +377,7 @@ de:
       customer_selector:
         customer: Kunde
       buttons:
-        year: Jahr
-        month: Monat
+        table: Tabelle
         calendar: Kalender
   time_entries:
     edit:
@@ -393,13 +403,13 @@ de:
       time_bonuses: Nachtzuschläge
     time_entry:
       duration_bonus: Nachtzuschlag
-      tooltip:
-        starts: 'Beginnt am'
-        ends: 'Endet am'
     timer:
       timer: Timer
       exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
       now: jetzt
+      tooltip:
+        starts: 'Beginnt am'
+        ends: 'Endet am'
     top_buttons:
       add_time: Zeit hinzufügen
     add_time_modal:
@@ -500,7 +510,16 @@ de:
       add_employment: Neues Anstellungsverhältnis
       open_ended: unbefristet
       confirm_delete: Löschen?
-
+  customers:
+    index:
+      new_customer: 'Neuer Kunde'
+      confirm_delete: 'Kunde "%{customer}" löschen?'
+    edit:
+      edit_customer: 'Kunde "%{customer}" bearbeiten'
+    form:
+      back: 'Zurück'
+    new:
+      new_customer: 'Kunde anlegen'
   roles:
     names:
       admin: 'Administrator'
@@ -514,6 +533,11 @@ de:
       new_role: 'Benutzerrolle anlegen'
     form:
       back: 'Zurück'
+  passwords:
+    edit:
+      edit_password: 'Passwort ändern'
+    form:
+      submit: 'Passwort ändern'
 
   not_logged_in: 'Sie sind nicht eingeloggt.'
 
@@ -521,6 +545,10 @@ de:
     footer:
       info-rule: 'Stunden müssen von allen Mitarbeitern bis zum Ende der Kalenderwoche erfasst sein.'
       logout: 'Logout'
+    header:
+      menu: 'Menü'
+      logout: 'Logout'
+      change_password: 'Passwort ändern'
 
   grape:
     errors:
@@ -538,3 +566,10 @@ de:
       name: 'Geplante Pikettarbeiten'
       description: 'Während der im nine.ch Pikett-Reglement spezifizierten Tageszeiten wird die geleistete Arbeitzeit zu 125% gutgeschrieben.'
 
+  views:
+    pagination:
+      first: '«'
+      last: '»'
+      previous: '‹'
+      next: '›'
+      truncate: '…'

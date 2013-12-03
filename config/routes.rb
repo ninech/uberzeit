@@ -13,6 +13,8 @@ Uberzeit::Application.routes.draw do
 
   # users scope
   resources :users do
+    resource :password, only: [:edit, :update]
+
     resources :recurring_entries, except: [:show, :index]
 
     resources :absences do
@@ -53,26 +55,12 @@ Uberzeit::Application.routes.draw do
 
   # reporting
   namespace :reports do
-    get '/overview/users/:user_id', to: 'overview#index', as: :overview_user
-
-    namespace :work do
-      get '/users/:user_id/:year', to: 'my_work#year', as: :user_year
-      get '/users/:user_id/:year/:month', to: 'my_work#month', as: :user_month
-
-      get '/:year(/team/:team_id)', to: 'work#year', as: :year
-      get '/:year/:month(/team/:team_id)', to: 'work#month', as: :month
-    end
-
-    namespace :absences do
-      get '/:year(/team/:team_id)', to: 'absence#year', as: :year, constraints: year_month_team_id_constraints
-      get '/:year/:month(/team/:team_id)', to: 'absence#month', as: :month, constraints: year_month_team_id_constraints
-      get '/:year/:month(/team/:team_id)/as/calendar', to: 'absence#calendar', as: :calendar, constraints: year_month_team_id_constraints
-    end
-
-    namespace :vacation do
-      get '/:year(/team/:team_id)', to: 'vacation#year', as: :year
-      get '/:year/:month(/team/:team_id)', to: 'vacation#month', as: :month
-    end
+    get '/overview/users/:user_id', to: 'overview#index', as: :overview
+    get '/work/users/:user_id', to: 'my_work#show', as: :my_work
+    get '/work', to: 'work#show', as: :work
+    get '/absences', to: 'absence#show'
+    get '/absences-calendar', to: 'absence#calendar', as: :absences_calendar
+    get '/vacation', to: 'vacation#show'
 
     namespace :activities do
       get '/billability(/:date)', to: 'billability#index', as: :billability
@@ -83,6 +71,8 @@ Uberzeit::Application.routes.draw do
   end
 
   resources :teams, except: :show
+
+  resources :customers, except: :show
 
   # API
   mount API::User => '/api'

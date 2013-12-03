@@ -1,0 +1,18 @@
+<%= form_for(@user, as: :password, url: user_password_path(@user)) do |f| %>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.password_field :password %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.password_field :password_confirmation %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-3 columns">
+    <%= f.submit t('.submit'), class: 'button'%>
+  </div>
+</div>
+<% end %>

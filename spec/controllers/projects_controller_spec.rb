@@ -38,11 +38,11 @@ describe ProjectsController do
     describe 'POST "create"' do
       context 'with valid attributes' do
         it 'creates a new project' do
-          expect { post :create, project: FactoryGirl.attributes_for(:project, customer_id: customer.id) }.to change(Project,:count).by(1)
+          expect { post :create, project: FactoryGirl.attributes_for(:project, customer_number: customer.number) }.to change(Project,:count).by(1)
         end
 
         it 'redirects to the overview' do
-          post :create, project: FactoryGirl.attributes_for(:project, customer_id: customer.id)
+          post :create, project: FactoryGirl.attributes_for(:project, customer_number: customer.number)
           response.should redirect_to projects_path
         end
       end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Reports::Vacation::VacationController do
+describe Reports::VacationController do
   render_views
 
   before(:all) do
@@ -40,7 +40,7 @@ describe Reports::Vacation::VacationController do
 
   context 'for non-signed in users' do
     it 'redirects to login' do
-      get :year, year: year
+      get :show, year: year
       response.should redirect_to(new_session_path)
     end
   end
@@ -56,7 +56,7 @@ describe Reports::Vacation::VacationController do
       end
 
       it 'allows to view this report when user has rights' do
-        expect { get :year, year: year }.to_not raise_error(CanCan::AccessDenied)
+        expect { get :show, year: year }.to_not raise_error(CanCan::AccessDenied)
       end
     end
 
@@ -66,7 +66,7 @@ describe Reports::Vacation::VacationController do
       end
 
       it 'denies to view this report when user has rights' do
-        expect { get :year, year: year }.to raise_error(CanCan::AccessDenied)
+        expect { get :show, year: year }.to raise_error(CanCan::AccessDenied)
       end
     end
   end

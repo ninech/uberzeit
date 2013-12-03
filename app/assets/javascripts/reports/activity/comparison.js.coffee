@@ -5,7 +5,7 @@ do ($ = jQuery) ->
       data = [
         {
           key: I18n.t('comparison.show.chart.time_entries')
-          color: '#009AD7'
+          color: '#8e44ad'
           values: chartContainer.data('time-entries')
         },
         {
