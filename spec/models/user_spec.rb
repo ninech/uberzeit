@@ -61,13 +61,14 @@ describe User do
   end
 
   describe 'validation' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryGirl.build(:user) }
 
     it 'allows valid users' do
       user.should be_valid
     end
 
     it 'ensures the email address is unique' do
+      user.save!
       other_user = FactoryGirl.build :user
       other_user.email = user.email
       other_user.should_not be_valid
@@ -87,6 +88,20 @@ describe User do
     it 'requires a non-empty name' do
       user.name = ''
       user.should_not be_valid
+    end
+
+    it 'requries a non-empty password' do
+      user.password = user.password_confirmation = nil
+      user.should_not be_valid
+    end
+
+    context 'with an auth source set' do
+      let(:user) { User.new email: 'example@test.com', auth_source: 'ldap', given_name: 'Jebus', name: 'Christus' }
+
+      it 'does not require a password' do
+        user.password = user.password_confirmation = nil
+        user.should be_valid
+      end
     end
   end
 

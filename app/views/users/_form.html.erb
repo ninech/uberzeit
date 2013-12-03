@@ -19,6 +19,18 @@
     <%= f.text_field :birthday %>
   </div>
 </div>
+<% if @user.new_record? %>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.password_field :password %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.password_field :password_confirmation %>
+  </div>
+</div>
+<% end %>
 <div class="row">
   <div class="small-4 columns">
     <%= field_set_tag User.human_attribute_name(:teams) do %>

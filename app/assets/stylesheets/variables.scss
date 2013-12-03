@@ -46,8 +46,8 @@ $body-font-weight: 400;
 
 // Colors
 
-$primary-color: #348fc9;
-// $secondary-color: #e9e9e9;
+$primary-color: #8e44ad;
+$secondary-color: #f5f5f5;
 // $alert-color: #c60f13;
 // $success-color: #5da423;
 
@@ -58,7 +58,7 @@ $primary-color: #348fc9;
 
 // Inset shadow shiny edges and depressions.
 
-// $shiny-edge-size: 0 1px 0;
+$shiny-edge-size: 0;
 // $shiny-edge-color: rgba(#fff, .5);
 // $shiny-edge-active-color: rgba(#000, .2);
 
@@ -1200,7 +1200,7 @@ $table-margin-bottom: emCalc(20px);
 
 // Background color for the top bar
 
-// $topbar-bg: #111 !default;
+$topbar-bg: $primary-color;
 
 // Height and margin
 
@@ -1234,7 +1234,7 @@ $table-margin-bottom: emCalc(20px);
 // $topbar-link-font-size: emCalc(13px);
 // $topbar-link-hover-lightness: -30%; // Darken by 30%
 // $topbar-link-bg-hover: darken($topbar-bg, 3%);
-// $topbar-link-bg-active: darken($topbar-bg, 3%);
+$topbar-link-bg-active: darken($topbar-bg, 4%);
 
 // $topbar-dropdown-label-color: #555;
 // $topbar-dropdown-label-text-transform: uppercase;
@@ -1248,8 +1248,8 @@ $table-margin-bottom: emCalc(20px);
 // $topbar-menu-link-weight: bold;
 // $topbar-menu-link-color: #fff;
 // $topbar-menu-icon-color: #fff;
-// $topbar-menu-link-color-toggled: #888;
-// $topbar-menu-icon-color-toggled: #888;
+$topbar-menu-link-color-toggled: #ddd;
+$topbar-menu-icon-color-toggled: #ddd;
 
 // Transitions and breakpoint styles
 

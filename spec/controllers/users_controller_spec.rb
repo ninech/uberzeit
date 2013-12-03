@@ -5,7 +5,8 @@ describe UsersController do
 
   let!(:user) { FactoryGirl.create(:admin) }
   let(:team) { FactoryGirl.create(:team) }
-  let(:valid_user_attributes) { { given_name: 'Dolan', name: 'Duck', email: 'doland@example.com', team_ids: [team.id] } }
+  let(:password) { 'yolo123' }
+  let(:valid_user_attributes) { { given_name: 'Dolan', name: 'Duck', email: 'doland@example.com', team_ids: [team.id], password: password, password_confirmation: password } }
 
   context 'for non-signed in users' do
     describe 'GET "edit"' do

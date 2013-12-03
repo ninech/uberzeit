@@ -17,12 +17,11 @@
 
   <title><%= content_for?(:title) ? yield(:title) : "uberZeit" %></title>
 
-  <link rel="icon" href="<%= ENV['RAILS_RELATIVE_URL_ROOT'] %>/favicon.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="<%= ENV['RAILS_RELATIVE_URL_ROOT'] %>/favicon.ico" type="image/x-icon">
 	<%= stylesheet_link_tag    "application", media: :all %>
   <%= stylesheet_link_tag    "application-print", media: :print %>
 	<%= javascript_include_tag "vendor/custom.modernizr" %>
   <%= javascript_include_tag "application" %>
+  <%= favicon_link_tag 'favicon.png', type: 'image/png' %>
   <%= csrf_meta_tags %>
 
   <%= javascript_tag do %>
@@ -38,10 +37,12 @@
 </head>
 <body class="content-<%= controller.controller_name %>">
   <%= render 'layouts/header' %>
-  <div class="subnavigation container">
+  <div class="container">
     <div class="row">
       <div class="small-12 columns">
-        <%= render_navigation(level: 2, renderer: SubnavRenderer) %>
+        <% if has_top_buttons? %>
+          <%= render "#{controller.controller_name}/top_buttons" %>
+        <% end %>
       </div>
     </div>
   </div>

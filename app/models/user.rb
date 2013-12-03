@@ -12,16 +12,18 @@
 #  birthday             :date
 #  authentication_token :string(255)
 #
+require 'bcrypt'
 
 class User < ActiveRecord::Base
   include TokenAuthenticable
 
   rolify
   acts_as_paranoid
+  validates_as_paranoid
 
   default_scope order('users.name')
 
-  attr_accessible :email, :name, :birthday, :given_name, :team_ids
+  attr_accessible :email, :name, :birthday, :given_name, :team_ids, :password, :password_confirmation, :auth_source
 
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
@@ -34,10 +36,17 @@ class User < ActiveRecord::Base
   has_many :days, dependent: :destroy
   has_many :time_spans, dependent: :destroy
 
-  validates_uniqueness_of :email
+  validates_uniqueness_of_without_deleted :email
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/ }
 
   validates_presence_of :given_name, :name
+
+  validates_presence_of :password, on: :create, unless: :external?
+  validates :password, length: { minimum: 6 }, if: :password
+  validates_confirmation_of :password
+
+  attr_reader :password
+  include ActiveModel::SecurePassword::InstanceMethodsOnActivation
 
   scope :in_teams, ->(teams) { where Membership.where(team_id: teams).where('user_id = users.id').exists }
 
@@ -94,5 +103,21 @@ class User < ActiveRecord::Base
 
   def time_sheet
     @time_sheet ||= TimeSheet.new(self)
+  end
+
+  def external?
+    auth_source.present?
+  end
+
+  def editable?
+    !external?
+  end
+
+  def when_editable(&block)
+    block.call if editable?
+  end
+
+  def when_not_editable(&block)
+    block.call unless editable?
   end
 end

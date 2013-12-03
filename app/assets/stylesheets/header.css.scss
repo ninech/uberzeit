@@ -1,43 +1,51 @@
-.header.container {
-  padding-top: 20px;
-  margin-bottom: 20px;
+@import 'variables';
 
-  .large-12.columns {
-    height: 64px;
-  }
-
-  .logo {
-    float: left;
-    width: 122px;
-    height: 36px;
-  }
-
-  .navigation {
-    float: left;
-    padding: 9px 0 0 30px;
-
-    ul {
-      list-style-type: none;
-
-      li {
-        float: left;
-        padding: 0 16px;
-
-        a {
-
-          text-transform: uppercase;
-          font-weight: 700;
-
-          &.active {
-            border-bottom: 3px solid #b0d4eb;
-          }
+nav.top-bar {
+  margin-bottom: 0;
+  .top-bar-section {
+    max-width: 62.5em;
+    margin: 0 auto;
+    text-transform: uppercase;
+    li {
+      a {
+        font-size: 1em;
+      }
+      &.hover {
+        > a {
+          background-color: $topbar-link-bg-active;
         }
+      }
+      &.has-dropdown a {
+        font-weight: normal;
+        text-transform: none;
       }
     }
   }
-
-  .top-buttons {
-    float: right;
+}
+div.subnavigation {
+  div.columns {
+    padding-left: 0;
+  }
+  border-bottom: 1px solid #EBEBEB;
+  background-color: #F5F5F5;
+  margin-bottom: 1.25em;
+  ul.sub-nav {
     margin: 0;
+
+    li {
+      float: left;
+      padding: 10px 15px;
+      display: block;
+      position: relative;
+
+      a {
+        color: #2d2d2d;
+        display: block;
+      }
+
+      &.active {
+        font-weight: bold;
+      }
+    }
   }
 }

@@ -3,6 +3,8 @@ FactoryGirl.define do
     sequence(:email) { |n| "user#{n}@example.com" }
     sequence(:given_name) { |n| "given_name#{n}" }
     sequence(:name) { |n| "name#{n}" }
+    password "hans-im-glueck"
+    password_confirmation "hans-im-glueck"
 
     teams { FactoryGirl.create_list(:team, 1) }
 

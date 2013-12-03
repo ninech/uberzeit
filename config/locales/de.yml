@@ -71,6 +71,8 @@ de:
         given_name: Vorname
         name: Nachname
         birthday: Geburtsdatum
+        password: Passwort
+        password_confirmation: 'Passwort (wiederholen)'
       team:
         name: Name
       role:
@@ -128,6 +130,7 @@ de:
   model_successfully_created: "%{model} wurde erfolgreich erstellt."
   model_successfully_updated: "%{model} wurde erfolgreich aktualisiert."
   model_successfully_deleted: "%{model} wurde erfolgreich gelöscht."
+  model_not_editable: "%{model} kann nicht editiert werden."
   time:
     formats:
       default: '%H:%M'
@@ -507,7 +510,6 @@ de:
       add_employment: Neues Anstellungsverhältnis
       open_ended: unbefristet
       confirm_delete: Löschen?
-
   customers:
     index:
       new_customer: 'Neuer Kunde'
@@ -518,7 +520,6 @@ de:
       back: 'Zurück'
     new:
       new_customer: 'Kunde anlegen'
-
   roles:
     names:
       admin: 'Administrator'
@@ -532,6 +533,11 @@ de:
       new_role: 'Benutzerrolle anlegen'
     form:
       back: 'Zurück'
+  passwords:
+    edit:
+      edit_password: 'Passwort ändern'
+    form:
+      submit: 'Passwort ändern'
 
   not_logged_in: 'Sie sind nicht eingeloggt.'
 
@@ -539,6 +545,10 @@ de:
     footer:
       info-rule: 'Stunden müssen von allen Mitarbeitern bis zum Ende der Kalenderwoche erfasst sein.'
       logout: 'Logout'
+    header:
+      menu: 'Menü'
+      logout: 'Logout'
+      change_password: 'Passwort ändern'
 
   grape:
     errors:

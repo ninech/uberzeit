@@ -1,15 +1,33 @@
-<div class="header container">
+<nav class="top-bar">
+  <ul class="title-area">
+    <li class="name"><!-- Leave this empty --></li>
+    <li class="toggle-topbar menu-icon"><a href="#"><span><%= t '.menu' %></span></a></li>
+  </ul>
+  <section class="top-bar-section">
+    <%= render_navigation level: 1 %>
+    <ul class="right">
+      <li class="has-dropdown">
+      <a href="#">
+        <%= current_user %>
+      </a>
+      <ul class="dropdown">
+        <% current_user.when_editable do %>
+          <li>
+            <%= link_to t('.change_password'), edit_user_password_path(current_user) %>
+          </li>
+        <% end %>
+        <li>
+          <%= link_to t('.logout'), logout_path %>
+        </li>
+      </ul>
+      </li>
+    </ul>
+  </section>
+</nav>
+<div class="container subnavigation">
   <div class="row">
-    <div class="large-12 columns">
-      <div class="logo">
-        <%= link_to image_tag('logo.svg', size: '122x36'), user_time_entries_path(current_user) %>
-      </div>
-      <div class="navigation">
-        <%= render_navigation level: 1 %>
-      </div>
-      <% if has_top_buttons? %>
-        <%= render "#{controller.controller_name}/top_buttons" %>
-      <% end %>
+    <div class="small-12 columns">
+      <%= render_navigation(level: 2) %>
     </div>
   </div>
 </div>

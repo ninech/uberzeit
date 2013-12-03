@@ -18,12 +18,21 @@
           <td class="action">
             <%= link_to icon('file-text'), user_employments_path(user) %>
           </td>
-          <td class="action">
-            <%= link_to icon('edit'), edit_user_path(user) %>
-          </td>
-          <td class="action">
-            <%= link_to icon('trash'), user, method: :delete, confirm: t('.confirm_delete') %>
-          </td>
+          <% if user.editable? %>
+            <td class="action">
+              <%= link_to icon('edit'), edit_user_path(user) %>
+            </td>
+            <td class="action">
+              <%= link_to icon('trash'), user, method: :delete, confirm: t('.confirm_delete') %>
+            </td>
+          <% else %>
+            <td class="action disabled">
+              <%= icon('edit') %>
+            </td>
+            <td class="action disabled">
+              <%= icon('trash') %>
+            </td>
+          <% end %>
         </tr>
         <% end %>
       </tbody>

@@ -270,11 +270,11 @@ describe 'Roles and Rights' do
         let(:current_user) { user }
 
         describe 'main menu' do
-          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte'], ['Verwalten']
+          include_examples :menu_list, 'section > ul > li', ['Zeiterfassung', 'Absenzen', 'Berichte'], ['Verwalten']
         end
 
         describe 'report menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit'], ['Arbeitszeit Mitarbeiter', 'Feriensaldo']
+          include_examples :menu_list, '.sub-nav > li', ['Meine Arbeitszeit'], ['Arbeitszeit Mitarbeiter', 'Feriensaldo']
         end
       end
 
@@ -282,11 +282,11 @@ describe 'Roles and Rights' do
         let(:current_user) { team_leader }
 
         describe 'main menu' do
-          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Aktivitäten', 'Berichte', 'Verwalten'], []
+          include_examples :menu_list, 'section > ul > li', ['Zeiterfassung', 'Absenzen', 'Aktivitäten', 'Berichte', 'Verwalten'], []
         end
 
         describe 'report menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Arbeitszeit Mitarbeiter'], []
+          include_examples :menu_list, '.sub-nav > li', ['Meine Arbeitszeit', 'Arbeitszeit Mitarbeiter'], []
         end
       end
 
@@ -294,11 +294,11 @@ describe 'Roles and Rights' do
         let(:current_user) { admin }
 
         describe 'main menu' do
-          include_examples :menu_list, '.navigation > ul > li', ['Zeiterfassung', 'Absenzen', 'Aktivitäten', 'Berichte', 'Verwalten'], []
+          include_examples :menu_list, 'section > ul > li', ['Zeiterfassung', 'Absenzen', 'Aktivitäten', 'Berichte', 'Verwalten'], []
         end
 
         describe 'report menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Meine Arbeitszeit', 'Arbeitszeit Mitarbeiter', 'Feriensaldo'], []
+          include_examples :menu_list, '.sub-nav > li', ['Meine Arbeitszeit', 'Arbeitszeit Mitarbeiter', 'Feriensaldo'], []
         end
       end
     end
@@ -313,7 +313,7 @@ describe 'Roles and Rights' do
         let(:current_user) { accountant }
 
         describe 'activities menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Verrechenbarkeit', 'Verrechnung'], []
+          include_examples :menu_list, '.sub-nav > li', ['Verrechenbarkeit', 'Verrechnung'], []
         end
       end
 
@@ -321,7 +321,7 @@ describe 'Roles and Rights' do
         let(:current_user) { team_leader }
 
         describe 'activities menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Übersicht', 'Verrechenbarkeit'], []
+          include_examples :menu_list, '.sub-nav > li', ['Übersicht', 'Verrechenbarkeit'], []
         end
       end
 
@@ -329,7 +329,7 @@ describe 'Roles and Rights' do
         let(:current_user) { admin }
 
         describe 'activities menu' do
-          include_examples :menu_list, '.sub-nav > dd', ['Übersicht', 'Verrechenbarkeit', 'Verrechnung'], []
+          include_examples :menu_list, '.sub-nav > li', ['Übersicht', 'Verrechenbarkeit', 'Verrechnung'], []
         end
       end
     end
