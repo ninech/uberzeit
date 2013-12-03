@@ -400,13 +400,13 @@ de:
       time_bonuses: Nachtzuschläge
     time_entry:
       duration_bonus: Nachtzuschlag
-      tooltip:
-        starts: 'Beginnt am'
-        ends: 'Endet am'
     timer:
       timer: Timer
       exceeds-day: 'Dies ist ein Timer, der die Tagesgrenze überschreitet.'
       now: jetzt
+      tooltip:
+        starts: 'Beginnt am'
+        ends: 'Endet am'
     top_buttons:
       add_time: Zeit hinzufügen
     add_time_modal:
