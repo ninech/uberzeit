@@ -65,8 +65,8 @@ Uberzeit::Application.routes.draw do
     namespace :activities do
       get '/billability(/:date)', to: 'billability#index', as: :billability
       get '/billing', to: 'billing#index', as: :billing
-      get '/filter/:year/:month/:group_by', to: 'filter#index', as: :filter
-      get '/detailed/:year/:month/(:customer_id)', to: 'detailed#index', as: :detailed
+      get '/filter', to: 'filter#index', as: :filter
+      get '/detailed', to: 'detailed#index', as: :detailed
     end
   end
 
