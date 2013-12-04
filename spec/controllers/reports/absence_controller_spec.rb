@@ -62,6 +62,13 @@ describe Reports::AbsenceController do
         response.should render_template :calendar
       end
 
+      context 'without a month set' do
+        it 'assigns the selected range' do
+          get :calendar, team_id: nil, month: nil, year: 2013
+          assigns(:range).should eq(UberZeit.year_as_range(2013))
+        end
+      end
+
       describe 'special rights' do
         let!(:another_team) { FactoryGirl.create(:team) }
         let!(:another_user) { FactoryGirl.create(:user, teams: [another_team]) }
@@ -83,7 +90,6 @@ describe Reports::AbsenceController do
         end
       end
     end
-
   end
 
 end
