@@ -94,20 +94,20 @@ describe Reports::Activities::DetailedController do
         end
 
         it 'assigns the grouped activities' do
-          get :index, month: 1, year: 2010, customer_id: swag_ag.id
+          get :index, month: 1, year: 2010, customer: swag_ag.display_name
           assigns(:grouped_activities).keys.map{ |type| type.name }.should == ['support', 'maintenance']
           assigns(:grouped_activities).values.first.length.should == 2
           assigns(:grouped_activities).values.second.length.should == 1
         end
 
         it 'assigns the subtotals' do
-          get :index, month: 1, year: 2010, customer_id: swag_ag.id
+          get :index, month: 1, year: 2010, customer: swag_ag.display_name
           assigns(:subtotals).values.first.should == { "billable" => 3600, "not_billable" => 7200, "billed" => 0 }
           assigns(:subtotals).values.second.should == { "billable" => 3300, "not_billable" => 0, "billed" => 3300 }
         end
 
         it 'assigns the totals' do
-          get :index, month: 1, year: 2010, customer_id: swag_ag.id
+          get :index, month: 1, year: 2010, customer: swag_ag.display_name
           assigns(:totals).should == { "billable" => 6900, "not_billable" => 7200, "billed" => 3300 }
         end
       end

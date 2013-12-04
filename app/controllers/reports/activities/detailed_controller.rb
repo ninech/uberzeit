@@ -4,7 +4,7 @@ class Reports::Activities::DetailedController < ApplicationController
   before_filter :set_year, :set_month, :set_customer
 
   def index
-    @range = UberZeit.month_as_range(@year, @month)
+    @range = @month ? UberZeit.month_as_range(@year, @month) : UberZeit.year_as_range(@year)
 
     @activities = Activity.by_customer(@customer.id).with_date_in_year_and_month(@year, @month).where(reviewed: true)
 
@@ -45,8 +45,11 @@ class Reports::Activities::DetailedController < ApplicationController
   end
 
   def set_customer
-    customer_id = params[:customer_id]
-    customer_id ||= Customer.first.id
-    @customer = Customer.find(customer_id)
+    if params[:customer].present?
+      match = params[:customer].match(/\A(\d+)/)
+      customer_number = match.captures.first
+    end
+    customer_number ||= Customer.first.number
+    @customer = Customer.find_by_number(customer_number)
   end
 end
