@@ -18,7 +18,11 @@ class Reports::AbsenceController < ApplicationController
   end
 
   def calendar
-    @range = UberZeit.month_as_range(@year, @month)
+    if @month.nil?
+      @range = UberZeit.year_as_range(@year)
+    else
+      @range = UberZeit.month_as_range(@year, @month)
+    end
 
     @public_holidays = PublicHoliday.with_date(@range).group_by { |public_holiday| public_holiday.date }
     @work_days = Hash[@range.collect { |day| [day, UberZeit.is_weekday_a_workday?(day)] }]

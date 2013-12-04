@@ -24,7 +24,7 @@ de:
         other: Kunden
     attributes:
       activity:
-        customer: 'Kunde'
+        customer_number: 'Kunde'
         project: 'Projekt'
         activity_type: 'Aktivität'
         duration: 'Dauer'

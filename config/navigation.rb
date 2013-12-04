@@ -97,7 +97,7 @@ SimpleNavigation::Configuration.run do |navigation|
       second.dom_class = 'sub-nav'
       second.item :projects, t('navigation.sub.manage.projects'), projects_path, highlights_on: %r!\A#{projects_path}!
       if current_user.admin?
-        second.item :users, t('navigation.sub.manage.users'), users_path, highlights_on: %r!\A#{users_path}(?:/(?:[0-9](?:/(?:(?:edit|employments|roles)(?:/.*)?)?)?)?)?\z!
+        second.item :users, t('navigation.sub.manage.users'), users_path, highlights_on: %r!\A#{users_path}(?:/(?:new(?:/)?|[0-9](?:/(?:(?:edit|employments|roles)(?:/.*)?)?)?)?)?\z!
         second.item :teams, t('navigation.sub.manage.teams'), teams_path, highlights_on: %r!\A#{teams_path}!
         second.item :customers, t('navigation.sub.manage.customers'), customers_path, highlights_on: %r!\A#{customers_path}!
         second.item :adjustments, t('navigation.sub.manage.adjustments'), adjustments_path, highlights_on: %r!\A#{adjustments_path}!

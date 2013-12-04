@@ -2,44 +2,49 @@
 <%= render partial: 'reports/shared/team_selector' %>
 <%= render partial: 'reports/shared/header', locals: {base_url: "/reports/absences/:year", append_to_url: "/as/calendar", title: t('.title') } %>
 
-<div class="content-summary row">
-  <div class="small-12 columns">
-    <table class="nice small-12 calendar">
-      <tr>
-        <th><%= l @range.min, format: t('.month_in_year') %></td>
-        <% @range.each do |day| %>
-          <% current_day_class = (day.today? ? 'today' : '') %>
-          <th class="
-            <% if day.today? %>today<% end %>
-            <% if @public_holidays[day] %>public-holiday has-tip<% end %>
-            "<% if @public_holidays[day] %> data-tooltip="<%=render(partial: 'shared/public_holiday_tooltip', locals: { public_holiday: @public_holidays[day].first }).to_s%>"<% end %>>
-            <%= day.strftime('%d') %>
-          </th>
-        <% end %>
-      </tr>
-
-      <% @users.each do |user| %>
-      <tr>
-        <td><%= user %></td>
-        <% @range.each do |day| %>
-          <%
-            absences = @absences_by_user_and_date.fetch([user.id, day], [])
-          %>
-          <td class="event
-          <% if day.today? %>today<% end %>
-          <% if @public_holidays[day] %>public-holiday<% end %>
-          <% unless @work_days[day] %>non-work-day<% end %>
-          <% unless absences.empty? %>has-tip<% end %>"
-          <% unless absences.empty? %>data-tooltip="<%=render(partial: 'shared/absences_tooltip', locals: { absences: absences, day: day, edit: false }).to_s%>" <% end %>>
-            <% unless absences.blank? %>
-              <div class="event-container">
-                <%= render_absences(absences).html_safe %>
-              </div>
+<% @range.select { |date| date.day == 1 }.each do |month_start| %>
+  <% range = UberZeit.month_as_range(month_start.year, month_start.month) %>
+  <div class="content-summary row">
+    <div class="large-12 columns">
+      <div class="row">
+        <table class="nice large-12 calendar">
+          <tr>
+            <th><%= l range.min, format: t('.month_in_year') %></td>
+            <% range.each do |day| %>
+              <% current_day_class = (day.today? ? 'today' : '') %>
+              <th class="
+                <% if day.today? %>today<% end %>
+                <% if @public_holidays[day] %>public-holiday has-tip<% end %>
+                "<% if @public_holidays[day] %> data-tooltip="<%=render(partial: 'shared/public_holiday_tooltip', locals: { public_holiday: @public_holidays[day].first }).to_s%>"<% end %>>
+                <%= day.strftime('%d') %>
+              </th>
             <% end %>
-          </td>
-        <% end %>
-      </tr>
-      <% end %>
-    </table>
+          </tr>
+
+          <% @users.each do |user| %>
+          <tr>
+            <td><%= user %></td>
+            <% range.each do |day| %>
+              <%
+                absences = @absences_by_user_and_date.fetch([user.id, day], [])
+              %>
+              <td class="event
+              <% if day.today? %>today<% end %>
+              <% if @public_holidays[day] %>public-holiday<% end %>
+              <% unless @work_days[day] %>non-work-day<% end %>
+              <% unless absences.empty? %>has-tip<% end %>"
+              <% unless absences.empty? %>data-tooltip="<%=render(partial: 'shared/absences_tooltip', locals: { absences: absences, day: day, edit: false }).to_s%>" <% end %>>
+                <% unless absences.blank? %>
+                  <div class="event-container">
+                    <%= render_absences(absences).html_safe %>
+                  </div>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
   </div>
-</div>
+<% end %>
