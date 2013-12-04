@@ -9,13 +9,13 @@ class Reports::Activities::FilterController < ApplicationController
     @allowed_group_by = %w{customer project activity_type}
 
     @sums = case @group_by
-    when 'activity_type'
-      Activity.sum_by_activity_type_and_year_and_month(@year, @month)
-    when 'customer'
-      Activity.sum_by_customer_and_year_and_month(@year, @month)
-    when 'project'
-      Activity.sum_by_project_and_year_and_month(@year, @month)
-    end
+            when 'activity_type'
+              Activity.sum_by_activity_type_and_year_and_month(@year, @month)
+            when 'customer'
+              Activity.sum_by_customer_and_year_and_month(@year, @month)
+            when 'project'
+              Activity.sum_by_project_and_year_and_month(@year, @month)
+            end
 
     @totals = {}
     @sums.each do |group, sum|

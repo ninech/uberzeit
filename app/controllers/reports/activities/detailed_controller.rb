@@ -45,8 +45,11 @@ class Reports::Activities::DetailedController < ApplicationController
   end
 
   def set_customer
-    customer_id = params[:customer_id]
-    customer_id ||= Customer.first.id
-    @customer = Customer.find(customer_id)
+    if params[:customer].present?
+      match = params[:customer].match(/\A(\d+)/)
+      customer_number = match.captures.first
+    end
+    customer_number ||= Customer.first.number
+    @customer = Customer.find_by_number(customer_number)
   end
 end
