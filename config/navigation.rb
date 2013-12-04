@@ -71,7 +71,7 @@ SimpleNavigation::Configuration.run do |navigation|
       second.dom_class = 'sub-nav'
       if ability.can? :manage, :filter
         second.item :activity_filter, t('navigation.sub.reports.activity_filter'), reports_activities_filter_path(Date.current.year, Date.current.month, 'customer'), highlights_on: %r!\A/reports/activities/filter!
-        second.item :activity_detail, t('navigation.sub.reports.activity_detailed'), reports_activities_detailed_path(Date.current.year, Date.current.month), highlights_on: %r!\A/reports/activities/detailed!
+        second.item :activity_detail, t('navigation.sub.reports.activity_detailed'), reports_activities_detailed_path(year: Date.current.year, month: Date.current.month), highlights_on: %r!\A/reports/activities/detailed!
       end
       if ability.can? :manage, :billability
         second.item :billability, t('navigation.sub.reports.billability'), reports_activities_billability_path, highlights_on: %r!\A/reports/activities/billability!

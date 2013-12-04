@@ -4,7 +4,7 @@ class Reports::Activities::DetailedController < ApplicationController
   before_filter :set_year, :set_month, :set_customer
 
   def index
-    @range = UberZeit.month_as_range(@year, @month)
+    @range = @month ? UberZeit.month_as_range(@year, @month) : UberZeit.year_as_range(@year)
 
     @activities = Activity.by_customer(@customer.id).with_date_in_year_and_month(@year, @month).where(reviewed: true)
 
