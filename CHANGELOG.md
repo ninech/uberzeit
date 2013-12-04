@@ -1,4 +1,13 @@
 
+2.2.4
+=====
+Date:        2013-12-04
+Released by: Nils Caspar
+Diff:        https://git.nine.ch/uberzeit/compare/2.2.3...2.2.4
+
+  * Bug #8879 Absenzen Mitarbeiter (500 Internal Server Error) (Nils Caspar)
+
+
 2.2.3
 =====
 Date:        2013-12-03
