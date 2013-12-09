@@ -35,11 +35,6 @@ gem 'cancan'
 gem 'rolify'
 
 # sync
-# Extensions
-gem 'nine-ldap',
-    git: 'git@git.nine.ch:nine-ldap.git',
-    tag: '0.0.13'
-
 gem 'version_reader'
 gem 'airbrake'
 gem 'jbuilder'
@@ -67,9 +62,7 @@ gem 'gaffe'
 gem 'kaminari'
 
 # Logging
-gem 'uberlog',
-  git: 'git@git.nine.ch:gems/uberlog',
-  tag: '0.4.1'
+
 
 # API
 # http://www.youtube.com/watch?v=mqgiEQXGetI
@@ -77,17 +70,6 @@ gem 'grape', git: 'git://github.com/intridea/grape.git'
 gem 'grape-entity', git: 'git://github.com/intridea/grape-entity.git'
 gem 'grape-swagger'
 gem 'warden'
-
-# Customers
-gem 'mynine-plugin_helpers',
-    require: 'plugin_helpers',
-    git: 'git@git.nine.ch:mynine/plugin_helpers.git',
-    branch: 'master'
-
-gem 'mynine-customer_plugin',
-    require: 'customer_plugin',
-    git: 'git@git.nine.ch:mynine/customer_plugin.git',
-    branch: 'master'
 
 group :development, :test do
   gem 'sqlite3'
@@ -122,3 +104,28 @@ group :development do
   gem 'sextant'
   gem 'meta_request'
 end
+
+# NINE SPECIFIC GEMS
+# ==================
+gem 'uberlog',
+  git: 'git@git.nine.ch:gems/uberlog',
+  tag: '0.4.1'
+
+# Customers
+gem 'mynine-plugin_helpers',
+    require: 'plugin_helpers',
+    git: 'git@git.nine.ch:mynine/plugin_helpers.git',
+    branch: 'master'
+gem 'mynine-customer_plugin',
+    require: 'customer_plugin',
+    git: 'git@git.nine.ch:mynine/customer_plugin.git',
+    branch: 'master'
+
+# Extensions
+gem 'nine-ldap',
+    git: 'git@git.nine.ch:nine-ldap.git',
+    branch: 'master'
+
+gem 'uberzeit_ldap_sync',
+  git: 'git@git.nine.ch:uberzeit_ldap_sync',
+  branch: 'master'

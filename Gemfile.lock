@@ -58,11 +58,20 @@ GIT
 
 GIT
   remote: git@git.nine.ch:nine-ldap.git
-  revision: 00dfc14c3cef7ae6f2d83348b0ae9ea38c6b991d
-  tag: 0.0.13
+  revision: fb9c480479561bebff26c627f46cd7c84edf4cf7
+  branch: master
   specs:
     nine-ldap (0.0.13)
       net-ldap
+
+GIT
+  remote: git@git.nine.ch:uberzeit_ldap_sync
+  revision: 7420148ab0af941ed39e8a2236d58f2314b969a1
+  branch: master
+  specs:
+    uberzeit_ldap_sync (1.0.1)
+      nine-ldap (~> 0.0.13)
+      rake (~> 10.1)
 
 GEM
   remote: https://rubygems.org/
@@ -476,6 +485,7 @@ DEPENDENCIES
   therubyracer
   timecop
   uberlog!
+  uberzeit_ldap_sync!
   uglifier (>= 1.0.3)
   validates_timeliness
   version_bumper
