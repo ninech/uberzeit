@@ -1,4 +1,8 @@
 development:
+  auth_providers:
+    - name: 'developer'
+      fields:
+        - 'email'
   ubertrack_hosts:
     redmine: 'http://redmine.dev'
     otrs: 'http://10.10.10.17'

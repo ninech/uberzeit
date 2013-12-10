@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :time_entry do
     ignore do
-      duration UberZeit::Config[:work_per_day]
+      duration UberZeit.config[:work_per_day]
       time_type :work
     end
 

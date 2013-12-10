@@ -73,18 +73,11 @@ module Uberzeit
     # uberZeit specific time settings
     Uberzeit::Application.config.to_prepare do
       config_path = File.join(Rails.root, 'config', 'uberzeit.yml')
-      yaml_config = YAML.load_file(config_path)
+      yaml_config = YAML.load_file(config_path).fetch(Rails.env, {})
 
-      if yaml_config[Rails.env]
-        yaml_config[Rails.env].each do |key, value|
-          UberZeit::Config.send("#{key}=", value)
-        end
+      yaml_config.each do |key, value|
+        UberZeit.config.send("#{key}=", value)
       end
-
-      UberZeit::Config[:rounding] = 1.minutes
-      UberZeit::Config[:work_days] = [:monday, :tuesday, :wednesday, :thursday, :friday]
-      UberZeit::Config[:work_per_day] = 8.5.hours
-      UberZeit::Config[:vacation_per_year] = 25.days
 
       UberZeit::BonusCalculators.register :nine_on_duty, UberZeit::BonusCalculators::NineOnDuty
     end

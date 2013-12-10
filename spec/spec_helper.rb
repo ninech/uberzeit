@@ -94,16 +94,17 @@ RSpec.configure do |config|
 
     # Overwrite uZ config with default values
     uberzeit_config = {
-      rounding: 1.minutes,
-      work_days:  [:monday, :tuesday, :wednesday, :thursday, :friday],
-      work_per_day:  8.5.hours,
-      vacation_per_year:  25.days,
+      rounding_minutes: 1,
+      work_days: %w(monday tuesday wednesday thursday friday),
+      work_per_day_hours:  8.5,
+      vacation_per_year_days:  25,
       ubertrack_hosts: {
         redmine: 'https://redmine.yolo',
         otrs: 'https://otrs.howdoyouturnthison'
       }
     }
-    stub_const 'UberZeit::Config', uberzeit_config
+    UberZeit.config.clear
+    UberZeit.config.merge! uberzeit_config
   end
 
   run_counter = 0
