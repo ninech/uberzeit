@@ -544,6 +544,7 @@ de:
       sign_in_with: 'Einloggen mit:'
       login: 'Login'
 
+  user_does_not_exist: 'Der authentifizierte Benutzer existert nicht.'
   login_failed: 'Login fehlgeschlagen.'
   not_logged_in: 'Sie sind nicht eingeloggt.'
 

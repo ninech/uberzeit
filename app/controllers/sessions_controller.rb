@@ -11,7 +11,8 @@ class SessionsController < ApplicationController
     auth = request.env['omniauth.auth']
     user = User.find_by_email(auth['uid'])
     if user.nil?
-      render text: 'The requested user could not be found.', status: 404
+      flash.now[:notice] = t('.user_does_not_exist')
+      render action: :new, status: 403
     else
       user.ensure_employment_exists
       sign_in(user)
@@ -26,6 +27,6 @@ class SessionsController < ApplicationController
 
   def failure
     flash.now[:notice] = t('.login_failed')
-    render action: :new
+    render action: :new, status: 403
   end
 end
