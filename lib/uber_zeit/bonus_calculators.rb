@@ -8,6 +8,7 @@ module UberZeit::BonusCalculators
   end
 
   def self.use(identifier, params)
+    require 'uber_zeit/bonus_calculators/dummy'
     return UberZeit::BonusCalculators::Dummy.new if identifier.blank?
     @@available_calculators[identifier].new(params)
   end
