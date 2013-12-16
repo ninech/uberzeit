@@ -1,5 +1,6 @@
 require 'spec_helper'
-require 'support/shared_examples_calculators'
+
+require 'uber_zeit/bonus_calculators/nine_planned_on_duty_work'
 
 describe UberZeit::BonusCalculators::NinePlannedOnDutyWork do
 

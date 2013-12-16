@@ -538,7 +538,13 @@ de:
       edit_password: 'Passwort ändern'
     form:
       submit: 'Passwort ändern'
+  sessions:
+    new:
+      sign_in: 'Einloggen'
+      sign_in_with: 'Einloggen mit:'
+      login: 'Login'
 
+  login_failed: 'Login fehlgeschlagen.'
   not_logged_in: 'Sie sind nicht eingeloggt.'
 
   layouts:

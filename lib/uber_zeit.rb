@@ -4,7 +4,7 @@ module UberZeit
   include ActiveSupport::Configurable
 
   DEFAULT_CONFIG = {
-    :weekdays => [:monday, :tuesday, :wednesday, :thursday, :friday],
+    :work_days => %w(monday tuesday wednesday thursday friday),
     :rounding_minutes => 1,
     :work_per_day_hours => 8.5,
     :vacation_per_year_days => 25,

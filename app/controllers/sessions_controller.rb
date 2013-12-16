@@ -2,7 +2,9 @@ class SessionsController < ApplicationController
   skip_before_filter :ensure_logged_in
 
   def new
-    redirect_to Rails.env.development? ? '/auth/developer' : '/auth/cas'
+    if other_auth_providers.size == 1 && !password_auth_provider?
+      redirect_to "/auth/#{other_auth_providers.first[:provider]}"
+    end
   end
 
   def create
@@ -19,6 +21,11 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out
-    redirect_to "#{Uberzeit::Application.config.cas_url}/logout"
+    redirect_to root_path
+  end
+
+  def failure
+    flash.now[:notice] = t('.login_failed')
+    render action: :new
   end
 end

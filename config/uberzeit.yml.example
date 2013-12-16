@@ -1,12 +1,21 @@
 development:
   auth_providers:
-    - name: 'developer'
+    - provider: 'password'
+    - provider: 'developer'
       fields:
         - 'email'
+      uid_field: 'email'
   ubertrack_hosts:
     redmine: 'http://redmine.dev'
     otrs: 'http://10.10.10.17'
     stats: 'http://10.10.10.12'
+
+# auth providers are loaded in an initializer,
+# this is why we need to configure this here...
+# ¯\_(ツ)_/¯
+test:
+  auth_providers:
+    - provider: 'password'
 
 staging:
   ubertrack_hosts:

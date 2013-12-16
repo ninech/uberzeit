@@ -36,7 +36,7 @@
   </script>
 </head>
 <body class="content-<%= controller.controller_name %>">
-  <%= render 'layouts/header' %>
+  <%= render 'layouts/header' if signed_in? %>
   <div class="container">
     <div class="row">
       <div class="small-12 columns">
@@ -62,6 +62,6 @@
 
     <%= yield %>
   </div>
-  <%= render 'layouts/footer' %>
+  <%= render 'layouts/footer' if signed_in? %>
 </body>
 </html>

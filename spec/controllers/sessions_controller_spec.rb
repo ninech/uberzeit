@@ -4,13 +4,19 @@ describe SessionsController do
   render_views
 
   before do
-    request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:cas]
+    request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:password]
   end
 
   describe 'GET new' do
-    it 'redirects to omniauth' do
-      get :new
-      response.should redirect_to('/auth/cas')
+    context 'with an other provider' do
+      before(:each) do
+        UberZeit.config.auth_providers = [ { 'provider' => 'cas' } ]
+      end
+
+      it 'redirects to omniauth' do
+        get :new
+        response.should redirect_to('/auth/cas')
+      end
     end
   end
 

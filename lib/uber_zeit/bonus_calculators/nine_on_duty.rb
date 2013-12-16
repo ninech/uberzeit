@@ -1,3 +1,5 @@
+require 'uber_zeit/bonus_calculators/base_nightly_window'
+
 class UberZeit::BonusCalculators::NineOnDuty
   include UberZeit::BonusCalculators::BaseNightlyWindow
 
