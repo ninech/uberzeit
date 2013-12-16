@@ -129,6 +129,6 @@ gem 'nine-ldap',
     git: 'git@git.nine.ch:nine-ldap.git',
     branch: 'master'
 
-gem 'uberzeit_ldap_sync',
-  git: 'git@git.nine.ch:uberzeit_ldap_sync',
+gem 'uberzeit_ninech_customizations',
+  git: 'git@git.nine.ch:uberzeit_ninech_customizations',
   branch: 'master'
