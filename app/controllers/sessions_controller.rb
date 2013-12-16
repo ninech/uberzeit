@@ -2,7 +2,9 @@ class SessionsController < ApplicationController
   skip_before_filter :ensure_logged_in
 
   def new
-    if other_auth_providers.size == 1 && !password_auth_provider?
+    if signed_in?
+      redirect_to user_time_entries_path(current_user)
+    elsif other_auth_providers.size == 1 && !password_auth_provider?
       redirect_to "/auth/#{other_auth_providers.first[:provider]}"
     end
   end
