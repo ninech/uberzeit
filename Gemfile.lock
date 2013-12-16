@@ -75,11 +75,11 @@ GIT
       net-ldap
 
 GIT
-  remote: git@git.nine.ch:uberzeit_ldap_sync
-  revision: 7420148ab0af941ed39e8a2236d58f2314b969a1
+  remote: git@git.nine.ch:uberzeit_ninech_customizations
+  revision: d141e268f5221aa782f272fb0922476985797dae
   branch: master
   specs:
-    uberzeit_ldap_sync (1.0.1)
+    uberzeit_ninech_customizations (1.1.0)
       nine-ldap (~> 0.0.13)
       rake (~> 10.1)
 
@@ -496,7 +496,7 @@ DEPENDENCIES
   therubyracer
   timecop
   uberlog!
-  uberzeit_ldap_sync!
+  uberzeit_ninech_customizations!
   uglifier (>= 1.0.3)
   validates_timeliness
   version_bumper

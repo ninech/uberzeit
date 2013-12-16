@@ -83,10 +83,6 @@ module Uberzeit
           UberZeit.config.send("#{key}=", value)
         end
       end
-
-      require 'uber_zeit/bonus_calculators'
-      require 'uber_zeit/bonus_calculators/nine_on_duty'
-      UberZeit::BonusCalculators.register :nine_on_duty, UberZeit::BonusCalculators::NineOnDuty
     end
 
     YAML::ENGINE.yamler = 'syck'
