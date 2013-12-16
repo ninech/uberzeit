@@ -13,14 +13,14 @@ module ActivitiesHelper
   end
 
   def customer_link(customer_id)
-    stats_url = UberZeit::Config[:ubertrack_hosts]["stats"]
+    stats_url = UberZeit.config.ubertrack_hosts[:stats]
     customer = Customer.where(id: customer_id).last || customer_id
     link_to(customer, "#{stats_url}/admin/customerdetail.php?id=#{customer_id}")
   end
 
   private
   def ticket_url(ticketing_system, ticket_id)
-    base_url = UberZeit::Config[:ubertrack_hosts]["#{ticketing_system}"]
+    base_url = UberZeit.config.ubertrack_hosts[:"#{ticketing_system}"]
     case(ticketing_system)
     when :redmine
       return "#{base_url}/issues/#{ticket_id}"

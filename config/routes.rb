@@ -8,6 +8,7 @@ Uberzeit::Application.routes.draw do
   # session stuff
   resource :session, only: [:new, :create, :destroy]
   match '/auth/:provider/callback', to: 'sessions#create'
+  match '/auth/failure', to: 'sessions#failure'
   match '/logout', to: 'sessions#destroy', as: 'logout'
 
 

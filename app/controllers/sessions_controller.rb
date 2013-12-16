@@ -2,14 +2,17 @@ class SessionsController < ApplicationController
   skip_before_filter :ensure_logged_in
 
   def new
-    redirect_to Rails.env.development? ? '/auth/developer' : '/auth/cas'
+    if other_auth_providers.size == 1 && !password_auth_provider?
+      redirect_to "/auth/#{other_auth_providers.first[:provider]}"
+    end
   end
 
   def create
     auth = request.env['omniauth.auth']
     user = User.find_by_email(auth['uid'])
     if user.nil?
-      render text: 'The requested user could not be found.', status: 404
+      flash.now[:notice] = t('.user_does_not_exist')
+      render action: :new, status: 403
     else
       user.ensure_employment_exists
       sign_in(user)
@@ -19,6 +22,11 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out
-    redirect_to "#{Uberzeit::Application.config.cas_url}/logout"
+    redirect_to root_path
+  end
+
+  def failure
+    flash.now[:notice] = t('.login_failed')
+    render action: :new, status: 403
   end
 end

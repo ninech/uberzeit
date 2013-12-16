@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'customer_sync'
 
 describe CustomerSync do
   let(:customer1) { OpenStruct.new id: 1, companyname: 'Yolo Inc.', firstname: '' }

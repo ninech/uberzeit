@@ -29,6 +29,9 @@ gem 'foundation_rails_helper'
 gem 'omniauth'
 gem 'omniauth-cas'
 gem 'omniauth-ldap'
+gem 'omniauth-password',
+  :github => 'ninech/omniauth-password',
+  :branch => 'fix-uid'
 
 # Authorization
 gem 'cancan'

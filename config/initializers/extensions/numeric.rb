@@ -8,11 +8,11 @@ class Numeric
   end
 
   def work_days
-    self.to_f * UberZeit::Config[:work_per_day]
+    self.to_f * UberZeit.config.work_per_day_hours.hours
   end
 
   def to_work_days
-    self.to_f / UberZeit::Config[:work_per_day]
+    self.to_f / UberZeit.config.work_per_day_hours.hours
   end
 
   def to_minutes

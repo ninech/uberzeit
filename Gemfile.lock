@@ -30,6 +30,16 @@ GIT
       virtus
 
 GIT
+  remote: git://github.com/ninech/omniauth-password.git
+  revision: e6fadcddd515093d7a91a0d7cd7da2bcf74c2194
+  branch: fix-uid
+  specs:
+    omniauth-password (0.0.1)
+      bcrypt-ruby (~> 3.0)
+      omniauth (~> 1.0)
+      rails (~> 3.2.1)
+
+GIT
   remote: git@git.nine.ch:gems/uberlog
   revision: ba0cca026a1c599bf3fd83d7a35b8d666382f6b8
   tag: 0.4.1
@@ -467,6 +477,7 @@ DEPENDENCIES
   omniauth
   omniauth-cas
   omniauth-ldap
+  omniauth-password!
   parallel_tests
   pg
   rack-cors
