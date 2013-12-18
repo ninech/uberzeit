@@ -7,7 +7,12 @@
 
   <div class="row">
     <div class="small-12 columns">
-      v<%= Uberzeit::Application.version.normal %> | <%= link_to t('.logout'), logout_path %>
+      v<%= Uberzeit::Application.version.normal %> |
+      <% if I18n.locale == :de %>
+        <%= link_to 'English', language_session_path(language: 'en'), method: :put %>
+      <% else %>
+        <%= link_to 'Deutsch', language_session_path(language: 'de'), method: :put %>
+      <% end %>
     </div>
   </div>
 

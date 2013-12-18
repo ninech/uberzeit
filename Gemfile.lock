@@ -76,10 +76,10 @@ GIT
 
 GIT
   remote: git@git.nine.ch:uberzeit_ninech_customizations
-  revision: d141e268f5221aa782f272fb0922476985797dae
+  revision: ca30e28b23a2202f4a40df0b5674b819bafb34aa
   branch: master
   specs:
-    uberzeit_ninech_customizations (1.1.0)
+    uberzeit_ninech_customizations (1.1.1)
       nine-ldap (~> 0.0.13)
       rake (~> 10.1)
 
@@ -232,6 +232,7 @@ GEM
       multi_json (~> 1.7)
     highline (1.6.16)
     hike (1.2.3)
+    http_accept_language (2.0.0)
     i18n (0.6.5)
     i18n-missing_translations (0.0.2)
       i18n (~> 0.6.0)
@@ -463,6 +464,7 @@ DEPENDENCIES
   grape-entity!
   grape-swagger
   guard-spring
+  http_accept_language
   i18n-js!
   i18n-missing_translations
   jbuilder

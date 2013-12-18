@@ -565,13 +565,6 @@ de:
         regexp: 'ist ungültig'
         invalid: 'ist ungültig'
         time_type_for_timer: 'ist nicht gültig für Präsenzzeit'
-  bonus_calculator:
-    nine_on_duty:
-      name: 'Normale Piketteinsätze'
-      description: 'Während der im nine.ch Pikett-Reglement spezifizierten Tageszeiten wird die geleistete Arbeitzeit zu 110% gutgeschrieben.'
-    nine_planned_on_duty_work:
-      name: 'Geplante Pikettarbeiten'
-      description: 'Während der im nine.ch Pikett-Reglement spezifizierten Tageszeiten wird die geleistete Arbeitzeit zu 125% gutgeschrieben.'
 
   views:
     pagination:

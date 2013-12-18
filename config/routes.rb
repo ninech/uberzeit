@@ -6,7 +6,10 @@ Uberzeit::Application.routes.draw do
 
 
   # session stuff
-  resource :session, only: [:new, :create, :destroy]
+  resource :session, only: [:new, :create, :destroy] do
+    put '/language', action: :change_language
+  end
+
   match '/auth/:provider/callback', to: 'sessions#create'
   match '/auth/failure', to: 'sessions#failure'
   match '/logout', to: 'sessions#destroy', as: 'logout'

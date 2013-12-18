@@ -64,8 +64,7 @@ gem 'rack-cors'
 gem 'gaffe'
 gem 'kaminari'
 
-# Logging
-
+gem 'http_accept_language'
 
 # API
 # http://www.youtube.com/watch?v=mqgiEQXGetI

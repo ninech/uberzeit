@@ -31,4 +31,12 @@ class SessionsController < ApplicationController
     flash.now[:notice] = t('.login_failed')
     render action: :new, status: 403
   end
+
+  def change_language
+    language = params[:language]
+    if I18n.available_locales.collect(&:to_s).include?(language)
+      session[:locale] = language
+    end
+    redirect_to(request.referer || root_path)
+  end
 end

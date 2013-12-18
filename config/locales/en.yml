@@ -1,0 +1,573 @@
+en:
+  activemodel:
+    models:
+      user_role: 'User role'
+    attributes:
+      user_role:
+        role: 'Role'
+        resource: 'Resource'
+  activerecord:
+    models:
+      employment: 'Employment'
+      public_holiday: 'Public holiday'
+      time_type: 'Time Type'
+      absence: 'Absence'
+      adjustment: 'Adjustment'
+      activity: 'Activity'
+      project: 'Projekt'
+      activity_type: 'Activity type'
+      user: 'User'
+      team: 'Team'
+      role: 'Role'
+      customer:
+        one: 'Customer'
+        other: 'Customers'
+    attributes:
+      activity:
+        customer_number: 'Customer'
+        project: 'Project'
+        activity_type: 'Activity'
+        duration: 'Duration'
+        date: 'Date'
+        description: 'Description'
+        redmine_ticket_id: 'Redmine #'
+        otrs_ticket_id: 'OTRS #'
+        customer_id: 'Customer'
+        billable: 'Billable'
+      time_entry:
+        start_time: 'From'
+        end_time: 'To'
+      timer:
+        start_time: 'From'
+        end_time: 'To'
+      time_type:
+        name: 'Name'
+        acquired_as: 'Reported as'
+        bonus_calculator: 'Bonus calculator'
+        confirm_delete: 'Confirm deletion'
+        time_types: 'Time types'
+        is_vacation: 'Substracted from vacations'
+        icon: 'Icon'
+        color_index: 'Color'
+        exclude_from_calculation: 'Exclude from calculation'
+      adjustment:
+        date: 'Date'
+        user: 'User'
+        time_type: 'Time type'
+        duration: 'Duration'
+        duration_in_work_days: 'Duration in work days'
+        duration_in_hours: 'Duration in hours'
+        label: 'Name'
+      employment:
+        workload: 'Workload'
+        start_date: 'From'
+        end_date: 'To'
+      public_holiday:
+        name: 'Name'
+        date: 'Date'
+        daypart: 'Duration'
+      user:
+        email: 'E-mail'
+        given_name: 'Given name'
+        name: 'Name'
+        birthday: 'Day of birth'
+        password: 'Password'
+        password_confirmation: 'Password (repeat)'
+      team:
+        name: 'Name'
+      role:
+        resource: 'Resource'
+      customer:
+        number: 'Customer number'
+        abbreviation: 'Abbreviation'
+        name: 'Name'
+      project:
+        customer_number: 'Customer'
+    errors:
+      models:
+        activity:
+          attributes:
+            customer_id:
+              customer_does_not_exist: 'does not exist'
+        time_entry:
+          attributes:
+            starts:
+              invalid_datetime: 'is not valid'
+            ends:
+              after: 'End date has to be after start date'
+            start_date:
+              timer_exists_on_date_already: 'There is already a timer running on the selected date'
+        absence:
+          attributes:
+            start_date:
+              absences_overlap: 'overlaps with absences on %{dates}'
+            end_date:
+              on_or_after: 'has to be at or after the start date'
+        absence_schedule:
+          attributes:
+            ends_date:
+              invalid_date: 'is not a valid date'
+              on_or_after: 'has to be at or after the start date'
+        public_holiday:
+          attributes:
+            date:
+              invalid_datetime: 'is not a valid date'
+        employment:
+          error_outside_1_and_100_percent: 'should be between 1 and 100'
+          attributes:
+            start_date:
+              invalid_datetime: 'is not a valid date'
+            end_date:
+              on_or_after: 'has to be before or after the start date'
+            base:
+              there_is_another_open_ended_entry: 'There is another open-ended entry.'
+              overlaps_with_another_entry: 'The date range overlaps with another entry.'
+              cannot_delete_single_employment: 'Deletion of the last employment is not possible.'
+        adjustment:
+          attributes:
+            date:
+              invalid_date: 'is not a valid date.'
+  model_successfully_created: "%{model} successfully created."
+  model_successfully_updated: "%{model} successfully updated."
+  model_successfully_deleted: "%{model} successfully deleted."
+  model_not_editable: "%{model} cannot be changed."
+  time:
+    formats:
+      default: '%H:%M'
+      weekday: '%a, %d. %b'
+  date:
+    formats:
+      iso: '%Y-%m-%d'
+      default: '%d.%m.%Y'
+      long: '%A, %d. %B %Y'
+      weekday: '%a, %d. %b'
+      medium: '%a, %d. %B %Y'
+  js:
+    pickadate:
+      firstDay: 1
+      format: 'dddd, dd. mmmm yyyy'
+
+  number:
+    format:
+      separator: ! '.'
+
+  whole_day: 'Whole day'
+  first_half_day: 'Morning'
+  second_half_day: 'Afternoon'
+
+  shared:
+    event_legend:
+      public_holiday: 'Public holiday'
+    absences_tooltip:
+      edit: 'Edit'
+      first_half_day: 'Morning'
+      second_half_day: 'Afternoon'
+      recurring_interval_until_date: "Recurring: Every %{interval} weeks until %{ends}."
+      add_absence: 'Add absence'
+    public_holiday_tooltip:
+      first_half_day: 'Morning'
+      second_half_day: 'Afternoon'
+    user_select:
+      user: 'User'
+    week_view:
+      head:
+        today: 'Today'
+        week_number: 'WN'
+      weekdays:
+        total: 'Total'
+      summary:
+        total: 'Total'
+  time_types:
+    edit:
+      edit_time_type: 'Edit time type'
+    index:
+      new_time_type: 'New time type'
+      work: 'Work'
+      absence: 'Absence'
+      confirm_delete: 'Delete?'
+    form:
+      back: 'Back'
+      acquired_as: 'Reported as'
+      work: 'Work'
+      absence: 'Absence'
+      clear: 'Clear'
+    new:
+      create_time_type: 'Create time type'
+  absences:
+    top_buttons:
+      add_absence: 'Add absence'
+    schedule_sub_form:
+      recurring_active: 'Recurring...'
+      repeat_every: 'Repeat every'
+      weeks_until: 'weeks until'
+      repeat: 'Repeat'
+    new:
+      add_absence: 'Add absence'
+    form:
+      create_absence: 'Create absence'
+      time_type: 'Time type'
+      start_date: 'From'
+      end_date: 'To'
+      daypart: 'Duration'
+      delete: 'Delete'
+    edit:
+      edit_absence: 'Edit absence'
+  users:
+    index:
+      new_user: 'New user'
+      confirm_delete: 'Delete?'
+    form:
+      back: 'Back'
+    edit:
+      edit_user: 'Edit "%{user}"'
+    new:
+      new_user: 'Create new user'
+  teams:
+    index:
+      new_team: 'New team'
+      confirm_delete: 'Delete?'
+    new:
+      new_team: 'Create new team'
+    form:
+      back: 'Back'
+    edit:
+      edit_team: 'Edit "%{team}"'
+  navigation:
+    manage: 'Administration'
+    absences: 'Absences'
+    time_tracking: 'Time reporting'
+    timesheet: 'Attendance'
+    activities: 'Activities'
+    reports: 'Reports'
+    sub:
+      absences:
+        my_absences: 'Personal'
+        absences: 'Employees'
+      manage:
+        roles: 'Roles'
+        public_holidays: 'Public holidays'
+        time_types: 'Time types'
+        users: 'Users'
+        teams: 'Teams'
+        customers: 'Customers'
+        adjustments: 'Adjustments'
+        projects: 'Projects'
+        activity_types: 'Activity types'
+      reports:
+        overview: 'Overview'
+        my_work: 'Personal time reporting'
+        work: 'Employees time reporting'
+        vacation: 'Vacations'
+        billability: 'Billability'
+        billing: 'Billing'
+        comparison: 'Presence / Activity'
+        activity_filter: 'Overview'
+        activity_detailed: 'Detailed'
+  reports:
+    formats:
+      date: '%e. %a.'
+      month: '%B'
+    overview:
+      index:
+        formats:
+          hours_and_minutes_html: '%{hours} hours and %{minutes} minutes'
+          work_days_html: '%{work_days} work days'
+        panels:
+          uberstunden:
+            info1_html: 'Your <span class="has-tip" data-tooltip="Extra hours since the beginning of the year until (and including) yesterday.">extra hours balance</span> is'
+            info2_html: 'This is equivalent to'
+          understunden:
+            info1_html: 'Keep it up! Just another'
+            info2_html: 'to compensate missed work hours!'
+          month:
+            info1_html: 'In %{month}, you reached'
+            emphasis1_html: '%{percent} of the monthly target time'
+            info2_html: 'already. This is equivalent to a working time of'
+          vacation:
+            info1_html: 'You redeemed'
+            emphasis1_html: '%{redeemed} days of vacation'
+            info2_html: 'and you have'
+            emphasis2_html: '%{remaining} days of vacation left!'
+          team:
+            title: 'Team absences'
+            time_frame: 'of the coming 7 days'
+          personal:
+            title: 'Your absences'
+            time_frame: 'of the coming 7 days'
+    work:
+      columns:
+        effective_worked: 'Work time'
+        absent: 'Absence time'
+        target: 'Target time'
+        overtime: 'Extra hours'
+        adjustments: 'Adjustments'
+      table:
+        title: 'Employees time reporting'
+    my_work:
+      table:
+        title: 'Personal time reporting'
+    absence:
+      table:
+        title: 'Employees absences'
+        total: 'Total'
+      calendar:
+        month_in_year: '%B %Y'
+        title: 'Employees absences'
+    vacation:
+      year:
+        title: 'Vacation report'
+        taken: 'Redeemed vacation days in %{year}'
+        remaining: 'Vacation days left in %{year}'
+      month:
+        title: 'Vacation report'
+        taken: 'Redeemed vation days in %{month} %{year}'
+        remaining: 'Vacation days left after %{month} %{year}'
+    activities:
+      billability:
+        index:
+          title: 'Billability'
+        table:
+          is_billable: 'Billable?'
+        form:
+          finish: 'Complete'
+      billing:
+        index:
+          title: 'Billing'
+        table:
+          is_billed: 'Billed?'
+      filter:
+        index:
+          title: 'Activities'
+          project: 'Project'
+          customer: 'Customer'
+          activity_type: 'Activity'
+          duration: 'Duration'
+          billable: 'Billable'
+          not_billable: 'Not billable'
+      detailed:
+        index:
+          title: 'Activities in detail'
+          billable: 'Billable'
+          not_billable: 'Not billable'
+          is_billed: 'Billed'
+          project: 'Project: %{project}'
+          redmine: 'Redmine: %{ticket_url}'
+          otrs: 'OTRS: %{ticket_url}'
+          no_activities: 'No matching activities found.'
+    shared:
+      users_absence_table:
+        total: Total
+      header:
+        show: 'Show'
+      team_selector:
+        users: 'Employees'
+        everyone: 'All'
+      time_frame_selector:
+        time_frame: 'Time frame'
+        all: 'All'
+      group_by_selector:
+        group_by: 'Group by'
+        project: 'Project'
+        activity_type: 'Activity'
+        customer: 'Customer'
+      datepicker:
+        by_date: 'To'
+      customer_selector:
+        customer: 'Customer'
+      buttons:
+        table: 'Table'
+        calendar: 'Calendar'
+  time_entries:
+    edit:
+      edit_time: 'Edit entry'
+    new:
+      add_entry: 'Add entry'
+    form:
+      cancel: 'Cancel'
+      add_entry: 'Add entry'
+      start_timer: 'Start timer'
+      delete: 'Delete'
+      date: 'Date'
+      save: 'Save'
+      now: 'now'
+    index:
+      overtime: 'Extra hours'
+      add_time_now: 'Start reporting time now'
+      no_entries_yet_message: 'No entries yet'
+      timer_running_warning:
+        one: 'There is a timer running on:'
+        other: 'There are timers running on the following dates:'
+      total: 'Total'
+      time_bonuses: 'Time bonuses'
+    time_entry:
+      duration_bonus: 'Time bonus'
+    timer:
+      timer: 'Timer'
+      exceeds-day: 'This is a timer exceeding the day boundaries.'
+      now: 'Now'
+      tooltip:
+        starts: 'Starts at'
+        ends: 'Ends at'
+    top_buttons:
+      add_time: 'Add entry'
+    add_time_modal:
+      add_time: 'Add entry'
+  comparison:
+    show:
+      title: 'Calendar week %{week}'
+      chart:
+        time_entries: 'Presence time'
+        activities: 'Activity time'
+  timers:
+    edit:
+      edit_time: 'Edit entry'
+    form:
+      cancel: 'Cancel'
+      add_entry: 'Add entry'
+      start_timer: 'Start timer'
+      delete: 'Delete'
+      save: 'Save'
+  public_holidays:
+    edit:
+      title: 'Edit public holiday'
+    index:
+      title: 'Public holidays %{year}'
+      new_public_holiday: 'New public holiday'
+      confirm_delete: 'Delete?'
+    form:
+      date: 'Date'
+      back: 'Back'
+    new:
+      title: 'Add vacation'
+  adjustments:
+    edit:
+      title: 'Edit adjustment'
+    index:
+      title: 'Adjustment in %{year}'
+      new_adjustment: 'New adjustment'
+      confirm_delete: 'Delete?'
+      unit_work_days: 'Work days'
+      unit_hours: 'Hours'
+    form:
+      date: 'Date'
+      back: 'Back'
+    new:
+      title: 'Add adjustment'
+  projects:
+    index:
+      title: 'Projects'
+      new: 'Add project'
+      confirm_delete: 'Delete?'
+    new:
+      title: 'Add a new project'
+    edit:
+      title: 'Edit project'
+    form:
+      back: 'Back'
+  activity_types:
+    index:
+      title: 'Activity type'
+      new: 'Add activity type'
+      confirm_delete: 'Delete?'
+      total_activities: 'Activities reported'
+    new:
+      title: 'Add a new activity type'
+    edit:
+      title: 'Edit activity type'
+    form:
+      back: 'Back'
+  activities:
+    top_buttons:
+      add_activity: 'Add activity'
+    index:
+      add_activity_now: 'Add activity now'
+      customer: 'Customer: %{customer_url}'
+      project: 'Project: %{project}'
+      no_entries_yet_message: 'No entries yet'
+      redmine: 'Redmine: %{ticket_url}'
+      otrs: 'OTRS: %{ticket_url}'
+    new:
+      add_activity: 'Add activity'
+    edit:
+      edit_activity: 'Edit activity'
+    form:
+       save: 'Save'
+       cancel: 'Cancel'
+       delete: 'Delete'
+       date: 'Date'
+
+  employments:
+    edit:
+      edit_employment: 'Edit employment'
+    new:
+      add_employment: 'Add employment'
+    form:
+      back: 'Back'
+    index:
+      employments: 'Employments'
+      add_employment: 'Add employment'
+      open_ended: 'open ended'
+      confirm_delete: 'Delete?'
+  customers:
+    index:
+      new_customer: 'Add customer'
+      confirm_delete: 'Delete customer "%{customer}"?'
+    edit:
+      edit_customer: 'Edit customer "%{customer}"'
+    form:
+      back: 'Back'
+    new:
+      new_customer: 'Add new customer'
+  roles:
+    names:
+      admin: 'Administrator'
+      team_leader: 'Team leader'
+      accountant: 'Accountant'
+    index:
+      title: 'User roles'
+      new_role: 'Add user roel'
+      confirm_delete: 'Delete?'
+    new:
+      new_role: 'Add new user role'
+    form:
+      back: 'Back'
+  passwords:
+    edit:
+      edit_password: 'Change password'
+    form:
+      submit: 'Change password'
+  sessions:
+    new:
+      sign_in: 'Sign in'
+      sign_in_with: 'Sign in with:'
+      login: 'Sign in'
+
+  user_does_not_exist: 'The authenticated user does not exist.'
+  login_failed: 'Login failed.'
+  not_logged_in: 'You are not logged in.'
+
+  layouts:
+    footer:
+      info-rule: 'Please report your working hours by the end of the calendar week.'
+      logout: 'Logout'
+    header:
+      menu: 'Menu'
+      logout: 'Logout'
+      change_password: 'Change password'
+
+  grape:
+    errors:
+      messages:
+        coerce: 'is not valid'
+        presence: 'is not present'
+        regexp: 'is not valid'
+        invalid: 'is not valid'
+        time_type_for_timer: 'is not valid for presence time.'
+
+  views:
+    pagination:
+      first: '«'
+      last: '»'
+      previous: '‹'
+      next: '›'
+      truncate: '…'
