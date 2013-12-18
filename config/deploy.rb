@@ -4,7 +4,7 @@ require 'airbrake/capistrano'
 require 'capistrano/maintenance'
 
 set :application, 'UberZeit'
-set :repository, 'git@git.nine.ch:uberzeit.git'
+set :repository, 'git@git.nine.ch:development/uberzeit.git'
 set :scm, :git
 
 set :stages, %w(production staging)

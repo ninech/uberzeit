@@ -110,24 +110,24 @@ end
 # NINE SPECIFIC GEMS
 # ==================
 gem 'uberlog',
-  git: 'git@git.nine.ch:gems/uberlog',
+  git: 'git@git.nine.ch:development/uberlog',
   tag: '0.4.1'
 
 # Customers
 gem 'mynine-plugin_helpers',
     require: 'plugin_helpers',
-    git: 'git@git.nine.ch:mynine/plugin_helpers.git',
+    git: 'git@git.nine.ch:development/plugin_helpers.git',
     branch: 'master'
 gem 'mynine-customer_plugin',
     require: 'customer_plugin',
-    git: 'git@git.nine.ch:mynine/customer_plugin.git',
+    git: 'git@git.nine.ch:development/customer_plugin.git',
     branch: 'master'
 
 # Extensions
 gem 'nine-ldap',
-    git: 'git@git.nine.ch:nine-ldap.git',
+    git: 'git@git.nine.ch:development/nine-ldap.git',
     branch: 'master'
 
 gem 'uberzeit_ninech_customizations',
-  git: 'git@git.nine.ch:uberzeit_ninech_customizations',
+  git: 'git@git.nine.ch:development/uberzeit_ninech_customizations',
   branch: 'master'

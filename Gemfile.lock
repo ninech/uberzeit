@@ -40,15 +40,7 @@ GIT
       rails (~> 3.2.1)
 
 GIT
-  remote: git@git.nine.ch:gems/uberlog
-  revision: ba0cca026a1c599bf3fd83d7a35b8d666382f6b8
-  tag: 0.4.1
-  specs:
-    uberlog (0.4.1)
-      logstash-event (~> 1.1)
-
-GIT
-  remote: git@git.nine.ch:mynine/customer_plugin.git
+  remote: git@git.nine.ch:development/customer_plugin.git
   revision: 18485ff7fb2608b269b703f48d3f95e209f3aade
   branch: master
   specs:
@@ -59,15 +51,7 @@ GIT
       mynine-plugin_helpers (~> 1.1)
 
 GIT
-  remote: git@git.nine.ch:mynine/plugin_helpers.git
-  revision: 0541817cd0de8e6b3d6d4d181197b063d8b39f01
-  branch: master
-  specs:
-    mynine-plugin_helpers (1.1.4)
-      faraday (~> 0.8)
-
-GIT
-  remote: git@git.nine.ch:nine-ldap.git
+  remote: git@git.nine.ch:development/nine-ldap.git
   revision: fb9c480479561bebff26c627f46cd7c84edf4cf7
   branch: master
   specs:
@@ -75,7 +59,23 @@ GIT
       net-ldap
 
 GIT
-  remote: git@git.nine.ch:uberzeit_ninech_customizations
+  remote: git@git.nine.ch:development/plugin_helpers.git
+  revision: a37d17a18a675351b7c8d3bf3356614de6e09a67
+  branch: master
+  specs:
+    mynine-plugin_helpers (1.1.4)
+      faraday (~> 0.8)
+
+GIT
+  remote: git@git.nine.ch:development/uberlog
+  revision: ba0cca026a1c599bf3fd83d7a35b8d666382f6b8
+  tag: 0.4.1
+  specs:
+    uberlog (0.4.1)
+      logstash-event (~> 1.1)
+
+GIT
+  remote: git@git.nine.ch:development/uberzeit_ninech_customizations
   revision: 91cc56d8dc3248190b1172b22c2ddc6f118f1bc2
   branch: master
   specs:
