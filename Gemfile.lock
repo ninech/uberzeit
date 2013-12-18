@@ -76,10 +76,10 @@ GIT
 
 GIT
   remote: git@git.nine.ch:uberzeit_ninech_customizations
-  revision: ca30e28b23a2202f4a40df0b5674b819bafb34aa
+  revision: 91cc56d8dc3248190b1172b22c2ddc6f118f1bc2
   branch: master
   specs:
-    uberzeit_ninech_customizations (1.1.1)
+    uberzeit_ninech_customizations (1.1.2)
       nine-ldap (~> 0.0.13)
       rake (~> 10.1)
 
