@@ -362,7 +362,7 @@ en:
       team_selector:
         users: 'Employees'
         everyone: 'All'
-      time_frame_selector:
+      month_year_selector:
         time_frame: 'Time frame'
         all: 'All'
       group_by_selector:

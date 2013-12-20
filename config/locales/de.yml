@@ -364,7 +364,7 @@ de:
       team_selector:
         users: Mitarbeiter
         everyone: Alle
-      time_frame_selector:
+      month_year_selector:
         time_frame: Zeitraum
         all: 'Alle'
       group_by_selector:

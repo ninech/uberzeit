@@ -1,6 +1,6 @@
 <%= render(partial: 'shared/user_select', locals: { link_generator: :reports_my_work_path, selected_user: @user }) %>
 
-<%= render partial: 'reports/shared/time_frame_selector' %>
+<%= render partial: 'reports/shared/month_year_selector' %>
 <%= render partial: 'reports/shared/header', locals: {base_url: "/reports/work/users/#{@user.id}/:year", title: t('.title') } %>
 
 <div class="content-summary row">
