@@ -13,7 +13,7 @@ describe Reports::Activities::FilterController do
   describe 'access' do
     context 'for non-signed in users' do
       it 'redirects to login' do
-        get :index, month: 1, year: 2010, group_by: 'activity_type'
+        get :index, start_date: '2010-01-01', end_date: '2010-01-31', group_by: 'activity_type'
         response.should redirect_to(new_session_path)
       end
     end
@@ -25,7 +25,7 @@ describe Reports::Activities::FilterController do
 
       describe 'GET "index"' do
         it 'denies access' do
-          expect { get :index, month: 1, year: 2010, group_by: 'activity_type' }.to raise_error(CanCan::AccessDenied)
+          expect { get :index, start_date: '2010-01-01', end_date: '2010-01-31', group_by: 'activity_type' }.to raise_error(CanCan::AccessDenied)
         end
       end
     end
@@ -37,7 +37,7 @@ describe Reports::Activities::FilterController do
 
       describe 'GET "index"' do
         it 'grants access' do
-          expect { get :index, month: 1, year: 2010, group_by: 'activity_type' }.to_not raise_error(CanCan::AccessDenied)
+          expect { get :index, start_date: '2010-01-01', end_date: '2010-01-31', group_by: 'activity_type' }.to_not raise_error(CanCan::AccessDenied)
         end
       end
     end
@@ -49,7 +49,7 @@ describe Reports::Activities::FilterController do
 
       describe 'GET "index"' do
         it 'grants access' do
-          expect { get :index, month: 1, year: 2010, group_by: 'activity_type' }.to_not raise_error(CanCan::AccessDenied)
+          expect { get :index, start_date: '2010-01-01', end_date: '2010-01-31', group_by: 'activity_type' }.to_not raise_error(CanCan::AccessDenied)
         end
       end
     end
@@ -61,7 +61,7 @@ describe Reports::Activities::FilterController do
 
       describe 'GET "index"' do
         it 'grants access' do
-          expect { get :index, month: 1, year: 2010, group_by: 'activity_type' }.to_not raise_error(CanCan::AccessDenied)
+          expect { get :index, start_date: '2010-01-01', end_date: '2010-01-31', group_by: 'activity_type' }.to_not raise_error(CanCan::AccessDenied)
         end
       end
     end
@@ -89,18 +89,18 @@ describe Reports::Activities::FilterController do
         end
 
         it 'shows the correct sums grouped by activity type' do
-          get :index, month: 1, year: 2010, group_by: 'activity_type'
+          get :index, start_date: '2010-01-01', end_date: '2010-01-31', group_by: 'activity_type'
           assigns(:sums).should == { "support" => { "not_billable" => 7200, "duration" => 9900, "billable" => 2700 } }
         end
 
         it 'shows the correct sums grouped by customer' do
-          get :index, month: 1, year: 2010, group_by: 'customer'
+          get :index, start_date: '2010-01-01', end_date: '2010-01-31', group_by: 'customer'
           assigns(:sums).should == { "swag ag" => { "not_billable" => 7200, "duration" => 7200 },
                                      "yolo inc" => { "billable" => 2700, "duration" => 2700 } }
         end
 
         it 'shows the correct sums grouped by project' do
-          get :index, month: 1, year: 2010, group_by: 'project'
+          get :index, start_date: '2010-01-01', end_date: '2010-01-31', group_by: 'project'
           assigns(:sums).should == { "project x" => { "not_billable" => 7200, "duration" => 9900, "billable" => 2700 } }
         end
       end

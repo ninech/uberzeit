@@ -365,6 +365,9 @@ en:
       month_year_selector:
         time_frame: 'Time frame'
         all: 'All'
+      time_frame_selector:
+        start_date: 'Start'
+        end_date: 'End'
       group_by_selector:
         group_by: 'Group by'
         project: 'Project'

@@ -367,6 +367,9 @@ de:
       month_year_selector:
         time_frame: Zeitraum
         all: 'Alle'
+      time_frame_selector:
+        start_date: 'Von'
+        end_date: 'Bis'
       group_by_selector:
         group_by: Gruppieren nach
         project: Projekt
