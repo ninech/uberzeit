@@ -3,6 +3,7 @@ require File.expand_path('../boot', __FILE__)
 $: << "#{File.expand_path('../../lib', __FILE__)}"
 
 require 'rails/all'
+require 'i18n/core_ext/hash'
 
 require 'uber_zeit'
 
