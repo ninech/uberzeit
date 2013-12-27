@@ -1,4 +1,18 @@
 
+2.3.0
+=====
+Date:        2013-12-27
+Released by: Nils Caspar
+Diff:        https://git.nine.ch/development/uberzeit.git/compare/2.2.5...2.3.0
+
+  * Feature #8621 LDAP-Sync extrahieren (Nils Caspar)
+  * Feature #8622 Authentifizierung lokaler Benutzer erlauben (Nils Caspar)
+  * Feature #8962 Customer-Sync extrahieren (Nils Caspar)
+  * Feature #8625 Übersetzung (Englisch) (Nils Caspar)
+  * Feature #8778 zus. Abschliessen-Skip Button (Steven Schmid)
+  * Feature #8800 Zeitraumangaben uberZeit (Raffael Schmid)
+
+
 2.2.5
 =====
 Date:        2013-12-04
