@@ -15,6 +15,8 @@
 #  bonus_calculator         :string(255)
 #
 
+require 'uber_zeit/bonus_calculators'
+
 class TimeType < ActiveRecord::Base
   acts_as_paranoid
   validates_as_paranoid
