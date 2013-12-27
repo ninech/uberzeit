@@ -13,9 +13,14 @@ module ActivitiesHelper
   end
 
   def customer_link(customer_id)
-    stats_url = UberZeit.config.ubertrack_hosts[:stats]
+    return unless customer_link_enabled?
+    customer_url = UberZeit.config.customer_url
     customer = Customer.where(id: customer_id).last || customer_id
-    link_to(customer, "#{stats_url}/admin/customerdetail.php?id=#{customer_id}")
+    link_to(customer, (customer_url % customer.number))
+  end
+
+  def customer_link_enabled?
+    UberZeit.config.customer_url.present?
   end
 
   def redmine_enabled?
