@@ -4,24 +4,26 @@
     <li class="toggle-topbar menu-icon"><a href="#"><span><%= t '.menu' %></span></a></li>
   </ul>
   <section class="top-bar-section">
-    <%= render_navigation level: 1 %>
-    <ul class="right">
-      <li class="has-dropdown">
-      <a href="#">
-        <%= current_user %>
-      </a>
-      <ul class="dropdown">
-        <% current_user.when_editable do %>
+    <% if signed_in? %>
+      <%= render_navigation level: 1 %>
+      <ul class="right">
+        <li class="has-dropdown">
+        <a href="#">
+          <%= current_user %>
+        </a>
+        <ul class="dropdown">
+          <% current_user.when_editable do %>
+            <li>
+              <%= link_to t('.change_password'), edit_user_password_path(current_user) %>
+            </li>
+          <% end %>
           <li>
-            <%= link_to t('.change_password'), edit_user_password_path(current_user) %>
+            <%= link_to t('.logout'), logout_path %>
           </li>
-        <% end %>
-        <li>
-          <%= link_to t('.logout'), logout_path %>
+        </ul>
         </li>
       </ul>
-      </li>
-    </ul>
+    <% end %>
   </section>
 </nav>
 <div class="container subnavigation">

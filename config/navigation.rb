@@ -67,11 +67,11 @@ SimpleNavigation::Configuration.run do |navigation|
       second.item :absences_others, t('navigation.sub.absences.absences'), reports_absences_calendar_path(year: Date.current.year, month: Date.current.month), highlights_on: %r!\A/reports/absences!
     end
 
-    primary.item :activities, t('navigation.activities'), reports_activities_filter_path(year: Date.current.year, month: Date.current.month, group_by: 'customer'), highlights_on: %r{\A/reports/activities((?!(/comparison)))}, if: -> { show_activities_link_in_navigation? } do |second|
+    primary.item :activities, t('navigation.activities'), reports_activities_filter_path(start_date: Date.current.beginning_of_month, end_date: Date.current.end_of_month, group_by: 'customer'), highlights_on: %r{\A/reports/activities((?!(/comparison)))}, if: -> { show_activities_link_in_navigation? } do |second|
       second.dom_class = 'sub-nav'
       if ability.can? :manage, :filter
-        second.item :activity_filter, t('navigation.sub.reports.activity_filter'), reports_activities_filter_path(year: Date.current.year, month: Date.current.month, group_by: 'customer'), highlights_on: %r!\A/reports/activities/filter!
-        second.item :activity_detail, t('navigation.sub.reports.activity_detailed'), reports_activities_detailed_path(year: Date.current.year, month: Date.current.month), highlights_on: %r!\A/reports/activities/detailed!
+        second.item :activity_filter, t('navigation.sub.reports.activity_filter'), reports_activities_filter_path(start_date: Date.current.beginning_of_month, end_date: Date.current.end_of_month, group_by: 'customer'), highlights_on: %r!\A/reports/activities/filter!
+        second.item :activity_detail, t('navigation.sub.reports.activity_detailed'), reports_activities_detailed_path(start_date: Date.current.beginning_of_month, end_date: Date.current.end_of_month), highlights_on: %r!\A/reports/activities/detailed!
       end
       if ability.can? :manage, :billability
         second.item :billability, t('navigation.sub.reports.billability'), reports_activities_billability_path, highlights_on: %r!\A/reports/activities/billability!

@@ -60,12 +60,16 @@ module ApplicationHelper
     time_type.color_index
   end
 
-  def datefield(form, object_name, label, date, css_class)
+  def datefield(form = nil, object_name, label, date, css_class)
     opts = {label: label, class: css_class}
     unless date.nil?
       opts.merge!({'data-value' => l(date, format: :iso)})
     end
-    form.text_field object_name, opts
+    if form
+      form.text_field object_name, opts
+    else
+      text_field_tag object_name, nil, opts
+    end
   end
 
   def display_in_hours(duration)

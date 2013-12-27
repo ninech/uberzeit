@@ -1,13 +1,22 @@
+require 'active_support/configurable'
+
 module UberZeit
-  # create initial Configuration
-  Config = ActiveSupport::OrderedOptions.new
+  include ActiveSupport::Configurable
+
+  DEFAULT_CONFIG = {
+    :work_days => %w(monday tuesday wednesday thursday friday),
+    :rounding_minutes => 1,
+    :work_per_day_hours => 8.5,
+    :vacation_per_year_days => 25,
+  }
+  self.config.merge! DEFAULT_CONFIG.deep_dup
 
   def self.is_work_day?(date)
     is_weekday_a_workday?(date) and not PublicHoliday.whole_day_on?(date)
   end
 
   def self.is_weekday_a_workday?(date)
-   UberZeit::Config[:work_days].include?(date.strftime('%A').downcase.to_sym)
+    config.work_days.include?(date.strftime('%A').downcase)
   end
 
   def self.year_as_range(year)
@@ -20,7 +29,8 @@ module UberZeit
     first_day_of_month..last_day_of_month
   end
 
-  def self.round(duration, smallest_unit = UberZeit::Config[:rounding])
+  def self.round(duration, smallest_unit = nil)
+    smallest_unit ||= (config.rounding_minutes * 60.0)
     (duration.to_f / smallest_unit.to_f).round * smallest_unit
   end
 

@@ -1,0 +1,38 @@
+<div id="login-container" class="row">
+  <div class="large-4 large-offset-4 columns">
+    <h1><%= t('.sign_in') %></h1>
+
+    <% if password_auth_provider? %>
+      <%= form_for(User.new, as: :sessions, url: '/auth/password/callback') do |f| %>
+        <div class="row">
+          <div class="small-12 columns">
+            <%= f.text_field :email %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            <%= f.password_field :password %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 columns">
+            <%= f.submit class: 'button', value: t('.login') %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+    <% if other_auth_providers.any? %>
+      <div class="row">
+        <div class="small-12 columns">
+          <ul class="providers">
+            <li><%= t '.sign_in_with' %></li>
+            <% other_auth_providers.each do |config| %>
+              <li><%= link_to config[:provider], "/auth/#{config[:provider]}" %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

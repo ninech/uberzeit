@@ -57,35 +57,29 @@ class Activity < ActiveRecord::Base
     !!billed
   end
 
-  def self.sum_by_activity_type_and_year_and_month(year, month)
-    summarize self.unscoped
-                  .with_date_in_year_and_month(year, month)
-                  .joins(:activity_type)
-                  .select('activity_types.name, activities.billable, sum(activities.duration) as duration')
-                  .where(reviewed: true)
-                  .group('activity_types.name, billable')
-                  .order('activity_types.name')
+  def self.sum_by_activity_type
+    summarize joins(:activity_type)
+               .select('activity_types.name, activities.billable, sum(activities.duration) as duration')
+               .where(reviewed: true)
+               .group('activity_types.name, billable')
+               .reorder('activity_types.name')
   end
 
-  def self.sum_by_customer_and_year_and_month(year, month)
-    summarize self.unscoped
-                  .with_date_in_year_and_month(year, month)
-                  .joins(:customer)
-                  .select('customers.name, activities.billable, sum(activities.duration) as duration')
-                  .where(reviewed: true)
-                  .group('customers.name, billable')
-                  .order('customers.name')
+  def self.sum_by_customer
+    summarize joins(:customer)
+               .select('customers.name, activities.billable, sum(activities.duration) as duration')
+               .where(reviewed: true)
+               .group('customers.name, billable')
+               .reorder('customers.name')
   end
 
-  def self.sum_by_project_and_year_and_month(year, month)
-    summarize self.unscoped
-                  .with_date_in_year_and_month(year, month)
-                  .joins(:project)
-                  .joins(:customer)
-                  .select('projects.name, activities.billable, sum(activities.duration) as duration')
-                  .where(reviewed: true)
-                  .group('customers.name, projects.name, billable')
-                  .order('projects.name')
+  def self.sum_by_project
+    summarize joins(:project)
+               .joins(:customer)
+               .select('projects.name, activities.billable, sum(activities.duration) as duration')
+               .where(reviewed: true)
+               .group('customers.name, projects.name, billable')
+               .reorder('projects.name')
   end
 
 

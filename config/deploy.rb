@@ -4,7 +4,7 @@ require 'airbrake/capistrano'
 require 'capistrano/maintenance'
 
 set :application, 'UberZeit'
-set :repository, 'git@git.nine.ch:uberzeit.git'
+set :repository, 'git@git.nine.ch:development/uberzeit.git'
 set :scm, :git
 
 set :stages, %w(production staging)
@@ -38,6 +38,20 @@ task :generate_tmp_sessions, :roles => :app do
   run "ln -s #{shared_path}/sessions #{release_path}/tmp/sessions"
 end
 after 'deploy:finalize_update', :generate_tmp_sessions
+
+# uberzeit.yml
+desc 'Deploy uberzeit.yml file'
+task :deploy_uberzeit_yml, :roles => :app do
+  template = File.read('config/uberzeit.yml.example')
+  put template, "#{shared_path}/config/uberzeit.yml"
+end
+after 'deploy:setup', :deploy_uberzeit_yml
+
+desc 'Link uberzeit.yml file'
+task :link_uberzeit_yml, :roles => :app do
+  run "ln -s #{shared_path}/config/uberzeit.yml #{release_path}/config/uberzeit.yml"
+end
+after 'deploy:finalize_update', :link_uberzeit_yml
 
 after 'deploy:restart', 'deploy:cleanup'
 

@@ -5,16 +5,20 @@ class Reports::Activities::FilterController < ApplicationController
   before_filter :set_year, :set_month, :set_group_by
 
   def index
-    @range = UberZeit.month_as_range(@year, @month)
+    @start_date = Date.parse(params[:start_date] || Date.today.beginning_of_month.to_s)
+    @end_date = Date.parse(params[:end_date] || Date.today.end_of_month.to_s)
+
+    @activities = Activity.with_date(@start_date..@end_date)
+
     @allowed_group_by = %w{customer project activity_type}
 
     @sums = case @group_by
             when 'activity_type'
-              Activity.sum_by_activity_type_and_year_and_month(@year, @month)
+              @activities.sum_by_activity_type
             when 'customer'
-              Activity.sum_by_customer_and_year_and_month(@year, @month)
+              @activities.sum_by_customer
             when 'project'
-              Activity.sum_by_project_and_year_and_month(@year, @month)
+              @activities.sum_by_project
             end
 
     @totals = {}
@@ -37,6 +41,6 @@ class Reports::Activities::FilterController < ApplicationController
   end
 
   def set_group_by
-    @group_by = params[:group_by]
+    @group_by = params[:group_by] || 'activity_type'
   end
 end

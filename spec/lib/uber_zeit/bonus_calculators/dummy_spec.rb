@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+require 'uber_zeit/bonus_calculators/dummy'
+
 describe UberZeit::BonusCalculators::Dummy do
 
   describe 'class' do

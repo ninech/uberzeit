@@ -1,14 +1,17 @@
-<% all_months_option = false unless local_assigns[:all_months_option] %>
 <% content_for :time_frame_selector do %>
-  <div class="row">
-    <div class="small-3 columns"><%= t '.time_frame' %></div>
-    <div class="small-4 columns">
-      <% if all_months_option %>
-        <%= select_month(@month, {}, {name: :month}) %>
-      <% else %>
-        <%= select_month(@month, {prompt: t('.all')}, {name: :month}) %>
-      <% end %>
+  <div class="from_to_date">
+    <div class="row">
+      <div class="small-3 columns text-field-label"><%= t '.start_date' %></div>
+      <div class="small-9 columns">
+        <%= datefield(:start_date, t('.start_date'), @start_date, :from_date) %>
+      </div>
     </div>
-    <div class="small-5 columns end"><%= select_year(@year, {start_year: Date.current.year-1, end_year: Date.current.year+1}, {name: :year}) %></div>
+
+    <div class="row">
+      <div class="small-3 columns text-field-label"><%= t '.end_date' %></div>
+      <div class="small-9 columns">
+        <%= datefield(:end_date, t('.end_date'), @end_date, :to_date) %>
+      </div>
+    </div>
   </div>
 <% end %>

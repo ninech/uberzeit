@@ -4,9 +4,10 @@ class Reports::Activities::DetailedController < ApplicationController
   before_filter :set_year, :set_month, :set_customer
 
   def index
-    @range = @month ? UberZeit.month_as_range(@year, @month) : UberZeit.year_as_range(@year)
+    @start_date = Date.parse(params[:start_date] || Date.today.beginning_of_month.to_s)
+    @end_date = Date.parse(params[:end_date] || Date.today.end_of_month.to_s)
 
-    @activities = Activity.by_customer(@customer.id).with_date_in_year_and_month(@year, @month).where(reviewed: true)
+    @activities = Activity.by_customer(@customer.id).with_date(@start_date..@end_date).where(reviewed: true)
 
     @grouped_activities = {}
     @subtotals = {}

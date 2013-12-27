@@ -30,15 +30,17 @@ GIT
       virtus
 
 GIT
-  remote: git@git.nine.ch:gems/uberlog
-  revision: ba0cca026a1c599bf3fd83d7a35b8d666382f6b8
-  tag: 0.4.1
+  remote: git://github.com/ninech/omniauth-password.git
+  revision: e6fadcddd515093d7a91a0d7cd7da2bcf74c2194
+  branch: fix-uid
   specs:
-    uberlog (0.4.1)
-      logstash-event (~> 1.1)
+    omniauth-password (0.0.1)
+      bcrypt-ruby (~> 3.0)
+      omniauth (~> 1.0)
+      rails (~> 3.2.1)
 
 GIT
-  remote: git@git.nine.ch:mynine/customer_plugin.git
+  remote: git@git.nine.ch:development/customer_plugin.git
   revision: 18485ff7fb2608b269b703f48d3f95e209f3aade
   branch: master
   specs:
@@ -49,7 +51,15 @@ GIT
       mynine-plugin_helpers (~> 1.1)
 
 GIT
-  remote: git@git.nine.ch:mynine/plugin_helpers.git
+  remote: git@git.nine.ch:development/nine-ldap.git
+  revision: fb9c480479561bebff26c627f46cd7c84edf4cf7
+  branch: master
+  specs:
+    nine-ldap (0.0.13)
+      net-ldap
+
+GIT
+  remote: git@git.nine.ch:development/plugin_helpers.git
   revision: 0541817cd0de8e6b3d6d4d181197b063d8b39f01
   branch: master
   specs:
@@ -57,12 +67,21 @@ GIT
       faraday (~> 0.8)
 
 GIT
-  remote: git@git.nine.ch:nine-ldap.git
-  revision: 00dfc14c3cef7ae6f2d83348b0ae9ea38c6b991d
-  tag: 0.0.13
+  remote: git@git.nine.ch:development/uberlog
+  revision: ba0cca026a1c599bf3fd83d7a35b8d666382f6b8
+  tag: 0.4.1
   specs:
-    nine-ldap (0.0.13)
-      net-ldap
+    uberlog (0.4.1)
+      logstash-event (~> 1.1)
+
+GIT
+  remote: git@git.nine.ch:development/uberzeit_ninech_customizations
+  revision: 91cc56d8dc3248190b1172b22c2ddc6f118f1bc2
+  branch: master
+  specs:
+    uberzeit_ninech_customizations (1.1.2)
+      nine-ldap (~> 0.0.13)
+      rake (~> 10.1)
 
 GEM
   remote: https://rubygems.org/
@@ -213,6 +232,7 @@ GEM
       multi_json (~> 1.7)
     highline (1.6.16)
     hike (1.2.3)
+    http_accept_language (2.0.0)
     i18n (0.6.5)
     i18n-missing_translations (0.0.2)
       i18n (~> 0.6.0)
@@ -444,6 +464,7 @@ DEPENDENCIES
   grape-entity!
   grape-swagger
   guard-spring
+  http_accept_language
   i18n-js!
   i18n-missing_translations
   jbuilder
@@ -458,6 +479,7 @@ DEPENDENCIES
   omniauth
   omniauth-cas
   omniauth-ldap
+  omniauth-password!
   parallel_tests
   pg
   rack-cors
@@ -476,6 +498,7 @@ DEPENDENCIES
   therubyracer
   timecop
   uberlog!
+  uberzeit_ninech_customizations!
   uglifier (>= 1.0.3)
   validates_timeliness
   version_bumper

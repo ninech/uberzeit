@@ -71,6 +71,9 @@ $ ->
     section.find('.customer-status').append('<i class="icon-ok green-tick">')
     section.find('.customer-title').fadeTo(ACTIVITY_FADE_TIME, ACTIVITY_FADE_TO_OPACITY)
 
+    # select next customer
+    $('p.title > a', section.next()).click()
+
     false # do not submit
 
   update_activity_sums()

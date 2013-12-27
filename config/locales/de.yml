@@ -364,9 +364,12 @@ de:
       team_selector:
         users: Mitarbeiter
         everyone: Alle
-      time_frame_selector:
+      month_year_selector:
         time_frame: Zeitraum
         all: 'Alle'
+      time_frame_selector:
+        start_date: 'Von'
+        end_date: 'Bis'
       group_by_selector:
         group_by: Gruppieren nach
         project: Projekt
@@ -538,7 +541,14 @@ de:
       edit_password: 'Passwort ändern'
     form:
       submit: 'Passwort ändern'
+  sessions:
+    new:
+      sign_in: 'Einloggen'
+      sign_in_with: 'Einloggen mit:'
+      login: 'Login'
 
+  user_does_not_exist: 'Der authentifizierte Benutzer existert nicht.'
+  login_failed: 'Login fehlgeschlagen.'
   not_logged_in: 'Sie sind nicht eingeloggt.'
 
   layouts:
@@ -558,13 +568,6 @@ de:
         regexp: 'ist ungültig'
         invalid: 'ist ungültig'
         time_type_for_timer: 'ist nicht gültig für Präsenzzeit'
-  bonus_calculator:
-    nine_on_duty:
-      name: 'Normale Piketteinsätze'
-      description: 'Während der im nine.ch Pikett-Reglement spezifizierten Tageszeiten wird die geleistete Arbeitzeit zu 110% gutgeschrieben.'
-    nine_planned_on_duty_work:
-      name: 'Geplante Pikettarbeiten'
-      description: 'Während der im nine.ch Pikett-Reglement spezifizierten Tageszeiten wird die geleistete Arbeitzeit zu 125% gutgeschrieben.'
 
   views:
     pagination:

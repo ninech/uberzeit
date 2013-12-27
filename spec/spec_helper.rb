@@ -91,19 +91,6 @@ RSpec.configure do |config|
       DatabaseCleaner.strategy = :transaction
       DatabaseCleaner.start
     end
-
-    # Overwrite uZ config with default values
-    uberzeit_config = {
-      rounding: 1.minutes,
-      work_days:  [:monday, :tuesday, :wednesday, :thursday, :friday],
-      work_per_day:  8.5.hours,
-      vacation_per_year:  25.days,
-      ubertrack_hosts: {
-        redmine: 'https://redmine.yolo',
-        otrs: 'https://otrs.howdoyouturnthison'
-      }
-    }
-    stub_const 'UberZeit::Config', uberzeit_config
   end
 
   run_counter = 0

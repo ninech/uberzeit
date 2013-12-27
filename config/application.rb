@@ -1,6 +1,10 @@
 require File.expand_path('../boot', __FILE__)
 
+$: << "#{File.expand_path('../../lib', __FILE__)}"
+
 require 'rails/all'
+
+require 'uber_zeit'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -16,7 +20,7 @@ module Uberzeit
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += %W(#{config.root}/lib #{config.root}/app/models #{config.root}/app/models/concerns #{config.root}/app/interactors #{config.root}/app/api #{config.root}/app/navigation_renderers)
+    config.autoload_paths += %W(#{config.root}/app/models #{config.root}/app/models/concerns #{config.root}/app/interactors #{config.root}/app/api #{config.root}/app/navigation_renderers)
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -34,6 +38,7 @@ module Uberzeit
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     #config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :de
+    config.i18n.available_locales = [:en, :de]
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
@@ -71,22 +76,14 @@ module Uberzeit
     config.action_dispatch.rescue_responses.merge!('CanCan::AccessDenied' => :forbidden)
 
     # uberZeit specific time settings
-    Uberzeit::Application.config.to_prepare do
+    Uberzeit::Application.config.before_initialize do
       config_path = File.join(Rails.root, 'config', 'uberzeit.yml')
-      yaml_config = YAML.load_file(config_path)
-
-      if yaml_config[Rails.env]
-        yaml_config[Rails.env].each do |key, value|
-          UberZeit::Config.send("#{key}=", value)
+      if File.exist?(config_path)
+        yaml_config = YAML.load_file(config_path).fetch(Rails.env, {}).deep_symbolize_keys
+        yaml_config.each do |key, value|
+          UberZeit.config.send("#{key}=", value)
         end
       end
-
-      UberZeit::Config[:rounding] = 1.minutes
-      UberZeit::Config[:work_days] = [:monday, :tuesday, :wednesday, :thursday, :friday]
-      UberZeit::Config[:work_per_day] = 8.5.hours
-      UberZeit::Config[:vacation_per_year] = 25.days
-
-      UberZeit::BonusCalculators.register :nine_on_duty, UberZeit::BonusCalculators::NineOnDuty
     end
 
     YAML::ENGINE.yamler = 'syck'

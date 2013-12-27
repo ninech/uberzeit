@@ -71,15 +71,6 @@ class Absence < ActiveRecord::Base
     range.duration
   end
 
-  def daily_work_duration
-    duration = UberZeit::Config[:work_per_day]
-    if whole_day?
-      duration
-    else
-      duration * 0.5
-    end
-  end
-
   def range
     (starts..ends)
   end
@@ -205,10 +196,10 @@ class Absence < ActiveRecord::Base
 
   # VIEWERS DISCRETION ADVISED
   #
-  # The following code is a neat hack: Rails set
+  # The following code is a neat hack: Rails sets
   # `schedule.absence` AFTER the creation of the Absence. For
-  # unpersisted absences, schedule.absence is therefore `nil`.
-  # Since the validation` must_not_overlap_with_other_absences`
+  # unpersisted absences, `schedule.absence` is therefore `nil`.
+  # Since the validation `must_not_overlap_with_other_absences`
   # uses `occurrences` which depends on `schedule.absence` being
   # set, we do this manually when building the absence. The code
   # is covered by our specs and believed to have no unpleasant
