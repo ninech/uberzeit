@@ -60,7 +60,7 @@ GIT
 
 GIT
   remote: git@git.nine.ch:development/plugin_helpers.git
-  revision: 880ca3d56e44b141227ecb23bc59b760d29eefe1
+  revision: 0541817cd0de8e6b3d6d4d181197b063d8b39f01
   branch: master
   specs:
     mynine-plugin_helpers (1.1.4)
