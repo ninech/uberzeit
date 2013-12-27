@@ -39,14 +39,10 @@ gem 'rolify'
 
 # sync
 gem 'version_reader'
-gem 'airbrake'
 gem 'jbuilder'
 
 gem 'validates_timeliness'
 gem 'acts_as_paranoid', '~>0.4.0'
-
-# regular tasks
-gem 'whenever'
 
 # calendar
 gem 'calendar_helper', '~> 0.2'
@@ -106,28 +102,3 @@ group :development do
   gem 'sextant'
   gem 'meta_request'
 end
-
-# NINE SPECIFIC GEMS
-# ==================
-gem 'uberlog',
-  git: 'git@git.nine.ch:development/uberlog',
-  tag: '0.4.1'
-
-# Customers
-gem 'mynine-plugin_helpers',
-    require: 'plugin_helpers',
-    git: 'git@git.nine.ch:development/plugin_helpers.git',
-    branch: 'master'
-gem 'mynine-customer_plugin',
-    require: 'customer_plugin',
-    git: 'git@git.nine.ch:development/customer_plugin.git',
-    branch: 'master'
-
-# Extensions
-gem 'nine-ldap',
-    git: 'git@git.nine.ch:development/nine-ldap.git',
-    branch: 'master'
-
-gem 'uberzeit_ninech_customizations',
-  git: 'git@git.nine.ch:development/uberzeit_ninech_customizations',
-  branch: 'master'

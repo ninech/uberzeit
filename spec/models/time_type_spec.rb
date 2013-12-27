@@ -46,17 +46,4 @@ describe TimeType do
   it 'allows a bonus calculator null' do
     FactoryGirl.build(:time_type, bonus_calculator: '').should be_valid
   end
-
-  it 'updates the time spans if the bonus changes' do
-    time_type = FactoryGirl.create(:time_type_work)
-    time_entry = FactoryGirl.create(:time_entry, start_time: '00:45:00', end_time: '01:30:00')
-
-    # TODO: remove fugly solution because of strange factory
-    time_entry.time_type = time_type
-    time_entry.save!
-
-    UberZeit::BonusCalculators.register :nine_on_duty, UberZeit::BonusCalculators::NineOnDuty
-    time_type.bonus_calculator = 'nine_on_duty'
-    expect { time_type.save! }.to change { time_entry.time_spans.reload.collect(&:duration_bonus) }
-  end
 end
