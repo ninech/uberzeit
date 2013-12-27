@@ -18,6 +18,14 @@ module ActivitiesHelper
     link_to(customer, "#{stats_url}/admin/customerdetail.php?id=#{customer_id}")
   end
 
+  def redmine_enabled?
+    UberZeit.config.ubertrack_hosts.present? && UberZeit.config.ubertrack_hosts[:redmine].present?
+  end
+
+  def otrs_enabled?
+    UberZeit.config.ubertrack_hosts.present? && UberZeit.config.ubertrack_hosts[:otrs].present?
+  end
+
   private
   def ticket_url(ticketing_system, ticket_id)
     base_url = UberZeit.config.ubertrack_hosts[:"#{ticketing_system}"]
