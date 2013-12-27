@@ -58,8 +58,8 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :timesheet, t('navigation.time_tracking'), user_time_entries_path(current_user), highlights_on: %r!\A/(users/\d+/(activities|time_entries))(/date/[\w-]+)?\z! do |second|
       second.dom_class = 'sub-nav'
       second.item :timesheet, t('navigation.timesheet'), show_date_user_time_entries_path(current_user, date: @day || Date.current), highlights_on: %r!\A/users/\d+/time_entries(/date/[\w-]+)?\z!
-      second.item :my_activities, t('navigation.activities'), show_date_user_activities_path(current_user, date: @day || Date.current), highlights_on: %r!\A/users/\d+/activities(/date/[\w-]+)?\z!
-      second.item :comparison, t('navigation.sub.reports.comparison'), user_comparison_path(current_user, date: @day || Date.current), highlights_on: %r!\A/users/\d+/comparison!
+      second.item :my_activities, t('navigation.activities'), show_date_user_activities_path(current_user, date: @day || Date.current), highlights_on: %r!\A/users/\d+/activities(/date/[\w-]+)?\z!, if: -> { activities_enabled? }
+      second.item :comparison, t('navigation.sub.reports.comparison'), user_comparison_path(current_user, date: @day || Date.current), highlights_on: %r!\A/users/\d+/comparison!, if: -> { activities_enabled? }
     end
     primary.item :absences, t('navigation.absences'), user_absences_path(current_user), highlights_on: %r!\A/(users/\d+/absences|reports/absences/\d*/\d*)! do |second|
       second.dom_class = 'sub-nav'
@@ -93,17 +93,22 @@ SimpleNavigation::Configuration.run do |navigation|
       end
     end
 
-    primary.item :manage, t('navigation.manage'), projects_path, if: -> { show_manage_link_in_navigation? } do |second|
-      second.dom_class = 'sub-nav'
-      second.item :projects, t('navigation.sub.manage.projects'), projects_path, highlights_on: %r!\A#{projects_path}!
-      if current_user.admin?
-        second.item :users, t('navigation.sub.manage.users'), users_path, highlights_on: %r!\A#{users_path}(?:/(?:new(?:/)?|[0-9](?:/(?:(?:edit|employments|roles)(?:/.*)?)?)?)?)?\z!
-        second.item :teams, t('navigation.sub.manage.teams'), teams_path, highlights_on: %r!\A#{teams_path}!
-        second.item :customers, t('navigation.sub.manage.customers'), customers_path, highlights_on: %r!\A#{customers_path}!
-        second.item :adjustments, t('navigation.sub.manage.adjustments'), adjustments_path, highlights_on: %r!\A#{adjustments_path}!
-        second.item :public_holidays, t('navigation.sub.manage.public_holidays'), public_holidays_path, highlights_on: %r!\A#{public_holidays_path}!
-        second.item :time_types, t('navigation.sub.manage.time_types'), time_types_path, highlights_on: %r!\A#{time_types_path}!
-        second.item :activity_types, t('navigation.sub.manage.activity_types'), activity_types_path, highlights_on: %r!\A#{activity_types_path}!
+    if show_manage_link_in_navigation?
+      manage_path = if activities_enabled?
+                      projects_path
+                    else
+                      users_path
+                    end
+      primary.item :manage, t('navigation.manage'), manage_path do |second|
+        second.dom_class = 'sub-nav'
+        second.item :projects, t('navigation.sub.manage.projects'), projects_path, highlights_on: %r!\A#{projects_path}!, if: -> { can?(:manage, Project) }
+        second.item :users, t('navigation.sub.manage.users'), users_path, highlights_on: %r!\A#{users_path}(?:/(?:new(?:/)?|[0-9](?:/(?:(?:edit|employments|roles)(?:/.*)?)?)?)?)?\z!, if: -> { can?(:manage, User) }
+        second.item :teams, t('navigation.sub.manage.teams'), teams_path, highlights_on: %r!\A#{teams_path}!, if: -> { can?(:manage, Team)}
+        second.item :customers, t('navigation.sub.manage.customers'), customers_path, highlights_on: %r!\A#{customers_path}!, if: -> { can?(:manage, Customer) }
+        second.item :adjustments, t('navigation.sub.manage.adjustments'), adjustments_path, highlights_on: %r!\A#{adjustments_path}!, if: -> { can?(:manage, Adjustment) }
+        second.item :public_holidays, t('navigation.sub.manage.public_holidays'), public_holidays_path, highlights_on: %r!\A#{public_holidays_path}!, if: -> { can?(:manage, PublicHoliday) }
+        second.item :time_types, t('navigation.sub.manage.time_types'), time_types_path, highlights_on: %r!\A#{time_types_path}!, if: -> { can?(:manage, TimeType) }
+        second.item :activity_types, t('navigation.sub.manage.activity_types'), activity_types_path, highlights_on: %r!\A#{activity_types_path}!, if: -> { can?(:manage, ActivityType) }
       end
     end
 

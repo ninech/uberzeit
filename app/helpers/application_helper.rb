@@ -28,6 +28,10 @@ module ApplicationHelper
     can?(:manage, TimeType) || can?(:manage, Employment) || can?(:manage, PublicHoliday) || can?(:manage, Project)
   end
 
+  def activities_enabled?
+    !UberZeit.config.disable_activities
+  end
+
   def show_activities_link_in_navigation?
     can?(:manage, :billability) || can?(:manage, :billing) || can?(:manage, :filter)
   end

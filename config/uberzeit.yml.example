@@ -1,4 +1,5 @@
 development:
+  disable_activities: true # recommended
   customer_url: 'http://10.10.10.2/admin/customerdetail.php?id=%s'
   auth_providers:
     - provider: 'password'

@@ -527,7 +527,7 @@ de:
     names:
       admin: 'Administrator'
       team_leader: 'Teamleiter'
-      accountant: 'Michi'
+      accountant: 'Buchhalter'
     index:
       title: 'Benutzerrollen'
       new_role: 'Neue Benutzerrolle'
