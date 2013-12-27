@@ -34,6 +34,7 @@
   </div>
 </div>
 
+<% if redmine_enabled? || otrs_enabled? %>
 <div class="row">
   <div class="small-4 columns">
     <%= f.text_field :redmine_ticket_id %>
@@ -42,6 +43,7 @@
     <%= f.text_field :otrs_ticket_id %>
   </div>
 </div>
+<% end %>
 
 <div class="row">
   <div class="small-12 columns">

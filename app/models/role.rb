@@ -16,7 +16,11 @@ class Role < ActiveRecord::Base
 
   scopify
 
-  AVAILABLE_ROLES = [ :admin, :team_leader, :accountant ]
+  AVAILABLE_ROLES = [ :admin, :team_leader ]
+  unless !!UberZeit.config.disable_activities
+    AVAILABLE_ROLES << :accountant
+  end
+
   RESOURCABLE_ROLES = [ :team_leader ]
 
   def to_s

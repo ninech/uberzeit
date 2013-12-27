@@ -1,14 +1,12 @@
 development:
+  disable_activities: true # recommended
+  customer_url: 'http://10.10.10.2/admin/customerdetail.php?id=%s'
   auth_providers:
     - provider: 'password'
     - provider: 'developer'
       fields:
         - 'email'
       uid_field: 'email'
-  ubertrack_hosts:
-    redmine: 'http://redmine.dev'
-    otrs: 'http://10.10.10.17'
-    stats: 'http://10.10.10.12'
 
 # auth providers are loaded in an initializer,
 # this is why we need to configure this here...
@@ -16,15 +14,3 @@ development:
 test:
   auth_providers:
     - provider: 'password'
-
-staging:
-  ubertrack_hosts:
-    redmine: 'https://redmine-staging.nine.ch'
-    otrs: 'https://otrs-staging.nine.ch'
-    stats: 'https://stats-staging.nine.ch'
-
-production:
-  ubertrack_hosts:
-    redmine: 'https://redmine.nine.ch'
-    otrs: 'https://otrs.nine.ch'
-    stats: 'https://stats.nine.ch'

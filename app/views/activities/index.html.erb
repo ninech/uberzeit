@@ -16,7 +16,9 @@
                       <%= activity.activity_type.name %>
                     </div>
                     <div class="metadata">
-                      <span><%= t('.customer', customer_url: customer_link(activity.customer_id)).html_safe %></span>
+                      <% if customer_link_enabled? %>
+                        <span><%= t('.customer', customer_url: customer_link(activity.customer_id)).html_safe %></span>
+                      <% end %>
                       <% if activity.project %>
                         <span><%= t('.project', project: activity.project.name) %></span>
                       <% end %>
