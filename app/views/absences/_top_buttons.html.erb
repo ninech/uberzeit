@@ -1,6 +1,7 @@
 <% if can? :manage, Absence %>
   <div class="top-buttons">
-    <a href="#" class="button remote-reveal" data-reveal-id="absence-modal" data-reveal-url="<%= new_user_absence_path(@user) %>">
+    <% date = @year.nil? || @year == Date.today.year ? Date.today : Date.new(@year) %>
+    <a href="#" class="button remote-reveal" data-reveal-id="absence-modal" data-reveal-url="<%= new_user_absence_path(@user, date: date) %>">
       <%= icon(:plus) %>
       <%= t '.add_absence' %>
     </a>

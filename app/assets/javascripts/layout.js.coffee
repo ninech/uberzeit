@@ -14,10 +14,10 @@ $(document).on 'click', '.remote-reveal', (event) ->
     , 100
 
 $(document).on 'mouseover', '.has-tip', ->
-    $(this).popover
-      trigger: 'hover'
-      content: $(this).data('tooltip')
-      fadeSpeed: 0
+  $(this).popover
+    trigger: 'hover'
+    content: $(this).data('tooltip')
+    fadeSpeed: 0
 
 $(document).on 'click', '.time-now', ->
   target = $('#' + $(this).siblings('label').attr('for'))

@@ -73,13 +73,16 @@ describe AbsencesController do
     end
 
     describe 'POST "create"' do
+      let(:start_date) { Date.today + 1.year }
+
       it 'creates a new absence' do
         expect { post :create, user_id: user.id, absence: FactoryGirl.attributes_for(:absence, time_type_id: TEST_TIME_TYPES[:vacation].id) }.to change(Absence, :count)
       end
 
       it 'redirects to the absence view of the year of the new created absence' do
-        post :create, user_id: user.id, absence: FactoryGirl.attributes_for(:absence, time_type_id: TEST_TIME_TYPES[:vacation].id)
-        response.should redirect_to("/users/#{user.id}/absences/year/#{Absence.last.start_date.year}")
+        post :create, user_id: user.id, absence: FactoryGirl.attributes_for(:absence, time_type_id: TEST_TIME_TYPES[:vacation].id, start_date: start_date)
+        response.code.should_not eq(200)
+        response.should redirect_to("/users/#{user.id}/absences/year/#{start_date.year}")
       end
     end
 

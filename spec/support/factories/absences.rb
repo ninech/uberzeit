@@ -6,7 +6,7 @@ FactoryGirl.define do
 
     user
     start_date { Date.today }
-    end_date { Date.today }
+    end_date { start_date }
 
     after(:build) do |entry, evaluator|
       entry.time_type = TEST_TIME_TYPES[evaluator.time_type]
