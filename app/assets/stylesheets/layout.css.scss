@@ -82,3 +82,11 @@ table {
 div.top-buttons {
   text-align: right;
 }
+
+form {
+  label {
+    input[type=checkbox] {
+      margin-right: 10px;
+    }
+  }
+}

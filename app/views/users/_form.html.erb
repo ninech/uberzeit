@@ -37,8 +37,7 @@
       <%= hidden_field_tag 'user[team_ids][]', nil %>
       <% Team.all.each do |team| %>
         <label for="<%= dom_id(team) %>">
-          <%= check_box_tag('user[team_ids][]', team.id, @user.teams.include?(team), id: dom_id(team)) %>
-          <%= team %>
+          <%= check_box_tag('user[team_ids][]', team.id, @user.teams.include?(team), id: dom_id(team)) %><%= team %>
         </label>
       <% end %>
     <% end %>

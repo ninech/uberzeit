@@ -27,12 +27,6 @@
 
   <div class="row">
     <div class="small-12 columns">
-      <%= f.check_box :exclude_from_calculation, class: 'small-2 columns' %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="small-12 columns">
       <%= f.select :is_work, [[t('.work'), true], [ t('.absence'), false]], label: t('.acquired_as') %>
     </div>
   </div>
@@ -40,6 +34,12 @@
   <div class="row">
     <div class="small-12 columns">
       <%= f.check_box :is_vacation %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-12 columns">
+      <%= f.check_box :exclude_from_calculation %>
     </div>
   </div>
 
