@@ -46,7 +46,7 @@ en:
         bonus_calculator: 'Bonus calculator'
         confirm_delete: 'Confirm deletion'
         time_types: 'Time types'
-        is_vacation: 'Substracted from vacations'
+        is_vacation: 'Subtracted from vacations'
         icon: 'Icon'
         color_index: 'Color'
         exclude_from_calculation: 'Exclude from calculation'
