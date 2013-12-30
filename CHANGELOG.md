@@ -1,4 +1,15 @@
 
+2.4.1
+=====
+Date:        2013-12-30
+Released by: Nils Caspar
+Diff:        https://git.nine.ch/development/uberzeit.git/compare/2.4.0...2.4.1
+
+  * Bug #8966 Wochenendfarben bei Kalenderansicht ist unglücklich gewählt (Nils Caspar)
+  * Bug #9105 "Zeittyp erstellen"-Formular fehlerhaft formatiert (Nils Caspar)
+  * Bug #9216 Routing fehlerhaft (Nils Caspar)
+
+
 2.4.0
 =====
 Date:        2013-12-27
