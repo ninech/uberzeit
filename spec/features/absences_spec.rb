@@ -22,6 +22,18 @@ describe 'having fun with absences' do
     page.should have_content('22.04.2013')
   end
 
+  it 'adds an absence in the future', js: true do
+    visit user_absences_path(user)
+    2.times { find('.icon-caret-right').click } # go to year after next year
+    click_on 'Absenz hinzufügen'
+    select 'test_vacation', from: 'absence_time_type_id'
+    select 'Vormittags', from: 'absence_daypart'
+    click_on 'Absenz erstellen'
+    find('.event-container').click
+    page.should have_content('test_vacation')
+    page.should have_content('01.01.2015')
+  end
+
   it 'updates an absence', js: true do
     absence = FactoryGirl.create(:absence, start_date: '2013-01-08', end_date: '2013-01-08', time_type: :vacation, user: user)
     absence.schedule.update_attribute(:ends_date, '2013-01-08') # explicitly set recurring end date so date picker preselects correct month
