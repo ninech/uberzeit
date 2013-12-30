@@ -84,7 +84,7 @@
         }
 
         &.non-work-day {
-          background-color: lighten($secondary-color, 0%);
+          background-color: darken($secondary-color, 1%);
         }
 
         i {

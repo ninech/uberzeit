@@ -67,7 +67,7 @@
         font-weight: 800;
       }
       &.non-work-day, &.otherMonth.weekendDay {
-        background-color: lighten($secondary-color, 2%);
+        background-color: darken($secondary-color, 1%);
       }
 
       &.public-holiday {
