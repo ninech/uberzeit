@@ -1,4 +1,13 @@
 
+2.4.2
+=====
+Date:        2014-01-13
+Released by: Raffael Schmid
+Diff:        https://git.nine.ch/development/uberzeit.git/compare/2.4.1...2.4.2
+
+  * Bug #9276 Am 1. Jänner gibt es diesen Fehler (Raffael Schmid)
+
+
 2.4.1
 =====
 Date:        2013-12-30
