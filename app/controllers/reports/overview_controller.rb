@@ -49,7 +49,7 @@ class Reports::OverviewController < ApplicationController
   end
 
   def range_of_year_till_yesterday
-    @range_of_year_till_yesterday ||= Date.today.at_beginning_of_year..Date.yesterday
+    @range_of_year_till_yesterday ||= Date.yesterday.at_beginning_of_year..Date.yesterday
   end
 
   def range_of_year
