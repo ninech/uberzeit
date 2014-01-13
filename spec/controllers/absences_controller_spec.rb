@@ -12,8 +12,9 @@ describe AbsencesController do
     end
 
     describe 'GET "index"' do
+      let(:attributes) { {user_id: user.id, year: 2013} }
       it 'assigns @time_types' do
-        get :index, user_id: user.id
+        get :index, attributes
         assigns(:time_types).should eq(TimeType.absence)
       end
 
@@ -22,7 +23,7 @@ describe AbsencesController do
         let!(:absence) { FactoryGirl.create(:absence, start_date: '2013-01-01', end_date: '2013-01-02', user: user) }
 
         it 'assigns the absences of the current user' do
-          get :index, user_id: user.id
+          get :index, attributes
           assigns(:absences).keys.length.should eq(2)
           assigns(:absences)['2013-01-01'.to_date].length.should eq(1)
           assigns(:absences)['2013-01-01'.to_date].first.should be_instance_of(Absence)
@@ -39,7 +40,7 @@ describe AbsencesController do
 
       it 'assigns @public_holidays' do
         rafs_birthday = FactoryGirl.create(:public_holiday, date: '2013-04-22', name: 'Its my birthday, men!')
-        get :index, user_id: user.id
+        get :index, attributes
         assigns(:public_holidays).should eq({'2013-04-22'.to_date => rafs_birthday})
       end
     end
