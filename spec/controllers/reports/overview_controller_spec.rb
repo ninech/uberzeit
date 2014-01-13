@@ -45,6 +45,14 @@ describe Reports::OverviewController do
           end.not_to raise_error
         end
       end
+
+      context 'on 1st january' do
+        before { Timecop.freeze('2014-01-01'.to_date) }
+
+        it 'does not raise an error' do
+          expect { get :index, user_id: user }.to_not raise_error
+        end
+      end
     end
 
   end
