@@ -1,4 +1,14 @@
 
+2.4.4
+=====
+Date:        2014-01-20
+Released by: Raffael Schmid
+Diff:        https://git.nine.ch/development/uberzeit/compare/2.4.3...2.4.4
+
+  * Feature #9393 Aktivitaeten fuer alle Mitarbeiter sichtbar (Raffael Schmid)
+  * Bug #9358 Erfassung von Activities für andere Benutzer (Raffael Schmid)
+
+
 2.4.2
 =====
 Date:        2014-01-13
