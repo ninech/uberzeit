@@ -32,7 +32,6 @@ class Ability
         can :manage, :work # summary
 
         if activities_enabled?
-          can :manage, :detailed
           can :manage, :billability
           can [:create, :update, :destroy, :review], Activity, user_id: manageable_user_ids(user)
           cannot [:update, :destroy], Activity, user_id: manageable_user_ids(user), reviewed: true
@@ -43,7 +42,6 @@ class Ability
       if user.accountant? && activities_enabled?
         can :manage, :billability
         can :manage, :billing
-        can :manage, :detailed
 
         can :read, User
         can [:update, :review], Activity
