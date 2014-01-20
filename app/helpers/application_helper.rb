@@ -33,7 +33,7 @@ module ApplicationHelper
   end
 
   def show_activities_link_in_navigation?
-    can?(:manage, :billability) || can?(:manage, :billing) || can?(:manage, :filter)
+    can?(:manage, :billability) || can?(:manage, :billing) || can?(:manage, :filter) || can?(:read, Activity)
   end
 
   def color_for_duration(duration)
