@@ -160,8 +160,8 @@ describe ActivitiesController do
           end.should change(Activity, :count).by(1)
         end
 
-        context 'for another user' do
-          it 'creates the activity in the name of another user' do
+        context 'for the selected user' do
+          it 'creates the activity in the name of the selected user' do
             other_user = FactoryGirl.create(:user)
             user.add_role :admin
             expect do
