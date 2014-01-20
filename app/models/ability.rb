@@ -13,7 +13,8 @@ class Ability
       can :read, Adjustment, user_id: user.id
 
       if activities_enabled?
-        can [:read, :create, :update, :destroy], Activity, user_id: user.id
+        can :read, Activity
+        can [:create, :update, :destroy], Activity, user_id: user.id
         cannot [:update, :destroy], Activity, user_id: user.id, reviewed: true
         can :read, Project
         can :read, ActivityType
@@ -31,10 +32,9 @@ class Ability
         can :manage, :work # summary
 
         if activities_enabled?
-          can :manage, :filter
           can :manage, :detailed
           can :manage, :billability
-          can [:read, :create, :update, :destroy, :review], Activity, user_id: manageable_user_ids(user)
+          can [:create, :update, :destroy, :review], Activity, user_id: manageable_user_ids(user)
           cannot [:update, :destroy], Activity, user_id: manageable_user_ids(user), reviewed: true
           can :manage, Project
         end
@@ -44,10 +44,9 @@ class Ability
         can :manage, :billability
         can :manage, :billing
         can :manage, :detailed
-        can :manage, :filter
 
         can :read, User
-        can [:read, :update, :review], Activity
+        can [:update, :review], Activity
       end
 
       if user.admin?
@@ -55,11 +54,11 @@ class Ability
 
         unless activities_enabled?
           cannot :manage, ActivityType
+          cannot :manage, Activity
           cannot :manage, Customer
           cannot :manage, Project
           cannot :manage, :billing
           cannot :manage, :billability
-          cannot :manage, :filter
         end
       end
     end
