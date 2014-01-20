@@ -43,7 +43,8 @@ class ActivitiesController < ApplicationController
 
   def create
     @activity.update_attributes(params[:activity])
-    respond_with @activity, location: show_date_user_activities_path(@user, date: @activity.date || Time.now)
+    @activity.update_attribute(:user, @user)
+    respond_with @activity, location: show_date_user_activities_path(@activity.user, date: @activity.date || Time.now)
   end
 
   private

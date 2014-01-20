@@ -160,6 +160,16 @@ describe ActivitiesController do
           end.should change(Activity, :count).by(1)
         end
 
+        context 'for another user' do
+          it 'creates the activity in the name of another user' do
+            other_user = FactoryGirl.create(:user)
+            user.add_role :admin
+            expect do
+              post :create, params.merge({user_id: other_user.id})
+            end.to change { other_user.activities.reload.count }.by(1)
+          end
+        end
+
         it_behaves_like 'correct duration handling'
       end
     end
