@@ -1,6 +1,6 @@
 class Reports::Activities::FilterController < ApplicationController
 
-  authorize_resource class: false
+  authorize_resource class: Activity
 
   before_filter :set_year, :set_month, :set_group_by
 

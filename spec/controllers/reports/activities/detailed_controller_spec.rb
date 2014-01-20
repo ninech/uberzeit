@@ -26,8 +26,8 @@ describe Reports::Activities::DetailedController do
       end
 
       describe 'GET "index"' do
-        it 'denies access' do
-          expect { get :index, start_date: '2010-01-01', end_date: '2010-01-31', customer_id: swag_ag.id }.to raise_error(CanCan::AccessDenied)
+        it 'allows access' do
+          expect { get :index, start_date: '2010-01-01', end_date: '2010-01-31', customer_id: swag_ag.id }.to_not raise_error
         end
       end
     end

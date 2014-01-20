@@ -291,7 +291,7 @@ describe Ability do
 
       let(:ability) { Ability.new(another_team_leader) }
 
-      it { should_not be_able_to(:read, activity) }
+      it { should be_able_to(:read, activity) }
       it { should_not be_able_to(:update, activity) }
       it { should_not be_able_to(:destroy, activity) }
     end
@@ -337,7 +337,7 @@ describe Ability do
     context 'as another user' do
       let(:ability) { Ability.new(FactoryGirl.create(:user)) }
 
-      it { should_not be_able_to(:read, activity) }
+      it { should be_able_to(:read, activity) }
       it { should_not be_able_to(:update, activity) }
       it { should_not be_able_to(:destroy, activity) }
     end
