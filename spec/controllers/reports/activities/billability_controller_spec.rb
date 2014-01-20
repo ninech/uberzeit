@@ -65,13 +65,13 @@ describe Reports::Activities::BillabilityController do
     let(:support) { FactoryGirl.create(:activity_type) }
     let(:maintenance) { FactoryGirl.create(:activity_type) }
 
-    let!(:upgrade_hard_disk) { FactoryGirl.create(:activity, user: user, duration: 2.hours, activity_type: support, customer: swag_ag) }
-    let!(:reboot_server) { FactoryGirl.create(:activity, user: user, duration: 5.minutes, activity_type: maintenance, customer: swag_ag) }
-    let!(:swap_ram_module) { FactoryGirl.create(:activity, user: user, duration: 30.minutes, activity_type: support, customer: yolo_inc) }
+    let!(:upgrade_hard_disk) { FactoryGirl.create(:activity, user: user, duration: 2.hours, activity_type: support, customer: swag_ag, description: 'Upgrade hard disk') }
+    let!(:reboot_server) { FactoryGirl.create(:activity, user: user, duration: 5.minutes, activity_type: maintenance, customer: swag_ag, description: 'Reboot server') }
+    let!(:swap_ram_module) { FactoryGirl.create(:activity, user: user, duration: 30.minutes, activity_type: support, customer: yolo_inc, description: 'Swap RAM module') }
 
-    let!(:build_datacenter) { FactoryGirl.create(:activity, user: user, duration: 3.months, activity_type: support, customer: swag_ag, reviewed: true) }
+    let!(:build_datacenter) { FactoryGirl.create(:activity, user: user, duration: 3.months, activity_type: support, customer: swag_ag, reviewed: true, description: 'Build datacenter') }
 
-    let!(:coffee_machine_cleaning) { FactoryGirl.create(:activity, user: user_of_another_team, duration: 30.minutes) }
+    let!(:coffee_machine_cleaning) { FactoryGirl.create(:activity, user: user_of_another_team, duration: 30.minutes, description: 'Coffee Machine Cleaning') }
 
     describe 'index' do
       context 'as teamleader' do
