@@ -4,7 +4,7 @@ class Reports::Activities::BillabilityController < ApplicationController
 
   def index
     @date = params[:date].present? ? params[:date].to_date : Date.today.beginning_of_week(:sunday)
-    @activities = ::Activity.accessible_by(current_ability)
+    @activities = ::Activity.accessible_by(current_ability, :update)
                             .where(reviewed: false)
                             .where('date <= ?', @date)
 
