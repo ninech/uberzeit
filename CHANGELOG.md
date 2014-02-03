@@ -1,4 +1,13 @@
 
+2.4.5
+=====
+Date:        2014-02-03
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/development/uberzeit/compare/2.4.4...2.4.5
+
+  * Bug #9805 Aktivitäten werden nicht komplett angezeigt (Steven Schmid)
+
+
 2.4.4
 =====
 Date:        2014-01-20
