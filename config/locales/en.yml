@@ -337,7 +337,7 @@ en:
           is_billed: 'Billed?'
       filter:
         index:
-          title: 'Activities'
+          title: 'Completed Activities'
           project: 'Project'
           customer: 'Customer'
           activity_type: 'Activity'
@@ -346,7 +346,7 @@ en:
           not_billable: 'Not billable'
       detailed:
         index:
-          title: 'Activities in detail'
+          title: 'Completed Activities in detail'
           billable: 'Billable'
           not_billable: 'Not billable'
           is_billed: 'Billed'

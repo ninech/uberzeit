@@ -339,7 +339,7 @@ de:
           is_billed: Verrechnet?
       filter:
         index:
-          title: Aktivitäten
+          title: Abgeschlossene Aktivitäten
           project: Projekt
           customer: Kunde
           activity_type: Aktivität
@@ -348,7 +348,7 @@ de:
           not_billable: Nicht verrechenbar
       detailed:
         index:
-          title: Aktivitäten detailliert
+          title: Abgeschlossene Aktivitäten detailliert
           billable: Verrechenbar
           not_billable: Nicht verrechenbar
           is_billed: Verrechnet
