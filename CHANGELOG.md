@@ -1,4 +1,13 @@
 
+2.4.6
+=====
+Date:        2014-02-04
+Released by: Nils Caspar
+Diff:        https://git.nine.ch/development/uberzeit.git/compare/2.4.5...2.4.6
+
+  * Bug #9844 Immer Deutsch beim Datepicker (Nils Caspar)
+
+
 2.4.5
 =====
 Date:        2014-02-03
