@@ -27,13 +27,8 @@ require 'capybara/rails'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
-Capybara.register_driver :wir_lieben_deutsche_land do |app|
-  profile = Selenium::WebDriver::Firefox::Profile.new
-  profile["intl.accept_languages"] =  'de'
-  Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
-end
-Capybara.default_driver = :wir_lieben_deutsche_land
-Capybara.javascript_driver = :wir_lieben_deutsche_land
+# Make sure language matches for feature specs
+I18n.available_locales = [:de]
 
 RSpec.configure do |config|
   # ## Mock Framework
