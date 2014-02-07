@@ -37,17 +37,21 @@ class ActivitiesController < ApplicationController
   end
 
   def update
-    @activity.update_attributes(params[:activity])
+    @activity.update_attributes(activity_params)
     respond_with @activity, location: show_date_user_activities_path(@user, date: @activity.date)
   end
 
   def create
-    @activity.update_attributes(params[:activity])
-    @activity.update_attribute(:user, @user)
+    @activity.update_attributes(activity_params)
     respond_with @activity, location: show_date_user_activities_path(@activity.user, date: @activity.date || Time.now)
   end
 
   private
+
+  def activity_params
+    (params[:activity] || {}).merge(user_id: @user.id)
+  end
+
   def parse_duration_to_seconds
     if params[:activity] && params[:activity][:duration]
       duration = params[:activity][:duration]

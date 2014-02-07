@@ -172,6 +172,18 @@ describe ActivitiesController do
 
         it_behaves_like 'correct duration handling'
       end
+
+      context 'with invalid parameters' do
+        context 'for the selected user' do
+          it 'will NOT create the activity, e.g. through some update_attribute black magic!' do
+            other_user = FactoryGirl.create(:user)
+            user.add_role :admin
+            expect do
+              post :create, {user_id: other_user.id}
+            end.to_not change { other_user.activities.reload.count }
+          end
+        end
+      end
     end
 
     describe 'DELETE "destroy"' do
