@@ -1,4 +1,13 @@
 
+2.4.7
+=====
+Date:        2014-02-07
+Released by: Steven Schmid
+Diff:        https://git.nine.ch/development/uberzeit/compare/2.4.6...2.4.7
+
+  * Bug #9917 [production][activities#index] NoMethodError: undefined method `number' for nil:NilClass (Steven Schmid)
+
+
 2.4.6
 =====
 Date:        2014-02-04
