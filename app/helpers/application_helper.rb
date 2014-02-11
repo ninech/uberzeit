@@ -112,7 +112,7 @@ module ApplicationHelper
   end
 
   def selectable_users
-    User.accessible_by(current_ability)
+    User.only_active.accessible_by(current_ability)
   end
 
   def time_types_in_absences(absences_per_day)
