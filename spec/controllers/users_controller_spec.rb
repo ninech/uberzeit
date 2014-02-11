@@ -181,15 +181,15 @@ describe UsersController do
     end
 
     describe 'PUT "activate"' do
-      it 'activates the user' do
+      it 'deactivates the user' do
         expect {
-          put :activate, id: user.id, activate: true
+          put :activate, id: user.id, activate: false
           user.reload
         }.to change(user, :active)
       end
 
       it 'redirects to the overview' do
-        put :activate, id: user.id, activate: true
+        put :activate, id: user.id, activate: false
         response.should redirect_to users_path
       end
     end
