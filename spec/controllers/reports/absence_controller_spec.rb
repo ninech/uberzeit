@@ -72,6 +72,7 @@ describe Reports::AbsenceController do
       describe 'special rights' do
         let!(:another_team) { FactoryGirl.create(:team) }
         let!(:another_user) { FactoryGirl.create(:user, teams: [another_team]) }
+        let!(:deactivated_user) { FactoryGirl.create(:user, active: false, teams: [another_team]) }
 
         it 'shows all users for all users' do
           get :calendar, year: year, month: month
@@ -87,6 +88,11 @@ describe Reports::AbsenceController do
           get :calendar, year: year, month: month, team_id: another_team.id
           assigns(:team).should eq(another_team)
           assigns(:users).should =~ [another_user]
+        end
+
+        it 'does not show deactivated users' do
+          get :calendar, year: year, month: month
+          assigns(:users).should_not include(deactivated_user)
         end
       end
     end

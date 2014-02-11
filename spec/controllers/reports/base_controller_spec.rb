@@ -10,6 +10,7 @@ describe Reports::BaseController do
   let!(:user) { FactoryGirl.create(:admin) }
   let!(:another_user) { FactoryGirl.create(:user, teams: user.teams) }
   let!(:another_user_in_another_team) { FactoryGirl.create(:user) }
+  let!(:deactivated_user) { FactoryGirl.create(:user, active: false) }
 
   before do
     test_sign_in user
@@ -50,6 +51,11 @@ describe Reports::BaseController do
         get :index
         assigns(:users).should =~ [user, another_user, another_user_in_another_team]
       end
+    end
+
+    it 'does not include deactivated users' do
+      get :index
+      assigns(:users).should_not include(deactivated_user)
     end
   end
 
