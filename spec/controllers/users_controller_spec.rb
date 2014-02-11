@@ -64,6 +64,13 @@ describe UsersController do
         end.to_not change(User, :count)
       end
     end
+
+    describe 'PUT "update"' do
+      it 'redirects to login' do
+        put :activate, id: user.id, activate: true
+        response.should redirect_to(new_session_path)
+      end
+    end
   end
 
   context 'for signed-in users' do
@@ -170,6 +177,20 @@ describe UsersController do
       it 'does delete the user' do
         delete :destroy, id: user.id
         User.where(id: user.id).count.should == 0
+      end
+    end
+
+    describe 'PUT "activate"' do
+      it 'activates the user' do
+        expect {
+          put :activate, id: user.id, activate: true
+          user.reload
+        }.to change(user, :active)
+      end
+
+      it 'redirects to the overview' do
+        put :activate, id: user.id, activate: true
+        response.should redirect_to users_path
       end
     end
 

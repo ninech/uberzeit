@@ -1,0 +1,18 @@
+.users {
+  .user {
+    .activate {
+      visibility: hidden;
+    }
+  }
+  .user:hover {
+    .activate {
+      visibility: visible;
+    }
+  }  
+  .user {
+    .status {
+      background: #AAA;
+      font-weight: normal;
+    }
+  }
+}

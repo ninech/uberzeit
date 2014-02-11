@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 
   default_scope order('users.name')
 
-  attr_accessible :email, :name, :birthday, :given_name, :team_ids, :password, :password_confirmation, :auth_source
+  attr_accessible :email, :name, :birthday, :given_name, :team_ids, :password, :password_confirmation, :auth_source, :active
 
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
@@ -111,6 +111,10 @@ class User < ActiveRecord::Base
 
   def editable?
     !external?
+  end
+
+  def active?
+    !!active
   end
 
   def when_editable(&block)

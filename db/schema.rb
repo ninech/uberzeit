@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131202133636) do
+ActiveRecord::Schema.define(:version => 20140211121101) do
 
   create_table "absence_schedules", :force => true do |t|
     t.boolean  "active",                 :default => false
@@ -86,14 +86,6 @@ ActiveRecord::Schema.define(:version => 20131202133636) do
   add_index "adjustments", ["time_type_id"], :name => "index_adjustments_on_time_type_id"
   add_index "adjustments", ["user_id"], :name => "index_adjustments_on_user_id"
 
-  create_table "assignments", :force => true do |t|
-    t.integer "localuser_id"
-    t.string  "localuser_type"
-    t.integer "role_id"
-  end
-
-  add_index "assignments", ["localuser_id", "localuser_type"], :name => "index_assignments_on_localuser_id_and_localuser_type"
-
   create_table "customers", :force => true do |t|
     t.integer  "number"
     t.string   "name"
@@ -136,20 +128,6 @@ ActiveRecord::Schema.define(:version => 20131202133636) do
 
   add_index "memberships", ["team_id"], :name => "index_memberships_on_team_id"
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
-
-  create_table "permissions", :force => true do |t|
-    t.integer  "role_id"
-    t.string   "name"
-    t.string   "resource"
-    t.string   "condition"
-    t.boolean  "cannot"
-    t.integer  "priority"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "permissions", ["name"], :name => "index_permissions_on_name"
-  add_index "permissions", ["role_id", "name"], :name => "index_permissions_on_role_id_and_name"
 
   create_table "projects", :force => true do |t|
     t.integer  "customer_id"
@@ -236,14 +214,15 @@ ActiveRecord::Schema.define(:version => 20131202133636) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.datetime "deleted_at"
     t.string   "given_name"
     t.date     "birthday"
     t.string   "authentication_token"
     t.string   "password_digest"
     t.string   "auth_source"
+    t.boolean  "active",               :default => true
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

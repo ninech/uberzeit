@@ -216,12 +216,20 @@ de:
     index:
       new_user: 'Neuer Benutzer'
       confirm_delete: Wirklich löschen?
+      deactive: Deaktiviert
+      activate: Aktivieren
+      deactivate: Deaktivieren
     form:
       back: Zurück
     edit:
       edit_user: '"%{user}" bearbeiten'
     new:
       new_user: 'Neuen Benutzer erstellen'
+    activate:
+      activating:
+        success: Benutzer "%{user}" wurde erfolgreich aktiviert.
+      deactivating:
+        success: Benutzer "%{user}" wurde erfolgreich deaktiviert.
   teams:
     index:
       new_team: 'Neues Team'

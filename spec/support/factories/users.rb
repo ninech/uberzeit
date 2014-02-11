@@ -5,6 +5,7 @@ FactoryGirl.define do
     sequence(:name) { |n| "name#{n}" }
     password "hans-im-glueck"
     password_confirmation "hans-im-glueck"
+    active true
 
     teams { FactoryGirl.create_list(:team, 1) }
 

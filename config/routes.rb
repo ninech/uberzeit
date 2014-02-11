@@ -17,6 +17,9 @@ Uberzeit::Application.routes.draw do
 
   # users scope
   resources :users do
+    member do
+      put '/activate', to: 'users#activate', as: 'activate'
+    end
     resource :password, only: [:edit, :update]
 
     resources :recurring_entries, except: [:show, :index]
