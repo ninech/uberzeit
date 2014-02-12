@@ -19,6 +19,7 @@ Uberzeit::Application.routes.draw do
   resources :users do
     member do
       put '/activate', to: 'users#activate', as: 'activate'
+      put '/deactivate', to: 'users#deactivate', as: 'deactivate'
     end
     resource :password, only: [:edit, :update]
 

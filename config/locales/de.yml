@@ -226,10 +226,9 @@ de:
     new:
       new_user: 'Neuen Benutzer erstellen'
     activate:
-      activating:
-        success: Benutzer "%{user}" wurde erfolgreich aktiviert.
-      deactivating:
-        success: Benutzer "%{user}" wurde erfolgreich deaktiviert.
+      success: Benutzer "%{user}" wurde erfolgreich aktiviert.
+    deactivate:
+      success: Benutzer "%{user}" wurde erfolgreich deaktiviert.
   teams:
     index:
       new_team: 'Neues Team'

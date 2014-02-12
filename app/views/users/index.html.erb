@@ -16,9 +16,9 @@
             <strong><%= user %></strong>
 
             <% if user.active? %>
-              <%= link_to(t('.deactivate'), activate_user_path(user, activate: false), :method => :put, class: 'activate right') %>
+              <%= link_to(t('.deactivate'), activate_user_path(user), :method => :put, class: 'activate right') %>
             <% else %>
-              <%= link_to(t('.activate'), activate_user_path(user, activate: true), :method => :put, class: 'activate right') %>
+              <%= link_to(t('.activate'), deactivate_user_path(user), :method => :put, class: 'activate right') %>
             <% end %>
           </td>
           <td class="action">
