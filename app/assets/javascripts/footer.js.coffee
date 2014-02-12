@@ -1,4 +1,21 @@
 $ ->
+  d = new Date()
+  if d.getDate() == 14 && d.getMonth() == 1 # YES 1 is february in javascript
+    $('.api-show-token').parent().css
+      'height': '20px'
+      'line-height': '30px'
+    $('.api-show-token').css
+      'width': '20px'
+      'display': 'inline-block'
+    $('.token').append('<p><em>Happy Valentines Day!</em></p>')
+
+    pulse = ->
+      $('.api-show-token').animate {fontSize: '20px'}, 100, 'swing', ->
+        $('.api-show-token').animate {fontSize: '13px'}, 1000, 'swing'
+
+    setInterval pulse, 2500
+
+
   $('.api-show-token').click ->
     $toggler = $(this)
     $toggler.css 'visibility', 'hidden'
@@ -15,8 +32,6 @@ $ ->
 
     animatedAttributes = {
       fontSize: '400px'
-      left: '50%'
-      top: '50%'
       marginLeft: '-200px'
       marginTop: '-200px'
     }
