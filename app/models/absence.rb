@@ -17,7 +17,7 @@
 class Absence < ActiveRecord::Base
   acts_as_paranoid
 
-  belongs_to :user
+  belongs_to :user, with_deleted: true
   belongs_to :time_type, with_deleted: true
   has_many :time_spans, as: :time_spanable, dependent: :destroy
   has_one :schedule, class_name: :AbsenceSchedule, dependent: :destroy

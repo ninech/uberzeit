@@ -15,7 +15,7 @@
 class AbsenceSchedule < ActiveRecord::Base
   acts_as_paranoid
 
-  belongs_to :absence, touch: true
+  belongs_to :absence, touch: true, with_deleted: true
 
   attr_accessible :active, :ends_date, :absence, :weekly_repeat_interval
   validates_numericality_of :weekly_repeat_interval, greater_than: 0, if: :active?
