@@ -51,6 +51,14 @@ describe Reports::BaseController do
         assigns(:users).should =~ [user, another_user, another_user_in_another_team]
       end
     end
+
+    describe 'deactivated user handling' do
+      let!(:deactivated_user) { FactoryGirl.create(:user, active: false) }
+      it 'does not include deactivated users' do
+        get :index
+        assigns(:users).should_not include(deactivated_user)
+      end
+    end
   end
 
   describe '@teams' do

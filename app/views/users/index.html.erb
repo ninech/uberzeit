@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row users">
   <div class="small-12 columns">
     <h1>
       <%= User.model_name.human %>
@@ -8,9 +8,18 @@
     <table class="nice small-12 edit destroy">
       <tbody>
         <% @users.each do |user| %>
-        <tr>
+        <tr class='user'>
           <td>
+            <% unless user.active? %>
+              <span class='radius label status'><%= t '.inactive' %></span>
+            <% end %>
             <strong><%= user %></strong>
+
+            <% if user.active? %>
+              <%= link_to(t('.deactivate'), deactivate_user_path(user), :method => :put, class: 'activate right') %>
+            <% else %>
+              <%= link_to(t('.activate'), activate_user_path(user), :method => :put, class: 'activate right') %>
+            <% end %>
           </td>
           <td class="action">
             <%= link_to icon('group'), user_roles_path(user) %>

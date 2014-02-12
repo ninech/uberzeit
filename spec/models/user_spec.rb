@@ -60,6 +60,13 @@ describe User do
     end
   end
 
+  describe '::only_active' do
+    it 'returns only the active users' do
+      user2 = FactoryGirl.create(:user, active: false)
+      User.only_active.should_not include(user2)
+    end
+  end
+
   describe 'validation' do
     let(:user) { FactoryGirl.build(:user) }
 

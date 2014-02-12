@@ -216,12 +216,19 @@ en:
     index:
       new_user: 'New user'
       confirm_delete: 'Delete?'
+      inactive: Deactivated
+      activate: Activate
+      deactivate: Deactivate
     form:
       back: 'Back'
     edit:
       edit_user: 'Edit "%{user}"'
     new:
       new_user: 'Create new user'
+    activate:
+      success: User "%{user}" successfully activated.
+    deactivate:
+      success: User "%{user}" successfully deactivated.
   teams:
     index:
       new_team: 'New team'

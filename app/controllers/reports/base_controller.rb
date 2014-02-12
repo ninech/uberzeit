@@ -19,7 +19,7 @@ class Reports::BaseController < ApplicationController
   end
 
   def accessible_users
-    User.accessible_by(current_ability)
+    User.only_active.accessible_by(current_ability)
   end
 
   def requested_team

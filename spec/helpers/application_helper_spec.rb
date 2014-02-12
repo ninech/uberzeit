@@ -20,4 +20,13 @@ describe ApplicationHelper do
       helper.display_in_hours(3586).should eq("01:00")
     end
   end
+
+  describe '#selectable_users' do
+    let!(:user) { FactoryGirl.create(:user) }
+    let!(:deactivated_user) { FactoryGirl.create(:user, active: false) }
+
+    it 'won\'t include deactivated users' do
+      helper.selectable_users.should_not include(deactivated_user)
+    end
+  end
 end

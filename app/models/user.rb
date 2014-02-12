@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 
   default_scope order('users.name')
 
-  attr_accessible :email, :name, :birthday, :given_name, :team_ids, :password, :password_confirmation, :auth_source
+  attr_accessible :email, :name, :birthday, :given_name, :team_ids, :password, :password_confirmation, :auth_source, :active
 
   has_many :memberships, dependent: :destroy
   has_many :teams, through: :memberships
@@ -49,6 +49,7 @@ class User < ActiveRecord::Base
   include ActiveModel::SecurePassword::InstanceMethodsOnActivation
 
   scope :in_teams, ->(teams) { where Membership.where(team_id: teams).where('user_id = users.id').exists }
+  scope :only_active, -> { where(active: true) }
 
   def subordinates
     # method chaining LIKE A BOSS
@@ -111,6 +112,10 @@ class User < ActiveRecord::Base
 
   def editable?
     !external?
+  end
+
+  def active?
+    !!active
   end
 
   def when_editable(&block)

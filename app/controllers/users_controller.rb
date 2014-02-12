@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
   def index
     authorize! :manage, User
+    @users = @users.sort_by { |u| u.active? ? 0 : 1 }
   end
 
   def new
@@ -39,5 +40,17 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     redirect_to users_path, flash: {success: t('model_successfully_deleted', model: User.model_name.human)}
+  end
+
+  def activate
+    authorize! :manage, @user
+    @user.update_attributes(active: true)
+    redirect_to users_path, flash: {success: t('users.activate.success', user: @user)}
+  end
+
+  def deactivate
+    authorize! :manage, @user
+    @user.update_attributes(active: false)
+    redirect_to users_path, flash: {success: t('users.deactivate.success', user: @user)}
   end
 end
