@@ -64,6 +64,20 @@ describe UsersController do
         end.to_not change(User, :count)
       end
     end
+
+    describe 'PUT "activate"' do
+      it 'redirects to login' do
+        put :activate, id: user.id
+        response.should redirect_to(new_session_path)
+      end
+    end
+
+    describe 'PUT "deactivate"' do
+      it 'redirects to login' do
+        put :deactivate, id: user.id
+        response.should redirect_to(new_session_path)
+      end
+    end
   end
 
   context 'for signed-in users' do
@@ -173,5 +187,37 @@ describe UsersController do
       end
     end
 
+    describe 'PUT "activate"' do
+      let(:inactive_user) { FactoryGirl.create(:user, active: false) }
+
+      it 'activates the user' do
+        expect {
+          put :activate, id: inactive_user.id
+          inactive_user.reload
+        }.to change(inactive_user, :active)
+      end
+
+      it 'redirects to the overview' do
+        put :activate, id: inactive_user.id
+        response.should redirect_to users_path
+      end
+    end
+
+    describe 'PUT "deactivate"' do
+      let(:active_user) { FactoryGirl.create(:user, active: true) }
+
+      it 'deactivates the user' do
+        active_user.update_attributes(active: true)
+        expect {
+          put :deactivate, id: active_user.id
+          active_user.reload
+        }.to change(active_user, :active)
+      end
+
+      it 'redirects to the overview' do
+        put :deactivate, id: active_user.id
+        response.should redirect_to users_path
+      end
+    end
   end
 end

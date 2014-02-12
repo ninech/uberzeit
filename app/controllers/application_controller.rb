@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
   def ensure_logged_in
     if current_user.nil?
       redirect_to new_session_path
+    else
+      unless current_user.active?
+        render text: 'Account deactivated', status: 401
+      end
     end
   end
 
