@@ -216,7 +216,7 @@ en:
     index:
       new_user: 'New user'
       confirm_delete: 'Delete?'
-      deactive: Deactivated
+      inactive: Deactivated
       activate: Activate
       deactivate: Deactivate
     form:

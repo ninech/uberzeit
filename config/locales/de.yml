@@ -216,7 +216,7 @@ de:
     index:
       new_user: 'Neuer Benutzer'
       confirm_delete: Wirklich löschen?
-      deactive: Deaktiviert
+      inactive: Deaktiviert
       activate: Aktivieren
       deactivate: Deaktivieren
     form:
