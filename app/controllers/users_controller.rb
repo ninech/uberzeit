@@ -45,12 +45,12 @@ class UsersController < ApplicationController
   def activate
     authorize! :manage, @user
     @user.update_attributes(active: true)
-    redirect_to users_path, flash: {success: t('users.activate.success'), user: @user}
+    redirect_to users_path, flash: {success: t('users.activate.success', user: @user)}
   end
 
   def deactivate
     authorize! :manage, @user
     @user.update_attributes(active: false)
-    redirect_to users_path, flash: {success: t('users.deactivate.success'), user: @user}
+    redirect_to users_path, flash: {success: t('users.deactivate.success', user: @user)}
   end
 end
