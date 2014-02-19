@@ -69,6 +69,9 @@ gem 'grape-entity', git: 'git://github.com/intridea/grape-entity.git'
 gem 'grape-swagger'
 gem 'warden'
 
+# .env magic
+gem 'dotenv-rails'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'mysql2'
