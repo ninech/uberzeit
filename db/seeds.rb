@@ -32,3 +32,9 @@ if Project.count == 0
   Project.create(customer_id: 2, name: 'Cleaning with Fun Cluster 1')
   Project.create(customer_id: 2, name: 'Demo @ nine HeadQuarters including an apero')
 end
+
+if User.count == 0
+  u = User.new(email: 'admin@example.org', name: 'McAdmin', given_name: 'John', password: 'admin', password_confirmation: 'admin')
+  u.save(validate: false)
+  u.add_role(:admin)
+end

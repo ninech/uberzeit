@@ -62,6 +62,8 @@ gem 'kaminari'
 
 gem 'http_accept_language'
 
+gem 'thin'
+
 # API
 # http://www.youtube.com/watch?v=mqgiEQXGetI
 gem 'grape', git: 'git://github.com/intridea/grape.git'
