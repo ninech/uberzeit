@@ -44,6 +44,13 @@ Then set up the database:
     cp config/uberzeit.yml.example config/uberzeit.yml
 
 
+#### Setup environment variables
+
+    cp config/.env.example config/.env
+
+Edit `.env` and change the value of `SECRET_TOKEN` to a random alphanumeric string.
+You could for example use `pwgen -s -1 100` to generate a random string.
+
 #### Start the app
 
     RAILS_ENV=production bundle exec thin start -e production
@@ -55,7 +62,7 @@ Now visit http://hostname:3000 and sign in with `admin@example.org`, password `a
 
 To deploy on Heroku, there are some modifications needed. The configuration must
 also be added to the repository.
-We do this with hidden branch ```deploy``` which will be pushed to Heroku only.
+We do this with hidden branch `deploy` which will be pushed to Heroku only.
 
 #### Clone repository
 
@@ -80,6 +87,7 @@ We do this with hidden branch ```deploy``` which will be pushed to Heroku only.
     # Edit config/uberzeit.yml to fit your needs
     git add -f config/uberzeit.yml
     git commit -m 'add configuration'
+    heroku config:set SECRET_TOKEN=`pwgen -s -1 100`
 
 ### Deploy To Heroku
 
