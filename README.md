@@ -1,5 +1,7 @@
 # uberZeit
 
+![Time Reporting](doc/images/time_reporting.png)
+
 ## Installation on your production server
 
 The installation has been tested on Ubuntu 12.04.
