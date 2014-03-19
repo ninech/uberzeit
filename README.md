@@ -31,7 +31,7 @@ The installation has been tested on Ubuntu 12.04.
 Now add a database user and adjust database.yml accordingly.
 Then set up the database:
 
-    RAILS_ENV=production bundle exec rake db:create db:migrate db:seed
+    RAILS_ENV=production bundle exec rake db:create db:schema:load db:seed
 
 
 #### Precompile assets
