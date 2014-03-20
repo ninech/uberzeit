@@ -74,7 +74,7 @@ To deploy on Heroku, there are some modifications needed. The configuration must
 also be added to the repository.
 We do this with hidden branch `deploy` which will be pushed to Heroku only.
 
-#### Clone repository
+### Clone repository
 
     cd /to/installation/directory
     git clone https://github.com/ninech/uberzeit.git .
