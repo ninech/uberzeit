@@ -8,9 +8,11 @@ development:
         - 'email'
       uid_field: 'email'
 
-# auth providers are loaded in an initializer,
-# this is why we need to configure this here...
-# ¯\_(ツ)_/¯
 test:
+  auth_providers:
+    - provider: 'password'
+
+production:
+  disable_activities: true
   auth_providers:
     - provider: 'password'

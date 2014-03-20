@@ -1,77 +1,103 @@
 # uberZeit
 
-## Rules
+## Features
 
-### Planned Working Time
+### Time Reporting
 
-* Is calculated by summing up `Day`s.planned_working_time
+![Time Reporting](doc/images/time_reporting.png)
 
-### Effective Work Time
+### Absences Management
 
-This is the real time which a user has spent working.
+![Absences Personal](doc/images/absences_personal.png)
+![Absences Employees](doc/images/absences_employees.png)
 
-* Only sum `TimeSpans` of `TimeEntry`
-* Sum up all `TimeSpan`s which belong to a `TimeType` which has `is_work` = `true`
 
-### Working time
+## Installation on your production server
 
-This is the time which will be compared to the planned working time to
-determine the overtime.
+The installation has been tested on Ubuntu 12.04.
 
-* Is calculated by summing up `TimeSpan`s.credited_duration
-* Exclude `TimeSpans` which belongs to a `TimeType` with `exclude_from_calculation` = `true`
+### Packages / Dependencies
 
-### Absence
+    apt-get update
+    apt-get install libxml2 libxml2-dev libxslt-dev libcurl4-openssl-dev ruby1.9.1 ruby1.9.1-dev postgresql-9.1 libpq-dev git build-essential
+    gem install bundler
 
-* Is calculated by summing up `TimeSpan`s.credited_duration
-* Only sum `TimeSpans` of `Absence` and `Adjustment`
-* Exclude `Adjustment` which belongs to a `TimeType` with `is_vacation` = `true`
 
-### Vacation
+### Setup
 
-#### Total days which a user can redeem
+#### Clone repository
 
-* `UberZeit.config[:vacation_per_year]` adjusted by
-  * the workload of the `User`s `Employment` during the year
-  * `TimeSpan`s which belong to an `Adjustment` and its `TimeType.is_vacation` is `true`
+    cd /to/installation/directory
+    git clone https://github.com/ninech/uberzeit.git .
 
-#### Redeemed Vacation days
+#### Install needed Gems
 
-* `TimeSpan` which belong to an `Absence` and `TimeType.is_vacation` is `true`
+    bundle install --without development test
 
-#### Not yet redeemed Vacation days
+#### Setup database
 
-* Total of the vacation days minus redeemed vacation days
+    cp config/database.yml.example config/database.yml
 
-### Bonus
+Now add a database user and adjust database.yml accordingly.
+Then set up the database:
 
-* Sum up all `TimeSpan`s.duration_bonus
+    RAILS_ENV=production bundle exec rake db:create db:schema:load db:seed
 
-### Overtime
 
-* Worktime minus Planned Working Time
+#### Precompile assets
 
-### Adjustment
+    RAILS_ENV=production bundle exec rake assets:precompile
 
-* Sum up all `TimeSpan`s which belong to an `Adjustment`
 
-## Development
+#### Copy initial app settings
 
-1. Sync users:
+    cp config/uberzeit.yml.example config/uberzeit.yml
 
-        rake uberzeit:sync:ldap
 
-2. Load seeds:
+#### Setup environment variables
 
-        rake db:seed
+    cp config/.env.example config/.env
 
-3. Login with your email address (`shortname`@nine.ch)
-4. Party!
+Edit `.env` and change the value of `SECRET_TOKEN` to a random alphanumeric string.
+You could for example use `pwgen -s -1 100` to generate a random string.
 
-5. If you are annoyed by the JS-Integration tests, disable the js tests:
+#### Start the app
 
-        rspec spec -t ~js
+    RAILS_ENV=production bundle exec thin start -e production
 
+Now visit http://hostname:3000 and sign in with `admin@example.org`, password `admin`. Enjoy!
+
+
+## Deployment on Heroku
+
+To deploy on Heroku, there are some modifications needed. The configuration must
+also be added to the repository.
+We do this with hidden branch `deploy` which will be pushed to Heroku only.
+
+#### Clone repository
+
+    cd /to/installation/directory
+    git clone https://github.com/ninech/uberzeit.git .
+
+### Setup Heroku
+
+    heroku create
+    git checkout -b deploy
+
+### Configure
+
+    cp config/uberzeit.yml.example config/uberzeit.yml
+    # Edit config/uberzeit.yml to fit your needs
+    git add -f config/uberzeit.yml
+    git commit -m 'add configuration'
+    heroku config:set SECRET_TOKEN=`pwgen -s -1 100`
+
+### Deploy To Heroku
+
+    git push heroku deploy:master
+    heroku run rake db:schema:load db:seed
+
+Now visit http://hostname:3000 and sign in with `admin@example.org`, password `admin`. Enjoy!
 
 ## API
 

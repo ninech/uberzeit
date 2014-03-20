@@ -31,8 +31,17 @@
   <% end %>
 
   <script type="text/javascript">
-    I18n.defaultLocale = "<%= I18n.default_locale %>";
-    I18n.locale = "<%= I18n.locale %>";
+    var I18n = (function() {
+      var translations = {
+        <% ['comparison.show.chart.time_entries', 'comparison.show.chart.activities', 'time_entries.form.save', 'time_entries.form.start_timer'].each do |key| %>
+          '<%= key %>': "<%= I18n.t(key) %>",
+        <% end %>
+      };
+      function translate(key) {
+        return translations[key];
+      }
+      return { t: translate };
+    })();
   </script>
 </head>
 <body class="content-<%= controller.controller_name %>">
