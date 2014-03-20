@@ -1,4 +1,4 @@
-# uberZeit
+# uberZeit [![Build Status](https://travis-ci.org/ninech/uberzeit.svg)](https://travis-ci.org/ninech/uberzeit)
 
 Time and activity tracking web application for the rest of us.
 
