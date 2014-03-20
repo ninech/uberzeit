@@ -1,12 +1,4 @@
 GIT
-  remote: git://github.com/fnando/i18n-js.git
-  revision: eeec14066b50f72876aa789c9b1f226172452798
-  branch: master
-  specs:
-    i18n-js (2.1.2)
-      i18n
-
-GIT
   remote: git://github.com/intridea/grape-entity.git
   revision: 97beee528bdb98ed5c6a18c139dafcf102273936
   specs:
@@ -414,7 +406,6 @@ DEPENDENCIES
   grape-swagger
   guard-spring
   http_accept_language
-  i18n-js!
   i18n-missing_translations
   jbuilder
   jquery-rails

@@ -73,13 +73,6 @@ We do this with hidden branch `deploy` which will be pushed to Heroku only.
 
     heroku create
     git checkout -b deploy
-    bundle install --without development test
-
-#### Prepare heroku modifications
-
-    bundle exec rake i18n:js:export
-    git add app/assets/javascripts/i18n/translations.js
-    git commit -m 'add i18n translations'
 
 ### Configure
 
@@ -92,7 +85,9 @@ We do this with hidden branch `deploy` which will be pushed to Heroku only.
 ### Deploy To Heroku
 
     git push heroku deploy:master
-    heroku run rake db:migrate db:seed
+    heroku run rake db:schema:load db:seed
+
+Now visit http://hostname:3000 and sign in with `admin@example.org`, password `admin`. Enjoy!
 
 ## API
 

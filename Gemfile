@@ -49,7 +49,6 @@ gem 'calendar_helper', '~> 0.2'
 
 # rails localization
 gem 'rails-i18n', branch: 'rails-3-x'
-gem 'i18n-js', :git => 'git://github.com/fnando/i18n-js.git', :branch => 'master'
 
 # navigation
 gem 'simple-navigation'
