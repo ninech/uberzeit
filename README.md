@@ -1,6 +1,16 @@
 # uberZeit
 
+## Features
+
+### Time Reporting
+
 ![Time Reporting](doc/images/time_reporting.png)
+
+### Absences Management
+
+![Absences Personal](doc/images/absences_personal.png)
+![Absences Employees](doc/images/absences_employees.png)
+
 
 ## Installation on your production server
 
