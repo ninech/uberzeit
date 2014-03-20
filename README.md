@@ -96,8 +96,9 @@ We do this with hidden branch `deploy` which will be pushed to Heroku only.
 
     git push heroku deploy:master
     heroku run rake db:schema:load db:seed
+    heroku open
 
-Now visit http://hostname:3000 and sign in with `admin@example.org`, password `admin`. Enjoy!
+Sign in with `admin@example.org`, password `admin`. Enjoy!
 
 ## API
 
