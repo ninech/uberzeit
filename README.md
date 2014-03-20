@@ -1,5 +1,7 @@
 # uberZeit
 
+Time and activity tracking web application for the rest of us.
+
 ## Features
 
 ### Time Reporting
