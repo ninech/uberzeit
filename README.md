@@ -64,7 +64,7 @@ Then set up the database:
 
 #### Setup environment variables
 
-    cp config/.env.example config/.env
+    cp .env.example .env
 
 Edit `.env` and change the value of `SECRET_TOKEN` to a random alphanumeric string.
 You could for example use `pwgen -s -1 100` to generate a random string.
