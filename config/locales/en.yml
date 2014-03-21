@@ -263,7 +263,7 @@ en:
       reports:
         overview: 'Overview'
         my_work: 'Personal time reporting'
-        work: 'Employees time reporting'
+        work: "Employees' time reporting"
         vacation: 'Vacations'
         billability: 'Billability'
         billing: 'Billing'
@@ -309,17 +309,17 @@ en:
         overtime: 'Extra hours'
         adjustments: 'Adjustments'
       table:
-        title: 'Employees time reporting'
+        title: "Employees' time reporting"
     my_work:
       table:
         title: 'Personal time reporting'
     absence:
       table:
-        title: 'Employees absences'
+        title: "Employees' absences"
         total: 'Total'
       calendar:
         month_in_year: '%B %Y'
-        title: 'Employees absences'
+        title: "Employees' absences"
     vacation:
       year:
         title: 'Vacation report'
