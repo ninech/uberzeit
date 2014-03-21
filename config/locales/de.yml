@@ -294,7 +294,7 @@ de:
             info1_html: 'Du hast bisher'
             emphasis1_html: '%{redeemed} Ferientage eingetragen'
             info2_html: 'und noch'
-            emphasis2_html: '%{remaining} Ferientage zu Gute!'
+            emphasis2_html: '%{remaining} Ferientage zugute!'
           team:
             title: 'Team Absenzen'
             time_frame: 'der nächsten 7 Tage'
