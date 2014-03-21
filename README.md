@@ -16,12 +16,18 @@ Time and activity tracking web application for the rest of us.
 
 ## Installation on your production server
 
-The installation has been tested on Ubuntu 12.04.
+The installation has been tested on Ubuntu 12.04 and Debian GNU/Linux 7.4 (wheezy).
 
 ### Packages / Dependencies
 
+#### For Ubuntu 12.04 and Debian GNU/Linux 7.4
+
     apt-get update
-    apt-get install libxml2 libxml2-dev libxslt-dev libcurl4-openssl-dev ruby1.9.1 ruby1.9.1-dev postgresql-9.1 libpq-dev git build-essential
+    apt-get install libxml2 libxml2-dev libxslt1-dev libcurl4-openssl-dev ruby1.9.1 ruby1.9.1-dev postgresql-9.1 libpq-dev git build-essential
+
+
+Install RubyGems from https://rubygems.org. Do not use the `rubygems` package from the repository as it's outdated and only works on Ruby 1.8. Then:
+
     gem install bundler
 
 
@@ -32,9 +38,9 @@ The installation has been tested on Ubuntu 12.04.
     cd /to/installation/directory
     git clone https://github.com/ninech/uberzeit.git .
 
-#### Install needed Gems
+#### Install required Gems
 
-    bundle install --without development test
+    bundle install --without development test --deployment
 
 #### Setup database
 
@@ -58,7 +64,7 @@ Then set up the database:
 
 #### Setup environment variables
 
-    cp config/.env.example config/.env
+    cp .env.example .env
 
 Edit `.env` and change the value of `SECRET_TOKEN` to a random alphanumeric string.
 You could for example use `pwgen -s -1 100` to generate a random string.
@@ -72,16 +78,16 @@ Now visit http://hostname:3000 and sign in with `admin@example.org`, password `a
 
 ## Deployment on Heroku
 
-To deploy on Heroku, there are some modifications needed. The configuration must
-also be added to the repository.
-We do this with hidden branch `deploy` which will be pushed to Heroku only.
+To deploy on Heroku, some some modifications are required. The configuration
+must also be added to the repository.
+We do this using the hidden branch `deploy` which will be pushed to Heroku only.
 
 ### Clone repository
 
     cd /to/installation/directory
     git clone https://github.com/ninech/uberzeit.git .
 
-### Setup Heroku
+### Set up Heroku
 
     heroku create
     git checkout -b deploy
