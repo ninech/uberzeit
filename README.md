@@ -23,7 +23,7 @@ The installation has been tested on Ubuntu 12.04.
 #### For Ubuntu 12.04
 
     apt-get update
-    apt-get install libxml2 libxml2-dev libxslt-dev libcurl4-openssl-dev ruby1.9.1 ruby1.9.1-dev postgresql-9.1 libpq-dev git build-essential
+    apt-get install libxml2 libxml2-dev libxslt1-dev libcurl4-openssl-dev ruby1.9.1 ruby1.9.1-dev postgresql-9.1 libpq-dev git build-essential
     gem install bundler
 
 
