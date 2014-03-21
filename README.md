@@ -105,3 +105,7 @@ Sign in with `admin@example.org`, password `admin`. Enjoy!
 ## API
 
     curl -v -H 'X-Auth-Token: YourSuperSecretToken' -X GET uberzeit.dev/api/ping
+
+## License
+
+uberZeit is released under the [MIT License](http://www.opensource.org/licenses/MIT). See LICENSE.txt for further details.
