@@ -296,7 +296,7 @@ de:
             info2_html: 'und noch'
             emphasis2_html: '%{remaining} Ferientage zugute!'
           team:
-            title: 'Team Absenzen'
+            title: 'Team-Absenzen'
             time_frame: 'der nächsten 7 Tage'
           personal:
             title: 'Deine Absenzen'
