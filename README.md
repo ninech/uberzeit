@@ -20,6 +20,8 @@ The installation has been tested on Ubuntu 12.04.
 
 ### Packages / Dependencies
 
+#### For Ubuntu 12.04
+
     apt-get update
     apt-get install libxml2 libxml2-dev libxslt-dev libcurl4-openssl-dev ruby1.9.1 ruby1.9.1-dev postgresql-9.1 libpq-dev git build-essential
     gem install bundler
@@ -32,7 +34,7 @@ The installation has been tested on Ubuntu 12.04.
     cd /to/installation/directory
     git clone https://github.com/ninech/uberzeit.git .
 
-#### Install needed Gems
+#### Install required Gems
 
     bundle install --without development test
 
@@ -72,16 +74,16 @@ Now visit http://hostname:3000 and sign in with `admin@example.org`, password `a
 
 ## Deployment on Heroku
 
-To deploy on Heroku, there are some modifications needed. The configuration must
-also be added to the repository.
-We do this with hidden branch `deploy` which will be pushed to Heroku only.
+To deploy on Heroku, some some modifications are required. The configuration
+must also be added to the repository.
+We do this using the hidden branch `deploy` which will be pushed to Heroku only.
 
 ### Clone repository
 
     cd /to/installation/directory
     git clone https://github.com/ninech/uberzeit.git .
 
-### Setup Heroku
+### Set up Heroku
 
     heroku create
     git checkout -b deploy
