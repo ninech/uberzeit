@@ -36,7 +36,7 @@ The installation has been tested on Ubuntu 12.04.
 
 #### Install required Gems
 
-    bundle install --without development test
+    bundle install --without development test --deployment
 
 #### Setup database
 
