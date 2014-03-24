@@ -573,6 +573,9 @@ en:
         regexp: 'is not valid'
         invalid: 'is not valid'
         time_type_for_timer: 'is not valid for presence time.'
+  errors:
+    resource:
+      not_found: The requested resource could not be found
 
   views:
     pagination:

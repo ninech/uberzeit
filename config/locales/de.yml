@@ -576,6 +576,10 @@ de:
         invalid: 'ist ungültig'
         time_type_for_timer: 'ist nicht gültig für Präsenzzeit'
 
+  errors:
+    resource:
+      not_found: Die gewünschte Ressource konnte nicht gefunden werden
+
   views:
     pagination:
       first: '«'
