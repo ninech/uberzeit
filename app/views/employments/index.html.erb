@@ -22,10 +22,10 @@
         <td><%= employment.end_date.nil? ? t('.open_ended') : l(employment.end_date, format: :long) %></td>
         <td><%= '%d' % employment.workload %>&#037;</td>
         <td>
-          <%= link_to icon('edit'), edit_user_employment_path(@user, employment)%>
+          <%= link_to icon('edit'), edit_user_employment_path(@user, employment), { title: t('global.actions.edit') }%>
         </td>
         <td>
-          <%= link_to icon('trash'), [@user, employment], :method => :delete, :data => { :confirm => t('.confirm_delete') } %>
+          <%= link_to icon('trash'), [@user, employment], { :method => :delete, title: t('global.actions.delete')}, :data => { :confirm => t('.confirm_delete') } %>
         </td>
       </tr>
       <% end %>

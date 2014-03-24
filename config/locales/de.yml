@@ -8,7 +8,9 @@ de:
         resource: Ressource
   activerecord:
     models:
-      employment: Anstellungsverhältnis
+      employment:
+        one: Anstellungsverhältnis
+        other: Anstellungsverhältnisse
       public_holiday: Feiertag
       time_type: Zeittyp
       absence: Absenz
@@ -18,7 +20,9 @@ de:
       activity_type: 'Aktivitätstyp'
       user: Benutzer
       team: Team
-      role: Rolle
+      role:
+        one: Rolle
+        other: Rollen
       customer:
         one: Kunde
         other: Kunden
@@ -579,6 +583,11 @@ de:
   errors:
     resource:
       not_found: Die gewünschte Ressource konnte nicht gefunden werden
+
+  global:
+    actions:
+      edit: Editieren
+      delete: Löschen
 
   views:
     pagination:

@@ -24,10 +24,10 @@
             </td>
             <td><%= public_holiday.name %></td>
             <td>
-              <%= link_to icon('edit'), edit_public_holiday_path(public_holiday) %>
+              <%= link_to icon('edit'), edit_public_holiday_path(public_holiday), { title: t('global.actions.edit') } %>
             </td>
             <td>
-              <%= link_to icon('trash'), public_holiday, method: :delete, confirm: t('.confirm_delete') %>
+              <%= link_to icon('trash'), public_holiday, method: :delete, confirm: t('.confirm_delete'), title: t('global.actions.delete') %>
             </td>
           </tr>
         <% end %>

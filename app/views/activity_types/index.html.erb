@@ -19,8 +19,8 @@
           <tr>
             <td><%= activity_type.name %></td>
             <td><%= activity_type.activities.count %></td>
-            <td><%= link_to icon('edit'), edit_activity_type_path(activity_type) %></td>
-            <td><%= link_to icon('trash'), activity_type, method: :delete, confirm: t('.confirm_delete') %></td>
+            <td><%= link_to icon('edit'), edit_activity_type_path(activity_type), { title: t('global.actions.edit') } %></td>
+            <td><%= link_to icon('trash'), activity_type, method: :delete, confirm: t('.confirm_delete'), title: t('global.actions.delete') %></td>
           </tr>
         <% end %>
       </tbody>

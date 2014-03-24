@@ -34,8 +34,8 @@
 
             </td>
             <td><%= adjustment.label %></td>
-            <td><%= link_to icon('edit'), edit_adjustment_path(adjustment) %></td>
-            <td><%= link_to icon('trash'), adjustment, method: :delete, confirm: t('.confirm_delete') %></td>
+            <td><%= link_to icon('edit'), edit_adjustment_path(adjustment), { title: t('global.actions.edit') } %></td>
+            <td><%= link_to icon('trash'), adjustment, method: :delete, confirm: t('.confirm_delete'), title: t('global.actions.delete') %></td>
           </tr>
         <% end %>
       </tbody>

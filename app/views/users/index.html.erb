@@ -22,17 +22,17 @@
             <% end %>
           </td>
           <td class="action">
-            <%= link_to icon('group'), user_roles_path(user) %>
+            <%= link_to icon('group'), user_roles_path(user), { title: t('activerecord.models.role', count: 2) } %>
           </td>
           <td class="action">
-            <%= link_to icon('file-text'), user_employments_path(user) %>
+            <%= link_to icon('file-text'), user_employments_path(user), { title: t('activerecord.models.employment', count: 2) } %>
           </td>
           <% if user.editable? %>
             <td class="action">
-              <%= link_to icon('edit'), edit_user_path(user) %>
+              <%= link_to icon('edit'), edit_user_path(user), { title: t('global.actions.edit') } %>
             </td>
             <td class="action">
-              <%= link_to icon('trash'), user, method: :delete, confirm: t('.confirm_delete') %>
+              <%= link_to icon('trash'), user, { method: :delete, confirm: t('.confirm_delete'), title: t('global.actions.delete') } %>
             </td>
           <% else %>
             <td class="action disabled">

@@ -8,7 +8,9 @@ en:
         resource: 'Resource'
   activerecord:
     models:
-      employment: 'Employment'
+      employment:
+        one: 'Employment'
+        other: 'Employments'
       public_holiday: 'Public holiday'
       time_type: 'Time Type'
       absence: 'Absence'
@@ -18,7 +20,10 @@ en:
       activity_type: 'Activity type'
       user: 'User'
       team: 'Team'
-      role: 'Role'
+      role:
+        one: 'Role'
+        other: 'Roles'
+      roles: 'Roles'
       customer:
         one: 'Customer'
         other: 'Customers'
@@ -576,6 +581,11 @@ en:
   errors:
     resource:
       not_found: The requested resource could not be found
+
+  global:
+    actions:
+      edit: Edit
+      delete: Delete
 
   views:
     pagination:
