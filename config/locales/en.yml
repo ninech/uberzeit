@@ -535,7 +535,7 @@ en:
       accountant: 'Accountant'
     index:
       title: 'User roles'
-      new_role: 'Add user roel'
+      new_role: 'Add user role'
       confirm_delete: 'Delete?'
     new:
       new_role: 'Add new user role'
