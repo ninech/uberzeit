@@ -34,7 +34,8 @@
               <% if @public_holidays[day] %>public-holiday<% end %>
               <% unless @work_days[day] %>non-work-day<% end %>
               <% unless absences.empty? %>has-tip<% end %>"
-              <% unless absences.empty? %>data-tooltip="<%=render(partial: 'shared/absences_tooltip', locals: { absences: absences, day: day, edit: false }).to_s%>" <% end %>>
+              <% unless absences.empty? %>data-tooltip="<%=render(partial: 'shared/absences_tooltip', locals: { absences: absences, day: day, edit: false }).to_s%>" <% end %>
+              <% if absences.empty? %>data-add-absence-url="<%= year_user_absences_path(user, day.year, add_absence_for_date: day) %>"<% end %>>
                 <% unless absences.blank? %>
                   <div class="event-container">
                     <%= render_absences(absences).html_safe %>

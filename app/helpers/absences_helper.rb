@@ -38,6 +38,9 @@ module AbsencesHelper
     if can? :manage, Absence
       options.merge! :'data-reveal-id' => 'absence-modal', :'data-reveal-url' => new_user_absence_path(@user, date: day)
     end
+    if params[:add_absence_for_date] == day.to_s
+      options.merge! :'data-reveal-on-load' => ''
+    end
 
     [content, options]
   end

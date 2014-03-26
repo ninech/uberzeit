@@ -15,3 +15,11 @@ $ ->
             event.stopPropagation()
     .popover('show')
 
+  $('[data-add-absence-url]').css('cursor', 'pointer')
+  $('[data-add-absence-url]').click (e) ->
+    self.location.href = $(this).data('add-absence-url')
+
+  # autoreveal on load
+  setTimeout ->
+    $("[data-reveal-on-load]").click()
+  , 250
