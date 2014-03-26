@@ -28,10 +28,10 @@
           <% end %>
         </td>
         <td>
-          <%= link_to icon('edit'), edit_time_type_path(time_type) %>
+          <%= link_to icon('edit'), edit_time_type_path(time_type), { title: t('global.actions.edit') } %>
         </td>
         <td>
-          <%= link_to icon('trash'), time_type, method: :delete, confirm: t('.confirm_delete') %>
+          <%= link_to icon('trash'), time_type, method: :delete, confirm: t('.confirm_delete'), title: t('global.actions.delete') %>
         </td>
       </tr>
       <% end %>

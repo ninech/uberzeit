@@ -27,7 +27,7 @@
             <% end %>
           </td>
           <td>
-            <%= link_to icon('trash'), user_role_path(@user, role), method: :delete, confirm: t('.confirm_delete') %>
+            <%= link_to icon('trash'), user_role_path(@user, role), method: :delete, confirm: t('.confirm_delete'), title: t('global.actions.delete') %>
           </td>
         </tr>
         <% end %>

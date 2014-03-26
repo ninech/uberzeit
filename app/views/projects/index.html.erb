@@ -14,8 +14,8 @@
           <% projects.each do |project| %>
             <tr>
               <td><%= project.name %></td>
-              <td><%= link_to icon('edit'), edit_project_path(project) %></td>
-              <td><%= link_to icon('trash'), project, method: :delete, confirm: t('.confirm_delete') %></td>
+              <td><%= link_to icon('edit'), edit_project_path(project), { title: t('global.actions.edit') } %></td>
+              <td><%= link_to icon('trash'), project, method: :delete, confirm: t('.confirm_delete'), title: t('global.actions.delete') %></td>
             </tr>
           <% end %>
         </tbody>
