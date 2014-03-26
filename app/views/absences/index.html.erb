@@ -29,12 +29,4 @@
 
 <% if can?(:manage, Absence) %>
   <%= render 'absence_modal' %>
-
-  <% unless params[:add_absence_for_date].blank? %>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("[data-reveal-id='absence-modal'][data-date='<%= params[:add_absence_for_date] %>']").click();
-    });
-  </script>
-  <% end %>
 <% end %>
