@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140211121101) do
+ActiveRecord::Schema.define(:version => 20140506144544) do
 
   create_table "absence_schedules", :force => true do |t|
     t.boolean  "active",                 :default => false
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(:version => 20140211121101) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.string   "abbreviation"
+    t.datetime "deleted_at"
   end
 
   add_index "customers", ["number"], :name => "index_customers_on_id", :unique => true
