@@ -15,7 +15,8 @@ module ActivitiesHelper
   def customer_link(customer_id)
     return unless customer_link_enabled?
     customer_url = UberZeit.config.customer_url
-    customer = Customer.where(id: customer_id).last || customer_id
+    customer = Customer.where(id: customer_id).last
+    return if customer.nil?
     link_to(customer, (customer_url % customer.number))
   end
 
