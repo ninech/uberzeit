@@ -23,4 +23,32 @@ describe ActivitiesHelper do
       it { should eq '.otrs: <a href="https://otrs.howdoyouturnthison/otrs/index.pl?Action=AgentTicketZoom&amp;TicketNumber=42">#42</a> und .redmine: <a href="https://redmine.yolo/issues/1337">#1337</a>' }
     end
   end
+
+  describe '#customer_link' do
+    let(:customer_id) { 1337 }
+    subject { helper.customer_link(customer_id) }
+
+    context 'without customer_url' do
+      before(:each) { UberZeit.config.customer_url = nil }
+
+      it { should be_nil }
+    end
+
+    context 'with customer_url' do
+      before(:each) { UberZeit.config.customer_url = 'https://www.nine.ch/customers/%s' }
+
+      context 'with a deleted customer' do
+        let(:customer_id) { FactoryGirl.create(:customer).tap { |c| c.delete }.id }
+
+        it { should be_nil }
+      end
+
+      context 'with an existing customer' do
+        let(:customer) { FactoryGirl.create(:customer) }
+        let(:customer_id) { customer.id }
+
+        it { should include "https://www.nine.ch/customers/#{customer.number}" }
+      end
+    end
+  end
 end
