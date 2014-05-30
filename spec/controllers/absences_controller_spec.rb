@@ -76,14 +76,25 @@ describe AbsencesController do
     describe 'POST "create"' do
       let(:start_date) { Date.today + 1.year }
 
-      it 'creates a new absence' do
-        expect { post :create, user_id: user.id, absence: FactoryGirl.attributes_for(:absence, time_type_id: TEST_TIME_TYPES[:vacation].id) }.to change(Absence, :count)
+      context 'with valid data' do
+        it 'creates a new absence' do
+          expect { post :create, user_id: user.id, absence: FactoryGirl.attributes_for(:absence, time_type_id: TEST_TIME_TYPES[:vacation].id) }.to change(Absence, :count)
+        end
+
+        it 'redirects to the absence view of the year of the new created absence' do
+          post :create, user_id: user.id, absence: FactoryGirl.attributes_for(:absence, time_type_id: TEST_TIME_TYPES[:vacation].id, start_date: start_date)
+          response.code.should_not eq(200)
+          response.should redirect_to("/users/#{user.id}/absences/year/#{start_date.year}")
+        end
       end
 
-      it 'redirects to the absence view of the year of the new created absence' do
-        post :create, user_id: user.id, absence: FactoryGirl.attributes_for(:absence, time_type_id: TEST_TIME_TYPES[:vacation].id, start_date: start_date)
-        response.code.should_not eq(200)
-        response.should redirect_to("/users/#{user.id}/absences/year/#{start_date.year}")
+      context 'with missing weekly_repeat_interval' do
+        let(:schedule_attributes) { { active: 1, ends_date: Date.today + 2.years, weekly_repeat_interval: nil } }
+        let(:absence_attributes) { FactoryGirl.attributes_for(:absence, time_type_id: TEST_TIME_TYPES[:vacation].id, start_date: start_date).merge(schedule_attributes: schedule_attributes)}
+        it 'respons with the right status code' do
+          post :create, user_id: user.id, absence: absence_attributes
+          response.code.should eq(200)
+        end
       end
     end
 

@@ -212,6 +212,7 @@ class Absence < ActiveRecord::Base
 
   private
   def must_not_overlap_with_other_absences
+    return if recurring? && !schedule.valid?
     conflicting_dates = find_conflicting_dates
     if conflicting_dates.any?
       errors.add(:start_date, :absences_overlap, dates: conflicting_dates.to_sentence)
