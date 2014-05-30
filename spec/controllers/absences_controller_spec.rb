@@ -93,7 +93,7 @@ describe AbsencesController do
         let(:absence_attributes) { FactoryGirl.attributes_for(:absence, time_type_id: TEST_TIME_TYPES[:vacation].id, start_date: start_date).merge(schedule_attributes: schedule_attributes)}
         it 'respons with the right status code' do
           post :create, user_id: user.id, absence: absence_attributes
-          response.code.should eq(200)
+          response.code.to_s.should eq("200")
         end
       end
     end
