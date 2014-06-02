@@ -91,7 +91,7 @@ describe AbsencesController do
       context 'with missing weekly_repeat_interval' do
         let(:schedule_attributes) { { active: 1, ends_date: Date.today + 2.years, weekly_repeat_interval: nil } }
         let(:absence_attributes) { FactoryGirl.attributes_for(:absence, time_type_id: TEST_TIME_TYPES[:vacation].id, start_date: start_date).merge(schedule_attributes: schedule_attributes)}
-        it 'respons with the right status code' do
+        it 'responds with the right status code' do
           post :create, user_id: user.id, absence: absence_attributes
           response.code.to_s.should eq("200")
         end
