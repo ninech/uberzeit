@@ -14,6 +14,7 @@ end
 
 if User.count == 0
   u = User.new(email: 'admin@example.org', name: 'McAdmin', given_name: 'John', password: 'admin', password_confirmation: 'admin')
+  u.ensure_authentication_token
   u.save(validate: false)
   u.add_role(:admin)
 end
