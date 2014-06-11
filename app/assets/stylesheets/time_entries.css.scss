@@ -7,6 +7,27 @@
       padding-top: 1.5em;
       font-size: 1.4em;
     }
+
+    @media only screen and (max-device-width : 480px) {
+      .time-difference {
+        padding: 0 1.5em;
+        height: 30px;
+        margin-bottom: 15px;
+        text-align: right;
+      }
+
+      input.button {
+        margin-top: 20px;
+        width: 100%;
+      }
+
+      .close-reveal-modal.link {
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin: 25px 0 0;
+      }
+    }
   }
 
   a.delete-time-entry-link,

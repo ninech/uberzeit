@@ -5,20 +5,20 @@
 </div>
 
 <div class="row">
-  <div class="small-10 columns">
+  <div class="large-10 small-12 columns">
     <%= datefield(f, :start_date, t('.date'), f.object.start_date, :date) %>
   </div>
 </div>
 
 <div class="row">
-  <div class="small-4 columns">
+  <div class="large-4 small-6 columns">
     <%= f.text_field :start_time, class: 'time' %>
   </div>
-  <div class="small-4 columns">
+  <div class="large-4 small-6 columns">
     <%= f.label :end_time, class: 'left' %> <%= link_to(content_tag(:small,t('.now')), '#', tabindex: -1, class: 'right time-now') %>
     <%= f.text_field :end_time, label: false, class: 'time' %>
   </div>
-  <div class="small-4 columns time-difference">
+  <div class="large-4 small-12 columns time-difference">
 
   </div>
 </div>
@@ -33,4 +33,3 @@
   <% end %>
 
 </div>
-
