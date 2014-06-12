@@ -111,6 +111,10 @@ Sign in with `admin@example.org`, password `admin`. Enjoy!
 ## API
 
     curl -v -H 'X-Auth-Token: YourSuperSecretToken' -X GET uberzeit.dev/api/ping
+    
+## 3rd Party Integrations
+
+* [Presence for uberZeit](http://crafted.ch/presence) - Mac OS X menubar app to manage your uberZeit timers
 
 ## License
 
