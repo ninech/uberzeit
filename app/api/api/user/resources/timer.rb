@@ -54,7 +54,7 @@ class API::User::Resources::Timer < Grape::API
         timer.end_date = params[:date] if timer.end_date.present?
       end
 
-      if timer.ends && timer.starts >= timer.ends
+      if timer.ends && timer.starts > timer.ends
         timer.end_date = timer.start_date + 1
       end
 

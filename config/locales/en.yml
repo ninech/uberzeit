@@ -99,7 +99,7 @@ en:
             starts:
               invalid_datetime: 'is not valid'
             ends:
-              after: 'End date has to be after start date'
+              after: 'End time has to be on or after start time'
             start_date:
               timer_exists_on_date_already: 'There is already a timer running on the selected date'
         absence:

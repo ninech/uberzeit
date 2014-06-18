@@ -32,9 +32,14 @@ describe TimeEntry do
     TimeEntry.all.should eq([entry2,entry1])
   end
 
-  it 'makes sure that the end time is after the start time' do
+  it 'makes sure that the end time is on or after the start time' do
     time = '2013-01-01 8:00:00 +0000'.to_time
-    FactoryGirl.build(:time_entry, starts: time, ends: time).should_not be_valid
+    FactoryGirl.build(:time_entry, starts: time, ends: time - 1.hour).should_not be_valid
+  end
+
+  it 'allows a duration of zero' do
+    time = '2013-01-01 8:00:00 +0000'.to_time
+    FactoryGirl.build(:time_entry, starts: time, ends: time).should be_valid
   end
 
   it 'saves the times rounded' do
