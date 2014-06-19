@@ -38,7 +38,7 @@ class CalculateTotalRedeemableVacation
   end
 
   def default_vacation_per_year
-    @default_vacation_per_year ||= UberZeit.config.vacation_per_year_days.days / 1.day * UberZeit.config.work_per_day_hours.hours
+    @default_vacation_per_year ||= Setting.vacation_per_year_days.days / 1.day * Setting.work_per_day_hours.hours
   end
 
   def redeemable_vacation_for_employment(employment)
@@ -78,7 +78,7 @@ class CalculateTotalRedeemableVacation
   end
 
   def half_work_day
-    0.5 * UberZeit.config.work_per_day_hours.hours
+    0.5 * Setting.work_per_day_hours.hours
   end
 
   def adjustments_in_year

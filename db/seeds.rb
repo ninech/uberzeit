@@ -17,3 +17,6 @@ if User.count == 0
   u.save(validate: false)
   u.add_role(:admin)
 end
+
+Setting.work_per_day_hours = 8.5
+Setting.vacation_per_year_days = 25

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Reports::VacationController do
   render_views
 
-  before(:all) do
+  before(:each) do
     @team = FactoryGirl.create(:team)
     @another_team = FactoryGirl.create(:team, users_count: 1, leaders_count: 1)
     @team_leader = FactoryGirl.create(:team_leader, teams: [@team])
@@ -14,13 +14,6 @@ describe Reports::VacationController do
     [@team, @another_team].map(&:members).flatten.each do |user|
       Day.create_or_regenerate_days_for_user_and_year!(user, @year)
     end
-  end
-
-  after(:all) do
-    Team.delete_all
-    Membership.delete_all
-    User.delete_all
-    Day.delete_all
   end
 
   let(:team) { @team }
