@@ -114,7 +114,8 @@ Sign in with `admin@example.org`, password `admin`. Enjoy!
     
 ## 3rd Party Integrations
 
-* [Presence for uberZeit](http://crafted.ch/presence) - Mac OS X menubar app to manage your uberZeit timers
+* [Presence for uberZeit Mac OS X](http://crafted.ch/presence) - Mac OS X menubar app to manage your uberZeit timers
+* [Presence for uberZeit iOS](https://itunes.apple.com/ch/app/presence-for-uberzeit/id890649751) - iOS app to manage your uberZeit timer
 
 ## License
 
