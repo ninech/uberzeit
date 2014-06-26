@@ -18,6 +18,7 @@ class Reports::AbsenceController < ApplicationController
   end
 
   def calendar
+    @year ||= Time.now.year
     if @month.nil?
       @range = UberZeit.year_as_range(@year)
     else
