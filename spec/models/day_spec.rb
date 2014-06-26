@@ -22,7 +22,7 @@ describe Day do
     let(:date) { Date.civil(year, 1, 1)..Date.civil(year, 12, 31) }
 
     it 'uses GeneratePlannedWorkingTimesForUserAndYear to generate all the entries' do
-      calculator = mock.tap { |m| m.should_receive(:run) }
+      calculator = double.tap { |m| m.should_receive(:run) }
       GeneratePlannedWorkingTimeForUserAndDates.should_receive(:new).with(user, date).and_return(calculator)
       Day.create_or_regenerate_days_for_user_and_year!(user, year)
     end
@@ -41,7 +41,7 @@ describe Day do
     end
 
     it 'uses GeneratePlannedWorkingTimeForUserAndDate to generate all the entries' do
-      calculator = mock.tap { |m| m.should_receive(:run) }
+      calculator = double.tap { |m| m.should_receive(:run) }
       GeneratePlannedWorkingTimeForUserAndDates.should_receive(:new).with(user, date).and_return(calculator)
       subject.regenerate!
     end

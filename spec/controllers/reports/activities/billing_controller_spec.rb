@@ -47,7 +47,7 @@ describe Reports::Activities::BillingController do
 
       describe 'GET "index"' do
         it 'grant access' do
-          expect { get :index }.to_not raise_error(CanCan::AccessDenied)
+          expect { get :index }.to_not raise_error
         end
       end
     end
@@ -59,7 +59,7 @@ describe Reports::Activities::BillingController do
 
       describe 'GET "index"' do
         it 'grants access' do
-          expect { get :index }.to_not raise_error(CanCan::AccessDenied)
+          expect { get :index }.to_not raise_error
         end
       end
     end

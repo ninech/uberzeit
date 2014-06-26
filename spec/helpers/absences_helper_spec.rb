@@ -20,12 +20,12 @@ describe AbsencesHelper do
 
     let(:date) { Date.civil(2013, 1, 1) }
     let(:schedule) do
-      mock.tap do |m|
+      double.tap do |m|
         m.stub(:active?).and_return(false)
       end
     end
     let(:absence) do
-       mock.tap do |m|
+      double.tap do |m|
         m.stub(:id).and_return(42)
         m.stub(:starts).and_return('2013-01-01'.to_date)
         m.stub(:ends).and_return('2013-02-02'.to_date)
@@ -36,8 +36,8 @@ describe AbsencesHelper do
         m.stub(:time_type).and_return(TEST_TIME_TYPES[:vacation])
         m.stub(:schedule).and_return(schedule)
         m.stub(:recurring?).and_return(false)
-       end
-     end
+      end
+    end
 
     it 'renders a calendar cell without a date' do
       assign(:user, FactoryGirl.build(:user))

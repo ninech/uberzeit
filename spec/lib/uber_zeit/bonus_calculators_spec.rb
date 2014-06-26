@@ -15,14 +15,14 @@ describe UberZeit::BonusCalculators do
     end
 
     it 'returns the specified registered calculator' do
-      UberZeit::BonusCalculators.use(:my_calc, mock).should be_instance_of(my_calculator)
+      UberZeit::BonusCalculators.use(:my_calc, double).should be_instance_of(my_calculator)
     end
 
     it 'returns a dummy calculator if the requested calculator is nil' do
-      UberZeit::BonusCalculators.use(nil, mock).should be_instance_of(UberZeit::BonusCalculators::Dummy)
+      UberZeit::BonusCalculators.use(nil, double).should be_instance_of(UberZeit::BonusCalculators::Dummy)
     end
     it 'returns a dummy calculator if the requested calculator is an empty string' do
-      UberZeit::BonusCalculators.use('', mock).should be_instance_of(UberZeit::BonusCalculators::Dummy)
+      UberZeit::BonusCalculators.use('', double).should be_instance_of(UberZeit::BonusCalculators::Dummy)
     end
   end
 

@@ -54,7 +54,7 @@ describe Reports::WorkController do
       end
 
       it 'allows to view this report when user has rights' do
-        expect { get :show, year: year }.to_not raise_error(CanCan::AccessDenied)
+        expect { get :show, year: year }.to_not raise_error
       end
     end
 
