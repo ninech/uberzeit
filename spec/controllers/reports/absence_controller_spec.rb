@@ -67,6 +67,13 @@ describe Reports::AbsenceController do
           get :calendar, team_id: nil, month: nil, year: 2013
           assigns(:range).should eq(UberZeit.year_as_range(2013))
         end
+
+        context 'without a year set' do
+          it 'assigns the current year as range' do
+            get :calendar, team_id: nil
+            assigns(:range).should eq(UberZeit.year_as_range(Time.now.year))
+          end
+        end
       end
 
       describe 'special rights' do
