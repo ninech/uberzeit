@@ -29,13 +29,13 @@ describe ComparisonController do
       describe 'GET "show"' do
         context 'with own user' do
           it 'grants access' do
-            expect { get_show user.id }.to_not raise_error(CanCan::AccessDenied)
+            expect { get_show user.id }.to_not raise_error
           end
         end
 
         context 'with other user' do
           it 'denies access' do
-            expect { get_show team_leader.id }.to raise_error(CanCan::AccessDenied)
+            expect { get_show team_leader.id }.to raise_error
           end
         end
       end
@@ -48,7 +48,7 @@ describe ComparisonController do
 
       describe 'GET "show"' do
         it 'grants access' do
-          expect { get_show user.id }.to_not raise_error(CanCan::AccessDenied)
+          expect { get_show user.id }.to_not raise_error
         end
       end
     end
@@ -60,7 +60,7 @@ describe ComparisonController do
 
       describe 'GET "show"' do
         it 'grants access' do
-          expect { get_show user.id }.to_not raise_error(CanCan::AccessDenied)
+          expect { get_show user.id }.to_not raise_error
         end
       end
     end
