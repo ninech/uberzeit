@@ -111,11 +111,15 @@ Sign in with `admin@example.org`, password `admin`. Enjoy!
 ## API
 
     curl -v -H 'X-Auth-Token: YourSuperSecretToken' -X GET uberzeit.dev/api/ping
-    
+
 ## 3rd Party Integrations
 
 * [Presence for uberZeit Mac OS X](http://crafted.ch/presence) - Mac OS X menubar app to manage your uberZeit timers
 * [Presence for uberZeit iOS](https://itunes.apple.com/ch/app/presence-for-uberzeit/id890649751) - iOS app to manage your uberZeit timer
+
+## Screencasts
+
+* [uberZeit -Time Tracking Done Right by Dieter Mannheim](https://db.tt/aobrLMsr)
 
 ## License
 
