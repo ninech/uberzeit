@@ -4,30 +4,22 @@ class Setting < ActiveRecord::Base
   validates_presence_of :key, :value
   validates_uniqueness_of :key
 
+  VALID_SETTING_KEYS = [:work_per_day_hours, :vacation_per_year_days]
 
-  def self.work_per_day_hours
-    Setting.find_by_key!(:work_per_day_hours).value.to_f
-  end
+  class << self
+    VALID_SETTING_KEYS.each do |key|
+      define_method(key) do
+        Setting.find_by_key!(key).value.to_f
+      end
 
-  def self.work_per_day_hours=(value)
-    setting = Setting.find_by_key(:work_per_day_hours)
-    if setting
-      setting.update_attributes!(value: value)
-    else
-      Setting.create!(key: :work_per_day_hours, value: value)
-    end
-  end
-
-  def self.vacation_per_year_days
-    Setting.find_by_key!(:vacation_per_year_days).value.to_f
-  end
-
-  def self.vacation_per_year_days=(value)
-    setting = Setting.find_by_key(:vacation_per_year_days)
-    if setting
-      setting.update_attributes!(value: value)
-    else
-      Setting.create!(key: :vacation_per_year_days, value: value)
+      define_method("#{key}=") do |value|
+        setting = Setting.find_by_key(key)
+        if setting
+          setting.update_attributes!(value: value)
+        else
+          Setting.create!(key: key, value: value)
+        end
+      end
     end
   end
 end
