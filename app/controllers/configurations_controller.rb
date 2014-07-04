@@ -9,7 +9,10 @@ class ConfigurationsController < ApplicationController
 
   def update
     if @configuration.update_attributes(params[:configuration])
-      redirect_to edit_configuration_path, flash: {success: t('model_successfully_updated', model: ::Configuration.model_name.human)}
+      redirect_to edit_configuration_path, flash: {
+        success: t('model_successfully_updated',
+        model: ::Configuration.model_name.human)
+      }
     else
       render :edit
     end
