@@ -1,0 +1,18 @@
+<%= form_for(@configuration, url: configuration_path) do |f| %>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.text_field :work_per_day_hours %>
+  </div>
+</div>
+<div class="row">
+  <div class="small-4 columns">
+    <%= f.text_field :vacation_per_year_days %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-3 columns">
+    <%= f.submit class: 'button'%>
+  </div>
+</div>
+<% end %>

@@ -241,6 +241,11 @@ describe 'Roles and Rights' do
         let(:path) { adjustments_path }
         include_examples :manage_access
       end
+
+      describe 'configuration' do
+        let(:path) { edit_configuration_path }
+        include_examples :manage_access
+      end
     end
   end
 

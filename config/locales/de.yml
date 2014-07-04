@@ -2,10 +2,14 @@ de:
   activemodel:
     models:
       user_role: Benutzerrolle
+      configuration: Konfiguration
     attributes:
       user_role:
         role: Rolle
         resource: Ressource
+      configuration:
+        work_per_day_hours: 'Arbeitsstunden pro Tag'
+        vacation_per_year_days: 'Ferientage pro Jahr'
   activerecord:
     models:
       employment:
@@ -264,6 +268,7 @@ de:
         adjustments: Anpassungen
         projects: 'Projekte'
         activity_types: 'Aktivitätstypen'
+        configuration: 'Konfiguration'
       reports:
         overview: Übersicht
         my_work: Meine Arbeitszeit
@@ -557,6 +562,9 @@ de:
       sign_in: 'Einloggen'
       sign_in_with: 'Einloggen mit:'
       login: 'Login'
+  configurations:
+    edit:
+      edit_configuration: 'Konfiguration bearbeiten'
 
   user_does_not_exist: 'Der authentifizierte Benutzer existert nicht.'
   login_failed: 'Login fehlgeschlagen.'
