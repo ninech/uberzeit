@@ -39,7 +39,7 @@ describe Reports::Activities::DetailedController do
 
       describe 'GET "index"' do
         it 'grants access' do
-          expect { get :index, start_date: '2010-01-01', end_date: '2010-01-31', customer_id: swag_ag.id }.to_not raise_error(CanCan::AccessDenied)
+          expect { get :index, start_date: '2010-01-01', end_date: '2010-01-31', customer_id: swag_ag.id }.to_not raise_error
         end
       end
     end
@@ -51,7 +51,7 @@ describe Reports::Activities::DetailedController do
 
       describe 'GET "index"' do
         it 'grants access' do
-          expect { get :index, start_date: '2010-01-01', end_date: '2010-01-31', customer_id: swag_ag.id }.to_not raise_error(CanCan::AccessDenied)
+          expect { get :index, start_date: '2010-01-01', end_date: '2010-01-31', customer_id: swag_ag.id }.to_not raise_error
         end
       end
     end
@@ -63,7 +63,7 @@ describe Reports::Activities::DetailedController do
 
       describe 'GET "index"' do
         it 'grants access' do
-          expect { get :index, start_date: '2010-01-01', end_date: '2010-01-31', customer_id: swag_ag.id }.to_not raise_error(CanCan::AccessDenied)
+          expect { get :index, start_date: '2010-01-01', end_date: '2010-01-31', customer_id: swag_ag.id }.to_not raise_error
         end
       end
     end

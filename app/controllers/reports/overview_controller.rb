@@ -29,11 +29,11 @@ class Reports::OverviewController < ApplicationController
   private
 
   def personal_absences_by_date
-    FindDailyAbsences.new(current_user, range_of_absences).result_grouped_by_date
+    FindDailyAbsences.new(@user, range_of_absences).result_grouped_by_date
   end
 
   def team_absences_by_date
-    FindDailyAbsences.new(other_team_members(current_user), range_of_absences).result_grouped_by_date
+    FindDailyAbsences.new(other_team_members(@user), range_of_absences).result_grouped_by_date
   end
 
   def range_of_absences

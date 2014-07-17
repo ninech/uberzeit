@@ -30,7 +30,7 @@ class TimeEntry < ActiveRecord::Base
   validates_presence_of :starts, :start_time, :start_date
   validates_presence_of :ends, unless: :timer?
   validates_datetime :starts
-  validates_datetime :ends, after: :starts, unless: :timer?
+  validates_datetime :ends, on_or_after: :starts, unless: :timer?
   validate :must_be_only_timer_on_date, if: :timer?
 
   scope_date :starts

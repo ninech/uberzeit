@@ -101,6 +101,10 @@
           font-size: 1.2em;
           font-weight: normal;
         }
+
+        @media only screen and (max-device-width: 480px) {
+          font-size: 0.6em;
+        }
       }
 
       &.active {

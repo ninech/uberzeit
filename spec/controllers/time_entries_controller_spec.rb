@@ -33,7 +33,7 @@ describe TimeEntriesController do
       subject { response }
 
       it 'assigns sorted @time_spans_of_time_entries' do
-        assigns(:time_spans_of_time_entries).should eq (time_entry_early.time_spans + time_entry_late.time_spans)
+        assigns(:time_spans_of_time_entries).should eq(time_entry_early.time_spans + time_entry_late.time_spans)
       end
 
       it { should render_template(:index) }
@@ -71,6 +71,13 @@ describe TimeEntriesController do
           time_entry.reload
           time_entry.starts.should eq("2013-02-05 23:00 +0100".to_time)
           time_entry.ends.should eq("2013-02-06 01:00 +0100".to_time)
+        end
+
+        it 'does not set the end date to tomorrow if the time is the same' do
+          put :update, id: time_entry, user_id: time_entry.user, time_entry: {start_date: '2013-02-05', start_time: '23:00', end_time: '23:00'}
+          time_entry.reload
+          time_entry.starts.should eq("2013-02-05 23:00 +0100".to_time)
+          time_entry.ends.should eq("2013-02-05 23:00 +0100".to_time)
         end
 
         it 'will restart a timer when the end time is empty' do

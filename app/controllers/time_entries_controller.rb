@@ -73,7 +73,7 @@ class TimeEntriesController < ApplicationController
 
   private
   def adjust_timer_day_boundary
-    if !@time_entry.timer? && @time_entry.starts && @time_entry.ends <= @time_entry.starts
+    if !@time_entry.timer? && @time_entry.starts && @time_entry.ends < @time_entry.starts
       @time_entry.end_date = @time_entry.start_date + 1
     end
   end

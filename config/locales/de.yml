@@ -102,7 +102,7 @@ de:
             starts:
               invalid_datetime: ist ungültig
             ends:
-              after: Endzeit muss nach Startzeit sein
+              on_or_after: Endzeit muss gleich oder nach Startzeit sein
             start_date:
               timer_exists_on_date_already: An diesem Datum läuft schon ein Timer.
         absence:
