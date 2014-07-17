@@ -1,5 +1,4 @@
 class ConfigurationsController < ApplicationController
-
   authorize_resource class: false
 
   before_filter :load_configuration
@@ -11,7 +10,7 @@ class ConfigurationsController < ApplicationController
     if @configuration.update_attributes(params[:configuration])
       redirect_to edit_configuration_path, flash: {
         success: t('model_successfully_updated',
-        model: ::Configuration.model_name.human)
+                   model: ::Configuration.model_name.human)
       }
     else
       render :edit
@@ -19,6 +18,7 @@ class ConfigurationsController < ApplicationController
   end
 
   private
+
   def load_configuration
     @configuration = ::Configuration.new
   end

@@ -1,22 +1,22 @@
 class Numeric
   def to_hours
-    self.to_f / 1.hour
+    to_f / 1.hour
   end
 
   def to_days
-    self.to_f / 24.hours
+    to_f / 24.hours
   end
 
   def work_days
-    self.to_f * Setting.work_per_day_hours.hours
+    to_f * Setting.work_per_day_hours.hours
   end
 
   def to_work_days
-    self.to_f / Setting.work_per_day_hours.hours
+    to_f / Setting.work_per_day_hours.hours
   end
 
   def to_minutes
-    self.to_f / 1.minute
+    to_f / 1.minute
   end
 
 end

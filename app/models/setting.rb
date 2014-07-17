@@ -1,8 +1,9 @@
 class Setting < ActiveRecord::Base
   attr_accessible :key, :value
 
-  validates_presence_of :key, :value
-  validates_uniqueness_of :key
+  validates :key, presence: true
+  validates :value, presence: true
+  validates :key, uniqueness: true
 
   VALID_SETTING_KEYS = [:work_per_day_hours, :vacation_per_year_days]
 

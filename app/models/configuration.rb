@@ -5,7 +5,7 @@ class Configuration
 
   define_attribute_methods Setting::VALID_SETTING_KEYS
 
-  validates_numericality_of :work_per_day_hours, greater_than_or_equal_to: 0
+  validates :work_per_day_hours, numericality: { greater_than_or_equal_to: 0 }
   validates :vacation_per_year_days, format: { with: /\A\d+(?:.[05])?\z/ }
 
   define_model_callbacks :save
@@ -18,7 +18,7 @@ class Configuration
     end
 
     define_method("#{key}=") do |value|
-      self.send("#{key}_will_change!") unless "#{self.send(key)}" == "#{value}"
+      send("#{key}_will_change!") unless "#{send(key)}" == "#{value}"
       instance_variable_set("@#{key}", value)
     end
   end
@@ -28,7 +28,7 @@ class Configuration
     run_callbacks :save do
       Setting::VALID_SETTING_KEYS.each do |key|
         value = instance_variable_get("@#{key}")
-        Setting.send("#{key}=", value) if self.send("#{key}_changed?")
+        Setting.send("#{key}=", value) if send("#{key}_changed?")
       end
     end
   end
@@ -36,7 +36,7 @@ class Configuration
   def update_attributes(attributes)
     attributes.each do |key, value|
       method = "#{key}="
-      self.send(method, value) if respond_to?(key)
+      send(method, value) if respond_to?(key)
     end
     save
   end
@@ -50,6 +50,7 @@ class Configuration
   end
 
   private
+
   def flush_cache
     Day.delete_all
   end
