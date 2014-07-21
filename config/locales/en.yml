@@ -2,10 +2,14 @@ en:
   activemodel:
     models:
       user_role: 'User role'
+      configuration: 'Configuration'
     attributes:
       user_role:
         role: 'Role'
         resource: 'Resource'
+      configuration:
+        work_per_day_hours: 'Hours of work per day'
+        vacation_per_year_days: 'Days of vacation per year'
   activerecord:
     models:
       employment:
@@ -265,6 +269,7 @@ en:
         adjustments: 'Adjustments'
         projects: 'Projects'
         activity_types: 'Activity types'
+        configuration: 'Configuration'
       reports:
         overview: 'Overview'
         my_work: 'Personal time reporting'
@@ -556,6 +561,9 @@ en:
       sign_in: 'Sign in'
       sign_in_with: 'Sign in with:'
       login: 'Sign in'
+  configurations:
+    edit:
+      edit_configuration: 'Edit configuration'
 
   user_does_not_exist: 'The authenticated user does not exist.'
   login_failed: 'Login failed.'

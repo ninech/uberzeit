@@ -44,7 +44,7 @@ class CalculatePlannedWorkingTime
     result = {}
     @range.each do |date|
       @date = date
-      result[date] = workload_on_date * UberZeit.config.work_per_day_hours.hours
+      result[date] = workload_on_date * Setting.work_per_day_hours.hours
     end
 
     result

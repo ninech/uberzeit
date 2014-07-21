@@ -7,8 +7,6 @@ development:
       fields:
         - 'email'
       uid_field: 'email'
-  work_per_day_hours: 8.5 # default
-  vacation_per_year_days: 25 # default
 
 test:
   auth_providers:

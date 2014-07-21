@@ -109,6 +109,7 @@ SimpleNavigation::Configuration.run do |navigation|
         second.item :public_holidays, t('navigation.sub.manage.public_holidays'), public_holidays_path, highlights_on: %r!\A#{public_holidays_path}!, if: -> { can?(:manage, PublicHoliday) }
         second.item :time_types, t('navigation.sub.manage.time_types'), time_types_path, highlights_on: %r!\A#{time_types_path}!, if: -> { can?(:manage, TimeType) }
         second.item :activity_types, t('navigation.sub.manage.activity_types'), activity_types_path, highlights_on: %r!\A#{activity_types_path}!, if: -> { can?(:manage, ActivityType) }
+        second.item :configuration, t('navigation.sub.manage.configuration'), edit_configuration_path, highlights_on: %r!\A#{edit_configuration_path}!, if: -> { can?(:manage, ::Configuration) }
       end
     end
 

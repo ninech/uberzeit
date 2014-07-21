@@ -59,6 +59,7 @@ Uberzeit::Application.routes.draw do
   resources :adjustments, except: [:show]
   resources :projects, except: [:show]
   resources :activity_types, except: [:show]
+  resource :configuration, only: [:edit, :update]
 
 
   # reporting
