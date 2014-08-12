@@ -117,10 +117,6 @@ Sign in with `admin@example.org`, password `admin`. Enjoy!
 * [Presence for uberZeit Mac OS X](http://crafted.ch/presence) - Mac OS X menubar app to manage your uberZeit timers
 * [Presence for uberZeit iOS](https://itunes.apple.com/ch/app/presence-for-uberzeit/id890649751) - iOS app to manage your uberZeit timer
 
-## Screencasts
-
-* [uberZeit -Time Tracking Done Right by Dieter Mannheim](https://db.tt/aobrLMsr)
-
 ## License
 
 uberZeit is released under the [MIT License](http://www.opensource.org/licenses/MIT). See LICENSE.txt for further details.
