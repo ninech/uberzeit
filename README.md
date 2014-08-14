@@ -78,7 +78,7 @@ Now visit http://hostname:3000 and sign in with `admin@example.org`, password `a
 
 ## Deployment on Heroku
 
-To deploy on Heroku, some some modifications are required. The configuration
+To deploy on Heroku, some modifications are required. The configuration
 must also be added to the repository.
 We do this using the hidden branch `deploy` which will be pushed to Heroku only.
 
