@@ -28,7 +28,7 @@ class Activity < ActiveRecord::Base
 
   acts_as_paranoid
 
-  default_scope order(:customer_id, :date)
+  default_scope order(:created_at)
 
   belongs_to :activity_type, with_deleted: true
   belongs_to :project, with_deleted: true
