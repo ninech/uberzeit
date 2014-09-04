@@ -13,6 +13,8 @@ a.close-reveal-modal.link {
 
 .reveal-modal {
   position: fixed;
+  top: 50px !important;
+  
   .button {
     margin-bottom: 0;
   }
