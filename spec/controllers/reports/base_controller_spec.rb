@@ -38,9 +38,9 @@ describe Reports::BaseController do
       end
     end
 
-    context 'team specified' do
-      it 'sets only the requested team' do
-        get :index, team_id: user.teams.first.id
+    context 'teams specified' do
+      it 'sets only the requested teams' do
+        get :index, team_ids: [user.teams.first.id]
         assigns(:users).should =~ [user, another_user]
       end
     end
@@ -68,10 +68,10 @@ describe Reports::BaseController do
     end
   end
 
-  describe '@team' do
-    it 'sets the requested team' do
-      get :index, team_id: user.teams.first.id
-      assigns(:team).should eq user.teams.first
+  describe '@requested_teams' do
+    it 'sets the requested teams' do
+      get :index, team_ids: [user.teams.first.id]
+      assigns(:requested_teams).should eq [user.teams.first]
     end
   end
 

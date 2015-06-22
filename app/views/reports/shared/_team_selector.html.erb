@@ -1,6 +1,14 @@
 <% content_for :team_selector do %>
   <div class="row">
     <div class="small-3 columns"><%= t '.users' %></div>
-    <div class="small-9 columns end"><%= select_tag :team_id, options_for_select(@teams.collect { |team| [team.name, team.id] }.prepend([t('.everyone'), nil]), @team.nil? ? nil : @team.id) %></div>
+    <div class="small-9 columns end team-selection">
+      <%= hidden_field_tag :'team_ids[]', '' %>
+      <% @teams.each do |team| %>
+        <label class="team">
+          <%= check_box_tag :'team_ids[]', team.id, @requested_teams.include?(team) %>
+          <%= team.name %>
+        </label>
+      <% end %>
+    </div>
   </div>
 <% end %>

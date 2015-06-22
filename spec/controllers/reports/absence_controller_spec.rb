@@ -91,9 +91,9 @@ describe Reports::AbsenceController do
           assigns(:teams).should =~ user.teams + another_user.teams
         end
 
-        it 'shows the requested team' do
-          get :calendar, year: year, month: month, team_id: another_team.id
-          assigns(:team).should eq(another_team)
+        it 'loads the requested teams' do
+          get :calendar, year: year, month: month, team_ids: [another_team.to_param]
+          assigns(:requested_teams).should eq [another_team]
           assigns(:users).should =~ [another_user]
         end
 
