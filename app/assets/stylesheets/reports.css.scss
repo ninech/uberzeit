@@ -10,6 +10,15 @@
   }
 }
 
+.team-selection {
+  display: flex;
+  flex-wrap: wrap;
+  > .team {
+    flex: 1;
+    flex-basis: 8em;
+  }
+}
+
 .content-summary {
   table.nice {
     tr {

@@ -9,8 +9,8 @@ class Reports::BaseController < ApplicationController
     if requested_year && requested_month
       @month_as_date = Date.new(requested_year, requested_month)
     end
+    @requested_teams = requested_teams
     @users = requested_users
-    @team = requested_team
     @teams = accessible_teams
   end
 
@@ -22,11 +22,11 @@ class Reports::BaseController < ApplicationController
     User.only_active.accessible_by(current_ability)
   end
 
-  def requested_team
-    # this workaround where first thingy can be removed when this app runs on rails 4
+  def requested_teams
     # accessible_by filters by id, a subsequent where(id: id) will replace the first one
     # (cf. rails activerecord/lib/active_record/relation/query_methods.rb, line 132)
-    accessible_teams.where('id = ?', params[:team_id]).first unless params[:team_id].blank?
+    return accessible_teams unless params[:team_ids].present?
+    accessible_teams.where('id IN (?)', params[:team_ids].map(&:to_i))
   end
 
   def requested_user
@@ -45,8 +45,8 @@ class Reports::BaseController < ApplicationController
     case
     when requested_user
       [requested_user]
-    when requested_team
-      requested_team.members
+    when requested_teams
+      accessible_users.in_teams(requested_teams)
     else
       accessible_users
     end
