@@ -22,7 +22,7 @@ group :assets do
   gem 'font-awesome-rails', '~> 3.2'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 2.2.1'
 gem 'foundation_rails_helper'
 
 # Authentication
@@ -78,6 +78,7 @@ group :development, :test do
   gem 'mysql2'
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'spring-commands-rspec'
   gem 'ci_reporter'
   gem 'brakeman'
   gem 'simplecov', :require => false
