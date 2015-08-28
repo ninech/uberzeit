@@ -28,7 +28,7 @@ class API::User < Grape::API
     end
 
     def ensure_authentication!
-      error!('401 Unauthorized', 401) unless current_user
+      error!('401 Unauthorized', 401) unless current_user && current_user.active?
     end
   end
 
