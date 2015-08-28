@@ -17,4 +17,31 @@ describe 'Authentication for App API' do
     response.status.should eq(200)
   end
 
+  context 'Token authentication' do
+    include Warden::Test::Helpers
+
+    let(:token) { 'abcd' }
+    let(:user) { FactoryGirl.create :user, active: user_active?, authentication_token: token }
+
+    before do
+      login_as user
+      get '/api/ping'
+    end
+
+    context 'for an active user' do
+      let(:user_active?) { true }
+
+      it 'allows authentication' do
+        expect(response.status).to eq 200
+      end
+    end
+
+    context 'for an inactive user' do
+      let(:user_active?) { false }
+
+      it 'denies authentication for active users' do
+        response.status.should eq 401
+      end
+    end
+  end
 end
