@@ -49,12 +49,12 @@ Install RubyGems from https://rubygems.org. Do not use the `rubygems` package fr
 Now add a database user and adjust database.yml accordingly.
 Then set up the database:
 
-    RAILS_ENV=production bundle exec rake db:create db:schema:load db:seed
+    RAILS_ENV=<env> bundle exec rake db:create db:schema:load db:seed
 
 
 #### Precompile assets
 
-    RAILS_ENV=production bundle exec rake assets:precompile
+    RAILS_ENV=<env> bundle exec rake assets:precompile
 
 
 #### Copy initial app settings
@@ -71,7 +71,7 @@ You could for example use `pwgen -s -1 100` to generate a random string.
 
 #### Start the app
 
-    RAILS_ENV=production bundle exec thin start -e production
+    RAILS_ENV=<env> bundle exec thin start -e production
 
 Now visit http://hostname:3000 and sign in with `admin@example.org`, password `admin`. Enjoy!
 
